@@ -1,0 +1,37 @@
+name: Build
+
+on:
+  push:
+    branches: [main, dev]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Build with Gradle
+        run: ./gradlew build
+
+      - name: Get version
+        id: version
+        run: echo "version=$(grep '^version' build.gradle.kts | head -1 | sed 's/.*"\(.*\)".*/\1/')" >> "$GITHUB_OUTPUT"
+
+      - name: Upload dev build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ChaosCraft-${{ steps.version.outputs.version }}-dev-${{ github.run_number }}
+          path: build/libs/ChaosCraft-*.jar
+          retention-days: 14

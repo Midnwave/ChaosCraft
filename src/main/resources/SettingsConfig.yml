@@ -1,0 +1,39 @@
+# ChaosCraft Settings Configuration
+# Define player settings and their scripts here
+
+Settings:
+
+  # Scoreboard setting
+  Scoreboard:
+    # Default value when player first joins
+    Default: disabled
+
+    # Available options
+    Options:
+
+      enabled:
+        # Script to run when scoreboard is enabled
+        Script:
+          - execute console command "say %player% enabled their scoreboard"
+          # Add your scoreboard enable commands here
+          # Example: execute console command "scoreboard players set %player% sidebar 1"
+
+      disabled:
+        # Script to run when scoreboard is disabled
+        Script:
+          - execute console command "say %player% disabled their scoreboard"
+          # Add your scoreboard disable commands here
+          # Example: execute console command "scoreboard players set %player% sidebar 0"
+
+# Add more settings here in the future!
+# Example structure:
+#
+#  SettingName:
+#    Default: option1
+#    Options:
+#      option1:
+#        Script:
+#          - execute console command "..."
+#      option2:
+#        Script:
+#          - execute console command "..."

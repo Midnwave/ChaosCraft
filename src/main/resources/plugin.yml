@@ -1,0 +1,165 @@
+name: ChaosCraft
+version: '${version}'
+main: com.blockforge.chaoscraft.ChaosCraftPlugin
+api-version: '1.21'
+description: '${description}'
+authors:
+  - BlockForgeStudios
+website: https://github.com/Midnwave/ChaosCraft
+
+softdepend:
+  - PlaceholderAPI
+  - MythicMobs
+  - ModelEngine
+  - Citizens
+  - ProtocolLib
+  - packetevents
+  - Vault
+  - ItemsAdder
+  - DynamicBackpacks
+
+commands:
+  # ===== Core Commands =====
+  chaoscraft:
+    description: Main ChaosCraft command hub
+    aliases: [cc]
+    usage: /cc <subcommand>
+    permission: chaoscraft.use
+
+  # ===== Mode Commands =====
+  triggermode:
+    description: Trigger a game mode
+    usage: /triggermode <mode>
+    permission: chaoscraft.mode.trigger
+  endmode:
+    description: End the active game mode
+    usage: /endmode
+    permission: chaoscraft.mode.end
+
+  # ===== Calamity Mode =====
+  calamity:
+    description: Calamity mode test and admin commands
+    usage: /calamity <testblockdisplay|testenvironmental|testboss> <phase> <id>
+    permission: chaoscraft.calamity.admin
+
+  # ===== Performance =====
+  ccperformance:
+    description: MythicMobs performance limiter management
+    aliases: [ccperf]
+    usage: /ccperf <enable|disable|toggle|reload|status|set|cleanup|debug>
+    permission: chaoscraft.performance.admin
+
+  # ===== Player-Facing =====
+  settings:
+    description: Open the player settings menu
+    usage: /settings
+    permission: chaoscraft.settings.use
+  codes:
+    description: Enter a promotional code
+    usage: /codes
+  itemtag:
+    description: View and manage item tags
+    usage: /itemtag <add|remove|list> [tag]
+    permission: chaoscraft.itemtag.use
+
+permissions:
+  # ----- Core -----
+  chaoscraft.use:
+    description: Use the /cc command
+    default: true
+  chaoscraft.admin:
+    description: Full ChaosCraft admin access (inherits all)
+    default: op
+    children:
+      chaoscraft.use: true
+      chaoscraft.mode.trigger: true
+      chaoscraft.mode.end: true
+      chaoscraft.mode.exempt: true
+      chaoscraft.calamity.admin: true
+      chaoscraft.devs: true
+      chaoscraft.performance.admin: true
+      chaoscraft.titlescreen: true
+      chaoscraft.settings.admin: true
+      chaoscraft.codes.create: true
+      chaoscraft.useragreement.admin: true
+      chaoscraft.play.admin: true
+      chaoscraft.item.give: true
+      chaoscraft.itemtag.add: true
+      chaoscraft.itemtag.remove: true
+      chaoscraft.itemtag.list: true
+
+  # ----- Mode System -----
+  chaoscraft.mode.trigger:
+    description: Trigger game modes (/triggermode)
+    default: op
+  chaoscraft.mode.end:
+    description: End active game mode (/endmode)
+    default: op
+  chaoscraft.mode.exempt:
+    description: Exempt from mode attacks (no damage from events)
+    default: false
+
+  # ----- Calamity Mode -----
+  chaoscraft.calamity.admin:
+    description: Calamity mode admin/test commands
+    default: op
+
+  # ----- Developer -----
+  chaoscraft.devs:
+    description: Developer commands (/cc devs, /cc dog, /cc debug)
+    default: op
+
+  # ----- Performance -----
+  chaoscraft.performance.admin:
+    description: Manage MythicMobs performance limiter
+    default: op
+  chaoscraft.performance.bypass:
+    description: Bypass performance limiter (ping cleanup, per-player limits)
+    default: false
+
+  # ----- Title Screen -----
+  chaoscraft.titlescreen:
+    description: Force players in/out of title screen
+    default: op
+
+  # ----- Settings -----
+  chaoscraft.settings.use:
+    description: Open settings menu (/settings)
+    default: true
+  chaoscraft.settings.admin:
+    description: Manage other players' settings
+    default: op
+
+  # ----- Codes -----
+  chaoscraft.codes.create:
+    description: Create and manage promotional codes
+    default: op
+
+  # ----- User Agreement -----
+  chaoscraft.useragreement.admin:
+    description: Force-accept user agreements for players
+    default: op
+
+  # ----- Play -----
+  chaoscraft.play.admin:
+    description: Execute play scripts on players
+    default: op
+
+  # ----- Items -----
+  chaoscraft.item.give:
+    description: Give special items to players
+    default: op
+
+  # ----- Item Tags -----
+  chaoscraft.itemtag.use:
+    description: View item tags
+    default: true
+  chaoscraft.itemtag.add:
+    description: Add tags to items
+    default: op
+  chaoscraft.itemtag.remove:
+    description: Remove tags from items
+    default: op
+  chaoscraft.itemtag.list:
+    description: List tags on items
+    default: true

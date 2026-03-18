@@ -1,0 +1,121 @@
+# ChaosCraft Play Configuration
+# Scripts are executed when /cc play is used
+# Messages are shown via %cc_play_status% placeholder
+
+# Scripts executed by /cc play command
+Scripts:
+  # Executed when player hasn't accepted user agreement
+  UserAgreementNotAccepted:
+    - "message %player% &cYou must accept the user agreement to play the server."
+    - "message %player% &7Please contact an administrator for assistance."
+    - "message %player% &7Type &e/help &7for more information."
+
+  # Executed when player has accepted user agreement
+  PlayAccepted:
+    - "message %player% &#FF0000&lW&#FF3300&lE&#FF6600&lL&#FF9900&lC&#FFCC00&lO&#FFFF00&lM&#CCFF00&lE"
+    - "message %player% &7Preparing your nightmare..."
+    - "message %player% &8The entity has taken notice of you."
+    - "message %player% &c&lGood luck."
+
+# Random messages shown via %cc_play_status% placeholder
+# Only shown when player is marked as playing
+Messages:
+  # Farewells & Greetings
+  - "Farewell, %player%..."
+  - "Welcome to your nightmare, %player%."
+  - "Good luck, %player%. You'll need it."
+  - "Enter at your own risk, %player%."
+  - "The darkness welcomes you, %player%."
+
+  # IT References
+  - "Beware of IT, %player%..."
+  - "IT is watching you, %player%."
+  - "We all float down here, %player%."
+  - "You'll float too, %player%."
+  - "IT knows your name, %player%."
+
+  # Warnings
+  - "Don't look behind you, %player%."
+  - "Run while you still can, %player%."
+  - "There is no escape, %player%."
+  - "You shouldn't have come here, %player%."
+  - "Turn back now, %player%. Please."
+  - "This is your last chance to leave, %player%."
+  - "You've been warned, %player%."
+  - "The shadows are hungry, %player%."
+  - "Something is following you, %player%."
+  - "You are not alone, %player%."
+
+  # Creepy Observations
+  - "I can see you, %player%..."
+  - "You look scared, %player%."
+  - "Your fear is delicious, %player%."
+  - "I've been waiting for you, %player%."
+  - "Finally, you've arrived, %player%."
+  - "The entity has taken notice of you, %player%."
+  - "You smell like fear, %player%."
+  - "Fresh prey... welcome, %player%."
+  - "Another soul to claim, %player%."
+  - "Your screams will echo here, %player%."
+
+  # Ominous Statements
+  - "The nightmare begins, %player%."
+  - "There is no light here, %player%."
+  - "Hope is a luxury you cannot afford, %player%."
+  - "The walls are closing in, %player%."
+  - "Time moves differently here, %player%."
+  - "Reality is fragile here, %player%."
+  - "The void consumes all, %player%."
+  - "Madness awaits you, %player%."
+  - "Your sanity will not survive, %player%."
+  - "The abyss stares back, %player%."
+
+  # Unsettling Questions
+  - "Did you hear that, %player%?"
+  - "What was that sound, %player%?"
+  - "Do you feel it too, %player%?"
+  - "Can you hear them whispering, %player%?"
+  - "Why did you come here, %player%?"
+  - "Are you ready to face your fears, %player%?"
+  - "Do you believe in ghosts, %player%?"
+  - "Have you said your prayers, %player%?"
+
+  # Entity References
+  - "It hunts in the darkness, %player%."
+  - "The creature knows you're here, %player%."
+  - "Something ancient has awakened, %player%."
+  - "The entity feeds on fear, %player%."
+  - "They are coming for you, %player%."
+  - "The spirits are restless tonight, %player%."
+  - "The dead do not rest here, %player%."
+  - "Demons walk among us, %player%."
+
+  # Atmospheric Horror
+  - "The fog grows thicker, %player%..."
+  - "The air is heavy with dread, %player%."
+  - "Blood stains these halls, %player%."
+  - "The scent of decay lingers, %player%."
+  - "Bones crunch beneath your feet, %player%."
+  - "The temperature drops suddenly, %player%."
+  - "Your breath forms clouds of frost, %player%."
+  - "The lights flicker and die, %player%."
+
+  # Psychological Horror
+  - "Trust nothing you see, %player%."
+  - "Your mind is playing tricks, %player%."
+  - "Question everything, %player%."
+  - "Nothing is as it seems, %player%."
+  - "The illusion is perfect, %player%."
+  - "You cannot trust your senses, %player%."
+  - "Paranoia is your only friend, %player%."
+  - "Every shadow hides a secret, %player%."
+
+  # Final Warnings
+  - "It's too late to turn back, %player%."
+  - "Your fate is sealed, %player%."
+  - "There is no salvation here, %player%."
+  - "You are already dead, %player%."
+  - "This is where you belong, %player%."
+  - "Welcome home, %player%."
+  - "You've always been here, %player%."
+  - "The nightmare never ends, %player%."

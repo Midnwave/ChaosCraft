@@ -1,0 +1,34 @@
+# ChaosCraft Codes Configuration
+# Roblox-style promo code system
+
+# Maximum incorrect code attempts before blacklist
+MaxIncorrectAttempts: 3
+
+# How long players are blacklisted after too many incorrect attempts
+# Format: 1d = 1 day, 1h = 1 hour, 1m = 1 minute, 1s = 1 second
+# Examples: "1d", "12h", "1d3h", "30m"
+BlacklistDuration: 1h
+
+# How long the status placeholder shows before going blank
+StatusDisplayDuration: 10s
+
+# Sounds played for each code status (played at player location with volume 10000)
+# Can be minecraft sounds or custom sounds from resource packs
+Sounds:
+  # Played when code is successfully redeemed
+  Success: "minecraft:entity.player.levelup"
+
+  # Played when code is invalid/incorrect
+  Invalid: "minecraft:entity.villager.no"
+
+  # Played when code has expired
+  Expired: "minecraft:entity.wither.hurt"
+
+  # Played when code is on cooldown
+  Cooldown: "minecraft:block.note_block.bass"
+
+  # Played when code was already redeemed max times
+  AlreadyRedeemed: "minecraft:entity.villager.no"
+
+  # Played when player is blacklisted
+  Blacklisted: "minecraft:entity.ender_dragon.growl"

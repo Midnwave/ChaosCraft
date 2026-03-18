@@ -1,0 +1,105 @@
+# ============================================================
+# ChaosCraft Performance Configuration
+# MythicMobs Limiter & Automatic Cleanup System
+# ============================================================
+
+# Master enable/disable switch
+enabled: true
+
+# ============================================================
+# MYTHICMOBS SPAWN LIMITS
+# ============================================================
+limits:
+  # Maximum MythicMobs within X blocks of any spawn attempt
+  radius:
+    enabled: true
+    max-mobs: 100
+    radius-blocks: 100
+
+  # Maximum MythicMobs on the entire server
+  server:
+    enabled: true
+    max-mobs: 500
+
+  # Maximum MythicMobs near any player (per-player check)
+  # This checks radius around EACH online player
+  per-player:
+    enabled: true
+    max-mobs: 50
+    radius-blocks: 64
+
+# ============================================================
+# BYPASS LIST
+# MythicMobs internal names that bypass ALL limits
+# ============================================================
+bypass-mobs:
+  - "BossMob"
+  - "WorldBoss"
+  - "EventBoss"
+  # Add your important mob IDs here
+  # Example: If you have a mob called "Dungeon_Guardian" that should
+  # always be able to spawn, add it to this list
+
+# ============================================================
+# AUTOMATIC PING-BASED CLEANUP
+# Automatically removes MythicMobs around players with high ping
+# ============================================================
+ping-cleanup:
+  enabled: true
+
+  # Ping threshold in milliseconds
+  # If player ping exceeds this, cleanup triggers
+  threshold-ms: 200
+
+  # How often to check player pings (in ticks, 20 = 1 second)
+  check-interval-ticks: 100
+
+  # Radius around high-ping player to clean up mobs
+  cleanup-radius: 32
+
+  # Maximum mobs to remove per cleanup cycle per player
+  # Prevents mass-removal lag spikes
+  max-remove-per-cycle: 10
+
+  # Cooldown per player before another cleanup can occur (seconds)
+  cooldown-seconds: 30
+
+  # Only clean up these specific mob types (empty = all MythicMobs)
+  # If populated, ONLY these mobs will be removed during ping cleanup
+  target-mobs: []
+
+  # Mobs that should NEVER be removed by ping cleanup
+  # (Bosses, quest mobs, etc.)
+  protected-mobs:
+    - "BossMob"
+    - "WorldBoss"
+    - "EventBoss"
+    - "QuestMob"
+
+# ============================================================
+# MESSAGES
+# ============================================================
+messages:
+  prefix: "&8[&6ChaosCraft&8] &7"
+
+  # Admin messages
+  spawn-blocked-radius: "&cSpawn blocked: Too many MythicMobs in radius ({count}/{max})"
+  spawn-blocked-server: "&cSpawn blocked: Server MythicMob limit reached ({count}/{max})"
+  spawn-blocked-player: "&cSpawn blocked: Too many MythicMobs near players"
+
+  # Ping cleanup messages (sent to affected player)
+  ping-cleanup-warning: "&eHigh ping detected ({ping}ms). Reducing nearby mob count..."
+  ping-cleanup-complete: "&aCleared {count} mobs to improve performance."
+
+  # Command messages
+  status-enabled: "&aPerformance limiter is &2ENABLED"
+  status-disabled: "&cPerformance limiter is &4DISABLED"
+  config-reloaded: "&aPerformance configuration reloaded!"
+  invalid-value: "&cInvalid value. Please enter a valid number."
+  setting-updated: "&aSetting &e{setting} &aupdated to &e{value}"
+
+# ============================================================
+# DEBUG MODE
+# Logs detailed information about spawn checks and cleanups
+# ============================================================
+debug: false

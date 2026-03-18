@@ -1,0 +1,427 @@
+# ============================================================
+# Celestial Ivory - Legendary Weapon Configuration
+# ============================================================
+
+enabled: true
+
+# ============================================================
+# ITEM TAGS
+# ============================================================
+item-tags:
+  "off": "celestial_ivory_off"
+  charging: "celestial_ivory_charging"
+  active: "celestial_ivory_active"
+  rage: "celestial_ivory_rage"
+
+base-material: DIAMOND_SWORD
+
+custom-model-data:
+  "off": 39001
+  charging: 39002
+  active: 39003
+  rage: 39004
+
+# ============================================================
+# STATE: OFF
+# ============================================================
+off:
+  name: "&5&lC&d&le&b&ll&3&le&9&ls&b&lt&d&li&5&la&d&ll &b&lI&3&lv&9&lo&b&lr&d&ly"
+  attack-speed: 48.0
+  right-click-to-charge: true
+
+# ============================================================
+# STATE: CHARGING
+# ============================================================
+charging:
+  name: "&5&lC&d&le&b&ll&3&le&9&ls&b&lt&d&li&5&la&d&ll &b&lI&3&lv&9&lo&b&lr&d&ly"
+  attack-speed: 48.0
+  charge-duration-ticks: 140
+  charge-script:
+    - 'execute console command "execute in %world% run playsound minecraft:chaoscraft.ivorycharging player @a %x% %y% %z% 2.0 1.0"'
+    - 'wait 140'
+    - 'finish'
+
+# ============================================================
+# STATE: ACTIVE
+# ============================================================
+active:
+  name: "&5&lC&d&le&b&ll&3&le&9&ls&b&lt&d&li&5&la&d&ll &b&lI&3&lv&9&lo&b&lr&d&ly"
+  attack-cooldown-seconds: 4.0
+  base-damage: 15000
+  knockback:
+    horizontal: 1.5
+    vertical: 0.5
+  sounds:
+    swing: "minecraft:chaoscraft.ivoryswing"
+    swing-volume: 2.0
+    swing-pitch: 1.0
+    hit: "minecraft:chaoscraft.ivoryattack"
+    hit-volume: 2.5
+    hit-pitch: 1.0
+  hit-effects:
+    screen-shake:
+      enabled: true
+    lightning:
+      enabled: true
+      invisible-bolt: false
+    white-flash:
+      enabled: true
+      duration-ticks: 20
+    particles:
+      enabled: true
+  on-hit-script:
+    - 'execute console command "execute in %world% run summon minecraft:lightning_bolt %x% 250 %z%"'
+    - 'execute console command "execute in %world% run summon minecraft:lightning_bolt %x% 250 %z%"'
+    - 'execute console command "execute in %world% run summon minecraft:lightning_bolt %x% 250 %z%"'
+    - 'execute console command "execute in %world% run summon minecraft:lightning_bolt %x% 250 %z%"'
+    - 'execute console command "execute in %world% run summon minecraft:lightning_bolt %x% 250 %z%"'
+
+# ============================================================
+# STATE: RAGE
+# ============================================================
+rage:
+  name: "&5&lC&d&le&b&ll&3&le&9&ls&b&lt&d&li&5&la&d&ll &b&lI&3&lv&9&lo&b&lr&d&ly"
+  attack-cooldown-seconds: 0.3
+  base-damage: 30000
+  knockback:
+    horizontal: 2.5
+    vertical: 0.3
+  duration-seconds: 30
+  speed-multiplier: 0.8
+  on-activate-script:
+    - 'execute console command "execute in %world% run playsound minecraft:chaoscraft:ivory.stellarrage player @a %x% %y% %z% 1.0 1.0"'
+    - 'execute console command "effect give %player% speed 30 2 true"'
+  on-deactivate-script:
+    - 'execute console command "effect clear %player% speed"'
+
+# ============================================================
+# STELLAR RAGE ABILITY
+# ============================================================
+stellar-rage:
+  cooldown-seconds: 60
+  activation-mode: "right_click"
+  allow-mode-toggle: true
+
+# ============================================================
+# ABILITY SYSTEM
+# ============================================================
+abilities:
+  cycle-method: "crouch_scroll"
+  show-cooldown-warning: true
+  mobs-only: true
+  order:
+    - "divine_cascade"
+    - "stellar_guillotine"
+    - "comet_barrage"
+    - "heavens_downpour"
+    - "radiant_spear_volley"
+    - "celestial_satellite_network"
+    - "ivory_sentinel_legion"
+    - "astral_phoenix_rebirth"
+    - "gravity_well_lumina"
+    - "celestial_armada"
+    - "apocalypse_divine_judgment"
+    - "supernova_genesis"
+    - "ragnarok_of_light"
+    - "heavens_wrath_full_release"
+    - "cosmic_obliteration_cannon"
+    - "astral_step_dance"
+    - "comet_charge"
+    - "sanctum_of_fallen_stars"
+    - "celestial_meteor_shower"
+    - "starfall_convergence"
+    - "aurora_borealis"
+    - "prismatic_refraction"
+    - "divine_guillotine_rain"
+    - "tempest_of_heavens"
+    - "storm_callers_wrath"
+    - "celestial_storm_front"
+    - "supernova_implosion"
+    - "cascade_detonation"
+    - "divine_omega_cannon"
+    - "constellation_manifestation"
+    - "celestial_arc_blade"
+    - "solar_flare_eruption"
+    - "titans_fist_of_judgment"
+    - "sacred_geometry_metatrons_cube"
+    - "zero_point_convergence"
+    - "ragnarok_twilight_of_gods"
+
+# ============================================================
+# INDIVIDUAL ABILITY CONFIGURATIONS
+# ============================================================
+ability-config:
+  divine_cascade:
+    enabled: true
+    cooldown-seconds: 30
+    damage-per-tick: 30.0
+    damage-tick-interval: 5
+    radius: 45
+  stellar_guillotine:
+    enabled: true
+    cooldown-seconds: 25
+    damage-per-tick: 60.0
+    damage-tick-interval: 2
+    disc-width: 30
+    travel-distance: 50
+  comet_barrage:
+    enabled: true
+    cooldown-seconds: 35
+    damage-per-tick: 45.0
+    damage-tick-interval: 4
+    comet-count: 20
+    radius: 60
+  heavens_downpour:
+    enabled: true
+    cooldown-seconds: 45
+    damage-per-tick: 22.5
+    damage-tick-interval: 3
+    arrow-count: 100
+    duration-seconds: 10
+    radius: 75
+  radiant_spear_volley:
+    enabled: true
+    cooldown-seconds: 20
+    damage-per-tick: 75.0
+    damage-tick-interval: 1
+    spear-count: 7
+    spear-length: 18
+  celestial_satellite_network:
+    enabled: true
+    cooldown-seconds: 60
+    damage-per-tick: 37.5
+    damage-tick-interval: 4
+    satellite-count: 4
+    orbit-height: 20
+    duration-seconds: 20
+  ivory_sentinel_legion:
+    enabled: true
+    cooldown-seconds: 50
+    damage-per-tick: 30.0
+    damage-tick-interval: 5
+    sentinel-count: 6
+    duration-seconds: 25
+  astral_phoenix_rebirth:
+    enabled: true
+    cooldown-seconds: 90
+    damage-per-tick: 60.0
+    damage-tick-interval: 3
+    wingspan: 45
+    duration-seconds: 15
+  gravity_well_lumina:
+    enabled: true
+    cooldown-seconds: 40
+    damage-per-tick: 45.0
+    damage-tick-interval: 4
+    pull-strength: 0.5
+    duration-seconds: 5
+    explosion-radius: 45
+  celestial_armada:
+    enabled: true
+    cooldown-seconds: 80
+    damage-per-tick: 30.0
+    damage-tick-interval: 3
+    weapon-count: 12
+    hover-height: 20
+    duration-seconds: 15
+  apocalypse_divine_judgment:
+    enabled: true
+    cooldown-seconds: 120
+    damage-per-tick: 75.0
+    damage-tick-interval: 2
+    beam-count: 100
+    duration-seconds: 12
+    final-beam-width: 30
+  supernova_genesis:
+    enabled: true
+    cooldown-seconds: 150
+    damage-per-tick: 120.0
+    damage-tick-interval: 1
+    growth-duration-seconds: 10
+    final-radius: 150
+  ragnarok_of_light:
+    enabled: true
+    cooldown-seconds: 100
+    damage-per-tick: 45.0
+    damage-tick-interval: 2
+    fragment-count: 1000
+    duration-seconds: 15
+  heavens_wrath_full_release:
+    enabled: true
+    cooldown-seconds: 130
+    damage-per-tick: 90.0
+    damage-tick-interval: 2
+    pillar-count: 8
+    pillar-height: 120
+    pillar-width: 15
+    rotation-duration-seconds: 10
+  cosmic_obliteration_cannon:
+    enabled: true
+    cooldown-seconds: 180
+    damage-per-tick: 60.0
+    damage-tick-interval: 1
+    beam-length: 100
+    beam-width: 24
+    duration-seconds: 6
+  astral_step_dance:
+    enabled: true
+    cooldown-seconds: 35
+    damage-per-tick: 60.0
+    damage-tick-interval: 1
+    teleport-count: 8
+    teleport-interval-ticks: 10
+  comet_charge:
+    enabled: true
+    cooldown-seconds: 25
+    damage-per-tick: 75.0
+    damage-tick-interval: 2
+    charge-distance: 30
+    trail-duration-seconds: 3
+  sanctum_of_fallen_stars:
+    enabled: true
+    cooldown-seconds: 55
+    damage-per-tick: 30.0
+    damage-tick-interval: 4
+    dome-radius: 45
+    duration-seconds: 12
+    heal-per-tick: 0.5
+  celestial_meteor_shower:
+    enabled: true
+    cooldown-seconds: 70
+    damage-per-tick: 52.5
+    damage-tick-interval: 3
+    meteor-count: 50
+    duration-seconds: 15
+    radius: 90
+  starfall_convergence:
+    enabled: true
+    cooldown-seconds: 45
+    damage-per-tick: 90.0
+    damage-tick-interval: 2
+    marker-count: 8
+    beam-width: 15
+    delay-seconds: 5
+  aurora_borealis:
+    enabled: true
+    cooldown-seconds: 60
+    damage-per-tick: 30.0
+    damage-tick-interval: 5
+    curtain-count: 5
+    duration-seconds: 20
+  prismatic_refraction:
+    enabled: true
+    cooldown-seconds: 30
+    damage-per-tick: 45.0
+    damage-tick-interval: 3
+    beam-count: 8
+    bounce-count: 3
+  divine_guillotine_rain:
+    enabled: true
+    cooldown-seconds: 50
+    damage-per-tick: 75.0
+    damage-tick-interval: 2
+    blade-count: 15
+    blade-height: 30
+    blade-width: 15
+  tempest_of_heavens:
+    enabled: true
+    cooldown-seconds: 65
+    damage-per-tick: 60.0
+    damage-tick-interval: 3
+    strike-count: 25
+    duration-seconds: 12
+  storm_callers_wrath:
+    enabled: true
+    cooldown-seconds: 55
+    damage-per-tick: 37.5
+    damage-tick-interval: 4
+    cloud-count: 8
+    cloud-height: 25
+    duration-seconds: 18
+  celestial_storm_front:
+    enabled: true
+    cooldown-seconds: 75
+    damage-per-tick: 45.0
+    damage-tick-interval: 2
+    wall-width: 120
+    wall-height: 90
+    move-speed: 1.0
+    duration-seconds: 20
+  supernova_implosion:
+    enabled: true
+    cooldown-seconds: 90
+    damage-per-tick: 60.0
+    damage-tick-interval: 2
+    start-radius: 90
+    implosion-duration-seconds: 5
+    explosion-radius: 210
+  cascade_detonation:
+    enabled: true
+    cooldown-seconds: 40
+    damage-per-tick: 52.5
+    damage-tick-interval: 2
+    radius: 45
+    chain-count: 30
+    delay-between-chains-ticks: 3
+  divine_omega_cannon:
+    enabled: true
+    cooldown-seconds: 200
+    damage-per-tick: 60.0
+    damage-tick-interval: 1
+    charge-time-seconds: 2
+    beam-width: 15
+    beam-length: 100
+    duration-seconds: 6
+    modelengine-beam-model: "ivory_omega_beam"
+  constellation_manifestation:
+    enabled: true
+    cooldown-seconds: 85
+    damage-per-tick: 75.0
+    damage-tick-interval: 2
+    star-count: 12
+    beam-width: 9
+  celestial_arc_blade:
+    enabled: true
+    cooldown-seconds: 20
+    damage-per-tick: 60.0
+    damage-tick-interval: 2
+    arc-width: 45
+    arc-height: 24
+    travel-distance: 50
+  solar_flare_eruption:
+    enabled: true
+    cooldown-seconds: 50
+    damage-per-tick: 52.5
+    damage-tick-interval: 3
+    geyser-height: 120
+    geyser-width: 24
+    duration-seconds: 5
+  titans_fist_of_judgment:
+    enabled: true
+    cooldown-seconds: 100
+    damage-per-tick: 120.0
+    damage-tick-interval: 1
+    fist-size: 30
+    impact-radius: 45
+  sacred_geometry_metatrons_cube:
+    enabled: true
+    cooldown-seconds: 70
+    damage-per-tick: 60.0
+    damage-tick-interval: 3
+    cube-size: 36
+    beam-count: 6
+    duration-seconds: 10
+  zero_point_convergence:
+    enabled: true
+    cooldown-seconds: 150
+    damage-per-tick: 90.0
+    damage-tick-interval: 1
+    pull-duration-seconds: 8
+    explosion-radius: 180
+  ragnarok_twilight_of_gods:
+    enabled: true
+    cooldown-seconds: 300
+    damage-per-tick: 75.0
+    damage-tick-interval: 2
+    fragment-count: 12
+    chaos-duration-seconds: 10

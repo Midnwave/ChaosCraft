@@ -1,0 +1,8 @@
+# ChaosCraft v5.0 Configuration
+
+# Enable debug logging
+debug: false
+
+# Title screen toggle
+title-screen:
+  enabled: true
