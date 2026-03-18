@@ -106,22 +106,29 @@ public class UpdateChecker {
     }
 
     /**
-     * Download the latest release JAR and stage it for restart.
+     * Download the latest JAR from the release/ folder in the repo and stage it for restart.
+     * This grabs ChaosCraft-latest.jar (updated by every push to main).
      * Paper/Spigot automatically replaces plugin JARs from /plugins/update/ on restart.
      */
     public void downloadUpdate(CommandSender notifyTarget) {
-        if (!updateAvailable || latestDownloadUrl == null) {
-            notifyTarget.sendMessage(Component.text("No update available. Run /cc update check first.", NamedTextColor.RED));
-            return;
+        // Can download from release/ folder even without a tagged release
+        String downloadUrl;
+        if (latestDownloadUrl != null) {
+            downloadUrl = latestDownloadUrl;
+        } else {
+            // Fall back to raw release/ChaosCraft-latest.jar from repo
+            downloadUrl = "https://raw.githubusercontent.com/" + githubOwner + "/" + githubRepo + "/main/release/ChaosCraft-latest.jar";
         }
 
-        notifyTarget.sendMessage(Component.text("Downloading ChaosCraft v" + latestVersion + "...", NamedTextColor.YELLOW));
+        String versionLabel = latestVersion != null ? "v" + latestVersion : "latest dev build";
+        notifyTarget.sendMessage(Component.text("Downloading ChaosCraft " + versionLabel + "...", NamedTextColor.YELLOW));
 
+        final String finalUrl = downloadUrl;
         new BukkitRunnable() {
             @Override
             public void run() {
                 try {
-                    HttpURLConnection conn = (HttpURLConnection) URI.create(latestDownloadUrl).toURL().openConnection();
+                    HttpURLConnection conn = (HttpURLConnection) URI.create(finalUrl).toURL().openConnection();
                     conn.setRequestProperty("User-Agent", "ChaosCraft-Updater");
                     conn.setConnectTimeout(30000);
                     conn.setReadTimeout(60000);
