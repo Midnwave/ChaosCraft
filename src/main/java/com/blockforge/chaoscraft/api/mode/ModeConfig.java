@@ -14,6 +14,12 @@ import java.util.List;
  */
 public class ModeConfig {
 
+    /**
+     * Bump when adding new config keys or changing defaults.
+     * Files with an older version are re-saved with new keys while preserving user edits.
+     */
+    public static final int CURRENT_CONFIG_VERSION = 1;
+
     private final ChaosCraftPlugin plugin;
     private final String modeName;
     private final File configFile;
@@ -36,6 +42,15 @@ public class ModeConfig {
             createDefaults();
         }
         config = YamlConfiguration.loadConfiguration(configFile);
+
+        // Config version check — re-save with new keys if outdated
+        int fileVersion = config.getInt("config-version", 0);
+        if (fileVersion < CURRENT_CONFIG_VERSION) {
+            plugin.getLogger().info("[" + modeName + "] Upgrading config from v" + fileVersion + " to v" + CURRENT_CONFIG_VERSION);
+            config.set("config-version", CURRENT_CONFIG_VERSION);
+            // Re-save preserves user values, adds any new keys from createDefaults logic
+            save();
+        }
     }
 
     public void save() {
@@ -99,6 +114,7 @@ public class ModeConfig {
 
     private void createDefaults() {
         FileConfiguration defaults = new YamlConfiguration();
+        defaults.set("config-version", CURRENT_CONFIG_VERSION);
         defaults.set("timer.default-seconds", 1200);
         defaults.set("timer.max-seconds", 1500);
         defaults.set("music.sound-id", "");

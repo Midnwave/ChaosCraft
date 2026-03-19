@@ -19,6 +19,13 @@ import java.io.IOException;
  */
 public class AttackConfig {
 
+    /**
+     * Bump this whenever a new config key is added or defaults change.
+     * On load, if the file version is lower, the file is re-saved with new keys
+     * while preserving user-edited values.
+     */
+    public static final int CURRENT_CONFIG_VERSION = 1;
+
     private final String attackId;
     private final AttackType type;
     private final int phase;
@@ -88,6 +95,8 @@ public class AttackConfig {
     /**
      * Load from a per-attack config file.
      * Each attack gets its own file: modes/{mode}/attacks/{type}/{attack_id}.yml
+     * If the file's config-version is older than CURRENT_CONFIG_VERSION,
+     * user-edited values are preserved but new keys/defaults are added.
      */
     public void loadFromFile(ChaosCraftPlugin plugin) {
         File file = getConfigFile(plugin);
@@ -96,17 +105,24 @@ public class AttackConfig {
             return;
         }
         FileConfiguration config = YamlConfiguration.loadConfiguration(file);
-        // Load directly from root of the file (not nested under attack ID)
         loadFrom(config);
+
+        // Check config version — if outdated, re-save with new keys while keeping user values
+        int fileVersion = config.getInt("config-version", 0);
+        if (fileVersion < CURRENT_CONFIG_VERSION) {
+            plugin.debug("[AttackConfig] Upgrading " + attackId + ".yml from v" + fileVersion + " to v" + CURRENT_CONFIG_VERSION);
+            saveToFile(plugin); // Re-saves with current values (user edits preserved via loadFrom above) + new keys
+        }
     }
 
     /**
-     * Save to a per-attack config file.
+     * Save to a per-attack config file. Always writes config-version.
      */
     public void saveToFile(ChaosCraftPlugin plugin) {
         File file = getConfigFile(plugin);
         file.getParentFile().mkdirs();
         YamlConfiguration config = new YamlConfiguration();
+        config.set("config-version", CURRENT_CONFIG_VERSION);
         config.set("id", attackId);
         config.set("type", type.name());
         config.set("phase", phase);

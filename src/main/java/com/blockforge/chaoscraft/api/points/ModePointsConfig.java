@@ -15,6 +15,8 @@ import java.util.logging.Level;
  */
 public class ModePointsConfig {
 
+    public static final int CURRENT_CONFIG_VERSION = 1;
+
     private final ChaosCraftPlugin plugin;
     private File configFile;
     private YamlConfiguration yaml;
@@ -91,11 +93,20 @@ public class ModePointsConfig {
         fragmentDropChance = yaml.getDouble("settings.fragment-drop-chance", 0.3);
         debug = yaml.getBoolean("debug", false);
 
+        // Config version check
+        int fileVersion = yaml.getInt("config-version", 0);
+        if (fileVersion < CURRENT_CONFIG_VERSION) {
+            plugin.getLogger().info("[ModePoints] Upgrading config from v" + fileVersion + " to v" + CURRENT_CONFIG_VERSION);
+            yaml.set("config-version", CURRENT_CONFIG_VERSION);
+            try { yaml.save(configFile); } catch (IOException ignored) {}
+        }
+
         plugin.getLogger().info("[ModePoints] Config loaded. " + rewardThresholds.size() + " reward thresholds configured.");
     }
 
     private void createDefaults() {
         YamlConfiguration defaults = new YamlConfiguration();
+        defaults.set("config-version", CURRENT_CONFIG_VERSION);
 
         // Actions section with all defaults
         for (PointAction action : PointAction.values()) {
