@@ -163,10 +163,27 @@ public class ChainMobManager {
             NPC npc = registry.createNPC(EntityType.PLAYER, config.getMobDisplayName());
             npc.setProtected(false); // Can take damage
 
-            // Set skin from config
+            // Set skin from config — supports player name or PNG file
+            String skinFile = config.getMobSkinFile();
             String skinName = config.getMobSkinPlayerName();
-            if (!skinName.isEmpty()) {
-                // Use a player name for skin lookup
+            if (!skinFile.isEmpty()) {
+                // PNG file in plugins/ChaosCraft/skins/
+                File skinPng = new File(plugin.getDataFolder(), "skins/" + skinFile);
+                if (skinPng.exists()) {
+                    // Use Citizens command dispatch to set skin from URL/file
+                    npc.data().setPersistent("cached-skin-uuid-name", skinFile);
+                    // Run /npc skin --url after spawn via console
+                    Bukkit.getScheduler().runTaskLater(plugin, () -> {
+                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(),
+                                "npc select " + npc.getId());
+                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(),
+                                "npc skin --url file:" + skinPng.getAbsolutePath());
+                    }, 5L);
+                } else {
+                    plugin.getLogger().warning("[Chain] Skin file not found: " + skinPng.getAbsolutePath());
+                }
+            } else if (!skinName.isEmpty()) {
+                // Use a player name for skin lookup via Citizens data
                 npc.data().setPersistent("player-skin-name", skinName);
             }
 

@@ -64,6 +64,7 @@ public class ChainConfig {
         if (!config.contains("mobs.enabled")) { config.set("mobs.enabled", true); needsSave = true; }
         if (!config.contains("mobs.display-name")) { config.set("mobs.display-name", "&7Chain Walker"); needsSave = true; }
         if (!config.contains("mobs.skin-player-name")) { config.set("mobs.skin-player-name", ""); needsSave = true; }
+        if (!config.contains("mobs.skin-file")) { config.set("mobs.skin-file", ""); needsSave = true; }
         if (!config.contains("mobs.health")) { config.set("mobs.health", 40.0); needsSave = true; }
         if (!config.contains("mobs.damage")) { config.set("mobs.damage", 6.0); needsSave = true; }
         if (!config.contains("mobs.speed")) { config.set("mobs.speed", 0.28); needsSave = true; }
@@ -180,6 +181,7 @@ public class ChainConfig {
     public boolean areMobsEnabled() { return config.getBoolean("mobs.enabled", true); }
     public String getMobDisplayName() { return config.getString("mobs.display-name", "&7Chain Walker"); }
     public String getMobSkinPlayerName() { return config.getString("mobs.skin-player-name", ""); }
+    public String getMobSkinFile() { return config.getString("mobs.skin-file", ""); }
     public double getMobHealth() { return config.getDouble("mobs.health", 40.0); }
     public double getMobDamage() { return config.getDouble("mobs.damage", 6.0); }
     public double getMobSpeed() { return config.getDouble("mobs.speed", 0.28); }
@@ -296,7 +298,13 @@ public class ChainConfig {
         defaults.set("mobs.skin-player-name", "");
         defaults.setComments("mobs.skin-player-name", List.of(
                 "Player name whose skin the NPCs will use. Leave empty for default Steve skin.",
-                "Example: \"Notch\" — the NPC will look like that player."));
+                "Example: \"Notch\" — the NPC will look like that player.",
+                "Ignored if skin-file is set (skin-file takes priority)."));
+        defaults.set("mobs.skin-file", "");
+        defaults.setComments("mobs.skin-file", List.of(
+                "PNG skin file name to use for the NPCs. Place the file in plugins/ChaosCraft/skins/",
+                "Example: \"chain_warrior.png\" — looks for plugins/ChaosCraft/skins/chain_warrior.png",
+                "Takes priority over skin-player-name. Leave empty to use skin-player-name instead."));
         defaults.set("mobs.health", 40.0);
         defaults.setComments("mobs.health", List.of(
                 "Maximum health of each chain mob NPC (in half-hearts). 40 = 20 hearts."));
