@@ -183,6 +183,7 @@ public class ChainAttackScheduler {
         spawnLoc.setPitch(0);
 
         AbstractAttack instance = attack.newInstance();
+        instance.getConfig().copyFrom(attack.getConfig()); // Apply YAML config to spawned instance
         instance.spawn(spawnLoc, player);
         activeAttacks.add(instance);
 

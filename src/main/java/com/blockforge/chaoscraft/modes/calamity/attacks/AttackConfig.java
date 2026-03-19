@@ -249,6 +249,26 @@ public class AttackConfig {
         };
     }
 
+    /**
+     * Copy all configurable values from another AttackConfig into this one.
+     * Used when newInstance() creates a fresh attack — the new instance
+     * copies the template's YAML-loaded values so config actually takes effect.
+     */
+    public void copyFrom(AttackConfig other) {
+        this.damage = other.damage;
+        this.damageRadius = other.damageRadius;
+        this.ticksBetweenDamage = other.ticksBetweenDamage;
+        this.cooldownTicks = other.cooldownTicks;
+        this.durationTicks = other.durationTicks;
+        this.chance = other.chance;
+        this.enabled = other.enabled;
+        this.tracksPlayer = other.tracksPlayer;
+        this.damageDelayTicks = other.damageDelayTicks;
+        this.damageOnImpactOnly = other.damageOnImpactOnly;
+        this.impactDamage = other.impactDamage;
+        this.impactRadius = other.impactRadius;
+    }
+
     // ---- Getters/Setters ----
 
     public String getAttackId() { return attackId; }

@@ -173,12 +173,17 @@ public class AttackRegistry {
         for (AbstractAttack attack : enabled) {
             cumulative += attack.getConfig().getChance();
             if (roll < cumulative) {
-                return attack.newInstance();
+                AbstractAttack instance = attack.newInstance();
+                instance.getConfig().copyFrom(attack.getConfig());
+                return instance;
             }
         }
 
         // Fallback: last enabled
-        return enabled.get(enabled.size() - 1).newInstance();
+        AbstractAttack last = enabled.get(enabled.size() - 1);
+        AbstractAttack instance = last.newInstance();
+        instance.getConfig().copyFrom(last.getConfig());
+        return instance;
     }
 
     // ========================

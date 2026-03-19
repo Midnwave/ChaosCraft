@@ -65,6 +65,7 @@ public final class ChainRains {
 
         public ChainDownpour(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("chain_downpour", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
+            config.setTracksPlayer(true); // Rain follows the player
             config.setDamage(40.0);
             config.setDamageRadius(6.0);
             config.setDurationTicks(400);

@@ -155,7 +155,12 @@ public abstract class AbstractAttack {
         for (Player player : world.getPlayers()) {
             if (isExempt(player)) continue;
             if (player.getLocation().distanceSquared(center) <= radius * radius) {
-                player.damage(damage);
+                // Apply TRUE damage — bypasses armor so config value = actual hearts lost
+                // damage is in half-hearts: 10.0 = 5 hearts
+                double newHealth = Math.max(0, player.getHealth() - damage);
+                player.setHealth(newHealth);
+                // Visual damage indicator (red flash, knockback sound)
+                player.damage(0.01); // Triggers damage animation without meaningful HP loss
             }
         }
     }
@@ -208,8 +213,7 @@ public abstract class AbstractAttack {
      * Call this from onTick() when the attack hits the ground.
      */
     protected void triggerImpactDamage(Location impactLocation) {
-        if (impactTriggered) return;
-        impactTriggered = true;
+        // Impact can trigger multiple times (e.g., multi-hit meteors, sequential drops)
 
         double radius = config.getImpactRadius();
         double damage = config.getImpactDamage();
@@ -221,7 +225,10 @@ public abstract class AbstractAttack {
         for (Player player : world.getPlayers()) {
             if (isExempt(player)) continue;
             if (player.getLocation().distanceSquared(impactLocation) <= radius * radius) {
-                player.damage(damage);
+                // TRUE damage — bypasses armor
+                double newHealth = Math.max(0, player.getHealth() - damage);
+                player.setHealth(newHealth);
+                player.damage(0.01); // Damage animation
             }
         }
 
