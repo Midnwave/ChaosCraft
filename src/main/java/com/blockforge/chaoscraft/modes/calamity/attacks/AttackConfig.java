@@ -86,7 +86,8 @@ public class AttackConfig {
     }
 
     /**
-     * Load from a standalone file for this attack.
+     * Load from a per-attack config file.
+     * Each attack gets its own file: modes/{mode}/attacks/{type}/{attack_id}.yml
      */
     public void loadFromFile(ChaosCraftPlugin plugin) {
         File file = getConfigFile(plugin);
@@ -95,18 +96,21 @@ public class AttackConfig {
             return;
         }
         FileConfiguration config = YamlConfiguration.loadConfiguration(file);
-        loadFrom(config.getConfigurationSection(attackId));
+        // Load directly from root of the file (not nested under attack ID)
+        loadFrom(config);
     }
 
     /**
-     * Save to a standalone file.
+     * Save to a per-attack config file.
      */
     public void saveToFile(ChaosCraftPlugin plugin) {
         File file = getConfigFile(plugin);
         file.getParentFile().mkdirs();
-        FileConfiguration config = YamlConfiguration.loadConfiguration(file);
-        ConfigurationSection section = config.createSection(attackId);
-        saveTo(section);
+        YamlConfiguration config = new YamlConfiguration();
+        config.set("id", attackId);
+        config.set("type", type.name());
+        config.set("phase", phase);
+        saveTo(config);
         try {
             config.save(file);
         } catch (IOException e) {
@@ -114,6 +118,14 @@ public class AttackConfig {
         }
     }
 
+    /**
+     * Each attack gets its own YAML file:
+     * plugins/ChaosCraft/{modePath}/{typePath}/{attack_id}.yml
+     *
+     * e.g. plugins/ChaosCraft/modes/chain/attacks/blockdisplays/chain_downpour.yml
+     *      plugins/ChaosCraft/modes/calamity/attacks/boss/void_slam.yml
+     *      plugins/ChaosCraft/modes/corruption/attacks/blockdisplays/corruption_pillar.yml
+     */
     private File getConfigFile(ChaosCraftPlugin plugin) {
         String typePath = switch (type) {
             case BLOCK_DISPLAY -> "blockdisplays";
@@ -121,7 +133,7 @@ public class AttackConfig {
             case BOSS -> "boss";
         };
         return new File(plugin.getDataFolder(),
-                modePath + "/" + typePath + "/phase" + phase + ".yml");
+                modePath + "/" + typePath + "/" + attackId + ".yml");
     }
 
     // ---- Getters/Setters ----
