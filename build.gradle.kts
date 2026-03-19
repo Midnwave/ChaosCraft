@@ -67,12 +67,21 @@ tasks {
     }
 
     processResources {
+        // Get git commit SHA for build tracking
+        val gitSha = providers.exec {
+            commandLine("git", "rev-parse", "--short=7", "HEAD")
+        }.standardOutput.asText.map { it.trim() }.getOrElse("unknown")
+
         val props = mapOf(
             "version" to project.version,
-            "description" to project.description
+            "description" to project.description,
+            "gitsha" to gitSha
         )
         inputs.properties(props)
         filesMatching("plugin.yml") {
+            expand(props)
+        }
+        filesMatching("build.properties") {
             expand(props)
         }
     }

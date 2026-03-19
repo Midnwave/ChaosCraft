@@ -30,12 +30,27 @@ public class UpdateChecker {
     private String latestVersion = null;
     private String latestDownloadUrl = null;
     private boolean updateAvailable = false;
+    private final String buildSha; // Git SHA baked into JAR at build time
 
     public UpdateChecker(ChaosCraftPlugin plugin) {
         this.plugin = plugin;
-        // Configurable — defaults to BlockForge Studios repo
         this.githubOwner = plugin.getConfig().getString("updater.github-owner", "Midnwave");
         this.githubRepo = plugin.getConfig().getString("updater.github-repo", "ChaosCraft");
+        this.buildSha = loadBuildSha();
+        if (!"unknown".equals(buildSha)) {
+            plugin.getLogger().info("[Updater] Build SHA: " + buildSha);
+        }
+    }
+
+    private String loadBuildSha() {
+        try (var is = plugin.getClass().getClassLoader().getResourceAsStream("build.properties")) {
+            if (is == null) return "unknown";
+            var props = new java.util.Properties();
+            props.load(is);
+            return props.getProperty("build.sha", "unknown").trim();
+        } catch (Exception e) {
+            return "unknown";
+        }
     }
 
     /**
@@ -116,7 +131,12 @@ public class UpdateChecker {
      * Paper/Spigot automatically replaces plugin JARs from /plugins/update/ on restart.
      */
     public void downloadUpdate(CommandSender notifyTarget) {
-        // Can download from release/ folder even without a tagged release
+        // Prevent unnecessary downloads if already up-to-date
+        if (!updateAvailable && latestVersion == null) {
+            notifyTarget.sendMessage(Component.text("Run /cc update check first to see if an update is available.", NamedTextColor.YELLOW));
+            return;
+        }
+
         String downloadUrl;
         if (latestDownloadUrl != null) {
             downloadUrl = latestDownloadUrl;
@@ -200,21 +220,26 @@ public class UpdateChecker {
             JsonObject commit = JsonParser.parseString(body).getAsJsonObject();
             String sha = commit.get("sha").getAsString().substring(0, 7);
             String message = commit.getAsJsonObject("commit").get("message").getAsString();
-            // Truncate long messages
             if (message.contains("\n")) message = message.substring(0, message.indexOf("\n"));
             if (message.length() > 60) message = message.substring(0, 60) + "...";
 
             String currentVersion = plugin.getDescription().getVersion();
 
-            // Set download URL to the raw release JAR
+            // Compare SHA to determine if update is needed
             latestDownloadUrl = "https://raw.githubusercontent.com/" + githubOwner + "/" + githubRepo + "/main/release/ChaosCraft-latest.jar";
             latestVersion = currentVersion + "-" + sha;
-            updateAvailable = true;
 
-            notifyAsync(notifyTarget, Component.text("No tagged releases found. Latest commit on main:", NamedTextColor.YELLOW));
-            notifyAsync(notifyTarget, Component.text("  " + sha + " — " + message, NamedTextColor.GRAY));
-            notifyAsync(notifyTarget, Component.text("Current build: v" + currentVersion, NamedTextColor.GRAY));
-            notifyAsync(notifyTarget, Component.text("Run /cc update download to grab the latest dev build.", NamedTextColor.YELLOW));
+            if (buildSha.equals(sha)) {
+                updateAvailable = false;
+                notifyAsync(notifyTarget, Component.text("You are running the latest build. ", NamedTextColor.GREEN)
+                        .append(Component.text("(v" + currentVersion + " @ " + sha + ")", NamedTextColor.GRAY)));
+            } else {
+                updateAvailable = true;
+                notifyAsync(notifyTarget, Component.text("Dev update available!", NamedTextColor.GREEN));
+                notifyAsync(notifyTarget, Component.text("  Current: " + ("unknown".equals(buildSha) ? "unknown SHA" : buildSha), NamedTextColor.GRAY));
+                notifyAsync(notifyTarget, Component.text("  Latest:  " + sha + " — " + message, NamedTextColor.AQUA));
+                notifyAsync(notifyTarget, Component.text("Run /cc update download to stage the update.", NamedTextColor.YELLOW));
+            }
 
         } catch (Exception e) {
             notifyAsync(notifyTarget, Component.text("Error checking commits: " + e.getMessage(), NamedTextColor.RED));
