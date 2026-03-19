@@ -55,6 +55,11 @@ public class UpdateChecker {
                     conn.setReadTimeout(10000);
 
                     int code = conn.getResponseCode();
+                    if (code == 404) {
+                        // No tagged releases — check latest commit on main instead
+                        checkLatestCommit(notifyTarget);
+                        return;
+                    }
                     if (code != 200) {
                         notifyAsync(notifyTarget, Component.text("Failed to check for updates (HTTP " + code + ")", NamedTextColor.RED));
                         return;
@@ -162,6 +167,59 @@ public class UpdateChecker {
                 }
             }
         }.runTaskAsynchronously(plugin);
+    }
+
+    /**
+     * Fallback when no tagged releases exist — check latest commit SHA on main.
+     * Compares against the build version to see if the repo has newer commits.
+     */
+    private void checkLatestCommit(CommandSender notifyTarget) {
+        try {
+            String apiUrl = "https://api.github.com/repos/" + githubOwner + "/" + githubRepo + "/commits/main";
+            HttpURLConnection conn = (HttpURLConnection) URI.create(apiUrl).toURL().openConnection();
+            conn.setRequestMethod("GET");
+            conn.setRequestProperty("Accept", "application/vnd.github+json");
+            conn.setRequestProperty("User-Agent", "ChaosCraft-Updater");
+            conn.setConnectTimeout(10000);
+            conn.setReadTimeout(10000);
+
+            int code = conn.getResponseCode();
+            if (code != 200) {
+                notifyAsync(notifyTarget, Component.text("Failed to check commits (HTTP " + code + ")", NamedTextColor.RED));
+                return;
+            }
+
+            String body;
+            try (var reader = new BufferedReader(new InputStreamReader(conn.getInputStream()))) {
+                var sb = new StringBuilder();
+                String line;
+                while ((line = reader.readLine()) != null) sb.append(line);
+                body = sb.toString();
+            }
+
+            JsonObject commit = JsonParser.parseString(body).getAsJsonObject();
+            String sha = commit.get("sha").getAsString().substring(0, 7);
+            String message = commit.getAsJsonObject("commit").get("message").getAsString();
+            // Truncate long messages
+            if (message.contains("\n")) message = message.substring(0, message.indexOf("\n"));
+            if (message.length() > 60) message = message.substring(0, 60) + "...";
+
+            String currentVersion = plugin.getDescription().getVersion();
+
+            // Set download URL to the raw release JAR
+            latestDownloadUrl = "https://raw.githubusercontent.com/" + githubOwner + "/" + githubRepo + "/main/release/ChaosCraft-latest.jar";
+            latestVersion = currentVersion + "-" + sha;
+            updateAvailable = true;
+
+            notifyAsync(notifyTarget, Component.text("No tagged releases found. Latest commit on main:", NamedTextColor.YELLOW));
+            notifyAsync(notifyTarget, Component.text("  " + sha + " — " + message, NamedTextColor.GRAY));
+            notifyAsync(notifyTarget, Component.text("Current build: v" + currentVersion, NamedTextColor.GRAY));
+            notifyAsync(notifyTarget, Component.text("Run /cc update download to grab the latest dev build.", NamedTextColor.YELLOW));
+
+        } catch (Exception e) {
+            notifyAsync(notifyTarget, Component.text("Error checking commits: " + e.getMessage(), NamedTextColor.RED));
+            plugin.getLogger().warning("[Updater] Commit check error: " + e.getMessage());
+        }
     }
 
     private void notifyAsync(CommandSender target, Component message) {
