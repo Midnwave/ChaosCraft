@@ -176,7 +176,11 @@ public class AttackConfig {
      *   plugins/ChaosCraft/modes/calamity/attacks/environmental.yml
      *   plugins/ChaosCraft/modes/corruption/attacks/boss.yml
      */
-    private File getConfigFile(ChaosCraftPlugin plugin) {
+    /**
+     * Returns the shared config file for this attack's type.
+     * Package-visible so AttackRegistry can batch-load files efficiently.
+     */
+    File getConfigFile(ChaosCraftPlugin plugin) {
         return new File(plugin.getDataFolder(),
                 modePath + "/" + getTypePath() + ".yml");
     }
@@ -185,7 +189,7 @@ public class AttackConfig {
      * Sets descriptive block comments on every key in this attack's config section.
      * Called whenever the section is written so comments are always present in the file.
      */
-    private void applyAttackComments(YamlConfiguration config, String id) {
+    void applyAttackComments(YamlConfiguration config, String id) {
         String p = id + ".";
         config.setComments(id, List.of(
                 "─────────────────────────────────────────────────────────",

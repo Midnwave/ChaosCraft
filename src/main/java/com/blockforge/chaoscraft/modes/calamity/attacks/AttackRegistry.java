@@ -1,7 +1,11 @@
 package com.blockforge.chaoscraft.modes.calamity.attacks;
 
 import com.blockforge.chaoscraft.ChaosCraftPlugin;
+import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.configuration.file.YamlConfiguration;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -222,21 +226,133 @@ public class AttackRegistry {
 
     /**
      * Reload all attack configs from YAML files.
+     * Batches by shared file so each YAML file is parsed from disk only ONCE
+     * instead of once per attack (critical for 1000+ attacks).
      */
     public void reloadConfigs() {
+        long totalStart = System.currentTimeMillis();
+
+        // Group attacks by their shared config file (e.g., blockdisplays.yml)
+        Map<File, List<AbstractAttack>> byFile = new LinkedHashMap<>();
         for (AbstractAttack attack : templates.values()) {
-            attack.getConfig().loadFromFile(plugin);
+            File file = attack.getConfig().getConfigFile(plugin);
+            byFile.computeIfAbsent(file, k -> new ArrayList<>()).add(attack);
         }
-        plugin.getLogger().info("[AttackRegistry] Reloaded configs for " + templates.size() + " attacks.");
+
+        int totalLoaded = 0;
+        for (Map.Entry<File, List<AbstractAttack>> entry : byFile.entrySet()) {
+            long fileStart = System.currentTimeMillis();
+            File file = entry.getKey();
+            List<AbstractAttack> attacks = entry.getValue();
+
+            file.getParentFile().mkdirs();
+
+            YamlConfiguration yaml;
+            boolean needsSave = false;
+            if (file.exists()) {
+                yaml = YamlConfiguration.loadConfiguration(file);
+            } else {
+                yaml = new YamlConfiguration();
+                yaml.set("config-version", AttackConfig.CURRENT_CONFIG_VERSION);
+                yaml.setComments("config-version", List.of(
+                        "Internal version number — do NOT edit manually.",
+                        "The plugin bumps this when new config keys are added and will auto-upgrade the file."));
+                needsSave = true;
+            }
+
+            // Version check — once per file, not per attack
+            int fileVersion = yaml.getInt("config-version", 0);
+            boolean versionUpgrade = fileVersion < AttackConfig.CURRENT_CONFIG_VERSION;
+            if (versionUpgrade) {
+                yaml.set("config-version", AttackConfig.CURRENT_CONFIG_VERSION);
+                needsSave = true;
+            }
+
+            for (AbstractAttack attack : attacks) {
+                AttackConfig cfg = attack.getConfig();
+                String id = cfg.getAttackId();
+                ConfigurationSection section = yaml.getConfigurationSection(id);
+                if (section != null) {
+                    cfg.loadFrom(section);
+                    if (versionUpgrade) {
+                        // Re-save section to pick up any new keys
+                        ConfigurationSection updated = yaml.createSection(id);
+                        cfg.saveTo(updated);
+                        cfg.applyAttackComments(yaml, id);
+                    }
+                } else {
+                    // Attack not in file yet — create section with defaults
+                    ConfigurationSection newSection = yaml.createSection(id);
+                    cfg.saveTo(newSection);
+                    cfg.applyAttackComments(yaml, id);
+                    needsSave = true;
+                }
+            }
+
+            if (needsSave) {
+                try {
+                    yaml.save(file);
+                } catch (IOException e) {
+                    plugin.getLogger().severe("[AttackRegistry] Failed to save: " + file.getName() + " — " + e.getMessage());
+                }
+            }
+
+            long fileMs = System.currentTimeMillis() - fileStart;
+            totalLoaded += attacks.size();
+            plugin.getLogger().info("[AttackRegistry] Loaded " + file.getName()
+                    + " (" + attacks.size() + " attacks) in " + fileMs + "ms");
+        }
+
+        long totalMs = System.currentTimeMillis() - totalStart;
+        plugin.getLogger().info("[AttackRegistry] Reloaded " + totalLoaded + " attacks from "
+                + byFile.size() + " files in " + totalMs + "ms");
     }
 
     /**
      * Save all attack configs to YAML files (creates defaults).
+     * Batched by file to avoid re-reading the same file per attack.
      */
     public void saveConfigs() {
+        long totalStart = System.currentTimeMillis();
+
+        Map<File, List<AbstractAttack>> byFile = new LinkedHashMap<>();
         for (AbstractAttack attack : templates.values()) {
-            attack.getConfig().saveToFile(plugin);
+            File file = attack.getConfig().getConfigFile(plugin);
+            byFile.computeIfAbsent(file, k -> new ArrayList<>()).add(attack);
         }
+
+        for (Map.Entry<File, List<AbstractAttack>> entry : byFile.entrySet()) {
+            File file = entry.getKey();
+            file.getParentFile().mkdirs();
+
+            YamlConfiguration yaml;
+            if (file.exists()) {
+                yaml = YamlConfiguration.loadConfiguration(file);
+            } else {
+                yaml = new YamlConfiguration();
+            }
+            yaml.set("config-version", AttackConfig.CURRENT_CONFIG_VERSION);
+            yaml.setComments("config-version", List.of(
+                    "Internal version number — do NOT edit manually.",
+                    "The plugin bumps this when new config keys are added and will auto-upgrade the file."));
+
+            for (AbstractAttack attack : entry.getValue()) {
+                AttackConfig cfg = attack.getConfig();
+                ConfigurationSection section = yaml.createSection(cfg.getAttackId());
+                cfg.saveTo(section);
+                cfg.applyAttackComments(yaml, cfg.getAttackId());
+            }
+
+            try {
+                yaml.save(file);
+            } catch (IOException e) {
+                plugin.getLogger().severe("[AttackRegistry] Failed to save: " + file.getName());
+            }
+        }
+
+        long totalMs = System.currentTimeMillis() - totalStart;
+        plugin.getLogger().info("[AttackRegistry] Saved " + templates.size() + " attacks to "
+                + byFile.size() + " files in " + totalMs + "ms");
     }
 
     // ========================

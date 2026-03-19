@@ -345,68 +345,57 @@ public class ChaosCraftPlugin extends JavaPlugin {
     }
 
     public void reload() {
+        long reloadStart = System.currentTimeMillis();
+
         reloadConfig();
         reloadAllYaml();
+
+        long t = System.currentTimeMillis();
         modeManager.reloadConfigs();
+        getLogger().info("[Reload] Mode configs in " + (System.currentTimeMillis() - t) + "ms");
+
         musicManager.reload();
 
-        // Reload performance config
-        if (performanceService != null) {
-            performanceService.reload();
-        }
+        // Reload service configs
+        if (performanceService != null) performanceService.reload();
+        if (titleScreenService != null) titleScreenService.loadConfig();
+        if (settingsService != null) settingsService.loadConfig();
+        if (codesService != null) codesService.loadConfig();
+        if (playService != null) playService.reload();
+        if (claimsService != null) claimsService.reload();
+        if (modePointsService != null) modePointsService.reload();
 
-        // Reload title screen config
-        if (titleScreenService != null) {
-            titleScreenService.loadConfig();
-        }
-
-        // Reload settings config
-        if (settingsService != null) {
-            settingsService.loadConfig();
-        }
-
-        // Reload codes config
-        if (codesService != null) {
-            codesService.loadConfig();
-        }
-
-        // Reload play config
-        if (playService != null) {
-            playService.reload();
-        }
-
-        // Reload claims config
-        if (claimsService != null) {
-            claimsService.reload();
-        }
-
-        // Reload mode points config
-        if (modePointsService != null) {
-            modePointsService.reload();
-        }
+        getLogger().info("[Reload] Services in " + (System.currentTimeMillis() - reloadStart) + "ms");
 
         // Reload Calamity-specific config + attack configs
+        t = System.currentTimeMillis();
         var calamity = modeManager.getMode("calamity");
         if (calamity instanceof CalamityMode calamityMode) {
             calamityMode.getCalamityConfig().load();
             calamityMode.getAttackRegistry().reloadConfigs();
         }
+        getLogger().info("[Reload] Calamity in " + (System.currentTimeMillis() - t) + "ms");
 
         // Reload Corruption-specific config + attack configs
+        t = System.currentTimeMillis();
         var corruption = modeManager.getMode("corruption");
         if (corruption instanceof CorruptionMode corruptionMode) {
             corruptionMode.getCorruptionConfig().load();
             corruptionMode.getAttackRegistry().reloadConfigs();
         }
+        getLogger().info("[Reload] Corruption in " + (System.currentTimeMillis() - t) + "ms");
 
         // Reload Chain-specific config + attack configs
+        t = System.currentTimeMillis();
         var chain = modeManager.getMode("chain");
         if (chain instanceof ChainMode chainMode) {
             chainMode.getChainConfig().load();
             chainMode.getAttackRegistry().reloadConfigs();
         }
+        getLogger().info("[Reload] Chain in " + (System.currentTimeMillis() - t) + "ms");
 
-        getLogger().info("ChaosCraft configuration reloaded.");
+        long totalMs = System.currentTimeMillis() - reloadStart;
+        getLogger().info("ChaosCraft configuration reloaded in " + totalMs + "ms");
     }
 
     // ---- Data layout ----
