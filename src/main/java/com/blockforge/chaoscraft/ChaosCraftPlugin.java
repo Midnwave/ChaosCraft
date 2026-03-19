@@ -8,6 +8,9 @@ import com.blockforge.chaoscraft.integration.PlaceholderExpansion;
 import com.blockforge.chaoscraft.modes.calamity.CalamityMode;
 import com.blockforge.chaoscraft.modes.chain.ChainMode;
 import com.blockforge.chaoscraft.modes.corruption.CorruptionMode;
+import com.blockforge.chaoscraft.api.points.ModePointsListener;
+import com.blockforge.chaoscraft.api.points.ModePointsService;
+import com.blockforge.chaoscraft.api.points.PointsCommand;
 import com.blockforge.chaoscraft.services.claims.ClaimsService;
 import com.blockforge.chaoscraft.services.claims.ClaimVisualization;
 import com.blockforge.chaoscraft.services.claims.ClaimCommand;
@@ -61,6 +64,7 @@ public class ChaosCraftPlugin extends JavaPlugin {
     private UserAgreementService userAgreementService;
     private PlayService playService;
     private ClaimsService claimsService;
+    private ModePointsService modePointsService;
     private com.blockforge.chaoscraft.updater.UpdateChecker updateChecker;
 
     @Override
@@ -127,12 +131,19 @@ public class ChaosCraftPlugin extends JavaPlugin {
         claimsService = new ClaimsService(this);
         claimsService.initialize();
 
+        // Initialize Mode Points service
+        modePointsService = new ModePointsService(this);
+        modePointsService.initialize();
+
         // Initialize update checker
         updateChecker = new com.blockforge.chaoscraft.updater.UpdateChecker(this);
         getLogger().info("Update checker ready. Use /cc update check to check for updates.");
 
         // Register codes chat listener
         getServer().getPluginManager().registerEvents(new CodesChatListener(this, codesService), this);
+
+        // Register Mode Points listener
+        getServer().getPluginManager().registerEvents(new ModePointsListener(this, modePointsService), this);
 
         // Register claims listener
         if (claimsService.isEnabled()) {
@@ -315,6 +326,14 @@ public class ChaosCraftPlugin extends JavaPlugin {
             itemTagCmd.setExecutor(handler);
             itemTagCmd.setTabCompleter(handler);
         }
+
+        // /points command
+        var pointsCmd = getCommand("points");
+        if (pointsCmd != null) {
+            var handler = new PointsCommand(this);
+            pointsCmd.setExecutor(handler);
+            pointsCmd.setTabCompleter(handler);
+        }
     }
 
     public void reload() {
@@ -351,6 +370,11 @@ public class ChaosCraftPlugin extends JavaPlugin {
         // Reload claims config
         if (claimsService != null) {
             claimsService.reload();
+        }
+
+        // Reload mode points config
+        if (modePointsService != null) {
+            modePointsService.reload();
         }
 
         // Reload Calamity-specific config + attack configs
@@ -575,6 +599,7 @@ public class ChaosCraftPlugin extends JavaPlugin {
     public UserAgreementService getUserAgreementService() { return userAgreementService; }
     public PlayService getPlayService() { return playService; }
     public ClaimsService getClaimsService() { return claimsService; }
+    public ModePointsService getModePointsService() { return modePointsService; }
     public com.blockforge.chaoscraft.updater.UpdateChecker getUpdateChecker() { return updateChecker; }
 
     public void debug(String message) {

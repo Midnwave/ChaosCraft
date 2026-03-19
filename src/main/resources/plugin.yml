@@ -55,6 +55,12 @@ commands:
     usage: /ccperf <enable|disable|toggle|reload|status|set|cleanup|debug>
     permission: chaoscraft.performance.admin
 
+  # ===== Mode Points =====
+  points:
+    description: Check Mode Points balance and leaderboard
+    usage: /points [top|debug|reload]
+    permission: chaoscraft.use
+
   # ===== Claims =====
   claim:
     description: Land claim management

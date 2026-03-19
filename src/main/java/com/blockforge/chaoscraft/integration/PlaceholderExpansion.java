@@ -154,6 +154,17 @@ public class PlaceholderExpansion extends me.clip.placeholderapi.expansion.Place
                 yield "false";
             }
 
+            // Mode Points
+            case "mode_points" -> {
+                if (player == null) yield "0";
+                var pts = plugin.getModePointsService();
+                yield pts != null ? String.valueOf(pts.getPoints(player)) : "0";
+            }
+            case "mode_points_session" -> {
+                var pts = plugin.getModePointsService();
+                yield pts != null && pts.isSessionActive() ? "true" : "false";
+            }
+
             default -> null;
         };
     }

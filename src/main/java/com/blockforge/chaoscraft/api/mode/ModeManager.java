@@ -82,6 +82,12 @@ public class ModeManager implements Listener {
         activeMode.onStart();
         activeMode.setState(ModeState.ACTIVE);
 
+        // Start Mode Points session
+        var pointsService = plugin.getModePointsService();
+        if (pointsService != null) {
+            pointsService.startSession();
+        }
+
         // Start the tick loop
         startTicking();
 
@@ -111,6 +117,12 @@ public class ModeManager implements Listener {
 
         // Run on-end commands
         activeMode.runEndCommands();
+
+        // End Mode Points session
+        var pointsService = plugin.getModePointsService();
+        if (pointsService != null) {
+            pointsService.endSession();
+        }
 
         // Call mode's onEnd
         activeMode.onEnd();
