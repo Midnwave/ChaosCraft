@@ -107,6 +107,10 @@ public class CalamityMode extends AbstractMode {
         registerPhase5BlockDisplayAttacks();
         registerPhase5EnvironmentalAttacks();
         registerPhase5BossAttacks();
+
+        // Generate/load per-attack YAML config files
+        attackRegistry.reloadConfigs();
+        plugin.getLogger().info("[Calamity] Registered " + attackRegistry.size() + " attacks, configs loaded.");
     }
 
     // ========================

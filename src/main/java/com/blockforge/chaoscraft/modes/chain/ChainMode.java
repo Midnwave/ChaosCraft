@@ -48,6 +48,10 @@ public class ChainMode extends AbstractMode {
         OverheadSky.registerAll(plugin, attackRegistry);
         WeaponsTools.registerAll(plugin, attackRegistry);
         EnvironmentalAmbient.registerAll(plugin, attackRegistry);
+
+        // Generate/load per-attack YAML config files
+        attackRegistry.reloadConfigs();
+        plugin.getLogger().info("[Chain] Registered " + attackRegistry.size() + " attacks, configs loaded.");
     }
 
     // ========================
