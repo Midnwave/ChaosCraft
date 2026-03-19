@@ -54,6 +54,7 @@ public class TriggerModeCommand implements CommandExecutor, TabCompleter {
     @Override
     public @Nullable List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command,
                                                  @NotNull String alias, @NotNull String[] args) {
+        if (!sender.hasPermission("chaoscraft.mode.trigger")) return List.of();
         if (args.length == 1) {
             String partial = args[0].toLowerCase();
             List<String> matches = new ArrayList<>();

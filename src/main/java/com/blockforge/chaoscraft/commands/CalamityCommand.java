@@ -478,6 +478,10 @@ public class CalamityCommand implements CommandExecutor, TabCompleter {
     @Override
     public @Nullable List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command,
                                                  @NotNull String alias, @NotNull String[] args) {
+        // Hide all completions if player lacks permission
+        if (!sender.hasPermission("chaoscraft.calamity.admin") && !sender.hasPermission("chaoscraft.admin")) {
+            return List.of();
+        }
         if (args.length == 1) {
             return filterStartsWith(ROOT_SUBS, args[0]);
         }

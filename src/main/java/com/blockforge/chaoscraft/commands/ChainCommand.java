@@ -262,6 +262,10 @@ public class ChainCommand implements CommandExecutor, TabCompleter {
 
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
+        // Hide all completions if player lacks permission
+        if (!sender.hasPermission("chaoscraft.chain.admin") && !sender.hasPermission("chaoscraft.admin")) {
+            return Collections.emptyList();
+        }
         if (args.length == 1) {
             return filterStartsWith(args[0],
                     "status", "debug", "test", "clearattacks", "spawninterval",

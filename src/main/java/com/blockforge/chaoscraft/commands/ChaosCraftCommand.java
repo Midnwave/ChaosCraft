@@ -7,6 +7,7 @@ import com.blockforge.chaoscraft.modes.calamity.boss.DoGManager;
 import com.blockforge.chaoscraft.updater.UpdateChecker;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -16,18 +17,20 @@ import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * Main /chaoscraft (alias: /cc) command.
  *
  * Subcommands:
+ *   help         — Full help menu (permission-filtered)
+ *   modes        — Unified mode management (/cc modes <mode> <cmd>)
  *   timer        — Mode timer management (set/add/remove/pause/resume)
- *   devs         — Developer tools (setgem, setscitem)
+ *   devs         — Developer tools (setgem, setscitem, gui)
  *   dog          — DoG datapack entity (spawn/kill/status)
  *   debug        — Debug info (calamitas/dog/attacks)
  *   reload       — Reload all configs
+ *   update       — Check for and download updates from GitHub
  *   exempt       — Attack exempt list (add/remove/list)
  *   entertitlescreen / exittitlescreen — Title screen control
  *   item         — Give special items
@@ -36,23 +39,45 @@ import java.util.List;
  *   codes        — Admin code management
  *   useragreement — User agreement admin
  *   play         — Execute play scripts
- *   update       — Check for and download updates from GitHub
  */
 public class ChaosCraftCommand implements CommandExecutor, TabCompleter {
 
     private final ChaosCraftPlugin plugin;
 
     private static final List<String> ROOT_SUBS = List.of(
-            "timer", "devs", "reload", "exempt", "dog", "debug", "update",
+            "help", "modes", "timer", "devs", "reload", "exempt", "dog", "debug", "update",
             "entertitlescreen", "exittitlescreen", "item", "itemtag",
             "settings", "codes", "useragreement", "play"
     );
+
+    // Permission required for each subcommand (for tab-complete filtering and help display)
+    private static final Map<String, String> SUB_PERMISSIONS = Map.ofEntries(
+            Map.entry("help", "chaoscraft.use"),
+            Map.entry("modes", "chaoscraft.use"),
+            Map.entry("timer", "chaoscraft.admin"),
+            Map.entry("devs", "chaoscraft.devs"),
+            Map.entry("reload", "chaoscraft.admin"),
+            Map.entry("exempt", "chaoscraft.admin"),
+            Map.entry("dog", "chaoscraft.devs"),
+            Map.entry("debug", "chaoscraft.devs"),
+            Map.entry("update", "chaoscraft.admin"),
+            Map.entry("entertitlescreen", "chaoscraft.titlescreen"),
+            Map.entry("exittitlescreen", "chaoscraft.titlescreen"),
+            Map.entry("item", "chaoscraft.item.give"),
+            Map.entry("itemtag", "chaoscraft.itemtag.use"),
+            Map.entry("settings", "chaoscraft.settings.admin"),
+            Map.entry("codes", "chaoscraft.codes.create"),
+            Map.entry("useragreement", "chaoscraft.useragreement.admin"),
+            Map.entry("play", "chaoscraft.play.admin")
+    );
+
     private static final List<String> TIMER_SUBS = List.of("set", "add", "remove", "pause", "resume");
-    private static final List<String> DEVS_SUBS = List.of("setgem", "setscitem");
+    private static final List<String> DEVS_SUBS = List.of("setgem", "setscitem", "gui");
     private static final List<String> EXEMPT_SUBS = List.of("add", "remove", "list");
     private static final List<String> DOG_SUBS = List.of("spawn", "kill", "status");
     private static final List<String> DEBUG_SUBS = List.of("calamitas", "dog", "attacks");
     private static final List<String> UPDATE_SUBS = List.of("check", "download");
+    private static final List<String> MODE_ACTIONS = List.of("start", "stop");
 
     // Delegates for ported subcommands
     private final EnterTitleScreenCommand enterTitleScreenCmd;
@@ -64,6 +89,13 @@ public class ChaosCraftCommand implements CommandExecutor, TabCompleter {
     private final UserAgreementCommand userAgreementCmd;
     private final PlayCommand playCmd;
 
+    // Mode-specific command handlers (used for /cc modes <mode> delegation)
+    private final CalamityCommand calamityHandler;
+    private final ChainCommand chainHandler;
+
+    // Dev GUI
+    private final DevGUI devGUI;
+
     public ChaosCraftCommand(ChaosCraftPlugin plugin) {
         this.plugin = plugin;
         this.enterTitleScreenCmd = new EnterTitleScreenCommand(plugin);
@@ -74,24 +106,28 @@ public class ChaosCraftCommand implements CommandExecutor, TabCompleter {
         this.adminCodesCmd = new AdminCodesCommand(plugin);
         this.userAgreementCmd = new UserAgreementCommand(plugin);
         this.playCmd = new PlayCommand(plugin);
+        this.calamityHandler = new CalamityCommand(plugin);
+        this.chainHandler = new ChainCommand(plugin);
+        this.devGUI = new DevGUI(plugin);
+
+        // Register the DevGUI listener
+        plugin.getServer().getPluginManager().registerEvents(devGUI, plugin);
     }
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command,
                              @NotNull String label, @NotNull String[] args) {
         if (args.length == 0) {
-            sender.sendMessage(Component.text("ChaosCraft v" + plugin.getDescription().getVersion(), NamedTextColor.DARK_PURPLE));
-            sender.sendMessage(Component.text("Subcommands:", NamedTextColor.GRAY));
-            sender.sendMessage(Component.text("  timer, devs, dog, debug, reload, exempt", NamedTextColor.GRAY));
-            sender.sendMessage(Component.text("  entertitlescreen, exittitlescreen, item, itemtag", NamedTextColor.GRAY));
-            sender.sendMessage(Component.text("  settings, codes, useragreement, play", NamedTextColor.GRAY));
+            sendBrief(sender);
             return true;
         }
 
         // Strip the subcommand name and pass remaining args to delegates
-        String[] subArgs = java.util.Arrays.copyOfRange(args, 1, args.length);
+        String[] subArgs = Arrays.copyOfRange(args, 1, args.length);
 
         return switch (args[0].toLowerCase()) {
+            case "help" -> handleHelp(sender);
+            case "modes" -> handleModes(sender, command, label, args);
             case "timer" -> handleTimer(sender, args);
             case "devs" -> handleDevs(sender, args);
             case "dog" -> handleDog(sender, args);
@@ -109,15 +145,200 @@ public class ChaosCraftCommand implements CommandExecutor, TabCompleter {
             case "useragreement" -> userAgreementCmd.onCommand(sender, command, label, subArgs);
             case "play" -> playCmd.onCommand(sender, command, label, subArgs);
             default -> {
-                sender.sendMessage(Component.text("Unknown subcommand: " + args[0], NamedTextColor.RED));
+                sender.sendMessage(Component.text("Unknown subcommand: " + args[0] + ". Use /cc help for a full list.", NamedTextColor.RED));
                 yield true;
             }
         };
     }
 
-    // ---- Timer subcommand ----
+    // ========================
+    // Brief info (no args)
+    // ========================
+
+    private void sendBrief(CommandSender sender) {
+        sender.sendMessage(Component.text("ChaosCraft v" + plugin.getDescription().getVersion(), NamedTextColor.DARK_PURPLE, TextDecoration.BOLD));
+        sender.sendMessage(Component.text("Use /cc help for a full list of commands.", NamedTextColor.GRAY));
+    }
+
+    // ========================
+    // Help (permission-filtered)
+    // ========================
+
+    private boolean handleHelp(CommandSender sender) {
+        sender.sendMessage(Component.empty());
+        sender.sendMessage(Component.text("=== ChaosCraft Help ===", NamedTextColor.DARK_PURPLE, TextDecoration.BOLD));
+        sender.sendMessage(Component.text("Commands you have access to:", NamedTextColor.GRAY));
+        sender.sendMessage(Component.empty());
+
+        // Core
+        helpSection(sender, "Core", NamedTextColor.GOLD);
+        helpLine(sender, "/cc help", "chaoscraft.use", "Show this help menu");
+        helpLine(sender, "/cc reload", "chaoscraft.admin", "Reload all configs");
+        helpLine(sender, "/cc timer <set|add|remove|pause|resume> [val]", "chaoscraft.admin", "Mode timer management");
+        helpLine(sender, "/cc exempt <add|remove|list> [player]", "chaoscraft.admin", "Attack-exempt player management");
+        helpLine(sender, "/cc update <check|download>", "chaoscraft.admin", "Plugin updates from GitHub");
+
+        // Modes
+        helpSection(sender, "Modes", NamedTextColor.LIGHT_PURPLE);
+        helpLine(sender, "/cc modes <mode> start", "chaoscraft.mode.trigger", "Start a game mode");
+        helpLine(sender, "/cc modes <mode> stop", "chaoscraft.mode.end", "Stop the active game mode");
+
+        Set<String> modeNames = plugin.getModeManager().getModeNames();
+        for (String mode : modeNames) {
+            String perm = "chaoscraft." + mode + ".admin";
+            if (sender.hasPermission(perm)) {
+                sender.sendMessage(Component.text("  /cc modes " + mode + " <cmd>", NamedTextColor.AQUA)
+                        .append(Component.text(" — " + capitalize(mode) + " mode admin tools", NamedTextColor.GRAY)));
+            }
+        }
+
+        // Dev
+        helpSection(sender, "Developer", NamedTextColor.RED);
+        helpLine(sender, "/cc devs gui", "chaoscraft.devs", "Open the developer GUI (commands, permissions, placeholders)");
+        helpLine(sender, "/cc devs setgem", "chaoscraft.devs", "Set held item as the Calamity gem item");
+        helpLine(sender, "/cc devs setscitem", "chaoscraft.devs", "Set held item as the Supreme Calamitas item");
+        helpLine(sender, "/cc dog <spawn|kill|status>", "chaoscraft.devs", "Devourer of Gods entity management");
+        helpLine(sender, "/cc debug <calamitas|dog|attacks>", "chaoscraft.devs", "Debug info for subsystems");
+
+        // Services
+        helpSection(sender, "Services", NamedTextColor.GREEN);
+        helpLine(sender, "/cc entertitlescreen <player> [reason]", "chaoscraft.titlescreen", "Force player into title screen");
+        helpLine(sender, "/cc exittitlescreen <player> [reason]", "chaoscraft.titlescreen", "Force player out of title screen");
+        helpLine(sender, "/settings", "chaoscraft.settings.use", "Open the player settings menu");
+        helpLine(sender, "/codes", null, "Enter a promotional code");
+        helpLine(sender, "/itemtag <add|remove|list> [tag]", "chaoscraft.itemtag.use", "View/manage item tags");
+        helpLine(sender, "/ccperf <action>", "chaoscraft.performance.admin", "MythicMobs performance limiter");
+
+        // Legacy shortcuts
+        helpSection(sender, "Shortcuts", NamedTextColor.DARK_GRAY);
+        helpLine(sender, "/calamity <cmd>", "chaoscraft.calamity.admin", "Shortcut for /cc modes calamity <cmd>");
+        helpLine(sender, "/chain <cmd>", "chaoscraft.chain.admin", "Shortcut for /cc modes chain <cmd>");
+        helpLine(sender, "/triggermode <mode>", "chaoscraft.mode.trigger", "Legacy mode start command");
+        helpLine(sender, "/endmode", "chaoscraft.mode.end", "Legacy mode stop command");
+
+        sender.sendMessage(Component.empty());
+        return true;
+    }
+
+    private void helpSection(CommandSender sender, String title, NamedTextColor color) {
+        sender.sendMessage(Component.text("--- " + title + " ---", color, TextDecoration.BOLD));
+    }
+
+    private void helpLine(CommandSender sender, String command, String permission, String description) {
+        // Only show commands the player has permission for (null permission = always show)
+        if (permission != null && !sender.hasPermission(permission)) return;
+        sender.sendMessage(Component.text("  " + command, NamedTextColor.AQUA)
+                .append(Component.text(" — " + description, NamedTextColor.GRAY)));
+    }
+
+    // ========================
+    // Modes subcommand
+    // ========================
+
+    private boolean handleModes(CommandSender sender, Command command, String label, String[] args) {
+        // args[0] = "modes"
+        Set<String> modeNames = plugin.getModeManager().getModeNames();
+
+        if (args.length < 2) {
+            sender.sendMessage(Component.text("=== Available Modes ===", NamedTextColor.LIGHT_PURPLE, TextDecoration.BOLD));
+            for (String mode : modeNames) {
+                boolean active = plugin.getModeManager().isAnyModeActive()
+                        && mode.equals(plugin.getModeManager().getActiveModeName());
+                sender.sendMessage(Component.text("  " + mode, NamedTextColor.AQUA)
+                        .append(Component.text(active ? " (ACTIVE)" : "", NamedTextColor.GREEN)));
+            }
+            sender.sendMessage(Component.text("Usage: /cc modes <mode> <start|stop|...>", NamedTextColor.GRAY));
+            return true;
+        }
+
+        String modeName = args[1].toLowerCase();
+        if (!modeNames.contains(modeName)) {
+            sender.sendMessage(Component.text("Unknown mode: " + args[1] + ". Available: " + String.join(", ", modeNames), NamedTextColor.RED));
+            return true;
+        }
+
+        if (args.length < 3) {
+            sender.sendMessage(Component.text("Usage: /cc modes " + modeName + " <start|stop|status|...>", NamedTextColor.GRAY));
+            sender.sendMessage(Component.text("Use /cc modes " + modeName + " help for mode-specific commands.", NamedTextColor.GRAY));
+            return true;
+        }
+
+        String action = args[2].toLowerCase();
+
+        // Handle start/stop universally for all modes
+        if ("start".equals(action)) {
+            if (!sender.hasPermission("chaoscraft.mode.trigger")) {
+                sender.sendMessage(Component.text("No permission.", NamedTextColor.RED));
+                return true;
+            }
+            if (plugin.getModeManager().isAnyModeActive()) {
+                sender.sendMessage(Component.text("A mode is already active: " + plugin.getModeManager().getActiveModeName()
+                        + ". Use /cc modes " + modeName + " stop first.", NamedTextColor.RED));
+                return true;
+            }
+            boolean started = plugin.getModeManager().startMode(modeName);
+            if (started) {
+                sender.sendMessage(Component.text("Started mode: " + modeName, NamedTextColor.GREEN));
+            } else {
+                sender.sendMessage(Component.text("Failed to start mode: " + modeName, NamedTextColor.RED));
+            }
+            return true;
+        }
+
+        if ("stop".equals(action)) {
+            if (!sender.hasPermission("chaoscraft.mode.end")) {
+                sender.sendMessage(Component.text("No permission.", NamedTextColor.RED));
+                return true;
+            }
+            if (!plugin.getModeManager().isAnyModeActive()) {
+                sender.sendMessage(Component.text("No mode is currently active.", NamedTextColor.RED));
+                return true;
+            }
+            if (!modeName.equals(plugin.getModeManager().getActiveModeName())) {
+                sender.sendMessage(Component.text(capitalize(modeName) + " is not the active mode. Active: "
+                        + plugin.getModeManager().getActiveModeName(), NamedTextColor.RED));
+                return true;
+            }
+            plugin.getModeManager().endActiveMode();
+            sender.sendMessage(Component.text("Stopped mode: " + modeName, NamedTextColor.GREEN));
+            return true;
+        }
+
+        // Delegate remaining subcommands to the mode-specific handler
+        // Shift args: ["modes", "chain", "test", "id"] -> ["test", "id"]
+        String[] modeArgs = Arrays.copyOfRange(args, 2, args.length);
+
+        return switch (modeName) {
+            case "calamity" -> {
+                if (!sender.hasPermission("chaoscraft.calamity.admin")) {
+                    sender.sendMessage(Component.text("No permission.", NamedTextColor.RED));
+                    yield true;
+                }
+                yield calamityHandler.onCommand(sender, command, label, modeArgs);
+            }
+            case "chain" -> {
+                if (!sender.hasPermission("chaoscraft.chain.admin")) {
+                    sender.sendMessage(Component.text("No permission.", NamedTextColor.RED));
+                    yield true;
+                }
+                yield chainHandler.onCommand(sender, command, label, modeArgs);
+            }
+            default -> {
+                sender.sendMessage(Component.text("Mode '" + modeName + "' does not have admin commands yet.", NamedTextColor.YELLOW));
+                yield true;
+            }
+        };
+    }
+
+    // ========================
+    // Timer subcommand
+    // ========================
 
     private boolean handleTimer(CommandSender sender, String[] args) {
+        if (!sender.hasPermission("chaoscraft.admin")) {
+            sender.sendMessage(Component.text("No permission.", NamedTextColor.RED));
+            return true;
+        }
         if (args.length < 2) {
             sender.sendMessage(Component.text("Usage: /cc timer <set|add|remove|pause|resume> [value]", NamedTextColor.RED));
             return true;
@@ -173,19 +394,31 @@ public class ChaosCraftCommand implements CommandExecutor, TabCompleter {
         return true;
     }
 
-    // ---- Devs subcommand ----
+    // ========================
+    // Devs subcommand (now includes GUI)
+    // ========================
 
     private boolean handleDevs(CommandSender sender, String[] args) {
         if (!sender.hasPermission("chaoscraft.devs")) {
             sender.sendMessage(Component.text("No permission.", NamedTextColor.RED));
             return true;
         }
-        if (!(sender instanceof Player player)) {
-            sender.sendMessage(Component.text("Must be a player.", NamedTextColor.RED));
+        if (args.length < 2) {
+            sender.sendMessage(Component.text("Usage: /cc devs <setgem|setscitem|gui>", NamedTextColor.RED));
             return true;
         }
-        if (args.length < 2) {
-            sender.sendMessage(Component.text("Usage: /cc devs <setgem|setscitem>", NamedTextColor.RED));
+
+        if (args[1].equalsIgnoreCase("gui")) {
+            if (!(sender instanceof Player player)) {
+                sender.sendMessage(Component.text("Must be a player.", NamedTextColor.RED));
+                return true;
+            }
+            devGUI.openCommandsPage(player);
+            return true;
+        }
+
+        if (!(sender instanceof Player player)) {
+            sender.sendMessage(Component.text("Must be a player.", NamedTextColor.RED));
             return true;
         }
 
@@ -221,7 +454,9 @@ public class ChaosCraftCommand implements CommandExecutor, TabCompleter {
         return true;
     }
 
-    // ---- DoG subcommand ----
+    // ========================
+    // DoG subcommand
+    // ========================
 
     private boolean handleDog(CommandSender sender, String[] args) {
         if (!sender.hasPermission("chaoscraft.devs")) {
@@ -275,7 +510,9 @@ public class ChaosCraftCommand implements CommandExecutor, TabCompleter {
         return true;
     }
 
-    // ---- Debug subcommand ----
+    // ========================
+    // Debug subcommand
+    // ========================
 
     private boolean handleDebug(CommandSender sender, String[] args) {
         if (!sender.hasPermission("chaoscraft.devs")) {
@@ -312,7 +549,6 @@ public class ChaosCraftCommand implements CommandExecutor, TabCompleter {
                     sender.sendMessage(Component.text("Supreme Calamitas is not spawned.", NamedTextColor.RED));
                     return true;
                 }
-                // Send debug info (uses legacy § color codes)
                 for (String line : sc.getDebugInfo().split("\n")) {
                     sender.sendMessage(net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer
                             .legacySection().deserialize(line));
@@ -331,9 +567,9 @@ public class ChaosCraftCommand implements CommandExecutor, TabCompleter {
         return true;
     }
 
-    // ---- Reload ----
-
-    // ---- Update subcommand ----
+    // ========================
+    // Update subcommand
+    // ========================
 
     private boolean handleUpdate(CommandSender sender, String[] args) {
         if (!sender.hasPermission("chaoscraft.admin")) {
@@ -359,17 +595,29 @@ public class ChaosCraftCommand implements CommandExecutor, TabCompleter {
         return true;
     }
 
-    // ---- Reload ----
+    // ========================
+    // Reload
+    // ========================
 
     private boolean handleReload(CommandSender sender) {
+        if (!sender.hasPermission("chaoscraft.admin")) {
+            sender.sendMessage(Component.text("No permission.", NamedTextColor.RED));
+            return true;
+        }
         plugin.reload();
         sender.sendMessage(Component.text("ChaosCraft configuration reloaded.", NamedTextColor.GREEN));
         return true;
     }
 
-    // ---- Exempt ----
+    // ========================
+    // Exempt
+    // ========================
 
     private boolean handleExempt(CommandSender sender, String[] args) {
+        if (!sender.hasPermission("chaoscraft.admin")) {
+            sender.sendMessage(Component.text("No permission.", NamedTextColor.RED));
+            return true;
+        }
         if (args.length < 2) {
             sender.sendMessage(Component.text("Usage: /cc exempt <add|remove|list> [player]", NamedTextColor.RED));
             return true;
@@ -431,19 +679,42 @@ public class ChaosCraftCommand implements CommandExecutor, TabCompleter {
         return true;
     }
 
-    // ---- Tab completion ----
+    // ========================
+    // Tab completion (permission-filtered)
+    // ========================
 
     @Override
     public @Nullable List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command,
                                                  @NotNull String alias, @NotNull String[] args) {
         if (args.length == 1) {
-            return filterStartsWith(ROOT_SUBS, args[0]);
+            // Filter root subcommands by permission
+            List<String> filtered = new ArrayList<>();
+            for (String sub : ROOT_SUBS) {
+                String perm = SUB_PERMISSIONS.get(sub);
+                if (perm == null || sender.hasPermission(perm)) {
+                    filtered.add(sub);
+                }
+            }
+            return filterStartsWith(filtered, args[0]);
         }
-        // For ported subcommands, delegate tab completion with shifted args
+
         String sub = args[0].toLowerCase();
+
+        // Check permission before showing any deeper completions
+        String requiredPerm = SUB_PERMISSIONS.get(sub);
+        if (requiredPerm != null && !sender.hasPermission(requiredPerm)) {
+            return List.of();
+        }
+
+        // Modes subcommand tab completion
+        if ("modes".equals(sub)) {
+            return tabCompleteModes(sender, args);
+        }
+
+        // For ported subcommands, delegate tab completion with shifted args
         if (List.of("entertitlescreen", "exittitlescreen", "item", "itemtag",
                 "settings", "codes", "useragreement", "play").contains(sub)) {
-            String[] subArgs = java.util.Arrays.copyOfRange(args, 1, args.length);
+            String[] subArgs = Arrays.copyOfRange(args, 1, args.length);
             TabCompleter delegate = switch (sub) {
                 case "entertitlescreen" -> enterTitleScreenCmd;
                 case "exittitlescreen" -> exitTitleScreenCmd;
@@ -480,12 +751,82 @@ public class ChaosCraftCommand implements CommandExecutor, TabCompleter {
         return List.of();
     }
 
+    /**
+     * Tab complete for /cc modes <mode> <action> [args...]
+     */
+    private List<String> tabCompleteModes(CommandSender sender, String[] args) {
+        Set<String> modeNames = plugin.getModeManager().getModeNames();
+
+        // /cc modes <mode>
+        if (args.length == 2) {
+            return filterStartsWith(new ArrayList<>(modeNames), args[1]);
+        }
+
+        String modeName = args[1].toLowerCase();
+        if (!modeNames.contains(modeName)) return List.of();
+
+        // /cc modes <mode> <action>
+        if (args.length == 3) {
+            List<String> actions = new ArrayList<>(MODE_ACTIONS); // start, stop
+
+            // Add mode-specific actions based on which mode
+            switch (modeName) {
+                case "calamity" -> {
+                    if (sender.hasPermission("chaoscraft.calamity.admin")) {
+                        actions.addAll(List.of("testblockdisplay", "testenvironmentalattack", "testbossattack",
+                                "setphase", "spawnboss", "killboss", "addgems", "setgems",
+                                "status", "debug", "clearattacks", "spawninterval", "toggleexempt"));
+                    }
+                }
+                case "chain" -> {
+                    if (sender.hasPermission("chaoscraft.chain.admin")) {
+                        actions.addAll(List.of("status", "debug", "test", "clearattacks",
+                                "spawninterval", "toggleexempt", "list", "reload"));
+                    }
+                }
+            }
+
+            // Filter start/stop by permission
+            if (!sender.hasPermission("chaoscraft.mode.trigger")) actions.remove("start");
+            if (!sender.hasPermission("chaoscraft.mode.end")) actions.remove("stop");
+
+            return filterStartsWith(actions, args[2]);
+        }
+
+        // Deeper tab completion — delegate to mode-specific handlers
+        // Shift args: ["modes", "chain", "test", "..."] -> ["test", "..."]
+        String[] modeArgs = Arrays.copyOfRange(args, 2, args.length);
+
+        return switch (modeName) {
+            case "calamity" -> {
+                if (!sender.hasPermission("chaoscraft.calamity.admin")) yield List.of();
+                List<String> result = calamityHandler.onTabComplete(sender, null, "", modeArgs);
+                yield result != null ? result : List.of();
+            }
+            case "chain" -> {
+                if (!sender.hasPermission("chaoscraft.chain.admin")) yield List.of();
+                List<String> result = chainHandler.onTabComplete(sender, null, "", modeArgs);
+                yield result != null ? result : List.of();
+            }
+            default -> List.of();
+        };
+    }
+
+    // ========================
+    // Helpers
+    // ========================
+
     private List<String> filterStartsWith(List<String> options, String prefix) {
         String lower = prefix.toLowerCase();
         List<String> result = new ArrayList<>();
         for (String opt : options) {
-            if (opt.startsWith(lower)) result.add(opt);
+            if (opt.toLowerCase().startsWith(lower)) result.add(opt);
         }
         return result;
+    }
+
+    private String capitalize(String s) {
+        if (s == null || s.isEmpty()) return s;
+        return s.substring(0, 1).toUpperCase() + s.substring(1);
     }
 }
