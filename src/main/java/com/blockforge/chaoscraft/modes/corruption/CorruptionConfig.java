@@ -56,54 +56,214 @@ public class CorruptionConfig {
 
     /**
      * Add corruption-specific defaults to the existing config without overwriting user values.
+     * Also sets comments so that newly-added keys are documented in the file.
      */
     private void ensureCorruptionDefaults() {
-        // Floating Blocks
-        if (!config.contains("floating-blocks.enabled")) config.set("floating-blocks.enabled", true);
-        if (!config.contains("floating-blocks.max-per-chunk")) config.set("floating-blocks.max-per-chunk", 30);
-        if (!config.contains("floating-blocks.spread-rate-ticks")) config.set("floating-blocks.spread-rate-ticks", 40);
-        if (!config.contains("floating-blocks.movement-speed")) config.set("floating-blocks.movement-speed", 0.05);
-        if (!config.contains("floating-blocks.damage")) config.set("floating-blocks.damage", 20.0);
-        if (!config.contains("floating-blocks.darkness-duration-seconds")) config.set("floating-blocks.darkness-duration-seconds", 5);
-        if (!config.contains("floating-blocks.darkness-amplifier")) config.set("floating-blocks.darkness-amplifier", 0);
+        // ── Floating Blocks ────────────────────────────────────────────────────
+        if (!config.contains("floating-blocks.enabled")) {
+            config.set("floating-blocks.enabled", true);
+            config.setComments("floating-blocks.enabled", List.of(
+                    "Enable or disable the floating corrupted block entities entirely.",
+                    "When enabled, blocks rise from the ground and drift toward players during the mode."));
+        }
+        if (!config.contains("floating-blocks.max-per-chunk")) {
+            config.set("floating-blocks.max-per-chunk", 30);
+            config.setComments("floating-blocks.max-per-chunk", List.of(
+                    "Maximum number of floating block entities allowed per loaded chunk at once.",
+                    "Higher = denser corruption but more entities = more server load. Recommended: 15–50."));
+        }
+        if (!config.contains("floating-blocks.spread-rate-ticks")) {
+            config.set("floating-blocks.spread-rate-ticks", 40);
+            config.setComments("floating-blocks.spread-rate-ticks", List.of(
+                    "How often (in ticks) the floating block system attempts to spawn new blocks.",
+                    "20 = every second, 40 = every 2 seconds. Lower = faster spreading corruption."));
+        }
+        if (!config.contains("floating-blocks.movement-speed")) {
+            config.set("floating-blocks.movement-speed", 0.05);
+            config.setComments("floating-blocks.movement-speed", List.of(
+                    "Velocity at which floating blocks move toward the nearest player each tick.",
+                    "0.05 = slow creeping, 0.1 = moderate, 0.2 = fast and aggressive."));
+        }
+        if (!config.contains("floating-blocks.damage")) {
+            config.set("floating-blocks.damage", 20.0);
+            config.setComments("floating-blocks.damage", List.of(
+                    "Damage dealt to a player when a floating block collides with them.",
+                    "In half-hearts: 20.0 = 10 hearts. This is a one-time impact hit, not per-tick."));
+        }
+        if (!config.contains("floating-blocks.darkness-duration-seconds")) {
+            config.set("floating-blocks.darkness-duration-seconds", 5);
+            config.setComments("floating-blocks.darkness-duration-seconds", List.of(
+                    "Duration in seconds of the Darkness potion effect applied when a floating block hits a player.",
+                    "The Darkness effect dims the player's vision. Set to 0 to disable the effect."));
+        }
+        if (!config.contains("floating-blocks.darkness-amplifier")) {
+            config.set("floating-blocks.darkness-amplifier", 0);
+            config.setComments("floating-blocks.darkness-amplifier", List.of(
+                    "Amplifier level for the Darkness effect (0 = level 1, 1 = level 2, etc.).",
+                    "Higher amplifier = darker screen. Level 1 (0) is already very dark."));
+        }
 
-        // Block Replacement
-        if (!config.contains("block-replacement.enabled")) config.set("block-replacement.enabled", true);
-        if (!config.contains("block-replacement.blocks-per-tick")) config.set("block-replacement.blocks-per-tick", 5);
-        if (!config.contains("block-replacement.max-radius-chunks")) config.set("block-replacement.max-radius-chunks", 5);
+        // ── Block Replacement (World Corruption) ───────────────────────────────
+        if (!config.contains("block-replacement.enabled")) {
+            config.set("block-replacement.enabled", true);
+            config.setComments("block-replacement.enabled", List.of(
+                    "Enable or disable the world corruption block replacement system.",
+                    "When enabled, vanilla blocks near players are gradually replaced with corruption blocks."));
+        }
+        if (!config.contains("block-replacement.blocks-per-tick")) {
+            config.set("block-replacement.blocks-per-tick", 5);
+            config.setComments("block-replacement.blocks-per-tick", List.of(
+                    "How many blocks are replaced with corruption blocks per tick across the world.",
+                    "Higher = faster world corruption spread. Recommended: 3–10 for smooth spread."));
+        }
+        if (!config.contains("block-replacement.max-radius-chunks")) {
+            config.set("block-replacement.max-radius-chunks", 5);
+            config.setComments("block-replacement.max-radius-chunks", List.of(
+                    "Maximum radius in chunks from any online player that corruption can spread.",
+                    "1 chunk = 16 blocks. 5 = 80 blocks radius. Larger radius = wider corruption zone."));
+        }
         if (!config.contains("block-replacement.vanilla-blocks")) {
             config.set("block-replacement.vanilla-blocks", List.of(
                     "CRYING_OBSIDIAN", "BLACKSTONE", "DEEPSLATE", "SCULK", "COAL_BLOCK"));
+            config.setComments("block-replacement.vanilla-blocks", List.of(
+                    "List of vanilla Minecraft material names that corruption will replace nearby blocks WITH.",
+                    "These are the block types the world gets corrupted INTO — the \"corruption palette\".",
+                    "Use exact Material enum names (uppercase). Example: CRYING_OBSIDIAN, SCULK, DEEPSLATE."));
         }
-        if (!config.contains("block-replacement.itemsadder-blocks")) config.set("block-replacement.itemsadder-blocks", new java.util.ArrayList<>());
-        if (!config.contains("block-replacement.craftengine-blocks")) config.set("block-replacement.craftengine-blocks", new java.util.ArrayList<>());
+        if (!config.contains("block-replacement.itemsadder-blocks")) {
+            config.set("block-replacement.itemsadder-blocks", new java.util.ArrayList<>());
+            config.setComments("block-replacement.itemsadder-blocks", List.of(
+                    "List of ItemsAdder custom block IDs that can also be used in the corruption palette.",
+                    "Only used if ItemsAdder is installed. Format: \"namespace:block_id\".",
+                    "Example: \"chaoscraft:corrupted_stone\""));
+        }
+        if (!config.contains("block-replacement.craftengine-blocks")) {
+            config.set("block-replacement.craftengine-blocks", new java.util.ArrayList<>());
+            config.setComments("block-replacement.craftengine-blocks", List.of(
+                    "List of CraftEngine custom block IDs that can also be used in the corruption palette.",
+                    "Only used if CraftEngine is installed. Format: \"namespace:block_id\"."));
+        }
 
-        // Restoration
-        if (!config.contains("restoration.blocks-per-tick")) config.set("restoration.blocks-per-tick", 20);
-        if (!config.contains("restoration.delay-after-end-ticks")) config.set("restoration.delay-after-end-ticks", 0);
+        // ── Restoration ────────────────────────────────────────────────────────
+        if (!config.contains("restoration.blocks-per-tick")) {
+            config.set("restoration.blocks-per-tick", 20);
+            config.setComments("restoration.blocks-per-tick", List.of(
+                    "How many corrupted blocks are restored back to their original state per tick",
+                    "after the mode ends. Higher = faster world cleanup. Recommended: 10–50."));
+        }
+        if (!config.contains("restoration.delay-after-end-ticks")) {
+            config.set("restoration.delay-after-end-ticks", 0);
+            config.setComments("restoration.delay-after-end-ticks", List.of(
+                    "Ticks to wait after the mode ends before starting block restoration.",
+                    "0 = restore immediately. 100 = wait 5 seconds before cleanup begins."));
+        }
 
-        // Mob Glitch
-        if (!config.contains("mob-glitch.enabled")) config.set("mob-glitch.enabled", true);
-        if (!config.contains("mob-glitch.hostile-only")) config.set("mob-glitch.hostile-only", true);
-        if (!config.contains("mob-glitch.intensity")) config.set("mob-glitch.intensity", 0.3);
-        if (!config.contains("mob-glitch.radius-chunks")) config.set("mob-glitch.radius-chunks", 5);
+        // ── Mob Glitch ─────────────────────────────────────────────────────────
+        if (!config.contains("mob-glitch.enabled")) {
+            config.set("mob-glitch.enabled", true);
+            config.setComments("mob-glitch.enabled", List.of(
+                    "Enable or disable the mob glitch visual effect during Corruption Mode.",
+                    "When enabled, nearby mobs flicker and glitch as if corrupted by the environment."));
+        }
+        if (!config.contains("mob-glitch.hostile-only")) {
+            config.set("mob-glitch.hostile-only", true);
+            config.setComments("mob-glitch.hostile-only", List.of(
+                    "If true, only hostile mobs (monsters) are affected by the glitch effect.",
+                    "Set to false to also glitch passive mobs like cows, pigs, and villagers."));
+        }
+        if (!config.contains("mob-glitch.intensity")) {
+            config.set("mob-glitch.intensity", 0.3);
+            config.setComments("mob-glitch.intensity", List.of(
+                    "Intensity of the glitch effect on affected mobs. Range: 0.0 (none) to 1.0 (maximum).",
+                    "Higher = more frequent and severe flickering/teleporting visual glitches."));
+        }
+        if (!config.contains("mob-glitch.radius-chunks")) {
+            config.set("mob-glitch.radius-chunks", 5);
+            config.setComments("mob-glitch.radius-chunks", List.of(
+                    "Radius in chunks around each player within which mobs are affected by the glitch.",
+                    "1 chunk = 16 blocks. 5 = 80 blocks radius."));
+        }
 
-        // Ambient
-        if (!config.contains("ambient.dark-particles")) config.set("ambient.dark-particles", true);
-        if (!config.contains("ambient.corruption-fog")) config.set("ambient.corruption-fog", true);
-        if (!config.contains("ambient.ambient-sounds")) config.set("ambient.ambient-sounds", true);
-        if (!config.contains("ambient.sound-interval-ticks")) config.set("ambient.sound-interval-ticks", 200);
+        // ── Ambient Effects ────────────────────────────────────────────────────
+        if (!config.contains("ambient.dark-particles")) {
+            config.set("ambient.dark-particles", true);
+            config.setComments("ambient.dark-particles", List.of(
+                    "Enable or disable dark particle effects that appear around players during the mode.",
+                    "Creates an atmospheric horror visual of corruption floating in the air."));
+        }
+        if (!config.contains("ambient.corruption-fog")) {
+            config.set("ambient.corruption-fog", true);
+            config.setComments("ambient.corruption-fog", List.of(
+                    "Enable or disable the corruption fog effect applied to players' screens.",
+                    "Uses a Blindness/Darkness overlay to create a claustrophobic, foggy atmosphere."));
+        }
+        if (!config.contains("ambient.ambient-sounds")) {
+            config.set("ambient.ambient-sounds", true);
+            config.setComments("ambient.ambient-sounds", List.of(
+                    "Enable or disable periodic ambient horror sound effects played to players.",
+                    "Uses Minecraft's cave/warden ambient sounds to build tension."));
+        }
+        if (!config.contains("ambient.sound-interval-ticks")) {
+            config.set("ambient.sound-interval-ticks", 200);
+            config.setComments("ambient.sound-interval-ticks", List.of(
+                    "How often (in ticks) an ambient sound is played to each player. 200 = every 10 seconds.",
+                    "Lower = more frequent unsettling sounds. Higher = rare, sudden sound stings."));
+        }
 
-        // Spawning
-        if (!config.contains("spawn.base-interval-ticks")) config.set("spawn.base-interval-ticks", 50);
-        if (!config.contains("spawn.max-events-per-player")) config.set("spawn.max-events-per-player", 5);
-        if (!config.contains("spawn.offset-radius")) config.set("spawn.offset-radius", 10.0);
+        // ── Claims Integration ─────────────────────────────────────────────────
+        if (!config.contains("respect-claims")) {
+            config.set("respect-claims", true);
+            config.setComments("respect-claims", List.of(
+                    "If true, block replacement corruption will NOT spread into claimed land areas.",
+                    "Requires ChaosCraft Claims (or GriefPrevention) to be active.",
+                    "Set to false to allow corruption to spread everywhere regardless of claims."));
+        }
 
-        // Timer HUD
-        if (!config.contains("timer-hud.display-name")) config.set("timer-hud.display-name", "CORRUPTED CORRUPTION");
-        if (!config.contains("timer-hud.color")) config.set("timer-hud.color", "dark_purple");
-        if (!config.contains("timer-hud.flash-color")) config.set("timer-hud.flash-color", "red");
-        if (!config.contains("timer-hud.flash-threshold-seconds")) config.set("timer-hud.flash-threshold-seconds", 60);
+        // ── Spawning ───────────────────────────────────────────────────────────
+        if (!config.contains("spawn.base-interval-ticks")) {
+            config.set("spawn.base-interval-ticks", 50);
+            config.setComments("spawn.base-interval-ticks", List.of(
+                    "Ticks between automatic corruption event spawn attempts per player. 20 ticks = 1 second.",
+                    "50 = attempt to spawn an event every 2.5 seconds per player."));
+        }
+        if (!config.contains("spawn.max-events-per-player")) {
+            config.set("spawn.max-events-per-player", 5);
+            config.setComments("spawn.max-events-per-player", List.of(
+                    "Maximum simultaneous active corruption events targeting one player at once.",
+                    "New events won't spawn for a player who already has this many active events."));
+        }
+        if (!config.contains("spawn.offset-radius")) {
+            config.set("spawn.offset-radius", 10.0);
+            config.setComments("spawn.offset-radius", List.of(
+                    "Maximum distance in blocks from the player that corruption events can spawn.",
+                    "Events appear at a random position within this radius around the player."));
+        }
+
+        // ── Timer HUD (BetterHud) ──────────────────────────────────────────────
+        if (!config.contains("timer-hud.display-name")) {
+            config.set("timer-hud.display-name", "CORRUPTED CORRUPTION");
+            config.setComments("timer-hud.display-name", List.of(
+                    "Text shown on the right side of the BetterHud mode timer bar.",
+                    "This is the label players see during the session."));
+        }
+        if (!config.contains("timer-hud.color")) {
+            config.set("timer-hud.color", "dark_purple");
+            config.setComments("timer-hud.color", List.of(
+                    "Color of the mode name text in the BetterHud timer bar (normal state).",
+                    "Use MiniMessage color names: dark_purple, red, aqua, gold, gray, etc."));
+        }
+        if (!config.contains("timer-hud.flash-color")) {
+            config.set("timer-hud.flash-color", "red");
+            config.setComments("timer-hud.flash-color", List.of(
+                    "Color the timer text flashes to during the low-time warning.",
+                    "Alternates between white and this color every 10 ticks when below the threshold."));
+        }
+        if (!config.contains("timer-hud.flash-threshold-seconds")) {
+            config.set("timer-hud.flash-threshold-seconds", 60);
+            config.setComments("timer-hud.flash-threshold-seconds", List.of(
+                    "Seconds remaining at which the timer text starts flashing. 60 = 1 minute warning.",
+                    "Set to 0 to disable the flashing warning entirely."));
+        }
     }
 
     public void save() {
@@ -342,70 +502,195 @@ public class CorruptionConfig {
     private void createDefaults() {
         FileConfiguration defaults = new YamlConfiguration();
 
-        // World
+        // ── World ──────────────────────────────────────────────────────────────
         defaults.set("world", "world");
+        defaults.setComments("world", List.of(
+                "World name where Corruption Mode runs (floating blocks, corruption spread, ambient effects).",
+                "Use the exact world folder name. Example: \"world\", \"survival\", \"skyworld\"."));
 
-        // Timer
+        // ── Timer ──────────────────────────────────────────────────────────────
         defaults.set("timer.default-seconds", 900);
+        defaults.setComments("timer.default-seconds", List.of(
+                "Default duration of Corruption Mode in seconds when started without a time argument.",
+                "900 = 15 min | 600 = 10 min | 1200 = 20 min."));
         defaults.set("timer.max-seconds", 1800);
+        defaults.setComments("timer.max-seconds", List.of(
+                "Maximum timer value (in seconds) allowed via: /cc modes corruption start <seconds>",
+                "Prevents excessively long sessions."));
 
-        // Floating Blocks
+        // ── Floating Blocks ────────────────────────────────────────────────────
         defaults.set("floating-blocks.enabled", true);
+        defaults.setComments("floating-blocks.enabled", List.of(
+                "Enable or disable the floating corrupted block entities entirely.",
+                "When enabled, blocks rise from the ground and drift toward players during the mode."));
         defaults.set("floating-blocks.max-per-chunk", 30);
+        defaults.setComments("floating-blocks.max-per-chunk", List.of(
+                "Maximum number of floating block entities allowed per loaded chunk at once.",
+                "Higher = denser corruption but more entities = more server load. Recommended: 15–50."));
         defaults.set("floating-blocks.spread-rate-ticks", 40);
+        defaults.setComments("floating-blocks.spread-rate-ticks", List.of(
+                "How often (in ticks) the floating block system attempts to spawn new blocks.",
+                "20 = every second, 40 = every 2 seconds. Lower = faster spreading corruption."));
         defaults.set("floating-blocks.movement-speed", 0.05);
+        defaults.setComments("floating-blocks.movement-speed", List.of(
+                "Velocity at which floating blocks move toward the nearest player each tick.",
+                "0.05 = slow creeping, 0.1 = moderate, 0.2 = fast and aggressive."));
         defaults.set("floating-blocks.damage", 20.0);
+        defaults.setComments("floating-blocks.damage", List.of(
+                "Damage dealt to a player when a floating block collides with them (in half-hearts).",
+                "20.0 = 10 hearts. This is a one-time impact hit, not continuous damage."));
         defaults.set("floating-blocks.darkness-duration-seconds", 5);
+        defaults.setComments("floating-blocks.darkness-duration-seconds", List.of(
+                "Duration in seconds of the Darkness effect applied when a floating block hits a player.",
+                "Darkness dims the player's vision. Set to 0 to disable the effect entirely."));
         defaults.set("floating-blocks.darkness-amplifier", 0);
+        defaults.setComments("floating-blocks.darkness-amplifier", List.of(
+                "Amplifier level for the Darkness effect (0 = level 1, 1 = level 2, etc.).",
+                "Higher amplifier = darker screen. Level 1 (0) is already very dark."));
 
-        // Block Replacement
+        // ── Block Replacement (World Corruption Spread) ────────────────────────
         defaults.set("block-replacement.enabled", true);
+        defaults.setComments("block-replacement.enabled", List.of(
+                "Enable or disable the world corruption block replacement system.",
+                "When enabled, natural blocks near players are gradually replaced with corruption blocks."));
         defaults.set("block-replacement.blocks-per-tick", 5);
+        defaults.setComments("block-replacement.blocks-per-tick", List.of(
+                "How many blocks are replaced with corruption blocks per server tick.",
+                "Higher = faster world corruption spread. Recommended: 3–10 for smooth performance."));
         defaults.set("block-replacement.max-radius-chunks", 5);
-
-        List<String> defaultVanillaBlocks = List.of(
+        defaults.setComments("block-replacement.max-radius-chunks", List.of(
+                "Maximum radius in chunks from any online player that corruption can spread.",
+                "1 chunk = 16 blocks. 5 = 80 blocks radius. Larger = wider corruption zone."));
+        defaults.set("block-replacement.vanilla-blocks", List.of(
                 "GRASS_BLOCK", "DIRT", "STONE", "COBBLESTONE", "OAK_LOG", "OAK_LEAVES",
                 "BIRCH_LOG", "BIRCH_LEAVES", "SPRUCE_LOG", "SPRUCE_LEAVES",
-                "SAND", "GRAVEL", "OAK_PLANKS", "BIRCH_PLANKS", "SPRUCE_PLANKS"
-        );
-        defaults.set("block-replacement.vanilla-blocks", defaultVanillaBlocks);
+                "SAND", "GRAVEL", "OAK_PLANKS", "BIRCH_PLANKS", "SPRUCE_PLANKS"));
+        defaults.setComments("block-replacement.vanilla-blocks", List.of(
+                "List of vanilla block material names that the corruption system can REPLACE.",
+                "These are blocks that get swapped OUT — the terrain that gets corrupted.",
+                "Use exact Material enum names (uppercase). Add any blocks you want corruption to affect."));
         defaults.set("block-replacement.itemsadder-blocks", new ArrayList<>());
+        defaults.setComments("block-replacement.itemsadder-blocks", List.of(
+                "ItemsAdder custom block IDs to include in the replaceable block list.",
+                "Only used if ItemsAdder is installed. Format: \"namespace:block_id\"."));
         defaults.set("block-replacement.craftengine-blocks", new ArrayList<>());
+        defaults.setComments("block-replacement.craftengine-blocks", List.of(
+                "CraftEngine custom block IDs to include in the replaceable block list.",
+                "Only used if CraftEngine is installed. Format: \"namespace:block_id\"."));
 
-        // Restoration
+        // ── Restoration ────────────────────────────────────────────────────────
         defaults.set("restoration.blocks-per-tick", 20);
+        defaults.setComments("restoration.blocks-per-tick", List.of(
+                "How many corrupted blocks are restored to their original state per tick after the mode ends.",
+                "Higher = faster world cleanup. Recommended: 10–50."));
         defaults.set("restoration.delay-after-end-ticks", 0);
+        defaults.setComments("restoration.delay-after-end-ticks", List.of(
+                "Ticks to wait after the mode ends before block restoration begins.",
+                "0 = start restoring immediately. 100 = wait 5 seconds before cleanup."));
 
-        // Mob Glitch
+        // ── Mob Glitch ─────────────────────────────────────────────────────────
         defaults.set("mob-glitch.enabled", true);
+        defaults.setComments("mob-glitch.enabled", List.of(
+                "Enable or disable the mob glitch visual effect during Corruption Mode.",
+                "Nearby mobs flicker and visually glitch as if corrupted by the environment."));
         defaults.set("mob-glitch.hostile-only", true);
+        defaults.setComments("mob-glitch.hostile-only", List.of(
+                "If true, only hostile mobs (monsters) are affected by the glitch effect.",
+                "Set to false to also apply glitch visuals to passive mobs like cows and villagers."));
         defaults.set("mob-glitch.intensity", 0.3);
+        defaults.setComments("mob-glitch.intensity", List.of(
+                "Intensity of the glitch effect on affected mobs. Range: 0.0 (none) to 1.0 (maximum).",
+                "Higher = more frequent and severe flickering/positional glitch visuals."));
         defaults.set("mob-glitch.radius-chunks", 5);
+        defaults.setComments("mob-glitch.radius-chunks", List.of(
+                "Radius in chunks around each player where mobs are affected by the glitch effect.",
+                "1 chunk = 16 blocks. 5 = 80 blocks. Larger = more mobs affected at once."));
 
-        // Ambient
+        // ── Ambient Effects ────────────────────────────────────────────────────
         defaults.set("ambient.dark-particles", true);
+        defaults.setComments("ambient.dark-particles", List.of(
+                "Enable dark particle effects that appear around players during the mode.",
+                "Creates an atmospheric visual of corruption particles floating in the air."));
         defaults.set("ambient.corruption-fog", true);
+        defaults.setComments("ambient.corruption-fog", List.of(
+                "Enable the corruption fog effect (Blindness/Darkness overlay) applied to players.",
+                "Creates a claustrophobic, foggy atmosphere during the mode."));
         defaults.set("ambient.ambient-sounds", true);
+        defaults.setComments("ambient.ambient-sounds", List.of(
+                "Enable periodic ambient horror sound effects played to all players.",
+                "Uses Minecraft cave/warden ambient sounds at configurable intervals."));
         defaults.set("ambient.sound-interval-ticks", 200);
+        defaults.setComments("ambient.sound-interval-ticks", List.of(
+                "How often (in ticks) an ambient sound is played to each player. 200 = every 10 seconds.",
+                "Lower = more frequent unsettling sounds. Higher = rare, sudden sound stings."));
 
-        // Claims
+        // ── Claims Integration ─────────────────────────────────────────────────
         defaults.set("respect-claims", true);
+        defaults.setComments("respect-claims", List.of(
+                "If true, block replacement corruption will NOT spread into claimed land areas.",
+                "Requires ChaosCraft Claims or GriefPrevention to be active.",
+                "Set to false to allow corruption to spread everywhere regardless of claims."));
 
-        // Spawning
+        // ── Spawning ───────────────────────────────────────────────────────────
         defaults.set("spawn.base-interval-ticks", 50);
+        defaults.setComments("spawn.base-interval-ticks", List.of(
+                "Ticks between automatic corruption event spawn attempts per player. 20 ticks = 1 second.",
+                "50 = attempt to spawn an event every 2.5 seconds per player."));
         defaults.set("spawn.max-events-per-player", 5);
+        defaults.setComments("spawn.max-events-per-player", List.of(
+                "Maximum simultaneous active corruption events targeting one player at once.",
+                "New events won't spawn for a player who already has this many active. Recommended: 3–8."));
         defaults.set("spawn.offset-radius", 10.0);
+        defaults.setComments("spawn.offset-radius", List.of(
+                "Maximum distance in blocks from the player that corruption events can appear.",
+                "Events spawn at a random position within this radius around each player."));
 
-        // Music
+        // ── Timer HUD (BetterHud) ──────────────────────────────────────────────
+        defaults.set("timer-hud.display-name", "CORRUPTED CORRUPTION");
+        defaults.setComments("timer-hud.display-name", List.of(
+                "Text shown on the right side of the BetterHud mode timer bar during this mode."));
+        defaults.set("timer-hud.color", "dark_purple");
+        defaults.setComments("timer-hud.color", List.of(
+                "Color of the mode name text in the BetterHud timer bar (normal state).",
+                "Use MiniMessage color names: dark_purple, red, aqua, gold, gray, etc."));
+        defaults.set("timer-hud.flash-color", "red");
+        defaults.setComments("timer-hud.flash-color", List.of(
+                "Color the timer text flashes to when time is running low.",
+                "Alternates between white and this color every 10 ticks below the threshold."));
+        defaults.set("timer-hud.flash-threshold-seconds", 60);
+        defaults.setComments("timer-hud.flash-threshold-seconds", List.of(
+                "Seconds remaining at which the timer text starts flashing. 60 = 1 minute warning.",
+                "Set to 0 to disable the flashing warning entirely."));
+
+        // ── Music ──────────────────────────────────────────────────────────────
         defaults.set("music.sound-id", "");
+        defaults.setComments("music.sound-id", List.of(
+                "Namespaced sound ID to play as background music during Corruption Mode.",
+                "Example: chaoscraft:music.corruption_theme   |   Leave empty (\"\") to disable."));
         defaults.set("music.loop", true);
+        defaults.setComments("music.loop", List.of(
+                "Whether the background music track loops continuously throughout the mode."));
         defaults.set("music.duration-ticks", 6000);
+        defaults.setComments("music.duration-ticks", List.of(
+                "Duration of one music loop in ticks before it replays. 6000 = 5 minutes.",
+                "Set this to match your actual audio file length."));
 
-        // Lifecycle
+        // ── Lifecycle Commands ─────────────────────────────────────────────────
         defaults.set("on-start-commands", new ArrayList<>());
+        defaults.setComments("on-start-commands", List.of(
+                "Console commands run when Corruption Mode starts. %player% = player who started it.",
+                "Example:",
+                "  - \"broadcast &5The world is being corrupted!\""));
         defaults.set("on-end-commands", new ArrayList<>());
+        defaults.setComments("on-end-commands", List.of(
+                "Console commands run when Corruption Mode ends."));
         defaults.set("exempt-players", new ArrayList<>());
+        defaults.setComments("exempt-players", List.of(
+                "Player names that receive ZERO damage from all corruption attacks (staff bypass)."));
         defaults.set("rewards.commands", new ArrayList<>());
+        defaults.setComments("rewards.commands", List.of(
+                "Commands run for each surviving player when the mode ends successfully.",
+                "Use %player% as a placeholder for each player's name."));
 
         try {
             defaults.save(configFile);

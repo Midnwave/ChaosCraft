@@ -147,28 +147,92 @@ public class ChainConfig {
     private void createDefaults() {
         FileConfiguration defaults = new YamlConfiguration();
 
-        // World (empty = first loaded world / Overworld)
+        // ── World ──────────────────────────────────────────────────────────────
         defaults.set("world", "");
+        defaults.setComments("world", List.of(
+                "World name where Chain Mode runs its attacks and timer.",
+                "Leave empty (\"\") to use the first loaded world (usually the Overworld).",
+                "Example: \"world\", \"survival\", \"skyblock_world\""));
 
-        // Timer
+        // ── Timer ──────────────────────────────────────────────────────────────
         defaults.set("timer.default-seconds", 600);
+        defaults.setComments("timer.default-seconds", List.of(
+                "Default duration of Chain Mode in seconds when started without a time argument.",
+                "600 = 10 min | 900 = 15 min | 1200 = 20 min."));
         defaults.set("timer.max-seconds", 1800);
+        defaults.setComments("timer.max-seconds", List.of(
+                "Maximum timer value (in seconds) allowed via: /cc modes chain start <seconds>",
+                "Prevents excessively long sessions from being configured by command."));
 
-        // Spawning
+        // ── Spawning ───────────────────────────────────────────────────────────
         defaults.set("spawn.base-interval-ticks", 50);
+        defaults.setComments("spawn.base-interval-ticks", List.of(
+                "Ticks between automatic attack spawn attempts per online player. 20 ticks = 1 second.",
+                "Lower = more frequent spawning and higher intensity. 50 = attempt every 2.5 seconds.",
+                "Each attempt may or may not spawn an attack depending on the max-events-per-player limit."));
         defaults.set("spawn.max-events-per-player", 5);
+        defaults.setComments("spawn.max-events-per-player", List.of(
+                "Maximum number of simultaneous active chain attacks targeting one player at once.",
+                "Once this cap is reached, no new attacks spawn for that player until old ones expire.",
+                "Higher = more chaos, more server load. Recommended: 3–8."));
         defaults.set("spawn.offset-radius", 10.0);
+        defaults.setComments("spawn.offset-radius", List.of(
+                "Maximum distance in blocks from the player that attacks can spawn.",
+                "Attacks spawn at a random position within a circle of this radius around the player.",
+                "Larger radius = attacks appear further away, giving more reaction time."));
 
-        // Music
+        // ── Timer HUD (BetterHud) ──────────────────────────────────────────────
+        defaults.set("timer-hud.display-name", "CHAIN MODE");
+        defaults.setComments("timer-hud.display-name", List.of(
+                "Text shown on the right side of the BetterHud mode timer bar.",
+                "This is the mode label players see during the session (e.g., \"CHAIN MODE\")."));
+        defaults.set("timer-hud.color", "gray");
+        defaults.setComments("timer-hud.color", List.of(
+                "Color of the mode name text in the BetterHud timer bar (normal state).",
+                "Use MiniMessage/BetterHud color names: black, dark_blue, dark_green, dark_aqua,",
+                "dark_red, dark_purple, gold, gray, dark_gray, blue, green, aqua, red, light_purple, yellow, white."));
+        defaults.set("timer-hud.flash-color", "red");
+        defaults.setComments("timer-hud.flash-color", List.of(
+                "Color of the timer text when flashing during the low-time warning period.",
+                "The text alternates between white and this color every 10 ticks when time is low."));
+        defaults.set("timer-hud.flash-threshold-seconds", 60);
+        defaults.setComments("timer-hud.flash-threshold-seconds", List.of(
+                "Seconds remaining at which the timer text starts flashing to warn players.",
+                "Default 60 = start flashing with 1 minute left. Set to 0 to disable flashing."));
+
+        // ── Music ──────────────────────────────────────────────────────────────
         defaults.set("music.sound-id", "");
+        defaults.setComments("music.sound-id", List.of(
+                "Namespaced sound ID to play as background music during Chain Mode.",
+                "Example: chaoscraft:music.chain_theme   |   Leave empty (\"\") to disable."));
         defaults.set("music.loop", true);
+        defaults.setComments("music.loop", List.of(
+                "Whether the background music track loops continuously.",
+                "Set to false for a one-shot track that plays once then stops."));
         defaults.set("music.duration-ticks", 6000);
+        defaults.setComments("music.duration-ticks", List.of(
+                "Duration of one music loop in ticks before it replays. 6000 = 5 minutes.",
+                "Set this to match your actual audio file length to avoid gaps or early replays."));
 
-        // Lifecycle
+        // ── Lifecycle Commands ─────────────────────────────────────────────────
         defaults.set("on-start-commands", new ArrayList<>());
+        defaults.setComments("on-start-commands", List.of(
+                "Console commands run when Chain Mode starts. Use %player% for the starting player.",
+                "Example:",
+                "  - \"broadcast &6Chain Mode has started — survive the chains!\""));
         defaults.set("on-end-commands", new ArrayList<>());
+        defaults.setComments("on-end-commands", List.of(
+                "Console commands run when Chain Mode ends (timer expires or /cc modes stop)."));
         defaults.set("exempt-players", new ArrayList<>());
+        defaults.setComments("exempt-players", List.of(
+                "Player names that receive ZERO damage from all chain attacks.",
+                "Staff/spectator bypass list. Example:",
+                "  - \"StaffName\""));
         defaults.set("rewards.commands", new ArrayList<>());
+        defaults.setComments("rewards.commands", List.of(
+                "Commands run for each surviving player when the mode ends successfully.",
+                "Use %player% as a placeholder. Example:",
+                "  - \"give %player% diamond 3\""));
 
         try {
             defaults.save(configFile);

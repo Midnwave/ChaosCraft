@@ -114,17 +114,72 @@ public class ModeConfig {
 
     private void createDefaults() {
         FileConfiguration defaults = new YamlConfiguration();
+
         defaults.set("config-version", CURRENT_CONFIG_VERSION);
+        defaults.setComments("config-version", List.of(
+                "Internal version number — do NOT edit this manually.",
+                "The plugin bumps this when new config keys are added and will auto-upgrade your file."));
+
+        // ── Timer ──────────────────────────────────────────────────────────────
         defaults.set("timer.default-seconds", 1200);
+        defaults.setComments("timer.default-seconds", List.of(
+                "Default duration of the mode in seconds when started without a time argument.",
+                "1200 = 20 min | 900 = 15 min | 600 = 10 min | 1800 = 30 min."));
         defaults.set("timer.max-seconds", 1500);
+        defaults.setComments("timer.max-seconds", List.of(
+                "Maximum timer value (seconds) allowed when using: /cc modes <mode> start <seconds>",
+                "Prevents staff from accidentally starting an excessively long session."));
+
+        // ── Music ──────────────────────────────────────────────────────────────
         defaults.set("music.sound-id", "");
+        defaults.setComments("music.sound-id", List.of(
+                "Namespaced sound ID to play as background music when this mode starts.",
+                "Example: chaoscraft:music.chain_theme   |   Leave empty (\"\") to disable music."));
         defaults.set("music.loop", true);
+        defaults.setComments("music.loop", List.of(
+                "Whether the background music track loops continuously throughout the mode.",
+                "Set to false for one-shot tracks that play once then stop."));
         defaults.set("music.duration-ticks", 6000);
+        defaults.setComments("music.duration-ticks", List.of(
+                "Duration of one music loop in ticks. The plugin replays the track after this many ticks.",
+                "6000 = 5 minutes. Set this to match your actual audio file length."));
+
+        // ── Lifecycle Commands ─────────────────────────────────────────────────
         defaults.set("on-start-commands", new ArrayList<>());
+        defaults.setComments("on-start-commands", List.of(
+                "Console commands run automatically when this mode starts.",
+                "Use %player% for the player who triggered the start, or omit for global effects.",
+                "Example:",
+                "  - \"broadcast &aThe mode has started!\"",
+                "  - \"give %player% golden_apple 1\""));
         defaults.set("on-end-commands", new ArrayList<>());
+        defaults.setComments("on-end-commands", List.of(
+                "Console commands run when this mode ends (naturally or via /cc modes stop).",
+                "Same %player% placeholder support as on-start-commands."));
+
+        // ── Exempt Players ─────────────────────────────────────────────────────
         defaults.set("exempt-players", new ArrayList<>());
+        defaults.setComments("exempt-players", List.of(
+                "Player names listed here receive ZERO damage from all mode attacks.",
+                "Useful for staff members or spectators who need to observe without being targeted.",
+                "Example:",
+                "  - \"Notch\"",
+                "  - \"jeb_\""));
+
         defaults.set("max-events-per-player", 5);
+        defaults.setComments("max-events-per-player", List.of(
+                "Maximum number of simultaneous active attacks that can target one player at once.",
+                "Higher = more chaotic but also higher server load. Recommended range: 3–8."));
+
+        // ── Rewards ────────────────────────────────────────────────────────────
         defaults.set("rewards.commands", new ArrayList<>());
+        defaults.setComments("rewards.commands", List.of(
+                "Commands run for each surviving player when the mode ends successfully.",
+                "Use %player% as a placeholder for each player's name.",
+                "Example:",
+                "  - \"give %player% diamond 5\"",
+                "  - \"eco give %player% 1000\""));
+
         try {
             defaults.save(configFile);
         } catch (IOException e) {

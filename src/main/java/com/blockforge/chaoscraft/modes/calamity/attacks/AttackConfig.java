@@ -7,6 +7,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * Loads and manages per-attack YAML configuration.
@@ -131,6 +132,7 @@ public class AttackConfig {
             // Re-save this attack's section with any new keys
             ConfigurationSection updated = config.createSection(attackId);
             saveTo(updated);
+            applyAttackComments(config, attackId);
             try {
                 config.save(file);
             } catch (IOException e) {
@@ -154,8 +156,12 @@ public class AttackConfig {
         }
 
         config.set("config-version", CURRENT_CONFIG_VERSION);
+        config.setComments("config-version", List.of(
+                "Internal version number — do NOT edit manually.",
+                "The plugin bumps this when new config keys are added and will auto-upgrade the file."));
         ConfigurationSection section = config.createSection(attackId);
         saveTo(section);
+        applyAttackComments(config, attackId);
 
         try {
             config.save(file);
@@ -173,6 +179,53 @@ public class AttackConfig {
     private File getConfigFile(ChaosCraftPlugin plugin) {
         return new File(plugin.getDataFolder(),
                 modePath + "/" + getTypePath() + ".yml");
+    }
+
+    /**
+     * Sets descriptive block comments on every key in this attack's config section.
+     * Called whenever the section is written so comments are always present in the file.
+     */
+    private void applyAttackComments(YamlConfiguration config, String id) {
+        String p = id + ".";
+        config.setComments(id, List.of(
+                "─────────────────────────────────────────────────────────",
+                "Attack: " + id,
+                "Type: " + type.name() + "  |  Phase: " + phase,
+                "─────────────────────────────────────────────────────────"));
+        config.setComments(p + "damage", List.of(
+                "Base damage dealt to players within the damage radius each damage tick.",
+                "Measured in half-hearts (2.0 = 1 full heart). 20.0 = 10 hearts (instant kill on default HP)."));
+        config.setComments(p + "damage-radius", List.of(
+                "Radius in blocks around the attack's center where players take damage each tick.",
+                "Circular area check — any player within this many blocks of the attack origin is hurt."));
+        config.setComments(p + "ticks-between-damage", List.of(
+                "How often (in ticks) this attack deals damage while it is active. 20 ticks = 1 second.",
+                "Example: 20 = damage once per second, 10 = twice per second, 40 = every 2 seconds."));
+        config.setComments(p + "cooldown-ticks", List.of(
+                "Minimum ticks that must pass before this attack can spawn again for the same player.",
+                "Prevents the same attack from immediately re-spawning after it ends. 200 = 10 seconds."));
+        config.setComments(p + "duration-ticks", List.of(
+                "How long (in ticks) this attack stays active before it expires and cleans itself up.",
+                "100 = 5 seconds, 200 = 10 seconds. Short = quick burst, long = sustained pressure."));
+        config.setComments(p + "chance", List.of(
+                "Relative weight used when randomly selecting which attack to spawn next for a player.",
+                "All attacks default to 1.0 (equal chance). 2.0 = twice as likely, 0.5 = half as likely.",
+                "Setting this to 0.0 effectively disables the attack without using the 'enabled' flag."));
+        config.setComments(p + "enabled", List.of(
+                "Set to false to completely disable this attack — it will never be selected to spawn.",
+                "Useful for disabling individual attacks during testing without deleting their config."));
+        config.setComments(p + "tracks-player", List.of(
+                "If true, this attack continuously moves toward the targeted player's current position.",
+                "Creates homing/tracking attacks. If false, the attack spawns at a fixed location."));
+        config.setComments(p + "damage-on-impact-only", List.of(
+                "For falling or projectile-style attacks: if true, damage is only dealt on the initial",
+                "impact rather than continuously over the duration. Best for meteor/explosion attacks."));
+        config.setComments(p + "impact-damage", List.of(
+                "One-time damage dealt on first impact when damage-on-impact-only is true.",
+                "This is separate from the ongoing 'damage' field — only applied at the moment of impact."));
+        config.setComments(p + "impact-radius", List.of(
+                "Radius in blocks of the impact explosion area when damage-on-impact-only is true.",
+                "All players within this radius of the impact point receive impact-damage instantly."));
     }
 
     private String getTypePath() {
