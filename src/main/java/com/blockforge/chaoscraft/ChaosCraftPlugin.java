@@ -178,17 +178,9 @@ public class ChaosCraftPlugin extends JavaPlugin {
         if (getServer().getPluginManager().getPlugin("PlaceholderAPI") != null) {
             Bukkit.getScheduler().runTask(this, () -> {
                 try {
-                    // Existing game-mode placeholders (%chaoscraft_timer_*%, %chaoscraft_mode%, etc.)
+                    // All chaoscraft placeholders in one expansion (game-mode + title screen)
                     new PlaceholderExpansion(this).register();
-                    getLogger().info("[PlaceholderAPI] Registered 'chaoscraft' game-mode expansion.");
-
-                    // Title screen specific placeholders (%chaoscraft_*%)
-                    if (titleScreenService != null) {
-                        new TitleScreenPlaceholders(this, titleScreenService, titleScreenService.getPingTracker()).register();
-                        getLogger().info("[PlaceholderAPI] Registered 'chaoscraft' title screen expansion.");
-                    } else {
-                        getLogger().warning("[PlaceholderAPI] Title screen service disabled — title screen placeholders NOT registered.");
-                    }
+                    getLogger().info("[PlaceholderAPI] Registered 'chaoscraft' expansion (game-mode + title screen).");
 
                     // Cross-service placeholders (%cc_*%)
                     new CCPlaceholders(titleScreenService, codesService, settingsService, userAgreementService, playService).register();

@@ -3,9 +3,14 @@ package com.blockforge.chaoscraft.integration;
 import com.blockforge.chaoscraft.ChaosCraftPlugin;
 import com.blockforge.chaoscraft.modes.calamity.CalamityMode;
 import com.blockforge.chaoscraft.modes.calamity.boss.DoGManager;
+import com.blockforge.chaoscraft.services.titlescreen.TitleScreenService;
+import com.blockforge.chaoscraft.services.titlescreen.TitleScreenSession;
+import com.blockforge.chaoscraft.services.titlescreen.PingTrackerService;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.Optional;
 
 /**
  * PlaceholderAPI expansion for ChaosCraft.
@@ -189,6 +194,57 @@ public class PlaceholderExpansion extends me.clip.placeholderapi.expansion.Place
             case "mode_display_name" -> {
                 var hud = plugin.getModeTimerHud();
                 yield hud != null ? hud.getDisplayName() : "";
+            }
+
+            // ── Title Screen placeholders (merged from TitleScreenPlaceholders) ──
+            case "loadingstatus" -> {
+                var tsService = plugin.getTitleScreenService();
+                if (tsService == null || player == null) yield "";
+                Optional<TitleScreenSession> session = tsService.getSession(player.getUniqueId());
+                yield session.filter(TitleScreenSession::isLoading)
+                        .map(s -> s.getCurrentStage().getDisplayName()).orElse("");
+            }
+            case "loadingprogress" -> {
+                var tsService = plugin.getTitleScreenService();
+                if (tsService == null || player == null) yield "0";
+                yield tsService.getSession(player.getUniqueId())
+                        .filter(TitleScreenSession::isLoading)
+                        .map(s -> String.valueOf(s.getProgress())).orElse("0");
+            }
+            case "isloading" -> {
+                var tsService = plugin.getTitleScreenService();
+                if (tsService == null || player == null) yield "false";
+                yield String.valueOf(tsService.getSession(player.getUniqueId())
+                        .map(TitleScreenSession::isLoading).orElse(false));
+            }
+            case "verificationcode" -> {
+                var tsService = plugin.getTitleScreenService();
+                if (tsService == null || player == null) yield "";
+                yield tsService.getSession(player.getUniqueId())
+                        .map(TitleScreenSession::getVerificationCode).orElse("");
+            }
+            case "awaitingverification" -> {
+                var tsService = plugin.getTitleScreenService();
+                if (tsService == null || player == null) yield "false";
+                yield String.valueOf(tsService.getSession(player.getUniqueId())
+                        .map(TitleScreenSession::isAwaitingVerification).orElse(false));
+            }
+            case "tickstill20" -> {
+                var tsService = plugin.getTitleScreenService();
+                if (tsService == null || player == null) yield "0";
+                Optional<TitleScreenSession> session = tsService.getSession(player.getUniqueId());
+                if (session.isEmpty() || !session.get().isInTitleScreen()) yield "0";
+                long currentTick = plugin.getServer().getCurrentTick();
+                long ticksSinceJoin = currentTick - session.get().getJoinTick();
+                yield String.valueOf(20L - (ticksSinceJoin % 20L));
+            }
+            case "ping" -> {
+                if (player == null) yield "0";
+                var tsService = plugin.getTitleScreenService();
+                if (tsService == null) yield String.valueOf(player.getPing());
+                var pingTracker = tsService.getPingTracker();
+                int ping = pingTracker.getPing(player);
+                yield ping >= 0 ? String.valueOf(ping) : "0";
             }
 
             default -> null;
