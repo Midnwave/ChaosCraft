@@ -161,9 +161,13 @@ public class EggAnimation {
 
     /**
      * Animate the main egg BlockDisplay: rotation, subtle shaking, breathing scale.
+     * Also teleports the egg to the current center so it orbits the arena.
      */
     private void animateEgg() {
         if (eggDisplay == null || !eggDisplay.isValid()) return;
+
+        // Teleport the egg to the current center (so it orbits the arena, not stays at spawn)
+        eggDisplay.teleport(center);
 
         // Rotation: slow continuous Y rotation
         float yRot = (float) (tickCounter * 0.02);
