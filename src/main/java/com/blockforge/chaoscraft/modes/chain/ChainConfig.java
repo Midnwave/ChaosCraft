@@ -59,6 +59,21 @@ public class ChainConfig {
         if (!config.contains("spawn.base-interval-ticks")) { config.set("spawn.base-interval-ticks", 50); needsSave = true; }
         if (!config.contains("spawn.max-events-per-player")) { config.set("spawn.max-events-per-player", 5); needsSave = true; }
         if (!config.contains("spawn.offset-radius")) { config.set("spawn.offset-radius", 10.0); needsSave = true; }
+
+        // ── Mob (Citizens NPC) keys ──────────────────────────────────────────
+        if (!config.contains("mobs.enabled")) { config.set("mobs.enabled", true); needsSave = true; }
+        if (!config.contains("mobs.display-name")) { config.set("mobs.display-name", "&7Chain Walker"); needsSave = true; }
+        if (!config.contains("mobs.skin-player-name")) { config.set("mobs.skin-player-name", ""); needsSave = true; }
+        if (!config.contains("mobs.health")) { config.set("mobs.health", 40.0); needsSave = true; }
+        if (!config.contains("mobs.damage")) { config.set("mobs.damage", 6.0); needsSave = true; }
+        if (!config.contains("mobs.speed")) { config.set("mobs.speed", 0.28); needsSave = true; }
+        if (!config.contains("mobs.detection-range")) { config.set("mobs.detection-range", 32.0); needsSave = true; }
+        if (!config.contains("mobs.attack-range")) { config.set("mobs.attack-range", 6.0); needsSave = true; }
+        if (!config.contains("mobs.spawn-distance")) { config.set("mobs.spawn-distance", 20.0); needsSave = true; }
+        if (!config.contains("mobs.spawn-interval-ticks")) { config.set("mobs.spawn-interval-ticks", 200); needsSave = true; }
+        if (!config.contains("mobs.skill-cooldown-ticks")) { config.set("mobs.skill-cooldown-ticks", 60); needsSave = true; }
+        if (!config.contains("mobs.max-per-player")) { config.set("mobs.max-per-player", 3); needsSave = true; }
+        if (!config.contains("mobs.max-total")) { config.set("mobs.max-total", 15); needsSave = true; }
         if (!config.contains("timer-hud.display-name")) { config.set("timer-hud.display-name", "CHAIN MODE"); needsSave = true; }
         if (!config.contains("timer-hud.color")) { config.set("timer-hud.color", "gray"); needsSave = true; }
         if (!config.contains("timer-hud.flash-color")) { config.set("timer-hud.flash-color", "red"); needsSave = true; }
@@ -159,6 +174,24 @@ public class ChainConfig {
     }
 
     // ========================
+    // Mobs (Citizens NPCs)
+    // ========================
+
+    public boolean areMobsEnabled() { return config.getBoolean("mobs.enabled", true); }
+    public String getMobDisplayName() { return config.getString("mobs.display-name", "&7Chain Walker"); }
+    public String getMobSkinPlayerName() { return config.getString("mobs.skin-player-name", ""); }
+    public double getMobHealth() { return config.getDouble("mobs.health", 40.0); }
+    public double getMobDamage() { return config.getDouble("mobs.damage", 6.0); }
+    public double getMobSpeed() { return config.getDouble("mobs.speed", 0.28); }
+    public double getMobDetectionRange() { return config.getDouble("mobs.detection-range", 32.0); }
+    public double getMobAttackRange() { return config.getDouble("mobs.attack-range", 6.0); }
+    public double getMobSpawnDistance() { return config.getDouble("mobs.spawn-distance", 20.0); }
+    public int getMobSpawnIntervalTicks() { return config.getInt("mobs.spawn-interval-ticks", 200); }
+    public int getMobSkillCooldownTicks() { return config.getInt("mobs.skill-cooldown-ticks", 60); }
+    public int getMobMaxPerPlayer() { return config.getInt("mobs.max-per-player", 3); }
+    public int getMobMaxTotal() { return config.getInt("mobs.max-total", 15); }
+
+    // ========================
     // Default config creation
     // ========================
 
@@ -251,6 +284,56 @@ public class ChainConfig {
                 "Commands run for each surviving player when the mode ends successfully.",
                 "Use %player% as a placeholder. Example:",
                 "  - \"give %player% diamond 3\""));
+
+        // ── Mobs (Citizens NPCs) ────────────────────────────────────────────
+        defaults.set("mobs.enabled", true);
+        defaults.setComments("mobs.enabled", List.of(
+                "Whether chain walker NPCs spawn during Chain Mode. Requires Citizens plugin.",
+                "Set to false to run Chain Mode with only block display attacks (no mobs)."));
+        defaults.set("mobs.display-name", "&7Chain Walker");
+        defaults.setComments("mobs.display-name", List.of(
+                "Display name shown above each chain mob NPC. Supports & color codes."));
+        defaults.set("mobs.skin-player-name", "");
+        defaults.setComments("mobs.skin-player-name", List.of(
+                "Player name whose skin the NPCs will use. Leave empty for default Steve skin.",
+                "Example: \"Notch\" — the NPC will look like that player."));
+        defaults.set("mobs.health", 40.0);
+        defaults.setComments("mobs.health", List.of(
+                "Maximum health of each chain mob NPC (in half-hearts). 40 = 20 hearts."));
+        defaults.set("mobs.damage", 6.0);
+        defaults.setComments("mobs.damage", List.of(
+                "Base damage dealt by chain mob skills (in half-hearts). 6 = 3 hearts.",
+                "Different skills multiply this: hook (1x), lash (0.8x), slam (1.2x), snare (0.4x/tick)."));
+        defaults.set("mobs.speed", 0.28);
+        defaults.setComments("mobs.speed", List.of(
+                "Movement speed of chain mobs. Default player speed is 0.2.",
+                "0.28 = slightly faster than players. 0.35 = noticeably fast."));
+        defaults.set("mobs.detection-range", 32.0);
+        defaults.setComments("mobs.detection-range", List.of(
+                "Maximum distance (blocks) at which a chain mob can detect and target a player."));
+        defaults.set("mobs.attack-range", 6.0);
+        defaults.setComments("mobs.attack-range", List.of(
+                "Distance (blocks) within which a chain mob will execute its chain skills.",
+                "The mob navigates toward the player until within this range, then attacks."));
+        defaults.set("mobs.spawn-distance", 20.0);
+        defaults.setComments("mobs.spawn-distance", List.of(
+                "How far (blocks) from the target player a new chain mob spawns.",
+                "Higher = more warning time before the mob reaches the player."));
+        defaults.set("mobs.spawn-interval-ticks", 200);
+        defaults.setComments("mobs.spawn-interval-ticks", List.of(
+                "Ticks between spawn attempts. 200 = every 10 seconds. 20 ticks = 1 second.",
+                "Lower = more frequent spawning (more intense). Each attempt checks mob caps first."));
+        defaults.set("mobs.skill-cooldown-ticks", 60);
+        defaults.setComments("mobs.skill-cooldown-ticks", List.of(
+                "Ticks a chain mob must wait between skill uses. 60 = 3 seconds.",
+                "Lower = more aggressive attacks. Higher = mobs spend more time chasing."));
+        defaults.set("mobs.max-per-player", 3);
+        defaults.setComments("mobs.max-per-player", List.of(
+                "Maximum chain mobs that can be near (within 30 blocks of) one player at once."));
+        defaults.set("mobs.max-total", 15);
+        defaults.setComments("mobs.max-total", List.of(
+                "Maximum total chain mobs alive at once across the entire mode.",
+                "Prevents server overload. Recommended: 10–20 depending on player count."));
 
         try {
             defaults.save(configFile);

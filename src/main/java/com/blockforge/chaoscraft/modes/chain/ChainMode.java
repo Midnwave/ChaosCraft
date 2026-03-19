@@ -25,6 +25,7 @@ public class ChainMode extends AbstractMode {
     private final ChainConfig chainConfig;
     private final AttackRegistry attackRegistry;
     private final ChainAttackScheduler attackScheduler;
+    private final ChainMobManager mobManager;
     private long tickCounter = 0;
 
     public ChainMode(ChaosCraftPlugin plugin) {
@@ -32,6 +33,7 @@ public class ChainMode extends AbstractMode {
         this.chainConfig = new ChainConfig(plugin);
         this.attackRegistry = new AttackRegistry(plugin);
         this.attackScheduler = new ChainAttackScheduler(plugin, attackRegistry, chainConfig);
+        this.mobManager = new ChainMobManager(plugin, chainConfig);
         registerAllAttacks();
     }
 
@@ -125,6 +127,12 @@ public class ChainMode extends AbstractMode {
     public void onTick() {
         tickCounter++;
         attackScheduler.tick();
+
+        // Tick chain mob AI
+        World world = getChainWorld();
+        if (world != null) {
+            mobManager.tick(world);
+        }
     }
 
     @Override
@@ -132,6 +140,7 @@ public class ChainMode extends AbstractMode {
         plugin.getLogger().info("[Chain] Mode ending — cleaning up...");
 
         attackScheduler.stop();
+        mobManager.cleanup();
         plugin.getMusicManager().stopAll();
 
         // NOTE: runEndCommands() and giveRewards() are called by ModeManager — do NOT call here
