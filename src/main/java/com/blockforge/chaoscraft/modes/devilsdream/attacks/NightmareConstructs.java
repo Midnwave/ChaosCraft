@@ -267,7 +267,7 @@ public final class NightmareConstructs {
             World w = center.getWorld();
             if (w == null) return;
 
-            double size = 3.0;
+            float size = 3.0f;
             // 4 walls, 2 blocks each = 8, plus floor and roof = 10
             Material wallMat = Material.POLISHED_BLACKSTONE_BRICKS;
             Material roofMat = Material.CRYING_OBSIDIAN;

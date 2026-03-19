@@ -146,7 +146,7 @@ public class VoidIntrusions {
                 for(double d=8;d>8-reach;d-=0.5){
                     double sway=Math.sin(d*0.8+t*0.05+i*1.5)*1.0;double y=0.5+Math.sin(d*0.5+t*0.03)*0.5;
                     Location tLoc=c.clone().add(Math.cos(a)*d+Math.sin(a)*sway,y,Math.sin(a)*d-Math.cos(a)*sway);
-                    if(t%2==0){DisplayBuilder.dustParticles(tLoc,1,0.15,15,8,25,1.5f-d*0.08f);
+                    if(t%2==0){DisplayBuilder.dustParticles(tLoc,1,0.15,15,8,25,1.5f-(float)(d*0.08));
                         if(d<4)w.spawnParticle(Particle.SMOKE,tLoc,1,0.1,0.1,0.1,0.003);}}}
             if(t%25==0)DisplayBuilder.playSound(c,Sound.ENTITY_WARDEN_TENDRIL_CLICKS,0.4f,0.3f);}
         @Override protected void onCleanup(){super.onCleanup();tentAngles.clear();}@Override public AbstractAttack newInstance(){return new ShadowTentacle(plugin);}

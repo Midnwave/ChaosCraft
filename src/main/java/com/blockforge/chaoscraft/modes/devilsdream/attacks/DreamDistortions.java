@@ -583,7 +583,7 @@ public final class DreamDistortions {
 
             Material[] mats = {Material.QUARTZ_BLOCK, Material.PRISMARINE};
             // 6 faces × 2 blocks each
-            double size = 2.0;
+            float size = 2.0f;
             // Top/Bottom
             faces.add(spawnFace(cubeCenter, 0, size, 0, size * 2, 0.3f, size * 2, mats[0]));
             faces.add(spawnFace(cubeCenter, 0, size, 0, size, 0.3f, size, mats[1]));
