@@ -46,7 +46,7 @@ public class ChaosCraftCommand implements CommandExecutor, TabCompleter {
 
     private static final List<String> ROOT_SUBS = List.of(
             "help", "modes", "timer", "devs", "reload", "exempt", "dog", "debug", "update",
-            "entertitlescreen", "exittitlescreen", "item", "itemtag",
+            "function", "entertitlescreen", "exittitlescreen", "item", "itemtag",
             "settings", "codes", "useragreement", "play"
     );
 
@@ -68,7 +68,8 @@ public class ChaosCraftCommand implements CommandExecutor, TabCompleter {
             Map.entry("settings", "chaoscraft.settings.admin"),
             Map.entry("codes", "chaoscraft.codes.create"),
             Map.entry("useragreement", "chaoscraft.useragreement.admin"),
-            Map.entry("play", "chaoscraft.play.admin")
+            Map.entry("play", "chaoscraft.play.admin"),
+            Map.entry("function", "chaoscraft.admin")
     );
 
     private static final List<String> TIMER_SUBS = List.of("set", "add", "remove", "pause", "resume");
@@ -78,6 +79,7 @@ public class ChaosCraftCommand implements CommandExecutor, TabCompleter {
     private static final List<String> DEBUG_SUBS = List.of("calamitas", "dog", "attacks");
     private static final List<String> UPDATE_SUBS = List.of("check", "download");
     private static final List<String> MODE_ACTIONS = List.of("start", "stop");
+    private static final List<String> FUNCTION_SUBS = List.of("startmodetimer", "stopmodetimer");
 
     // Delegates for ported subcommands
     private final EnterTitleScreenCommand enterTitleScreenCmd;
@@ -135,6 +137,7 @@ public class ChaosCraftCommand implements CommandExecutor, TabCompleter {
             case "update" -> handleUpdate(sender, args);
             case "reload" -> handleReload(sender);
             case "exempt" -> handleExempt(sender, args);
+            case "function" -> handleFunction(sender, args);
             // Ported subcommands -- delegate to their own command classes
             case "entertitlescreen" -> enterTitleScreenCmd.onCommand(sender, command, label, subArgs);
             case "exittitlescreen" -> exitTitleScreenCmd.onCommand(sender, command, label, subArgs);
@@ -610,6 +613,41 @@ public class ChaosCraftCommand implements CommandExecutor, TabCompleter {
     }
 
     // ========================
+    // Function (startmodetimer, stopmodetimer)
+    // ========================
+
+    private boolean handleFunction(CommandSender sender, String[] args) {
+        if (!sender.hasPermission("chaoscraft.admin")) {
+            sender.sendMessage(Component.text("No permission.", NamedTextColor.RED));
+            return true;
+        }
+        if (args.length < 2) {
+            sender.sendMessage(Component.text("Usage: /cc function <startmodetimer|stopmodetimer>", NamedTextColor.RED));
+            return true;
+        }
+
+        var timerHud = plugin.getModeTimerHud();
+        if (timerHud == null) {
+            sender.sendMessage(Component.text("Timer HUD not initialized.", NamedTextColor.RED));
+            return true;
+        }
+
+        switch (args[1].toLowerCase()) {
+            case "startmodetimer" -> {
+                timerHud.startHud();
+                sender.sendMessage(Component.text("Mode timer HUD started.", NamedTextColor.GREEN));
+            }
+            case "stopmodetimer" -> {
+                timerHud.stopHud();
+                sender.sendMessage(Component.text("Mode timer HUD stopped.", NamedTextColor.GREEN));
+            }
+            default -> sender.sendMessage(Component.text("Unknown function: " + args[1]
+                    + ". Available: startmodetimer, stopmodetimer", NamedTextColor.RED));
+        }
+        return true;
+    }
+
+    // ========================
     // Exempt
     // ========================
 
@@ -739,6 +777,7 @@ public class ChaosCraftCommand implements CommandExecutor, TabCompleter {
                 case "debug" -> filterStartsWith(DEBUG_SUBS, args[1]);
                 case "update" -> filterStartsWith(UPDATE_SUBS, args[1]);
                 case "exempt" -> filterStartsWith(EXEMPT_SUBS, args[1]);
+                case "function" -> filterStartsWith(FUNCTION_SUBS, args[1]);
                 default -> List.of();
             };
         }

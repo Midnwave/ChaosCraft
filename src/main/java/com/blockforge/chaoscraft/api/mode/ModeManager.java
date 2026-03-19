@@ -88,6 +88,12 @@ public class ModeManager implements Listener {
             pointsService.startSession();
         }
 
+        // Start Mode Timer HUD
+        var timerHud = plugin.getModeTimerHud();
+        if (timerHud != null) {
+            timerHud.startHud();
+        }
+
         // Start the tick loop
         startTicking();
 
@@ -122,6 +128,12 @@ public class ModeManager implements Listener {
         var pointsService = plugin.getModePointsService();
         if (pointsService != null) {
             pointsService.endSession();
+        }
+
+        // Stop Mode Timer HUD
+        var timerHud = plugin.getModeTimerHud();
+        if (timerHud != null) {
+            timerHud.stopHud();
         }
 
         // Call mode's onEnd
@@ -163,6 +175,9 @@ public class ModeManager implements Listener {
                     return;
                 }
                 activeMode.onTick();
+                // Tick the timer HUD (flash state, sync counter)
+                var hud = plugin.getModeTimerHud();
+                if (hud != null) hud.tick();
             }
         }.runTaskTimer(plugin, 1L, 1L);
     }

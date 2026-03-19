@@ -11,6 +11,7 @@ import com.blockforge.chaoscraft.modes.corruption.CorruptionMode;
 import com.blockforge.chaoscraft.api.points.ModePointsListener;
 import com.blockforge.chaoscraft.api.points.ModePointsService;
 import com.blockforge.chaoscraft.api.points.PointsCommand;
+import com.blockforge.chaoscraft.api.timer.ModeTimerHud;
 import com.blockforge.chaoscraft.services.claims.ClaimsService;
 import com.blockforge.chaoscraft.services.claims.ClaimVisualization;
 import com.blockforge.chaoscraft.services.claims.ClaimCommand;
@@ -65,6 +66,7 @@ public class ChaosCraftPlugin extends JavaPlugin {
     private PlayService playService;
     private ClaimsService claimsService;
     private ModePointsService modePointsService;
+    private ModeTimerHud modeTimerHud;
     private com.blockforge.chaoscraft.updater.UpdateChecker updateChecker;
 
     @Override
@@ -134,6 +136,9 @@ public class ChaosCraftPlugin extends JavaPlugin {
         // Initialize Mode Points service
         modePointsService = new ModePointsService(this);
         modePointsService.initialize();
+
+        // Initialize Mode Timer HUD
+        modeTimerHud = new ModeTimerHud(this);
 
         // Initialize update checker
         updateChecker = new com.blockforge.chaoscraft.updater.UpdateChecker(this);
@@ -600,6 +605,7 @@ public class ChaosCraftPlugin extends JavaPlugin {
     public PlayService getPlayService() { return playService; }
     public ClaimsService getClaimsService() { return claimsService; }
     public ModePointsService getModePointsService() { return modePointsService; }
+    public ModeTimerHud getModeTimerHud() { return modeTimerHud; }
     public com.blockforge.chaoscraft.updater.UpdateChecker getUpdateChecker() { return updateChecker; }
 
     public void debug(String message) {

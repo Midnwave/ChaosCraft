@@ -165,6 +165,32 @@ public class PlaceholderExpansion extends me.clip.placeholderapi.expansion.Place
                 yield pts != null && pts.isSessionActive() ? "true" : "false";
             }
 
+            // Mode Timer HUD placeholders
+            case "mode_timer_ticks" -> {
+                var hud = plugin.getModeTimerHud();
+                yield hud != null ? String.valueOf(hud.getSyncTick()) : "0";
+            }
+            case "mode_timer_active" -> {
+                var hud = plugin.getModeTimerHud();
+                yield hud != null ? String.valueOf(hud.isActive()) : "false";
+            }
+            case "mode_timer_flash" -> {
+                var hud = plugin.getModeTimerHud();
+                yield hud != null ? String.valueOf(hud.isFlashing()) : "false";
+            }
+            case "mode_timer_low" -> {
+                var hud = plugin.getModeTimerHud();
+                yield hud != null ? String.valueOf(hud.isLow()) : "false";
+            }
+            case "mode_color" -> {
+                var hud = plugin.getModeTimerHud();
+                yield hud != null ? hud.getColor() : "white";
+            }
+            case "mode_display_name" -> {
+                var hud = plugin.getModeTimerHud();
+                yield hud != null ? hud.getDisplayName() : "";
+            }
+
             default -> null;
         };
     }
