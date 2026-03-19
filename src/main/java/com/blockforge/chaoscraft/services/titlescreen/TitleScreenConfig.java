@@ -32,8 +32,15 @@ public class TitleScreenConfig {
     // ---- Loading ----
 
     private void loadFromConfig(YamlConfiguration yaml) {
+        if (yaml == null) {
+            Bukkit.getLogger().warning("[ChaosCraft] titlescreen.yml not loaded — using defaults. " +
+                    "Check that the file exists in plugins/ChaosCraft/titlescreen.yml");
+            setDefaults();
+            return;
+        }
         ConfigurationSection ts = yaml.getConfigurationSection("TitleScreen");
         if (ts == null) {
+            Bukkit.getLogger().warning("[ChaosCraft] titlescreen.yml missing 'TitleScreen' section — using defaults.");
             setDefaults();
             return;
         }

@@ -90,7 +90,17 @@ public class TitleScreenService implements Listener {
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.LOWEST)
     public void onPlayerMove(PlayerMoveEvent event) {
-        // Reserved for future movement-blocking logic
+        if (!config.isMovementDisabled()) return;
+
+        Player player = event.getPlayer();
+        if (!isInTitleScreen(player.getUniqueId())) return;
+
+        // Block position changes (allow head rotation)
+        if (event.getFrom().getBlockX() != event.getTo().getBlockX()
+                || event.getFrom().getBlockY() != event.getTo().getBlockY()
+                || event.getFrom().getBlockZ() != event.getTo().getBlockZ()) {
+            event.setCancelled(true);
+        }
     }
 
     @SuppressWarnings("deprecation")

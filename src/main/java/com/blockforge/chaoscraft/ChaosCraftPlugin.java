@@ -121,20 +121,32 @@ public class ChaosCraftPlugin extends JavaPlugin {
         // Register commands
         registerCommands();
 
-        // Register PlaceholderAPI expansions
+        // Register PlaceholderAPI expansions (deferred to next tick so PAPI is fully initialized)
         if (getServer().getPluginManager().getPlugin("PlaceholderAPI") != null) {
-            // Existing game-mode placeholders (chaoscraft_timer_*, chaoscraft_mode, etc.)
-            new PlaceholderExpansion(this).register();
+            Bukkit.getScheduler().runTask(this, () -> {
+                try {
+                    // Existing game-mode placeholders (%chaoscraft_timer_*%, %chaoscraft_mode%, etc.)
+                    new PlaceholderExpansion(this).register();
+                    getLogger().info("[PlaceholderAPI] Registered 'chaoscraft' game-mode expansion.");
 
-            // Title screen specific placeholders (%cctitlescreen_*%)
-            if (titleScreenService != null) {
-                new TitleScreenPlaceholders(this, titleScreenService, titleScreenService.getPingTracker()).register();
-            }
+                    // Title screen specific placeholders (%chaoscraft_*%)
+                    if (titleScreenService != null) {
+                        new TitleScreenPlaceholders(this, titleScreenService, titleScreenService.getPingTracker()).register();
+                        getLogger().info("[PlaceholderAPI] Registered 'chaoscraft' title screen expansion.");
+                    } else {
+                        getLogger().warning("[PlaceholderAPI] Title screen service disabled — title screen placeholders NOT registered.");
+                    }
 
-            // Cross-service placeholders (%cc_*%)
-            new CCPlaceholders(titleScreenService, codesService, settingsService, userAgreementService, playService).register();
-
-            getLogger().info("PlaceholderAPI expansions registered.");
+                    // Cross-service placeholders (%cc_*%)
+                    new CCPlaceholders(titleScreenService, codesService, settingsService, userAgreementService, playService).register();
+                    getLogger().info("[PlaceholderAPI] Registered 'cc' cross-service expansion.");
+                } catch (Exception e) {
+                    getLogger().severe("[PlaceholderAPI] Failed to register expansions: " + e.getMessage());
+                    e.printStackTrace();
+                }
+            });
+        } else {
+            getLogger().warning("PlaceholderAPI not found — placeholders will not be available.");
         }
 
         // Register event listeners
@@ -147,7 +159,25 @@ public class ChaosCraftPlugin extends JavaPlugin {
         getServer().getPluginManager().registerEvents(calamityMode.getPortalManager(), this);
         getServer().getPluginManager().registerEvents(calamityMode.getDragonManager(), this);
 
+        // Dependency check logging
+        checkDependency("MythicMobs", "Required for Calamity boss spawning (Voidmaw, Dweller)");
+        checkDependency("PlaceholderAPI", "Required for title screen placeholders and HUD");
+        checkDependency("ModelEngine", "Optional — used for boss model overlays");
+        checkDependency("MythicCrucible", "Optional — used for custom items");
+        checkDependency("ItemsAdder", "Optional — used for custom portal blocks");
+
         getLogger().info("ChaosCraft v" + getDescription().getVersion() + " enabled.");
+    }
+
+    /**
+     * Log whether a dependency plugin is loaded, with a description of what it's used for.
+     */
+    private void checkDependency(String pluginName, String description) {
+        if (getServer().getPluginManager().getPlugin(pluginName) != null) {
+            getLogger().info("[Dependency] " + pluginName + " found — " + description);
+        } else {
+            getLogger().warning("[Dependency] " + pluginName + " NOT found — " + description);
+        }
     }
 
     @Override

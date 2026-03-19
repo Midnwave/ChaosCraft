@@ -114,10 +114,14 @@ public class TitleScreenSession {
         if (config.isInvisible()) {
             player.setInvisible(true);
         }
+        if (config.isZeroGravity()) {
+            player.setGravity(false);
+        }
     }
 
     private void restoreOriginalState() {
         player.setInvisible(false);
+        player.setGravity(true);
         player.removePotionEffect(PotionEffectType.INVISIBILITY);
         restoreInventoryFromFile();
     }

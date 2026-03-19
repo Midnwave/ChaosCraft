@@ -33,7 +33,7 @@ public class TitleScreenPlaceholders extends PlaceholderExpansion {
         this.pingTracker = pingTracker;
     }
 
-    @Override public @NotNull String getIdentifier() { return "cctitlescreen"; }
+    @Override public @NotNull String getIdentifier() { return "chaoscraft"; }
     @Override public @NotNull String getAuthor() { return "BlockForge Studios"; }
     @Override public @NotNull String getVersion() { return "1.0.0"; }
     @Override public boolean persist() { return true; }
