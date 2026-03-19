@@ -72,11 +72,12 @@ public final class SwingingPendulum {
 
         public NetheriteWreckingBall(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("netherite_wrecking_ball", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
-            config.setDamage(44.0);
-            config.setDamageRadius(4.0);
+            config.setDamage(66.0);
+            config.setDamageRadius(8.0);
             config.setDurationTicks(400);
             config.setCooldownTicks(300);
             config.setTicksBetweenDamage(10);
+            config.setTracksPlayer(true);
         }
 
         @Override
@@ -86,13 +87,13 @@ public final class SwingingPendulum {
 
             Location anchorLoc = center.clone().add(0, 12, 0);
             anchor = displayBuilder.spawnBlock(anchorLoc, Material.IRON_BLOCK);
-            anchor.scale(2.0f, 1.0f, 2.0f).glow(180, 180, 190).interpolation(2, 0);
+            anchor.scale(3.0f, 1.5f, 3.0f).glow(180, 180, 190).interpolation(2, 0);
             spawnedEntities.add(anchor.entity());
 
             for (int i = 0; i < 10; i++) {
                 Location linkLoc = anchorLoc.clone().add(0, -(i + 1), 0);
                 BlockDisplayHandle link = displayBuilder.spawnBlock(linkLoc, Material.CHAIN);
-                link.scale(0.6f, 1.0f, 0.6f).glow(100, 100, 110).interpolation(2, 0);
+                link.scale(0.9f, 1.5f, 0.9f).glow(100, 100, 110).interpolation(2, 0);
                 chainLinks.add(link);
                 spawnedEntities.add(link.entity());
             }
@@ -108,7 +109,7 @@ public final class SwingingPendulum {
                     ballCenter.clone().add(off[0] - 0.5, off[1] - 0.5, off[2] - 0.5),
                     Material.NETHERITE_BLOCK
                 );
-                b.scale(1.0f, 1.0f, 1.0f).glow(60, 50, 50).interpolation(2, 0);
+                b.scale(1.5f, 1.5f, 1.5f).glow(60, 50, 50).interpolation(2, 0);
                 ballBlocks.add(b);
                 spawnedEntities.add(b.entity());
             }
@@ -199,11 +200,12 @@ public final class SwingingPendulum {
 
         public DoublePendulum(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("double_pendulum", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
-            config.setDamage(42.0);
-            config.setDamageRadius(3.5);
+            config.setDamage(63.0);
+            config.setDamageRadius(7.0);
             config.setDurationTicks(500);
             config.setCooldownTicks(350);
             config.setTicksBetweenDamage(10);
+            config.setTracksPlayer(true);
         }
 
         @Override
@@ -213,33 +215,33 @@ public final class SwingingPendulum {
 
             Location pivotLoc = center.clone().add(0, 12, 0);
             pivot = displayBuilder.spawnBlock(pivotLoc, Material.IRON_BLOCK);
-            pivot.scale(1.5f, 1.5f, 1.5f).glow(180, 180, 190).interpolation(2, 0);
+            pivot.scale(2.25f, 2.25f, 2.25f).glow(180, 180, 190).interpolation(2, 0);
             spawnedEntities.add(pivot.entity());
 
             for (int i = 0; i < 6; i++) {
                 Location linkLoc = pivotLoc.clone().add(0, -(i + 1), 0);
                 BlockDisplayHandle link = displayBuilder.spawnBlock(linkLoc, Material.CHAIN);
-                link.scale(0.5f, 1.0f, 0.5f).glow(100, 100, 110).interpolation(2, 0);
+                link.scale(0.75f, 1.5f, 0.75f).glow(100, 100, 110).interpolation(2, 0);
                 upperChain.add(link);
                 spawnedEntities.add(link.entity());
             }
 
             Location w1Loc = pivotLoc.clone().add(0, -7, 0);
             weight1 = displayBuilder.spawnBlock(w1Loc, Material.IRON_BLOCK);
-            weight1.scale(1.2f, 1.2f, 1.2f).glow(200, 200, 220).interpolation(2, 0);
+            weight1.scale(1.8f, 1.8f, 1.8f).glow(200, 200, 220).interpolation(2, 0);
             spawnedEntities.add(weight1.entity());
 
             for (int i = 0; i < 4; i++) {
                 Location linkLoc = w1Loc.clone().add(0, -(i + 1), 0);
                 BlockDisplayHandle link = displayBuilder.spawnBlock(linkLoc, Material.CHAIN);
-                link.scale(0.5f, 1.0f, 0.5f).glow(100, 100, 110).interpolation(2, 0);
+                link.scale(0.75f, 1.5f, 0.75f).glow(100, 100, 110).interpolation(2, 0);
                 lowerChain.add(link);
                 spawnedEntities.add(link.entity());
             }
 
             Location w2Loc = w1Loc.clone().add(0, -5, 0);
             weight2 = displayBuilder.spawnBlock(w2Loc, Material.IRON_BLOCK);
-            weight2.scale(1.0f, 1.0f, 1.0f).glow(200, 200, 220).interpolation(2, 0);
+            weight2.scale(1.5f, 1.5f, 1.5f).glow(200, 200, 220).interpolation(2, 0);
             spawnedEntities.add(weight2.entity());
 
             DisplayBuilder.playSound(center, Sound.BLOCK_CHAIN_PLACE, 1.5f, 0.6f);
@@ -344,11 +346,12 @@ public final class SwingingPendulum {
 
         public ChainFlail(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("chain_flail", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
-            config.setDamage(46.0);
-            config.setDamageRadius(5.0);
+            config.setDamage(69.0);
+            config.setDamageRadius(10.0);
             config.setDurationTicks(400);
             config.setCooldownTicks(280);
             config.setTicksBetweenDamage(8);
+            config.setTracksPlayer(true);
         }
 
         @Override
@@ -358,7 +361,7 @@ public final class SwingingPendulum {
 
             Location hubLoc = center.clone().add(0, 6, 0);
             hub = displayBuilder.spawnBlock(hubLoc, Material.IRON_BLOCK);
-            hub.scale(1.0f, 1.0f, 1.0f).glow(180, 180, 190).interpolation(2, 0);
+            hub.scale(1.5f, 1.5f, 1.5f).glow(180, 180, 190).interpolation(2, 0);
             spawnedEntities.add(hub.entity());
 
             for (int i = 0; i < 5; i++) {
@@ -366,7 +369,7 @@ public final class SwingingPendulum {
                 double dist = (i + 1) * 1.2;
                 Location linkLoc = hubLoc.clone().add(Math.cos(angle) * dist, -0.5, Math.sin(angle) * dist);
                 BlockDisplayHandle link = displayBuilder.spawnBlock(linkLoc, Material.CHAIN);
-                link.scale(0.5f, 0.8f, 0.5f).glow(100, 100, 110).interpolation(2, 0);
+                link.scale(0.75f, 1.2f, 0.75f).glow(100, 100, 110).interpolation(2, 0);
                 chainLinks.add(link);
                 spawnedEntities.add(link.entity());
             }
@@ -374,14 +377,14 @@ public final class SwingingPendulum {
             double chainRadius = 6.0;
             Location coreLoc = hubLoc.clone().add(chainRadius, -0.5, 0);
             core = displayBuilder.spawnBlock(coreLoc, Material.NETHERITE_BLOCK);
-            core.scale(1.2f, 1.2f, 1.2f).glow(60, 50, 50).interpolation(2, 0);
+            core.scale(1.8f, 1.8f, 1.8f).glow(60, 50, 50).interpolation(2, 0);
             spawnedEntities.add(core.entity());
 
             double[][] spikeDirections = {{1,0,0},{-1,0,0},{0,1,0},{0,-1,0},{0,0,1},{0,0,-1}};
             for (double[] dir : spikeDirections) {
                 Location spikeLoc = coreLoc.clone().add(dir[0] * 0.8, dir[1] * 0.8, dir[2] * 0.8);
                 BlockDisplayHandle spike = displayBuilder.spawnBlock(spikeLoc, Material.IRON_BARS);
-                spike.scale(0.3f, 0.8f, 0.3f).glow(200, 200, 220).interpolation(2, 0);
+                spike.scale(0.45f, 1.2f, 0.45f).glow(200, 200, 220).interpolation(2, 0);
                 spikes.add(spike);
                 spawnedEntities.add(spike.entity());
             }
@@ -471,11 +474,12 @@ public final class SwingingPendulum {
 
         public PendulumBlade(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("pendulum_blade", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
-            config.setDamage(48.0);
-            config.setDamageRadius(4.5);
+            config.setDamage(72.0);
+            config.setDamageRadius(9.0);
             config.setDurationTicks(450);
             config.setCooldownTicks(300);
             config.setTicksBetweenDamage(10);
+            config.setTracksPlayer(true);
         }
 
         @Override
@@ -485,13 +489,13 @@ public final class SwingingPendulum {
 
             Location anchorLoc = center.clone().add(0, 11, 0);
             anchorBlock = displayBuilder.spawnBlock(anchorLoc, Material.IRON_BLOCK);
-            anchorBlock.scale(1.5f, 0.5f, 1.5f).glow(180, 180, 190).interpolation(2, 0);
+            anchorBlock.scale(2.25f, 0.75f, 2.25f).glow(180, 180, 190).interpolation(2, 0);
             spawnedEntities.add(anchorBlock.entity());
 
             for (int i = 0; i < 8; i++) {
                 Location linkLoc = anchorLoc.clone().add(0, -(i + 1), 0);
                 BlockDisplayHandle link = displayBuilder.spawnBlock(linkLoc, Material.CHAIN);
-                link.scale(0.5f, 1.0f, 0.5f).glow(100, 100, 110).interpolation(2, 0);
+                link.scale(0.75f, 1.5f, 0.75f).glow(100, 100, 110).interpolation(2, 0);
                 chainLinks.add(link);
                 spawnedEntities.add(link.entity());
             }
@@ -507,7 +511,7 @@ public final class SwingingPendulum {
                 BlockDisplayHandle b = displayBuilder.spawnBlock(
                     bladeCenter.clone().add(off[0], off[1], off[2]), Material.IRON_BLOCK
                 );
-                b.scale(1.0f, 0.2f, 1.0f).glow(200, 200, 220).interpolation(2, 0);
+                b.scale(1.5f, 0.3f, 1.5f).glow(200, 200, 220).interpolation(2, 0);
                 bladeBlocks.add(b);
                 spawnedEntities.add(b.entity());
             }
@@ -598,11 +602,12 @@ public final class SwingingPendulum {
 
         public TripleChainCradle(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("triple_chain_cradle", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
-            config.setDamage(40.0);
-            config.setDamageRadius(4.0);
+            config.setDamage(60.0);
+            config.setDamageRadius(8.0);
             config.setDurationTicks(500);
             config.setCooldownTicks(320);
             config.setTicksBetweenDamage(12);
+            config.setTracksPlayer(true);
         }
 
         @Override
@@ -617,16 +622,16 @@ public final class SwingingPendulum {
                 BlockDisplayHandle post = displayBuilder.spawnBlock(
                     center.clone().add(xOff, 4, zOff), Material.IRON_BLOCK
                 );
-                post.scale(0.3f, 4.0f, 0.3f).glow(180, 180, 190).interpolation(2, 0);
+                post.scale(0.45f, 6.0f, 0.45f).glow(180, 180, 190).interpolation(2, 0);
                 frameParts.add(post);
                 spawnedEntities.add(post.entity());
             }
             BlockDisplayHandle crossbar1 = displayBuilder.spawnBlock(frameTop.clone().add(0, 0, -1), Material.IRON_BLOCK);
-            crossbar1.scale(8.0f, 0.3f, 0.3f).glow(180, 180, 190).interpolation(2, 0);
+            crossbar1.scale(12.0f, 0.45f, 0.45f).glow(180, 180, 190).interpolation(2, 0);
             frameParts.add(crossbar1);
             spawnedEntities.add(crossbar1.entity());
             BlockDisplayHandle crossbar2 = displayBuilder.spawnBlock(frameTop.clone().add(0, 0, 1), Material.IRON_BLOCK);
-            crossbar2.scale(8.0f, 0.3f, 0.3f).glow(180, 180, 190).interpolation(2, 0);
+            crossbar2.scale(12.0f, 0.45f, 0.45f).glow(180, 180, 190).interpolation(2, 0);
             frameParts.add(crossbar2);
             spawnedEntities.add(crossbar2.entity());
 
@@ -635,14 +640,14 @@ public final class SwingingPendulum {
                 for (int j = 0; j < 2; j++) {
                     Location chainLoc = frameTop.clone().add(xOff, -(j + 1) * 2, 0);
                     BlockDisplayHandle chain = displayBuilder.spawnBlock(chainLoc, Material.CHAIN);
-                    chain.scale(0.3f, 2.0f, 0.3f).glow(100, 100, 110).interpolation(2, 0);
+                    chain.scale(0.45f, 3.0f, 0.45f).glow(100, 100, 110).interpolation(2, 0);
                     chains.add(chain);
                     spawnedEntities.add(chain.entity());
                 }
 
                 Location weightLoc = frameTop.clone().add(xOff, -PENDULUM_LENGTH - 0.5, 0);
                 BlockDisplayHandle weight = displayBuilder.spawnBlock(weightLoc, Material.IRON_BLOCK);
-                weight.scale(1.2f, 1.2f, 1.2f).glow(200, 200, 220).interpolation(2, 0);
+                weight.scale(1.8f, 1.8f, 1.8f).glow(200, 200, 220).interpolation(2, 0);
                 weights.add(weight);
                 spawnedEntities.add(weight.entity());
                 weightAngles[i] = 0;
@@ -739,11 +744,12 @@ public final class SwingingPendulum {
 
         public OrbitChains(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("orbit_chains", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
-            config.setDamage(42.0);
-            config.setDamageRadius(7.0);
+            config.setDamage(63.0);
+            config.setDamageRadius(14.0);
             config.setDurationTicks(500);
             config.setCooldownTicks(350);
             config.setTicksBetweenDamage(10);
+            config.setTracksPlayer(true);
         }
 
         @Override
@@ -753,7 +759,7 @@ public final class SwingingPendulum {
 
             Location hubLoc = center.clone().add(0, 6, 0);
             centralAnchor = displayBuilder.spawnBlock(hubLoc, Material.IRON_BLOCK);
-            centralAnchor.scale(1.5f, 1.5f, 1.5f).glow(180, 180, 190).interpolation(2, 0);
+            centralAnchor.scale(2.25f, 2.25f, 2.25f).glow(180, 180, 190).interpolation(2, 0);
             spawnedEntities.add(centralAnchor.entity());
 
             for (int arm = 0; arm < 8; arm++) {
@@ -768,7 +774,7 @@ public final class SwingingPendulum {
                         Math.cos(angle) * dist, heightOffsets[arm] - i * 0.3, Math.sin(angle) * dist
                     );
                     BlockDisplayHandle link = displayBuilder.spawnBlock(linkLoc, Material.CHAIN);
-                    link.scale(0.4f, 0.8f, 0.4f).glow(100, 100, 110).interpolation(2, 0);
+                    link.scale(0.6f, 1.2f, 0.6f).glow(100, 100, 110).interpolation(2, 0);
                     armLinks.add(link);
                     spawnedEntities.add(link.entity());
                 }
@@ -780,7 +786,7 @@ public final class SwingingPendulum {
                     Math.sin(tipAngle) * (length + 0.5)
                 );
                 BlockDisplayHandle tip = displayBuilder.spawnBlock(tipLoc, Material.DEEPSLATE);
-                tip.scale(0.8f, 0.8f, 0.8f).glow(200, 200, 220).interpolation(2, 0);
+                tip.scale(1.2f, 1.2f, 1.2f).glow(200, 200, 220).interpolation(2, 0);
                 tips.add(tip);
                 spawnedEntities.add(tip.entity());
 
@@ -862,14 +868,15 @@ public final class SwingingPendulum {
 
         public ChainHammer(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("chain_hammer", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
-            config.setDamage(52.0);
-            config.setDamageRadius(5.0);
+            config.setDamage(78.0);
+            config.setDamageRadius(10.0);
             config.setDurationTicks(400);
             config.setCooldownTicks(350);
             config.setTicksBetweenDamage(15);
             config.setDamageOnImpactOnly(true);
-            config.setImpactDamage(52.0);
-            config.setImpactRadius(5.0);
+            config.setImpactDamage(78.0);
+            config.setImpactRadius(10.0);
+            config.setTracksPlayer(true);
         }
 
         @Override
@@ -879,13 +886,13 @@ public final class SwingingPendulum {
 
             Location anchorLoc = center.clone().add(0, 12, 0);
             anchorPoint = displayBuilder.spawnBlock(anchorLoc, Material.IRON_BLOCK);
-            anchorPoint.scale(1.0f, 0.5f, 1.0f).glow(180, 180, 190).interpolation(2, 0);
+            anchorPoint.scale(1.5f, 0.75f, 1.5f).glow(180, 180, 190).interpolation(2, 0);
             spawnedEntities.add(anchorPoint.entity());
 
             for (int i = 0; i < 6; i++) {
                 Location linkLoc = anchorLoc.clone().add(0, -(i + 1), 0);
                 BlockDisplayHandle link = displayBuilder.spawnBlock(linkLoc, Material.CHAIN);
-                link.scale(0.6f, 1.0f, 0.6f).glow(100, 100, 110).interpolation(2, 0);
+                link.scale(0.9f, 1.5f, 0.9f).glow(100, 100, 110).interpolation(2, 0);
                 chainLinks.add(link);
                 spawnedEntities.add(link.entity());
             }
@@ -895,7 +902,7 @@ public final class SwingingPendulum {
                 BlockDisplayHandle handleBlock = displayBuilder.spawnBlock(
                     handleBase.clone().add(0, -i, 0), Material.DEEPSLATE
                 );
-                handleBlock.scale(0.6f, 1.0f, 0.6f).glow(60, 50, 50).interpolation(2, 0);
+                handleBlock.scale(0.9f, 1.5f, 0.9f).glow(60, 50, 50).interpolation(2, 0);
                 hammerHandle.add(handleBlock);
                 spawnedEntities.add(handleBlock.entity());
             }
@@ -909,7 +916,7 @@ public final class SwingingPendulum {
                 BlockDisplayHandle h = displayBuilder.spawnBlock(
                     headCenter.clone().add(off[0], off[1], off[2]), Material.IRON_BLOCK
                 );
-                h.scale(1.0f, 1.5f, 1.0f).glow(200, 200, 220).interpolation(2, 0);
+                h.scale(1.5f, 2.25f, 1.5f).glow(200, 200, 220).interpolation(2, 0);
                 hammerHead.add(h);
                 spawnedEntities.add(h.entity());
             }
@@ -1011,11 +1018,12 @@ public final class SwingingPendulum {
 
         public Centrifuge(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("centrifuge", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
-            config.setDamage(44.0);
-            config.setDamageRadius(6.0);
+            config.setDamage(66.0);
+            config.setDamageRadius(12.0);
             config.setDurationTicks(500);
             config.setCooldownTicks(300);
             config.setTicksBetweenDamage(8);
+            config.setTracksPlayer(true);
         }
 
         @Override
@@ -1025,11 +1033,11 @@ public final class SwingingPendulum {
 
             Location hubLoc = center.clone().add(0, 8, 0);
             hub = displayBuilder.spawnBlock(hubLoc, Material.IRON_BLOCK);
-            hub.scale(1.5f, 1.5f, 1.5f).glow(180, 180, 190).interpolation(2, 0);
+            hub.scale(2.25f, 2.25f, 2.25f).glow(180, 180, 190).interpolation(2, 0);
             spawnedEntities.add(hub.entity());
 
             BlockDisplayHandle hubTop = displayBuilder.spawnBlock(hubLoc.clone().add(0, 1, 0), Material.HEAVY_CORE);
-            hubTop.scale(1.0f, 0.5f, 1.0f).glow(100, 100, 110).interpolation(2, 0);
+            hubTop.scale(1.5f, 0.75f, 1.5f).glow(100, 100, 110).interpolation(2, 0);
             spawnedEntities.add(hubTop.entity());
 
             for (int arm = 0; arm < 4; arm++) {
@@ -1039,14 +1047,14 @@ public final class SwingingPendulum {
                 for (int i = 0; i < ARM_LENGTH; i++) {
                     Location linkLoc = hubLoc.clone().add(0, -(i + 1), 0);
                     BlockDisplayHandle link = displayBuilder.spawnBlock(linkLoc, Material.CHAIN);
-                    link.scale(0.4f, 0.8f, 0.4f).glow(100, 100, 110).interpolation(2, 0);
+                    link.scale(0.6f, 1.2f, 0.6f).glow(100, 100, 110).interpolation(2, 0);
                     armLinks.add(link);
                     spawnedEntities.add(link.entity());
                 }
 
                 Location weightLoc = hubLoc.clone().add(0, -(ARM_LENGTH + 1), 0);
                 BlockDisplayHandle weight = displayBuilder.spawnBlock(weightLoc, Material.ANVIL);
-                weight.scale(0.8f, 0.8f, 0.8f).glow(60, 50, 50).interpolation(2, 0);
+                weight.scale(1.2f, 1.2f, 1.2f).glow(60, 50, 50).interpolation(2, 0);
                 armWeights.add(weight);
                 spawnedEntities.add(weight.entity());
 
@@ -1137,11 +1145,12 @@ public final class SwingingPendulum {
 
         public ChandelierSwing(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("chandelier_swing", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
-            config.setDamage(40.0);
-            config.setDamageRadius(5.0);
+            config.setDamage(60.0);
+            config.setDamageRadius(10.0);
             config.setDurationTicks(500);
             config.setCooldownTicks(280);
             config.setTicksBetweenDamage(10);
+            config.setTracksPlayer(true);
         }
 
         @Override
@@ -1151,15 +1160,15 @@ public final class SwingingPendulum {
 
             Location topLoc = center.clone().add(0, 10, 0);
             crownTop = displayBuilder.spawnBlock(topLoc, Material.IRON_BLOCK);
-            crownTop.scale(2.0f, 0.5f, 2.0f).glow(200, 200, 220).interpolation(2, 0);
+            crownTop.scale(3.0f, 0.75f, 3.0f).glow(200, 200, 220).interpolation(2, 0);
             spawnedEntities.add(crownTop.entity());
 
             for (int i = 0; i < 4; i++) {
                 Location pillarLoc = topLoc.clone().add(0, -(i + 1), 0);
                 Material mat = (i % 2 == 0) ? Material.CHAIN : Material.IRON_BLOCK;
                 BlockDisplayHandle pillarBlock = displayBuilder.spawnBlock(pillarLoc, mat);
-                float pScale = 0.6f - i * 0.05f;
-                pillarBlock.scale(pScale, 1.0f, pScale).glow(180, 180, 190).interpolation(2, 0);
+                float pScale = 0.9f - i * 0.075f;
+                pillarBlock.scale(pScale, 1.5f, pScale).glow(180, 180, 190).interpolation(2, 0);
                 centralPillar.add(pillarBlock);
                 spawnedEntities.add(pillarBlock.entity());
             }
@@ -1175,7 +1184,7 @@ public final class SwingingPendulum {
                 for (int i = 0; i < 3; i++) {
                     Location chainLoc = armBase.clone().add(0, -(i + 1), 0);
                     BlockDisplayHandle chain = displayBuilder.spawnBlock(chainLoc, Material.CHAIN);
-                    chain.scale(0.3f, 0.8f, 0.3f).glow(100, 100, 110).interpolation(2, 0);
+                    chain.scale(0.45f, 1.2f, 0.45f).glow(100, 100, 110).interpolation(2, 0);
                     chainSegments.add(chain);
                     spawnedEntities.add(chain.entity());
                 }
@@ -1183,7 +1192,7 @@ public final class SwingingPendulum {
 
                 Location tipLoc = armBase.clone().add(0, -4, 0);
                 BlockDisplayHandle tip = displayBuilder.spawnBlock(tipLoc, Material.IRON_BARS);
-                tip.scale(0.5f, 0.6f, 0.5f).glow(200, 200, 220).interpolation(2, 0);
+                tip.scale(0.75f, 0.9f, 0.75f).glow(200, 200, 220).interpolation(2, 0);
                 chainTips.add(tip);
                 spawnedEntities.add(tip.entity());
             }
@@ -1273,11 +1282,12 @@ public final class SwingingPendulum {
 
         public GrapplingHook(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("grappling_hook", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
-            config.setDamage(44.0);
-            config.setDamageRadius(3.5);
+            config.setDamage(66.0);
+            config.setDamageRadius(7.0);
             config.setDurationTicks(400);
             config.setCooldownTicks(300);
             config.setTicksBetweenDamage(10);
+            config.setTracksPlayer(true);
         }
 
         @Override
@@ -1287,12 +1297,12 @@ public final class SwingingPendulum {
 
             Location launcherLoc = center.clone().add(0, 3, 0);
             launcher = displayBuilder.spawnBlock(launcherLoc, Material.IRON_BLOCK);
-            launcher.scale(1.5f, 1.5f, 1.5f).glow(180, 180, 190).interpolation(2, 0);
+            launcher.scale(2.25f, 2.25f, 2.25f).glow(180, 180, 190).interpolation(2, 0);
             spawnedEntities.add(launcher.entity());
 
             for (int i = 0; i < 10; i++) {
                 BlockDisplayHandle link = displayBuilder.spawnBlock(launcherLoc.clone(), Material.CHAIN);
-                link.scale(0.4f, 0.6f, 0.4f).glow(100, 100, 110).interpolation(2, 0);
+                link.scale(0.6f, 0.9f, 0.6f).glow(100, 100, 110).interpolation(2, 0);
                 chainLinks.add(link);
                 spawnedEntities.add(link.entity());
             }
@@ -1302,7 +1312,7 @@ public final class SwingingPendulum {
                 BlockDisplayHandle hook = displayBuilder.spawnBlock(
                     launcherLoc.clone().add(off[0], off[1], off[2]), Material.IRON_BARS
                 );
-                hook.scale(0.4f, 0.8f, 0.4f).glow(200, 200, 220)
+                hook.scale(0.6f, 1.2f, 0.6f).glow(200, 200, 220)
                     .rotate(0.5f, 1, 0, 0).interpolation(2, 0);
                 hooks.add(hook);
                 spawnedEntities.add(hook.entity());
@@ -1414,11 +1424,12 @@ public final class SwingingPendulum {
 
         public ChainBolas(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("chain_bolas", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
-            config.setDamage(42.0);
-            config.setDamageRadius(4.0);
+            config.setDamage(63.0);
+            config.setDamageRadius(8.0);
             config.setDurationTicks(450);
             config.setCooldownTicks(300);
             config.setTicksBetweenDamage(8);
+            config.setTracksPlayer(true);
         }
 
         @Override
@@ -1432,27 +1443,27 @@ public final class SwingingPendulum {
                 double offset = (i - 2.5) * 1.0;
                 Location linkLoc = baseLoc.clone().add(offset, 0, 0);
                 BlockDisplayHandle link = displayBuilder.spawnBlock(linkLoc, Material.CHAIN);
-                link.scale(0.5f, 0.5f, 0.8f).glow(100, 100, 110).interpolation(2, 0);
+                link.scale(0.75f, 0.75f, 1.2f).glow(100, 100, 110).interpolation(2, 0);
                 chainLinks.add(link);
                 spawnedEntities.add(link.entity());
             }
 
             Location w1Loc = baseLoc.clone().add(-CHAIN_HALF_LENGTH, 0, 0);
             weight1 = displayBuilder.spawnBlock(w1Loc, Material.IRON_BLOCK);
-            weight1.scale(1.3f, 1.3f, 1.3f).glow(200, 200, 220).interpolation(2, 0);
+            weight1.scale(1.95f, 1.95f, 1.95f).glow(200, 200, 220).interpolation(2, 0);
             spawnedEntities.add(weight1.entity());
 
             weightDecor1 = displayBuilder.spawnBlock(w1Loc.clone().add(0, -0.5, 0), Material.DEEPSLATE);
-            weightDecor1.scale(0.8f, 0.5f, 0.8f).glow(60, 50, 50).interpolation(2, 0);
+            weightDecor1.scale(1.2f, 0.75f, 1.2f).glow(60, 50, 50).interpolation(2, 0);
             spawnedEntities.add(weightDecor1.entity());
 
             Location w2Loc = baseLoc.clone().add(CHAIN_HALF_LENGTH, 0, 0);
             weight2 = displayBuilder.spawnBlock(w2Loc, Material.IRON_BLOCK);
-            weight2.scale(1.3f, 1.3f, 1.3f).glow(200, 200, 220).interpolation(2, 0);
+            weight2.scale(1.95f, 1.95f, 1.95f).glow(200, 200, 220).interpolation(2, 0);
             spawnedEntities.add(weight2.entity());
 
             weightDecor2 = displayBuilder.spawnBlock(w2Loc.clone().add(0, -0.5, 0), Material.DEEPSLATE);
-            weightDecor2.scale(0.8f, 0.5f, 0.8f).glow(60, 50, 50).interpolation(2, 0);
+            weightDecor2.scale(1.2f, 0.75f, 1.2f).glow(60, 50, 50).interpolation(2, 0);
             spawnedEntities.add(weightDecor2.entity());
 
             DisplayBuilder.playSound(center, Sound.BLOCK_CHAIN_PLACE, 1.5f, 0.8f);
@@ -1537,14 +1548,15 @@ public final class SwingingPendulum {
 
         public SiegeFlail(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("siege_flail", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
-            config.setDamage(56.0);
-            config.setDamageRadius(6.0);
+            config.setDamage(84.0);
+            config.setDamageRadius(12.0);
             config.setDurationTicks(300);
             config.setCooldownTicks(400);
             config.setTicksBetweenDamage(20);
             config.setDamageOnImpactOnly(true);
-            config.setImpactDamage(56.0);
-            config.setImpactRadius(6.0);
+            config.setImpactDamage(84.0);
+            config.setImpactRadius(12.0);
+            config.setTracksPlayer(true);
         }
 
         @Override
@@ -1554,13 +1566,13 @@ public final class SwingingPendulum {
 
             Location mountLoc = center.clone().add(0, 10, 0);
             mountPoint = displayBuilder.spawnBlock(mountLoc, Material.IRON_BLOCK);
-            mountPoint.scale(2.0f, 2.0f, 2.0f).glow(180, 180, 190).interpolation(2, 0);
+            mountPoint.scale(3.0f, 3.0f, 3.0f).glow(180, 180, 190).interpolation(2, 0);
             spawnedEntities.add(mountPoint.entity());
 
             for (int i = 0; i < 4; i++) {
                 Location chainLoc = mountLoc.clone().add(0, -(i + 1) * 1.5, 0);
                 BlockDisplayHandle link = displayBuilder.spawnBlock(chainLoc, Material.CHAIN);
-                link.scale(1.5f, 1.5f, 1.5f).glow(100, 100, 110).interpolation(2, 0);
+                link.scale(2.25f, 2.25f, 2.25f).glow(100, 100, 110).interpolation(2, 0);
                 thickChain.add(link);
                 spawnedEntities.add(link.entity());
             }
@@ -1574,7 +1586,7 @@ public final class SwingingPendulum {
                             BlockDisplayHandle b = displayBuilder.spawnBlock(
                                 ballCenter.clone().add(x * 0.8, y * 0.8, z * 0.8), Material.NETHERITE_BLOCK
                             );
-                            b.scale(0.8f, 0.8f, 0.8f).glow(60, 50, 50).interpolation(2, 0);
+                            b.scale(1.2f, 1.2f, 1.2f).glow(60, 50, 50).interpolation(2, 0);
                             ballBlocks.add(b);
                             spawnedEntities.add(b.entity());
                         }
@@ -1714,11 +1726,12 @@ public final class SwingingPendulum {
 
         public ClockPendulum(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("clock_pendulum", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
-            config.setDamage(40.0);
-            config.setDamageRadius(3.5);
+            config.setDamage(60.0);
+            config.setDamageRadius(7.0);
             config.setDurationTicks(500);
             config.setCooldownTicks(300);
             config.setTicksBetweenDamage(10);
+            config.setTracksPlayer(true);
         }
 
         @Override
@@ -1737,31 +1750,31 @@ public final class SwingingPendulum {
                 BlockDisplayHandle fb = displayBuilder.spawnBlock(
                     faceCenterLoc.clone().add(off[0], off[1], off[2]), Material.IRON_BLOCK
                 );
-                fb.scale(1.0f, 1.0f, 0.3f).glow(200, 200, 220).interpolation(2, 0);
+                fb.scale(1.5f, 1.5f, 0.45f).glow(200, 200, 220).interpolation(2, 0);
                 faceBlocks.add(fb);
                 spawnedEntities.add(fb.entity());
             }
 
             minuteHand = displayBuilder.spawnBlock(faceCenterLoc.clone().add(0, 0.5, 0.2), Material.DEEPSLATE);
-            minuteHand.scale(0.15f, 1.5f, 0.15f).glow(60, 50, 50).interpolation(2, 0);
+            minuteHand.scale(0.23f, 2.25f, 0.23f).glow(60, 50, 50).interpolation(2, 0);
             spawnedEntities.add(minuteHand.entity());
 
             hourHand = displayBuilder.spawnBlock(faceCenterLoc.clone().add(0.3, 0, 0.2), Material.DEEPSLATE);
-            hourHand.scale(1.0f, 0.15f, 0.15f).glow(60, 50, 50).interpolation(2, 0);
+            hourHand.scale(1.5f, 0.23f, 0.23f).glow(60, 50, 50).interpolation(2, 0);
             spawnedEntities.add(hourHand.entity());
 
             Location pendulumTop = faceCenterLoc.clone().add(0, -2.5, 0);
             for (int i = 0; i < 6; i++) {
                 Location chainLoc = pendulumTop.clone().add(0, -(i + 1), 0);
                 BlockDisplayHandle chain = displayBuilder.spawnBlock(chainLoc, Material.CHAIN);
-                chain.scale(0.5f, 1.0f, 0.5f).glow(100, 100, 110).interpolation(2, 0);
+                chain.scale(0.75f, 1.5f, 0.75f).glow(100, 100, 110).interpolation(2, 0);
                 pendulumChain.add(chain);
                 spawnedEntities.add(chain.entity());
             }
 
             Location weightLoc = pendulumTop.clone().add(0, -7, 0);
             pendulumWeight = displayBuilder.spawnBlock(weightLoc, Material.HEAVY_CORE);
-            pendulumWeight.scale(1.5f, 0.5f, 1.5f).glow(180, 100, 40).interpolation(2, 0);
+            pendulumWeight.scale(2.25f, 0.75f, 2.25f).glow(180, 100, 40).interpolation(2, 0);
             spawnedEntities.add(pendulumWeight.entity());
 
             DisplayBuilder.playSound(center, Sound.BLOCK_ANVIL_LAND, 0.8f, 1.5f);
@@ -1866,11 +1879,12 @@ public final class SwingingPendulum {
 
         public ChainWhip(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("chain_whip", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
-            config.setDamage(44.0);
-            config.setDamageRadius(3.0);
+            config.setDamage(66.0);
+            config.setDamageRadius(6.0);
             config.setDurationTicks(500);
             config.setCooldownTicks(280);
             config.setTicksBetweenDamage(8);
+            config.setTracksPlayer(true);
         }
 
         @Override
@@ -1880,20 +1894,20 @@ public final class SwingingPendulum {
 
             Location handleLoc = center.clone().add(0, 3, 0);
             handle = displayBuilder.spawnBlock(handleLoc, Material.IRON_BLOCK);
-            handle.scale(0.6f, 1.5f, 0.6f).glow(180, 180, 190).interpolation(2, 0);
+            handle.scale(0.9f, 2.25f, 0.9f).glow(180, 180, 190).interpolation(2, 0);
             spawnedEntities.add(handle.entity());
 
             for (int i = 0; i < 12; i++) {
                 Location segLoc = handleLoc.clone().add(i + 1, 0, 0);
                 BlockDisplayHandle seg = displayBuilder.spawnBlock(segLoc, Material.CHAIN);
-                float segScale = 0.5f - i * 0.025f;
-                seg.scale(segScale, 0.6f, segScale).glow(100, 100, 110).interpolation(2, 0);
+                float segScale = 0.75f - i * 0.038f;
+                seg.scale(segScale, 0.9f, segScale).glow(100, 100, 110).interpolation(2, 0);
                 whipSegments.add(seg);
                 spawnedEntities.add(seg.entity());
             }
 
             crackTip = displayBuilder.spawnBlock(handleLoc.clone().add(13, 0, 0), Material.IRON_BARS);
-            crackTip.scale(0.3f, 0.4f, 0.3f).glow(200, 200, 220).interpolation(2, 0);
+            crackTip.scale(0.45f, 0.6f, 0.45f).glow(200, 200, 220).interpolation(2, 0);
             spawnedEntities.add(crackTip.entity());
 
             strikeTimer = 0;
@@ -2014,11 +2028,12 @@ public final class SwingingPendulum {
 
         public Gyroscope(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("gyroscope", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
-            config.setDamage(46.0);
-            config.setDamageRadius(6.5);
+            config.setDamage(69.0);
+            config.setDamageRadius(13.0);
             config.setDurationTicks(500);
             config.setCooldownTicks(350);
             config.setTicksBetweenDamage(10);
+            config.setTracksPlayer(true);
         }
 
         @Override
@@ -2028,15 +2043,15 @@ public final class SwingingPendulum {
 
             Location coreLoc = center.clone().add(0, 6, 0);
             coreBlock = displayBuilder.spawnBlock(coreLoc, Material.IRON_BLOCK);
-            coreBlock.scale(1.0f, 1.0f, 1.0f).glow(200, 200, 220).interpolation(2, 0);
+            coreBlock.scale(1.5f, 1.5f, 1.5f).glow(200, 200, 220).interpolation(2, 0);
             spawnedEntities.add(coreBlock.entity());
 
             coreDecor1 = displayBuilder.spawnBlock(coreLoc.clone().add(0, 0.5, 0), Material.HEAVY_CORE);
-            coreDecor1.scale(0.6f, 0.3f, 0.6f).glow(180, 180, 190).interpolation(2, 0);
+            coreDecor1.scale(0.9f, 0.45f, 0.9f).glow(180, 180, 190).interpolation(2, 0);
             spawnedEntities.add(coreDecor1.entity());
 
             coreDecor2 = displayBuilder.spawnBlock(coreLoc.clone().add(0, -0.5, 0), Material.HEAVY_CORE);
-            coreDecor2.scale(0.6f, 0.3f, 0.6f).glow(180, 180, 190).interpolation(2, 0);
+            coreDecor2.scale(0.9f, 0.45f, 0.9f).glow(180, 180, 190).interpolation(2, 0);
             spawnedEntities.add(coreDecor2.entity());
 
             for (int i = 0; i < 8; i++) {
@@ -2046,7 +2061,7 @@ public final class SwingingPendulum {
                 BlockDisplayHandle link = displayBuilder.spawnBlock(
                     coreLoc.clone().add(x, y, 0), Material.CHAIN
                 );
-                link.scale(0.5f, 0.5f, 0.5f).glow(100, 100, 110).interpolation(2, 0);
+                link.scale(0.75f, 0.75f, 0.75f).glow(100, 100, 110).interpolation(2, 0);
                 innerRing.add(link);
                 spawnedEntities.add(link.entity());
             }
@@ -2058,7 +2073,7 @@ public final class SwingingPendulum {
                 BlockDisplayHandle link = displayBuilder.spawnBlock(
                     coreLoc.clone().add(x, 0, z), Material.CHAIN
                 );
-                link.scale(0.6f, 0.6f, 0.6f).glow(180, 180, 190).interpolation(2, 0);
+                link.scale(0.9f, 0.9f, 0.9f).glow(180, 180, 190).interpolation(2, 0);
                 middleRing.add(link);
                 spawnedEntities.add(link.entity());
             }
@@ -2070,7 +2085,7 @@ public final class SwingingPendulum {
                 BlockDisplayHandle link = displayBuilder.spawnBlock(
                     coreLoc.clone().add(0, y, z), Material.CHAIN
                 );
-                link.scale(0.7f, 0.7f, 0.7f).glow(200, 200, 220).interpolation(2, 0);
+                link.scale(1.05f, 1.05f, 1.05f).glow(200, 200, 220).interpolation(2, 0);
                 outerRing.add(link);
                 spawnedEntities.add(link.entity());
             }

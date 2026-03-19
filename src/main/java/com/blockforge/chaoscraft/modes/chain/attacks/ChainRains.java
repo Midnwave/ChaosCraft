@@ -65,13 +65,14 @@ public final class ChainRains {
 
         public ChainDownpour(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("chain_downpour", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
+            config.setTracksPlayer(true);
             config.setDamage(40.0);
-            config.setDamageRadius(3.0);
+            config.setDamageRadius(6.0);
             config.setDurationTicks(400);
             config.setCooldownTicks(300);
             config.setDamageOnImpactOnly(true);
-            config.setImpactDamage(40.0);
-            config.setImpactRadius(3.0);
+            config.setImpactDamage(60.0);
+            config.setImpactRadius(7.0);
         }
 
         @Override
@@ -110,7 +111,7 @@ public final class ChainRains {
                 if (chains.get(i) == null) {
                     Location spawnLoc = c.clone().add(offsetsX.get(i), START_Y, offsetsZ.get(i));
                     BlockDisplayHandle handle = displayBuilder.spawnBlock(spawnLoc, Material.CHAIN);
-                    handle.scale(1.0f, 3.0f, 1.0f)
+                    handle.scale(1.5f, 4.5f, 1.5f)
                           .glow(200, 200, 220)
                           .interpolation(2, 0);
                     spawnedEntities.add(handle.entity());
@@ -177,8 +178,9 @@ public final class ChainRains {
 
         public IronCurtain(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("iron_curtain", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
+            config.setTracksPlayer(true);
             config.setDamage(40.0);
-            config.setDamageRadius(3.0);
+            config.setDamageRadius(6.0);
             config.setDurationTicks(200);
             config.setCooldownTicks(350);
         }
@@ -196,7 +198,7 @@ public final class ChainRains {
                 double x = -BAR_WIDTH / 2 + (BAR_WIDTH / 2.0) * i;
                 Location seg = center.clone().add(x, 5, -SWEEP_DISTANCE / 2);
                 BlockDisplayHandle bar = displayBuilder.spawnBlock(seg, Material.IRON_BLOCK);
-                bar.scale(2.2f, 0.4f, 0.4f)
+                bar.scale(3.3f, 0.6f, 0.6f)
                    .glow(180, 180, 190)
                    .interpolation(2, 0);
                 barSegments.add(bar);
@@ -209,7 +211,7 @@ public final class ChainRains {
                 Location chainLoc = center.clone().add(x, 2.5, -SWEEP_DISTANCE / 2);
                 BlockDisplayHandle chain = displayBuilder.spawnBlock(chainLoc, Material.CHAIN);
                 float chainLen = 3.0f + (float)(Math.sin(i * 0.8) * 1.0);
-                chain.scale(0.3f, chainLen, 0.3f)
+                chain.scale(0.45f, chainLen * 1.5f, 0.45f)
                      .glow(200, 200, 220)
                      .interpolation(3, 0);
                 hangingChains.add(chain);
@@ -295,13 +297,14 @@ public final class ChainRains {
 
         public ChainHailstorm(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("chain_hailstorm", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
+            config.setTracksPlayer(true);
             config.setDamage(40.0);
-            config.setDamageRadius(2.5);
+            config.setDamageRadius(6.0);
             config.setDurationTicks(300);
             config.setCooldownTicks(280);
             config.setDamageOnImpactOnly(true);
-            config.setImpactDamage(40.0);
-            config.setImpactRadius(2.5);
+            config.setImpactDamage(60.0);
+            config.setImpactRadius(7.0);
         }
 
         @Override
@@ -339,7 +342,7 @@ public final class ChainRains {
                 if (fragments.get(i) == null) {
                     Location spawnLoc = c.clone().add(xOffsets.get(i), yPositions.get(i), zOffsets.get(i));
                     BlockDisplayHandle frag = displayBuilder.spawnBlock(spawnLoc, Material.CHAIN);
-                    frag.scale(0.3f, 0.3f, 0.3f)
+                    frag.scale(0.45f, 0.45f, 0.45f)
                         .glow(180, 180, 190)
                         .interpolation(1, 0);
                     fragments.set(i, frag);
@@ -407,13 +410,14 @@ public final class ChainRains {
 
         public SpikedChainRain(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("spiked_chain_rain", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
+            config.setTracksPlayer(true);
             config.setDamage(45.0);
-            config.setDamageRadius(3.0);
+            config.setDamageRadius(6.0);
             config.setDurationTicks(350);
             config.setCooldownTicks(320);
             config.setDamageOnImpactOnly(true);
-            config.setImpactDamage(45.0);
-            config.setImpactRadius(3.0);
+            config.setImpactDamage(68.0);
+            config.setImpactRadius(7.0);
         }
 
         @Override
@@ -458,7 +462,7 @@ public final class ChainRains {
                 if (chainBodies.get(i) == null) {
                     Location spawnLoc = c.clone().add(xOffsets.get(i), yPositions.get(i), zOffsets.get(i));
                     BlockDisplayHandle body = displayBuilder.spawnBlock(spawnLoc, Material.CHAIN);
-                    body.scale(0.4f, 4.0f, 0.4f)
+                    body.scale(0.6f, 6.0f, 0.6f)
                         .glow(200, 200, 220)
                         .interpolation(2, 0);
                     // Tilt 45 degrees in drift direction
@@ -469,7 +473,7 @@ public final class ChainRains {
 
                     Location tipLoc = spawnLoc.clone().add(0, -2, 0);
                     BlockDisplayHandle tip = displayBuilder.spawnBlock(tipLoc, Material.NETHERITE_BLOCK);
-                    tip.scale(0.5f, 0.8f, 0.5f)
+                    tip.scale(0.75f, 1.2f, 0.75f)
                        .glow(60, 50, 50)
                        .interpolation(2, 0);
                     netheriteTips.set(i, tip);
@@ -537,8 +541,9 @@ public final class ChainRains {
 
         public DiagonalChainSlash(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("diagonal_chain_slash", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
+            config.setTracksPlayer(true);
             config.setDamage(42.0);
-            config.setDamageRadius(3.5);
+            config.setDamageRadius(7.0);
             config.setDurationTicks(200);
             config.setCooldownTicks(300);
         }
@@ -557,7 +562,7 @@ public final class ChainRains {
 
                 Location chainLoc = center.clone().add(startX, startY, startZ);
                 BlockDisplayHandle chain = displayBuilder.spawnBlock(chainLoc, Material.CHAIN);
-                chain.scale(0.5f, 2.0f, 0.5f)
+                chain.scale(0.75f, 3.0f, 0.75f)
                      .glow(200, 200, 220)
                      .interpolation(2, 0);
 
@@ -571,12 +576,12 @@ public final class ChainRains {
             // Add deepslate accent blocks at the ends
             Location topEnd = center.clone().add(-SLASH_RANGE / 2, 12, -SLASH_RANGE / 2);
             BlockDisplayHandle topCap = displayBuilder.spawnBlock(topEnd, Material.DEEPSLATE);
-            topCap.scale(1.0f, 1.0f, 1.0f).glow(100, 100, 110);
+            topCap.scale(1.5f, 1.5f, 1.5f).glow(100, 100, 110);
             spawnedEntities.add(topCap.entity());
 
             Location botEnd = center.clone().add(SLASH_RANGE / 2, 2, SLASH_RANGE / 2);
             BlockDisplayHandle botCap = displayBuilder.spawnBlock(botEnd, Material.DEEPSLATE);
-            botCap.scale(1.0f, 1.0f, 1.0f).glow(100, 100, 110);
+            botCap.scale(1.5f, 1.5f, 1.5f).glow(100, 100, 110);
             spawnedEntities.add(botCap.entity());
 
             DisplayBuilder.playSound(center, Sound.ENTITY_IRON_GOLEM_HURT, 1.2f, 1.5f);
@@ -653,13 +658,14 @@ public final class ChainRains {
 
         public ChainTornadoDownpour(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("chain_tornado_downpour", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
+            config.setTracksPlayer(true);
             config.setDamage(44.0);
-            config.setDamageRadius(3.0);
+            config.setDamageRadius(6.0);
             config.setDurationTicks(400);
             config.setCooldownTicks(350);
             config.setDamageOnImpactOnly(true);
-            config.setImpactDamage(44.0);
-            config.setImpactRadius(4.0);
+            config.setImpactDamage(66.0);
+            config.setImpactRadius(8.0);
         }
 
         @Override
@@ -677,7 +683,7 @@ public final class ChainRains {
                 double z = Math.sin(angle) * 8.0;
                 Location chainLoc = center.clone().add(x, 15.0 + heightOffset, z);
                 BlockDisplayHandle chain = displayBuilder.spawnBlock(chainLoc, Material.CHAIN);
-                chain.scale(0.5f, 2.5f, 0.5f)
+                chain.scale(0.75f, 3.75f, 0.75f)
                      .glow(200, 200, 220)
                      .interpolation(2, 0);
                 chains.add(chain);
@@ -686,7 +692,7 @@ public final class ChainRains {
 
             // Center column accent
             BlockDisplayHandle core = displayBuilder.spawnBlock(center.clone().add(0, 15, 0), Material.IRON_BLOCK);
-            core.scale(0.6f, 0.6f, 0.6f).glow(180, 180, 190);
+            core.scale(0.9f, 0.9f, 0.9f).glow(180, 180, 190);
             spawnedEntities.add(core.entity());
 
             DisplayBuilder.playSound(center.clone().add(0, 15, 0), Sound.ENTITY_IRON_GOLEM_HURT, 1.0f, 0.4f);
@@ -775,8 +781,9 @@ public final class ChainRains {
 
         public RustStorm(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("rust_storm", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
+            config.setTracksPlayer(true);
             config.setDamage(40.0);
-            config.setDamageRadius(4.0);
+            config.setDamageRadius(8.0);
             config.setTicksBetweenDamage(15);
             config.setDurationTicks(400);
             config.setCooldownTicks(350);
@@ -814,7 +821,7 @@ public final class ChainRains {
 
                 Location blockLoc = center.clone().add(x, yOffset, z);
                 BlockDisplayHandle block = displayBuilder.spawnBlock(blockLoc, materials[i]);
-                float scale = (materials[i] == Material.IRON_BLOCK) ? 0.6f : 0.4f;
+                float scale = (materials[i] == Material.IRON_BLOCK) ? 0.9f : 0.6f;
                 block.scale(scale, scale, scale)
                      .glow(180, 100, 40) // Rust orange
                      .interpolation(2, 0);
@@ -913,13 +920,14 @@ public final class ChainRains {
 
         public ChainMeteorShower(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("chain_meteor_shower", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
+            config.setTracksPlayer(true);
             config.setDamage(50.0);
-            config.setDamageRadius(4.0);
+            config.setDamageRadius(8.0);
             config.setDurationTicks(400);
             config.setCooldownTicks(400);
             config.setDamageOnImpactOnly(true);
-            config.setImpactDamage(50.0);
-            config.setImpactRadius(4.0);
+            config.setImpactDamage(75.0);
+            config.setImpactRadius(8.0);
         }
 
         @Override
@@ -975,7 +983,7 @@ public final class ChainRains {
                         Location blockLoc = meteorCenter.clone().add(
                             clusterOffsets[j][0] * 0.8, clusterOffsets[j][1] * 0.8, clusterOffsets[j][2] * 0.8);
                         BlockDisplayHandle block = displayBuilder.spawnBlock(blockLoc, mats[j]);
-                        block.scale(0.9f, 0.9f, 0.9f)
+                        block.scale(1.35f, 1.35f, 1.35f)
                              .glow(180, 180, 190)
                              .interpolation(2, 0);
                         cluster.add(block);
@@ -1071,8 +1079,9 @@ public final class ChainRains {
 
         public PendulumRain(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("pendulum_rain", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
+            config.setTracksPlayer(true);
             config.setDamage(42.0);
-            config.setDamageRadius(3.0);
+            config.setDamageRadius(6.0);
             config.setTicksBetweenDamage(12);
             config.setDurationTicks(400);
             config.setCooldownTicks(350);
@@ -1094,7 +1103,7 @@ public final class ChainRains {
                 // Chain body (vertical initially)
                 Location chainLoc = center.clone().add(ax, ANCHOR_HEIGHT - CHAIN_LENGTH / 2, az);
                 BlockDisplayHandle chain = displayBuilder.spawnBlock(chainLoc, Material.CHAIN);
-                chain.scale(0.3f, CHAIN_LENGTH, 0.3f)
+                chain.scale(0.45f, CHAIN_LENGTH * 1.5f, 0.45f)
                      .glow(200, 200, 220)
                      .interpolation(3, 0);
                 pendulumChains.add(chain);
@@ -1104,7 +1113,7 @@ public final class ChainRains {
                 Location weightLoc = center.clone().add(ax, ANCHOR_HEIGHT - CHAIN_LENGTH, az);
                 Material weightMat = (i % 3 == 0) ? Material.ANVIL : Material.IRON_BLOCK;
                 BlockDisplayHandle weight = displayBuilder.spawnBlock(weightLoc, weightMat);
-                weight.scale(0.8f, 0.8f, 0.8f)
+                weight.scale(1.2f, 1.2f, 1.2f)
                       .glow(100, 100, 110)
                       .interpolation(3, 0);
                 pendulumWeights.add(weight);
@@ -1114,12 +1123,12 @@ public final class ChainRains {
             // Anchor bar accents
             BlockDisplayHandle leftAnchor = displayBuilder.spawnBlock(
                 center.clone().add(-PENDULUM_COUNT, ANCHOR_HEIGHT, 0), Material.DEEPSLATE);
-            leftAnchor.scale(0.5f, 0.5f, 0.5f).glow(60, 50, 50);
+            leftAnchor.scale(0.75f, 0.75f, 0.75f).glow(60, 50, 50);
             spawnedEntities.add(leftAnchor.entity());
 
             BlockDisplayHandle rightAnchor = displayBuilder.spawnBlock(
                 center.clone().add(PENDULUM_COUNT, ANCHOR_HEIGHT, 0), Material.DEEPSLATE);
-            rightAnchor.scale(0.5f, 0.5f, 0.5f).glow(60, 50, 50);
+            rightAnchor.scale(0.75f, 0.75f, 0.75f).glow(60, 50, 50);
             spawnedEntities.add(rightAnchor.entity());
 
             DisplayBuilder.playSound(center, Sound.BLOCK_CHAIN_PLACE, 1.2f, 0.4f);
@@ -1203,13 +1212,14 @@ public final class ChainRains {
 
         public ChainNetDrop(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("chain_net_drop", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
+            config.setTracksPlayer(true);
             config.setDamage(44.0);
-            config.setDamageRadius(4.0);
+            config.setDamageRadius(8.0);
             config.setDurationTicks(350);
             config.setCooldownTicks(320);
             config.setDamageOnImpactOnly(true);
-            config.setImpactDamage(44.0);
-            config.setImpactRadius(5.0);
+            config.setImpactDamage(66.0);
+            config.setImpactRadius(10.0);
         }
 
         @Override
@@ -1236,10 +1246,10 @@ public final class ChainRains {
 
                 if (i < 6) {
                     // Horizontal bars — wide and thin
-                    block.scale(0.15f, 0.15f, 6.0f);
+                    block.scale(0.22f, 0.22f, 9.0f);
                 } else {
                     // Vertical bars — wide and thin in other direction
-                    block.scale(6.0f, 0.15f, 0.15f);
+                    block.scale(9.0f, 0.22f, 0.22f);
                 }
                 block.glow(200, 200, 220).interpolation(3, 0);
                 netBlocks.add(block);
@@ -1251,7 +1261,7 @@ public final class ChainRains {
             for (double[] corner : corners) {
                 BlockDisplayHandle anchor = displayBuilder.spawnBlock(
                     center.clone().add(corner[0], netHeight, corner[2]), Material.IRON_BLOCK);
-                anchor.scale(0.4f, 0.4f, 0.4f).glow(180, 180, 190);
+                anchor.scale(0.6f, 0.6f, 0.6f).glow(180, 180, 190);
                 netBlocks.add(anchor);
                 spawnedEntities.add(anchor.entity());
             }
@@ -1296,9 +1306,9 @@ public final class ChainRains {
 
                 // Scale chains to match contraction
                 if (i < 6) {
-                    netBlocks.get(i).scale(0.15f, 0.15f, 6.0f * contraction);
+                    netBlocks.get(i).scale(0.22f, 0.22f, 9.0f * contraction);
                 } else if (i < 12) {
-                    netBlocks.get(i).scale(6.0f * contraction, 0.15f, 0.15f);
+                    netBlocks.get(i).scale(9.0f * contraction, 0.22f, 0.22f);
                 }
             }
 
@@ -1352,13 +1362,14 @@ public final class ChainRains {
 
         public ChainCascade(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("chain_cascade", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
+            config.setTracksPlayer(true);
             config.setDamage(40.0);
-            config.setDamageRadius(3.0);
+            config.setDamageRadius(6.0);
             config.setDurationTicks(350);
             config.setCooldownTicks(300);
             config.setDamageOnImpactOnly(true);
-            config.setImpactDamage(40.0);
-            config.setImpactRadius(3.5);
+            config.setImpactDamage(60.0);
+            config.setImpactRadius(7.0);
         }
 
         @Override
@@ -1393,7 +1404,7 @@ public final class ChainRains {
                         double zOffset = (c2 - CHAINS_PER_WAVE / 2.0) * 1.5;
                         Location chainLoc = c.clone().add(lateralX, START_Y, zOffset);
                         BlockDisplayHandle chain = displayBuilder.spawnBlock(chainLoc, Material.CHAIN);
-                        chain.scale(0.4f, 3.0f, 0.4f)
+                        chain.scale(0.6f, 4.5f, 0.6f)
                              .glow(200, 200, 220)
                              .interpolation(2, 0);
                         waves.get(wave).add(chain);
@@ -1403,7 +1414,7 @@ public final class ChainRains {
                     // Iron block connector at top of wave
                     BlockDisplayHandle connector = displayBuilder.spawnBlock(
                         c.clone().add(lateralX, START_Y + 1, 0), Material.IRON_BLOCK);
-                    connector.scale(0.5f, 0.3f, (float)(CHAINS_PER_WAVE * 1.5))
+                    connector.scale(0.75f, 0.45f, (float)(CHAINS_PER_WAVE * 2.25))
                              .glow(180, 180, 190);
                     waves.get(wave).add(connector);
                     spawnedEntities.add(connector.entity());
@@ -1480,8 +1491,9 @@ public final class ChainRains {
 
         public ChainBlizzard(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("chain_blizzard", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
+            config.setTracksPlayer(true);
             config.setDamage(40.0);
-            config.setDamageRadius(4.0);
+            config.setDamageRadius(8.0);
             config.setTicksBetweenDamage(12);
             config.setDurationTicks(400);
             config.setCooldownTicks(350);
@@ -1508,7 +1520,7 @@ public final class ChainRains {
                 );
                 Material mat = mats[i % mats.length];
                 BlockDisplayHandle frag = displayBuilder.spawnBlock(fragLoc, mat);
-                frag.scale(0.2f, 0.2f, 0.2f)
+                frag.scale(0.3f, 0.3f, 0.3f)
                     .glow(200, 200, 220)
                     .interpolation(2, 0);
                 fragments.add(frag);
@@ -1602,13 +1614,14 @@ public final class ChainRains {
 
         public ScatteredShackleRain(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("scattered_shackle_rain", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
+            config.setTracksPlayer(true);
             config.setDamage(42.0);
-            config.setDamageRadius(3.0);
+            config.setDamageRadius(6.0);
             config.setDurationTicks(350);
             config.setCooldownTicks(320);
             config.setDamageOnImpactOnly(true);
-            config.setImpactDamage(42.0);
-            config.setImpactRadius(3.0);
+            config.setImpactDamage(63.0);
+            config.setImpactRadius(7.0);
         }
 
         @Override
@@ -1649,17 +1662,17 @@ public final class ChainRains {
                     Location spawnLoc = c.clone().add(xOffsets.get(i), yPositions.get(i), zOffsets.get(i));
 
                     BlockDisplayHandle left = displayBuilder.spawnBlock(spawnLoc.clone().add(-0.7, 0, 0), Material.CHAIN);
-                    left.scale(0.3f, 2.0f, 0.3f).glow(200, 200, 220).interpolation(2, 0);
+                    left.scale(0.45f, 3.0f, 0.45f).glow(200, 200, 220).interpolation(2, 0);
                     leftChains.set(i, left);
                     spawnedEntities.add(left.entity());
 
                     BlockDisplayHandle right = displayBuilder.spawnBlock(spawnLoc.clone().add(0.7, 0, 0), Material.CHAIN);
-                    right.scale(0.3f, 2.0f, 0.3f).glow(200, 200, 220).interpolation(2, 0);
+                    right.scale(0.45f, 3.0f, 0.45f).glow(200, 200, 220).interpolation(2, 0);
                     rightChains.set(i, right);
                     spawnedEntities.add(right.entity());
 
                     BlockDisplayHandle conn = displayBuilder.spawnBlock(spawnLoc.clone().add(0, 1, 0), Material.IRON_BLOCK);
-                    conn.scale(1.8f, 0.4f, 0.4f).glow(180, 180, 190).interpolation(2, 0);
+                    conn.scale(2.7f, 0.6f, 0.6f).glow(180, 180, 190).interpolation(2, 0);
                     connectors.set(i, conn);
                     spawnedEntities.add(conn.entity());
 
@@ -1739,13 +1752,14 @@ public final class ChainRains {
 
         public WeightedChainFall(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("weighted_chain_fall", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
+            config.setTracksPlayer(true);
             config.setDamage(50.0);
-            config.setDamageRadius(3.5);
+            config.setDamageRadius(7.0);
             config.setDurationTicks(400);
             config.setCooldownTicks(380);
             config.setDamageOnImpactOnly(true);
-            config.setImpactDamage(50.0);
-            config.setImpactRadius(3.5);
+            config.setImpactDamage(75.0);
+            config.setImpactRadius(7.0);
         }
 
         @Override
@@ -1786,7 +1800,7 @@ public final class ChainRains {
 
                     // Heavy chain body
                     BlockDisplayHandle body = displayBuilder.spawnBlock(spawnLoc, Material.CHAIN);
-                    body.scale(0.5f, 5.0f, 0.5f)
+                    body.scale(0.75f, 7.5f, 0.75f)
                         .glow(200, 200, 220)
                         .interpolation(2, 0);
                     chainBodies.set(i, body);
@@ -1795,7 +1809,7 @@ public final class ChainRains {
                     // Iron weight at bottom
                     BlockDisplayHandle weight = displayBuilder.spawnBlock(
                         spawnLoc.clone().add(0, -3, 0), Material.IRON_BLOCK);
-                    weight.scale(1.5f, 1.5f, 1.5f)
+                    weight.scale(2.25f, 2.25f, 2.25f)
                           .glow(100, 100, 110)
                           .interpolation(2, 0);
                     weightBlocks.set(i, weight);
@@ -1804,7 +1818,7 @@ public final class ChainRains {
                     // Deepslate cap at top
                     BlockDisplayHandle cap = displayBuilder.spawnBlock(
                         spawnLoc.clone().add(0, 2.5, 0), Material.DEEPSLATE);
-                    cap.scale(0.7f, 0.5f, 0.7f)
+                    cap.scale(1.05f, 0.75f, 1.05f)
                        .glow(60, 50, 50);
                     topCaps.set(i, cap);
                     spawnedEntities.add(cap.entity());
@@ -1861,7 +1875,7 @@ public final class ChainRains {
 
                     // Chain coils on top effect — reposition chain body to ground
                     chainBodies.get(i).entity().teleport(c.clone().add(ox, 0.5, oz));
-                    chainBodies.get(i).scale(1.5f, 0.5f, 1.5f); // Flatten to simulate coiling
+                    chainBodies.get(i).scale(2.25f, 0.75f, 2.25f); // Flatten to simulate coiling
                     topCaps.get(i).entity().teleport(c.clone().add(ox, 1, oz));
                 }
             }
@@ -1897,13 +1911,14 @@ public final class ChainRains {
 
         public ChainLightningRain(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("chain_lightning_rain", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
+            config.setTracksPlayer(true);
             config.setDamage(46.0);
-            config.setDamageRadius(3.0);
+            config.setDamageRadius(6.0);
             config.setDurationTicks(350);
             config.setCooldownTicks(330);
             config.setDamageOnImpactOnly(true);
-            config.setImpactDamage(46.0);
-            config.setImpactRadius(3.5);
+            config.setImpactDamage(69.0);
+            config.setImpactRadius(7.0);
         }
 
         @Override
@@ -1946,7 +1961,7 @@ public final class ChainRains {
                     Location spawnLoc = c.clone().add(xPositions.get(i), yPositions.get(i), zPositions.get(i));
 
                     BlockDisplayHandle chain = displayBuilder.spawnBlock(spawnLoc, Material.CHAIN);
-                    chain.scale(0.4f, 2.5f, 0.4f)
+                    chain.scale(0.6f, 3.75f, 0.6f)
                          .glow(200, 200, 220)
                          .interpolation(1, 0);
                     boltChains.set(i, chain);
@@ -1954,7 +1969,7 @@ public final class ChainRains {
 
                     // Glowing core (lightning center)
                     BlockDisplayHandle core = displayBuilder.spawnBlock(spawnLoc, Material.IRON_BLOCK);
-                    core.scale(0.25f, 0.25f, 0.25f)
+                    core.scale(0.38f, 0.38f, 0.38f)
                         .glow(220, 230, 255)
                         .brightness(15, 15);
                     boltCores.set(i, core);

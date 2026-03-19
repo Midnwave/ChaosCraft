@@ -108,8 +108,8 @@ public abstract class AbstractAttack {
             applyRadiusDamage();
         }
 
-        // Debug: show damage radius outline every 5 ticks
-        if (plugin.getConfig().getBoolean("debug", false) && ticksAlive % 5 == 0) {
+        // Debug: show damage radius outline every 3 ticks
+        if (plugin.getConfig().getBoolean("debug", false) && ticksAlive % 3 == 0) {
             renderDebugRadius();
         }
     }
@@ -166,25 +166,25 @@ public abstract class AbstractAttack {
 
     /**
      * Renders a particle circle outline at the attack center showing the damage radius.
-     * RED = continuous damage radius, YELLOW = impact damage radius.
+     * BLUE = continuous damage radius, CYAN = impact damage radius.
      * Only shown when debug: true in config.yml.
      */
     private void renderDebugRadius() {
         if (center == null || center.getWorld() == null) return;
         World world = center.getWorld();
 
-        // Continuous damage radius (red circle)
+        // Continuous damage radius (blue circle)
         double radius = config.getDamageRadius();
         if (radius > 0 && config.getDamage() > 0) {
-            renderCircle(world, center, radius, Color.fromRGB(255, 50, 50), 0.8f);
+            renderCircle(world, center, radius, Color.fromRGB(50, 100, 255), 1.0f);
         }
 
-        // Impact damage radius (yellow circle, slightly above)
+        // Impact damage radius (cyan circle, slightly above)
         if (config.isDamageOnImpactOnly()) {
             double impactRadius = config.getImpactRadius();
             if (impactRadius > 0 && config.getImpactDamage() > 0) {
                 Location raised = center.clone().add(0, 0.1, 0);
-                renderCircle(world, raised, impactRadius, Color.fromRGB(255, 255, 50), 1.0f);
+                renderCircle(world, raised, impactRadius, Color.fromRGB(50, 200, 255), 1.2f);
             }
         }
     }

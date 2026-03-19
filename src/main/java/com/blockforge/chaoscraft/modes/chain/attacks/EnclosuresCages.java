@@ -64,11 +64,12 @@ public final class EnclosuresCages {
 
         public IronMaiden(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("iron_maiden", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
-            config.setDamage(5.0);
-            config.setDamageRadius(2.0);
+            config.setDamage(7.5);
+            config.setDamageRadius(6.0);
             config.setTicksBetweenDamage(15);
             config.setDurationTicks(200);
             config.setCooldownTicks(300);
+            config.setTracksPlayer(true);
         }
 
         @Override
@@ -81,7 +82,7 @@ public final class EnclosuresCages {
                 double yOff = i * 0.6;
                 BlockDisplayHandle h = displayBuilder.spawnBlock(
                         center.clone().add(-2.5, yOff, 0), Material.IRON_BARS);
-                h.scale(0.3f, 0.6f, 1.2f).glow(180, 180, 190).interpolation(2, 0);
+                h.scale(0.45f, 0.9f, 1.8f).glow(180, 180, 190).interpolation(2, 0);
                 leftBars.add(h);
                 spawnedEntities.add(h.entity());
             }
@@ -91,19 +92,19 @@ public final class EnclosuresCages {
                 double yOff = i * 0.6;
                 BlockDisplayHandle h = displayBuilder.spawnBlock(
                         center.clone().add(2.5, yOff, 0), Material.IRON_BARS);
-                h.scale(0.3f, 0.6f, 1.2f).glow(180, 180, 190).interpolation(2, 0);
+                h.scale(0.45f, 0.9f, 1.8f).glow(180, 180, 190).interpolation(2, 0);
                 rightBars.add(h);
                 spawnedEntities.add(h.entity());
             }
 
             // Top cap - iron block
             topCap = displayBuilder.spawnBlock(center.clone().add(0, 3.8, 0), Material.IRON_BLOCK);
-            topCap.scale(2.0f, 0.4f, 1.5f).glow(100, 100, 110).interpolation(2, 0);
+            topCap.scale(3.0f, 0.6f, 2.25f).glow(100, 100, 110).interpolation(2, 0);
             spawnedEntities.add(topCap.entity());
 
             // Bottom cap - deepslate
             bottomCap = displayBuilder.spawnBlock(center.clone().add(0, -0.3, 0), Material.DEEPSLATE);
-            bottomCap.scale(2.0f, 0.3f, 1.5f).glow(100, 100, 110).interpolation(2, 0);
+            bottomCap.scale(3.0f, 0.45f, 2.25f).glow(100, 100, 110).interpolation(2, 0);
             spawnedEntities.add(bottomCap.entity());
 
             // Interior spike chain blocks (6 spikes thrust inward after close)
@@ -114,7 +115,7 @@ public final class EnclosuresCages {
             for (double[] sp : spikePositions) {
                 BlockDisplayHandle h = displayBuilder.spawnBlock(
                         center.clone().add(sp[0] * 2.5, sp[1], sp[2]), Material.CHAIN);
-                h.scale(0.15f, 0.15f, 0.8f).glow(180, 100, 40).interpolation(2, 0);
+                h.scale(0.23f, 0.23f, 1.2f).glow(180, 100, 40).interpolation(2, 0);
                 spikes.add(h);
                 spawnedEntities.add(h.entity());
             }
@@ -221,11 +222,12 @@ public final class EnclosuresCages {
 
         public ChainCageDescend(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("chain_cage_descend", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
-            config.setDamage(6.0);
-            config.setDamageRadius(2.5);
+            config.setDamage(9.0);
+            config.setDamageRadius(6.0);
             config.setTicksBetweenDamage(15);
             config.setDurationTicks(240);
             config.setCooldownTicks(350);
+            config.setTracksPlayer(true);
         }
 
         @Override
@@ -242,7 +244,7 @@ public final class EnclosuresCages {
                 BlockDisplayHandle h = displayBuilder.spawnBlock(
                         center.clone().add(off[0] * currentSize, currentY + off[1] * currentSize * 2, off[2] * currentSize),
                         Material.IRON_BLOCK);
-                h.scale(0.6f, 0.6f, 0.6f).glow(180, 180, 190).interpolation(2, 0);
+                h.scale(0.9f, 0.9f, 0.9f).glow(180, 180, 190).interpolation(2, 0);
                 corners.add(h);
                 spawnedEntities.add(h.entity());
             }
@@ -264,9 +266,9 @@ public final class EnclosuresCages {
                 boolean isVertical = (pair[0] < 4 && pair[1] >= 4);
                 boolean isXAxis = (cornerOffsets[pair[0]][2] == cornerOffsets[pair[1]][2] &&
                         cornerOffsets[pair[0]][0] != cornerOffsets[pair[1]][0]);
-                float sx = isXAxis ? 1.8f : 0.3f;
-                float sy = isVertical ? 1.8f : 0.3f;
-                float sz = (!isXAxis && !isVertical) ? 1.8f : 0.3f;
+                float sx = isXAxis ? 2.7f : 0.45f;
+                float sy = isVertical ? 2.7f : 0.45f;
+                float sz = (!isXAxis && !isVertical) ? 2.7f : 0.45f;
                 h.scale(sx, sy, sz).glow(100, 100, 110).interpolation(2, 0);
                 edges.add(h);
                 spawnedEntities.add(h.entity());
@@ -394,11 +396,12 @@ public final class EnclosuresCages {
 
         public SuspendedGibbet(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("suspended_gibbet", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
-            config.setDamage(4.0);
-            config.setDamageRadius(2.0);
+            config.setDamage(6.0);
+            config.setDamageRadius(6.0);
             config.setTicksBetweenDamage(15);
             config.setDurationTicks(300);
             config.setCooldownTicks(400);
+            config.setTracksPlayer(true);
         }
 
         @Override
@@ -408,17 +411,17 @@ public final class EnclosuresCages {
 
             // Top ring - iron block
             topRing = displayBuilder.spawnBlock(center.clone().add(0, cageY + 3.5, 0), Material.IRON_BLOCK);
-            topRing.scale(2.0f, 0.3f, 2.0f).glow(180, 180, 190).interpolation(2, 0);
+            topRing.scale(3.0f, 0.45f, 3.0f).glow(180, 180, 190).interpolation(2, 0);
             spawnedEntities.add(topRing.entity());
 
             // Bottom ring - iron block
             bottomRing = displayBuilder.spawnBlock(center.clone().add(0, cageY, 0), Material.IRON_BLOCK);
-            bottomRing.scale(2.5f, 0.3f, 2.5f).glow(100, 100, 110).interpolation(2, 0);
+            bottomRing.scale(3.75f, 0.45f, 3.75f).glow(100, 100, 110).interpolation(2, 0);
             spawnedEntities.add(bottomRing.entity());
 
             // Hook chain above
             hookChain = displayBuilder.spawnBlock(center.clone().add(0, cageY + 4.0, 0), Material.CHAIN);
-            hookChain.scale(0.3f, 2.0f, 0.3f).glow(180, 100, 40).interpolation(2, 0);
+            hookChain.scale(0.45f, 3.0f, 0.45f).glow(180, 100, 40).interpolation(2, 0);
             spawnedEntities.add(hookChain.entity());
 
             // 8 curved bars forming bird-cage shape
@@ -428,7 +431,7 @@ public final class EnclosuresCages {
                 double z = Math.sin(angle) * 1.2;
                 BlockDisplayHandle h = displayBuilder.spawnBlock(
                         center.clone().add(x, cageY + 1.75, z), Material.CHAIN);
-                h.scale(0.2f, 3.0f, 0.2f).glow(180, 180, 190).interpolation(2, 0);
+                h.scale(0.3f, 4.5f, 0.3f).glow(180, 180, 190).interpolation(2, 0);
                 // Slight outward lean at middle using rotation
                 float lean = (float) (Math.PI * 0.08);
                 h.rotate(lean, (float) -Math.sin(angle), 0, (float) Math.cos(angle));
@@ -540,11 +543,12 @@ public final class EnclosuresCages {
 
         public ChainWeb(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("chain_web", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
-            config.setDamage(4.0);
-            config.setDamageRadius(4.0);
+            config.setDamage(6.0);
+            config.setDamageRadius(8.0);
             config.setTicksBetweenDamage(12);
             config.setDurationTicks(250);
             config.setCooldownTicks(300);
+            config.setTracksPlayer(true);
         }
 
         @Override
@@ -554,7 +558,7 @@ public final class EnclosuresCages {
 
             // Center node - heavy core
             centerNode = displayBuilder.spawnBlock(center.clone().add(0, 0.1, 0), Material.HEAVY_CORE);
-            centerNode.scale(0.5f, 0.3f, 0.5f).glow(100, 100, 110).interpolation(2, 0);
+            centerNode.scale(0.75f, 0.45f, 0.75f).glow(100, 100, 110).interpolation(2, 0);
             spawnedEntities.add(centerNode.entity());
 
             // 16 radial chains from center outward
@@ -565,9 +569,9 @@ public final class EnclosuresCages {
                 BlockDisplayHandle h = displayBuilder.spawnBlock(
                         center.clone().add(x * 0.5, 0.1, z * 0.5), Material.CHAIN);
                 // Scale along radial direction
-                float sx = (float) Math.abs(Math.cos(angle)) * 2.5f + 0.2f;
-                float sz = (float) Math.abs(Math.sin(angle)) * 2.5f + 0.2f;
-                h.scale(sx, 0.15f, sz).glow(180, 180, 190).interpolation(2, 0);
+                float sx = (float) Math.abs(Math.cos(angle)) * 3.75f + 0.3f;
+                float sz = (float) Math.abs(Math.sin(angle)) * 3.75f + 0.3f;
+                h.scale(sx, 0.23f, sz).glow(180, 180, 190).interpolation(2, 0);
                 radialChains.add(h);
                 spawnedEntities.add(h.entity());
             }
@@ -579,7 +583,7 @@ public final class EnclosuresCages {
                 double z = Math.sin(angle) * 1.5;
                 BlockDisplayHandle h = displayBuilder.spawnBlock(
                         center.clone().add(x, 0.1, z), Material.CHAIN);
-                h.scale(0.8f, 0.15f, 0.8f).glow(100, 100, 110).interpolation(2, 0);
+                h.scale(1.2f, 0.23f, 1.2f).glow(100, 100, 110).interpolation(2, 0);
                 innerRing.add(h);
                 spawnedEntities.add(h.entity());
             }
@@ -591,7 +595,7 @@ public final class EnclosuresCages {
                 double z = Math.sin(angle) * 3.5;
                 BlockDisplayHandle h = displayBuilder.spawnBlock(
                         center.clone().add(x, 0.1, z), Material.CHAIN);
-                h.scale(1.2f, 0.15f, 1.2f).glow(180, 100, 40).interpolation(2, 0);
+                h.scale(1.8f, 0.23f, 1.8f).glow(180, 100, 40).interpolation(2, 0);
                 outerRing.add(h);
                 spawnedEntities.add(h.entity());
             }
@@ -678,11 +682,12 @@ public final class EnclosuresCages {
 
         public ClosingWalls(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("closing_walls", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
-            config.setDamage(5.0);
-            config.setDamageRadius(3.0);
+            config.setDamage(7.5);
+            config.setDamageRadius(6.0);
             config.setTicksBetweenDamage(10);
             config.setDurationTicks(260);
             config.setCooldownTicks(350);
+            config.setTracksPlayer(true);
         }
 
         @Override
@@ -712,7 +717,7 @@ public final class EnclosuresCages {
                         int glowR = ((col + row) % 2 == 0) ? 180 : 100;
                         int glowG = ((col + row) % 2 == 0) ? 180 : 100;
                         int glowB = ((col + row) % 2 == 0) ? 190 : 110;
-                        h.scale(1.0f, 1.0f, 0.2f).glow(glowR, glowG, glowB).interpolation(2, 0);
+                        h.scale(1.5f, 1.5f, 0.3f).glow(glowR, glowG, glowB).interpolation(2, 0);
                         wall.add(h);
                         spawnedEntities.add(h.entity());
                     }
@@ -799,11 +804,12 @@ public final class EnclosuresCages {
 
         public ChainDome(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("chain_dome", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
-            config.setDamage(5.0);
-            config.setDamageRadius(5.0);
+            config.setDamage(7.5);
+            config.setDamageRadius(10.0);
             config.setTicksBetweenDamage(12);
             config.setDurationTicks(280);
             config.setCooldownTicks(350);
+            config.setTracksPlayer(true);
         }
 
         @Override
@@ -821,7 +827,7 @@ public final class EnclosuresCages {
                 // Spawn at ground, will animate upward
                 BlockDisplayHandle h = displayBuilder.spawnBlock(
                         center.clone().add(x, 0, z), Material.CHAIN);
-                h.scale(0.3f, 0.5f, 0.3f).glow(180, 180, 190).interpolation(3, 0);
+                h.scale(0.45f, 0.75f, 0.45f).glow(180, 180, 190).interpolation(3, 0);
                 domeChains.add(h);
                 spawnedEntities.add(h.entity());
             }
@@ -833,7 +839,7 @@ public final class EnclosuresCages {
                 double z = Math.sin(angle) * 4.5;
                 BlockDisplayHandle h = displayBuilder.spawnBlock(
                         center.clone().add(x, 0, z), Material.CHAIN);
-                h.scale(0.3f, 0.5f, 0.3f).glow(100, 100, 110).interpolation(3, 0);
+                h.scale(0.45f, 0.75f, 0.45f).glow(100, 100, 110).interpolation(3, 0);
                 domeChains.add(h);
                 spawnedEntities.add(h.entity());
             }
@@ -845,7 +851,7 @@ public final class EnclosuresCages {
                 double z = Math.sin(angle) * 2.0;
                 BlockDisplayHandle h = displayBuilder.spawnBlock(
                         center.clone().add(x, 0, z), Material.IRON_BLOCK);
-                h.scale(0.4f, 0.4f, 0.4f).glow(180, 100, 40).interpolation(3, 0);
+                h.scale(0.6f, 0.6f, 0.6f).glow(180, 100, 40).interpolation(3, 0);
                 domeChains.add(h);
                 spawnedEntities.add(h.entity());
             }
@@ -853,7 +859,7 @@ public final class EnclosuresCages {
             // Apex block
             BlockDisplayHandle apex = displayBuilder.spawnBlock(
                     center.clone().add(0, 0, 0), Material.HEAVY_CORE);
-            apex.scale(0.6f, 0.6f, 0.6f).glow(100, 100, 110).interpolation(3, 0);
+            apex.scale(0.9f, 0.9f, 0.9f).glow(100, 100, 110).interpolation(3, 0);
             domeChains.add(apex);
             spawnedEntities.add(apex.entity());
 
@@ -864,7 +870,7 @@ public final class EnclosuresCages {
                 double z = Math.sin(angle) * 3.0;
                 BlockDisplayHandle h = displayBuilder.spawnBlock(
                         center.clone().add(x, 6.0, z), Material.CHAIN);
-                h.scale(0.2f, 1.5f, 0.2f).glow(180, 180, 190).interpolation(2, 0);
+                h.scale(0.3f, 2.25f, 0.3f).glow(180, 180, 190).interpolation(2, 0);
                 fallingInterior.add(h);
                 spawnedEntities.add(h.entity());
             }
@@ -980,11 +986,12 @@ public final class EnclosuresCages {
 
         public PrisonBox(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("prison_box", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
-            config.setDamage(4.0);
-            config.setDamageRadius(2.5);
+            config.setDamage(6.0);
+            config.setDamageRadius(6.0);
             config.setTicksBetweenDamage(12);
             config.setDurationTicks(300);
             config.setCooldownTicks(400);
+            config.setTracksPlayer(true);
         }
 
         @Override
@@ -997,7 +1004,7 @@ public final class EnclosuresCages {
             for (double[] pos : floorPos) {
                 BlockDisplayHandle h = displayBuilder.spawnBlock(
                         center.clone().add(pos[0], -0.5, pos[2]), Material.DEEPSLATE);
-                h.scale(1.5f, 0.5f, 1.5f).glow(100, 100, 110).interpolation(4, 0);
+                h.scale(2.25f, 0.75f, 2.25f).glow(100, 100, 110).interpolation(4, 0);
                 // Start invisible (scale 0) and grow
                 h.scale(0.0f, 0.0f, 0.0f);
                 floorBlocks.add(h);
@@ -1140,11 +1147,12 @@ public final class EnclosuresCages {
 
         public ChainVortexTrap(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("chain_vortex_trap", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
-            config.setDamage(5.0);
-            config.setDamageRadius(3.0);
+            config.setDamage(7.5);
+            config.setDamageRadius(6.0);
             config.setTicksBetweenDamage(10);
             config.setDurationTicks(240);
             config.setCooldownTicks(300);
+            config.setTracksPlayer(true);
         }
 
         @Override
@@ -1161,8 +1169,8 @@ public final class EnclosuresCages {
                 Material mat = (i % 3 == 0) ? Material.IRON_BLOCK : Material.CHAIN;
                 BlockDisplayHandle h = displayBuilder.spawnBlock(
                         center.clone().add(x, height, z), mat);
-                float scale = 0.4f + (i / 15.0f) * 0.3f;
-                h.scale(scale, 0.8f, scale).glow(180, 180, 190).interpolation(2, 0);
+                float scale = 0.6f + (i / 15.0f) * 0.45f;
+                h.scale(scale, 1.2f, scale).glow(180, 180, 190).interpolation(2, 0);
                 spiralChains.add(h);
                 spawnedEntities.add(h.entity());
             }
@@ -1252,11 +1260,12 @@ public final class EnclosuresCages {
 
         public GallowsFrame(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("gallows_frame", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
-            config.setDamage(6.0);
-            config.setDamageRadius(2.0);
+            config.setDamage(9.0);
+            config.setDamageRadius(6.0);
             config.setTicksBetweenDamage(15);
             config.setDurationTicks(250);
             config.setCooldownTicks(350);
+            config.setTracksPlayer(true);
         }
 
         @Override
@@ -1421,14 +1430,15 @@ public final class EnclosuresCages {
 
         public ChainCoil(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("chain_coil", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
-            config.setDamage(4.0);
-            config.setDamageRadius(2.5);
+            config.setDamage(6.0);
+            config.setDamageRadius(6.0);
             config.setTicksBetweenDamage(15);
             config.setDurationTicks(200);
             config.setCooldownTicks(300);
             config.setDamageOnImpactOnly(true);
-            config.setImpactDamage(12.0);
-            config.setImpactRadius(5.0);
+            config.setImpactDamage(18.0);
+            config.setImpactRadius(10.0);
+            config.setTracksPlayer(true);
         }
 
         @Override
@@ -1445,7 +1455,7 @@ public final class EnclosuresCages {
                 Material mat = (i % 4 == 0) ? Material.IRON_BLOCK : Material.CHAIN;
                 BlockDisplayHandle h = displayBuilder.spawnBlock(
                         center.clone().add(x, height, z), mat);
-                h.scale(0.5f, 0.5f, 0.5f).glow(180, 180, 190).interpolation(2, 0);
+                h.scale(0.75f, 0.75f, 0.75f).glow(180, 180, 190).interpolation(2, 0);
                 coilBlocks.add(h);
                 spawnedEntities.add(h.entity());
             }
@@ -1577,11 +1587,12 @@ public final class EnclosuresCages {
 
         public LanternCage(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("lantern_cage", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
-            config.setDamage(5.0);
-            config.setDamageRadius(3.5);
+            config.setDamage(7.5);
+            config.setDamageRadius(7.0);
             config.setTicksBetweenDamage(30);
             config.setDurationTicks(300);
             config.setCooldownTicks(400);
+            config.setTracksPlayer(true);
         }
 
         @Override
@@ -1596,7 +1607,7 @@ public final class EnclosuresCages {
                 double z = Math.sin(angle) * 1.5;
                 BlockDisplayHandle h = displayBuilder.spawnBlock(
                         center.clone().add(x, 4.0, z), Material.CHAIN);
-                h.scale(0.25f, 2.0f, 0.25f).glow(180, 180, 190).interpolation(2, 0);
+                h.scale(0.38f, 3.0f, 0.38f).glow(180, 180, 190).interpolation(2, 0);
                 // Lean inward
                 float lean = (float) (Math.PI * 0.2);
                 h.rotate(lean, (float) -Math.sin(angle), 0, (float) Math.cos(angle));
@@ -1612,7 +1623,7 @@ public final class EnclosuresCages {
                 Material mat = (i % 2 == 0) ? Material.IRON_BARS : Material.CHAIN;
                 BlockDisplayHandle h = displayBuilder.spawnBlock(
                         center.clone().add(x, 2.5, z), mat);
-                h.scale(0.3f, 2.5f, 0.3f).glow(100, 100, 110).interpolation(2, 0);
+                h.scale(0.45f, 3.75f, 0.45f).glow(100, 100, 110).interpolation(2, 0);
                 middleRing.add(h);
                 spawnedEntities.add(h.entity());
             }
@@ -1624,7 +1635,7 @@ public final class EnclosuresCages {
                 double z = Math.sin(angle) * 1.5;
                 BlockDisplayHandle h = displayBuilder.spawnBlock(
                         center.clone().add(x, 1.0, z), Material.CHAIN);
-                h.scale(0.25f, 1.5f, 0.25f).glow(180, 100, 40).interpolation(2, 0);
+                h.scale(0.38f, 2.25f, 0.38f).glow(180, 100, 40).interpolation(2, 0);
                 float lean = (float) (-Math.PI * 0.2);
                 h.rotate(lean, (float) -Math.sin(angle), 0, (float) Math.cos(angle));
                 bottomPyramid.add(h);
@@ -1633,7 +1644,7 @@ public final class EnclosuresCages {
 
             // Central glowing block
             centralGlow = displayBuilder.spawnBlock(center.clone().add(0, 2.5, 0), Material.HEAVY_CORE);
-            centralGlow.scale(0.8f, 0.8f, 0.8f).glow(255, 200, 100).brightness(15, 15).interpolation(2, 0);
+            centralGlow.scale(1.2f, 1.2f, 1.2f).glow(255, 200, 100).brightness(15, 15).interpolation(2, 0);
             spawnedEntities.add(centralGlow.entity());
 
             DisplayBuilder.playSound(center, Sound.BLOCK_CHAIN_PLACE, 0.8f, 0.8f);
@@ -1733,11 +1744,12 @@ public final class EnclosuresCages {
 
         public ChainMaze(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("chain_maze", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
-            config.setDamage(4.0);
-            config.setDamageRadius(3.5);
+            config.setDamage(6.0);
+            config.setDamageRadius(7.0);
             config.setTicksBetweenDamage(12);
             config.setDurationTicks(280);
             config.setCooldownTicks(300);
+            config.setTracksPlayer(true);
 
             // 10 wall segments in a grid pattern
             wallPositions = new double[][] {
@@ -1766,9 +1778,9 @@ public final class EnclosuresCages {
                     Material mat = (seg % 3 == 0) ? Material.IRON_BARS : Material.CHAIN;
                     BlockDisplayHandle h = displayBuilder.spawnBlock(
                             center.clone().add(pos[0], row * 1.0, pos[2]), mat);
-                    float sx = wallIsXAxis[seg] ? 2.0f : 0.2f;
-                    float sz = wallIsXAxis[seg] ? 0.2f : 2.0f;
-                    h.scale(sx, 1.0f, sz).glow(180, 180, 190).interpolation(4, 0);
+                    float sx = wallIsXAxis[seg] ? 3.0f : 0.3f;
+                    float sz = wallIsXAxis[seg] ? 0.3f : 3.0f;
+                    h.scale(sx, 1.5f, sz).glow(180, 180, 190).interpolation(4, 0);
                     wallSegments.add(h);
                     spawnedEntities.add(h.entity());
                 }
@@ -1864,14 +1876,15 @@ public final class EnclosuresCages {
 
         public BarrelTrap(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("barrel_trap", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
-            config.setDamage(4.0);
-            config.setDamageRadius(2.0);
+            config.setDamage(6.0);
+            config.setDamageRadius(6.0);
             config.setTicksBetweenDamage(20);
             config.setDurationTicks(180);
             config.setCooldownTicks(280);
             config.setDamageOnImpactOnly(true);
-            config.setImpactDamage(10.0);
-            config.setImpactRadius(4.0);
+            config.setImpactDamage(15.0);
+            config.setImpactRadius(8.0);
+            config.setTracksPlayer(true);
         }
 
         @Override
@@ -1897,7 +1910,7 @@ public final class EnclosuresCages {
                     Material mat = (ring == 1) ? Material.IRON_BARS : Material.CHAIN;
                     BlockDisplayHandle h = displayBuilder.spawnBlock(
                             barrelCenter.clone().add(x, y, ring * 0.8 - 0.8), mat);
-                    h.scale(0.4f, 0.4f, 0.8f).glow(180, 180, 190).interpolation(2, 0);
+                    h.scale(0.6f, 0.6f, 1.2f).glow(180, 180, 190).interpolation(2, 0);
                     cylinderChains.add(h);
                     spawnedEntities.add(h.entity());
                 }
@@ -1906,13 +1919,13 @@ public final class EnclosuresCages {
             // Top cap
             topCap = displayBuilder.spawnBlock(
                     barrelCenter.clone().add(0, 0, 1.2), Material.IRON_BLOCK);
-            topCap.scale(1.5f, 1.5f, 0.3f).glow(100, 100, 110).interpolation(2, 0);
+            topCap.scale(2.25f, 2.25f, 0.45f).glow(100, 100, 110).interpolation(2, 0);
             spawnedEntities.add(topCap.entity());
 
             // Bottom cap
             bottomCap = displayBuilder.spawnBlock(
                     barrelCenter.clone().add(0, 0, -1.2), Material.IRON_BLOCK);
-            bottomCap.scale(1.5f, 1.5f, 0.3f).glow(100, 100, 110).interpolation(2, 0);
+            bottomCap.scale(2.25f, 2.25f, 0.45f).glow(100, 100, 110).interpolation(2, 0);
             spawnedEntities.add(bottomCap.entity());
 
             DisplayBuilder.playSound(barrelCenter, Sound.BLOCK_CHAIN_PLACE, 1.0f, 0.6f);
@@ -2031,14 +2044,15 @@ public final class EnclosuresCages {
 
         public ChainPyramid(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("chain_pyramid", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
-            config.setDamage(5.0);
-            config.setDamageRadius(3.0);
+            config.setDamage(7.5);
+            config.setDamageRadius(6.0);
             config.setTicksBetweenDamage(15);
             config.setDurationTicks(200);
             config.setCooldownTicks(300);
             config.setDamageOnImpactOnly(true);
-            config.setImpactDamage(14.0);
-            config.setImpactRadius(5.0);
+            config.setImpactDamage(21.0);
+            config.setImpactRadius(10.0);
+            config.setTracksPlayer(true);
         }
 
         @Override
@@ -2068,7 +2082,7 @@ public final class EnclosuresCages {
 
                     BlockDisplayHandle h = displayBuilder.spawnBlock(
                             center.clone().add(bx, pyramidY + y, bz), Material.CHAIN);
-                    h.scale(0.35f, 0.35f, 0.35f).glow(180, 180, 190).interpolation(2, 0);
+                    h.scale(0.53f, 0.53f, 0.53f).glow(180, 180, 190).interpolation(2, 0);
                     edgeChains.add(h);
                     spawnedEntities.add(h.entity());
                 }
@@ -2077,7 +2091,7 @@ public final class EnclosuresCages {
 
             // Apex block at top center
             apexBlock = displayBuilder.spawnBlock(center.clone().add(0, pyramidY + 4, 0), Material.NETHERITE_BLOCK);
-            apexBlock.scale(0.6f, 0.6f, 0.6f).glow(100, 100, 110).interpolation(2, 0);
+            apexBlock.scale(0.9f, 0.9f, 0.9f).glow(100, 100, 110).interpolation(2, 0);
             spawnedEntities.add(apexBlock.entity());
 
             DisplayBuilder.playSound(center.clone().add(0, pyramidY, 0), Sound.BLOCK_CHAIN_PLACE, 1.0f, 0.4f);
@@ -2211,14 +2225,15 @@ public final class EnclosuresCages {
 
         public CollapsingSphere(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("collapsing_sphere", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
-            config.setDamage(4.0);
-            config.setDamageRadius(3.5);
+            config.setDamage(6.0);
+            config.setDamageRadius(7.0);
             config.setTicksBetweenDamage(12);
             config.setDurationTicks(220);
             config.setCooldownTicks(350);
             config.setDamageOnImpactOnly(true);
-            config.setImpactDamage(16.0);
-            config.setImpactRadius(6.0);
+            config.setImpactDamage(24.0);
+            config.setImpactRadius(12.0);
+            config.setTracksPlayer(true);
         }
 
         @Override
@@ -2243,7 +2258,7 @@ public final class EnclosuresCages {
 
                 BlockDisplayHandle h = displayBuilder.spawnBlock(
                         center.clone().add(x, yPos + 3.0, z), mat);
-                h.scale(0.5f, 0.5f, 0.5f).glow(180, 180, 190).interpolation(2, 0);
+                h.scale(0.75f, 0.75f, 0.75f).glow(180, 180, 190).interpolation(2, 0);
                 sphereChains.add(h);
                 spawnedEntities.add(h.entity());
             }

@@ -64,11 +64,12 @@ public final class EnvironmentalAmbient {
 
         public ChainAurora(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("chain_aurora", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
-            config.setDamage(42.0);
-            config.setDamageRadius(4.0);
+            config.setDamage(63.0);
+            config.setDamageRadius(8.0);
             config.setDurationTicks(500);
             config.setCooldownTicks(400);
             config.setTicksBetweenDamage(25);
+            config.setTracksPlayer(true);
             currentHeight = START_HEIGHT;
         }
 
@@ -84,7 +85,7 @@ public final class EnvironmentalAmbient {
                 Location loc = center.clone().add(x, START_HEIGHT, 0);
                 BlockDisplayHandle chain = displayBuilder.spawnBlock(loc, Material.CHAIN);
                 float height = 4.0f + (float)(Math.sin(i * 0.6) * 1.5);
-                chain.scale(0.4f, height, 0.4f)
+                chain.scale(0.6f, height * 1.5f, 0.6f)
                      .glow(0, 220, 255)
                      .interpolation(3, 0);
                 curtainChains.add(chain);
@@ -160,11 +161,12 @@ public final class EnvironmentalAmbient {
 
         public RustingChainField(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("rusting_chain_field", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
-            config.setDamage(44.0);
-            config.setDamageRadius(5.0);
+            config.setDamage(66.0);
+            config.setDamageRadius(10.0);
             config.setDurationTicks(400);
             config.setCooldownTicks(350);
             config.setTicksBetweenDamage(20);
+            config.setTracksPlayer(true);
         }
 
         public static RustingChainField create(ChaosCraftPlugin plugin) { return new RustingChainField(plugin); }
@@ -188,7 +190,7 @@ public final class EnvironmentalAmbient {
                 baseScales.add(baseScale);
                 rotations.add((float)(Math.random() * Math.PI));
 
-                chain.scale(baseScale, 0.3f, baseScale)
+                chain.scale(baseScale * 1.5f, 0.45f, baseScale * 1.5f)
                      .rotate(rotations.get(i), 0, 1, 0)
                      .glow(180, 100, 40)
                      .interpolation(5, 0);
@@ -266,11 +268,12 @@ public final class EnvironmentalAmbient {
 
         public ChainEarthquake(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("chain_earthquake", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
-            config.setDamage(48.0);
-            config.setDamageRadius(4.0);
+            config.setDamage(72.0);
+            config.setDamageRadius(8.0);
             config.setDurationTicks(CYCLE_TICKS * TOTAL_CYCLES + 20);
             config.setCooldownTicks(400);
             config.setTicksBetweenDamage(15);
+            config.setTracksPlayer(true);
         }
 
         public static ChainEarthquake create(ChaosCraftPlugin plugin) { return new ChainEarthquake(plugin); }
@@ -336,7 +339,7 @@ public final class EnvironmentalAmbient {
                     for (int i = 0; i < CHAIN_COUNT; i++) {
                         Location loc = c.clone().add(offsetsX.get(i), -1.0, offsetsZ.get(i));
                         BlockDisplayHandle chain = displayBuilder.spawnBlock(loc, Material.CHAIN);
-                        chain.scale(0.5f, 0.1f, 0.5f)
+                        chain.scale(0.75f, 0.15f, 0.75f)
                              .glow(180, 180, 190)
                              .interpolation(2, 0);
                         chains.set(i, chain);
@@ -426,8 +429,8 @@ public final class EnvironmentalAmbient {
 
         public PhantomChains(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("phantom_chains", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
-            config.setDamage(46.0);
-            config.setDamageRadius(2.5);
+            config.setDamage(69.0);
+            config.setDamageRadius(6.0);
             config.setDurationTicks(400);
             config.setCooldownTicks(350);
             config.setTicksBetweenDamage(30);
@@ -459,7 +462,7 @@ public final class EnvironmentalAmbient {
                 double z = Math.sin(phase) * radius;
                 Location loc = center.clone().add(x, height, z);
                 BlockDisplayHandle chain = displayBuilder.spawnBlock(loc, Material.CHAIN);
-                chain.scale(0.25f, 1.2f, 0.25f)
+                chain.scale(0.38f, 1.8f, 0.38f)
                      .glow(200, 200, 220)
                      .interpolation(2, 0);
                 chains.add(chain);
@@ -558,11 +561,12 @@ public final class EnvironmentalAmbient {
 
         public ChainFog(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("chain_fog", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
-            config.setDamage(40.0);
-            config.setDamageRadius(6.0);
+            config.setDamage(60.0);
+            config.setDamageRadius(12.0);
             config.setDurationTicks(500);
             config.setCooldownTicks(380);
             config.setTicksBetweenDamage(25);
+            config.setTracksPlayer(true);
         }
 
         public static ChainFog create(ChaosCraftPlugin plugin) { return new ChainFog(plugin); }
@@ -583,7 +587,7 @@ public final class EnvironmentalAmbient {
 
                 Location loc = center.clone().add(ox, posY.get(i), oz);
                 BlockDisplayHandle frag = displayBuilder.spawnBlock(loc, Material.CHAIN);
-                frag.scale(0.15f + (float)(Math.random() * 0.2), 0.15f, 0.15f + (float)(Math.random() * 0.2))
+                frag.scale(0.23f + (float)(Math.random() * 0.3), 0.23f, 0.23f + (float)(Math.random() * 0.3))
                     .glow(100, 100, 110)
                     .interpolation(3, 0);
                 float rot = (float)(Math.random() * Math.PI);
@@ -679,11 +683,12 @@ public final class EnvironmentalAmbient {
 
         public ChainInfestation(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("chain_infestation", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
-            config.setDamage(46.0);
-            config.setDamageRadius(4.0);
+            config.setDamage(69.0);
+            config.setDamageRadius(8.0);
             config.setDurationTicks(450);
             config.setCooldownTicks(380);
             config.setTicksBetweenDamage(20);
+            config.setTracksPlayer(true);
         }
 
         public static ChainInfestation create(ChaosCraftPlugin plugin) { return new ChainInfestation(plugin); }
@@ -709,7 +714,7 @@ public final class EnvironmentalAmbient {
                 for (int seg = 0; seg < SEGMENTS_PER_WORM; seg++) {
                     Location loc = center.clone().add(ox, -0.5 + seg * 0.3, oz);
                     BlockDisplayHandle chain = displayBuilder.spawnBlock(loc, Material.CHAIN);
-                    chain.scale(0.2f, 0.4f, 0.2f)
+                    chain.scale(0.3f, 0.6f, 0.3f)
                          .glow(100, 100, 110)
                          .interpolation(2, 0);
                     segments.add(chain);
@@ -805,13 +810,14 @@ public final class EnvironmentalAmbient {
 
         public ChainThunderstorm(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("chain_thunderstorm", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
-            config.setDamage(50.0);
-            config.setDamageRadius(3.0);
+            config.setDamage(75.0);
+            config.setDamageRadius(6.0);
             config.setDurationTicks(400);
             config.setCooldownTicks(380);
             config.setDamageOnImpactOnly(true);
-            config.setImpactDamage(50.0);
-            config.setImpactRadius(3.5);
+            config.setImpactDamage(75.0);
+            config.setImpactRadius(7.0);
+            config.setTracksPlayer(true);
         }
 
         public static ChainThunderstorm create(ChaosCraftPlugin plugin) { return new ChainThunderstorm(plugin); }
@@ -834,7 +840,7 @@ public final class EnvironmentalAmbient {
                 for (int seg = 0; seg < SEGMENTS_PER_BOLT; seg++) {
                     Location loc = center.clone().add(ox, 25, oz); // Start hidden high
                     BlockDisplayHandle chain = displayBuilder.spawnBlock(loc, Material.CHAIN);
-                    chain.scale(0.3f, 1.0f, 0.3f)
+                    chain.scale(0.45f, 1.5f, 0.45f)
                          .glow(200, 200, 220)
                          .interpolation(1, 0);
                     segments.add(chain);
@@ -946,11 +952,12 @@ public final class EnvironmentalAmbient {
 
         public ChainTide(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("chain_tide", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
-            config.setDamage(44.0);
-            config.setDamageRadius(4.0);
+            config.setDamage(66.0);
+            config.setDamageRadius(8.0);
             config.setDurationTicks(TICKS_PER_CYCLE * TOTAL_CYCLES + 40);
             config.setCooldownTicks(350);
             config.setTicksBetweenDamage(15);
+            config.setTracksPlayer(true);
         }
 
         public static ChainTide create(ChaosCraftPlugin plugin) { return new ChainTide(plugin); }
@@ -966,7 +973,7 @@ public final class EnvironmentalAmbient {
 
                 Location loc = center.clone().add(x, 0, -SWEEP_DISTANCE / 2);
                 BlockDisplayHandle chain = displayBuilder.spawnBlock(loc, Material.CHAIN);
-                chain.scale(0.4f, 2.5f, 0.4f)
+                chain.scale(0.6f, 3.75f, 0.6f)
                      .glow(180, 180, 190)
                      .interpolation(2, 0);
                 chains.add(chain);
@@ -1056,11 +1063,12 @@ public final class EnvironmentalAmbient {
 
         public ChainEclipse(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("chain_eclipse", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
-            config.setDamage(48.0);
-            config.setDamageRadius(3.5);
+            config.setDamage(72.0);
+            config.setDamageRadius(7.0);
             config.setDurationTicks(450);
             config.setCooldownTicks(400);
             config.setTicksBetweenDamage(18);
+            config.setTracksPlayer(true);
         }
 
         public static ChainEclipse create(ChaosCraftPlugin plugin) { return new ChainEclipse(plugin); }
@@ -1073,7 +1081,7 @@ public final class EnvironmentalAmbient {
             // Central dark core
             Location coreLoc = center.clone().add(0, START_HEIGHT, 0);
             coreBlock = displayBuilder.spawnBlock(coreLoc, Material.NETHERITE_BLOCK);
-            coreBlock.scale(2.5f, 0.8f, 2.5f)
+            coreBlock.scale(3.75f, 1.2f, 3.75f)
                      .glow(60, 50, 50)
                      .interpolation(3, 0);
             spawnedEntities.add(coreBlock.entity());
@@ -1085,7 +1093,7 @@ public final class EnvironmentalAmbient {
                 double z = Math.sin(angle) * INITIAL_RADIUS;
                 Location loc = center.clone().add(x, START_HEIGHT, z);
                 BlockDisplayHandle chain = displayBuilder.spawnBlock(loc, Material.CHAIN);
-                chain.scale(0.5f, 2.0f, 0.5f)
+                chain.scale(0.75f, 3.0f, 0.75f)
                      .glow(180, 180, 190)
                      .interpolation(3, 0);
                 ringChains.add(chain);
@@ -1190,13 +1198,14 @@ public final class EnvironmentalAmbient {
 
         public HauntedChains(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("haunted_chains", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
-            config.setDamage(42.0);
-            config.setDamageRadius(3.0);
+            config.setDamage(63.0);
+            config.setDamageRadius(6.0);
             config.setDurationTicks(420);
             config.setCooldownTicks(350);
             config.setDamageOnImpactOnly(true);
-            config.setImpactDamage(46.0);
-            config.setImpactRadius(3.0);
+            config.setImpactDamage(69.0);
+            config.setImpactRadius(7.0);
+            config.setTracksPlayer(true);
         }
 
         public static HauntedChains create(ChaosCraftPlugin plugin) { return new HauntedChains(plugin); }
@@ -1224,7 +1233,7 @@ public final class EnvironmentalAmbient {
 
                 Location loc = center.clone().add(ox, ay, oz);
                 BlockDisplayHandle chain = displayBuilder.spawnBlock(loc, Material.CHAIN);
-                chain.scale(0.3f, chainLen, 0.3f)
+                chain.scale(0.45f, chainLen * 1.5f, 0.45f)
                      .glow(200, 200, 220)
                      .interpolation(2, 0);
                 chains.add(chain);
@@ -1344,8 +1353,8 @@ public final class EnvironmentalAmbient {
 
         public ChainWhisper(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("chain_whisper", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
-            config.setDamage(52.0);
-            config.setDamageRadius(2.0);
+            config.setDamage(78.0);
+            config.setDamageRadius(6.0);
             config.setDurationTicks(350);
             config.setCooldownTicks(300);
             config.setTicksBetweenDamage(12);
@@ -1369,7 +1378,7 @@ public final class EnvironmentalAmbient {
                 double z = Math.sin(phase) * ORBIT_RADIUS;
                 Location loc = center.clone().add(x, heightOff, z);
                 BlockDisplayHandle chain = displayBuilder.spawnBlock(loc, Material.CHAIN);
-                chain.scale(0.12f, 0.5f, 0.12f)
+                chain.scale(0.18f, 0.75f, 0.18f)
                      .glow(200, 200, 220)
                      .interpolation(1, 0);
                 chains.add(chain);
@@ -1455,11 +1464,12 @@ public final class EnvironmentalAmbient {
 
         public ChainFrostbite(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("chain_frostbite", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
-            config.setDamage(44.0);
-            config.setDamageRadius(5.0);
+            config.setDamage(66.0);
+            config.setDamageRadius(10.0);
             config.setDurationTicks(400);
             config.setCooldownTicks(370);
             config.setTicksBetweenDamage(18);
+            config.setTracksPlayer(true);
         }
 
         public static ChainFrostbite create(ChaosCraftPlugin plugin) { return new ChainFrostbite(plugin); }
@@ -1477,7 +1487,7 @@ public final class EnvironmentalAmbient {
                     // Chain segment
                     Location chainLoc = center.clone(); // Will be positioned in onTick
                     BlockDisplayHandle chain = displayBuilder.spawnBlock(chainLoc, Material.CHAIN);
-                    chain.scale(0.3f, 0.1f, 0.3f)
+                    chain.scale(0.45f, 0.15f, 0.45f)
                          .glow(150, 200, 255)
                          .interpolation(2, 0);
                     chainSegments.add(chain);
@@ -1485,7 +1495,7 @@ public final class EnvironmentalAmbient {
 
                     // Ice segment alongside
                     BlockDisplayHandle ice = displayBuilder.spawnBlock(chainLoc, Material.BLUE_ICE);
-                    ice.scale(0.2f, 0.15f, 0.2f)
+                    ice.scale(0.3f, 0.23f, 0.3f)
                        .glow(100, 180, 255)
                        .interpolation(2, 0);
                     iceSegments.add(ice);
@@ -1588,11 +1598,12 @@ public final class EnvironmentalAmbient {
 
         public ChainSandstorm(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("chain_sandstorm", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
-            config.setDamage(42.0);
-            config.setDamageRadius(5.0);
+            config.setDamage(63.0);
+            config.setDamageRadius(10.0);
             config.setDurationTicks(450);
             config.setCooldownTicks(370);
             config.setTicksBetweenDamage(18);
+            config.setTracksPlayer(true);
         }
 
         public static ChainSandstorm create(ChaosCraftPlugin plugin) { return new ChainSandstorm(plugin); }
@@ -1615,7 +1626,7 @@ public final class EnvironmentalAmbient {
                 double z = Math.sin(angle) * currentRadius;
                 Location loc = center.clone().add(x, height, z);
                 BlockDisplayHandle chain = displayBuilder.spawnBlock(loc, Material.CHAIN);
-                chain.scale(0.2f, 0.4f, 0.2f)
+                chain.scale(0.3f, 0.6f, 0.3f)
                      .glow(180, 160, 100)
                      .interpolation(2, 0);
                 chains.add(chain);
@@ -1719,13 +1730,14 @@ public final class EnvironmentalAmbient {
 
         public ChainGraveyardRise(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("chain_graveyard_rise", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
-            config.setDamage(46.0);
-            config.setDamageRadius(3.5);
+            config.setDamage(69.0);
+            config.setDamageRadius(7.0);
             config.setDurationTicks(450);
             config.setCooldownTicks(380);
             config.setDamageOnImpactOnly(true);
-            config.setImpactDamage(46.0);
-            config.setImpactRadius(3.5);
+            config.setImpactDamage(69.0);
+            config.setImpactRadius(7.0);
+            config.setTracksPlayer(true);
         }
 
         public static ChainGraveyardRise create(ChaosCraftPlugin plugin) { return new ChainGraveyardRise(plugin); }
@@ -1752,7 +1764,7 @@ public final class EnvironmentalAmbient {
 
                 Location loc = center.clone().add(ox, -0.5, oz);
                 BlockDisplayHandle chain = displayBuilder.spawnBlock(loc, Material.CHAIN);
-                chain.scale(0.4f, 0.1f, 0.4f)
+                chain.scale(0.6f, 0.15f, 0.6f)
                      .glow(100, 100, 110)
                      .interpolation(2, 0);
                 chains.add(chain);
@@ -1908,13 +1920,14 @@ public final class EnvironmentalAmbient {
 
         public ChainApocalypse(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("chain_apocalypse", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
-            config.setDamage(62.0);
-            config.setDamageRadius(6.0);
+            config.setDamage(93.0);
+            config.setDamageRadius(12.0);
             config.setDurationTicks(500);
             config.setCooldownTicks(500);
             config.setDamageOnImpactOnly(true);
-            config.setImpactDamage(66.0);
-            config.setImpactRadius(8.0);
+            config.setImpactDamage(99.0);
+            config.setImpactRadius(16.0);
+            config.setTracksPlayer(true);
         }
 
         public static ChainApocalypse create(ChaosCraftPlugin plugin) { return new ChainApocalypse(plugin); }
@@ -1934,7 +1947,7 @@ public final class EnvironmentalAmbient {
                 for (int seg = 0; seg < CHAINS_PER_PILLAR; seg++) {
                     Location loc = center.clone().add(px, seg * 1.5, pz);
                     BlockDisplayHandle chain = displayBuilder.spawnBlock(loc, Material.CHAIN);
-                    chain.scale(0.6f, 1.5f, 0.6f)
+                    chain.scale(0.9f, 2.25f, 0.9f)
                          .glow(180, 180, 190)
                          .interpolation(2, 0);
                     pillar.add(chain);
@@ -1947,7 +1960,7 @@ public final class EnvironmentalAmbient {
             for (int i = 0; i < CONNECTING_CHAINS; i++) {
                 Location loc = center.clone().add(0, 3, 0);
                 BlockDisplayHandle connector = displayBuilder.spawnBlock(loc, Material.IRON_BARS);
-                connector.scale(0.3f, 0.3f, 4.0f)
+                connector.scale(0.45f, 0.45f, 6.0f)
                          .glow(100, 100, 110)
                          .interpolation(2, 0);
                 connectors.add(connector);
@@ -1959,7 +1972,7 @@ public final class EnvironmentalAmbient {
             for (int i = 0; i < CORE_BLOCKS; i++) {
                 Location loc = center.clone().add(0, 2 + i * 0.6, 0);
                 BlockDisplayHandle core = displayBuilder.spawnBlock(loc, coreMats[i]);
-                float s = (i == 0) ? 1.8f : 1.0f + (float)(Math.random() * 0.5);
+                float s = (i == 0) ? 2.7f : 1.5f + (float)(Math.random() * 0.75);
                 core.scale(s, s * 0.8f, s)
                     .glow(60, 50, 50)
                     .interpolation(3, 0);

@@ -54,11 +54,12 @@ public final class WeaponsTools {
 
         public ChainSword(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("chain_sword", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
-            config.setDamage(42.0);
-            config.setDamageRadius(8.0);
+            config.setDamage(63.0);
+            config.setDamageRadius(16.0);
             config.setDurationTicks(400);
             config.setCooldownTicks(300);
             config.setTicksBetweenDamage(60);
+            config.setTracksPlayer(true);
         }
 
         @Override
@@ -70,8 +71,8 @@ public final class WeaponsTools {
             for (int i = 0; i < 6; i++) {
                 Location loc = center.clone().add(0, -2 + i * 1.2, 0);
                 BlockDisplayHandle h = displayBuilder.spawnBlock(loc, Material.DEEPSLATE);
-                float width = 0.9f - (i * 0.1f); // Taper from 0.9 to 0.4
-                h.scale(width, 1.1f, 0.25f).glow(80, 80, 90).interpolation(2, 0);
+                float width = 1.35f - (i * 0.15f); // Taper from 1.35 to 0.6
+                h.scale(width, 1.65f, 0.38f).glow(80, 80, 90).interpolation(2, 0);
                 bladeBlocks.add(h);
                 spawnedEntities.add(h.entity());
             }
@@ -79,13 +80,13 @@ public final class WeaponsTools {
             // Crossguard: 2 iron blocks extending perpendicular
             BlockDisplayHandle guardL = displayBuilder.spawnBlock(
                     center.clone().add(-1.2, -2.2, 0), Material.IRON_BLOCK);
-            guardL.scale(1.2f, 0.35f, 0.35f).glow(180, 180, 190).interpolation(2, 0);
+            guardL.scale(1.8f, 0.5f, 0.5f).glow(180, 180, 190).interpolation(2, 0);
             crossguardBlocks.add(guardL);
             spawnedEntities.add(guardL.entity());
 
             BlockDisplayHandle guardR = displayBuilder.spawnBlock(
                     center.clone().add(1.2, -2.2, 0), Material.IRON_BLOCK);
-            guardR.scale(1.2f, 0.35f, 0.35f).glow(180, 180, 190).interpolation(2, 0);
+            guardR.scale(1.8f, 0.5f, 0.5f).glow(180, 180, 190).interpolation(2, 0);
             crossguardBlocks.add(guardR);
             spawnedEntities.add(guardR.entity());
 
@@ -93,14 +94,14 @@ public final class WeaponsTools {
             for (int i = 0; i < 3; i++) {
                 Location loc = center.clone().add(0, -3.0 - i * 0.9, 0);
                 BlockDisplayHandle h = displayBuilder.spawnBlock(loc, Material.CHAIN);
-                h.scale(0.4f, 0.8f, 0.4f).glow(120, 120, 130).interpolation(2, 0);
+                h.scale(0.6f, 1.2f, 0.6f).glow(120, 120, 130).interpolation(2, 0);
                 handleBlocks.add(h);
                 spawnedEntities.add(h.entity());
             }
 
             // Pommel: 1 netherite block at base
             pommel = displayBuilder.spawnBlock(center.clone().add(0, -5.8, 0), Material.NETHERITE_BLOCK);
-            pommel.scale(0.5f, 0.5f, 0.5f).glow(40, 40, 50).interpolation(2, 0);
+            pommel.scale(0.75f, 0.75f, 0.75f).glow(40, 40, 50).interpolation(2, 0);
             spawnedEntities.add(pommel.entity());
 
             DisplayBuilder.playSound(center, Sound.BLOCK_CHAIN_PLACE, 1.0f, 0.5f);
@@ -224,11 +225,12 @@ public final class WeaponsTools {
 
         public ChainMace(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("chain_mace", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
-            config.setDamage(48.0);
-            config.setDamageRadius(9.0);
+            config.setDamage(72.0);
+            config.setDamageRadius(18.0);
             config.setDurationTicks(400);
             config.setCooldownTicks(320);
             config.setTicksBetweenDamage(50);
+            config.setTracksPlayer(true);
         }
 
         @Override
@@ -240,7 +242,7 @@ public final class WeaponsTools {
             for (int i = 0; i < 4; i++) {
                 Location loc = center.clone().add(0, 1.0 + i * 1.0, 0);
                 BlockDisplayHandle h = displayBuilder.spawnBlock(loc, Material.CHAIN);
-                h.scale(0.35f, 0.9f, 0.35f).glow(120, 120, 130).interpolation(2, 0);
+                h.scale(0.5f, 1.35f, 0.5f).glow(120, 120, 130).interpolation(2, 0);
                 shaftBlocks.add(h);
                 spawnedEntities.add(h.entity());
             }
@@ -253,7 +255,7 @@ public final class WeaponsTools {
             for (double[] off : headOffsets) {
                 Location loc = center.clone().add(off[0], headBaseY + off[1], off[2]);
                 BlockDisplayHandle h = displayBuilder.spawnBlock(loc, Material.IRON_BLOCK);
-                h.scale(0.8f, 0.8f, 0.8f).glow(190, 190, 200).interpolation(2, 0);
+                h.scale(1.2f, 1.2f, 1.2f).glow(190, 190, 200).interpolation(2, 0);
                 headBlocks.add(h);
                 spawnedEntities.add(h.entity());
             }
@@ -353,11 +355,12 @@ public final class WeaponsTools {
 
         public ChainScythe(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("chain_scythe", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
-            config.setDamage(44.0);
-            config.setDamageRadius(9.0);
+            config.setDamage(66.0);
+            config.setDamageRadius(18.0);
             config.setDurationTicks(380);
             config.setCooldownTicks(280);
             config.setTicksBetweenDamage(50);
+            config.setTracksPlayer(true);
         }
 
         @Override
@@ -372,8 +375,8 @@ public final class WeaponsTools {
                 double y = Math.sin(angle) * 1.5 + 1.5; // Chest height
                 Location loc = center.clone().add(x, y, 0);
                 BlockDisplayHandle h = displayBuilder.spawnBlock(loc, Material.IRON_BLOCK);
-                float taper = 0.7f - (Math.abs(i - 2) * 0.1f);
-                h.scale(taper, 0.35f, 0.2f).glow(200, 200, 210).interpolation(2, 0);
+                float taper = 1.05f - (Math.abs(i - 2) * 0.15f);
+                h.scale(taper, 0.5f, 0.3f).glow(200, 200, 210).interpolation(2, 0);
                 bladeArc.add(h);
                 spawnedEntities.add(h.entity());
             }
@@ -382,7 +385,7 @@ public final class WeaponsTools {
             for (int i = 0; i < 5; i++) {
                 Location loc = center.clone().add(0, 1.2 - i * 0.8, 0);
                 BlockDisplayHandle h = displayBuilder.spawnBlock(loc, Material.CHAIN);
-                h.scale(0.3f, 0.7f, 0.3f).glow(120, 120, 130).interpolation(2, 0);
+                h.scale(0.45f, 1.05f, 0.45f).glow(120, 120, 130).interpolation(2, 0);
                 handleBlocks.add(h);
                 spawnedEntities.add(h.entity());
             }
@@ -391,7 +394,7 @@ public final class WeaponsTools {
             for (int i = 0; i < 2; i++) {
                 Location loc = center.clone().add(0, -2.8 - i * 0.7, 0);
                 BlockDisplayHandle h = displayBuilder.spawnBlock(loc, Material.DEEPSLATE);
-                h.scale(0.45f, 0.6f, 0.45f).glow(70, 70, 80).interpolation(2, 0);
+                h.scale(0.68f, 0.9f, 0.68f).glow(70, 70, 80).interpolation(2, 0);
                 gripBlocks.add(h);
                 spawnedEntities.add(h.entity());
             }
@@ -482,11 +485,12 @@ public final class WeaponsTools {
 
         public ChainSpear(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("chain_spear", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
-            config.setDamage(46.0);
-            config.setDamageRadius(6.0);
+            config.setDamage(69.0);
+            config.setDamageRadius(12.0);
             config.setDurationTicks(450);
             config.setCooldownTicks(300);
             config.setTicksBetweenDamage(40);
+            config.setTracksPlayer(true);
         }
 
         @Override
@@ -496,12 +500,12 @@ public final class WeaponsTools {
 
             // Tip: 2 netherite blocks with tapering scale
             BlockDisplayHandle tipFront = displayBuilder.spawnBlock(center.clone().add(0, 1.5, -1.2), Material.NETHERITE_BLOCK);
-            tipFront.scale(0.3f, 0.3f, 0.8f).glow(40, 40, 50).interpolation(2, 0);
+            tipFront.scale(0.45f, 0.45f, 1.2f).glow(40, 40, 50).interpolation(2, 0);
             tipBlocks.add(tipFront);
             spawnedEntities.add(tipFront.entity());
 
             BlockDisplayHandle tipRear = displayBuilder.spawnBlock(center.clone().add(0, 1.5, -0.4), Material.NETHERITE_BLOCK);
-            tipRear.scale(0.5f, 0.5f, 0.6f).glow(40, 40, 50).interpolation(2, 0);
+            tipRear.scale(0.75f, 0.75f, 0.9f).glow(40, 40, 50).interpolation(2, 0);
             tipBlocks.add(tipRear);
             spawnedEntities.add(tipRear.entity());
 
@@ -509,7 +513,7 @@ public final class WeaponsTools {
             for (int i = 0; i < 8; i++) {
                 Location loc = center.clone().add(0, 1.5, 0.2 + i * 0.8);
                 BlockDisplayHandle h = displayBuilder.spawnBlock(loc, Material.CHAIN);
-                h.scale(0.3f, 0.3f, 0.7f).glow(120, 120, 130).interpolation(2, 0);
+                h.scale(0.45f, 0.45f, 1.05f).glow(120, 120, 130).interpolation(2, 0);
                 shaftBlocks.add(h);
                 spawnedEntities.add(h.entity());
             }
@@ -616,11 +620,12 @@ public final class WeaponsTools {
 
         public ChainShield(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("chain_shield", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
-            config.setDamage(40.0);
-            config.setDamageRadius(5.0);
+            config.setDamage(60.0);
+            config.setDamageRadius(10.0);
             config.setDurationTicks(360);
             config.setCooldownTicks(300);
             config.setTicksBetweenDamage(20);
+            config.setTracksPlayer(true);
         }
 
         @Override
@@ -635,7 +640,7 @@ public final class WeaponsTools {
                     double y = row * 1.1 + 0.5;
                     Location loc = center.clone().add(x, y, 0);
                     BlockDisplayHandle h = displayBuilder.spawnBlock(loc, Material.IRON_BLOCK);
-                    h.scale(1.0f, 1.0f, 0.4f).glow(190, 190, 200).interpolation(2, 0);
+                    h.scale(1.5f, 1.5f, 0.6f).glow(190, 190, 200).interpolation(2, 0);
                     wallBlocks.add(h);
                     spawnedEntities.add(h.entity());
                 }
@@ -644,28 +649,28 @@ public final class WeaponsTools {
             // Chain border: top edge
             BlockDisplayHandle topChain = displayBuilder.spawnBlock(
                     center.clone().add(0, 3.8, 0), Material.CHAIN);
-            topChain.scale(5.0f, 0.3f, 0.3f).glow(120, 120, 130).interpolation(2, 0);
+            topChain.scale(7.5f, 0.45f, 0.45f).glow(120, 120, 130).interpolation(2, 0);
             borderChains.add(topChain);
             spawnedEntities.add(topChain.entity());
 
             // Bottom edge
             BlockDisplayHandle bottomChain = displayBuilder.spawnBlock(
                     center.clone().add(0, 0.2, 0), Material.CHAIN);
-            bottomChain.scale(5.0f, 0.3f, 0.3f).glow(120, 120, 130).interpolation(2, 0);
+            bottomChain.scale(7.5f, 0.45f, 0.45f).glow(120, 120, 130).interpolation(2, 0);
             borderChains.add(bottomChain);
             spawnedEntities.add(bottomChain.entity());
 
             // Left edge
             BlockDisplayHandle leftChain = displayBuilder.spawnBlock(
                     center.clone().add(-2.3, 2.0, 0), Material.CHAIN);
-            leftChain.scale(0.3f, 3.8f, 0.3f).glow(120, 120, 130).interpolation(2, 0);
+            leftChain.scale(0.45f, 5.7f, 0.45f).glow(120, 120, 130).interpolation(2, 0);
             borderChains.add(leftChain);
             spawnedEntities.add(leftChain.entity());
 
             // Right edge
             BlockDisplayHandle rightChain = displayBuilder.spawnBlock(
                     center.clone().add(2.3, 2.0, 0), Material.CHAIN);
-            rightChain.scale(0.3f, 3.8f, 0.3f).glow(120, 120, 130).interpolation(2, 0);
+            rightChain.scale(0.45f, 5.7f, 0.45f).glow(120, 120, 130).interpolation(2, 0);
             borderChains.add(rightChain);
             spawnedEntities.add(rightChain.entity());
 
@@ -769,11 +774,12 @@ public final class WeaponsTools {
 
         public ChainAxe(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("chain_axe", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
-            config.setDamage(44.0);
-            config.setDamageRadius(7.0);
+            config.setDamage(66.0);
+            config.setDamageRadius(14.0);
             config.setDurationTicks(360);
             config.setCooldownTicks(280);
             config.setTicksBetweenDamage(30);
+            config.setTracksPlayer(true);
         }
 
         @Override
@@ -786,7 +792,7 @@ public final class WeaponsTools {
             for (double[] off : leftOffsets) {
                 Location loc = center.clone().add(off[0], 3 + off[1], off[2]);
                 BlockDisplayHandle h = displayBuilder.spawnBlock(loc, Material.IRON_BLOCK);
-                h.scale(0.8f, 0.6f, 0.25f).glow(200, 200, 210).interpolation(2, 0);
+                h.scale(1.2f, 0.9f, 0.38f).glow(200, 200, 210).interpolation(2, 0);
                 bladeLeft.add(h);
                 spawnedEntities.add(h.entity());
             }
@@ -796,7 +802,7 @@ public final class WeaponsTools {
             for (double[] off : rightOffsets) {
                 Location loc = center.clone().add(off[0], 3 + off[1], off[2]);
                 BlockDisplayHandle h = displayBuilder.spawnBlock(loc, Material.IRON_BLOCK);
-                h.scale(0.8f, 0.6f, 0.25f).glow(200, 200, 210).interpolation(2, 0);
+                h.scale(1.2f, 0.9f, 0.38f).glow(200, 200, 210).interpolation(2, 0);
                 bladeRight.add(h);
                 spawnedEntities.add(h.entity());
             }
@@ -805,7 +811,7 @@ public final class WeaponsTools {
             for (int i = 0; i < 5; i++) {
                 Location loc = center.clone().add(0, 3 - 0.8 - i * 0.8, 0);
                 BlockDisplayHandle h = displayBuilder.spawnBlock(loc, Material.CHAIN);
-                h.scale(0.3f, 0.7f, 0.3f).glow(120, 120, 130).interpolation(2, 0);
+                h.scale(0.45f, 1.05f, 0.45f).glow(120, 120, 130).interpolation(2, 0);
                 handleBlocks.add(h);
                 spawnedEntities.add(h.entity());
             }
@@ -905,11 +911,12 @@ public final class WeaponsTools {
 
         public ChainTrident(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("chain_trident", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
-            config.setDamage(46.0);
-            config.setDamageRadius(6.0);
+            config.setDamage(69.0);
+            config.setDamageRadius(12.0);
             config.setDurationTicks(420);
             config.setCooldownTicks(300);
             config.setTicksBetweenDamage(45);
+            config.setTracksPlayer(true);
         }
 
         @Override
@@ -924,8 +931,8 @@ public final class WeaponsTools {
                     double spread = prongXOff[p] * (1.0 + seg * 0.3);
                     Location loc = center.clone().add(spread, 3.0 + seg * 0.9, 0);
                     BlockDisplayHandle h = displayBuilder.spawnBlock(loc, Material.CHAIN);
-                    float taper = 0.35f - seg * 0.08f;
-                    h.scale(taper, 0.8f, 0.25f).glow(120, 120, 140).interpolation(2, 0);
+                    float taper = 0.5f - seg * 0.12f;
+                    h.scale(taper, 1.2f, 0.38f).glow(120, 120, 140).interpolation(2, 0);
                     prongBlocks.add(h);
                     spawnedEntities.add(h.entity());
                 }
@@ -935,14 +942,14 @@ public final class WeaponsTools {
             for (int i = 0; i < 6; i++) {
                 Location loc = center.clone().add(0, 2.5 - i * 0.7, 0);
                 BlockDisplayHandle h = displayBuilder.spawnBlock(loc, Material.CHAIN);
-                h.scale(0.3f, 0.6f, 0.3f).glow(120, 120, 130).interpolation(2, 0);
+                h.scale(0.45f, 0.9f, 0.45f).glow(120, 120, 130).interpolation(2, 0);
                 shaftBlocks.add(h);
                 spawnedEntities.add(h.entity());
             }
 
             // Base: 1 iron block
             baseBlock = displayBuilder.spawnBlock(center.clone().add(0, -1.7, 0), Material.IRON_BLOCK);
-            baseBlock.scale(0.4f, 0.4f, 0.4f).glow(190, 190, 200).interpolation(2, 0);
+            baseBlock.scale(0.6f, 0.6f, 0.6f).glow(190, 190, 200).interpolation(2, 0);
             spawnedEntities.add(baseBlock.entity());
 
             DisplayBuilder.playSound(center, Sound.BLOCK_CHAIN_PLACE, 1.0f, 0.8f);
@@ -1082,11 +1089,12 @@ public final class WeaponsTools {
 
         public ChainCrossbow(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("chain_crossbow", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
-            config.setDamage(42.0);
-            config.setDamageRadius(5.0);
+            config.setDamage(63.0);
+            config.setDamageRadius(10.0);
             config.setDurationTicks(400);
             config.setCooldownTicks(280);
             config.setTicksBetweenDamage(30);
+            config.setTracksPlayer(true);
         }
 
         @Override
@@ -1098,8 +1106,8 @@ public final class WeaponsTools {
             for (int i = 0; i < 3; i++) {
                 Location loc = center.clone().add(-0.5 - i * 0.8, 2.0 + i * 0.2, 0);
                 BlockDisplayHandle h = displayBuilder.spawnBlock(loc, Material.CHAIN);
-                float taper = 0.35f - i * 0.05f;
-                h.scale(0.7f, taper, 0.2f).glow(120, 120, 130).interpolation(2, 0);
+                float taper = 0.5f - i * 0.08f;
+                h.scale(1.05f, taper, 0.3f).glow(120, 120, 130).interpolation(2, 0);
                 leftArm.add(h);
                 spawnedEntities.add(h.entity());
             }
@@ -1108,8 +1116,8 @@ public final class WeaponsTools {
             for (int i = 0; i < 3; i++) {
                 Location loc = center.clone().add(0.5 + i * 0.8, 2.0 + i * 0.2, 0);
                 BlockDisplayHandle h = displayBuilder.spawnBlock(loc, Material.CHAIN);
-                float taper = 0.35f - i * 0.05f;
-                h.scale(0.7f, taper, 0.2f).glow(120, 120, 130).interpolation(2, 0);
+                float taper = 0.5f - i * 0.08f;
+                h.scale(1.05f, taper, 0.3f).glow(120, 120, 130).interpolation(2, 0);
                 rightArm.add(h);
                 spawnedEntities.add(h.entity());
             }
@@ -1118,7 +1126,7 @@ public final class WeaponsTools {
             for (int i = 0; i < 4; i++) {
                 Location loc = center.clone().add(0, 1.5, 0.5 + i * 0.7);
                 BlockDisplayHandle h = displayBuilder.spawnBlock(loc, Material.IRON_BLOCK);
-                h.scale(0.4f, 0.5f, 0.6f).glow(190, 190, 200).interpolation(2, 0);
+                h.scale(0.6f, 0.75f, 0.9f).glow(190, 190, 200).interpolation(2, 0);
                 stockBlocks.add(h);
                 spawnedEntities.add(h.entity());
             }
@@ -1129,7 +1137,7 @@ public final class WeaponsTools {
                 for (int seg = 0; seg < 2; seg++) {
                     Location loc = center.clone().add(0, -10, 0); // Hidden below
                     BlockDisplayHandle h = displayBuilder.spawnBlock(loc, Material.CHAIN);
-                    h.scale(0.2f, 0.2f, 0.6f).glow(150, 150, 160).interpolation(2, 0);
+                    h.scale(0.3f, 0.3f, 0.9f).glow(150, 150, 160).interpolation(2, 0);
                     bolt.add(h);
                     spawnedEntities.add(h.entity());
                 }
@@ -1257,14 +1265,15 @@ public final class WeaponsTools {
 
         public ChainWarHammer(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("chain_war_hammer", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
-            config.setDamage(50.0);
-            config.setDamageRadius(10.0);
+            config.setDamage(75.0);
+            config.setDamageRadius(20.0);
             config.setDurationTicks(420);
             config.setCooldownTicks(350);
             config.setTicksBetweenDamage(60);
             config.setDamageOnImpactOnly(true);
-            config.setImpactDamage(50.0);
-            config.setImpactRadius(8.0);
+            config.setImpactDamage(75.0);
+            config.setImpactRadius(16.0);
+            config.setTracksPlayer(true);
         }
 
         @Override
@@ -1279,7 +1288,7 @@ public final class WeaponsTools {
                     double y = 6.0 + row * 0.8;
                     Location loc = center.clone().add(x, y, 0);
                     BlockDisplayHandle h = displayBuilder.spawnBlock(loc, Material.IRON_BLOCK);
-                    h.scale(0.8f, 0.7f, 0.6f).glow(190, 190, 200).interpolation(2, 0);
+                    h.scale(1.2f, 1.05f, 0.9f).glow(190, 190, 200).interpolation(2, 0);
                     headBlocks.add(h);
                     spawnedEntities.add(h.entity());
                 }
@@ -1287,14 +1296,14 @@ public final class WeaponsTools {
 
             // Spike on back of head: 1 netherite
             spikeBlock = displayBuilder.spawnBlock(center.clone().add(0, 6.4, 0.5), Material.NETHERITE_BLOCK);
-            spikeBlock.scale(0.3f, 0.3f, 0.8f).glow(40, 40, 50).interpolation(2, 0);
+            spikeBlock.scale(0.45f, 0.45f, 1.2f).glow(40, 40, 50).interpolation(2, 0);
             spawnedEntities.add(spikeBlock.entity());
 
             // Handle: 5 chain blocks below head
             for (int i = 0; i < 5; i++) {
                 Location loc = center.clone().add(0, 5.2 - i * 0.9, 0);
                 BlockDisplayHandle h = displayBuilder.spawnBlock(loc, Material.CHAIN);
-                h.scale(0.35f, 0.8f, 0.35f).glow(120, 120, 130).interpolation(2, 0);
+                h.scale(0.5f, 1.2f, 0.5f).glow(120, 120, 130).interpolation(2, 0);
                 handleBlocks.add(h);
                 spawnedEntities.add(h.entity());
             }
@@ -1435,11 +1444,12 @@ public final class WeaponsTools {
 
         public ChainFlailStar(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("chain_flail_star", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
-            config.setDamage(44.0);
-            config.setDamageRadius(8.0);
+            config.setDamage(66.0);
+            config.setDamageRadius(16.0);
             config.setDurationTicks(400);
             config.setCooldownTicks(300);
             config.setTicksBetweenDamage(25);
+            config.setTracksPlayer(true);
         }
 
         @Override
@@ -1449,7 +1459,7 @@ public final class WeaponsTools {
 
             // Core: 1 iron block (morning star center)
             coreBlock = displayBuilder.spawnBlock(center.clone().add(0, 4, 0), Material.IRON_BLOCK);
-            coreBlock.scale(0.9f, 0.9f, 0.9f).glow(190, 190, 200).interpolation(2, 0);
+            coreBlock.scale(1.35f, 1.35f, 1.35f).glow(190, 190, 200).interpolation(2, 0);
             spawnedEntities.add(coreBlock.entity());
 
             // 6 spikes radiating outward (iron bars) in 6 directions
@@ -1459,7 +1469,7 @@ public final class WeaponsTools {
             for (double[] dir : spikeDirections) {
                 Location loc = center.clone().add(dir[0] * 0.7, 4 + dir[1] * 0.7, dir[2] * 0.7);
                 BlockDisplayHandle h = displayBuilder.spawnBlock(loc, Material.IRON_BARS);
-                h.scale(0.3f, 0.3f, 0.3f).glow(200, 200, 210).interpolation(2, 0);
+                h.scale(0.45f, 0.45f, 0.45f).glow(200, 200, 210).interpolation(2, 0);
                 spikeBlocks.add(h);
                 spawnedEntities.add(h.entity());
             }
@@ -1468,7 +1478,7 @@ public final class WeaponsTools {
             for (int i = 0; i < 4; i++) {
                 Location loc = center.clone().add(0, 5.0 + i * 0.8, 0);
                 BlockDisplayHandle h = displayBuilder.spawnBlock(loc, Material.CHAIN);
-                h.scale(0.25f, 0.7f, 0.25f).glow(120, 120, 130).interpolation(2, 0);
+                h.scale(0.38f, 1.05f, 0.38f).glow(120, 120, 130).interpolation(2, 0);
                 chainBlocks.add(h);
                 spawnedEntities.add(h.entity());
             }

@@ -55,11 +55,12 @@ public final class SpinningRotational {
 
         public ChainBuzzsaw(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("chain_buzzsaw", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
-            config.setDamage(44.0);
-            config.setDamageRadius(4.0);
+            config.setDamage(66.0);
+            config.setDamageRadius(8.0);
             config.setDurationTicks(200);
             config.setCooldownTicks(280);
             config.setTicksBetweenDamage(10);
+            config.setTracksPlayer(true);
         }
 
         @Override
@@ -76,7 +77,7 @@ public final class SpinningRotational {
                 double z = Math.sin(angle) * 3.0;
                 BlockDisplayHandle h = displayBuilder.spawnBlock(
                         center.clone().add(x, 0, z), Material.CHAIN);
-                h.scale(0.8f, 0.8f, 0.8f).glow(180, 180, 190).interpolation(2, 0);
+                h.scale(1.2f, 1.2f, 1.2f).glow(180, 180, 190).interpolation(2, 0);
                 discBlocks.add(h);
                 spawnedEntities.add(h.entity());
             }
@@ -148,11 +149,12 @@ public final class SpinningRotational {
 
         public IronWindmill(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("iron_windmill", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
-            config.setDamage(42.0);
-            config.setDamageRadius(5.0);
+            config.setDamage(63.0);
+            config.setDamageRadius(10.0);
             config.setDurationTicks(240);
             config.setCooldownTicks(300);
             config.setTicksBetweenDamage(12);
+            config.setTracksPlayer(true);
         }
 
         @Override
@@ -162,7 +164,7 @@ public final class SpinningRotational {
 
             // Central hub (iron block)
             hub = displayBuilder.spawnBlock(center.clone(), Material.IRON_BLOCK);
-            hub.scale(1.2f, 1.2f, 1.2f).glow(180, 180, 190).interpolation(2, 0);
+            hub.scale(1.8f, 1.8f, 1.8f).glow(180, 180, 190).interpolation(2, 0);
             spawnedEntities.add(hub.entity());
 
             // 4 arms, 3 chains each = 12 chain blocks
@@ -173,7 +175,7 @@ public final class SpinningRotational {
                     double z = Math.sin(armAngle) * seg * 1.5;
                     BlockDisplayHandle h = displayBuilder.spawnBlock(
                             center.clone().add(x, 0, z), Material.CHAIN);
-                    h.scale(0.7f, 0.7f, 0.7f).glow(100, 100, 110).interpolation(2, 0);
+                    h.scale(1.05f, 1.05f, 1.05f).glow(100, 100, 110).interpolation(2, 0);
                     armBlocks.add(h);
                     spawnedEntities.add(h.entity());
                 }
@@ -250,11 +252,12 @@ public final class SpinningRotational {
 
         public ChainDrill(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("chain_drill", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
-            config.setDamage(48.0);
-            config.setDamageRadius(3.5);
+            config.setDamage(72.0);
+            config.setDamageRadius(7.0);
             config.setDurationTicks(180);
             config.setCooldownTicks(260);
             config.setTicksBetweenDamage(8);
+            config.setTracksPlayer(true);
         }
 
         @Override
@@ -273,7 +276,7 @@ public final class SpinningRotational {
                 double z = Math.sin(spiralAngle) * radius;
                 BlockDisplayHandle h = displayBuilder.spawnBlock(
                         center.clone().add(x, y + yOffset, z), Material.CHAIN);
-                h.scale(0.7f, 0.7f, 0.7f).glow(100, 100, 110).interpolation(2, 0);
+                h.scale(1.05f, 1.05f, 1.05f).glow(100, 100, 110).interpolation(2, 0);
                 drillBlocks.add(h);
                 spawnedEntities.add(h.entity());
             }
@@ -343,11 +346,12 @@ public final class SpinningRotational {
 
         public TornadoOfChains(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("tornado_of_chains", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
-            config.setDamage(46.0);
-            config.setDamageRadius(4.5);
+            config.setDamage(69.0);
+            config.setDamageRadius(9.0);
             config.setDurationTicks(260);
             config.setCooldownTicks(320);
             config.setTicksBetweenDamage(10);
+            config.setTracksPlayer(true);
         }
 
         @Override
@@ -367,7 +371,7 @@ public final class SpinningRotational {
                 Material mat = (i % 3 == 0) ? Material.IRON_BLOCK : Material.CHAIN;
                 BlockDisplayHandle h = displayBuilder.spawnBlock(
                         center.clone().add(x, y, z), mat);
-                h.scale(0.75f, 0.75f, 0.75f).glow(180, 180, 190).interpolation(2, 0);
+                h.scale(1.1f, 1.1f, 1.1f).glow(180, 180, 190).interpolation(2, 0);
                 tornadoBlocks.add(h);
                 spawnedEntities.add(h.entity());
             }
@@ -448,11 +452,12 @@ public final class SpinningRotational {
 
         public SpinningChainStar(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("spinning_chain_star", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
-            config.setDamage(40.0);
-            config.setDamageRadius(4.5);
+            config.setDamage(60.0);
+            config.setDamageRadius(9.0);
             config.setDurationTicks(220);
             config.setCooldownTicks(280);
             config.setTicksBetweenDamage(10);
+            config.setTracksPlayer(true);
         }
 
         @Override
@@ -464,7 +469,7 @@ public final class SpinningRotational {
 
             // Center heavy core
             centerBlock = displayBuilder.spawnBlock(waist, Material.HEAVY_CORE);
-            centerBlock.scale(0.9f, 0.9f, 0.9f).glow(180, 180, 190).interpolation(2, 0);
+            centerBlock.scale(1.35f, 1.35f, 1.35f).glow(180, 180, 190).interpolation(2, 0);
             spawnedEntities.add(centerBlock.entity());
 
             // 5 arms, 2 chains each
@@ -478,9 +483,9 @@ public final class SpinningRotational {
                             waist.clone().add(x, 0, z), Material.CHAIN);
                     // Tips glow brighter (rust orange)
                     if (seg == 2) {
-                        h.scale(0.8f, 0.8f, 0.8f).glow(255, 180, 80).interpolation(2, 0);
+                        h.scale(1.2f, 1.2f, 1.2f).glow(255, 180, 80).interpolation(2, 0);
                     } else {
-                        h.scale(0.7f, 0.7f, 0.7f).glow(100, 100, 110).interpolation(2, 0);
+                        h.scale(1.05f, 1.05f, 1.05f).glow(100, 100, 110).interpolation(2, 0);
                     }
                     starBlocks.add(h);
                     spawnedEntities.add(h.entity());
@@ -562,11 +567,12 @@ public final class SpinningRotational {
 
         public ChainCentrifuge(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("chain_centrifuge", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
-            config.setDamage(44.0);
-            config.setDamageRadius(5.5);
+            config.setDamage(66.0);
+            config.setDamageRadius(11.0);
             config.setDurationTicks(220);
             config.setCooldownTicks(300);
             config.setTicksBetweenDamage(10);
+            config.setTracksPlayer(true);
         }
 
         @Override
@@ -578,7 +584,7 @@ public final class SpinningRotational {
             for (int y = 0; y < 4; y++) {
                 BlockDisplayHandle h = displayBuilder.spawnBlock(
                         center.clone().add(0, y, 0), Material.IRON_BLOCK);
-                h.scale(0.9f, 0.9f, 0.9f).glow(180, 180, 190).interpolation(2, 0);
+                h.scale(1.35f, 1.35f, 1.35f).glow(180, 180, 190).interpolation(2, 0);
                 pillarBlocks.add(h);
                 spawnedEntities.add(h.entity());
             }
@@ -590,7 +596,7 @@ public final class SpinningRotational {
                 double z = Math.sin(angle) * chainRadius;
                 BlockDisplayHandle h = displayBuilder.spawnBlock(
                         center.clone().add(x, 1.5, z), Material.CHAIN);
-                h.scale(0.6f, 0.6f, 0.6f).glow(100, 100, 110).interpolation(2, 0);
+                h.scale(0.9f, 0.9f, 0.9f).glow(100, 100, 110).interpolation(2, 0);
                 chainBlocks.add(h);
                 spawnedEntities.add(h.entity());
             }
@@ -670,11 +676,12 @@ public final class SpinningRotational {
 
         public HelixSpiral(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("helix_spiral", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
-            config.setDamage(42.0);
-            config.setDamageRadius(3.5);
+            config.setDamage(63.0);
+            config.setDamageRadius(7.0);
             config.setDurationTicks(240);
             config.setCooldownTicks(300);
             config.setTicksBetweenDamage(12);
+            config.setTracksPlayer(true);
         }
 
         @Override
@@ -694,7 +701,7 @@ public final class SpinningRotational {
                 double z = Math.sin(angle) * radius;
                 BlockDisplayHandle h = displayBuilder.spawnBlock(
                         center.clone().add(x, y, z), Material.CHAIN);
-                h.scale(0.7f, 0.7f, 0.7f).glow(180, 180, 190).interpolation(2, 0);
+                h.scale(1.05f, 1.05f, 1.05f).glow(180, 180, 190).interpolation(2, 0);
                 helixA.add(h);
                 spawnedEntities.add(h.entity());
             }
@@ -708,7 +715,7 @@ public final class SpinningRotational {
                 double z = Math.sin(angle) * radius;
                 BlockDisplayHandle h = displayBuilder.spawnBlock(
                         center.clone().add(x, y, z), Material.DEEPSLATE);
-                h.scale(0.7f, 0.7f, 0.7f).glow(100, 100, 110).interpolation(2, 0);
+                h.scale(1.05f, 1.05f, 1.05f).glow(100, 100, 110).interpolation(2, 0);
                 helixB.add(h);
                 spawnedEntities.add(h.entity());
             }
@@ -795,11 +802,12 @@ public final class SpinningRotational {
 
         public ChainPropeller(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("chain_propeller", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
-            config.setDamage(44.0);
-            config.setDamageRadius(5.0);
+            config.setDamage(66.0);
+            config.setDamageRadius(10.0);
             config.setDurationTicks(200);
             config.setCooldownTicks(280);
             config.setTicksBetweenDamage(10);
+            config.setTracksPlayer(true);
         }
 
         @Override
@@ -821,7 +829,7 @@ public final class SpinningRotational {
                     Material mat = (seg == 4) ? Material.NETHERITE_BLOCK : Material.CHAIN;
                     BlockDisplayHandle h = displayBuilder.spawnBlock(
                             rotor.clone().add(x, tiltY, z), mat);
-                    h.scale(0.7f, 0.7f, 0.7f).glow(180, 180, 190).interpolation(2, 0);
+                    h.scale(1.05f, 1.05f, 1.05f).glow(180, 180, 190).interpolation(2, 0);
                     bladeBlocks.add(h);
                     spawnedEntities.add(h.entity());
                 }
@@ -914,11 +922,12 @@ public final class SpinningRotational {
 
         public GrindingGears(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("grinding_gears", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
-            config.setDamage(48.0);
-            config.setDamageRadius(4.0);
+            config.setDamage(72.0);
+            config.setDamageRadius(8.0);
             config.setDurationTicks(200);
             config.setCooldownTicks(280);
             config.setTicksBetweenDamage(8);
+            config.setTracksPlayer(true);
         }
 
         @Override
@@ -940,13 +949,13 @@ public final class SpinningRotational {
 
                 BlockDisplayHandle hA = displayBuilder.spawnBlock(
                         gearACenter.clone().add(x, 0, z), Material.CHAIN);
-                hA.scale(0.8f, 0.8f, 0.8f).glow(180, 180, 190).interpolation(2, 0);
+                hA.scale(1.2f, 1.2f, 1.2f).glow(180, 180, 190).interpolation(2, 0);
                 gearA.add(hA);
                 spawnedEntities.add(hA.entity());
 
                 BlockDisplayHandle hB = displayBuilder.spawnBlock(
                         gearBCenter.clone().add(x, 0, z), Material.CHAIN);
-                hB.scale(0.8f, 0.8f, 0.8f).glow(180, 180, 190).interpolation(2, 0);
+                hB.scale(1.2f, 1.2f, 1.2f).glow(180, 180, 190).interpolation(2, 0);
                 gearB.add(hB);
                 spawnedEntities.add(hB.entity());
             }
@@ -1044,11 +1053,12 @@ public final class SpinningRotational {
 
         public ChainWhirlpool(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("chain_whirlpool", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
-            config.setDamage(50.0);
-            config.setDamageRadius(3.0);
+            config.setDamage(75.0);
+            config.setDamageRadius(6.0);
             config.setDurationTicks(240);
             config.setCooldownTicks(320);
             config.setTicksBetweenDamage(8);
+            config.setTracksPlayer(true);
         }
 
         @Override
@@ -1064,7 +1074,7 @@ public final class SpinningRotational {
                 Material mat = (i % 4 == 0) ? Material.ANVIL : Material.CHAIN;
                 BlockDisplayHandle h = displayBuilder.spawnBlock(
                         center.clone().add(x, 1.0, z), mat);
-                h.scale(0.7f, 0.7f, 0.7f).glow(100, 100, 110).interpolation(2, 0);
+                h.scale(1.05f, 1.05f, 1.05f).glow(100, 100, 110).interpolation(2, 0);
                 whirlBlocks.add(h);
                 spawnedEntities.add(h.entity());
             }
@@ -1154,11 +1164,12 @@ public final class SpinningRotational {
 
         public RotatingChainCross(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("rotating_chain_cross", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
-            config.setDamage(42.0);
-            config.setDamageRadius(5.0);
+            config.setDamage(63.0);
+            config.setDamageRadius(10.0);
             config.setDurationTicks(260);
             config.setCooldownTicks(320);
             config.setTicksBetweenDamage(10);
+            config.setTracksPlayer(true);
         }
 
         @Override
@@ -1170,7 +1181,7 @@ public final class SpinningRotational {
 
             // Center block (heavy core)
             centerBlock = displayBuilder.spawnBlock(mid, Material.HEAVY_CORE);
-            centerBlock.scale(1.0f, 1.0f, 1.0f).glow(180, 180, 190).interpolation(2, 0);
+            centerBlock.scale(1.5f, 1.5f, 1.5f).glow(180, 180, 190).interpolation(2, 0);
             spawnedEntities.add(centerBlock.entity());
 
             // Horizontal arm: 2 blocks each side of center (4 total)
@@ -1178,7 +1189,7 @@ public final class SpinningRotational {
                 if (i == 0) continue;
                 BlockDisplayHandle h = displayBuilder.spawnBlock(
                         mid.clone().add(i * 1.5, 0, 0), Material.CHAIN);
-                h.scale(0.8f, 0.8f, 0.8f).glow(100, 100, 110).interpolation(2, 0);
+                h.scale(1.2f, 1.2f, 1.2f).glow(100, 100, 110).interpolation(2, 0);
                 horizontalBlocks.add(h);
                 spawnedEntities.add(h.entity());
             }
@@ -1188,7 +1199,7 @@ public final class SpinningRotational {
                 if (i == 0) continue;
                 BlockDisplayHandle h = displayBuilder.spawnBlock(
                         mid.clone().add(0, 0, i * 1.5), Material.CHAIN);
-                h.scale(0.8f, 0.8f, 0.8f).glow(100, 100, 110).interpolation(2, 0);
+                h.scale(1.2f, 1.2f, 1.2f).glow(100, 100, 110).interpolation(2, 0);
                 verticalBlocks.add(h);
                 spawnedEntities.add(h.entity());
             }
@@ -1198,7 +1209,7 @@ public final class SpinningRotational {
             for (double[] off : cornerOffsets) {
                 BlockDisplayHandle h = displayBuilder.spawnBlock(
                         mid.clone().add(off[0], off[1], off[2]), Material.DEEPSLATE);
-                h.scale(0.5f, 0.5f, 0.5f).glow(80, 80, 90).interpolation(2, 0);
+                h.scale(0.75f, 0.75f, 0.75f).glow(80, 80, 90).interpolation(2, 0);
                 cornerAccents.add(h);
                 spawnedEntities.add(h.entity());
             }
@@ -1298,11 +1309,12 @@ public final class SpinningRotational {
 
         public ChainTurbine(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("chain_turbine", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
-            config.setDamage(46.0);
-            config.setDamageRadius(5.0);
+            config.setDamage(69.0);
+            config.setDamageRadius(10.0);
             config.setDurationTicks(220);
             config.setCooldownTicks(300);
             config.setTicksBetweenDamage(10);
+            config.setTracksPlayer(true);
         }
 
         @Override
@@ -1314,7 +1326,7 @@ public final class SpinningRotational {
             for (int y = 0; y < 3; y++) {
                 BlockDisplayHandle h = displayBuilder.spawnBlock(
                         center.clone().add(0, y + 0.5, 0), Material.IRON_BLOCK);
-                h.scale(1.0f, 1.0f, 1.0f).glow(180, 180, 190).interpolation(2, 0);
+                h.scale(1.5f, 1.5f, 1.5f).glow(180, 180, 190).interpolation(2, 0);
                 cylinderBlocks.add(h);
                 spawnedEntities.add(h.entity());
             }
@@ -1328,7 +1340,7 @@ public final class SpinningRotational {
                 double y = (i % 2 == 0) ? 1.0 : 2.0;
                 BlockDisplayHandle h = displayBuilder.spawnBlock(
                         center.clone().add(x, y, z), Material.CHAIN);
-                h.scale(0.8f, 1.2f, 0.4f).glow(100, 100, 110).interpolation(2, 0);
+                h.scale(1.2f, 1.8f, 0.6f).glow(100, 100, 110).interpolation(2, 0);
                 vaneBlocks.add(h);
                 spawnedEntities.add(h.entity());
             }
@@ -1411,11 +1423,12 @@ public final class SpinningRotational {
 
         public OrbitalRings(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("orbital_rings", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
-            config.setDamage(44.0);
-            config.setDamageRadius(4.5);
+            config.setDamage(66.0);
+            config.setDamageRadius(9.0);
             config.setDurationTicks(260);
             config.setCooldownTicks(320);
             config.setTicksBetweenDamage(10);
+            config.setTracksPlayer(true);
         }
 
         @Override
@@ -1433,7 +1446,7 @@ public final class SpinningRotational {
                 double y = Math.sin(angle) * radius;
                 BlockDisplayHandle h = displayBuilder.spawnBlock(
                         mid.clone().add(x, y, 0), Material.CHAIN);
-                h.scale(0.7f, 0.7f, 0.7f).glow(180, 180, 190).interpolation(2, 0);
+                h.scale(1.05f, 1.05f, 1.05f).glow(180, 180, 190).interpolation(2, 0);
                 ringXY.add(h);
                 spawnedEntities.add(h.entity());
             }
@@ -1445,7 +1458,7 @@ public final class SpinningRotational {
                 double z = Math.sin(angle) * radius;
                 BlockDisplayHandle h = displayBuilder.spawnBlock(
                         mid.clone().add(x, 0, z), Material.DEEPSLATE);
-                h.scale(0.7f, 0.7f, 0.7f).glow(100, 100, 110).interpolation(2, 0);
+                h.scale(1.05f, 1.05f, 1.05f).glow(100, 100, 110).interpolation(2, 0);
                 ringXZ.add(h);
                 spawnedEntities.add(h.entity());
             }
@@ -1457,7 +1470,7 @@ public final class SpinningRotational {
                 double z = Math.sin(angle) * radius;
                 BlockDisplayHandle h = displayBuilder.spawnBlock(
                         mid.clone().add(0, y, z), Material.NETHERITE_BLOCK);
-                h.scale(0.7f, 0.7f, 0.7f).glow(180, 100, 40).interpolation(2, 0);
+                h.scale(1.05f, 1.05f, 1.05f).glow(180, 100, 40).interpolation(2, 0);
                 ringYZ.add(h);
                 spawnedEntities.add(h.entity());
             }
@@ -1556,11 +1569,12 @@ public final class SpinningRotational {
 
         public ChainRoulette(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("chain_roulette", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
-            config.setDamage(52.0);
-            config.setDamageRadius(2.5);
+            config.setDamage(78.0);
+            config.setDamageRadius(6.0);
             config.setDurationTicks(240);
             config.setCooldownTicks(300);
             config.setTicksBetweenDamage(8);
+            config.setTracksPlayer(true);
         }
 
         @Override
@@ -1577,7 +1591,7 @@ public final class SpinningRotational {
                 double z = Math.sin(angle) * 3.5;
                 BlockDisplayHandle h = displayBuilder.spawnBlock(
                         table.clone().add(x, 0, z), Material.CHAIN);
-                h.scale(0.8f, 0.8f, 0.8f).glow(100, 100, 110).interpolation(2, 0);
+                h.scale(1.2f, 1.2f, 1.2f).glow(100, 100, 110).interpolation(2, 0);
                 wheelBlocks.add(h);
                 spawnedEntities.add(h.entity());
             }
@@ -1587,7 +1601,7 @@ public final class SpinningRotational {
                 double offset = i * 0.5;
                 BlockDisplayHandle h = displayBuilder.spawnBlock(
                         table.clone().add(3.5, 0.3 + offset, 0), Material.NETHERITE_BLOCK);
-                h.scale(0.5f, 0.5f, 0.5f).glow(255, 180, 80).interpolation(2, 0);
+                h.scale(0.75f, 0.75f, 0.75f).glow(255, 180, 80).interpolation(2, 0);
                 ballBlocks.add(h);
                 spawnedEntities.add(h.entity());
             }
@@ -1679,11 +1693,12 @@ public final class SpinningRotational {
 
         public MeatGrinderSpiral(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("meat_grinder_spiral", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
-            config.setDamage(50.0);
-            config.setDamageRadius(3.5);
+            config.setDamage(75.0);
+            config.setDamageRadius(7.0);
             config.setDurationTicks(200);
             config.setCooldownTicks(280);
             config.setTicksBetweenDamage(8);
+            config.setTracksPlayer(true);
         }
 
         @Override
@@ -1711,7 +1726,7 @@ public final class SpinningRotational {
 
                 BlockDisplayHandle h = displayBuilder.spawnBlock(
                         center.clone().add(x, y, z), mat);
-                h.scale(0.75f, 0.75f, 0.75f);
+                h.scale(1.1f, 1.1f, 1.1f);
 
                 // Bottom blocks glow hot (rust orange), top blocks iron gray
                 if (t > 0.7) {

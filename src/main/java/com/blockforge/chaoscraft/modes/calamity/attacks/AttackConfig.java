@@ -25,7 +25,7 @@ public class AttackConfig {
      * On load, if the file version is lower, the file is re-saved with new keys
      * while preserving user-edited values.
      */
-    public static final int CURRENT_CONFIG_VERSION = 1;
+    public static final int CURRENT_CONFIG_VERSION = 2;
 
     private final String attackId;
     private final AttackType type;
@@ -33,8 +33,8 @@ public class AttackConfig {
     private final String modePath; // e.g. "modes/calamity/attacks" or "modes/chain/attacks"
 
     // Configurable values with defaults
-    private double damage = 4.0;
-    private double damageRadius = 3.0;
+    private double damage = 6.0;
+    private double damageRadius = 6.0;
     private int ticksBetweenDamage = 20;
     private int cooldownTicks = 200;
     private int durationTicks = 100;
@@ -44,8 +44,8 @@ public class AttackConfig {
 
     // Optional overrides
     private boolean damageOnImpactOnly = false; // For meteors/falling attacks
-    private double impactDamage = 8.0;
-    private double impactRadius = 4.0;
+    private double impactDamage = 16.0;
+    private double impactRadius = 7.0;
 
     public AttackConfig(String attackId, AttackType type, int phase) {
         this(attackId, type, phase, "modes/calamity/attacks");

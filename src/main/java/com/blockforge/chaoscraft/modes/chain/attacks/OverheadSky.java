@@ -6,6 +6,7 @@ import com.blockforge.chaoscraft.modes.calamity.display.DisplayBuilder;
 import com.blockforge.chaoscraft.modes.calamity.display.DisplayBuilder.BlockDisplayHandle;
 import org.bukkit.*;
 import org.bukkit.entity.BlockDisplay;
+import org.bukkit.entity.Player;
 import org.bukkit.util.Transformation;
 import org.joml.AxisAngle4f;
 import org.joml.Vector3f;
@@ -53,8 +54,9 @@ public final class OverheadSky {
 
         public ChainCanopy(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("chain_canopy", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
-            config.setDamage(10.0);
-            config.setDamageRadius(5.0);
+            config.setTracksPlayer(true);
+            config.setDamage(15.0);
+            config.setDamageRadius(10.0);
             config.setTicksBetweenDamage(15);
             config.setDurationTicks(600);
             config.setCooldownTicks(400);
@@ -75,7 +77,7 @@ public final class OverheadSky {
                     // Edge chains droop lower
                     boolean isEdge = gx == 0 || gx == 3 || gz == 0 || gz == 3;
                     float droopY = isEdge ? -1.2f : 0f;
-                    chain.scale(1.0f, 2.0f, 1.0f)
+                    chain.scale(1.5f, 3.0f, 1.5f)
                          .translate(-0.5f, droopY - 0.5f, -0.5f)
                          .glow(140, 140, 150)
                          .interpolation(5, 0);
@@ -89,7 +91,7 @@ public final class OverheadSky {
             for (double[] corner : corners) {
                 Location pLoc = center.clone().add(corner[0], canopyY + 1, corner[2]);
                 BlockDisplayHandle post = displayBuilder.spawnBlock(pLoc, Material.IRON_BLOCK);
-                post.scale(0.5f, 3.0f, 0.5f).glow(180, 180, 190).interpolation(5, 0);
+                post.scale(0.75f, 4.5f, 0.75f).glow(180, 180, 190).interpolation(5, 0);
                 supportPosts.add(post);
                 spawnedEntities.add(post.entity());
             }
@@ -170,14 +172,15 @@ public final class OverheadSky {
 
         public SuspendedChainBridge(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("suspended_chain_bridge", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
-            config.setDamage(8.0);
-            config.setDamageRadius(3.0);
+            config.setTracksPlayer(true);
+            config.setDamage(12.0);
+            config.setDamageRadius(6.0);
             config.setTicksBetweenDamage(15);
             config.setDurationTicks(700);
             config.setCooldownTicks(450);
             config.setDamageOnImpactOnly(true);
-            config.setImpactDamage(42.0);
-            config.setImpactRadius(2.5);
+            config.setImpactDamage(63.0);
+            config.setImpactRadius(7.0);
             dropped = new boolean[14];
         }
 
@@ -193,7 +196,7 @@ public final class OverheadSky {
                 double droop = -Math.abs(i - 6.5) * 0.15;
                 Location loc = center.clone().add(x, 8 + droop, 0);
                 BlockDisplayHandle chain = displayBuilder.spawnBlock(loc, Material.CHAIN);
-                chain.scale(0.8f, 1.5f, 1.2f).glow(160, 160, 170).interpolation(4, 0);
+                chain.scale(1.2f, 2.25f, 1.8f).glow(160, 160, 170).interpolation(4, 0);
                 bridgeChains.add(chain);
                 spawnedEntities.add(chain.entity());
             }
@@ -203,7 +206,7 @@ public final class OverheadSky {
             for (double[] off : supportOffsets) {
                 Location sLoc = center.clone().add(off[0], off[1], off[2]);
                 BlockDisplayHandle support = displayBuilder.spawnBlock(sLoc, Material.IRON_BLOCK);
-                support.scale(0.4f, 4.0f, 0.4f).glow(120, 120, 130).interpolation(4, 0);
+                support.scale(0.6f, 6.0f, 0.6f).glow(120, 120, 130).interpolation(4, 0);
                 supportChains.add(support);
                 spawnedEntities.add(support.entity());
             }
@@ -212,7 +215,7 @@ public final class OverheadSky {
             for (double xEnd : new double[]{-5.0, 5.0}) {
                 Location aLoc = center.clone().add(xEnd, 12.5, 0);
                 BlockDisplayHandle anchor = displayBuilder.spawnBlock(aLoc, Material.IRON_BLOCK);
-                anchor.scale(1.5f, 0.5f, 2.5f).glow(180, 180, 190).interpolation(4, 0);
+                anchor.scale(2.25f, 0.75f, 3.75f).glow(180, 180, 190).interpolation(4, 0);
                 spawnedEntities.add(anchor.entity());
             }
 
@@ -306,13 +309,14 @@ public final class OverheadSky {
 
         public ChainSkyAnvil(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("chain_sky_anvil", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
+            config.setTracksPlayer(true);
             config.setDamage(0);
             config.setDamageRadius(0);
             config.setDurationTicks(500);
             config.setCooldownTicks(500);
             config.setDamageOnImpactOnly(true);
-            config.setImpactDamage(80.0);
-            config.setImpactRadius(5.0);
+            config.setImpactDamage(120.0);
+            config.setImpactRadius(10.0);
         }
 
         @Override
@@ -325,7 +329,7 @@ public final class OverheadSky {
             for (double[] off : baseOffsets) {
                 Location loc = center.clone().add(off[0], anvilY, off[2]);
                 BlockDisplayHandle block = displayBuilder.spawnBlock(loc, Material.IRON_BLOCK);
-                block.scale(2.0f, 1.0f, 2.0f).glow(180, 180, 190).interpolation(3, 0);
+                block.scale(3.0f, 1.5f, 3.0f).glow(180, 180, 190).interpolation(3, 0);
                 anvilBody.add(block);
                 spawnedEntities.add(block.entity());
             }
@@ -334,7 +338,7 @@ public final class OverheadSky {
             for (int i = 0; i < 2; i++) {
                 Location loc = center.clone().add(0, anvilY + 1 + i, 0);
                 BlockDisplayHandle neck = displayBuilder.spawnBlock(loc, Material.IRON_BLOCK);
-                neck.scale(1.2f, 1.0f, 1.2f).glow(160, 160, 170).interpolation(3, 0);
+                neck.scale(1.8f, 1.5f, 1.8f).glow(160, 160, 170).interpolation(3, 0);
                 anvilBody.add(neck);
                 spawnedEntities.add(neck.entity());
             }
@@ -342,7 +346,7 @@ public final class OverheadSky {
             // Anvil top — flat top (1 anvil block)
             BlockDisplayHandle top = displayBuilder.spawnBlock(
                     center.clone().add(0, anvilY + 3, 0), Material.ANVIL);
-            top.scale(2.5f, 0.8f, 2.5f).glow(200, 200, 210).interpolation(3, 0);
+            top.scale(3.75f, 1.2f, 3.75f).glow(200, 200, 210).interpolation(3, 0);
             anvilBody.add(top);
             spawnedEntities.add(top.entity());
 
@@ -351,7 +355,7 @@ public final class OverheadSky {
             for (double[] cc : chainCorners) {
                 Location cLoc = center.clone().add(cc[0], anvilY - 1, cc[2]);
                 BlockDisplayHandle chain = displayBuilder.spawnBlock(cLoc, Material.CHAIN);
-                chain.scale(0.3f, 3.0f, 0.3f).glow(140, 140, 150).interpolation(3, 0);
+                chain.scale(0.45f, 4.5f, 0.45f).glow(140, 140, 150).interpolation(3, 0);
                 supportChains.add(chain);
                 spawnedEntities.add(chain.entity());
             }
@@ -495,8 +499,9 @@ public final class OverheadSky {
 
         public HangingChainForest(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("hanging_chain_forest", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
-            config.setDamage(8.0);
-            config.setDamageRadius(1.5);
+            config.setTracksPlayer(true);
+            config.setDamage(12.0);
+            config.setDamageRadius(6.0);
             config.setTicksBetweenDamage(10);
             config.setDurationTicks(800);
             config.setCooldownTicks(400);
@@ -520,14 +525,14 @@ public final class OverheadSky {
                 Location loc = center.clone().add(chainX[i], chainHeight[i], chainZ[i]);
                 BlockDisplayHandle chain = displayBuilder.spawnBlock(loc, Material.CHAIN);
                 float chainLen = 3.0f + (float) (Math.random() * 4.0);
-                chain.scale(0.5f, chainLen, 0.5f).glow(150, 150, 160).interpolation(4, 0);
+                chain.scale(0.75f, chainLen * 1.5f, 0.75f).glow(150, 150, 160).interpolation(4, 0);
                 hangingChains.add(chain);
                 spawnedEntities.add(chain.entity());
 
                 // Small anchor block at top
                 Location aLoc = center.clone().add(chainX[i], chainHeight[i] + chainLen * 0.5 + 0.3, chainZ[i]);
                 BlockDisplayHandle anchor = displayBuilder.spawnBlock(aLoc, Material.DEEPSLATE);
-                anchor.scale(0.6f, 0.3f, 0.6f).glow(80, 80, 90).interpolation(4, 0);
+                anchor.scale(0.9f, 0.45f, 0.9f).glow(80, 80, 90).interpolation(4, 0);
                 topAnchors.add(anchor);
                 spawnedEntities.add(anchor.entity());
             }
@@ -620,8 +625,9 @@ public final class OverheadSky {
 
         public ChainChandelier(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("chain_chandelier", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
-            config.setDamage(10.0);
-            config.setDamageRadius(3.5);
+            config.setTracksPlayer(true);
+            config.setDamage(15.0);
+            config.setDamageRadius(7.0);
             config.setTicksBetweenDamage(15);
             config.setDurationTicks(800);
             config.setCooldownTicks(450);
@@ -635,19 +641,19 @@ public final class OverheadSky {
             // Central iron pillar
             centralPillar = displayBuilder.spawnBlock(
                     center.clone().add(0, chandelierY, 0), Material.IRON_BLOCK);
-            centralPillar.scale(0.6f, 4.0f, 0.6f).glow(200, 200, 220).interpolation(5, 0);
+            centralPillar.scale(0.9f, 6.0f, 0.9f).glow(200, 200, 220).interpolation(5, 0);
             spawnedEntities.add(centralPillar.entity());
 
             // Top cap — decorative heavy_core
             topCap = displayBuilder.spawnBlock(
                     center.clone().add(0, chandelierY + 3, 0), Material.HEAVY_CORE);
-            topCap.scale(1.2f, 0.5f, 1.2f).glow(160, 160, 180).interpolation(5, 0);
+            topCap.scale(1.8f, 0.75f, 1.8f).glow(160, 160, 180).interpolation(5, 0);
             spawnedEntities.add(topCap.entity());
 
             // Bottom gem — netherite accent
             bottomGem = displayBuilder.spawnBlock(
                     center.clone().add(0, chandelierY - 1.5, 0), Material.NETHERITE_BLOCK);
-            bottomGem.scale(0.4f, 0.4f, 0.4f).glow(80, 80, 100).interpolation(5, 0);
+            bottomGem.scale(0.6f, 0.6f, 0.6f).glow(80, 80, 100).interpolation(5, 0);
             spawnedEntities.add(bottomGem.entity());
 
             // 8 hanging chains at angles
@@ -657,7 +663,7 @@ public final class OverheadSky {
                 double z = Math.sin(angle) * 2.0;
                 Location cLoc = center.clone().add(x, chandelierY - 0.5, z);
                 BlockDisplayHandle chain = displayBuilder.spawnBlock(cLoc, Material.CHAIN);
-                chain.scale(0.3f, 2.5f, 0.3f).glow(140, 140, 155).interpolation(5, 0);
+                chain.scale(0.45f, 3.75f, 0.45f).glow(140, 140, 155).interpolation(5, 0);
                 hangingChains.add(chain);
                 spawnedEntities.add(chain.entity());
             }
@@ -669,7 +675,7 @@ public final class OverheadSky {
                 double z = Math.sin(angle) * 1.2;
                 Location bLoc = center.clone().add(x, chandelierY + 1.5, z);
                 BlockDisplayHandle bar = displayBuilder.spawnBlock(bLoc, Material.IRON_BARS);
-                bar.scale(0.5f, 1.5f, 0.5f).glow(180, 180, 200).interpolation(5, 0);
+                bar.scale(0.75f, 2.25f, 0.75f).glow(180, 180, 200).interpolation(5, 0);
                 ironBars.add(bar);
                 spawnedEntities.add(bar.entity());
             }
@@ -764,8 +770,9 @@ public final class OverheadSky {
 
         public SkyChainWeb(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("sky_chain_web", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
-            config.setDamage(8.0);
-            config.setDamageRadius(5.0);
+            config.setTracksPlayer(true);
+            config.setDamage(12.0);
+            config.setDamageRadius(10.0);
             config.setTicksBetweenDamage(12);
             config.setDurationTicks(700);
             config.setCooldownTicks(400);
@@ -786,7 +793,7 @@ public final class OverheadSky {
                     double z = Math.sin(angle) * dist;
                     Location loc = center.clone().add(x, webY, z);
                     BlockDisplayHandle chain = displayBuilder.spawnBlock(loc, Material.CHAIN);
-                    chain.scale(0.4f, 0.4f, 2.0f)
+                    chain.scale(0.6f, 0.6f, 3.0f)
                          .rotate((float) angle, 0, 1, 0)
                          .glow(150, 150, 165)
                          .interpolation(4, 0);
@@ -802,7 +809,7 @@ public final class OverheadSky {
                 double z = Math.sin(angle) * 3.0;
                 Location loc = center.clone().add(x, webY, z);
                 BlockDisplayHandle chain = displayBuilder.spawnBlock(loc, Material.CHAIN);
-                chain.scale(2.0f, 0.3f, 0.3f)
+                chain.scale(3.0f, 0.45f, 0.45f)
                      .rotate((float) angle, 0, 1, 0)
                      .glow(140, 140, 155)
                      .interpolation(4, 0);
@@ -915,13 +922,14 @@ public final class OverheadSky {
 
         public ChainMeteor(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("chain_meteor", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
+            config.setTracksPlayer(true);
             config.setDamage(0);
             config.setDamageRadius(0);
             config.setDurationTicks(400);
             config.setCooldownTicks(600);
             config.setDamageOnImpactOnly(true);
-            config.setImpactDamage(96.0);
-            config.setImpactRadius(6.0);
+            config.setImpactDamage(144.0);
+            config.setImpactRadius(12.0);
         }
 
         @Override
@@ -934,16 +942,18 @@ public final class OverheadSky {
             meteorY = center.getY() + 25;
             meteorZ = center.getZ() + (Math.random() - 0.5) * 6;
 
-            // Velocity: angled descent toward center
-            velocityX = -0.6;
+            // Velocity: aim at target player if available, otherwise at center
+            Player target = getTargetPlayer();
+            Location aimAt = (target != null && target.isOnline()) ? target.getLocation() : center;
+            velocityX = (aimAt.getX() - meteorX) * 0.03;
             velocityY = -0.8;
-            velocityZ = (center.getZ() - meteorZ) * 0.02;
+            velocityZ = (aimAt.getZ() - meteorZ) * 0.03;
 
             Location spawnLoc = new Location(w, meteorX, meteorY, meteorZ);
 
             // Netherite core
             netheriteCore = displayBuilder.spawnBlock(spawnLoc, Material.NETHERITE_BLOCK);
-            netheriteCore.scale(2.5f, 2.5f, 2.5f).glow(60, 50, 60).interpolation(2, 0);
+            netheriteCore.scale(3.75f, 3.75f, 3.75f).glow(60, 50, 60).interpolation(2, 0);
             spawnedEntities.add(netheriteCore.entity());
 
             // 12 chain blocks surrounding the core
@@ -955,7 +965,7 @@ public final class OverheadSky {
             for (double[] off : offsets) {
                 Location cLoc = spawnLoc.clone().add(off[0], off[1], off[2]);
                 BlockDisplayHandle chain = displayBuilder.spawnBlock(cLoc, Material.CHAIN);
-                chain.scale(1.2f, 1.2f, 1.2f).glow(180, 120, 60).interpolation(2, 0);
+                chain.scale(1.8f, 1.8f, 1.8f).glow(180, 120, 60).interpolation(2, 0);
                 chainBall.add(chain);
                 spawnedEntities.add(chain.entity());
             }
@@ -1069,14 +1079,15 @@ public final class OverheadSky {
 
         public FloatingChainIsland(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("floating_chain_island", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
-            config.setDamage(6.0);
-            config.setDamageRadius(2.0);
+            config.setTracksPlayer(true);
+            config.setDamage(9.0);
+            config.setDamageRadius(6.0);
             config.setTicksBetweenDamage(20);
             config.setDurationTicks(900);
             config.setCooldownTicks(500);
             config.setDamageOnImpactOnly(true);
-            config.setImpactDamage(44.0);
-            config.setImpactRadius(3.0);
+            config.setImpactDamage(66.0);
+            config.setImpactRadius(7.0);
         }
 
         @Override
@@ -1089,7 +1100,7 @@ public final class OverheadSky {
             for (double[] bp : baseParts) {
                 Location loc = center.clone().add(bp[0], islandY, bp[2]);
                 BlockDisplayHandle base = displayBuilder.spawnBlock(loc, Material.IRON_BLOCK);
-                base.scale(1.5f, 0.5f, 1.5f).glow(170, 170, 180).interpolation(4, 0);
+                base.scale(2.25f, 0.75f, 2.25f).glow(170, 170, 180).interpolation(4, 0);
                 islandBase.add(base);
                 spawnedEntities.add(base.entity());
             }
@@ -1102,7 +1113,7 @@ public final class OverheadSky {
                 Location cLoc = center.clone().add(x, islandY - 1.5, z);
                 BlockDisplayHandle chain = displayBuilder.spawnBlock(cLoc, Material.CHAIN);
                 float len = 2.0f + (i % 3) * 0.8f;
-                chain.scale(0.3f, len, 0.3f).glow(140, 140, 150).interpolation(4, 0);
+                chain.scale(0.45f, len * 1.5f, 0.45f).glow(140, 140, 150).interpolation(4, 0);
                 hangingChains.add(chain);
                 spawnedEntities.add(chain.entity());
             }
@@ -1112,7 +1123,7 @@ public final class OverheadSky {
                 Location tLoc = center.clone().add(0, islandY + 0.5 + i, 0);
                 Material mat = i == 2 ? Material.HEAVY_CORE : Material.CHAIN;
                 BlockDisplayHandle tower = displayBuilder.spawnBlock(tLoc, mat);
-                tower.scale(0.5f, 1.0f, 0.5f).glow(160, 160, 175).interpolation(4, 0);
+                tower.scale(0.75f, 1.5f, 0.75f).glow(160, 160, 175).interpolation(4, 0);
                 towerChains.add(tower);
                 spawnedEntities.add(tower.entity());
             }
@@ -1167,7 +1178,7 @@ public final class OverheadSky {
                 bombTimer = 0;
                 Location bombStart = c.clone().add(driftX, islandY - 2, driftZ);
                 BlockDisplayHandle bomb = displayBuilder.spawnBlock(bombStart, Material.CHAIN);
-                bomb.scale(0.8f, 0.8f, 0.8f).glow(255, 140, 60).interpolation(2, 0);
+                bomb.scale(1.2f, 1.2f, 1.2f).glow(255, 140, 60).interpolation(2, 0);
                 bombs.add(bomb);
                 spawnedEntities.add(bomb.entity());
                 DisplayBuilder.playSound(bombStart, Sound.BLOCK_CHAIN_BREAK, 0.8f, 0.8f);
@@ -1226,13 +1237,14 @@ public final class OverheadSky {
 
         public ChainGuillotine(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("chain_guillotine", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
+            config.setTracksPlayer(true);
             config.setDamage(0);
             config.setDamageRadius(0);
             config.setDurationTicks(600);
             config.setCooldownTicks(400);
             config.setDamageOnImpactOnly(true);
-            config.setImpactDamage(60.0);
-            config.setImpactRadius(2.5);
+            config.setImpactDamage(90.0);
+            config.setImpactRadius(7.0);
         }
 
         @Override
@@ -1247,7 +1259,7 @@ public final class OverheadSky {
                 for (int y = 0; y < 6; y++) {
                     Location pLoc = center.clone().add(side * 1.5, y, 0);
                     BlockDisplayHandle post = displayBuilder.spawnBlock(pLoc, Material.CHAIN);
-                    post.scale(0.5f, 1.0f, 0.5f).glow(140, 140, 150).interpolation(3, 0);
+                    post.scale(0.75f, 1.5f, 0.75f).glow(140, 140, 150).interpolation(3, 0);
                     framePosts.add(post);
                     spawnedEntities.add(post.entity());
                 }
@@ -1256,20 +1268,20 @@ public final class OverheadSky {
             // Crossbar at top
             crossbar = displayBuilder.spawnBlock(
                     center.clone().add(0, 6.5, 0), Material.IRON_BLOCK);
-            crossbar.scale(4.0f, 0.5f, 0.5f).glow(180, 180, 195).interpolation(3, 0);
+            crossbar.scale(6.0f, 0.75f, 0.75f).glow(180, 180, 195).interpolation(3, 0);
             spawnedEntities.add(crossbar.entity());
 
             // Blade — wide flat iron block
             blade = displayBuilder.spawnBlock(
                     center.clone().add(0, bladeY, 0), Material.IRON_BLOCK);
-            blade.scale(2.5f, 0.3f, 1.2f).glow(220, 220, 230).interpolation(1, 0);
+            blade.scale(3.75f, 0.45f, 1.8f).glow(220, 220, 230).interpolation(1, 0);
             spawnedEntities.add(blade.entity());
 
             // Decorative guide chains on posts
             for (int side = -1; side <= 1; side += 2) {
                 Location gLoc = center.clone().add(side * 1.2, 3, 0);
                 BlockDisplayHandle guide = displayBuilder.spawnBlock(gLoc, Material.CHAIN);
-                guide.scale(0.2f, 5.0f, 0.2f).glow(120, 120, 130).interpolation(3, 0);
+                guide.scale(0.3f, 7.5f, 0.3f).glow(120, 120, 130).interpolation(3, 0);
                 frameChains.add(guide);
                 spawnedEntities.add(guide.entity());
             }
@@ -1277,7 +1289,7 @@ public final class OverheadSky {
             // Base block
             BlockDisplayHandle base = displayBuilder.spawnBlock(
                     center.clone().add(0, -0.3, 0), Material.DEEPSLATE);
-            base.scale(3.5f, 0.4f, 2.0f).glow(60, 60, 70).interpolation(3, 0);
+            base.scale(5.25f, 0.6f, 3.0f).glow(60, 60, 70).interpolation(3, 0);
             spawnedEntities.add(base.entity());
 
             DisplayBuilder.playSound(center.clone().add(0, 3, 0),
@@ -1378,8 +1390,9 @@ public final class OverheadSky {
 
         public SkyChainRain(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("sky_chain_rain", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
-            config.setDamage(6.0);
-            config.setDamageRadius(4.0);
+            config.setTracksPlayer(true);
+            config.setDamage(9.0);
+            config.setDamageRadius(8.0);
             config.setTicksBetweenDamage(10);
             config.setDurationTicks(800);
             config.setCooldownTicks(400);
@@ -1399,7 +1412,7 @@ public final class OverheadSky {
                 Location loc = center.clone().add(off[0], 18 + off[1], off[2]);
                 BlockDisplayHandle cloud = displayBuilder.spawnBlock(loc, Material.DEEPSLATE);
                 float size = 1.5f + (float) (Math.random() * 1.0);
-                cloud.scale(size, 0.8f, size).glow(50, 50, 60).interpolation(5, 0);
+                cloud.scale(size * 1.5f, 1.2f, size * 1.5f).glow(50, 50, 60).interpolation(5, 0);
                 cloudBlocks.add(cloud);
                 spawnedEntities.add(cloud.entity());
             }
@@ -1435,7 +1448,7 @@ public final class OverheadSky {
                 double rz = (Math.random() - 0.5) * 4.0 + cloudDriftZ;
                 Location rLoc = c.clone().add(rx, 17.5, rz);
                 BlockDisplayHandle drop = displayBuilder.spawnBlock(rLoc, Material.CHAIN);
-                drop.scale(0.4f, 1.5f, 0.4f).glow(160, 160, 175).interpolation(2, 0);
+                drop.scale(0.6f, 2.25f, 0.6f).glow(160, 160, 175).interpolation(2, 0);
                 raindrops.add(drop);
                 raindropY.add(17.5f);
                 spawnedEntities.add(drop.entity());
@@ -1514,8 +1527,9 @@ public final class OverheadSky {
 
         public ChainSkywheel(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("chain_skywheel", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
-            config.setDamage(10.0);
-            config.setDamageRadius(2.5);
+            config.setTracksPlayer(true);
+            config.setDamage(15.0);
+            config.setDamageRadius(6.0);
             config.setTicksBetweenDamage(12);
             config.setDurationTicks(900);
             config.setCooldownTicks(450);
@@ -1529,12 +1543,12 @@ public final class OverheadSky {
             // Hub at center of wheel
             hubBlock = displayBuilder.spawnBlock(
                     center.clone().add(0, WHEEL_Y, 0), Material.IRON_BLOCK);
-            hubBlock.scale(1.0f, 1.0f, 0.5f).glow(180, 180, 195).interpolation(3, 0);
+            hubBlock.scale(1.5f, 1.5f, 0.75f).glow(180, 180, 195).interpolation(3, 0);
             spawnedEntities.add(hubBlock.entity());
 
             hubBlock2 = displayBuilder.spawnBlock(
                     center.clone().add(0, WHEEL_Y, 0), Material.HEAVY_CORE);
-            hubBlock2.scale(0.6f, 0.6f, 0.6f).glow(200, 200, 210).interpolation(3, 0);
+            hubBlock2.scale(0.9f, 0.9f, 0.9f).glow(200, 200, 210).interpolation(3, 0);
             spawnedEntities.add(hubBlock2.entity());
 
             // 12 chains in a circle (on XY plane, vertical wheel)
@@ -1544,7 +1558,7 @@ public final class OverheadSky {
                 double y = Math.sin(angle) * WHEEL_RADIUS;
                 Location loc = center.clone().add(x, WHEEL_Y + y, 0);
                 BlockDisplayHandle chain = displayBuilder.spawnBlock(loc, Material.CHAIN);
-                chain.scale(0.5f, 1.0f, 0.5f).glow(150, 150, 165).interpolation(3, 0);
+                chain.scale(0.75f, 1.5f, 0.75f).glow(150, 150, 165).interpolation(3, 0);
                 wheelChains.add(chain);
                 spawnedEntities.add(chain.entity());
             }
@@ -1556,7 +1570,7 @@ public final class OverheadSky {
                 double y = Math.sin(angle) * WHEEL_RADIUS;
                 Location loc = center.clone().add(x, WHEEL_Y + y, 0);
                 BlockDisplayHandle carriage = displayBuilder.spawnBlock(loc, Material.IRON_BLOCK);
-                carriage.scale(1.0f, 0.8f, 1.0f).glow(200, 200, 215).interpolation(3, 0);
+                carriage.scale(1.5f, 1.2f, 1.5f).glow(200, 200, 215).interpolation(3, 0);
                 carriages.add(carriage);
                 spawnedEntities.add(carriage.entity());
             }
@@ -1565,7 +1579,7 @@ public final class OverheadSky {
             for (int side = -1; side <= 1; side += 2) {
                 Location sLoc = center.clone().add(0, WHEEL_Y - WHEEL_RADIUS - 1, side * 0.8);
                 BlockDisplayHandle stand = displayBuilder.spawnBlock(sLoc, Material.IRON_BLOCK);
-                stand.scale(0.4f, WHEEL_RADIUS + 1, 0.4f).glow(120, 120, 130).interpolation(3, 0);
+                stand.scale(0.6f, (WHEEL_RADIUS + 1) * 1.5f, 0.6f).glow(120, 120, 130).interpolation(3, 0);
                 spawnedEntities.add(stand.entity());
             }
 
@@ -1666,8 +1680,9 @@ public final class OverheadSky {
 
         public HoveringChainCube(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("hovering_chain_cube", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
-            config.setDamage(8.0);
-            config.setDamageRadius(3.0);
+            config.setTracksPlayer(true);
+            config.setDamage(12.0);
+            config.setDamageRadius(6.0);
             config.setTicksBetweenDamage(12);
             config.setDurationTicks(800);
             config.setCooldownTicks(400);
@@ -1689,9 +1704,9 @@ public final class OverheadSky {
                 Location loc = center.clone().add(mx, cubeY + my, mz);
                 BlockDisplayHandle chain = displayBuilder.spawnBlock(loc, Material.CHAIN);
                 // Scale based on edge direction
-                float sx = (v1[0] != v2[0]) ? HALF_SIZE * 2 : 0.3f;
-                float sy = (v1[1] != v2[1]) ? HALF_SIZE * 2 : 0.3f;
-                float sz = (v1[2] != v2[2]) ? HALF_SIZE * 2 : 0.3f;
+                float sx = (v1[0] != v2[0]) ? HALF_SIZE * 3 : 0.45f;
+                float sy = (v1[1] != v2[1]) ? HALF_SIZE * 3 : 0.45f;
+                float sz = (v1[2] != v2[2]) ? HALF_SIZE * 3 : 0.45f;
                 chain.scale(sx, sy, sz).glow(150, 150, 170).interpolation(3, 0);
                 edgeChains.add(chain);
                 spawnedEntities.add(chain.entity());
@@ -1701,7 +1716,7 @@ public final class OverheadSky {
             for (float[] v : VERTICES) {
                 Location vLoc = center.clone().add(v[0] * HALF_SIZE, cubeY + v[1] * HALF_SIZE, v[2] * HALF_SIZE);
                 BlockDisplayHandle glow = displayBuilder.spawnBlock(vLoc, Material.IRON_BLOCK);
-                glow.scale(0.3f, 0.3f, 0.3f).glow(220, 220, 240).interpolation(3, 0);
+                glow.scale(0.45f, 0.45f, 0.45f).glow(220, 220, 240).interpolation(3, 0);
                 vertexGlows.add(glow);
                 spawnedEntities.add(glow.entity());
             }
@@ -1818,13 +1833,14 @@ public final class OverheadSky {
 
         public ChainBomber(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("chain_bomber", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
+            config.setTracksPlayer(true);
             config.setDamage(0);
             config.setDamageRadius(0);
             config.setDurationTicks(600);
             config.setCooldownTicks(500);
             config.setDamageOnImpactOnly(true);
-            config.setImpactDamage(50.0);
-            config.setImpactRadius(3.5);
+            config.setImpactDamage(75.0);
+            config.setImpactRadius(7.0);
         }
 
         @Override
@@ -1844,8 +1860,8 @@ public final class OverheadSky {
             for (int i = 0; i < 6; i++) {
                 Location bLoc = spawnLoc.clone().add(-i * 1.2, 0, 0);
                 BlockDisplayHandle body = displayBuilder.spawnBlock(bLoc, Material.CHAIN);
-                float bodyScale = (i < 2) ? 1.0f : (i < 4) ? 0.8f : 0.6f;
-                body.scale(1.2f, bodyScale, bodyScale).glow(140, 140, 155).interpolation(3, 0);
+                float bodyScale = (i < 2) ? 1.5f : (i < 4) ? 1.2f : 0.9f;
+                body.scale(1.8f, bodyScale, bodyScale).glow(140, 140, 155).interpolation(3, 0);
                 bodyChains.add(body);
                 spawnedEntities.add(body.entity());
             }
@@ -1854,7 +1870,7 @@ public final class OverheadSky {
             for (int side = -1; side <= 1; side += 2) {
                 Location wLoc = spawnLoc.clone().add(-2.4, 0, side * 2.5);
                 BlockDisplayHandle wing = displayBuilder.spawnBlock(wLoc, Material.IRON_BLOCK);
-                wing.scale(1.5f, 0.3f, 2.5f).glow(170, 170, 185).interpolation(3, 0);
+                wing.scale(2.25f, 0.45f, 3.75f).glow(170, 170, 185).interpolation(3, 0);
                 wingChains.add(wing);
                 spawnedEntities.add(wing.entity());
             }
@@ -1863,7 +1879,7 @@ public final class OverheadSky {
             for (int i = 0; i < 2; i++) {
                 Location tLoc = spawnLoc.clone().add(-6.5 - i * 0.8, 0.5 + i * 0.5, 0);
                 BlockDisplayHandle tail = displayBuilder.spawnBlock(tLoc, Material.CHAIN);
-                tail.scale(0.8f, 0.5f, 0.8f).glow(130, 130, 145).interpolation(3, 0);
+                tail.scale(1.2f, 0.75f, 1.2f).glow(130, 130, 145).interpolation(3, 0);
                 tailChains.add(tail);
                 spawnedEntities.add(tail.entity());
             }
@@ -1871,7 +1887,7 @@ public final class OverheadSky {
             // Nose cone (iron block)
             BlockDisplayHandle nose = displayBuilder.spawnBlock(
                     spawnLoc.clone().add(1, 0, 0), Material.IRON_BLOCK);
-            nose.scale(1.0f, 0.8f, 0.8f).glow(200, 200, 215).interpolation(3, 0);
+            nose.scale(1.5f, 1.2f, 1.2f).glow(200, 200, 215).interpolation(3, 0);
             bodyChains.add(nose); // treat as body for movement
             spawnedEntities.add(nose.entity());
 
@@ -1882,6 +1898,19 @@ public final class OverheadSky {
         protected void onTick(int ticksAlive) {
             Location c = getCenter();
             if (c == null || c.getWorld() == null) return;
+
+            // Steer toward player
+            Player target = getTargetPlayer();
+            if (target != null && target.isOnline()) {
+                Location targetLoc = target.getLocation();
+                double dx = targetLoc.getX() - bomberX;
+                double dz = targetLoc.getZ() - bomberZ;
+                double dist = Math.sqrt(dx * dx + dz * dz);
+                if (dist > 1) {
+                    dirX = (dx / dist) * 0.35;
+                    dirZ = (dz / dist) * 0.35;
+                }
+            }
 
             // Move bomber forward
             bomberX += dirX;
@@ -1931,7 +1960,7 @@ public final class OverheadSky {
                 bombsDropped++;
                 Location bombStart = bomberLoc.clone().add(0, -1, 0);
                 BlockDisplayHandle bomb = displayBuilder.spawnBlock(bombStart, Material.CHAIN);
-                bomb.scale(0.6f, 0.6f, 0.6f).glow(255, 100, 50).interpolation(2, 0);
+                bomb.scale(0.9f, 0.9f, 0.9f).glow(255, 100, 50).interpolation(2, 0);
                 activeBombs.add(bomb);
                 bombY.add((float) (c.getY() + BOMBER_Y - 1));
                 bombX.add(bomberX);
@@ -1999,8 +2028,9 @@ public final class OverheadSky {
 
         public SkyChainLattice(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("sky_chain_lattice", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
-            config.setDamage(8.0);
-            config.setDamageRadius(5.0);
+            config.setTracksPlayer(true);
+            config.setDamage(12.0);
+            config.setDamageRadius(10.0);
             config.setTicksBetweenDamage(12);
             config.setDurationTicks(800);
             config.setCooldownTicks(450);
@@ -2025,7 +2055,7 @@ public final class OverheadSky {
 
                 Location loc = center.clone().add(x, domeY + y - domeRadius, z);
                 BlockDisplayHandle chain = displayBuilder.spawnBlock(loc, Material.CHAIN);
-                chain.scale(0.5f, 0.5f, 2.0f)
+                chain.scale(0.75f, 0.75f, 3.0f)
                      .rotate((float) azimuth, 0, 1, 0)
                      .glow(150, 150, 170)
                      .interpolation(4, 0);
@@ -2131,13 +2161,14 @@ public final class OverheadSky {
 
         public ChainComet(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("chain_comet", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
+            config.setTracksPlayer(true);
             config.setDamage(0);
             config.setDamageRadius(0);
             config.setDurationTicks(500);
             config.setCooldownTicks(500);
             config.setDamageOnImpactOnly(true);
-            config.setImpactDamage(48.0);
-            config.setImpactRadius(3.0);
+            config.setImpactDamage(72.0);
+            config.setImpactRadius(7.0);
         }
 
         @Override
@@ -2156,7 +2187,7 @@ public final class OverheadSky {
 
             // Bright netherite head
             cometHead = displayBuilder.spawnBlock(spawnLoc, Material.NETHERITE_BLOCK);
-            cometHead.scale(1.8f, 1.8f, 1.8f).glow(255, 200, 150).interpolation(2, 0);
+            cometHead.scale(2.7f, 2.7f, 2.7f).glow(255, 200, 150).interpolation(2, 0);
             spawnedEntities.add(cometHead.entity());
 
             // 10 chains in V-formation trailing behind
@@ -2167,7 +2198,7 @@ public final class OverheadSky {
                 double oz = side * depth * 0.6;
                 Location cLoc = spawnLoc.clone().add(ox, -depth * 0.3, oz);
                 BlockDisplayHandle chain = displayBuilder.spawnBlock(cLoc, Material.CHAIN);
-                float fadeScale = 1.0f - depth * 0.1f;
+                float fadeScale = 1.5f - depth * 0.15f;
                 chain.scale(fadeScale, fadeScale, fadeScale)
                      .glow(200 - depth * 15, 160 - depth * 15, 120 - depth * 10)
                      .interpolation(2, 0);
@@ -2226,7 +2257,7 @@ public final class OverheadSky {
                 double dz = (Math.random() - 0.5) * 4;
                 Location dLoc = cometLoc.clone().add(dx, -2, dz);
                 BlockDisplayHandle debris = displayBuilder.spawnBlock(dLoc, Material.CHAIN);
-                debris.scale(0.5f, 0.5f, 0.5f).glow(200, 140, 80).interpolation(2, 0);
+                debris.scale(0.75f, 0.75f, 0.75f).glow(200, 140, 80).interpolation(2, 0);
                 debrisPieces.add(debris);
                 debrisY.add((float) dLoc.getY());
                 debrisX.add(dLoc.getX());

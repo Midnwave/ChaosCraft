@@ -60,11 +60,12 @@ public final class GroundEruptions {
 
         public ChainGeyser(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("chain_geyser", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
-            config.setDamage(40.0);
-            config.setDamageRadius(2.5);
+            config.setDamage(60.0);
+            config.setDamageRadius(6.0);
             config.setDurationTicks(200);
             config.setCooldownTicks(300);
             config.setTicksBetweenDamage(20);
+            config.setTracksPlayer(true);
         }
 
         @Override
@@ -76,7 +77,7 @@ public final class GroundEruptions {
             for (int i = 0; i < 12; i++) {
                 Location loc = center.clone().add(0, -12 + i, 0);
                 BlockDisplayHandle h = displayBuilder.spawnBlock(loc, Material.CHAIN);
-                h.scale(0.8f, 1.2f, 0.8f).glow(120, 120, 130).interpolation(3, 0);
+                h.scale(1.2f, 1.8f, 1.2f).glow(120, 120, 130).interpolation(3, 0);
                 chainColumn.add(h);
                 spawnedEntities.add(h.entity());
             }
@@ -163,11 +164,12 @@ public final class GroundEruptions {
 
         public RupturedChainVein(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("ruptured_chain_vein", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
-            config.setDamage(42.0);
-            config.setDamageRadius(3.0);
+            config.setDamage(63.0);
+            config.setDamageRadius(6.0);
             config.setDurationTicks(250);
             config.setCooldownTicks(280);
             config.setTicksBetweenDamage(25);
+            config.setTracksPlayer(true);
 
             // Staggered emergence: each chain has a random delay 0-15 ticks
             for (int i = 0; i < 14; i++) {
@@ -186,7 +188,7 @@ public final class GroundEruptions {
                 double xJag = Math.sin(i * 1.7) * 0.6; // jagged offset
                 Location loc = center.clone().add(xJag, -3, zOff);
                 BlockDisplayHandle h = displayBuilder.spawnBlock(loc, Material.CHAIN);
-                h.scale(0.6f, 0.3f, 0.6f).glow(100, 90, 80).interpolation(3, 0);
+                h.scale(0.9f, 0.45f, 0.9f).glow(100, 90, 80).interpolation(3, 0);
                 veinChains.add(h);
                 spawnedEntities.add(h.entity());
             }
@@ -265,11 +267,12 @@ public final class GroundEruptions {
 
         public ChainSpikeField(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("chain_spike_field", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
-            config.setDamage(44.0);
-            config.setDamageRadius(4.0);
+            config.setDamage(66.0);
+            config.setDamageRadius(8.0);
             config.setDurationTicks(220);
             config.setCooldownTicks(260);
             config.setTicksBetweenDamage(15);
+            config.setTracksPlayer(true);
         }
 
         @Override
@@ -287,8 +290,8 @@ public final class GroundEruptions {
                     for (int h = 0; h < 3; h++) {
                         Location loc = center.clone().add(xOff, -4 + h, zOff);
                         BlockDisplayHandle handle = displayBuilder.spawnBlock(loc, Material.CHAIN);
-                        float taper = 1.0f - (h * 0.2f);
-                        handle.scale(taper, 1.0f, taper).glow(110, 110, 120).interpolation(2, 0);
+                        float taper = 1.5f - (h * 0.3f);
+                        handle.scale(taper, 1.5f, taper).glow(110, 110, 120).interpolation(2, 0);
                         pillar.add(handle);
                         spawnedEntities.add(handle.entity());
                     }
@@ -378,11 +381,12 @@ public final class GroundEruptions {
 
         public IronRootSystem(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("iron_root_system", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
-            config.setDamage(40.0);
-            config.setDamageRadius(5.0);
+            config.setDamage(60.0);
+            config.setDamageRadius(10.0);
             config.setDurationTicks(300);
             config.setCooldownTicks(320);
             config.setTicksBetweenDamage(20);
+            config.setTracksPlayer(true);
 
             for (int i = 0; i < 12; i++) {
                 rootAngles[i] = (Math.PI * 2 * i) / 12.0 + (Math.random() - 0.5) * 0.3;
@@ -397,7 +401,7 @@ public final class GroundEruptions {
             for (int i = 0; i < 12; i++) {
                 Location loc = center.clone().add(0, -1, 0);
                 BlockDisplayHandle h = displayBuilder.spawnBlock(loc, Material.CHAIN);
-                h.scale(0.5f, 0.4f, 0.5f).glow(160, 90, 40).interpolation(3, 0); // rust orange glow
+                h.scale(0.75f, 0.6f, 0.75f).glow(160, 90, 40).interpolation(3, 0); // rust orange glow
                 rootBlocks.add(h);
                 spawnedEntities.add(h.entity());
             }
@@ -475,14 +479,15 @@ public final class GroundEruptions {
 
         public ChainVolcano(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("chain_volcano", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
-            config.setDamage(46.0);
-            config.setDamageRadius(3.5);
+            config.setDamage(69.0);
+            config.setDamageRadius(7.0);
             config.setDurationTicks(280);
             config.setCooldownTicks(350);
             config.setTicksBetweenDamage(20);
             config.setDamageOnImpactOnly(true);
-            config.setImpactDamage(46.0);
-            config.setImpactRadius(3.5);
+            config.setImpactDamage(69.0);
+            config.setImpactRadius(7.0);
+            config.setTracksPlayer(true);
         }
 
         @Override
@@ -498,7 +503,7 @@ public final class GroundEruptions {
             for (double[] pos : basePositions) {
                 Location loc = center.clone().add(pos[0], -4 + pos[1], pos[2]);
                 BlockDisplayHandle h = displayBuilder.spawnBlock(loc, Material.IRON_BLOCK);
-                h.scale(1.2f, 0.8f, 1.2f).glow(100, 100, 110).interpolation(4, 0);
+                h.scale(1.8f, 1.2f, 1.8f).glow(100, 100, 110).interpolation(4, 0);
                 coneBase.add(h);
                 spawnedEntities.add(h.entity());
             }
@@ -508,7 +513,7 @@ public final class GroundEruptions {
                 double angle = (Math.PI * 2 * i) / 4;
                 Location loc = center.clone().add(Math.cos(angle) * 1.0, -3, Math.sin(angle) * 1.0);
                 BlockDisplayHandle h = displayBuilder.spawnBlock(loc, Material.CHAIN);
-                h.scale(0.4f, 2.0f, 0.4f).glow(200, 100, 30).interpolation(3, 0); // molten glow
+                h.scale(0.6f, 3.0f, 0.6f).glow(200, 100, 30).interpolation(3, 0); // molten glow
                 lavaStreams.add(h);
                 spawnedEntities.add(h.entity());
             }
@@ -517,7 +522,7 @@ public final class GroundEruptions {
             for (int i = 0; i < 6; i++) {
                 Location loc = center.clone().add(0, -2, 0);
                 BlockDisplayHandle h = displayBuilder.spawnBlock(loc, Material.CHAIN);
-                h.scale(0.6f, 0.6f, 0.6f).glow(220, 120, 40).interpolation(2, 0);
+                h.scale(0.9f, 0.9f, 0.9f).glow(220, 120, 40).interpolation(2, 0);
                 eruptedChains.add(h);
                 spawnedEntities.add(h.entity());
             }
@@ -624,11 +629,12 @@ public final class GroundEruptions {
 
         public ShackleEruption(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("shackle_eruption", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
-            config.setDamage(42.0);
-            config.setDamageRadius(4.0);
+            config.setDamage(63.0);
+            config.setDamageRadius(8.0);
             config.setDurationTicks(250);
             config.setCooldownTicks(300);
             config.setTicksBetweenDamage(15);
+            config.setTracksPlayer(true);
         }
 
         @Override
@@ -645,21 +651,21 @@ public final class GroundEruptions {
                 // Iron block base
                 Location baseLoc = center.clone().add(x, -3, z);
                 BlockDisplayHandle iron = displayBuilder.spawnBlock(baseLoc, Material.IRON_BLOCK);
-                iron.scale(0.6f, 0.4f, 0.6f).glow(130, 130, 140).interpolation(2, 0);
+                iron.scale(0.9f, 0.6f, 0.9f).glow(130, 130, 140).interpolation(2, 0);
                 shackleIrons.add(iron);
                 spawnedEntities.add(iron.entity());
 
                 // Left jaw chain
                 Location leftLoc = center.clone().add(x - 0.3, -3, z);
                 BlockDisplayHandle left = displayBuilder.spawnBlock(leftLoc, Material.CHAIN);
-                left.scale(0.3f, 0.8f, 0.3f).glow(120, 120, 130).interpolation(2, 0);
+                left.scale(0.45f, 1.2f, 0.45f).glow(120, 120, 130).interpolation(2, 0);
                 shackleChainL.add(left);
                 spawnedEntities.add(left.entity());
 
                 // Right jaw chain
                 Location rightLoc = center.clone().add(x + 0.3, -3, z);
                 BlockDisplayHandle right = displayBuilder.spawnBlock(rightLoc, Material.CHAIN);
-                right.scale(0.3f, 0.8f, 0.3f).glow(120, 120, 130).interpolation(2, 0);
+                right.scale(0.45f, 1.2f, 0.45f).glow(120, 120, 130).interpolation(2, 0);
                 shackleChainR.add(right);
                 spawnedEntities.add(right.entity());
             }
@@ -763,14 +769,15 @@ public final class GroundEruptions {
 
         public ChainPillarBurst(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("chain_pillar_burst", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
-            config.setDamage(48.0);
-            config.setDamageRadius(3.0);
+            config.setDamage(72.0);
+            config.setDamageRadius(6.0);
             config.setDurationTicks(260);
             config.setCooldownTicks(340);
             config.setTicksBetweenDamage(25);
             config.setDamageOnImpactOnly(true);
-            config.setImpactDamage(48.0);
-            config.setImpactRadius(3.0);
+            config.setImpactDamage(72.0);
+            config.setImpactRadius(7.0);
+            config.setTracksPlayer(true);
         }
 
         @Override
@@ -789,7 +796,7 @@ public final class GroundEruptions {
                 for (int h = 0; h < 3; h++) {
                     Location loc = center.clone().add(bx, -6 + h * 2, bz);
                     BlockDisplayHandle handle = displayBuilder.spawnBlock(loc, Material.CHAIN);
-                    handle.scale(2.0f, 2.0f, 2.0f).glow(100, 100, 110).interpolation(3, 0);
+                    handle.scale(3.0f, 3.0f, 3.0f).glow(100, 100, 110).interpolation(3, 0);
                     pillar.add(handle);
                     spawnedEntities.add(handle.entity());
                 }
@@ -897,11 +904,12 @@ public final class GroundEruptions {
 
         public MoltenChainPool(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("molten_chain_pool", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
-            config.setDamage(40.0);
-            config.setDamageRadius(3.5);
+            config.setDamage(60.0);
+            config.setDamageRadius(7.0);
             config.setDurationTicks(300);
             config.setCooldownTicks(280);
             config.setTicksBetweenDamage(10);
+            config.setTracksPlayer(true);
 
             for (int i = 0; i < 12; i++) {
                 chainAngles[i] = (Math.PI * 2 * i) / 12.0 + (Math.random() - 0.5) * 0.4;
@@ -920,7 +928,7 @@ public final class GroundEruptions {
                 Location loc = center.clone().add(x, 0, z);
                 BlockDisplayHandle h = displayBuilder.spawnBlock(loc, Material.CHAIN);
                 // Flat orientation (wide and thin)
-                h.scale(1.2f, 0.15f, 1.2f).glow(200, 100, 30).interpolation(3, 0);
+                h.scale(1.8f, 0.23f, 1.8f).glow(200, 100, 30).interpolation(3, 0);
                 poolChains.add(h);
                 spawnedEntities.add(h.entity());
             }
@@ -990,14 +998,15 @@ public final class GroundEruptions {
 
         public ChainMineExplosion(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("chain_mine_explosion", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
-            config.setDamage(50.0);
-            config.setDamageRadius(5.0);
+            config.setDamage(75.0);
+            config.setDamageRadius(10.0);
             config.setDurationTicks(200);
             config.setCooldownTicks(300);
             config.setTicksBetweenDamage(40);
             config.setDamageOnImpactOnly(true);
-            config.setImpactDamage(50.0);
-            config.setImpactRadius(5.0);
+            config.setImpactDamage(75.0);
+            config.setImpactRadius(10.0);
+            config.setTracksPlayer(true);
 
             for (int i = 0; i < 12; i++) {
                 shrapnelAngles[i] = (Math.PI * 2 * i) / 12.0 + (Math.random() - 0.5) * 0.3;
@@ -1012,7 +1021,7 @@ public final class GroundEruptions {
 
             // Single iron block mine at ground level
             mine = displayBuilder.spawnBlock(center, Material.IRON_BLOCK);
-            mine.scale(0.8f, 0.8f, 0.8f).glow(200, 50, 50).interpolation(2, 0);
+            mine.scale(1.2f, 1.2f, 1.2f).glow(200, 50, 50).interpolation(2, 0);
             spawnedEntities.add(mine.entity());
 
             // Pre-spawn shrapnel blocks hidden inside the mine
@@ -1127,11 +1136,12 @@ public final class GroundEruptions {
 
         public EruptingChainRing(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("erupting_chain_ring", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
-            config.setDamage(44.0);
-            config.setDamageRadius(5.0);
+            config.setDamage(66.0);
+            config.setDamageRadius(10.0);
             config.setDurationTicks(240);
             config.setCooldownTicks(300);
             config.setTicksBetweenDamage(15);
+            config.setTracksPlayer(true);
         }
 
         @Override
@@ -1146,7 +1156,7 @@ public final class GroundEruptions {
 
                 Location loc = center.clone().add(x, -4, z);
                 BlockDisplayHandle h = displayBuilder.spawnBlock(loc, Material.CHAIN);
-                h.scale(0.7f, 1.5f, 0.7f).glow(130, 130, 145).interpolation(3, 0);
+                h.scale(1.05f, 2.25f, 1.05f).glow(130, 130, 145).interpolation(3, 0);
                 ringChains.add(h);
                 spawnedEntities.add(h.entity());
             }
@@ -1228,11 +1238,12 @@ public final class GroundEruptions {
 
         public ChainQuake(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("chain_quake", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
-            config.setDamage(42.0);
-            config.setDamageRadius(2.0);
+            config.setDamage(63.0);
+            config.setDamageRadius(6.0);
             config.setDurationTicks(200);
             config.setCooldownTicks(250);
             config.setTicksBetweenDamage(10);
+            config.setTracksPlayer(true);
         }
 
         @Override
@@ -1245,7 +1256,7 @@ public final class GroundEruptions {
                 double xOff = (i / (double) (CHAIN_COUNT - 1)) * 10.0 - 5.0; // -5 to +5
                 Location loc = center.clone().add(xOff, -2, 0);
                 BlockDisplayHandle h = displayBuilder.spawnBlock(loc, Material.CHAIN);
-                h.scale(0.7f, 0.1f, 0.7f).glow(110, 110, 120).interpolation(1, 0);
+                h.scale(1.05f, 0.15f, 1.05f).glow(110, 110, 120).interpolation(1, 0);
                 quakeChains.add(h);
                 spawnedEntities.add(h.entity());
             }
@@ -1331,14 +1342,15 @@ public final class GroundEruptions {
 
         public AnchorEruption(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("anchor_eruption", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
-            config.setDamage(48.0);
-            config.setDamageRadius(3.5);
+            config.setDamage(72.0);
+            config.setDamageRadius(7.0);
             config.setDurationTicks(260);
             config.setCooldownTicks(340);
             config.setTicksBetweenDamage(25);
             config.setDamageOnImpactOnly(true);
-            config.setImpactDamage(48.0);
-            config.setImpactRadius(3.5);
+            config.setImpactDamage(72.0);
+            config.setImpactRadius(7.0);
+            config.setTracksPlayer(true);
         }
 
         @Override
@@ -1355,7 +1367,7 @@ public final class GroundEruptions {
                 // Heavy core (anchor head)
                 Location coreLoc = center.clone().add(dx, -5, dz);
                 BlockDisplayHandle core = displayBuilder.spawnBlock(coreLoc, Material.HEAVY_CORE);
-                core.scale(1.5f, 1.5f, 1.5f).glow(80, 80, 90).interpolation(3, 0);
+                core.scale(2.25f, 2.25f, 2.25f).glow(80, 80, 90).interpolation(3, 0);
                 anchorCores.add(core);
                 spawnedEntities.add(core.entity());
 
@@ -1369,7 +1381,7 @@ public final class GroundEruptions {
                             dz + Math.sin(flukeAngle) * 0.8
                     );
                     BlockDisplayHandle fluke = displayBuilder.spawnBlock(flukeLoc, Material.CHAIN);
-                    fluke.scale(0.6f, 1.2f, 0.6f).glow(100, 100, 110).interpolation(3, 0);
+                    fluke.scale(0.9f, 1.8f, 0.9f).glow(100, 100, 110).interpolation(3, 0);
                     flukes.add(fluke);
                     spawnedEntities.add(fluke.entity());
                 }
@@ -1489,11 +1501,12 @@ public final class GroundEruptions {
 
         public ChainGeyserField(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("chain_geyser_field", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
-            config.setDamage(40.0);
-            config.setDamageRadius(4.0);
+            config.setDamage(60.0);
+            config.setDamageRadius(8.0);
             config.setDurationTicks(220);
             config.setCooldownTicks(280);
             config.setTicksBetweenDamage(15);
+            config.setTracksPlayer(true);
 
             for (int i = 0; i < 6; i++) {
                 geyserX[i] = (Math.random() - 0.5) * 10.0;
@@ -1512,7 +1525,7 @@ public final class GroundEruptions {
                 for (int i = 0; i < 3; i++) {
                     Location loc = center.clone().add(geyserX[g], -3 + i, geyserZ[g]);
                     BlockDisplayHandle h = displayBuilder.spawnBlock(loc, Material.CHAIN);
-                    h.scale(0.6f, 1.0f, 0.6f).glow(120, 120, 135).interpolation(2, 0);
+                    h.scale(0.9f, 1.5f, 0.9f).glow(120, 120, 135).interpolation(2, 0);
                     geyser.add(h);
                     spawnedEntities.add(h.entity());
                 }
@@ -1592,11 +1605,12 @@ public final class GroundEruptions {
 
         public RisingChainWall(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("rising_chain_wall", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
-            config.setDamage(44.0);
-            config.setDamageRadius(3.0);
+            config.setDamage(66.0);
+            config.setDamageRadius(6.0);
             config.setDurationTicks(260);
             config.setCooldownTicks(320);
             config.setTicksBetweenDamage(12);
+            config.setTracksPlayer(true);
         }
 
         @Override
@@ -1610,7 +1624,7 @@ public final class GroundEruptions {
                     double xOff = (col - 2) * 1.2; // spread across X
                     Location loc = center.clone().add(xOff, -4 + row, -3);
                     BlockDisplayHandle h = displayBuilder.spawnBlock(loc, Material.CHAIN);
-                    h.scale(1.0f, 1.0f, 0.8f).glow(100, 100, 115).interpolation(3, 0);
+                    h.scale(1.5f, 1.5f, 1.2f).glow(100, 100, 115).interpolation(3, 0);
                     wallBlocks.add(h);
                     spawnedEntities.add(h.entity());
                 }
@@ -1697,11 +1711,12 @@ public final class GroundEruptions {
 
         public ChainFountain(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("chain_fountain", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
-            config.setDamage(42.0);
-            config.setDamageRadius(4.0);
+            config.setDamage(63.0);
+            config.setDamageRadius(8.0);
             config.setDurationTicks(300);
             config.setCooldownTicks(300);
             config.setTicksBetweenDamage(12);
+            config.setTracksPlayer(true);
         }
 
         @Override
@@ -1713,8 +1728,8 @@ public final class GroundEruptions {
             for (int i = 0; i < 3; i++) {
                 Location loc = center.clone().add(0, i, 0);
                 BlockDisplayHandle h = displayBuilder.spawnBlock(loc, Material.IRON_BLOCK);
-                float taper = 1.0f - i * 0.15f; // slight taper upward
-                h.scale(taper, 1.0f, taper).glow(140, 140, 150).interpolation(3, 0);
+                float taper = 1.5f - i * 0.23f; // slight taper upward
+                h.scale(taper, 1.5f, taper).glow(140, 140, 150).interpolation(3, 0);
                 pedestalBlocks.add(h);
                 spawnedEntities.add(h.entity());
             }
@@ -1723,7 +1738,7 @@ public final class GroundEruptions {
             for (int i = 0; i < 10; i++) {
                 Location loc = center.clone().add(0, 3, 0); // start at pedestal top
                 BlockDisplayHandle h = displayBuilder.spawnBlock(loc, Material.CHAIN);
-                h.scale(0.5f, 0.8f, 0.5f).glow(130, 130, 145).interpolation(2, 0);
+                h.scale(0.75f, 1.2f, 0.75f).glow(130, 130, 145).interpolation(2, 0);
                 fountainChains.add(h);
                 spawnedEntities.add(h.entity());
             }
