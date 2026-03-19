@@ -126,12 +126,11 @@ public class UpdateChecker {
     }
 
     /**
-     * Download the latest JAR from the release/ folder in the repo and stage it for restart.
-     * This grabs ChaosCraft-latest.jar (updated by every push to main).
-     * Paper/Spigot automatically replaces plugin JARs from /plugins/update/ on restart.
+     * Download the latest JAR from the repo's release/ folder.
+     * Uses the GitHub API to find the latest dev build number and downloads
+     * the specific versioned JAR to avoid raw.githubusercontent caching issues.
      */
     public void downloadUpdate(CommandSender notifyTarget) {
-        // Prevent unnecessary downloads if already up-to-date
         if (!updateAvailable && latestVersion == null) {
             notifyTarget.sendMessage(Component.text("Run /cc update check first to see if an update is available.", NamedTextColor.YELLOW));
             return;
@@ -141,8 +140,15 @@ public class UpdateChecker {
         if (latestDownloadUrl != null) {
             downloadUrl = latestDownloadUrl;
         } else {
-            // Fall back to raw release/ChaosCraft-latest.jar from repo
-            downloadUrl = "https://raw.githubusercontent.com/" + githubOwner + "/" + githubRepo + "/main/release/ChaosCraft-latest.jar";
+            // Try to find the latest build number for a specific versioned JAR
+            int buildNum = fetchLatestBuildNumber();
+            if (buildNum > 0) {
+                downloadUrl = "https://raw.githubusercontent.com/" + githubOwner + "/" + githubRepo
+                        + "/main/release/ChaosCraft-dev-" + buildNum + ".jar";
+            } else {
+                downloadUrl = "https://raw.githubusercontent.com/" + githubOwner + "/" + githubRepo
+                        + "/main/release/ChaosCraft-latest.jar";
+            }
         }
 
         String versionLabel = latestVersion != null ? "v" + latestVersion : "latest dev build";
@@ -225,8 +231,17 @@ public class UpdateChecker {
 
             String currentVersion = plugin.getDescription().getVersion();
 
-            // Compare SHA to determine if update is needed
-            latestDownloadUrl = "https://raw.githubusercontent.com/" + githubOwner + "/" + githubRepo + "/main/release/ChaosCraft-latest.jar";
+            // Get the latest CI build number from workflow runs
+            int latestBuildNum = fetchLatestBuildNumber();
+            if (latestBuildNum > 0) {
+                // Use specific versioned JAR to avoid raw.githubusercontent caching
+                latestDownloadUrl = "https://raw.githubusercontent.com/" + githubOwner + "/" + githubRepo
+                        + "/main/release/ChaosCraft-dev-" + latestBuildNum + ".jar";
+            } else {
+                // Fallback to the GitHub Contents API (avoids CDN caching)
+                latestDownloadUrl = "https://api.github.com/repos/" + githubOwner + "/" + githubRepo
+                        + "/contents/release/ChaosCraft-latest.jar?ref=main";
+            }
             latestVersion = currentVersion + "-" + sha;
 
             if (buildSha.equals(sha)) {
@@ -245,6 +260,43 @@ public class UpdateChecker {
             notifyAsync(notifyTarget, Component.text("Error checking commits: " + e.getMessage(), NamedTextColor.RED));
             plugin.getLogger().warning("[Updater] Commit check error: " + e.getMessage());
         }
+    }
+
+    /**
+     * Fetch the latest successful workflow run number from GitHub Actions API.
+     * Returns 0 if unable to determine.
+     */
+    private int fetchLatestBuildNumber() {
+        try {
+            String apiUrl = "https://api.github.com/repos/" + githubOwner + "/" + githubRepo
+                    + "/actions/runs?branch=main&status=success&per_page=1";
+            HttpURLConnection conn = (HttpURLConnection) URI.create(apiUrl).toURL().openConnection();
+            conn.setRequestMethod("GET");
+            conn.setRequestProperty("Accept", "application/vnd.github+json");
+            conn.setRequestProperty("User-Agent", "ChaosCraft-Updater");
+            conn.setConnectTimeout(10000);
+            conn.setReadTimeout(10000);
+
+            if (conn.getResponseCode() != 200) return 0;
+
+            String body;
+            try (var reader = new BufferedReader(new InputStreamReader(conn.getInputStream()))) {
+                var sb = new StringBuilder();
+                String line;
+                while ((line = reader.readLine()) != null) sb.append(line);
+                body = sb.toString();
+            }
+
+            JsonObject result = JsonParser.parseString(body).getAsJsonObject();
+            JsonArray runs = result.getAsJsonArray("workflow_runs");
+            if (runs != null && !runs.isEmpty()) {
+                JsonObject latestRun = runs.get(0).getAsJsonObject();
+                return latestRun.get("run_number").getAsInt();
+            }
+        } catch (Exception e) {
+            plugin.getLogger().warning("[Updater] Failed to fetch build number: " + e.getMessage());
+        }
+        return 0;
     }
 
     private void notifyAsync(CommandSender target, Component message) {
