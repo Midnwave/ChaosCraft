@@ -215,6 +215,9 @@ public class ChaosCraftPlugin extends JavaPlugin {
         checkDependency("MythicCrucible", "Optional — used for custom items");
         checkDependency("ItemsAdder", "Optional — used for custom portal blocks");
 
+        // Initial config load for all services (same as /cc reload but on startup)
+        reload();
+
         getLogger().info("ChaosCraft v" + getDescription().getVersion() + " enabled.");
     }
 
