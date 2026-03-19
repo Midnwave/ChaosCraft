@@ -36,6 +36,12 @@ commands:
     usage: /endmode
     permission: chaoscraft.mode.end
 
+  # ===== Chain Mode =====
+  chain:
+    description: Chain mode test and admin commands
+    usage: /chain <subcommand> — use /chain for full help
+    permission: chaoscraft.chain.admin
+
   # ===== Calamity Mode =====
   calamity:
     description: Calamity mode test and admin commands
@@ -77,6 +83,7 @@ permissions:
       # NOTE: chaoscraft.mode.exempt is NOT included here — admins should take damage
       # during testing. Use /calamity toggleexempt to manually exempt specific players.
       chaoscraft.calamity.admin: true
+      chaoscraft.chain.admin: true
       chaoscraft.devs: true
       chaoscraft.performance.admin: true
       chaoscraft.titlescreen: true
@@ -99,6 +106,11 @@ permissions:
   chaoscraft.mode.exempt:
     description: Exempt from mode attacks (no damage from events)
     default: false
+
+  # ----- Chain Mode -----
+  chaoscraft.chain.admin:
+    description: Chain mode admin/test commands
+    default: op
 
   # ----- Calamity Mode -----
   chaoscraft.calamity.admin:

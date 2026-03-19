@@ -22,6 +22,7 @@ public class AttackConfig {
     private final String attackId;
     private final AttackType type;
     private final int phase;
+    private final String modePath; // e.g. "modes/calamity/attacks" or "modes/chain/attacks"
 
     // Configurable values with defaults
     private double damage = 4.0;
@@ -39,9 +40,14 @@ public class AttackConfig {
     private double impactRadius = 4.0;
 
     public AttackConfig(String attackId, AttackType type, int phase) {
+        this(attackId, type, phase, "modes/calamity/attacks");
+    }
+
+    public AttackConfig(String attackId, AttackType type, int phase, String modePath) {
         this.attackId = attackId;
         this.type = type;
         this.phase = phase;
+        this.modePath = modePath;
     }
 
     /**
@@ -115,7 +121,7 @@ public class AttackConfig {
             case BOSS -> "boss";
         };
         return new File(plugin.getDataFolder(),
-                "modes/calamity/attacks/" + typePath + "/phase" + phase + ".yml");
+                modePath + "/" + typePath + "/phase" + phase + ".yml");
     }
 
     // ---- Getters/Setters ----

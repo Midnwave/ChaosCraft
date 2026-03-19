@@ -6,6 +6,7 @@ import com.blockforge.chaoscraft.api.timer.ModeTimer;
 import com.blockforge.chaoscraft.commands.*;
 import com.blockforge.chaoscraft.integration.PlaceholderExpansion;
 import com.blockforge.chaoscraft.modes.calamity.CalamityMode;
+import com.blockforge.chaoscraft.modes.chain.ChainMode;
 import com.blockforge.chaoscraft.services.codes.CodesChatListener;
 import com.blockforge.chaoscraft.services.codes.CodesService;
 import com.blockforge.chaoscraft.services.performance.PerformanceCommand;
@@ -78,6 +79,9 @@ public class ChaosCraftPlugin extends JavaPlugin {
         // Register modes
         CalamityMode calamityMode = new CalamityMode(this);
         modeManager.registerMode(calamityMode);
+
+        ChainMode chainMode = new ChainMode(this);
+        modeManager.registerMode(chainMode);
 
         // Initialize performance service
         performanceService = new PerformanceService(this);
@@ -240,6 +244,13 @@ public class ChaosCraftPlugin extends JavaPlugin {
             calamityCmd.setTabCompleter(handler);
         }
 
+        var chainCmd = getCommand("chain");
+        if (chainCmd != null) {
+            var handler = new ChainCommand(this);
+            chainCmd.setExecutor(handler);
+            chainCmd.setTabCompleter(handler);
+        }
+
         var perfCmd = getCommand("ccperformance");
         if (perfCmd != null) {
             var handler = new PerformanceCommand(this, performanceService);
@@ -308,6 +319,13 @@ public class ChaosCraftPlugin extends JavaPlugin {
         if (calamity instanceof CalamityMode calamityMode) {
             calamityMode.getCalamityConfig().load();
             calamityMode.getAttackRegistry().reloadConfigs();
+        }
+
+        // Reload Chain-specific config + attack configs
+        var chain = modeManager.getMode("chain");
+        if (chain instanceof ChainMode chainMode) {
+            chainMode.getChainConfig().load();
+            chainMode.getAttackRegistry().reloadConfigs();
         }
 
         getLogger().info("ChaosCraft configuration reloaded.");
