@@ -128,8 +128,7 @@ public class CorruptionMode extends AbstractMode {
             plugin.getMusicManager().playModeMusic(this);
         }
 
-        // Run start commands
-        runStartCommands();
+        // NOTE: runStartCommands() is called by ModeManager — do NOT call here
 
         // Start the attack scheduler
         attackScheduler.start();
@@ -162,11 +161,7 @@ public class CorruptionMode extends AbstractMode {
         // TODO: corruptionEngine.stop() — stops floating blocks, mob glitch, ambient effects
         // TODO: corruptionEngine.startRestoration() — begins block restoration process
 
-        // Run end commands
-        runEndCommands();
-
-        // Give rewards to survivors
-        giveRewards();
+        // NOTE: runEndCommands() and giveRewards() are called by ModeManager — do NOT call here
 
         tickCounter = 0;
         plugin.getLogger().info("[Corruption] Mode ended. All corruption systems cleaned up.");

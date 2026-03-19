@@ -69,7 +69,6 @@ public final class EnclosuresCages {
             config.setTicksBetweenDamage(15);
             config.setDurationTicks(200);
             config.setCooldownTicks(300);
-            config.setTracksPlayer(true);
         }
 
         @Override
@@ -227,7 +226,6 @@ public final class EnclosuresCages {
             config.setTicksBetweenDamage(15);
             config.setDurationTicks(240);
             config.setCooldownTicks(350);
-            config.setTracksPlayer(true);
         }
 
         @Override
@@ -401,7 +399,6 @@ public final class EnclosuresCages {
             config.setTicksBetweenDamage(15);
             config.setDurationTicks(300);
             config.setCooldownTicks(400);
-            config.setTracksPlayer(true);
         }
 
         @Override
@@ -548,7 +545,6 @@ public final class EnclosuresCages {
             config.setTicksBetweenDamage(12);
             config.setDurationTicks(250);
             config.setCooldownTicks(300);
-            config.setTracksPlayer(true);
         }
 
         @Override
@@ -687,7 +683,6 @@ public final class EnclosuresCages {
             config.setTicksBetweenDamage(10);
             config.setDurationTicks(260);
             config.setCooldownTicks(350);
-            config.setTracksPlayer(true);
         }
 
         @Override
@@ -809,7 +804,6 @@ public final class EnclosuresCages {
             config.setTicksBetweenDamage(12);
             config.setDurationTicks(280);
             config.setCooldownTicks(350);
-            config.setTracksPlayer(true);
         }
 
         @Override
@@ -991,7 +985,6 @@ public final class EnclosuresCages {
             config.setTicksBetweenDamage(12);
             config.setDurationTicks(300);
             config.setCooldownTicks(400);
-            config.setTracksPlayer(true);
         }
 
         @Override
@@ -1152,7 +1145,6 @@ public final class EnclosuresCages {
             config.setTicksBetweenDamage(10);
             config.setDurationTicks(240);
             config.setCooldownTicks(300);
-            config.setTracksPlayer(true);
         }
 
         @Override
@@ -1265,7 +1257,6 @@ public final class EnclosuresCages {
             config.setTicksBetweenDamage(15);
             config.setDurationTicks(250);
             config.setCooldownTicks(350);
-            config.setTracksPlayer(true);
         }
 
         @Override
@@ -1438,7 +1429,6 @@ public final class EnclosuresCages {
             config.setDamageOnImpactOnly(true);
             config.setImpactDamage(18.0);
             config.setImpactRadius(10.0);
-            config.setTracksPlayer(true);
         }
 
         @Override
@@ -1592,7 +1582,6 @@ public final class EnclosuresCages {
             config.setTicksBetweenDamage(30);
             config.setDurationTicks(300);
             config.setCooldownTicks(400);
-            config.setTracksPlayer(true);
         }
 
         @Override
@@ -1749,7 +1738,6 @@ public final class EnclosuresCages {
             config.setTicksBetweenDamage(12);
             config.setDurationTicks(280);
             config.setCooldownTicks(300);
-            config.setTracksPlayer(true);
 
             // 10 wall segments in a grid pattern
             wallPositions = new double[][] {
@@ -1884,7 +1872,6 @@ public final class EnclosuresCages {
             config.setDamageOnImpactOnly(true);
             config.setImpactDamage(15.0);
             config.setImpactRadius(8.0);
-            config.setTracksPlayer(true);
         }
 
         @Override
@@ -2052,7 +2039,6 @@ public final class EnclosuresCages {
             config.setDamageOnImpactOnly(true);
             config.setImpactDamage(21.0);
             config.setImpactRadius(10.0);
-            config.setTracksPlayer(true);
         }
 
         @Override
@@ -2233,7 +2219,6 @@ public final class EnclosuresCages {
             config.setDamageOnImpactOnly(true);
             config.setImpactDamage(24.0);
             config.setImpactRadius(12.0);
-            config.setTracksPlayer(true);
         }
 
         @Override

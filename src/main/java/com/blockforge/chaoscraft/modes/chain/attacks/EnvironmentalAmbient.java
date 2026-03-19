@@ -69,7 +69,6 @@ public final class EnvironmentalAmbient {
             config.setDurationTicks(500);
             config.setCooldownTicks(400);
             config.setTicksBetweenDamage(25);
-            config.setTracksPlayer(true);
             currentHeight = START_HEIGHT;
         }
 
@@ -166,7 +165,6 @@ public final class EnvironmentalAmbient {
             config.setDurationTicks(400);
             config.setCooldownTicks(350);
             config.setTicksBetweenDamage(20);
-            config.setTracksPlayer(true);
         }
 
         public static RustingChainField create(ChaosCraftPlugin plugin) { return new RustingChainField(plugin); }
@@ -273,7 +271,6 @@ public final class EnvironmentalAmbient {
             config.setDurationTicks(CYCLE_TICKS * TOTAL_CYCLES + 20);
             config.setCooldownTicks(400);
             config.setTicksBetweenDamage(15);
-            config.setTracksPlayer(true);
         }
 
         public static ChainEarthquake create(ChaosCraftPlugin plugin) { return new ChainEarthquake(plugin); }
@@ -434,7 +431,6 @@ public final class EnvironmentalAmbient {
             config.setDurationTicks(400);
             config.setCooldownTicks(350);
             config.setTicksBetweenDamage(30);
-            config.setTracksPlayer(true);
         }
 
         public static PhantomChains create(ChaosCraftPlugin plugin) { return new PhantomChains(plugin); }
@@ -566,7 +562,6 @@ public final class EnvironmentalAmbient {
             config.setDurationTicks(500);
             config.setCooldownTicks(380);
             config.setTicksBetweenDamage(25);
-            config.setTracksPlayer(true);
         }
 
         public static ChainFog create(ChaosCraftPlugin plugin) { return new ChainFog(plugin); }
@@ -688,7 +683,6 @@ public final class EnvironmentalAmbient {
             config.setDurationTicks(450);
             config.setCooldownTicks(380);
             config.setTicksBetweenDamage(20);
-            config.setTracksPlayer(true);
         }
 
         public static ChainInfestation create(ChaosCraftPlugin plugin) { return new ChainInfestation(plugin); }
@@ -817,7 +811,6 @@ public final class EnvironmentalAmbient {
             config.setDamageOnImpactOnly(true);
             config.setImpactDamage(75.0);
             config.setImpactRadius(7.0);
-            config.setTracksPlayer(true);
         }
 
         public static ChainThunderstorm create(ChaosCraftPlugin plugin) { return new ChainThunderstorm(plugin); }
@@ -957,7 +950,6 @@ public final class EnvironmentalAmbient {
             config.setDurationTicks(TICKS_PER_CYCLE * TOTAL_CYCLES + 40);
             config.setCooldownTicks(350);
             config.setTicksBetweenDamage(15);
-            config.setTracksPlayer(true);
         }
 
         public static ChainTide create(ChaosCraftPlugin plugin) { return new ChainTide(plugin); }
@@ -1068,7 +1060,6 @@ public final class EnvironmentalAmbient {
             config.setDurationTicks(450);
             config.setCooldownTicks(400);
             config.setTicksBetweenDamage(18);
-            config.setTracksPlayer(true);
         }
 
         public static ChainEclipse create(ChaosCraftPlugin plugin) { return new ChainEclipse(plugin); }
@@ -1205,7 +1196,6 @@ public final class EnvironmentalAmbient {
             config.setDamageOnImpactOnly(true);
             config.setImpactDamage(69.0);
             config.setImpactRadius(7.0);
-            config.setTracksPlayer(true);
         }
 
         public static HauntedChains create(ChaosCraftPlugin plugin) { return new HauntedChains(plugin); }
@@ -1358,7 +1348,6 @@ public final class EnvironmentalAmbient {
             config.setDurationTicks(350);
             config.setCooldownTicks(300);
             config.setTicksBetweenDamage(12);
-            config.setTracksPlayer(true);
         }
 
         public static ChainWhisper create(ChaosCraftPlugin plugin) { return new ChainWhisper(plugin); }
@@ -1469,7 +1458,6 @@ public final class EnvironmentalAmbient {
             config.setDurationTicks(400);
             config.setCooldownTicks(370);
             config.setTicksBetweenDamage(18);
-            config.setTracksPlayer(true);
         }
 
         public static ChainFrostbite create(ChaosCraftPlugin plugin) { return new ChainFrostbite(plugin); }
@@ -1603,7 +1591,6 @@ public final class EnvironmentalAmbient {
             config.setDurationTicks(450);
             config.setCooldownTicks(370);
             config.setTicksBetweenDamage(18);
-            config.setTracksPlayer(true);
         }
 
         public static ChainSandstorm create(ChaosCraftPlugin plugin) { return new ChainSandstorm(plugin); }
@@ -1737,7 +1724,6 @@ public final class EnvironmentalAmbient {
             config.setDamageOnImpactOnly(true);
             config.setImpactDamage(69.0);
             config.setImpactRadius(7.0);
-            config.setTracksPlayer(true);
         }
 
         public static ChainGraveyardRise create(ChaosCraftPlugin plugin) { return new ChainGraveyardRise(plugin); }
@@ -1927,7 +1913,6 @@ public final class EnvironmentalAmbient {
             config.setDamageOnImpactOnly(true);
             config.setImpactDamage(99.0);
             config.setImpactRadius(16.0);
-            config.setTracksPlayer(true);
         }
 
         public static ChainApocalypse create(ChaosCraftPlugin plugin) { return new ChainApocalypse(plugin); }

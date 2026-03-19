@@ -57,7 +57,6 @@ public final class HellfireFormations {
 
         public InfernoPillar(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("inferno_pillar", AttackType.BLOCK_DISPLAY, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(55.0);
             config.setDamageRadius(6.0);
             config.setDurationTicks(400);
@@ -149,7 +148,6 @@ public final class HellfireFormations {
 
         public BrimstoneGeyser(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("brimstone_geyser", AttackType.BLOCK_DISPLAY, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(45.0);
             config.setDamageRadius(7.0);
             config.setDurationTicks(300);
@@ -252,7 +250,6 @@ public final class HellfireFormations {
 
         public HellfireRing(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("hellfire_ring", AttackType.BLOCK_DISPLAY, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(55.0);
             config.setDamageRadius(7.0);
             config.setDurationTicks(400);
@@ -338,7 +335,6 @@ public final class HellfireFormations {
 
         public MagmaSerpent(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("magma_serpent", AttackType.BLOCK_DISPLAY, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(60.0);
             config.setDamageRadius(5.0);
             config.setDurationTicks(400);
@@ -419,7 +415,6 @@ public final class HellfireFormations {
 
         public LavaPillarRow(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("lava_pillar_row", AttackType.BLOCK_DISPLAY, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(50.0);
             config.setDamageRadius(6.0);
             config.setDurationTicks(350);
@@ -514,7 +509,6 @@ public final class HellfireFormations {
 
         public InfernalCross(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("infernal_cross", AttackType.BLOCK_DISPLAY, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(55.0);
             config.setDamageRadius(7.0);
             config.setDurationTicks(400);
@@ -605,7 +599,6 @@ public final class HellfireFormations {
 
         public FireStorm(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("fire_storm", AttackType.BLOCK_DISPLAY, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(50.0);
             config.setDamageRadius(8.0);
             config.setDurationTicks(400);
@@ -686,7 +679,6 @@ public final class HellfireFormations {
 
         public BrimstoneWall(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("brimstone_wall", AttackType.BLOCK_DISPLAY, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(65.0);
             config.setDamageRadius(5.0);
             config.setDurationTicks(300);
@@ -764,7 +756,6 @@ public final class HellfireFormations {
 
         public HellfireStarfish(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("hellfire_starfish", AttackType.BLOCK_DISPLAY, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(50.0);
             config.setDamageRadius(8.0);
             config.setDurationTicks(400);
@@ -851,7 +842,6 @@ public final class HellfireFormations {
 
         public MoltenRain(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("molten_rain", AttackType.BLOCK_DISPLAY, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(40.0);
             config.setDamageRadius(6.0);
             config.setDurationTicks(350);
@@ -938,7 +928,6 @@ public final class HellfireFormations {
 
         public InfernalCage(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("infernal_cage", AttackType.BLOCK_DISPLAY, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(55.0);
             config.setDamageRadius(5.0);
             config.setDurationTicks(400);
@@ -1036,7 +1025,6 @@ public final class HellfireFormations {
 
         public VolcanicSpine(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("volcanic_spine", AttackType.BLOCK_DISPLAY, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(55.0);
             config.setDamageRadius(7.0);
             config.setDurationTicks(350);
@@ -1131,7 +1119,6 @@ public final class HellfireFormations {
 
         public BrimstoneMeteor(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("brimstone_meteor", AttackType.BLOCK_DISPLAY, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(40.0);
             config.setDamageRadius(5.0);
             config.setDurationTicks(400);

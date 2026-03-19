@@ -57,7 +57,6 @@ public final class NightmareConstructs {
 
         public EscherStaircase(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("escher_staircase", AttackType.BLOCK_DISPLAY, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(50.0);
             config.setDamageRadius(7.0);
             config.setDurationTicks(400);
@@ -152,7 +151,6 @@ public final class NightmareConstructs {
 
         public InfiniteHallway(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("infinite_hallway", AttackType.BLOCK_DISPLAY, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(55.0);
             config.setDamageRadius(6.0);
             config.setDurationTicks(350);
@@ -252,7 +250,6 @@ public final class NightmareConstructs {
 
         public FloatingRoom(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("floating_room", AttackType.BLOCK_DISPLAY, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(45.0);
             config.setDamageRadius(8.0);
             config.setDurationTicks(400);
@@ -375,7 +372,6 @@ public final class NightmareConstructs {
 
         public BrokenClock(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("broken_clock", AttackType.BLOCK_DISPLAY, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(55.0);
             config.setDamageRadius(7.0);
             config.setDurationTicks(400);
@@ -475,7 +471,6 @@ public final class NightmareConstructs {
 
         public DoorToNowhere(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("door_to_nowhere", AttackType.BLOCK_DISPLAY, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(60.0);
             config.setDamageRadius(6.0);
             config.setDurationTicks(350);
@@ -578,7 +573,6 @@ public final class NightmareConstructs {
 
         public MeltingTower(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("melting_tower", AttackType.BLOCK_DISPLAY, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(50.0);
             config.setDamageRadius(7.0);
             config.setDurationTicks(400);
@@ -660,7 +654,6 @@ public final class NightmareConstructs {
 
         public GravityStairs(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("gravity_stairs", AttackType.BLOCK_DISPLAY, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(50.0);
             config.setDamageRadius(7.0);
             config.setDurationTicks(400);
@@ -743,7 +736,6 @@ public final class NightmareConstructs {
 
         public MirrorCorridor(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("mirror_corridor", AttackType.BLOCK_DISPLAY, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(50.0);
             config.setDamageRadius(6.0);
             config.setDurationTicks(350);
@@ -829,7 +821,6 @@ public final class NightmareConstructs {
 
         public PendulumRoom(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("pendulum_room", AttackType.BLOCK_DISPLAY, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(65.0);
             config.setDamageRadius(5.0);
             config.setDurationTicks(400);
@@ -937,7 +928,6 @@ public final class NightmareConstructs {
 
         public ShrinkingBox(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("shrinking_box", AttackType.BLOCK_DISPLAY, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(55.0);
             config.setDamageRadius(6.0);
             config.setDurationTicks(400);
@@ -1043,7 +1033,6 @@ public final class NightmareConstructs {
 
         public TwistedSpire(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("twisted_spire", AttackType.BLOCK_DISPLAY, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(50.0);
             config.setDamageRadius(7.0);
             config.setDurationTicks(400);
@@ -1127,7 +1116,6 @@ public final class NightmareConstructs {
 
         public NightmareCarousel(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("nightmare_carousel", AttackType.BLOCK_DISPLAY, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(50.0);
             config.setDamageRadius(8.0);
             config.setDurationTicks(400);
@@ -1222,7 +1210,6 @@ public final class NightmareConstructs {
 
         public ImpossibleArch(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("impossible_arch", AttackType.BLOCK_DISPLAY, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(50.0);
             config.setDamageRadius(8.0);
             config.setDurationTicks(400);

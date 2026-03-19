@@ -39,7 +39,6 @@ public class NightmareWeather {
     public static class BloodStorm extends EnvironmentalAttack {
         public BloodStorm(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("blood_storm", AttackType.ENVIRONMENTAL, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true); config.setDamage(8.0); config.setDamageRadius(12.0);
             config.setTicksBetweenDamage(15); config.setDurationTicks(400); config.setCooldownTicks(350);
         }
         @Override protected void onSpawn(Location center) {
@@ -75,7 +74,6 @@ public class NightmareWeather {
         private final List<Float> hailY = new ArrayList<>(); private final List<Double> hailX = new ArrayList<>(), hailZ = new ArrayList<>();
         public SoulHail(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("soul_hail", AttackType.ENVIRONMENTAL, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true); config.setDamage(7.0); config.setDamageRadius(10.0);
             config.setTicksBetweenDamage(12); config.setDurationTicks(350); config.setCooldownTicks(300);
         }
         @Override protected void onSpawn(Location center) {
@@ -105,7 +103,6 @@ public class NightmareWeather {
         private double windAngle = 0;
         public BrimstoneWind(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("brimstone_wind", AttackType.ENVIRONMENTAL, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true); config.setDamage(6.0); config.setDamageRadius(10.0);
             config.setTicksBetweenDamage(15); config.setDurationTicks(350); config.setCooldownTicks(300);
         }
         @Override protected void onSpawn(Location center) { windAngle = Math.random()*Math.PI*2; DisplayBuilder.playSound(center, Sound.ENTITY_ENDER_DRAGON_FLAP, 0.8f, 0.3f); }
@@ -129,7 +126,6 @@ public class NightmareWeather {
         private float fogDensity = 0;
         public NightFog(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("night_fog", AttackType.ENVIRONMENTAL, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true); config.setDamage(5.0); config.setDamageRadius(12.0);
             config.setTicksBetweenDamage(25); config.setDurationTicks(400); config.setCooldownTicks(350);
         }
         @Override protected void onSpawn(Location center) { DisplayBuilder.playSound(center, Sound.AMBIENT_CAVE, 1.0f, 0.3f); }
@@ -152,7 +148,6 @@ public class NightmareWeather {
     public static class EmberShower extends EnvironmentalAttack {
         public EmberShower(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("ember_shower", AttackType.ENVIRONMENTAL, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true); config.setDamage(7.0); config.setDamageRadius(10.0);
             config.setTicksBetweenDamage(12); config.setDurationTicks(350); config.setCooldownTicks(300);
         }
         @Override protected void onSpawn(Location center) { DisplayBuilder.playSound(center, Sound.ENTITY_BLAZE_AMBIENT, 0.8f, 0.4f); }
@@ -177,7 +172,6 @@ public class NightmareWeather {
         private final List<BlockDisplayHandle> ashChunks = new ArrayList<>();
         public AshCloud(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("ash_cloud", AttackType.ENVIRONMENTAL, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true); config.setDamage(5.0); config.setDamageRadius(12.0);
             config.setTicksBetweenDamage(20); config.setDurationTicks(400); config.setCooldownTicks(350);
         }
         @Override protected void onSpawn(Location center) { World w = center.getWorld(); if (w == null) return;
@@ -204,7 +198,6 @@ public class NightmareWeather {
     public static class ThunderScream extends EnvironmentalAttack {
         public ThunderScream(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("thunder_scream", AttackType.ENVIRONMENTAL, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true); config.setDamage(12.0); config.setDamageRadius(10.0);
             config.setTicksBetweenDamage(40); config.setDurationTicks(300); config.setCooldownTicks(300);
         }
         @Override protected void onSpawn(Location center) { DisplayBuilder.playSound(center, Sound.ENTITY_LIGHTNING_BOLT_THUNDER, 1.2f, 0.3f); }
@@ -229,7 +222,6 @@ public class NightmareWeather {
         private double windDir = 0;
         public HellWind(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("hell_wind", AttackType.ENVIRONMENTAL, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true); config.setDamage(8.0); config.setDamageRadius(10.0);
             config.setTicksBetweenDamage(12); config.setDurationTicks(300); config.setCooldownTicks(280);
         }
         @Override protected void onSpawn(Location center) { windDir = Math.random()*Math.PI*2; DisplayBuilder.playSound(center, Sound.ENTITY_ENDER_DRAGON_FLAP, 1.0f, 0.3f); }
@@ -251,7 +243,6 @@ public class NightmareWeather {
     public static class SoulBlizzard extends EnvironmentalAttack {
         public SoulBlizzard(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("soul_blizzard", AttackType.ENVIRONMENTAL, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true); config.setDamage(7.0); config.setDamageRadius(12.0);
             config.setTicksBetweenDamage(15); config.setDurationTicks(400); config.setCooldownTicks(350);
         }
         @Override protected void onSpawn(Location center) { DisplayBuilder.playSound(center, Sound.ENTITY_POLAR_BEAR_WARNING, 0.8f, 0.3f); }
@@ -275,7 +266,6 @@ public class NightmareWeather {
     public static class CrimsonDew extends EnvironmentalAttack {
         public CrimsonDew(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("crimson_dew", AttackType.ENVIRONMENTAL, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true); config.setDamage(5.0); config.setDamageRadius(12.0);
             config.setTicksBetweenDamage(20); config.setDurationTicks(400); config.setCooldownTicks(300);
         }
         @Override protected void onSpawn(Location center) { DisplayBuilder.playSound(center, Sound.BLOCK_NETHER_SPROUTS_BREAK, 0.8f, 0.3f); }
@@ -297,7 +287,6 @@ public class NightmareWeather {
     public static class VolcanicAsh extends EnvironmentalAttack {
         public VolcanicAsh(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("volcanic_ash", AttackType.ENVIRONMENTAL, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true); config.setDamage(6.0); config.setDamageRadius(12.0);
             config.setTicksBetweenDamage(18); config.setDurationTicks(400); config.setCooldownTicks(350);
         }
         @Override protected void onSpawn(Location center) { DisplayBuilder.playSound(center, Sound.ENTITY_GENERIC_EXPLODE, 0.6f, 0.3f); }
@@ -321,7 +310,6 @@ public class NightmareWeather {
         private final List<BlockDisplayHandle> debris = new ArrayList<>(); private float intensity = 0;
         public NightmareTornado(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("nightmare_tornado", AttackType.ENVIRONMENTAL, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true); config.setDamage(10.0); config.setDamageRadius(8.0);
             config.setTicksBetweenDamage(10); config.setDurationTicks(400); config.setCooldownTicks(350);
         }
         @Override protected void onSpawn(Location center) { World w = center.getWorld(); if (w == null) return;
@@ -351,7 +339,6 @@ public class NightmareWeather {
     public static class DreamStorm extends EnvironmentalAttack {
         public DreamStorm(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("dream_storm", AttackType.ENVIRONMENTAL, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true); config.setDamage(10.0); config.setDamageRadius(12.0);
             config.setTicksBetweenDamage(12); config.setDurationTicks(400); config.setCooldownTicks(400);
         }
         @Override protected void onSpawn(Location center) { DisplayBuilder.playSound(center, Sound.ENTITY_WITHER_SPAWN, 0.8f, 0.4f);

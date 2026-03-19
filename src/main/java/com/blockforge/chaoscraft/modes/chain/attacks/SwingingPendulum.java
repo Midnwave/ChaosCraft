@@ -77,7 +77,6 @@ public final class SwingingPendulum {
             config.setDurationTicks(400);
             config.setCooldownTicks(300);
             config.setTicksBetweenDamage(10);
-            config.setTracksPlayer(true);
         }
 
         @Override
@@ -205,7 +204,6 @@ public final class SwingingPendulum {
             config.setDurationTicks(500);
             config.setCooldownTicks(350);
             config.setTicksBetweenDamage(10);
-            config.setTracksPlayer(true);
         }
 
         @Override
@@ -351,7 +349,6 @@ public final class SwingingPendulum {
             config.setDurationTicks(400);
             config.setCooldownTicks(280);
             config.setTicksBetweenDamage(8);
-            config.setTracksPlayer(true);
         }
 
         @Override
@@ -479,7 +476,6 @@ public final class SwingingPendulum {
             config.setDurationTicks(450);
             config.setCooldownTicks(300);
             config.setTicksBetweenDamage(10);
-            config.setTracksPlayer(true);
         }
 
         @Override
@@ -607,7 +603,6 @@ public final class SwingingPendulum {
             config.setDurationTicks(500);
             config.setCooldownTicks(320);
             config.setTicksBetweenDamage(12);
-            config.setTracksPlayer(true);
         }
 
         @Override
@@ -749,7 +744,6 @@ public final class SwingingPendulum {
             config.setDurationTicks(500);
             config.setCooldownTicks(350);
             config.setTicksBetweenDamage(10);
-            config.setTracksPlayer(true);
         }
 
         @Override
@@ -876,7 +870,6 @@ public final class SwingingPendulum {
             config.setDamageOnImpactOnly(true);
             config.setImpactDamage(78.0);
             config.setImpactRadius(10.0);
-            config.setTracksPlayer(true);
         }
 
         @Override
@@ -1023,7 +1016,6 @@ public final class SwingingPendulum {
             config.setDurationTicks(500);
             config.setCooldownTicks(300);
             config.setTicksBetweenDamage(8);
-            config.setTracksPlayer(true);
         }
 
         @Override
@@ -1150,7 +1142,6 @@ public final class SwingingPendulum {
             config.setDurationTicks(500);
             config.setCooldownTicks(280);
             config.setTicksBetweenDamage(10);
-            config.setTracksPlayer(true);
         }
 
         @Override
@@ -1287,7 +1278,6 @@ public final class SwingingPendulum {
             config.setDurationTicks(400);
             config.setCooldownTicks(300);
             config.setTicksBetweenDamage(10);
-            config.setTracksPlayer(true);
         }
 
         @Override
@@ -1429,7 +1419,6 @@ public final class SwingingPendulum {
             config.setDurationTicks(450);
             config.setCooldownTicks(300);
             config.setTicksBetweenDamage(8);
-            config.setTracksPlayer(true);
         }
 
         @Override
@@ -1556,7 +1545,6 @@ public final class SwingingPendulum {
             config.setDamageOnImpactOnly(true);
             config.setImpactDamage(84.0);
             config.setImpactRadius(12.0);
-            config.setTracksPlayer(true);
         }
 
         @Override
@@ -1731,7 +1719,6 @@ public final class SwingingPendulum {
             config.setDurationTicks(500);
             config.setCooldownTicks(300);
             config.setTicksBetweenDamage(10);
-            config.setTracksPlayer(true);
         }
 
         @Override
@@ -1884,7 +1871,6 @@ public final class SwingingPendulum {
             config.setDurationTicks(500);
             config.setCooldownTicks(280);
             config.setTicksBetweenDamage(8);
-            config.setTracksPlayer(true);
         }
 
         @Override
@@ -2033,7 +2019,6 @@ public final class SwingingPendulum {
             config.setDurationTicks(500);
             config.setCooldownTicks(350);
             config.setTicksBetweenDamage(10);
-            config.setTracksPlayer(true);
         }
 
         @Override

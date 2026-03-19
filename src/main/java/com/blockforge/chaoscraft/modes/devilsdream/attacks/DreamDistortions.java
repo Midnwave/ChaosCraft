@@ -55,7 +55,6 @@ public final class DreamDistortions {
 
         public RealityTear(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("reality_tear", AttackType.BLOCK_DISPLAY, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(55.0);
             config.setDamageRadius(6.0);
             config.setDurationTicks(400);
@@ -140,7 +139,6 @@ public final class DreamDistortions {
 
         public GravityInversion(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("gravity_inversion", AttackType.BLOCK_DISPLAY, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(50.0);
             config.setDamageRadius(7.0);
             config.setDurationTicks(400);
@@ -229,7 +227,6 @@ public final class DreamDistortions {
 
         public SizeDistortion(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("size_distortion", AttackType.BLOCK_DISPLAY, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(50.0);
             config.setDamageRadius(7.0);
             config.setDurationTicks(400);
@@ -303,7 +300,6 @@ public final class DreamDistortions {
 
         public TimeLoop(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("time_loop", AttackType.BLOCK_DISPLAY, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(50.0);
             config.setDamageRadius(7.0);
             config.setDurationTicks(400);
@@ -397,7 +393,6 @@ public final class DreamDistortions {
 
         public InvertedRain(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("inverted_rain", AttackType.BLOCK_DISPLAY, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(45.0);
             config.setDamageRadius(6.0);
             config.setDurationTicks(350);
@@ -489,7 +484,6 @@ public final class DreamDistortions {
 
         public WarpedGrid(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("warped_grid", AttackType.BLOCK_DISPLAY, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(50.0);
             config.setDamageRadius(8.0);
             config.setDurationTicks(400);
@@ -568,7 +562,6 @@ public final class DreamDistortions {
 
         public FoldingCube(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("folding_cube", AttackType.BLOCK_DISPLAY, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(50.0);
             config.setDamageRadius(6.0);
             config.setDurationTicks(400);
@@ -679,7 +672,6 @@ public final class DreamDistortions {
 
         public StretchedCorridor(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("stretched_corridor", AttackType.BLOCK_DISPLAY, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(50.0);
             config.setDamageRadius(6.0);
             config.setDurationTicks(400);
@@ -760,7 +752,6 @@ public final class DreamDistortions {
 
         public FragmentedSphere(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("fragmented_sphere", AttackType.BLOCK_DISPLAY, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(50.0);
             config.setDamageRadius(7.0);
             config.setDurationTicks(400);
@@ -846,7 +837,6 @@ public final class DreamDistortions {
 
         public DimensionBleed(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("dimension_bleed", AttackType.BLOCK_DISPLAY, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(55.0);
             config.setDamageRadius(7.0);
             config.setDurationTicks(400);
@@ -969,7 +959,6 @@ public final class DreamDistortions {
 
         public MobiusRing(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("mobius_ring", AttackType.BLOCK_DISPLAY, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(50.0);
             config.setDamageRadius(7.0);
             config.setDurationTicks(400);
@@ -1046,7 +1035,6 @@ public final class DreamDistortions {
 
         public RecursivePyramid(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("recursive_pyramid", AttackType.BLOCK_DISPLAY, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(50.0);
             config.setDamageRadius(7.0);
             config.setDurationTicks(400);
@@ -1147,7 +1135,6 @@ public final class DreamDistortions {
 
         public PhaseShift(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("phase_shift", AttackType.BLOCK_DISPLAY, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(55.0);
             config.setDamageRadius(7.0);
             config.setDurationTicks(400);

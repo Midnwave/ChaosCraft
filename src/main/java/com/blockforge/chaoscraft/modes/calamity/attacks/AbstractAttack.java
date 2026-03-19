@@ -103,8 +103,8 @@ public abstract class AbstractAttack {
         // Subclass animation
         onTick(ticksAlive);
 
-        // Apply damage
-        if (!config.isDamageOnImpactOnly()) {
+        // Apply damage (respects damage-delay-ticks — no damage until delay expires)
+        if (!config.isDamageOnImpactOnly() && ticksAlive >= config.getDamageDelayTicks()) {
             applyRadiusDamage();
         }
 

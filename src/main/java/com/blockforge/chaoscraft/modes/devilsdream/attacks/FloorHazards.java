@@ -42,7 +42,6 @@ public class FloorHazards {
         private int cracksRevealed = 0;
         public LavaCracks(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("lava_cracks", AttackType.ENVIRONMENTAL, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true); config.setDamage(8.0); config.setDamageRadius(8.0);
             config.setTicksBetweenDamage(12); config.setDurationTicks(400); config.setCooldownTicks(300);
         }
         @Override protected void onSpawn(Location center) { World w = center.getWorld(); if (w == null) return;
@@ -73,7 +72,6 @@ public class FloorHazards {
         private final List<BlockDisplayHandle> patches = new ArrayList<>(); private float patchRadius = 1;
         public SoulSandPatch(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("soul_sand_patch", AttackType.ENVIRONMENTAL, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true); config.setDamage(5.0); config.setDamageRadius(8.0);
             config.setTicksBetweenDamage(20); config.setDurationTicks(400); config.setCooldownTicks(300);
         }
         @Override protected void onSpawn(Location center) { World w = center.getWorld(); if (w == null) return;
@@ -101,7 +99,6 @@ public class FloorHazards {
         private final List<Location> trailPoints = new ArrayList<>();
         public FireTrail(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("fire_trail", AttackType.ENVIRONMENTAL, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true); config.setDamage(9.0); config.setDamageRadius(3.0);
             config.setTicksBetweenDamage(8); config.setDurationTicks(350); config.setCooldownTicks(280);
         }
         @Override protected void onSpawn(Location center) { DisplayBuilder.playSound(center, Sound.ENTITY_BLAZE_SHOOT, 0.8f, 0.5f); }
@@ -124,7 +121,6 @@ public class FloorHazards {
         private final List<Double> bx = new ArrayList<>(), bz = new ArrayList<>();
         public MagmaBubble(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("magma_bubble", AttackType.ENVIRONMENTAL, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true); config.setDamage(10.0); config.setDamageRadius(5.0);
             config.setTicksBetweenDamage(30); config.setDurationTicks(350); config.setCooldownTicks(300);
         }
         @Override protected void onSpawn(Location center) { World w = center.getWorld(); if (w == null) return;
@@ -155,7 +151,6 @@ public class FloorHazards {
         private float radius = 1;
         public BrimstoneFloor(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("brimstone_floor", AttackType.ENVIRONMENTAL, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true); config.setDamage(7.0); config.setDamageRadius(10.0);
             config.setTicksBetweenDamage(15); config.setDurationTicks(400); config.setCooldownTicks(300);
         }
         @Override protected void onSpawn(Location center) { DisplayBuilder.playSound(center, Sound.BLOCK_BASALT_BREAK, 0.8f, 0.3f); }
@@ -176,7 +171,6 @@ public class FloorHazards {
     public static class CrumblingGround extends EnvironmentalAttack {
         public CrumblingGround(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("crumbling_ground", AttackType.ENVIRONMENTAL, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true); config.setDamage(6.0); config.setDamageRadius(6.0);
             config.setTicksBetweenDamage(15); config.setDurationTicks(350); config.setCooldownTicks(280);
         }
         @Override protected void onSpawn(Location center) { DisplayBuilder.playSound(center, Sound.BLOCK_GRAVEL_BREAK, 0.8f, 0.3f); }
@@ -197,7 +191,6 @@ public class FloorHazards {
         private final List<BlockDisplayHandle> sandBlocks = new ArrayList<>(); private float qRadius = 3;
         public NightmareQuicksand(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("nightmare_quicksand", AttackType.ENVIRONMENTAL, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true); config.setDamage(8.0); config.setDamageRadius(5.0);
             config.setTicksBetweenDamage(10); config.setDurationTicks(350); config.setCooldownTicks(300);
         }
         @Override protected void onSpawn(Location center) { World w = center.getWorld(); if (w == null) return;
@@ -226,7 +219,6 @@ public class FloorHazards {
         private int activeGeyser = 0;
         public HellfireGeyserLine(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("hellfire_geyser_line", AttackType.ENVIRONMENTAL, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true); config.setDamage(10.0); config.setDamageRadius(4.0);
             config.setTicksBetweenDamage(15); config.setDurationTicks(300); config.setCooldownTicks(280);
         }
         @Override protected void onSpawn(Location center) { DisplayBuilder.playSound(center, Sound.ENTITY_BLAZE_SHOOT, 0.8f, 0.4f); }
@@ -250,7 +242,6 @@ public class FloorHazards {
         private float ringRadius = 1;
         public SoulFireRing(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("soul_fire_ring", AttackType.ENVIRONMENTAL, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true); config.setDamage(8.0); config.setDamageRadius(8.0);
             config.setTicksBetweenDamage(12); config.setDurationTicks(350); config.setCooldownTicks(300);
         }
         @Override protected void onSpawn(Location center) { DisplayBuilder.playSound(center, Sound.BLOCK_SOUL_SAND_BREAK, 0.8f, 0.4f); }
@@ -275,7 +266,6 @@ public class FloorHazards {
         private final List<BlockDisplayHandle> icePatches = new ArrayList<>(); private float iceRadius = 1;
         public DarkIce(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("dark_ice", AttackType.ENVIRONMENTAL, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true); config.setDamage(6.0); config.setDamageRadius(8.0);
             config.setTicksBetweenDamage(15); config.setDurationTicks(400); config.setCooldownTicks(300);
         }
         @Override protected void onSpawn(Location center) { World w = center.getWorld(); if (w == null) return;
@@ -301,7 +291,6 @@ public class FloorHazards {
         private final List<Location> footprints = new ArrayList<>();
         public BurningFootprints(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("burning_footprints", AttackType.ENVIRONMENTAL, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true); config.setDamage(7.0); config.setDamageRadius(3.0);
             config.setTicksBetweenDamage(8); config.setDurationTicks(350); config.setCooldownTicks(280);
         }
         @Override protected void onSpawn(Location center) { DisplayBuilder.playSound(center, Sound.BLOCK_FIRE_AMBIENT, 0.8f, 0.5f); }
@@ -320,7 +309,6 @@ public class FloorHazards {
         private float poolR = 1;
         public CorrosivePool(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("corrosive_pool", AttackType.ENVIRONMENTAL, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true); config.setDamage(8.0); config.setDamageRadius(8.0);
             config.setTicksBetweenDamage(10); config.setDurationTicks(400); config.setCooldownTicks(300);
         }
         @Override protected void onSpawn(Location center) { DisplayBuilder.playSound(center, Sound.BLOCK_LAVA_EXTINGUISH, 0.8f, 0.8f); }
@@ -345,7 +333,6 @@ public class FloorHazards {
         private final List<BlockDisplayHandle> fissureBlocks = new ArrayList<>(); private float fissureLen = 0;
         public NetherFissure(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("nether_fissure", AttackType.ENVIRONMENTAL, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true); config.setDamage(9.0); config.setDamageRadius(6.0);
             config.setTicksBetweenDamage(12); config.setDurationTicks(350); config.setCooldownTicks(300);
         }
         @Override protected void onSpawn(Location center) { World w = center.getWorld(); if (w == null) return;

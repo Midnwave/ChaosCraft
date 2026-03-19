@@ -29,7 +29,6 @@ public class AdaptationResponses {
     public static class SprintPunish extends EnvironmentalAttack {
         private final List<Location> sprintTrail=new ArrayList<>();
         public SprintPunish(ChaosCraftPlugin p){super(p,new AttackConfig("sprint_punish",AttackType.ENVIRONMENTAL,1,"modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);config.setDamage(9.0);config.setDamageRadius(4.0);config.setTicksBetweenDamage(8);config.setDurationTicks(300);config.setCooldownTicks(280);}
         @Override protected void onSpawn(Location c){DisplayBuilder.playSound(c,Sound.ENTITY_BLAZE_SHOOT,0.6f,0.5f);
             c.getWorld().spawnParticle(Particle.FLAME,c,15,1,0.5,1,0.05);}
         @Override protected void onTick(int t){Location c=getCenter();if(c==null||c.getWorld()==null)return;World w=c.getWorld();
@@ -46,7 +45,6 @@ public class AdaptationResponses {
     // 2. MINING BACKLASH — Shockwave erupts when players mine. Ground particles explode outward
     public static class MiningBacklash extends EnvironmentalAttack {
         public MiningBacklash(ChaosCraftPlugin p){super(p,new AttackConfig("mining_backlash",AttackType.ENVIRONMENTAL,1,"modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);config.setDamage(10.0);config.setDamageRadius(6.0);config.setTicksBetweenDamage(20);config.setDurationTicks(300);config.setCooldownTicks(280);}
         @Override protected void onSpawn(Location c){DisplayBuilder.playSound(c,Sound.ENTITY_GENERIC_EXPLODE,0.6f,0.6f);
             c.getWorld().spawnParticle(Particle.BLOCK,c,20,1,0.5,1,0.1,Material.STONE.createBlockData());}
         @Override protected void onTick(int t){Location c=getCenter();if(c==null||c.getWorld()==null)return;World w=c.getWorld();
@@ -63,7 +61,6 @@ public class AdaptationResponses {
     // 3. BUILD COLLAPSE — Structures players build get "rejected". Falling block particles
     public static class BuildCollapse extends EnvironmentalAttack {
         public BuildCollapse(ChaosCraftPlugin p){super(p,new AttackConfig("build_collapse",AttackType.ENVIRONMENTAL,1,"modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);config.setDamage(8.0);config.setDamageRadius(6.0);config.setTicksBetweenDamage(20);config.setDurationTicks(300);config.setCooldownTicks(300);}
         @Override protected void onSpawn(Location c){DisplayBuilder.playSound(c,Sound.ENTITY_WITHER_BREAK_BLOCK,0.6f,0.4f);}
         @Override protected void onTick(int t){Location c=getCenter();if(c==null||c.getWorld()==null)return;World w=c.getWorld();
             // Periodic collapse waves
@@ -78,7 +75,6 @@ public class AdaptationResponses {
     // 4. AGGRESSION MIRROR — Damage reflected back. Red mirror particles flash near attacker
     public static class AggressionMirror extends EnvironmentalAttack {
         public AggressionMirror(ChaosCraftPlugin p){super(p,new AttackConfig("aggression_mirror",AttackType.ENVIRONMENTAL,1,"modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);config.setDamage(8.0);config.setDamageRadius(6.0);config.setTicksBetweenDamage(15);config.setDurationTicks(300);config.setCooldownTicks(280);}
         @Override protected void onSpawn(Location c){DisplayBuilder.playSound(c,Sound.BLOCK_GLASS_BREAK,0.8f,0.4f);}
         @Override protected void onTick(int t){Location c=getCenter();if(c==null||c.getWorld()==null)return;World w=c.getWorld();
             // Pulsing red mirror effect
@@ -94,7 +90,6 @@ public class AdaptationResponses {
     // 5. STILLNESS GRASP — Dream grabs players who stand still. Dark tendrils rise from feet
     public static class StillnessGrasp extends EnvironmentalAttack {
         public StillnessGrasp(ChaosCraftPlugin p){super(p,new AttackConfig("stillness_grasp",AttackType.ENVIRONMENTAL,1,"modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);config.setDamage(10.0);config.setDamageRadius(5.0);config.setTicksBetweenDamage(10);config.setDurationTicks(350);config.setCooldownTicks(300);}
         @Override protected void onSpawn(Location c){DisplayBuilder.playSound(c,Sound.ENTITY_WARDEN_DIG,0.6f,0.3f);}
         @Override protected void onTick(int t){Location c=getCenter();if(c==null||c.getWorld()==null)return;World w=c.getWorld();
             // Tendrils reaching up from the ground
@@ -113,7 +108,6 @@ public class AdaptationResponses {
     public static class FearEscalation extends EnvironmentalAttack {
         private float fear=0;
         public FearEscalation(ChaosCraftPlugin p){super(p,new AttackConfig("fear_escalation",AttackType.ENVIRONMENTAL,1,"modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);config.setDamage(5.0);config.setDamageRadius(8.0);config.setTicksBetweenDamage(20);config.setDurationTicks(400);config.setCooldownTicks(350);}
         @Override protected void onSpawn(Location c){DisplayBuilder.playSound(c,Sound.ENTITY_WARDEN_HEARTBEAT,0.5f,0.5f);}
         @Override protected void onTick(int t){Location c=getCenter();if(c==null||c.getWorld()==null)return;World w=c.getWorld();
             if(fear<1.0f)fear+=0.002f;int count=(int)(fear*20);
@@ -128,7 +122,6 @@ public class AdaptationResponses {
     // 7. FLIGHT DENIAL — Dream prevents escape upward. Downward force when too high
     public static class FlightDenial extends EnvironmentalAttack {
         public FlightDenial(ChaosCraftPlugin p){super(p,new AttackConfig("flight_denial",AttackType.ENVIRONMENTAL,1,"modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);config.setDamage(8.0);config.setDamageRadius(10.0);config.setTicksBetweenDamage(10);config.setDurationTicks(350);config.setCooldownTicks(300);}
         @Override protected void onSpawn(Location c){DisplayBuilder.playSound(c,Sound.ENTITY_SHULKER_BULLET_HIT,0.8f,0.3f);}
         @Override protected void onTick(int t){Location c=getCenter();if(c==null||c.getWorld()==null)return;World w=c.getWorld();
             // Ceiling of dark particles
@@ -147,7 +140,6 @@ public class AdaptationResponses {
     public static class ParanoiaWatcher extends EnvironmentalAttack {
         private final List<double[]> eyes=new ArrayList<>();
         public ParanoiaWatcher(ChaosCraftPlugin p){super(p,new AttackConfig("paranoia_watcher",AttackType.ENVIRONMENTAL,1,"modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);config.setDamage(5.0);config.setDamageRadius(12.0);config.setTicksBetweenDamage(25);config.setDurationTicks(400);config.setCooldownTicks(350);}
         @Override protected void onSpawn(Location c){for(int i=0;i<10;i++){double a=(2*Math.PI*i)/10;
             eyes.add(new double[]{Math.cos(a)*10,4+Math.random()*3,Math.sin(a)*10});}
             DisplayBuilder.playSound(c,Sound.ENTITY_ENDERMAN_STARE,0.6f,0.3f);}
@@ -166,7 +158,6 @@ public class AdaptationResponses {
     // 9. HYPER ADAPTATION — Dream matches everything. Multiple particle types cycle rapidly
     public static class HyperAdaptation extends EnvironmentalAttack {
         public HyperAdaptation(ChaosCraftPlugin p){super(p,new AttackConfig("hyper_adaptation",AttackType.ENVIRONMENTAL,1,"modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);config.setDamage(9.0);config.setDamageRadius(8.0);config.setTicksBetweenDamage(12);config.setDurationTicks(350);config.setCooldownTicks(300);}
         @Override protected void onSpawn(Location c){DisplayBuilder.playSound(c,Sound.ENTITY_WITHER_SPAWN,0.5f,0.5f);}
         @Override protected void onTick(int t){Location c=getCenter();if(c==null||c.getWorld()==null)return;World w=c.getWorld();
             Particle[] particles={Particle.FLAME,Particle.SOUL_FIRE_FLAME,Particle.REVERSE_PORTAL,Particle.END_ROD,Particle.SMOKE,Particle.SOUL};
@@ -185,7 +176,6 @@ public class AdaptationResponses {
     public static class DreamLearning extends EnvironmentalAttack {
         private final List<Location> hotspots=new ArrayList<>();
         public DreamLearning(ChaosCraftPlugin p){super(p,new AttackConfig("dream_learning",AttackType.ENVIRONMENTAL,1,"modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);config.setDamage(8.0);config.setDamageRadius(5.0);config.setTicksBetweenDamage(15);config.setDurationTicks(400);config.setCooldownTicks(350);}
         @Override protected void onSpawn(Location c){DisplayBuilder.playSound(c,Sound.BLOCK_SCULK_SENSOR_CLICKING,0.8f,0.3f);}
         @Override protected void onTick(int t){Location c=getCenter();if(c==null||c.getWorld()==null)return;World w=c.getWorld();
             // Track positions every 20 ticks
@@ -201,7 +191,6 @@ public class AdaptationResponses {
     // 11. PATTERN BREAKER — Sudden random effects that disrupt routine play
     public static class PatternBreaker extends EnvironmentalAttack {
         public PatternBreaker(ChaosCraftPlugin p){super(p,new AttackConfig("pattern_breaker",AttackType.ENVIRONMENTAL,1,"modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);config.setDamage(7.0);config.setDamageRadius(8.0);config.setTicksBetweenDamage(20);config.setDurationTicks(350);config.setCooldownTicks(300);}
         @Override protected void onSpawn(Location c){DisplayBuilder.playSound(c,Sound.ENTITY_ENDERMAN_TELEPORT,0.8f,0.5f);}
         @Override protected void onTick(int t){Location c=getCenter();if(c==null||c.getWorld()==null)return;World w=c.getWorld();
             if(t%25==0){int effect=(int)(Math.random()*4);Location effectLoc=c.clone().add(Math.random()*8-4,0,Math.random()*8-4);
@@ -225,7 +214,6 @@ public class AdaptationResponses {
     // 12. NIGHTMARE MEMORY — Past attack echoes replay as faint particle ghosts
     public static class NightmareMemory extends EnvironmentalAttack {
         public NightmareMemory(ChaosCraftPlugin p){super(p,new AttackConfig("nightmare_memory",AttackType.ENVIRONMENTAL,1,"modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);config.setDamage(6.0);config.setDamageRadius(8.0);config.setTicksBetweenDamage(20);config.setDurationTicks(400);config.setCooldownTicks(350);}
         @Override protected void onSpawn(Location c){DisplayBuilder.playSound(c,Sound.BLOCK_RESPAWN_ANCHOR_AMBIENT,0.6f,0.3f);}
         @Override protected void onTick(int t){Location c=getCenter();if(c==null||c.getWorld()==null)return;World w=c.getWorld();
             int memoryType=(t/40)%4;Location memLoc=c.clone().add(Math.sin(t*0.03)*5,0,Math.cos(t*0.03)*5);
@@ -242,7 +230,6 @@ public class AdaptationResponses {
     public static class DreamFeedback extends EnvironmentalAttack {
         private float feedbackLevel=0;
         public DreamFeedback(ChaosCraftPlugin p){super(p,new AttackConfig("dream_feedback",AttackType.ENVIRONMENTAL,1,"modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);config.setDamage(6.0);config.setDamageRadius(10.0);config.setTicksBetweenDamage(15);config.setDurationTicks(400);config.setCooldownTicks(350);}
         @Override protected void onSpawn(Location c){DisplayBuilder.playSound(c,Sound.BLOCK_BEACON_AMBIENT,0.6f,0.3f);}
         @Override protected void onTick(int t){Location c=getCenter();if(c==null||c.getWorld()==null)return;World w=c.getWorld();
             if(feedbackLevel<1.0f)feedbackLevel+=0.003f;

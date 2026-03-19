@@ -53,7 +53,6 @@ public final class GroundTerrors {
 
         public DemonHandEruption(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("demon_hand_eruption", AttackType.BLOCK_DISPLAY, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(60.0);
             config.setDamageRadius(6.0);
             config.setDurationTicks(400);
@@ -151,7 +150,6 @@ public final class GroundTerrors {
 
         public HellfireCrack(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("hellfire_crack", AttackType.BLOCK_DISPLAY, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(55.0);
             config.setDamageRadius(6.0);
             config.setDurationTicks(400);
@@ -227,7 +225,6 @@ public final class GroundTerrors {
 
         public BoneField(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("bone_field", AttackType.BLOCK_DISPLAY, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(55.0);
             config.setDamageRadius(7.0);
             config.setDurationTicks(400);
@@ -312,7 +309,6 @@ public final class GroundTerrors {
 
         public SoulGeyser(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("soul_geyser", AttackType.BLOCK_DISPLAY, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(55.0);
             config.setDamageRadius(6.0);
             config.setDurationTicks(400);
@@ -412,7 +408,6 @@ public final class GroundTerrors {
 
         public NightmareRoots(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("nightmare_roots", AttackType.BLOCK_DISPLAY, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(50.0);
             config.setDamageRadius(8.0);
             config.setDurationTicks(400);
@@ -492,7 +487,6 @@ public final class GroundTerrors {
 
         public MagmaPool(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("magma_pool", AttackType.BLOCK_DISPLAY, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(50.0);
             config.setDamageRadius(7.0);
             config.setDurationTicks(400);
@@ -563,7 +557,6 @@ public final class GroundTerrors {
 
         public TombstoneRise(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("tombstone_rise", AttackType.BLOCK_DISPLAY, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(50.0);
             config.setDamageRadius(7.0);
             config.setDurationTicks(400);
@@ -641,7 +634,6 @@ public final class GroundTerrors {
 
         public HellfireVent(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("hellfire_vent", AttackType.BLOCK_DISPLAY, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(55.0);
             config.setDamageRadius(5.0);
             config.setDurationTicks(400);
@@ -719,7 +711,6 @@ public final class GroundTerrors {
 
         public AbyssalMaw(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("abyssal_maw", AttackType.BLOCK_DISPLAY, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(60.0);
             config.setDamageRadius(6.0);
             config.setDurationTicks(400);
@@ -787,7 +778,6 @@ public final class GroundTerrors {
 
         public CrimsonThorn(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("crimson_thorn", AttackType.BLOCK_DISPLAY, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(50.0);
             config.setDamageRadius(6.0);
             config.setDurationTicks(400);
@@ -863,7 +853,6 @@ public final class GroundTerrors {
 
         public NightmareGrave(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("nightmare_grave", AttackType.BLOCK_DISPLAY, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(55.0);
             config.setDamageRadius(5.0);
             config.setDurationTicks(400);
@@ -955,7 +944,6 @@ public final class GroundTerrors {
 
         public SoulVortex(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("soul_vortex", AttackType.BLOCK_DISPLAY, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(50.0);
             config.setDamageRadius(7.0);
             config.setDurationTicks(400);
@@ -1028,7 +1016,6 @@ public final class GroundTerrors {
 
         public EruptingPentagram(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("erupting_pentagram", AttackType.BLOCK_DISPLAY, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(65.0);
             config.setDamageRadius(7.0);
             config.setDurationTicks(400);

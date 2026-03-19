@@ -51,7 +51,6 @@ public final class EtherealHauntings {
 
         public PhantomBridge(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("phantom_bridge", AttackType.BLOCK_DISPLAY, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(50.0);
             config.setDamageRadius(6.0);
             config.setDurationTicks(400);
@@ -125,7 +124,6 @@ public final class EtherealHauntings {
 
         public SoulLanterns(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("soul_lanterns", AttackType.BLOCK_DISPLAY, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(45.0);
             config.setDamageRadius(8.0);
             config.setDurationTicks(400);
@@ -189,7 +187,6 @@ public final class EtherealHauntings {
 
         public GhostlyPortal(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("ghostly_portal", AttackType.BLOCK_DISPLAY, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(55.0);
             config.setDamageRadius(6.0);
             config.setDurationTicks(400);
@@ -258,7 +255,6 @@ public final class EtherealHauntings {
 
         public SpectralCage(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("spectral_cage", AttackType.BLOCK_DISPLAY, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(50.0);
             config.setDamageRadius(5.0);
             config.setDurationTicks(400);
@@ -350,7 +346,6 @@ public final class EtherealHauntings {
 
         public HauntedMirror(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("haunted_mirror", AttackType.BLOCK_DISPLAY, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(50.0);
             config.setDamageRadius(6.0);
             config.setDurationTicks(400);
@@ -425,7 +420,6 @@ public final class EtherealHauntings {
 
         public SoulChain(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("soul_chain", AttackType.BLOCK_DISPLAY, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(50.0);
             config.setDamageRadius(6.0);
             config.setDurationTicks(400);
@@ -494,7 +488,6 @@ public final class EtherealHauntings {
 
         public GhostlyShip(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("ghostly_ship", AttackType.BLOCK_DISPLAY, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(55.0);
             config.setDamageRadius(8.0);
             config.setDurationTicks(400);
@@ -573,7 +566,6 @@ public final class EtherealHauntings {
 
         public SpectralStairway(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("spectral_stairway", AttackType.BLOCK_DISPLAY, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(45.0);
             config.setDamageRadius(7.0);
             config.setDurationTicks(400);
@@ -638,7 +630,6 @@ public final class EtherealHauntings {
 
         public PhantomClock(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("phantom_clock", AttackType.BLOCK_DISPLAY, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(50.0);
             config.setDamageRadius(7.0);
             config.setDurationTicks(400);
@@ -714,7 +705,6 @@ public final class EtherealHauntings {
 
         public SoulWhirlpool(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("soul_whirlpool", AttackType.BLOCK_DISPLAY, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(55.0);
             config.setDamageRadius(7.0);
             config.setDurationTicks(400);
@@ -779,7 +769,6 @@ public final class EtherealHauntings {
 
         public GhostlyArmy(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("ghostly_army", AttackType.BLOCK_DISPLAY, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(50.0);
             config.setDamageRadius(8.0);
             config.setDurationTicks(400);
@@ -849,7 +838,6 @@ public final class EtherealHauntings {
 
         public EtherealOrb(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("ethereal_orb", AttackType.BLOCK_DISPLAY, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(50.0);
             config.setDamageRadius(5.0);
             config.setDurationTicks(400);
@@ -918,7 +906,6 @@ public final class EtherealHauntings {
 
         public NightmareThrone(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("nightmare_throne", AttackType.BLOCK_DISPLAY, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(55.0);
             config.setDamageRadius(7.0);
             config.setDurationTicks(400);

@@ -55,7 +55,6 @@ public final class FallingNightmares {
 
         public SkullBombardment(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("skull_bombardment", AttackType.BLOCK_DISPLAY, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(40.0);
             config.setDamageRadius(5.0);
             config.setDurationTicks(350);
@@ -138,7 +137,6 @@ public final class FallingNightmares {
 
         public NightmareAnvil(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("nightmare_anvil", AttackType.BLOCK_DISPLAY, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(40.0);
             config.setDamageRadius(4.0);
             config.setDurationTicks(300);
@@ -234,7 +232,6 @@ public final class FallingNightmares {
 
         public BloodRain(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("blood_rain", AttackType.BLOCK_DISPLAY, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(35.0);
             config.setDamageRadius(7.0);
             config.setDurationTicks(400);
@@ -313,7 +310,6 @@ public final class FallingNightmares {
 
         public FallingEyes(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("falling_eyes", AttackType.BLOCK_DISPLAY, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(45.0);
             config.setDamageRadius(5.0);
             config.setDurationTicks(350);
@@ -408,7 +404,6 @@ public final class FallingNightmares {
 
         public DemonicDebris(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("demonic_debris", AttackType.BLOCK_DISPLAY, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(40.0);
             config.setDamageRadius(6.0);
             config.setDurationTicks(350);
@@ -480,7 +475,6 @@ public final class FallingNightmares {
 
         public SoulDrop(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("soul_drop", AttackType.BLOCK_DISPLAY, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(40.0);
             config.setDamageRadius(5.0);
             config.setDurationTicks(350);
@@ -559,7 +553,6 @@ public final class FallingNightmares {
 
         public NightmareHail(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("nightmare_hail", AttackType.BLOCK_DISPLAY, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(30.0);
             config.setDamageRadius(8.0);
             config.setDurationTicks(300);
@@ -628,7 +621,6 @@ public final class FallingNightmares {
 
         public CollapsingCeiling(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("collapsing_ceiling", AttackType.BLOCK_DISPLAY, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(50.0);
             config.setDamageRadius(7.0);
             config.setDurationTicks(350);
@@ -722,7 +714,6 @@ public final class FallingNightmares {
 
         public MeteorSwarm(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("meteor_swarm", AttackType.BLOCK_DISPLAY, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(45.0);
             config.setDamageRadius(5.0);
             config.setDurationTicks(400);
@@ -809,7 +800,6 @@ public final class FallingNightmares {
 
         public FallingCage(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("falling_cage", AttackType.BLOCK_DISPLAY, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(50.0);
             config.setDamageRadius(4.0);
             config.setDurationTicks(400);
@@ -897,7 +887,6 @@ public final class FallingNightmares {
 
         public NightmareChandelier(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("nightmare_chandelier", AttackType.BLOCK_DISPLAY, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(45.0);
             config.setDamageRadius(5.0);
             config.setDurationTicks(300);
@@ -982,7 +971,6 @@ public final class FallingNightmares {
 
         public BoneAvalanche(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("bone_avalanche", AttackType.BLOCK_DISPLAY, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(45.0);
             config.setDamageRadius(7.0);
             config.setDurationTicks(350);
@@ -1060,7 +1048,6 @@ public final class FallingNightmares {
 
         public PillarCollapse(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("pillar_collapse", AttackType.BLOCK_DISPLAY, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(50.0);
             config.setDamageRadius(6.0);
             config.setDurationTicks(350);

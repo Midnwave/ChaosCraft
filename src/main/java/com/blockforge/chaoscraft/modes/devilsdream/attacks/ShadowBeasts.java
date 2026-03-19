@@ -56,7 +56,6 @@ public final class ShadowBeasts {
 
         public NightmareHound(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("nightmare_hound", AttackType.BLOCK_DISPLAY, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(60.0);
             config.setDamageRadius(5.0);
             config.setDurationTicks(400);
@@ -169,7 +168,6 @@ public final class ShadowBeasts {
 
         public DemonWings(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("demon_wings", AttackType.BLOCK_DISPLAY, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(55.0);
             config.setDamageRadius(8.0);
             config.setDurationTicks(400);
@@ -276,7 +274,6 @@ public final class ShadowBeasts {
 
         public SkullSpider(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("skull_spider", AttackType.BLOCK_DISPLAY, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(60.0);
             config.setDamageRadius(5.0);
             config.setDurationTicks(400);
@@ -389,7 +386,6 @@ public final class ShadowBeasts {
 
         public SerpentCoil(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("serpent_coil", AttackType.BLOCK_DISPLAY, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(55.0);
             config.setDamageRadius(6.0);
             config.setDurationTicks(400);
@@ -462,7 +458,6 @@ public final class ShadowBeasts {
 
         public GraspingHand(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("grasping_hand", AttackType.BLOCK_DISPLAY, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(65.0);
             config.setDamageRadius(5.0);
             config.setDurationTicks(350);
@@ -561,7 +556,6 @@ public final class ShadowBeasts {
 
         public NightmareCentipede(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("nightmare_centipede", AttackType.BLOCK_DISPLAY, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(50.0);
             config.setDamageRadius(6.0);
             config.setDurationTicks(400);
@@ -630,7 +624,6 @@ public final class ShadowBeasts {
 
         public DemonicSkull(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("demonic_skull", AttackType.BLOCK_DISPLAY, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(55.0);
             config.setDamageRadius(7.0);
             config.setDurationTicks(400);
@@ -730,7 +723,6 @@ public final class ShadowBeasts {
 
         public ShadowRaven(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("shadow_raven", AttackType.BLOCK_DISPLAY, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(55.0);
             config.setDamageRadius(6.0);
             config.setDurationTicks(400);
@@ -834,7 +826,6 @@ public final class ShadowBeasts {
 
         public NightmareBear(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("nightmare_bear", AttackType.BLOCK_DISPLAY, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(70.0);
             config.setDamageRadius(5.0);
             config.setDurationTicks(400);
@@ -927,7 +918,6 @@ public final class ShadowBeasts {
 
         public AbyssalJellyfish(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("abyssal_jellyfish", AttackType.BLOCK_DISPLAY, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(50.0);
             config.setDamageRadius(7.0);
             config.setDurationTicks(400);
@@ -1027,7 +1017,6 @@ public final class ShadowBeasts {
 
         public BoneDragon(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("bone_dragon", AttackType.BLOCK_DISPLAY, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(70.0);
             config.setDamageRadius(8.0);
             config.setDurationTicks(400);
@@ -1142,7 +1131,6 @@ public final class ShadowBeasts {
 
         public DemonHorns(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("demon_horns", AttackType.BLOCK_DISPLAY, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(55.0);
             config.setDamageRadius(7.0);
             config.setDurationTicks(400);
@@ -1247,7 +1235,6 @@ public final class ShadowBeasts {
 
         public SoulLeviathan(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("soul_leviathan", AttackType.BLOCK_DISPLAY, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(60.0);
             config.setDamageRadius(9.0);
             config.setDurationTicks(400);

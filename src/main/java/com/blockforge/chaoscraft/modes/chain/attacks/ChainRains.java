@@ -65,7 +65,6 @@ public final class ChainRains {
 
         public ChainDownpour(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("chain_downpour", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(40.0);
             config.setDamageRadius(6.0);
             config.setDurationTicks(400);
@@ -178,7 +177,6 @@ public final class ChainRains {
 
         public IronCurtain(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("iron_curtain", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(40.0);
             config.setDamageRadius(6.0);
             config.setDurationTicks(200);
@@ -297,7 +295,6 @@ public final class ChainRains {
 
         public ChainHailstorm(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("chain_hailstorm", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(40.0);
             config.setDamageRadius(6.0);
             config.setDurationTicks(300);
@@ -410,7 +407,6 @@ public final class ChainRains {
 
         public SpikedChainRain(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("spiked_chain_rain", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(45.0);
             config.setDamageRadius(6.0);
             config.setDurationTicks(350);
@@ -541,7 +537,6 @@ public final class ChainRains {
 
         public DiagonalChainSlash(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("diagonal_chain_slash", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(42.0);
             config.setDamageRadius(7.0);
             config.setDurationTicks(200);
@@ -658,7 +653,6 @@ public final class ChainRains {
 
         public ChainTornadoDownpour(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("chain_tornado_downpour", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(44.0);
             config.setDamageRadius(6.0);
             config.setDurationTicks(400);
@@ -781,7 +775,6 @@ public final class ChainRains {
 
         public RustStorm(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("rust_storm", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(40.0);
             config.setDamageRadius(8.0);
             config.setTicksBetweenDamage(15);
@@ -920,7 +913,6 @@ public final class ChainRains {
 
         public ChainMeteorShower(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("chain_meteor_shower", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(50.0);
             config.setDamageRadius(8.0);
             config.setDurationTicks(400);
@@ -1079,7 +1071,6 @@ public final class ChainRains {
 
         public PendulumRain(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("pendulum_rain", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(42.0);
             config.setDamageRadius(6.0);
             config.setTicksBetweenDamage(12);
@@ -1212,7 +1203,6 @@ public final class ChainRains {
 
         public ChainNetDrop(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("chain_net_drop", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(44.0);
             config.setDamageRadius(8.0);
             config.setDurationTicks(350);
@@ -1362,7 +1352,6 @@ public final class ChainRains {
 
         public ChainCascade(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("chain_cascade", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(40.0);
             config.setDamageRadius(6.0);
             config.setDurationTicks(350);
@@ -1491,7 +1480,6 @@ public final class ChainRains {
 
         public ChainBlizzard(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("chain_blizzard", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(40.0);
             config.setDamageRadius(8.0);
             config.setTicksBetweenDamage(12);
@@ -1614,7 +1602,6 @@ public final class ChainRains {
 
         public ScatteredShackleRain(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("scattered_shackle_rain", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(42.0);
             config.setDamageRadius(6.0);
             config.setDurationTicks(350);
@@ -1752,7 +1739,6 @@ public final class ChainRains {
 
         public WeightedChainFall(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("weighted_chain_fall", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(50.0);
             config.setDamageRadius(7.0);
             config.setDurationTicks(400);
@@ -1911,7 +1897,6 @@ public final class ChainRains {
 
         public ChainLightningRain(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("chain_lightning_rain", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(46.0);
             config.setDamageRadius(6.0);
             config.setDurationTicks(350);

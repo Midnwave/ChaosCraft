@@ -54,7 +54,6 @@ public final class OverheadSky {
 
         public ChainCanopy(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("chain_canopy", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(15.0);
             config.setDamageRadius(10.0);
             config.setTicksBetweenDamage(15);
@@ -172,7 +171,6 @@ public final class OverheadSky {
 
         public SuspendedChainBridge(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("suspended_chain_bridge", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(12.0);
             config.setDamageRadius(6.0);
             config.setTicksBetweenDamage(15);
@@ -309,7 +307,6 @@ public final class OverheadSky {
 
         public ChainSkyAnvil(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("chain_sky_anvil", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(0);
             config.setDamageRadius(0);
             config.setDurationTicks(500);
@@ -499,7 +496,6 @@ public final class OverheadSky {
 
         public HangingChainForest(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("hanging_chain_forest", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(12.0);
             config.setDamageRadius(6.0);
             config.setTicksBetweenDamage(10);
@@ -625,7 +621,6 @@ public final class OverheadSky {
 
         public ChainChandelier(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("chain_chandelier", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(15.0);
             config.setDamageRadius(7.0);
             config.setTicksBetweenDamage(15);
@@ -770,7 +765,6 @@ public final class OverheadSky {
 
         public SkyChainWeb(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("sky_chain_web", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(12.0);
             config.setDamageRadius(10.0);
             config.setTicksBetweenDamage(12);
@@ -922,7 +916,6 @@ public final class OverheadSky {
 
         public ChainMeteor(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("chain_meteor", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(0);
             config.setDamageRadius(0);
             config.setDurationTicks(400);
@@ -1079,7 +1072,6 @@ public final class OverheadSky {
 
         public FloatingChainIsland(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("floating_chain_island", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(9.0);
             config.setDamageRadius(6.0);
             config.setTicksBetweenDamage(20);
@@ -1237,7 +1229,6 @@ public final class OverheadSky {
 
         public ChainGuillotine(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("chain_guillotine", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(0);
             config.setDamageRadius(0);
             config.setDurationTicks(600);
@@ -1390,7 +1381,6 @@ public final class OverheadSky {
 
         public SkyChainRain(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("sky_chain_rain", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(9.0);
             config.setDamageRadius(8.0);
             config.setTicksBetweenDamage(10);
@@ -1527,7 +1517,6 @@ public final class OverheadSky {
 
         public ChainSkywheel(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("chain_skywheel", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(15.0);
             config.setDamageRadius(6.0);
             config.setTicksBetweenDamage(12);
@@ -1680,7 +1669,6 @@ public final class OverheadSky {
 
         public HoveringChainCube(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("hovering_chain_cube", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(12.0);
             config.setDamageRadius(6.0);
             config.setTicksBetweenDamage(12);
@@ -1833,7 +1821,6 @@ public final class OverheadSky {
 
         public ChainBomber(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("chain_bomber", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(0);
             config.setDamageRadius(0);
             config.setDurationTicks(600);
@@ -2028,7 +2015,6 @@ public final class OverheadSky {
 
         public SkyChainLattice(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("sky_chain_lattice", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(12.0);
             config.setDamageRadius(10.0);
             config.setTicksBetweenDamage(12);
@@ -2161,7 +2147,6 @@ public final class OverheadSky {
 
         public ChainComet(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("chain_comet", AttackType.BLOCK_DISPLAY, 1, "modes/chain/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(0);
             config.setDamageRadius(0);
             config.setDurationTicks(500);

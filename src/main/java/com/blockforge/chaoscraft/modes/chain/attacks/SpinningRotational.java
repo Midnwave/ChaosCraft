@@ -60,7 +60,6 @@ public final class SpinningRotational {
             config.setDurationTicks(200);
             config.setCooldownTicks(280);
             config.setTicksBetweenDamage(10);
-            config.setTracksPlayer(true);
         }
 
         @Override
@@ -154,7 +153,6 @@ public final class SpinningRotational {
             config.setDurationTicks(240);
             config.setCooldownTicks(300);
             config.setTicksBetweenDamage(12);
-            config.setTracksPlayer(true);
         }
 
         @Override
@@ -257,7 +255,6 @@ public final class SpinningRotational {
             config.setDurationTicks(180);
             config.setCooldownTicks(260);
             config.setTicksBetweenDamage(8);
-            config.setTracksPlayer(true);
         }
 
         @Override
@@ -351,7 +348,6 @@ public final class SpinningRotational {
             config.setDurationTicks(260);
             config.setCooldownTicks(320);
             config.setTicksBetweenDamage(10);
-            config.setTracksPlayer(true);
         }
 
         @Override
@@ -457,7 +453,6 @@ public final class SpinningRotational {
             config.setDurationTicks(220);
             config.setCooldownTicks(280);
             config.setTicksBetweenDamage(10);
-            config.setTracksPlayer(true);
         }
 
         @Override
@@ -572,7 +567,6 @@ public final class SpinningRotational {
             config.setDurationTicks(220);
             config.setCooldownTicks(300);
             config.setTicksBetweenDamage(10);
-            config.setTracksPlayer(true);
         }
 
         @Override
@@ -681,7 +675,6 @@ public final class SpinningRotational {
             config.setDurationTicks(240);
             config.setCooldownTicks(300);
             config.setTicksBetweenDamage(12);
-            config.setTracksPlayer(true);
         }
 
         @Override
@@ -807,7 +800,6 @@ public final class SpinningRotational {
             config.setDurationTicks(200);
             config.setCooldownTicks(280);
             config.setTicksBetweenDamage(10);
-            config.setTracksPlayer(true);
         }
 
         @Override
@@ -927,7 +919,6 @@ public final class SpinningRotational {
             config.setDurationTicks(200);
             config.setCooldownTicks(280);
             config.setTicksBetweenDamage(8);
-            config.setTracksPlayer(true);
         }
 
         @Override
@@ -1058,7 +1049,6 @@ public final class SpinningRotational {
             config.setDurationTicks(240);
             config.setCooldownTicks(320);
             config.setTicksBetweenDamage(8);
-            config.setTracksPlayer(true);
         }
 
         @Override
@@ -1169,7 +1159,6 @@ public final class SpinningRotational {
             config.setDurationTicks(260);
             config.setCooldownTicks(320);
             config.setTicksBetweenDamage(10);
-            config.setTracksPlayer(true);
         }
 
         @Override
@@ -1314,7 +1303,6 @@ public final class SpinningRotational {
             config.setDurationTicks(220);
             config.setCooldownTicks(300);
             config.setTicksBetweenDamage(10);
-            config.setTracksPlayer(true);
         }
 
         @Override
@@ -1428,7 +1416,6 @@ public final class SpinningRotational {
             config.setDurationTicks(260);
             config.setCooldownTicks(320);
             config.setTicksBetweenDamage(10);
-            config.setTracksPlayer(true);
         }
 
         @Override
@@ -1574,7 +1561,6 @@ public final class SpinningRotational {
             config.setDurationTicks(240);
             config.setCooldownTicks(300);
             config.setTicksBetweenDamage(8);
-            config.setTracksPlayer(true);
         }
 
         @Override
@@ -1698,7 +1684,6 @@ public final class SpinningRotational {
             config.setDurationTicks(200);
             config.setCooldownTicks(280);
             config.setTicksBetweenDamage(8);
-            config.setTracksPlayer(true);
         }
 
         @Override

@@ -52,7 +52,6 @@ public final class DevilsArsenal {
 
         public DemonicPitchfork(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("demonic_pitchfork", AttackType.BLOCK_DISPLAY, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(65.0);
             config.setDamageRadius(5.0);
             config.setDurationTicks(350);
@@ -164,7 +163,6 @@ public final class DevilsArsenal {
 
         public HellfireScythe(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("hellfire_scythe", AttackType.BLOCK_DISPLAY, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(70.0);
             config.setDamageRadius(6.0);
             config.setDurationTicks(300);
@@ -264,7 +262,6 @@ public final class DevilsArsenal {
 
         public BrimstoneHammer(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("brimstone_hammer", AttackType.BLOCK_DISPLAY, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(50.0);
             config.setDamageRadius(5.0);
             config.setDurationTicks(350);
@@ -366,7 +363,6 @@ public final class DevilsArsenal {
 
         public SoulBow(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("soul_bow", AttackType.BLOCK_DISPLAY, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(60.0);
             config.setDamageRadius(4.0);
             config.setDurationTicks(300);
@@ -456,7 +452,6 @@ public final class DevilsArsenal {
 
         public NightmareAxe(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("nightmare_axe", AttackType.BLOCK_DISPLAY, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(65.0);
             config.setDamageRadius(5.0);
             config.setDurationTicks(400);
@@ -558,7 +553,6 @@ public final class DevilsArsenal {
 
         public DemonWhip(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("demon_whip", AttackType.BLOCK_DISPLAY, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(55.0);
             config.setDamageRadius(6.0);
             config.setDurationTicks(400);
@@ -630,7 +624,6 @@ public final class DevilsArsenal {
 
         public CursedSword(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("cursed_sword", AttackType.BLOCK_DISPLAY, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(65.0);
             config.setDamageRadius(5.0);
             config.setDurationTicks(350);
@@ -720,7 +713,6 @@ public final class DevilsArsenal {
 
         public BrimstoneSpear(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("brimstone_spear", AttackType.BLOCK_DISPLAY, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(60.0);
             config.setDamageRadius(4.0);
             config.setDurationTicks(300);
@@ -806,7 +798,6 @@ public final class DevilsArsenal {
 
         public SoulflameStaff(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("soulflame_staff", AttackType.BLOCK_DISPLAY, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(55.0);
             config.setDamageRadius(6.0);
             config.setDurationTicks(400);
@@ -884,7 +875,6 @@ public final class DevilsArsenal {
 
         public DemonicFlail(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("demonic_flail", AttackType.BLOCK_DISPLAY, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(60.0);
             config.setDamageRadius(5.0);
             config.setDurationTicks(400);
@@ -967,7 +957,6 @@ public final class DevilsArsenal {
 
         public NightmareCrossbow(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("nightmare_crossbow", AttackType.BLOCK_DISPLAY, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(60.0);
             config.setDamageRadius(4.0);
             config.setDurationTicks(300);
@@ -1044,7 +1033,6 @@ public final class DevilsArsenal {
 
         public HellfireShield(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("hellfire_shield", AttackType.BLOCK_DISPLAY, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(55.0);
             config.setDamageRadius(6.0);
             config.setDurationTicks(300);
@@ -1130,7 +1118,6 @@ public final class DevilsArsenal {
 
         public DevilsTrident(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("devils_trident", AttackType.BLOCK_DISPLAY, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(55.0);
             config.setDamageRadius(5.0);
             config.setDurationTicks(350);

@@ -59,7 +59,6 @@ public final class WeaponsTools {
             config.setDurationTicks(400);
             config.setCooldownTicks(300);
             config.setTicksBetweenDamage(60);
-            config.setTracksPlayer(true);
         }
 
         @Override
@@ -230,7 +229,6 @@ public final class WeaponsTools {
             config.setDurationTicks(400);
             config.setCooldownTicks(320);
             config.setTicksBetweenDamage(50);
-            config.setTracksPlayer(true);
         }
 
         @Override
@@ -360,7 +358,6 @@ public final class WeaponsTools {
             config.setDurationTicks(380);
             config.setCooldownTicks(280);
             config.setTicksBetweenDamage(50);
-            config.setTracksPlayer(true);
         }
 
         @Override
@@ -490,7 +487,6 @@ public final class WeaponsTools {
             config.setDurationTicks(450);
             config.setCooldownTicks(300);
             config.setTicksBetweenDamage(40);
-            config.setTracksPlayer(true);
         }
 
         @Override
@@ -625,7 +621,6 @@ public final class WeaponsTools {
             config.setDurationTicks(360);
             config.setCooldownTicks(300);
             config.setTicksBetweenDamage(20);
-            config.setTracksPlayer(true);
         }
 
         @Override
@@ -779,7 +774,6 @@ public final class WeaponsTools {
             config.setDurationTicks(360);
             config.setCooldownTicks(280);
             config.setTicksBetweenDamage(30);
-            config.setTracksPlayer(true);
         }
 
         @Override
@@ -916,7 +910,6 @@ public final class WeaponsTools {
             config.setDurationTicks(420);
             config.setCooldownTicks(300);
             config.setTicksBetweenDamage(45);
-            config.setTracksPlayer(true);
         }
 
         @Override
@@ -1094,7 +1087,6 @@ public final class WeaponsTools {
             config.setDurationTicks(400);
             config.setCooldownTicks(280);
             config.setTicksBetweenDamage(30);
-            config.setTracksPlayer(true);
         }
 
         @Override
@@ -1273,7 +1265,6 @@ public final class WeaponsTools {
             config.setDamageOnImpactOnly(true);
             config.setImpactDamage(75.0);
             config.setImpactRadius(16.0);
-            config.setTracksPlayer(true);
         }
 
         @Override
@@ -1449,7 +1440,6 @@ public final class WeaponsTools {
             config.setDurationTicks(400);
             config.setCooldownTicks(300);
             config.setTicksBetweenDamage(25);
-            config.setTracksPlayer(true);
         }
 
         @Override

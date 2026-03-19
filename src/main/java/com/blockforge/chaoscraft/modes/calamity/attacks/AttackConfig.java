@@ -25,7 +25,7 @@ public class AttackConfig {
      * On load, if the file version is lower, the file is re-saved with new keys
      * while preserving user-edited values.
      */
-    public static final int CURRENT_CONFIG_VERSION = 2;
+    public static final int CURRENT_CONFIG_VERSION = 3;
 
     private final String attackId;
     private final AttackType type;
@@ -41,6 +41,9 @@ public class AttackConfig {
     private double chance = 1.0; // Equal chance = 1.0 for all by default
     private boolean enabled = true;
     private boolean tracksPlayer = false;
+
+    // Delay before constant damage radius activates (ticks after spawn)
+    private int damageDelayTicks = 0;
 
     // Optional overrides
     private boolean damageOnImpactOnly = false; // For meteors/falling attacks
@@ -71,6 +74,7 @@ public class AttackConfig {
         chance = section.getDouble("chance", chance);
         enabled = section.getBoolean("enabled", enabled);
         tracksPlayer = section.getBoolean("tracks-player", tracksPlayer);
+        damageDelayTicks = section.getInt("damage-delay-ticks", damageDelayTicks);
         damageOnImpactOnly = section.getBoolean("damage-on-impact-only", damageOnImpactOnly);
         impactDamage = section.getDouble("impact-damage", impactDamage);
         impactRadius = section.getDouble("impact-radius", impactRadius);
@@ -88,6 +92,7 @@ public class AttackConfig {
         section.set("chance", chance);
         section.set("enabled", enabled);
         section.set("tracks-player", tracksPlayer);
+        section.set("damage-delay-ticks", damageDelayTicks);
         section.set("damage-on-impact-only", damageOnImpactOnly);
         section.set("impact-damage", impactDamage);
         section.set("impact-radius", impactRadius);
@@ -221,6 +226,10 @@ public class AttackConfig {
         config.setComments(p + "tracks-player", List.of(
                 "If true, this attack continuously moves toward the targeted player's current position.",
                 "Creates homing/tracking attacks. If false, the attack spawns at a fixed location."));
+        config.setComments(p + "damage-delay-ticks", List.of(
+                "Number of ticks after spawning before the continuous damage radius activates.",
+                "Gives players time to see the attack and react before it starts hurting them.",
+                "0 = damage starts immediately, 20 = 1 second delay, 40 = 2 second delay."));
         config.setComments(p + "damage-on-impact-only", List.of(
                 "For falling or projectile-style attacks: if true, damage is only dealt on the initial",
                 "impact rather than continuously over the duration. Best for meteor/explosion attacks."));
@@ -269,6 +278,9 @@ public class AttackConfig {
 
     public boolean tracksPlayer() { return tracksPlayer; }
     public void setTracksPlayer(boolean tracks) { this.tracksPlayer = tracks; }
+
+    public int getDamageDelayTicks() { return damageDelayTicks; }
+    public void setDamageDelayTicks(int ticks) { this.damageDelayTicks = ticks; }
 
     public boolean isDamageOnImpactOnly() { return damageOnImpactOnly; }
     public void setDamageOnImpactOnly(boolean impact) { this.damageOnImpactOnly = impact; }

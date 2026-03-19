@@ -65,7 +65,6 @@ public final class GroundEruptions {
             config.setDurationTicks(200);
             config.setCooldownTicks(300);
             config.setTicksBetweenDamage(20);
-            config.setTracksPlayer(true);
         }
 
         @Override
@@ -169,7 +168,6 @@ public final class GroundEruptions {
             config.setDurationTicks(250);
             config.setCooldownTicks(280);
             config.setTicksBetweenDamage(25);
-            config.setTracksPlayer(true);
 
             // Staggered emergence: each chain has a random delay 0-15 ticks
             for (int i = 0; i < 14; i++) {
@@ -272,7 +270,6 @@ public final class GroundEruptions {
             config.setDurationTicks(220);
             config.setCooldownTicks(260);
             config.setTicksBetweenDamage(15);
-            config.setTracksPlayer(true);
         }
 
         @Override
@@ -386,7 +383,6 @@ public final class GroundEruptions {
             config.setDurationTicks(300);
             config.setCooldownTicks(320);
             config.setTicksBetweenDamage(20);
-            config.setTracksPlayer(true);
 
             for (int i = 0; i < 12; i++) {
                 rootAngles[i] = (Math.PI * 2 * i) / 12.0 + (Math.random() - 0.5) * 0.3;
@@ -487,7 +483,6 @@ public final class GroundEruptions {
             config.setDamageOnImpactOnly(true);
             config.setImpactDamage(69.0);
             config.setImpactRadius(7.0);
-            config.setTracksPlayer(true);
         }
 
         @Override
@@ -634,7 +629,6 @@ public final class GroundEruptions {
             config.setDurationTicks(250);
             config.setCooldownTicks(300);
             config.setTicksBetweenDamage(15);
-            config.setTracksPlayer(true);
         }
 
         @Override
@@ -777,7 +771,6 @@ public final class GroundEruptions {
             config.setDamageOnImpactOnly(true);
             config.setImpactDamage(72.0);
             config.setImpactRadius(7.0);
-            config.setTracksPlayer(true);
         }
 
         @Override
@@ -909,7 +902,6 @@ public final class GroundEruptions {
             config.setDurationTicks(300);
             config.setCooldownTicks(280);
             config.setTicksBetweenDamage(10);
-            config.setTracksPlayer(true);
 
             for (int i = 0; i < 12; i++) {
                 chainAngles[i] = (Math.PI * 2 * i) / 12.0 + (Math.random() - 0.5) * 0.4;
@@ -1006,7 +998,6 @@ public final class GroundEruptions {
             config.setDamageOnImpactOnly(true);
             config.setImpactDamage(75.0);
             config.setImpactRadius(10.0);
-            config.setTracksPlayer(true);
 
             for (int i = 0; i < 12; i++) {
                 shrapnelAngles[i] = (Math.PI * 2 * i) / 12.0 + (Math.random() - 0.5) * 0.3;
@@ -1141,7 +1132,6 @@ public final class GroundEruptions {
             config.setDurationTicks(240);
             config.setCooldownTicks(300);
             config.setTicksBetweenDamage(15);
-            config.setTracksPlayer(true);
         }
 
         @Override
@@ -1243,7 +1233,6 @@ public final class GroundEruptions {
             config.setDurationTicks(200);
             config.setCooldownTicks(250);
             config.setTicksBetweenDamage(10);
-            config.setTracksPlayer(true);
         }
 
         @Override
@@ -1350,7 +1339,6 @@ public final class GroundEruptions {
             config.setDamageOnImpactOnly(true);
             config.setImpactDamage(72.0);
             config.setImpactRadius(7.0);
-            config.setTracksPlayer(true);
         }
 
         @Override
@@ -1506,7 +1494,6 @@ public final class GroundEruptions {
             config.setDurationTicks(220);
             config.setCooldownTicks(280);
             config.setTicksBetweenDamage(15);
-            config.setTracksPlayer(true);
 
             for (int i = 0; i < 6; i++) {
                 geyserX[i] = (Math.random() - 0.5) * 10.0;
@@ -1610,7 +1597,6 @@ public final class GroundEruptions {
             config.setDurationTicks(260);
             config.setCooldownTicks(320);
             config.setTicksBetweenDamage(12);
-            config.setTracksPlayer(true);
         }
 
         @Override
@@ -1716,7 +1702,6 @@ public final class GroundEruptions {
             config.setDurationTicks(300);
             config.setCooldownTicks(300);
             config.setTicksBetweenDamage(12);
-            config.setTracksPlayer(true);
         }
 
         @Override

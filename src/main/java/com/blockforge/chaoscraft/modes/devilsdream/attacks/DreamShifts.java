@@ -47,7 +47,6 @@ public class DreamShifts {
 
         public GravityPulse(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("gravity_pulse", AttackType.ENVIRONMENTAL, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(8.0);
             config.setDamageRadius(8.0);
             config.setTicksBetweenDamage(20);
@@ -120,7 +119,6 @@ public class DreamShifts {
     public static class TimeStutter extends EnvironmentalAttack {
         public TimeStutter(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("time_stutter", AttackType.ENVIRONMENTAL, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(6.0);
             config.setDamageRadius(10.0);
             config.setTicksBetweenDamage(30);
@@ -187,7 +185,6 @@ public class DreamShifts {
 
         public SpatialCompression(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("spatial_compression", AttackType.ENVIRONMENTAL, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(10.0);
             config.setDamageRadius(12.0);
             config.setTicksBetweenDamage(15);
@@ -246,7 +243,6 @@ public class DreamShifts {
     public static class DirectionScramble extends EnvironmentalAttack {
         public DirectionScramble(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("direction_scramble", AttackType.ENVIRONMENTAL, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(5.0);
             config.setDamageRadius(8.0);
             config.setTicksBetweenDamage(25);
@@ -311,7 +307,6 @@ public class DreamShifts {
 
         public DepthDistortion(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("depth_distortion", AttackType.ENVIRONMENTAL, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(7.0);
             config.setDamageRadius(8.0);
             config.setTicksBetweenDamage(20);
@@ -373,7 +368,6 @@ public class DreamShifts {
 
         public EchoStep(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("echo_step", AttackType.ENVIRONMENTAL, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(8.0);
             config.setDamageRadius(3.0);
             config.setTicksBetweenDamage(10);
@@ -424,7 +418,6 @@ public class DreamShifts {
     public static class MirrorWorld extends EnvironmentalAttack {
         public MirrorWorld(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("mirror_world", AttackType.ENVIRONMENTAL, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(7.0);
             config.setDamageRadius(8.0);
             config.setTicksBetweenDamage(20);
@@ -486,7 +479,6 @@ public class DreamShifts {
 
         public DreamRewind(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("dream_rewind", AttackType.ENVIRONMENTAL, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(6.0);
             config.setDamageRadius(10.0);
             config.setTicksBetweenDamage(60);
@@ -543,7 +535,6 @@ public class DreamShifts {
 
         public SizeShift(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("size_shift", AttackType.ENVIRONMENTAL, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(7.0);
             config.setDamageRadius(8.0);
             config.setTicksBetweenDamage(20);
@@ -601,7 +592,6 @@ public class DreamShifts {
     public static class ParallelSelf extends EnvironmentalAttack {
         public ParallelSelf(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("parallel_self", AttackType.ENVIRONMENTAL, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(6.0);
             config.setDamageRadius(8.0);
             config.setTicksBetweenDamage(25);
@@ -650,7 +640,6 @@ public class DreamShifts {
     public static class PhaseFlicker extends EnvironmentalAttack {
         public PhaseFlicker(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("phase_flicker", AttackType.ENVIRONMENTAL, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(8.0);
             config.setDamageRadius(8.0);
             config.setTicksBetweenDamage(25);
@@ -697,7 +686,6 @@ public class DreamShifts {
     public static class MemoryBleed extends EnvironmentalAttack {
         public MemoryBleed(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("memory_bleed", AttackType.ENVIRONMENTAL, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(7.0);
             config.setDamageRadius(8.0);
             config.setTicksBetweenDamage(20);
@@ -769,7 +757,6 @@ public class DreamShifts {
 
         public LoopBreak(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("loop_break", AttackType.ENVIRONMENTAL, 1, "modes/devilsdream/attacks"));
-            config.setTracksPlayer(true);
             config.setDamage(10.0);
             config.setDamageRadius(8.0);
             config.setTicksBetweenDamage(40);

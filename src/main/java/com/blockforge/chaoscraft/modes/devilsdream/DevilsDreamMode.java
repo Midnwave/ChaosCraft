@@ -126,7 +126,7 @@ public class DevilsDreamMode extends AbstractMode implements Listener {
             plugin.getMusicManager().playModeMusic(this);
         }
 
-        runStartCommands();
+        // NOTE: runStartCommands() is called by ModeManager — do NOT call here
 
         // Register event listener for adaptation tracking
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
@@ -171,8 +171,7 @@ public class DevilsDreamMode extends AbstractMode implements Listener {
         BlockPlaceEvent.getHandlerList().unregister(this);
         EntityDamageByEntityEvent.getHandlerList().unregister(this);
 
-        runEndCommands();
-        giveRewards();
+        // NOTE: runEndCommands() and giveRewards() are called by ModeManager — do NOT call here
 
         tickCounter = 0;
         plugin.getLogger().info("[DevilsDream] Mode ended. The nightmare is over.");
