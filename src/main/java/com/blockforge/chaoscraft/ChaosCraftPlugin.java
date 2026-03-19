@@ -7,6 +7,10 @@ import com.blockforge.chaoscraft.commands.*;
 import com.blockforge.chaoscraft.integration.PlaceholderExpansion;
 import com.blockforge.chaoscraft.modes.calamity.CalamityMode;
 import com.blockforge.chaoscraft.modes.chain.ChainMode;
+import com.blockforge.chaoscraft.modes.corruption.CorruptionMode;
+import com.blockforge.chaoscraft.services.claims.ClaimsService;
+import com.blockforge.chaoscraft.services.claims.ClaimVisualization;
+import com.blockforge.chaoscraft.services.claims.ClaimCommand;
 import com.blockforge.chaoscraft.services.codes.CodesChatListener;
 import com.blockforge.chaoscraft.services.codes.CodesService;
 import com.blockforge.chaoscraft.services.performance.PerformanceCommand;
@@ -56,6 +60,7 @@ public class ChaosCraftPlugin extends JavaPlugin {
     private CodesService codesService;
     private UserAgreementService userAgreementService;
     private PlayService playService;
+    private ClaimsService claimsService;
     private com.blockforge.chaoscraft.updater.UpdateChecker updateChecker;
 
     @Override
@@ -82,6 +87,9 @@ public class ChaosCraftPlugin extends JavaPlugin {
 
         ChainMode chainMode = new ChainMode(this);
         modeManager.registerMode(chainMode);
+
+        CorruptionMode corruptionMode = new CorruptionMode(this);
+        modeManager.registerMode(corruptionMode);
 
         // Initialize performance service
         performanceService = new PerformanceService(this);
@@ -115,12 +123,33 @@ public class ChaosCraftPlugin extends JavaPlugin {
         playService.initialize();
         getLogger().info("Play service enabled.");
 
+        // Initialize claims service
+        claimsService = new ClaimsService(this);
+        claimsService.initialize();
+
         // Initialize update checker
         updateChecker = new com.blockforge.chaoscraft.updater.UpdateChecker(this);
         getLogger().info("Update checker ready. Use /cc update check to check for updates.");
 
         // Register codes chat listener
         getServer().getPluginManager().registerEvents(new CodesChatListener(this, codesService), this);
+
+        // Register claims listener
+        if (claimsService.isEnabled()) {
+            var claimViz = new ClaimVisualization(this);
+            getServer().getPluginManager().registerEvents(
+                    new com.blockforge.chaoscraft.services.claims.ClaimListener(this, claimsService.getManager()), this);
+
+            // Register claim commands
+            var claimCmd = new ClaimCommand(this, claimViz);
+            for (String cmdName : new String[]{"claim", "trust", "untrust", "trustlist", "claimblocks"}) {
+                var cmd = getCommand(cmdName);
+                if (cmd != null) {
+                    cmd.setExecutor(claimCmd);
+                    cmd.setTabCompleter(claimCmd);
+                }
+            }
+        }
 
         // Register commands
         registerCommands();
@@ -202,6 +231,11 @@ public class ChaosCraftPlugin extends JavaPlugin {
                 titleScreenService.endSession(player.getUniqueId());
             }
             titleScreenService.getPingTracker().stop();
+        }
+
+        // Shutdown claims
+        if (claimsService != null) {
+            claimsService.shutdown();
         }
 
         // Stop timer
@@ -314,11 +348,23 @@ public class ChaosCraftPlugin extends JavaPlugin {
             playService.reload();
         }
 
+        // Reload claims config
+        if (claimsService != null) {
+            claimsService.reload();
+        }
+
         // Reload Calamity-specific config + attack configs
         var calamity = modeManager.getMode("calamity");
         if (calamity instanceof CalamityMode calamityMode) {
             calamityMode.getCalamityConfig().load();
             calamityMode.getAttackRegistry().reloadConfigs();
+        }
+
+        // Reload Corruption-specific config + attack configs
+        var corruption = modeManager.getMode("corruption");
+        if (corruption instanceof CorruptionMode corruptionMode) {
+            corruptionMode.getCorruptionConfig().load();
+            corruptionMode.getAttackRegistry().reloadConfigs();
         }
 
         // Reload Chain-specific config + attack configs
@@ -528,6 +574,7 @@ public class ChaosCraftPlugin extends JavaPlugin {
     public CodesService getCodesService() { return codesService; }
     public UserAgreementService getUserAgreementService() { return userAgreementService; }
     public PlayService getPlayService() { return playService; }
+    public ClaimsService getClaimsService() { return claimsService; }
     public com.blockforge.chaoscraft.updater.UpdateChecker getUpdateChecker() { return updateChecker; }
 
     public void debug(String message) {

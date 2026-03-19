@@ -55,6 +55,28 @@ commands:
     usage: /ccperf <enable|disable|toggle|reload|status|set|cleanup|debug>
     permission: chaoscraft.performance.admin
 
+  # ===== Claims =====
+  claim:
+    description: Land claim management
+    usage: /claim [show|info|list|delete|resize]
+    permission: chaoscraft.claims.use
+  trust:
+    description: Grant trust to a player on your claim
+    usage: /trust <player> [level]
+    permission: chaoscraft.claims.use
+  untrust:
+    description: Remove trust from a player on your claim
+    usage: /untrust <player>
+    permission: chaoscraft.claims.use
+  trustlist:
+    description: List trusted players on the current claim
+    usage: /trustlist
+    permission: chaoscraft.claims.use
+  claimblocks:
+    description: Check or buy claim blocks
+    usage: /claimblocks [buy <amount>]
+    permission: chaoscraft.claims.use
+
   # ===== Player-Facing =====
   settings:
     description: Open the player settings menu
@@ -95,6 +117,8 @@ permissions:
       chaoscraft.itemtag.add: true
       chaoscraft.itemtag.remove: true
       chaoscraft.itemtag.list: true
+      chaoscraft.claims.admin: true
+      chaoscraft.corruption.admin: true
 
   # ----- Mode System -----
   chaoscraft.mode.trigger:
@@ -176,3 +200,16 @@ permissions:
   chaoscraft.itemtag.list:
     description: List tags on items
     default: true
+
+  # ----- Claims -----
+  chaoscraft.claims.use:
+    description: Use claim commands (/claim, /trust, /untrust, etc.)
+    default: true
+  chaoscraft.claims.admin:
+    description: Admin claim management (/cc claims)
+    default: op
+
+  # ----- Corruption Mode -----
+  chaoscraft.corruption.admin:
+    description: Corruption mode admin/test commands
+    default: op
