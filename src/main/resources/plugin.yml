@@ -83,6 +83,12 @@ commands:
     usage: /claimblocks [buy <amount>]
     permission: chaoscraft.claims.use
 
+  # ===== Celestial Ivory =====
+  ivory:
+    description: Celestial Ivory weapon commands
+    usage: /ivory <give|state|ability|list|reload>
+    permission: chaoscraft.ivory.test
+
   # ===== Player-Facing =====
   settings:
     description: Open the player settings menu
@@ -125,6 +131,7 @@ permissions:
       chaoscraft.itemtag.list: true
       chaoscraft.claims.admin: true
       chaoscraft.corruption.admin: true
+      chaoscraft.ivory.test: true
 
   # ----- Mode System -----
   chaoscraft.mode.trigger:
@@ -213,6 +220,11 @@ permissions:
     default: true
   chaoscraft.claims.admin:
     description: Admin claim management (/cc claims)
+    default: op
+
+  # ----- Ivory Weapon -----
+  chaoscraft.ivory.test:
+    description: Celestial Ivory admin/test commands
     default: op
 
   # ----- Corruption Mode -----

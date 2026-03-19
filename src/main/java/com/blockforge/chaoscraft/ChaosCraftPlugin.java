@@ -68,6 +68,7 @@ public class ChaosCraftPlugin extends JavaPlugin {
     private ClaimsService claimsService;
     private ModePointsService modePointsService;
     private ModeTimerHud modeTimerHud;
+    private com.blockforge.chaoscraft.weapons.ivory.IvoryService ivoryService;
     private com.blockforge.chaoscraft.updater.UpdateChecker updateChecker;
 
     @Override
@@ -170,6 +171,10 @@ public class ChaosCraftPlugin extends JavaPlugin {
                 }
             }
         }
+
+        // Initialize Celestial Ivory weapon
+        ivoryService = new com.blockforge.chaoscraft.weapons.ivory.IvoryService(this);
+        ivoryService.initialize();
 
         // Register commands
         registerCommands();
@@ -298,6 +303,14 @@ public class ChaosCraftPlugin extends JavaPlugin {
             var handler = new ChainCommand(this);
             chainCmd.setExecutor(handler);
             chainCmd.setTabCompleter(handler);
+        }
+
+        // Celestial Ivory
+        var ivoryCmd = getCommand("ivory");
+        if (ivoryCmd != null && ivoryService != null) {
+            var handler = new com.blockforge.chaoscraft.weapons.ivory.IvoryCommand(this, ivoryService);
+            ivoryCmd.setExecutor(handler);
+            ivoryCmd.setTabCompleter(handler);
         }
 
         var perfCmd = getCommand("ccperformance");
@@ -595,6 +608,7 @@ public class ChaosCraftPlugin extends JavaPlugin {
     public ModePointsService getModePointsService() { return modePointsService; }
     public ModeTimerHud getModeTimerHud() { return modeTimerHud; }
     public com.blockforge.chaoscraft.updater.UpdateChecker getUpdateChecker() { return updateChecker; }
+    public com.blockforge.chaoscraft.weapons.ivory.IvoryService getIvoryService() { return ivoryService; }
 
     public void debug(String message) {
         if (getConfig().getBoolean("debug", false)) {
