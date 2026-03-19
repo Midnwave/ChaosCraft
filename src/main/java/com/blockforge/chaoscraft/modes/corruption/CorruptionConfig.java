@@ -39,9 +39,23 @@ public class CorruptionConfig {
         }
         config = YamlConfiguration.loadConfiguration(configFile);
 
-        // Ensure corruption-specific keys exist (ModeConfig may have created
-        // the file first with only generic keys)
+        // Ensure ALL keys exist — both base mode keys and corruption-specific keys.
         boolean needsSave = false;
+
+        // ── Base mode keys ───────────────────────────────────────────────────
+        if (!config.contains("config-version")) { config.set("config-version", 1); needsSave = true; }
+        if (!config.contains("timer.default-seconds")) { config.set("timer.default-seconds", 1200); needsSave = true; }
+        if (!config.contains("timer.max-seconds")) { config.set("timer.max-seconds", 1800); needsSave = true; }
+        if (!config.contains("music.sound-id")) { config.set("music.sound-id", ""); needsSave = true; }
+        if (!config.contains("music.loop")) { config.set("music.loop", true); needsSave = true; }
+        if (!config.contains("music.duration-ticks")) { config.set("music.duration-ticks", 6000); needsSave = true; }
+        if (!config.contains("on-start-commands")) { config.set("on-start-commands", new ArrayList<>()); needsSave = true; }
+        if (!config.contains("on-end-commands")) { config.set("on-end-commands", new ArrayList<>()); needsSave = true; }
+        if (!config.contains("exempt-players")) { config.set("exempt-players", new ArrayList<>()); needsSave = true; }
+        if (!config.contains("max-events-per-player")) { config.set("max-events-per-player", 5); needsSave = true; }
+        if (!config.contains("rewards.commands")) { config.set("rewards.commands", new ArrayList<>()); needsSave = true; }
+
+        // ── Corruption-specific keys ─────────────────────────────────────────
         if (!config.contains("floating-blocks")) { ensureCorruptionDefaults(); needsSave = true; }
         if (!config.contains("block-replacement")) { ensureCorruptionDefaults(); needsSave = true; }
         if (!config.contains("mob-glitch")) { ensureCorruptionDefaults(); needsSave = true; }

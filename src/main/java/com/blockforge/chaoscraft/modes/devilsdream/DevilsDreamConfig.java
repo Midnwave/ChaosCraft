@@ -36,8 +36,23 @@ public class DevilsDreamConfig {
         }
         config = YamlConfiguration.loadConfiguration(configFile);
 
-        // Ensure all keys exist
+        // Ensure ALL keys exist — both base mode keys and devilsdream-specific keys.
         boolean needsSave = false;
+
+        // ── Base mode keys ───────────────────────────────────────────────────
+        if (!config.contains("config-version")) { config.set("config-version", 1); needsSave = true; }
+        if (!config.contains("timer.default-seconds")) { config.set("timer.default-seconds", 900); needsSave = true; }
+        if (!config.contains("timer.max-seconds")) { config.set("timer.max-seconds", 1800); needsSave = true; }
+        if (!config.contains("music.sound-id")) { config.set("music.sound-id", ""); needsSave = true; }
+        if (!config.contains("music.loop")) { config.set("music.loop", true); needsSave = true; }
+        if (!config.contains("music.duration-ticks")) { config.set("music.duration-ticks", 6000); needsSave = true; }
+        if (!config.contains("on-start-commands")) { config.set("on-start-commands", new ArrayList<>()); needsSave = true; }
+        if (!config.contains("on-end-commands")) { config.set("on-end-commands", new ArrayList<>()); needsSave = true; }
+        if (!config.contains("exempt-players")) { config.set("exempt-players", new ArrayList<>()); needsSave = true; }
+        if (!config.contains("max-events-per-player")) { config.set("max-events-per-player", 6); needsSave = true; }
+        if (!config.contains("rewards.commands")) { config.set("rewards.commands", new ArrayList<>()); needsSave = true; }
+
+        // ── Devil's Dream-specific keys ──────────────────────────────────────
         if (!config.contains("world")) { config.set("world", ""); needsSave = true; }
         if (!config.contains("spawn.base-interval-ticks")) { config.set("spawn.base-interval-ticks", 45); needsSave = true; }
         if (!config.contains("spawn.max-events-per-player")) { config.set("spawn.max-events-per-player", 6); needsSave = true; }
