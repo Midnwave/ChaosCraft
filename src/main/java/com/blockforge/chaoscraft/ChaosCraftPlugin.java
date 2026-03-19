@@ -8,6 +8,7 @@ import com.blockforge.chaoscraft.integration.PlaceholderExpansion;
 import com.blockforge.chaoscraft.modes.calamity.CalamityMode;
 import com.blockforge.chaoscraft.modes.chain.ChainMode;
 import com.blockforge.chaoscraft.modes.corruption.CorruptionMode;
+import com.blockforge.chaoscraft.modes.devilsdream.DevilsDreamMode;
 import com.blockforge.chaoscraft.api.points.ModePointsListener;
 import com.blockforge.chaoscraft.api.points.ModePointsService;
 import com.blockforge.chaoscraft.api.points.PointsCommand;
@@ -96,6 +97,9 @@ public class ChaosCraftPlugin extends JavaPlugin {
 
         CorruptionMode corruptionMode = new CorruptionMode(this);
         modeManager.registerMode(corruptionMode);
+
+        DevilsDreamMode devilsDreamMode = new DevilsDreamMode(this);
+        modeManager.registerMode(devilsDreamMode);
 
         // Initialize performance service
         performanceService = new PerformanceService(this);
