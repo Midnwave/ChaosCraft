@@ -93,40 +93,70 @@ public class AttackConfig {
     }
 
     /**
-     * Load from a per-attack config file.
-     * Each attack gets its own file: modes/{mode}/attacks/{type}/{attack_id}.yml
-     * If the file's config-version is older than CURRENT_CONFIG_VERSION,
-     * user-edited values are preserved but new keys/defaults are added.
+     * Load this attack's config from the shared type file.
+     * All attacks of the same type share one YAML file, each as a section:
+     *   plugins/ChaosCraft/{modePath}/blockdisplays.yml
+     *   plugins/ChaosCraft/{modePath}/environmental.yml
+     *   plugins/ChaosCraft/{modePath}/boss.yml
+     *
+     * If the attack's section doesn't exist yet, it's created with defaults.
+     * If config-version is outdated, the file is re-saved with new keys.
      */
     public void loadFromFile(ChaosCraftPlugin plugin) {
         File file = getConfigFile(plugin);
-        if (!file.exists()) {
-            saveToFile(plugin); // Create defaults
+        file.getParentFile().mkdirs();
+
+        YamlConfiguration config;
+        if (file.exists()) {
+            config = YamlConfiguration.loadConfiguration(file);
+        } else {
+            config = new YamlConfiguration();
+            config.set("config-version", CURRENT_CONFIG_VERSION);
+        }
+
+        ConfigurationSection section = config.getConfigurationSection(attackId);
+        if (section != null) {
+            loadFrom(section);
+        } else {
+            // Attack not in file yet — add it with defaults
+            saveToFile(plugin);
             return;
         }
-        FileConfiguration config = YamlConfiguration.loadConfiguration(file);
-        loadFrom(config);
 
-        // Check config version — if outdated, re-save with new keys while keeping user values
+        // Config version check
         int fileVersion = config.getInt("config-version", 0);
         if (fileVersion < CURRENT_CONFIG_VERSION) {
-            plugin.debug("[AttackConfig] Upgrading " + attackId + ".yml from v" + fileVersion + " to v" + CURRENT_CONFIG_VERSION);
-            saveToFile(plugin); // Re-saves with current values (user edits preserved via loadFrom above) + new keys
+            plugin.debug("[AttackConfig] Upgrading " + getTypePath() + ".yml from v" + fileVersion + " to v" + CURRENT_CONFIG_VERSION);
+            config.set("config-version", CURRENT_CONFIG_VERSION);
+            // Re-save this attack's section with any new keys
+            ConfigurationSection updated = config.createSection(attackId);
+            saveTo(updated);
+            try {
+                config.save(file);
+            } catch (IOException e) {
+                plugin.getLogger().severe("Failed to save attack config file: " + file.getName());
+            }
         }
     }
 
     /**
-     * Save to a per-attack config file. Always writes config-version.
+     * Save this attack's config section to the shared type file.
      */
     public void saveToFile(ChaosCraftPlugin plugin) {
         File file = getConfigFile(plugin);
         file.getParentFile().mkdirs();
-        YamlConfiguration config = new YamlConfiguration();
+
+        YamlConfiguration config;
+        if (file.exists()) {
+            config = YamlConfiguration.loadConfiguration(file);
+        } else {
+            config = new YamlConfiguration();
+        }
+
         config.set("config-version", CURRENT_CONFIG_VERSION);
-        config.set("id", attackId);
-        config.set("type", type.name());
-        config.set("phase", phase);
-        saveTo(config);
+        ConfigurationSection section = config.createSection(attackId);
+        saveTo(section);
+
         try {
             config.save(file);
         } catch (IOException e) {
@@ -135,21 +165,22 @@ public class AttackConfig {
     }
 
     /**
-     * Each attack gets its own YAML file:
-     * plugins/ChaosCraft/{modePath}/{typePath}/{attack_id}.yml
-     *
-     * e.g. plugins/ChaosCraft/modes/chain/attacks/blockdisplays/chain_downpour.yml
-     *      plugins/ChaosCraft/modes/calamity/attacks/boss/void_slam.yml
-     *      plugins/ChaosCraft/modes/corruption/attacks/blockdisplays/corruption_pillar.yml
+     * All attacks of the same type share one YAML file:
+     *   plugins/ChaosCraft/modes/chain/attacks/blockdisplays.yml
+     *   plugins/ChaosCraft/modes/calamity/attacks/environmental.yml
+     *   plugins/ChaosCraft/modes/corruption/attacks/boss.yml
      */
     private File getConfigFile(ChaosCraftPlugin plugin) {
-        String typePath = switch (type) {
+        return new File(plugin.getDataFolder(),
+                modePath + "/" + getTypePath() + ".yml");
+    }
+
+    private String getTypePath() {
+        return switch (type) {
             case BLOCK_DISPLAY -> "blockdisplays";
             case ENVIRONMENTAL -> "environmental";
             case BOSS -> "boss";
         };
-        return new File(plugin.getDataFolder(),
-                modePath + "/" + typePath + "/" + attackId + ".yml");
     }
 
     // ---- Getters/Setters ----
