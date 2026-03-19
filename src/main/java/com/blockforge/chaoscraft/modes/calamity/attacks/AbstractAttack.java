@@ -2,7 +2,9 @@ package com.blockforge.chaoscraft.modes.calamity.attacks;
 
 import com.blockforge.chaoscraft.ChaosCraftPlugin;
 import com.blockforge.chaoscraft.modes.calamity.CalamityMode;
+import org.bukkit.Color;
 import org.bukkit.Location;
+import org.bukkit.Particle;
 import org.bukkit.World;
 import org.bukkit.entity.Display;
 import org.bukkit.entity.Entity;
@@ -105,6 +107,11 @@ public abstract class AbstractAttack {
         if (!config.isDamageOnImpactOnly()) {
             applyRadiusDamage();
         }
+
+        // Debug: show damage radius outline every 5 ticks
+        if (plugin.getConfig().getBoolean("debug", false) && ticksAlive % 5 == 0) {
+            renderDebugRadius();
+        }
     }
 
     /**
@@ -150,6 +157,49 @@ public abstract class AbstractAttack {
             if (player.getLocation().distanceSquared(center) <= radius * radius) {
                 player.damage(damage);
             }
+        }
+    }
+
+    // ========================
+    // Debug radius rendering
+    // ========================
+
+    /**
+     * Renders a particle circle outline at the attack center showing the damage radius.
+     * RED = continuous damage radius, YELLOW = impact damage radius.
+     * Only shown when debug: true in config.yml.
+     */
+    private void renderDebugRadius() {
+        if (center == null || center.getWorld() == null) return;
+        World world = center.getWorld();
+
+        // Continuous damage radius (red circle)
+        double radius = config.getDamageRadius();
+        if (radius > 0 && config.getDamage() > 0) {
+            renderCircle(world, center, radius, Color.fromRGB(255, 50, 50), 0.8f);
+        }
+
+        // Impact damage radius (yellow circle, slightly above)
+        if (config.isDamageOnImpactOnly()) {
+            double impactRadius = config.getImpactRadius();
+            if (impactRadius > 0 && config.getImpactDamage() > 0) {
+                Location raised = center.clone().add(0, 0.1, 0);
+                renderCircle(world, raised, impactRadius, Color.fromRGB(255, 255, 50), 1.0f);
+            }
+        }
+    }
+
+    /**
+     * Renders a circle of dust particles at the given location and radius.
+     */
+    private void renderCircle(World world, Location loc, double radius, Color color, float size) {
+        int points = Math.max(12, (int) (radius * 8)); // More points for larger circles
+        Particle.DustOptions dust = new Particle.DustOptions(color, size);
+        for (int i = 0; i < points; i++) {
+            double angle = (2 * Math.PI * i) / points;
+            double x = loc.getX() + Math.cos(angle) * radius;
+            double z = loc.getZ() + Math.sin(angle) * radius;
+            world.spawnParticle(Particle.DUST, x, loc.getY() + 0.1, z, 1, 0, 0, 0, 0, dust);
         }
     }
 
