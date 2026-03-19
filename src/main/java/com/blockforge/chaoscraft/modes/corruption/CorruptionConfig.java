@@ -38,6 +38,72 @@ public class CorruptionConfig {
             createDefaults();
         }
         config = YamlConfiguration.loadConfiguration(configFile);
+
+        // Ensure corruption-specific keys exist (ModeConfig may have created
+        // the file first with only generic keys)
+        boolean needsSave = false;
+        if (!config.contains("floating-blocks")) { ensureCorruptionDefaults(); needsSave = true; }
+        if (!config.contains("block-replacement")) { ensureCorruptionDefaults(); needsSave = true; }
+        if (!config.contains("mob-glitch")) { ensureCorruptionDefaults(); needsSave = true; }
+        if (!config.contains("ambient")) { ensureCorruptionDefaults(); needsSave = true; }
+        if (!config.contains("world")) { config.set("world", "world"); needsSave = true; }
+        if (!config.contains("respect-claims")) { config.set("respect-claims", true); needsSave = true; }
+        if (needsSave) {
+            save();
+            config = YamlConfiguration.loadConfiguration(configFile);
+        }
+    }
+
+    /**
+     * Add corruption-specific defaults to the existing config without overwriting user values.
+     */
+    private void ensureCorruptionDefaults() {
+        // Floating Blocks
+        if (!config.contains("floating-blocks.enabled")) config.set("floating-blocks.enabled", true);
+        if (!config.contains("floating-blocks.max-per-chunk")) config.set("floating-blocks.max-per-chunk", 30);
+        if (!config.contains("floating-blocks.spread-rate-ticks")) config.set("floating-blocks.spread-rate-ticks", 40);
+        if (!config.contains("floating-blocks.movement-speed")) config.set("floating-blocks.movement-speed", 0.05);
+        if (!config.contains("floating-blocks.damage")) config.set("floating-blocks.damage", 20.0);
+        if (!config.contains("floating-blocks.darkness-duration-seconds")) config.set("floating-blocks.darkness-duration-seconds", 5);
+        if (!config.contains("floating-blocks.darkness-amplifier")) config.set("floating-blocks.darkness-amplifier", 0);
+
+        // Block Replacement
+        if (!config.contains("block-replacement.enabled")) config.set("block-replacement.enabled", true);
+        if (!config.contains("block-replacement.blocks-per-tick")) config.set("block-replacement.blocks-per-tick", 5);
+        if (!config.contains("block-replacement.max-radius-chunks")) config.set("block-replacement.max-radius-chunks", 5);
+        if (!config.contains("block-replacement.vanilla-blocks")) {
+            config.set("block-replacement.vanilla-blocks", List.of(
+                    "CRYING_OBSIDIAN", "BLACKSTONE", "DEEPSLATE", "SCULK", "COAL_BLOCK"));
+        }
+        if (!config.contains("block-replacement.itemsadder-blocks")) config.set("block-replacement.itemsadder-blocks", new java.util.ArrayList<>());
+        if (!config.contains("block-replacement.craftengine-blocks")) config.set("block-replacement.craftengine-blocks", new java.util.ArrayList<>());
+
+        // Restoration
+        if (!config.contains("restoration.blocks-per-tick")) config.set("restoration.blocks-per-tick", 20);
+        if (!config.contains("restoration.delay-after-end-ticks")) config.set("restoration.delay-after-end-ticks", 0);
+
+        // Mob Glitch
+        if (!config.contains("mob-glitch.enabled")) config.set("mob-glitch.enabled", true);
+        if (!config.contains("mob-glitch.hostile-only")) config.set("mob-glitch.hostile-only", true);
+        if (!config.contains("mob-glitch.intensity")) config.set("mob-glitch.intensity", 0.3);
+        if (!config.contains("mob-glitch.radius-chunks")) config.set("mob-glitch.radius-chunks", 5);
+
+        // Ambient
+        if (!config.contains("ambient.dark-particles")) config.set("ambient.dark-particles", true);
+        if (!config.contains("ambient.corruption-fog")) config.set("ambient.corruption-fog", true);
+        if (!config.contains("ambient.ambient-sounds")) config.set("ambient.ambient-sounds", true);
+        if (!config.contains("ambient.sound-interval-ticks")) config.set("ambient.sound-interval-ticks", 200);
+
+        // Spawning
+        if (!config.contains("spawn.base-interval-ticks")) config.set("spawn.base-interval-ticks", 50);
+        if (!config.contains("spawn.max-events-per-player")) config.set("spawn.max-events-per-player", 5);
+        if (!config.contains("spawn.offset-radius")) config.set("spawn.offset-radius", 10.0);
+
+        // Timer HUD
+        if (!config.contains("timer-hud.display-name")) config.set("timer-hud.display-name", "CORRUPTED CORRUPTION");
+        if (!config.contains("timer-hud.color")) config.set("timer-hud.color", "dark_purple");
+        if (!config.contains("timer-hud.flash-color")) config.set("timer-hud.flash-color", "red");
+        if (!config.contains("timer-hud.flash-threshold-seconds")) config.set("timer-hud.flash-threshold-seconds", 60);
     }
 
     public void save() {

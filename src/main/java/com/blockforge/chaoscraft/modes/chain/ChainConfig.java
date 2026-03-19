@@ -35,6 +35,21 @@ public class ChainConfig {
             createDefaults();
         }
         config = YamlConfiguration.loadConfiguration(configFile);
+
+        // Ensure chain-specific keys exist (ModeConfig may have created the file first)
+        boolean needsSave = false;
+        if (!config.contains("world")) { config.set("world", ""); needsSave = true; }
+        if (!config.contains("spawn.base-interval-ticks")) { config.set("spawn.base-interval-ticks", 50); needsSave = true; }
+        if (!config.contains("spawn.max-events-per-player")) { config.set("spawn.max-events-per-player", 5); needsSave = true; }
+        if (!config.contains("spawn.offset-radius")) { config.set("spawn.offset-radius", 10.0); needsSave = true; }
+        if (!config.contains("timer-hud.display-name")) { config.set("timer-hud.display-name", "CHAIN MODE"); needsSave = true; }
+        if (!config.contains("timer-hud.color")) { config.set("timer-hud.color", "gray"); needsSave = true; }
+        if (!config.contains("timer-hud.flash-color")) { config.set("timer-hud.flash-color", "red"); needsSave = true; }
+        if (!config.contains("timer-hud.flash-threshold-seconds")) { config.set("timer-hud.flash-threshold-seconds", 60); needsSave = true; }
+        if (needsSave) {
+            save();
+            config = YamlConfiguration.loadConfiguration(configFile);
+        }
     }
 
     public void save() {
