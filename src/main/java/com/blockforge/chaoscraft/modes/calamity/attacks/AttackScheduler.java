@@ -126,10 +126,16 @@ public class AttackScheduler {
 
     private void attemptSpawn() {
         World endWorld = getEndWorld();
-        if (endWorld == null) return;
+        if (endWorld == null) {
+            plugin.debug("[AttackScheduler] No End world found — cannot spawn attacks.");
+            return;
+        }
 
         List<Player> players = endWorld.getPlayers();
-        if (players.isEmpty()) return;
+        if (players.isEmpty()) {
+            plugin.debug("[AttackScheduler] No players in The End — skipping spawn.");
+            return;
+        }
 
         // Pick a random target player
         Player target = players.get(new Random().nextInt(players.size()));
@@ -137,17 +143,31 @@ public class AttackScheduler {
         // Check max events for this player
         int maxEvents = config.getMaxEventsPerPlayer();
         int currentEvents = playerEventCounts.getOrDefault(target.getUniqueId(), 0);
-        if (currentEvents >= maxEvents) return;
+        if (currentEvents >= maxEvents) {
+            plugin.debug("[AttackScheduler] " + target.getName() + " has max events (" + currentEvents + "/" + maxEvents + ") — skipping.");
+            return;
+        }
 
         // Check exempt
-        if (isExempt(target)) return;
+        if (isExempt(target)) {
+            plugin.debug("[AttackScheduler] " + target.getName() + " is exempt — skipping. "
+                    + "(Remove exempt with /calamity toggleexempt or remove chaoscraft.mode.exempt permission)");
+            return;
+        }
 
         // Select a random attack to spawn
         AbstractAttack attack = selectAttackForSpawn();
-        if (attack == null) return;
+        if (attack == null) {
+            plugin.debug("[AttackScheduler] No enabled attack found for phase " + currentPhase
+                    + " (bossActive=" + bossActive + "). Check attack configs.");
+            return;
+        }
 
         // Check if this attack is on cooldown
-        if (attackCooldowns.containsKey(attack.getId())) return;
+        if (attackCooldowns.containsKey(attack.getId())) {
+            plugin.debug("[AttackScheduler] Attack " + attack.getId() + " on cooldown — skipping.");
+            return;
+        }
 
         // Spawn it
         Location spawnLoc = target.getLocation().clone();
@@ -203,6 +223,8 @@ public class AttackScheduler {
     /**
      * Force-spawn a specific attack on a player (for test commands).
      * Bypasses cooldowns, max events, and exempt checks.
+     * If the scheduler is not active, starts a temporary tick loop so the attack
+     * still animates and deals damage during manual testing.
      */
     public void forceSpawn(AbstractAttack attack, Player player) {
         Location spawnLoc = player.getLocation().clone();
@@ -213,7 +235,32 @@ public class AttackScheduler {
         instance.spawn(spawnLoc, player);
         activeAttacks.add(instance);
 
-        plugin.debug("[AttackScheduler] Force-spawned " + instance.getId() + " on " + player.getName());
+        // If scheduler is not active (mode not running), start a temporary tick loop
+        // so force-spawned attacks still animate and deal damage
+        if (!active) {
+            startTemporaryTicking(instance);
+        }
+
+        plugin.debug("[AttackScheduler] Force-spawned " + instance.getId() + " on " + player.getName()
+                + " (scheduler active: " + active + ")");
+    }
+
+    /**
+     * Starts a temporary BukkitRunnable that ticks a single force-spawned attack
+     * when the scheduler is not otherwise active. Cancels when the attack expires.
+     */
+    private void startTemporaryTicking(AbstractAttack attack) {
+        new org.bukkit.scheduler.BukkitRunnable() {
+            @Override
+            public void run() {
+                if (!attack.isActive()) {
+                    activeAttacks.remove(attack);
+                    cancel();
+                    return;
+                }
+                attack.tick();
+            }
+        }.runTaskTimer(plugin, 1L, 1L);
     }
 
     // ========================

@@ -39,8 +39,8 @@ commands:
   # ===== Calamity Mode =====
   calamity:
     description: Calamity mode test and admin commands
-    usage: /calamity <testblockdisplay|testenvironmental|testboss> <phase> <id>
-    permission: chaoscraft.calamity.admin
+    usage: /calamity <subcommand> — use /calamity for full help
+    permission: chaoscraft.admin
 
   # ===== Performance =====
   ccperformance:
@@ -74,7 +74,8 @@ permissions:
       chaoscraft.use: true
       chaoscraft.mode.trigger: true
       chaoscraft.mode.end: true
-      chaoscraft.mode.exempt: true
+      # NOTE: chaoscraft.mode.exempt is NOT included here — admins should take damage
+      # during testing. Use /calamity toggleexempt to manually exempt specific players.
       chaoscraft.calamity.admin: true
       chaoscraft.devs: true
       chaoscraft.performance.admin: true

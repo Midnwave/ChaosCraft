@@ -352,19 +352,34 @@ public class CalamityMode extends AbstractMode {
 
         World endWorld = getEndWorld();
         if (endWorld == null) {
-            plugin.getLogger().severe("[Calamity] Cannot start — The End world not found!");
+            plugin.getLogger().severe("[Calamity] Cannot start — The End world not found! " +
+                    "Make sure The End dimension is enabled in bukkit.yml and loaded.");
             return;
         }
 
         // 1. Remove dragon egg from portal and get its location
         Location eggLocation = eggDetector.removeEggFromPortal(endWorld);
+        if (eggLocation == null) {
+            plugin.getLogger().warning("[Calamity] Dragon egg not found at portal — using default End spawn location.");
+            eggLocation = new Location(endWorld, 0.5, 68, 0.5);
+        }
 
         // 2. Teleport all players to The End
         portalManager.start();
+        int playerCount = plugin.getServer().getOnlinePlayers().size();
         portalManager.teleportAllToEnd();
+        plugin.getLogger().info("[Calamity] Teleporting " + playerCount + " players to The End.");
+
+        if (playerCount == 0) {
+            plugin.getLogger().warning("[Calamity] No players online — events will not spawn until someone joins The End.");
+        }
 
         // 3. Spawn ItemsAdder portal blocks (if available)
-        portalManager.spawnItemsAdderPortals();
+        if (plugin.getServer().getPluginManager().getPlugin("ItemsAdder") != null) {
+            portalManager.spawnItemsAdderPortals();
+        } else {
+            plugin.getLogger().info("[Calamity] ItemsAdder not found — skipping portal block spawning.");
+        }
 
         // 4. Start the animated egg BlockDisplay
         eggAnimation.start(eggLocation);
@@ -383,6 +398,19 @@ public class CalamityMode extends AbstractMode {
 
         // 9. Load attack configs and start scheduler
         attackRegistry.reloadConfigs();
+
+        // Validate attack registry
+        if (attackRegistry.size() == 0) {
+            plugin.getLogger().severe("[Calamity] WARNING: 0 attacks registered! Check attack registration in CalamityMode constructor.");
+        } else {
+            // Log per-phase counts
+            for (int p = 1; p <= 5; p++) {
+                int bd = attackRegistry.getByPhaseAndType(p, com.blockforge.chaoscraft.modes.calamity.attacks.AttackType.BLOCK_DISPLAY).size();
+                int env = attackRegistry.getByPhaseAndType(p, com.blockforge.chaoscraft.modes.calamity.attacks.AttackType.ENVIRONMENTAL).size();
+                int boss = attackRegistry.getByPhaseAndType(p, com.blockforge.chaoscraft.modes.calamity.attacks.AttackType.BOSS).size();
+                plugin.getLogger().info("[Calamity] Phase " + p + ": " + bd + " BD, " + env + " ENV, " + boss + " BOSS attacks");
+            }
+        }
 
         // 10. Advance to Phase 1 (pre-boss gem collection)
         advanceToPhase(1);
@@ -492,11 +520,8 @@ public class CalamityMode extends AbstractMode {
         // Switch music to this phase
         plugin.getMusicManager().playPhaseMusic(phase);
 
-        // Start attack scheduler for this phase
-        attackScheduler.setPhase(phase);
-        if (!attackScheduler.getActiveAttacks().isEmpty() || phase == 1) {
-            attackScheduler.start(phase);
-        }
+        // Start attack scheduler for this phase — always restart to reset cooldowns/counts
+        attackScheduler.start(phase);
     }
 
     /**
@@ -684,7 +709,14 @@ public class CalamityMode extends AbstractMode {
      */
     private void spawnMythicMob(String mythicId, Location location) {
         if (plugin.getServer().getPluginManager().getPlugin("MythicMobs") == null) {
-            plugin.getLogger().warning("[Calamity] MythicMobs not loaded — cannot spawn " + mythicId);
+            plugin.getLogger().severe("[Calamity] MythicMobs is NOT installed! Cannot spawn boss '" + mythicId + "'. "
+                    + "Install MythicMobs from https://mythiccraft.io and configure the mob ID in calamity.yml");
+            return;
+        }
+
+        if (mythicId == null || mythicId.isEmpty()) {
+            plugin.getLogger().severe("[Calamity] MythicMobs mob ID is empty! "
+                    + "Configure the boss mob ID in plugins/ChaosCraft/calamity.yml under bosses.<bossname>.mythic-id");
             return;
         }
 
@@ -696,11 +728,24 @@ public class CalamityMode extends AbstractMode {
 
             // MobManager.spawnMob(String, Location)
             var spawnMethod = mobManager.getClass().getMethod("spawnMob", String.class, Location.class);
-            spawnMethod.invoke(mobManager, mythicId, location);
+            Object result = spawnMethod.invoke(mobManager, mythicId, location);
 
-            plugin.debug("[Calamity] Spawned MythicMob: " + mythicId);
+            if (result == null) {
+                plugin.getLogger().severe("[Calamity] MythicMobs returned null when spawning '" + mythicId + "'! "
+                        + "Check that the mob ID exists in your MythicMobs mobs/ folder. "
+                        + "Run /mm mobs to see all available mob types.");
+            } else {
+                plugin.getLogger().info("[Calamity] Successfully spawned MythicMob: " + mythicId + " at " + formatLocation(location));
+            }
+        } catch (ClassNotFoundException e) {
+            plugin.getLogger().severe("[Calamity] MythicMobs API class not found — wrong MythicMobs version? "
+                    + "ChaosCraft requires MythicMobs 5.x+ (io.lumine.mythic.bukkit.MythicBukkit)");
+        } catch (NoSuchMethodException e) {
+            plugin.getLogger().severe("[Calamity] MythicMobs API method not found: " + e.getMessage()
+                    + " — MythicMobs version may be incompatible. Requires 5.x+");
         } catch (Exception e) {
-            plugin.getLogger().warning("[Calamity] Failed to spawn MythicMob '" + mythicId + "': " + e.getMessage());
+            plugin.getLogger().severe("[Calamity] Failed to spawn MythicMob '" + mythicId + "': " + e.getMessage());
+            e.printStackTrace();
         }
     }
 
