@@ -24,6 +24,7 @@ public class HellscapeSurges {
     // 1. HEAT WAVE — Pulsing waves of heat distortion, flame particles sweep across
     public static class HeatWave extends EnvironmentalAttack {
         public HeatWave(ChaosCraftPlugin p) { super(p, new AttackConfig("heat_wave", AttackType.ENVIRONMENTAL, 1, "modes/devilsdream/attacks"));
+        }
         @Override protected void onSpawn(Location c) { DisplayBuilder.playSound(c, Sound.ENTITY_BLAZE_AMBIENT, 0.8f, 0.3f); }
         @Override protected void onTick(int t) { Location c=getCenter();if(c==null||c.getWorld()==null)return;World w=c.getWorld();
             double waveZ = Math.sin(t*0.06)*12;
@@ -38,6 +39,7 @@ public class HellscapeSurges {
     // 2. EMBER STORM — Dense cloud of embers and sparks
     public static class EmberStorm extends EnvironmentalAttack {
         public EmberStorm(ChaosCraftPlugin p){super(p,new AttackConfig("ember_storm",AttackType.ENVIRONMENTAL,1,"modes/devilsdream/attacks"));
+        }
         @Override protected void onSpawn(Location c){DisplayBuilder.playSound(c,Sound.ENTITY_BLAZE_SHOOT,1.0f,0.4f);}
         @Override protected void onTick(int t){Location c=getCenter();if(c==null||c.getWorld()==null)return;World w=c.getWorld();
             for(int i=0;i<25;i++){double x=c.getX()+Math.random()*20-10,z=c.getZ()+Math.random()*20-10,y=c.getY()+Math.random()*6;
@@ -51,6 +53,7 @@ public class HellscapeSurges {
     // 3. BRIMSTONE ERUPTION — Periodic eruption bursts from center
     public static class BrimstoneEruption extends EnvironmentalAttack {
         public BrimstoneEruption(ChaosCraftPlugin p){super(p,new AttackConfig("brimstone_eruption",AttackType.ENVIRONMENTAL,1,"modes/devilsdream/attacks"));
+        }
         @Override protected void onSpawn(Location c){DisplayBuilder.playSound(c,Sound.ENTITY_GENERIC_EXPLODE,0.8f,0.4f);}
         @Override protected void onTick(int t){Location c=getCenter();if(c==null||c.getWorld()==null)return;World w=c.getWorld();
             if(t%30==0){w.spawnParticle(Particle.FLAME,c,30,2,3,2,0.08);w.spawnParticle(Particle.LAVA,c,15,1.5,2,1.5,0);
@@ -68,6 +71,7 @@ public class HellscapeSurges {
     public static class InfernalSurge extends EnvironmentalAttack {
         private float surgeHeight = 0;
         public InfernalSurge(ChaosCraftPlugin p){super(p,new AttackConfig("infernal_surge",AttackType.ENVIRONMENTAL,1,"modes/devilsdream/attacks"));
+        }
         @Override protected void onSpawn(Location c){DisplayBuilder.playSound(c,Sound.ENTITY_BLAZE_SHOOT,1.0f,0.3f);}
         @Override protected void onTick(int t){Location c=getCenter();if(c==null||c.getWorld()==null)return;World w=c.getWorld();
             if(surgeHeight<15)surgeHeight+=0.15f;
@@ -83,6 +87,7 @@ public class HellscapeSurges {
     public static class MagmaRise extends EnvironmentalAttack {
         private final List<BlockDisplayHandle> tiles=new ArrayList<>();private float riseY=-2;
         public MagmaRise(ChaosCraftPlugin p){super(p,new AttackConfig("magma_rise",AttackType.ENVIRONMENTAL,1,"modes/devilsdream/attacks"));
+        }
         @Override protected void onSpawn(Location c){World w=c.getWorld();if(w==null)return;
             for(int x=-2;x<=2;x++)for(int z=-2;z<=2;z++){BlockDisplayHandle t=displayBuilder.spawnBlock(c.clone().add(x*2,riseY,z*2),
                     (x+z)%2==0?Material.MAGMA_BLOCK:Material.NETHERRACK);t.scale(2.0f,0.5f,2.0f).glow(200,80,20).interpolation(3,0);
@@ -99,6 +104,7 @@ public class HellscapeSurges {
     // 6. HELLFIRE PILLAR — Single massive fire column erupts periodically at random nearby spots
     public static class HellfirePillar extends EnvironmentalAttack {
         public HellfirePillar(ChaosCraftPlugin p){super(p,new AttackConfig("hellfire_pillar",AttackType.ENVIRONMENTAL,1,"modes/devilsdream/attacks"));
+        }
         @Override protected void onSpawn(Location c){DisplayBuilder.playSound(c,Sound.ENTITY_BLAZE_SHOOT,0.8f,0.4f);}
         @Override protected void onTick(int t){Location c=getCenter();if(c==null||c.getWorld()==null)return;World w=c.getWorld();
             if(t%25==0){Location pLoc=c.clone().add(Math.random()*10-5,0,Math.random()*10-5);
@@ -113,6 +119,7 @@ public class HellscapeSurges {
     // 7. CINDER RAIN — Slow-falling embers and cinders
     public static class CinderRain extends EnvironmentalAttack {
         public CinderRain(ChaosCraftPlugin p){super(p,new AttackConfig("cinder_rain",AttackType.ENVIRONMENTAL,1,"modes/devilsdream/attacks"));
+        }
         @Override protected void onSpawn(Location c){DisplayBuilder.playSound(c,Sound.BLOCK_FIRE_AMBIENT,0.8f,0.4f);}
         @Override protected void onTick(int t){Location c=getCenter();if(c==null||c.getWorld()==null)return;World w=c.getWorld();
             for(int i=0;i<15;i++){double x=c.getX()+Math.random()*20-10,z=c.getZ()+Math.random()*20-10,y=c.getY()+6+Math.random()*8;
@@ -127,6 +134,7 @@ public class HellscapeSurges {
     public static class LavaFlow extends EnvironmentalAttack {
         private double flowAngle=0;
         public LavaFlow(ChaosCraftPlugin p){super(p,new AttackConfig("lava_flow",AttackType.ENVIRONMENTAL,1,"modes/devilsdream/attacks"));
+        }
         @Override protected void onSpawn(Location c){flowAngle=Math.random()*Math.PI*2;DisplayBuilder.playSound(c,Sound.BLOCK_LAVA_AMBIENT,1.0f,0.4f);}
         @Override protected void onTick(int t){Location c=getCenter();if(c==null||c.getWorld()==null)return;World w=c.getWorld();
             double fx=Math.cos(flowAngle),fz=Math.sin(flowAngle);
@@ -143,6 +151,7 @@ public class HellscapeSurges {
     // 9. NETHER BREEZE — Warm particles drift with occasional ember gusts
     public static class NetherBreeze extends EnvironmentalAttack {
         public NetherBreeze(ChaosCraftPlugin p){super(p,new AttackConfig("nether_breeze",AttackType.ENVIRONMENTAL,1,"modes/devilsdream/attacks"));
+        }
         @Override protected void onSpawn(Location c){DisplayBuilder.playSound(c,Sound.ENTITY_PHANTOM_FLAP,0.6f,0.3f);}
         @Override protected void onTick(int t){Location c=getCenter();if(c==null||c.getWorld()==null)return;World w=c.getWorld();
             double wx=Math.cos(t*0.005),wz=Math.sin(t*0.005);
@@ -158,6 +167,7 @@ public class HellscapeSurges {
     // 10. VOLCANIC BURST — Random explosive bursts from the ground
     public static class VolcanicBurst extends EnvironmentalAttack {
         public VolcanicBurst(ChaosCraftPlugin p){super(p,new AttackConfig("volcanic_burst",AttackType.ENVIRONMENTAL,1,"modes/devilsdream/attacks"));
+        }
         @Override protected void onSpawn(Location c){DisplayBuilder.playSound(c,Sound.ENTITY_GENERIC_EXPLODE,0.6f,0.5f);}
         @Override protected void onTick(int t){Location c=getCenter();if(c==null||c.getWorld()==null)return;World w=c.getWorld();
             if(t%20==0){Location burst=c.clone().add(Math.random()*10-5,0,Math.random()*10-5);
@@ -170,6 +180,7 @@ public class HellscapeSurges {
     // 11. INFERNAL GROUND — Ground glows hot, flame particles rise everywhere
     public static class InfernalGround extends EnvironmentalAttack {
         public InfernalGround(ChaosCraftPlugin p){super(p,new AttackConfig("infernal_ground",AttackType.ENVIRONMENTAL,1,"modes/devilsdream/attacks"));
+        }
         @Override protected void onSpawn(Location c){DisplayBuilder.playSound(c,Sound.BLOCK_LAVA_AMBIENT,0.8f,0.4f);}
         @Override protected void onTick(int t){Location c=getCenter();if(c==null||c.getWorld()==null)return;World w=c.getWorld();
             for(int i=0;i<15;i++){double x=c.getX()+Math.random()*20-10,z=c.getZ()+Math.random()*20-10;
@@ -183,6 +194,7 @@ public class HellscapeSurges {
     // 12. FIRE WHIRL — Spinning fire vortex column
     public static class FireWhirl extends EnvironmentalAttack {
         public FireWhirl(ChaosCraftPlugin p){super(p,new AttackConfig("fire_whirl",AttackType.ENVIRONMENTAL,1,"modes/devilsdream/attacks"));
+        }
         @Override protected void onSpawn(Location c){DisplayBuilder.playSound(c,Sound.ENTITY_BLAZE_SHOOT,0.8f,0.4f);}
         @Override protected void onTick(int t){Location c=getCenter();if(c==null||c.getWorld()==null)return;World w=c.getWorld();
             for(int layer=0;layer<10;layer++){double h=layer*0.8;double r=1.5+layer*0.3;double a=t*0.15+layer*0.4;
@@ -199,6 +211,7 @@ public class HellscapeSurges {
     public static class HellPulse extends EnvironmentalAttack {
         private float pulseRadius=0;
         public HellPulse(ChaosCraftPlugin p){super(p,new AttackConfig("hell_pulse",AttackType.ENVIRONMENTAL,1,"modes/devilsdream/attacks"));
+        }
         @Override protected void onSpawn(Location c){DisplayBuilder.playSound(c,Sound.ENTITY_BLAZE_AMBIENT,0.8f,0.3f);}
         @Override protected void onTick(int t){Location c=getCenter();if(c==null||c.getWorld()==null)return;World w=c.getWorld();
             pulseRadius+=0.3f;if(pulseRadius>12)pulseRadius=0;

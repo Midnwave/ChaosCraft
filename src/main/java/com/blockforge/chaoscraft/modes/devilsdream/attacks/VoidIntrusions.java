@@ -25,6 +25,7 @@ public class VoidIntrusions {
     public static class ShadowCreep extends EnvironmentalAttack {
         private float creepRadius=12;
         public ShadowCreep(ChaosCraftPlugin p){super(p,new AttackConfig("shadow_creep",AttackType.ENVIRONMENTAL,1,"modes/devilsdream/attacks"));
+        }
         @Override protected void onSpawn(Location c){DisplayBuilder.playSound(c,Sound.ENTITY_WARDEN_DIG,0.6f,0.3f);}
         @Override protected void onTick(int t){Location c=getCenter();if(c==null||c.getWorld()==null)return;World w=c.getWorld();
             if(creepRadius>2)creepRadius-=0.02f;
@@ -48,6 +49,7 @@ public class VoidIntrusions {
     public static class LightDrain extends EnvironmentalAttack {
         private float darkness=0;
         public LightDrain(ChaosCraftPlugin p){super(p,new AttackConfig("light_drain",AttackType.ENVIRONMENTAL,1,"modes/devilsdream/attacks"));
+        }
         @Override protected void onSpawn(Location c){DisplayBuilder.playSound(c,Sound.BLOCK_RESPAWN_ANCHOR_DEPLETE,0.8f,0.3f);}
         @Override protected void onTick(int t){Location c=getCenter();if(c==null||c.getWorld()==null)return;World w=c.getWorld();
             if(darkness<1)darkness+=0.004f;
@@ -66,6 +68,7 @@ public class VoidIntrusions {
     public static class VoidPocket extends EnvironmentalAttack {
         private final List<double[]> pockets=new ArrayList<>();
         public VoidPocket(ChaosCraftPlugin p){super(p,new AttackConfig("void_pocket",AttackType.ENVIRONMENTAL,1,"modes/devilsdream/attacks"));
+        }
         @Override protected void onSpawn(Location c){DisplayBuilder.playSound(c,Sound.ENTITY_ENDERMAN_TELEPORT,0.8f,0.3f);}
         @Override protected void onTick(int t){Location c=getCenter();if(c==null||c.getWorld()==null)return;World w=c.getWorld();
             // Spawn new pocket every 40 ticks
@@ -90,6 +93,7 @@ public class VoidIntrusions {
     public static class DarknessSurge extends EnvironmentalAttack {
         private double surgeZ=-10;
         public DarknessSurge(ChaosCraftPlugin p){super(p,new AttackConfig("darkness_surge",AttackType.ENVIRONMENTAL,1,"modes/devilsdream/attacks"));
+        }
         @Override protected void onSpawn(Location c){DisplayBuilder.playSound(c,Sound.ENTITY_WARDEN_ROAR,0.5f,0.3f);}
         @Override protected void onTick(int t){Location c=getCenter();if(c==null||c.getWorld()==null)return;World w=c.getWorld();
             surgeZ+=0.15;if(surgeZ>10)surgeZ=-10;
@@ -109,6 +113,7 @@ public class VoidIntrusions {
     // 5. ABYSS GAZE — Giant "eye" of darkness stares down from above
     public static class AbyssGaze extends EnvironmentalAttack {
         public AbyssGaze(ChaosCraftPlugin p){super(p,new AttackConfig("abyss_gaze",AttackType.ENVIRONMENTAL,1,"modes/devilsdream/attacks"));
+        }
         @Override protected void onSpawn(Location c){DisplayBuilder.playSound(c,Sound.ENTITY_ENDERMAN_STARE,0.8f,0.3f);}
         @Override protected void onTick(int t){Location c=getCenter();if(c==null||c.getWorld()==null)return;World w=c.getWorld();
             Location eyeCenter=c.clone().add(0,12,0);
@@ -131,6 +136,7 @@ public class VoidIntrusions {
     public static class ShadowTentacle extends EnvironmentalAttack {
         private final List<Double> tentAngles=new ArrayList<>();
         public ShadowTentacle(ChaosCraftPlugin p){super(p,new AttackConfig("shadow_tentacle",AttackType.ENVIRONMENTAL,1,"modes/devilsdream/attacks"));
+        }
         @Override protected void onSpawn(Location c){for(int i=0;i<6;i++)tentAngles.add((2*Math.PI*i)/6);
             DisplayBuilder.playSound(c,Sound.ENTITY_WARDEN_EMERGE,0.6f,0.3f);}
         @Override protected void onTick(int t){Location c=getCenter();if(c==null||c.getWorld()==null)return;World w=c.getWorld();
@@ -149,6 +155,7 @@ public class VoidIntrusions {
     // 7. VOID BURST — Explosive void detonations at random locations
     public static class VoidBurst extends EnvironmentalAttack {
         public VoidBurst(ChaosCraftPlugin p){super(p,new AttackConfig("void_burst",AttackType.ENVIRONMENTAL,1,"modes/devilsdream/attacks"));
+        }
         @Override protected void onSpawn(Location c){DisplayBuilder.playSound(c,Sound.ENTITY_WARDEN_SONIC_BOOM,0.5f,0.3f);}
         @Override protected void onTick(int t){Location c=getCenter();if(c==null||c.getWorld()==null)return;World w=c.getWorld();
             if(t%25==0){Location burst=c.clone().add(Math.random()*10-5,1+Math.random()*2,Math.random()*10-5);
@@ -169,6 +176,7 @@ public class VoidIntrusions {
     public static class NightEncroach extends EnvironmentalAttack {
         private float nightRadius=12;
         public NightEncroach(ChaosCraftPlugin p){super(p,new AttackConfig("night_encroach",AttackType.ENVIRONMENTAL,1,"modes/devilsdream/attacks"));
+        }
         @Override protected void onSpawn(Location c){DisplayBuilder.playSound(c,Sound.AMBIENT_CAVE,0.8f,0.3f);}
         @Override protected void onTick(int t){Location c=getCenter();if(c==null||c.getWorld()==null)return;World w=c.getWorld();
             if(nightRadius>2)nightRadius-=0.015f;
@@ -189,6 +197,7 @@ public class VoidIntrusions {
     public static class ObsidianTear extends EnvironmentalAttack {
         private final List<double[]> tears=new ArrayList<>();
         public ObsidianTear(ChaosCraftPlugin p){super(p,new AttackConfig("obsidian_tear",AttackType.ENVIRONMENTAL,1,"modes/devilsdream/attacks"));
+        }
         @Override protected void onSpawn(Location c){for(int i=0;i<8;i++)tears.add(new double[]{Math.random()*12-6,6+Math.random()*4,Math.random()*12-6});
             DisplayBuilder.playSound(c,Sound.BLOCK_RESPAWN_ANCHOR_CHARGE,0.6f,0.3f);}
         @Override protected void onTick(int t){Location c=getCenter();if(c==null||c.getWorld()==null)return;World w=c.getWorld();
@@ -208,6 +217,7 @@ public class VoidIntrusions {
     public static class ShadowWave extends EnvironmentalAttack {
         private float wavePhase=0;
         public ShadowWave(ChaosCraftPlugin p){super(p,new AttackConfig("shadow_wave",AttackType.ENVIRONMENTAL,1,"modes/devilsdream/attacks"));
+        }
         @Override protected void onSpawn(Location c){DisplayBuilder.playSound(c,Sound.ENTITY_WARDEN_DIG,0.6f,0.3f);}
         @Override protected void onTick(int t){Location c=getCenter();if(c==null||c.getWorld()==null)return;World w=c.getWorld();
             wavePhase+=0.2f;
@@ -227,6 +237,7 @@ public class VoidIntrusions {
     public static class VoidWhisper extends EnvironmentalAttack {
         private double whisperAngle=0;
         public VoidWhisper(ChaosCraftPlugin p){super(p,new AttackConfig("void_whisper",AttackType.ENVIRONMENTAL,1,"modes/devilsdream/attacks"));
+        }
         @Override protected void onSpawn(Location c){whisperAngle=Math.random()*Math.PI*2;DisplayBuilder.playSound(c,Sound.ENTITY_VEX_AMBIENT,0.6f,0.3f);}
         @Override protected void onTick(int t){Location c=getCenter();if(c==null||c.getWorld()==null)return;World w=c.getWorld();
             whisperAngle+=0.005;double wx=Math.cos(whisperAngle),wz=Math.sin(whisperAngle);
@@ -247,6 +258,7 @@ public class VoidIntrusions {
     public static class DarkPrison extends EnvironmentalAttack {
         private float wallDist=6;
         public DarkPrison(ChaosCraftPlugin p){super(p,new AttackConfig("dark_prison",AttackType.ENVIRONMENTAL,1,"modes/devilsdream/attacks"));
+        }
         @Override protected void onSpawn(Location c){DisplayBuilder.playSound(c,Sound.BLOCK_PISTON_EXTEND,0.8f,0.3f);}
         @Override protected void onTick(int t){Location c=getCenter();if(c==null||c.getWorld()==null)return;World w=c.getWorld();
             if(wallDist>2)wallDist-=0.015f;
@@ -270,6 +282,7 @@ public class VoidIntrusions {
     public static class AbyssalRift extends EnvironmentalAttack {
         private float riftHeight=0;
         public AbyssalRift(ChaosCraftPlugin p){super(p,new AttackConfig("abyssal_rift",AttackType.ENVIRONMENTAL,1,"modes/devilsdream/attacks"));
+        }
         @Override protected void onSpawn(Location c){DisplayBuilder.playSound(c,Sound.ENTITY_WARDEN_ROAR,0.6f,0.3f);
             DisplayBuilder.playSound(c,Sound.BLOCK_GLASS_BREAK,0.8f,0.3f);}
         @Override protected void onTick(int t){Location c=getCenter();if(c==null||c.getWorld()==null)return;World w=c.getWorld();

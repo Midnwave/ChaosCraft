@@ -24,6 +24,7 @@ public class SoulHarvesting {
     // 1. SOUL DRAIN — Soul particles pulled from players toward a central vortex
     public static class SoulDrain extends EnvironmentalAttack {
         public SoulDrain(ChaosCraftPlugin p){super(p,new AttackConfig("soul_drain",AttackType.ENVIRONMENTAL,1,"modes/devilsdream/attacks"));
+        }
         @Override protected void onSpawn(Location c){DisplayBuilder.playSound(c,Sound.ENTITY_WARDEN_SONIC_BOOM,0.4f,0.3f);}
         @Override protected void onTick(int t){Location c=getCenter();if(c==null||c.getWorld()==null)return;World w=c.getWorld();
             // Soul particles spiral inward from player positions
@@ -45,6 +46,7 @@ public class SoulHarvesting {
     // 2. GHOST TOUCH — Invisible hands shove players, soul particles appear at contact point
     public static class GhostTouch extends EnvironmentalAttack {
         public GhostTouch(ChaosCraftPlugin p){super(p,new AttackConfig("ghost_touch",AttackType.ENVIRONMENTAL,1,"modes/devilsdream/attacks"));
+        }
         @Override protected void onSpawn(Location c){DisplayBuilder.playSound(c,Sound.ENTITY_VEX_AMBIENT,0.6f,0.3f);}
         @Override protected void onTick(int t){Location c=getCenter();if(c==null||c.getWorld()==null)return;World w=c.getWorld();
             if(t%18==0)for(Player p:w.getPlayers()){if(isExempt(p))continue;if(p.getLocation().distanceSquared(c)<=64){
@@ -61,6 +63,7 @@ public class SoulHarvesting {
     public static class SpiritSwarm extends EnvironmentalAttack {
         private final List<double[]> wisps=new ArrayList<>();
         public SpiritSwarm(ChaosCraftPlugin p){super(p,new AttackConfig("spirit_swarm",AttackType.ENVIRONMENTAL,1,"modes/devilsdream/attacks"));
+        }
         @Override protected void onSpawn(Location c){for(int i=0;i<15;i++)wisps.add(new double[]{Math.random()*Math.PI*2,2+Math.random()*5,1+Math.random()*3,0.03+Math.random()*0.06});
             DisplayBuilder.playSound(c,Sound.ENTITY_VEX_CHARGE,0.6f,0.3f);}
         @Override protected void onTick(int t){Location c=getCenter();if(c==null||c.getWorld()==null)return;World w=c.getWorld();
@@ -75,6 +78,7 @@ public class SoulHarvesting {
     // 4. SOUL SIPHON — Beam of soul particles connects to nearest player, draining
     public static class SoulSiphon extends EnvironmentalAttack {
         public SoulSiphon(ChaosCraftPlugin p){super(p,new AttackConfig("soul_siphon",AttackType.ENVIRONMENTAL,1,"modes/devilsdream/attacks"));
+        }
         @Override protected void onSpawn(Location c){DisplayBuilder.playSound(c,Sound.BLOCK_BEACON_DEACTIVATE,0.8f,0.3f);}
         @Override protected void onTick(int t){Location c=getCenter();if(c==null||c.getWorld()==null)return;World w=c.getWorld();
             Location siphonSource=c.clone().add(0,4,0);
@@ -93,6 +97,7 @@ public class SoulHarvesting {
     // 5. REAPER MARK — Skull particle crosshair appears on random player, damage pulse
     public static class ReaperMark extends EnvironmentalAttack {
         public ReaperMark(ChaosCraftPlugin p){super(p,new AttackConfig("reaper_mark",AttackType.ENVIRONMENTAL,1,"modes/devilsdream/attacks"));
+        }
         @Override protected void onSpawn(Location c){DisplayBuilder.playSound(c,Sound.ENTITY_WITHER_AMBIENT,0.6f,0.3f);}
         @Override protected void onTick(int t){Location c=getCenter();if(c==null||c.getWorld()==null)return;World w=c.getWorld();
             // Mark crosshair on center
@@ -110,6 +115,7 @@ public class SoulHarvesting {
     // 6. SOUL STORM — Dense swirling soul particles like a hurricane
     public static class SoulStorm extends EnvironmentalAttack {
         public SoulStorm(ChaosCraftPlugin p){super(p,new AttackConfig("soul_storm",AttackType.ENVIRONMENTAL,1,"modes/devilsdream/attacks"));
+        }
         @Override protected void onSpawn(Location c){DisplayBuilder.playSound(c,Sound.ENTITY_WARDEN_ROAR,0.5f,0.3f);}
         @Override protected void onTick(int t){Location c=getCenter();if(c==null||c.getWorld()==null)return;World w=c.getWorld();
             for(int layer=0;layer<6;layer++){double h=layer*1.2;double r=2+layer*1.2;
@@ -127,6 +133,7 @@ public class SoulHarvesting {
     public static class PhantomChains extends EnvironmentalAttack {
         private float chainR=6;
         public PhantomChains(ChaosCraftPlugin p){super(p,new AttackConfig("phantom_chains",AttackType.ENVIRONMENTAL,1,"modes/devilsdream/attacks"));
+        }
         @Override protected void onSpawn(Location c){DisplayBuilder.playSound(c,Sound.BLOCK_CHAIN_PLACE,0.8f,0.4f);}
         @Override protected void onTick(int t){Location c=getCenter();if(c==null||c.getWorld()==null)return;World w=c.getWorld();
             if(chainR>2)chainR-=0.012f;double spin=t*0.04;
@@ -145,6 +152,7 @@ public class SoulHarvesting {
     // 8. SPIRIT BURST — Periodic explosions of soul energy
     public static class SpiritBurst extends EnvironmentalAttack {
         public SpiritBurst(ChaosCraftPlugin p){super(p,new AttackConfig("spirit_burst",AttackType.ENVIRONMENTAL,1,"modes/devilsdream/attacks"));
+        }
         @Override protected void onSpawn(Location c){DisplayBuilder.playSound(c,Sound.ENTITY_WARDEN_SONIC_BOOM,0.4f,0.4f);}
         @Override protected void onTick(int t){Location c=getCenter();if(c==null||c.getWorld()==null)return;World w=c.getWorld();
             if(t%25==0){Location burst=c.clone().add(Math.random()*8-4,1,Math.random()*8-4);
@@ -162,6 +170,7 @@ public class SoulHarvesting {
     // 9. GHOST WAIL — Eerie wailing sounds with visible sound waves (particle rings)
     public static class GhostWail extends EnvironmentalAttack {
         public GhostWail(ChaosCraftPlugin p){super(p,new AttackConfig("ghost_wail",AttackType.ENVIRONMENTAL,1,"modes/devilsdream/attacks"));
+        }
         @Override protected void onSpawn(Location c){DisplayBuilder.playSound(c,Sound.ENTITY_GHAST_SCREAM,0.6f,0.3f);}
         @Override protected void onTick(int t){Location c=getCenter();if(c==null||c.getWorld()==null)return;World w=c.getWorld();
             // Sound wave rings expanding outward
@@ -183,6 +192,7 @@ public class SoulHarvesting {
     public static class SoulTrap extends EnvironmentalAttack {
         private float trapR=8;private boolean trapped=false;
         public SoulTrap(ChaosCraftPlugin p){super(p,new AttackConfig("soul_trap",AttackType.ENVIRONMENTAL,1,"modes/devilsdream/attacks"));
+        }
         @Override protected void onSpawn(Location c){DisplayBuilder.playSound(c,Sound.BLOCK_SOUL_SAND_BREAK,0.8f,0.3f);
             DisplayBuilder.particleRing(c,trapR,Particle.SOUL,24,null);}
         @Override protected void onTick(int t){Location c=getCenter();if(c==null||c.getWorld()==null)return;World w=c.getWorld();
@@ -200,6 +210,7 @@ public class SoulHarvesting {
     // 11. ANCESTRAL WRATH — Ghostly figures rise from ground and charge outward
     public static class AncestralWrath extends EnvironmentalAttack {
         public AncestralWrath(ChaosCraftPlugin p){super(p,new AttackConfig("ancestral_wrath",AttackType.ENVIRONMENTAL,1,"modes/devilsdream/attacks"));
+        }
         @Override protected void onSpawn(Location c){DisplayBuilder.playSound(c,Sound.ENTITY_WARDEN_EMERGE,0.6f,0.4f);}
         @Override protected void onTick(int t){Location c=getCenter();if(c==null||c.getWorld()==null)return;World w=c.getWorld();
             // Ghost figures rise every 25 ticks
@@ -218,6 +229,7 @@ public class SoulHarvesting {
     public static class EctoplasmicWave extends EnvironmentalAttack {
         private double wavePos=-10;
         public EctoplasmicWave(ChaosCraftPlugin p){super(p,new AttackConfig("ectoplasmic_wave",AttackType.ENVIRONMENTAL,1,"modes/devilsdream/attacks"));
+        }
         @Override protected void onSpawn(Location c){DisplayBuilder.playSound(c,Sound.ENTITY_ELDER_GUARDIAN_AMBIENT,0.6f,0.3f);}
         @Override protected void onTick(int t){Location c=getCenter();if(c==null||c.getWorld()==null)return;World w=c.getWorld();
             wavePos+=0.2;if(wavePos>10)wavePos=-10;
@@ -234,6 +246,7 @@ public class SoulHarvesting {
     // 13. SOUL FUNNEL — Inverted tornado of souls spiraling upward and dispersing
     public static class SoulFunnel extends EnvironmentalAttack {
         public SoulFunnel(ChaosCraftPlugin p){super(p,new AttackConfig("soul_funnel",AttackType.ENVIRONMENTAL,1,"modes/devilsdream/attacks"));
+        }
         @Override protected void onSpawn(Location c){DisplayBuilder.playSound(c,Sound.ENTITY_VEX_CHARGE,0.8f,0.3f);}
         @Override protected void onTick(int t){Location c=getCenter();if(c==null||c.getWorld()==null)return;World w=c.getWorld();
             // Inverted funnel: narrow at bottom, wide at top
