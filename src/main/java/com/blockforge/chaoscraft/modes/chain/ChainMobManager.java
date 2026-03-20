@@ -159,27 +159,11 @@ public class ChainMobManager {
         try {
             NPCRegistry registry = CitizensAPI.getNPCRegistry();
 
-            // Create NPC with ZOMBIE entity type but PLAYER appearance
-            NPC npc = registry.createNPC(EntityType.PLAYER, config.getMobDisplayName());
+            // Create NPC as ZOMBIE (PvE, not PvP) — disguised as player via LibsDisguises
+            NPC npc = registry.createNPC(EntityType.ZOMBIE, config.getMobDisplayName());
             npc.setProtected(false); // Can take damage
 
-            // Set skin from config — supports URL or player name
-            String skinUrl = config.getMobSkinUrl();
-            String skinName = config.getMobSkinPlayerName();
-            if (!skinUrl.isEmpty()) {
-                // HTTP/HTTPS URL — Citizens sends to mineskin.org for processing
-                Bukkit.getScheduler().runTaskLater(plugin, () -> {
-                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(),
-                            "npc select " + npc.getId());
-                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(),
-                            "npc skin --url " + skinUrl);
-                }, 5L);
-            } else if (!skinName.isEmpty()) {
-                // Use a player name for skin lookup via Citizens data
-                npc.data().setPersistent("player-skin-name", skinName);
-            }
-
-            // Spawn the NPC
+            // Spawn the NPC first so it has an entity
             npc.spawn(location);
 
             if (npc.getEntity() instanceof LivingEntity living) {
@@ -194,21 +178,51 @@ public class ChainMobManager {
                     speedAttr.setBaseValue(config.getMobSpeed());
                 }
 
+                // Zombies burn in daylight — prevent that
+                if (living instanceof Zombie zombie) {
+                    zombie.setShouldBurnInDay(false);
+                }
+
                 // Equipment — chain themed
-                if (living instanceof Player || living.getEquipment() != null) {
-                    var equipment = living.getEquipment();
-                    if (equipment != null) {
-                        equipment.setItemInMainHand(new ItemStack(Material.CHAIN));
-                        equipment.setHelmet(new ItemStack(Material.CHAINMAIL_HELMET));
-                        equipment.setChestplate(new ItemStack(Material.CHAINMAIL_CHESTPLATE));
-                        equipment.setLeggings(new ItemStack(Material.CHAINMAIL_LEGGINGS));
-                        equipment.setBoots(new ItemStack(Material.CHAINMAIL_BOOTS));
-                    }
+                var equipment = living.getEquipment();
+                if (equipment != null) {
+                    equipment.setItemInMainHand(new ItemStack(Material.CHAIN));
+                    equipment.setHelmet(new ItemStack(Material.CHAINMAIL_HELMET));
+                    equipment.setChestplate(new ItemStack(Material.CHAINMAIL_CHESTPLATE));
+                    equipment.setLeggings(new ItemStack(Material.CHAINMAIL_LEGGINGS));
+                    equipment.setBoots(new ItemStack(Material.CHAINMAIL_BOOTS));
                 }
 
                 // Disable NPC default behaviors — we control AI
                 npc.getDefaultGoalController().clear();
                 npc.getDefaultGoalController().setPaused(true);
+            }
+
+            // Apply LibsDisguises player disguise with skin
+            String skinUrl = config.getMobSkinUrl();
+            String skinName = config.getMobSkinPlayerName();
+            boolean hasLibsDisguises = Bukkit.getPluginManager().getPlugin("LibsDisguises") != null;
+
+            if (hasLibsDisguises) {
+                Bukkit.getScheduler().runTaskLater(plugin, () -> {
+                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(),
+                            "npc select " + npc.getId());
+                    if (!skinUrl.isEmpty()) {
+                        // Disguise as player with skin from URL
+                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(),
+                                "npc disguise player " + config.getMobDisplayName().replace("&", "") + " setSkin url:" + skinUrl);
+                    } else if (!skinName.isEmpty()) {
+                        // Disguise as player with another player's skin
+                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(),
+                                "npc disguise player " + skinName + " setSkin " + skinName);
+                    } else {
+                        // Default player disguise (Steve)
+                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(),
+                                "npc disguise player");
+                    }
+                }, 5L);
+            } else {
+                plugin.getLogger().warning("[Chain] LibsDisguises not found — chain mobs will appear as zombies.");
             }
 
             // Configure navigator
