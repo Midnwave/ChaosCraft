@@ -102,6 +102,10 @@ public class ChaosCraftPlugin extends JavaPlugin {
         DevilsDreamMode devilsDreamMode = new DevilsDreamMode(this);
         modeManager.registerMode(devilsDreamMode);
 
+        com.blockforge.chaoscraft.modes.bluemoon.BlueMoonMode blueMoonMode =
+                new com.blockforge.chaoscraft.modes.bluemoon.BlueMoonMode(this);
+        modeManager.registerMode(blueMoonMode);
+
         // Initialize performance service
         performanceService = new PerformanceService(this);
         performanceService.initialize();
