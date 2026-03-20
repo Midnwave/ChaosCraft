@@ -419,6 +419,12 @@ public class CalamityMode extends AbstractMode {
         // 10. Advance to Phase 1 (pre-boss gem collection)
         advanceToPhase(1);
 
+        // Universal mob spawning
+        if (plugin.getMobSpawnService() != null) {
+            plugin.getMobSpawnService().createSession("calamity",
+                    calamityConfig.getMobSpawnConfig(), endWorld);
+        }
+
         plugin.getLogger().info("[Calamity] Mode fully started. Phase 1 — collecting gems for Voidmaw."
                 + " (" + attackRegistry.size() + " attacks registered)");
     }
@@ -447,11 +453,21 @@ public class CalamityMode extends AbstractMode {
 
         // Tick the attack scheduler (spawns block displays, environmental, boss attacks)
         attackScheduler.tick();
+
+        // Universal mob spawning
+        if (plugin.getMobSpawnService() != null) {
+            plugin.getMobSpawnService().tick("calamity", getExemptPlayers());
+        }
     }
 
     @Override
     public void onEnd() {
         plugin.getLogger().info("[Calamity] Mode ending — cleaning up...");
+
+        // Universal mob spawning cleanup
+        if (plugin.getMobSpawnService() != null) {
+            plugin.getMobSpawnService().destroySession("calamity");
+        }
 
         // Stop all sub-systems
         attackScheduler.stop();

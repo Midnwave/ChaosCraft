@@ -8,6 +8,8 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.inventory.ItemStack;
 
+import com.blockforge.chaoscraft.services.mobspawn.MobSpawnConfig;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
@@ -41,7 +43,8 @@ public class CalamityConfig {
         boolean needsSave = false;
 
         // ── Base mode keys ───────────────────────────────────────────────────
-        if (!config.contains("config-version")) { config.set("config-version", 1); needsSave = true; }
+        if (!config.contains("config-version")) { config.set("config-version", 2); needsSave = true; }
+        if (config.getInt("config-version") < 2) { config.set("config-version", 2); needsSave = true; }
         if (!config.contains("timer.default-seconds")) { config.set("timer.default-seconds", 1200); needsSave = true; }
         if (!config.contains("timer.max-seconds")) { config.set("timer.max-seconds", 2400); needsSave = true; }
         if (!config.contains("music.sound-id")) { config.set("music.sound-id", ""); needsSave = true; }
@@ -53,10 +56,18 @@ public class CalamityConfig {
         if (!config.contains("max-events-per-player")) { config.set("max-events-per-player", 5); needsSave = true; }
         if (!config.contains("rewards.commands")) { config.set("rewards.commands", new java.util.ArrayList<>()); needsSave = true; }
 
+        // ── Universal mob spawning ───────────────────────────────────
+        if (MobSpawnConfig.ensureKeys(config)) needsSave = true;
+
         if (needsSave) {
             save();
             config = YamlConfiguration.loadConfiguration(configFile);
         }
+    }
+
+    /** Returns a MobSpawnConfig backed by this mode's YAML. */
+    public MobSpawnConfig getMobSpawnConfig() {
+        return new MobSpawnConfig(config);
     }
 
     public void save() {
@@ -547,6 +558,15 @@ public class CalamityConfig {
                 "Use %player% as a placeholder. Example:",
                 "  - \"give %player% netherite_ingot 3\"",
                 "  - \"eco give %player% 5000\""));
+
+        // ── Universal Mob Spawning ──────────────────────────────────────
+        // Calamity has its own boss phases. This section supports additional
+        // ambient mobs or MythicMobs minions that spawn between boss fights.
+        MobSpawnConfig.writeDefaults(defaults, List.of(
+                new MobSpawnConfig.MobSpawnDefaultEntry("ENDERMAN", "vanilla", 8, 1, 3, 2.0, 1.5),
+                new MobSpawnConfig.MobSpawnDefaultEntry("SHULKER", "vanilla", 4, 1, 2, 1.5, 1.0),
+                new MobSpawnConfig.MobSpawnDefaultEntry("PHANTOM", "vanilla", 6, 2, 4, 1.5, 1.2)
+        ));
 
         try {
             defaults.save(configFile);

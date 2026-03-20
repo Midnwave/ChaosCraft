@@ -135,6 +135,12 @@ public class DevilsDreamMode extends AbstractMode implements Listener {
         adaptationTracker.resetAll();
         attackScheduler.start();
 
+        // Universal mob spawning
+        if (plugin.getMobSpawnService() != null) {
+            plugin.getMobSpawnService().createSession("devilsdream",
+                    dreamConfig.getMobSpawnConfig(), world);
+        }
+
         plugin.getLogger().info("[DevilsDream] Mode fully started. Survive " + timerSeconds + " seconds! "
                 + "Dream Adaptation active. MythicMobs: " + (mobSpawner.isMythicMobsAvailable() ? "ENABLED" : "DISABLED"));
     }
@@ -154,6 +160,11 @@ public class DevilsDreamMode extends AbstractMode implements Listener {
 
         // Tick mob spawner
         mobSpawner.tick(world);
+
+        // Universal mob spawning
+        if (plugin.getMobSpawnService() != null) {
+            plugin.getMobSpawnService().tick("devilsdream", getExemptPlayers());
+        }
     }
 
     @Override
@@ -165,6 +176,11 @@ public class DevilsDreamMode extends AbstractMode implements Listener {
         adaptationTracker.resetAll();
         plugin.getMusicManager().stopAll();
         plugin.getModeTimer().stop();
+
+        // Universal mob spawning cleanup
+        if (plugin.getMobSpawnService() != null) {
+            plugin.getMobSpawnService().destroySession("devilsdream");
+        }
 
         // Unregister event listeners
         BlockBreakEvent.getHandlerList().unregister(this);

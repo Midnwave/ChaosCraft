@@ -10,7 +10,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Forged link by link from iron,\nchain hangs from ceilings and lanterns\nand gives every build a dungeon's soul."
   FLOWER_POT:
     buy: 277.84
     sell: 69.48
@@ -18,7 +18,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A small clay vessel with a generous spirit —\nit holds any sapling, mushroom, or flower\nand turns a bare windowsill into a garden."
   HONEYCOMB_BLOCK:
     buy: 52.92
     sell: 13.24
@@ -26,7 +26,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Packed with golden geometry,\nthis block smells faintly of the hive\nand waxes copper when pressed against it."
   JACK_O_LANTERN:
     buy: 27.44
     sell: 6.88
@@ -34,7 +34,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A grinning face carved from autumn's bounty,\nlit from within and undying —\nthe night holds no fear for the lantern-bearer."
   POINTED_DRIPSTONE:
     buy: 4.0
     sell: 1.0
@@ -42,7 +42,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Time made solid, drop by patient drop —\npointeds dripstone rises and falls\nin caverns that predate every map."
   SPORE_BLOSSOM:
     buy: 14.0
     sell: 3.52
@@ -50,7 +50,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Hanging from lush cave ceilings,\nit breathes a constant gentle shower of spores\ninto the underground air below."
   BLACK_CANDLE:
     buy: 66.84
     sell: 16.72
@@ -58,7 +58,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Dipped in obsidian dye and ceremony,\nthis candle burns with quiet authority\nin rooms that prefer their shadows."
   BLUE_CANDLE:
     buy: 49.2
     sell: 12.32
@@ -66,7 +66,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A cool and steady flame\nthat colors the dark with ocean light\nand calms whatever room it inhabits."
   BROWN_CANDLE:
     buy: 71.24
     sell: 17.84
@@ -74,7 +74,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Earthy and unassuming,\nthe brown candle burns with the warmth\nof a hearth in a modest home."
   CANDLE:
     buy: 42.64
     sell: 10.68
@@ -82,7 +82,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A simple wick and a bit of honeycomb —\nthe humble candle has lit\nevery room and ritual since the beginning."
   CYAN_CANDLE:
     buy: 47.32
     sell: 11.84
@@ -90,7 +90,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Burning at the edge of blue and green,\ncyan candlelight casts the glow\nof deep ocean temples across stone walls."
   GRAY_CANDLE:
     buy: 59.96
     sell: 15.0
@@ -98,7 +98,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Neither warm nor cold, just present —\nthe gray candle suits the halls\nof places with complicated histories."
   GREEN_CANDLE:
     buy: 45.24
     sell: 11.32
@@ -106,7 +106,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "The color of deep forest and mossy stone,\nthis candle flickers with the light\nof places the sun barely reaches."
   LIGHT_BLUE_CANDLE:
     buy: 49.2
     sell: 12.32
@@ -114,7 +114,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Like daylight caught in wax,\nthe light blue candle brightens rooms\nwith the cheerfulness of a clear sky."
   LIGHT_GRAY_CANDLE:
     buy: 49.2
     sell: 12.32
@@ -122,7 +122,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A softer shade of ash and fog,\nit burns in the middle of arguments\nand illuminates everyone equally."
   LIME_CANDLE:
     buy: 71.24
     sell: 17.84
@@ -130,7 +130,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Bright and unexpected in any room,\nthe lime candle carries the energy\nof new growth and early spring."
   MAGENTA_CANDLE:
     buy: 49.2
     sell: 12.32
@@ -138,7 +138,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Vivid and unapologetic,\nmagenta candlelight stains the walls\nwith a color that refuses to be ignored."
   ORANGE_CANDLE:
     buy: 49.2
     sell: 12.32
@@ -146,7 +146,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Warm as an autumn evening,\nthe orange candle turns any room\ninto a harvest celebration."
   PINK_CANDLE:
     buy: 49.2
     sell: 12.32
@@ -154,7 +154,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Gentle and rose-tinted,\nit glows with the soft light\nof peach blossoms in late afternoon."
   PURPLE_CANDLE:
     buy: 49.4
     sell: 12.36
@@ -162,7 +162,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "The color of sorcery and ceremony,\npurple candlelight lingers in rooms\nwhere enchanting tables are always warm."
   RED_CANDLE:
     buy: 49.2
     sell: 12.32
@@ -170,7 +170,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Burning with urgency and passion,\nred candlelight colors the dark\nwith the hue of something that matters."
   WHITE_CANDLE:
     buy: 51.6
     sell: 12.92
@@ -178,7 +178,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Pure and unwavering,\nthe white candle burns at every altar\nand every memorial without exception."
   YELLOW_CANDLE:
     buy: 47.72
     sell: 11.96
@@ -186,7 +186,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Bright as a sunflower and twice as cheerful,\nyellow candlelight fills rooms\nwith the warmth of a midsummer afternoon."
   BRAIN_CORAL:
     buy: 20.0
     sell: 5.0
@@ -194,7 +194,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Folded and convoluted like thought itself,\nbrain coral thrives in warm shallows\nwhere life is patient and unhurried."
   BRAIN_CORAL_BLOCK:
     buy: 64.0
     sell: 16.0
@@ -202,7 +202,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A solid mass of reef-life\nbuilt from a thousand tiny polyps —\nthe brain of a garden that never sleeps."
   BRAIN_CORAL_FAN:
     buy: 12.0
     sell: 3.0
@@ -210,7 +210,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Splayed wide in the current,\nthis fan of coral catches everything\nthe warm water carries past."
   BUBBLE_CORAL:
     buy: 20.0
     sell: 5.0
@@ -218,7 +218,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Clustered spheres of vivid purple,\nbubble coral sways in the shallows\nlike tiny worlds held together by salt."
   BUBBLE_CORAL_BLOCK:
     buy: 64.0
     sell: 16.0
@@ -226,7 +226,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Dense and richly colored,\nthis block carries the reef's vibrancy\ninto every build that touches the sea."
   BUBBLE_CORAL_FAN:
     buy: 12.0
     sell: 3.0
@@ -234,7 +234,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Fanning out like purple velvet,\nit softens every underwater wall\nwith the grace of the coral garden."
   DEAD_BRAIN_CORAL:
     buy: 20.0
     sell: 5.0
@@ -242,7 +242,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "What remains when the warmth is gone —\nbleached white and silent,\nthe reef's memory preserved in stone."
   DEAD_BRAIN_CORAL_BLOCK:
     buy: 64.0
     sell: 16.0
@@ -250,7 +250,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Pale and fossil-like,\nthis block tells of a reef that once bloomed\nand now rests in permanent stillness."
   DEAD_BRAIN_CORAL_FAN:
     buy: 12.0
     sell: 3.0
@@ -258,7 +258,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A dried fan of what was once living,\nholding its shape long after\nthe current stopped carrying color through it."
   DEAD_BUBBLE_CORAL:
     buy: 20.0
     sell: 5.0
@@ -266,7 +266,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Spheres of grey where purple once lived —\nthe dead coral holds the shape of life\nwhile the color has long since faded."
   DEAD_BUBBLE_CORAL_BLOCK:
     buy: 64.0
     sell: 16.0
@@ -274,7 +274,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A bleached record of the reef's former glory,\nstill dense and beautiful\nin its own austere, monochrome way."
   DEAD_BUBBLE_CORAL_FAN:
     buy: 12.0
     sell: 3.0
@@ -282,7 +282,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Pale and still in the current,\nthis fan no longer filters or feeds —\nit simply holds the memory of motion."
   DEAD_FIRE_CORAL:
     buy: 20.0
     sell: 5.0
@@ -290,7 +290,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "The flame went out long ago,\nleaving behind bleached branches\nthat once burned red in the warm sea."
   DEAD_FIRE_CORAL_BLOCK:
     buy: 64.0
     sell: 16.0
@@ -298,7 +298,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Ash-white and angular,\nthis block carries the skeleton\nof what was once the reef's most vivid corner."
   DEAD_FIRE_CORAL_FAN:
     buy: 12.0
     sell: 3.0
@@ -306,7 +306,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "The embers cooled and never returned —\nthis pale fan spreads quietly\nin the space where fire coral once blazed."
   DEAD_HORN_CORAL:
     buy: 20.0
     sell: 5.0
@@ -314,7 +314,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Ivory-pale and silent,\nthe dead horn coral keeps its branches\npointing at the surface it can no longer reach."
   DEAD_HORN_CORAL_BLOCK:
     buy: 64.0
     sell: 16.0
@@ -322,7 +322,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A bleached fortress of former life,\nthis block has the rough beauty\nof ancient bone laid bare in the current."
   DEAD_HORN_CORAL_FAN:
     buy: 12.0
     sell: 3.0
@@ -330,7 +330,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "White as sea foam and twice as fragile-looking,\nthis fan holds its open shape\nfor a current that will never come back."
   DEAD_TUBE_CORAL:
     buy: 20.0
     sell: 5.0
@@ -338,7 +338,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "The blue drained away over time\nleaving white tubes that still reach\nupward with the persistence of the dead."
   DEAD_TUBE_CORAL_BLOCK:
     buy: 64.0
     sell: 16.0
@@ -346,7 +346,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Bleached columns packed together —\nthis block is the reef's fossil record,\nbeautiful in its quiet absence of color."
   DEAD_TUBE_CORAL_FAN:
     buy: 12.0
     sell: 3.0
@@ -354,7 +354,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A pale array of hollow tubes\nthat once carried life and color —\nnow just the shape remains."
   FIRE_CORAL:
     buy: 20.0
     sell: 5.0
@@ -362,7 +362,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Red as a desert sunset and just as vivid,\nfire coral burns through the water\nwith a color that needs no flame to shock."
   FIRE_CORAL_BLOCK:
     buy: 64.0
     sell: 16.0
@@ -370,7 +370,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A solid wall of reef-fire,\nthis block brings the warmth of tropical shallows\nto any build that dares to use it."
   FIRE_CORAL_FAN:
     buy: 12.0
     sell: 3.0
@@ -378,7 +378,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Fanning out like a flame in the current,\nred tendrils spread wide\nand light up every corner of the reef."
   HORN_CORAL:
     buy: 20.0
     sell: 5.0
@@ -386,7 +386,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Yellow-gold and branching upward,\nhorn coral twists toward the light\nwith the patience of the deep sea."
   HORN_CORAL_BLOCK:
     buy: 64.0
     sell: 16.0
@@ -394,7 +394,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Dense gold beneath the waves,\nthis block carries the sun's warmth\ninto the darkest corners of the ocean floor."
   HORN_CORAL_FAN:
     buy: 12.0
     sell: 3.0
@@ -402,7 +402,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Spread wide like an open hand,\nthis golden fan catches the drift\nof nutrients the current carries."
   TUBE_CORAL:
     buy: 20.0
     sell: 5.0
@@ -410,7 +410,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Blue as a deep ocean trench,\ntube coral clusters along the reef wall\nin columns of vivid electric color."
   TUBE_CORAL_BLOCK:
     buy: 64.0
     sell: 16.0
@@ -418,7 +418,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A dense formation of ocean blue,\nthis block is the reef's cornerstone —\nbold, saturated, unmistakably alive."
   TUBE_CORAL_FAN:
     buy: 24.0
     sell: 6.0
@@ -426,7 +426,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Blue fingers fanned open in the tide,\nthis coral reaches into the water\nand holds its shape against every current."
   ACACIA_LEAVES:
     buy: 12.0
     sell: 3.0
@@ -434,7 +434,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Flat and broad in the savanna sun,\nacacia leaves cast a shade\nfor every creature resting below."
   AZALEA_LEAVES:
     buy: 12.6
     sell: 3.16
@@ -442,7 +442,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Green leaves with the memory of flowers —\nazalea crowns the lush cave entrance\nand marks the way to something deeper."
   BIRCH_LEAVES:
     buy: 12.0
     sell: 3.0
@@ -450,7 +450,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Small and bright, they flutter\nat the top of pale white trunks\nand turn to gold at every autumn's end."
   CHERRY_LEAVES:
     buy: 12.0
     sell: 3.0
@@ -458,7 +458,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Pink as a spring morning,\ncherry leaves drift and scatter\nin a perpetual silent celebration."
   DARK_OAK_LEAVES:
     buy: 12.0
     sell: 3.0
@@ -466,7 +466,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Dense and dark-green above the forest floor,\nthese leaves block out the sun\nand make their woods feel ancient and still."
   FLOWERING_AZALEA_LEAVES:
     buy: 12.6
     sell: 3.16
@@ -474,7 +474,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Leaves crowned with pink blossoms\nthat never fall — flowering azalea\nmarks the ceiling of the lush cave world."
   JUNGLE_LEAVES:
     buy: 12.0
     sell: 3.0
@@ -482,7 +482,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Dense and impossibly green,\njungle leaves form a canopy so thick\nthe rain barely reaches the floor below."
   OAK_LEAVES:
     buy: 12.0
     sell: 3.0
@@ -490,7 +490,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "The first leaves any sapling grows —\noak is the forest's most familiar green,\nhome to parrots and carried on every breeze."
   SPRUCE_LEAVES:
     buy: 12.0
     sell: 3.0
@@ -498,7 +498,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Dark needles tipped with snow\nor heavy with mountain air —\nspruce leaves carry the cold wherever they go."
   COPPER_BULB:
     buy: 21.12
     sell: 5.28
@@ -506,7 +506,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A redstone-powered light source\nthat burns bright copper gold —\nmodern, efficient, and slowly changing."
   EXPOSED_COPPER_BULB:
     buy: 21.72
     sell: 5.44
@@ -514,7 +514,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Weathering has already begun —\nthe exposed bulb dims slightly\nas the copper acknowledges the air."
   OXIDIZED_COPPER_BULB:
     buy: 23.0
     sell: 5.76
@@ -522,7 +522,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Green and transformed by time,\nthe oxidized bulb glows at its dimmest —\nbeauty earned through slow patience."
   SEA_LANTERN:
     buy: 264.6
     sell: 66.16
@@ -530,7 +530,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Prismarine and pulsing with soft light,\nthe sea lantern illuminates ocean monuments\nwith the glow of deep-water bioluminescence."
   SHROOMLIGHT:
     buy: 32.0
     sell: 8.0
@@ -538,7 +538,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Nestled in the crown of a Nether giant,\nshroomlight glows with an orange warmth\nthat no fire ever quite matches."
   WEATHERED_COPPER_BULB:
     buy: 22.36
     sell: 5.6
@@ -546,7 +546,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Halfway to green and dimming still,\nthe weathered bulb carries the story\nof copper left to its own devices."
   OCHRE_FROGLIGHT:
     buy: 24.0
     sell: 6.0
@@ -554,7 +554,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Yellow-gold and warm as a campfire,\nthe ochre froglight is a treasure\nthat comes from the most unexpected source."
   PEARLESCENT_FROGLIGHT:
     buy: 24.0
     sell: 6.0
@@ -562,7 +562,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Pale and luminescent with a purple hue,\nthis froglight shimmers like moonlight\ncaught inside a smooth white stone."
   VERDANT_FROGLIGHT:
     buy: 24.0
     sell: 6.0
@@ -570,7 +570,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Green as the swamp that made it,\nverdant froglight carries the color\nof the warm biome's amphibian gift."
   MANGROVE_LEAVES:
     buy: 12.0
     sell: 3.0
@@ -578,7 +578,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Hanging from the canopy above the water,\nmangrove leaves catch the light\nthat filters through the swamp's tangle."
   MANGROVE_ROOTS:
     buy: 12.0
     sell: 3.0
@@ -586,7 +586,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A lattice of reaching roots\nthat holds the mangrove above the mud\nand the mud in place beneath it."
   MUDDY_MANGROVE_ROOTS:
     buy: 12.0
     sell: 3.0
@@ -594,7 +594,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Roots coated in the swamp's dark clay —\nmuddy and textured and entirely at home\nin the wet, tangled world of the mangrove."
   ACACIA_SAPLING:
     buy: 12.0
     sell: 3.0
@@ -602,7 +602,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A promise of the savanna made small —\nplant this and wait for the flat canopy\nthat defines the open plains."
   AZALEA:
     buy: 12.0
     sell: 3.0
@@ -610,7 +610,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A flowering shrub that marks the way down —\nazalea grows above lush caves\nand blooms without asking for permission."
   BIRCH_SAPLING:
     buy: 12.0
     sell: 3.0
@@ -618,7 +618,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "White bark future bound in a tiny seed —\nthe birch sapling grows straight and fast\nand fills forests with pale, elegant trunks."
   CHERRY_SAPLING:
     buy: 12.0
     sell: 3.0
@@ -626,7 +626,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Plant it and wait for pink —\nthe cherry sapling grows into blossoms\nthat rain petals in a constant gentle drift."
   DARK_OAK_SAPLING:
     buy: 12.0
     sell: 3.0
@@ -634,7 +634,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Four saplings, one purpose —\nthe dark oak demands company to grow\ninto the forest's most imposing presence."
   FLOWERING_AZALEA:
     buy: 12.0
     sell: 3.0
@@ -642,7 +642,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Pink flowers on green leaves,\nthe flowering azalea blooms permanently\nand never asks what season it is."
   JUNGLE_SAPLING:
     buy: 12.0
     sell: 3.0
@@ -650,7 +650,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Given space and bone meal,\nthis sapling becomes a titan\nwith a canopy that swallows the sky."
   MANGROVE_PROPAGULE:
     buy: 12.0
     sell: 3.0
@@ -658,7 +658,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Dangling from the mangrove's branches,\nthe propagule drops into swamp water\nand begins to build the next root system."
   OAK_SAPLING:
     buy: 12.0
     sell: 3.0
@@ -666,7 +666,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "The world's most versatile beginning —\nthe oak sapling becomes a tree,\na hollow, or a sprawling forest canopy."
   SPRUCE_SAPLING:
     buy: 12.0
     sell: 3.0
@@ -674,7 +674,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Small and already dark-needled,\nthe spruce sapling grows into the tallest trees\nthe cold mountain forests have ever known."
   ACACIA_HANGING_SIGN:
     buy: 14.48
     sell: 3.64
@@ -682,7 +682,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Swinging from chains above a doorway,\nthis acacia sign carries its message\nin the orange-warm grain of the savanna."
   ACACIA_SIGN:
     buy: 10.08
     sell: 2.52
@@ -690,7 +690,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Post-mounted and direct,\nthe acacia sign says what needs saying\nin the wood of the wide open plains."
   BAMBOO_HANGING_SIGN:
     buy: 11.92
     sell: 3.0
@@ -698,7 +698,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Lightweight and rustling overhead,\nthis bamboo sign hangs with the ease\nof something that grew in a single morning."
   BAMBOO_SIGN:
     buy: 5.0
     sell: 1.28
@@ -706,7 +706,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Green-striped and efficient,\nthe bamboo sign marks its territory\nwith the quiet authority of the jungle."
   BIRCH_HANGING_SIGN:
     buy: 14.48
     sell: 3.64
@@ -714,7 +714,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Pale and elegant suspended from chains,\nthe birch hanging sign brings\nthe light of the birch forest indoors."
   BIRCH_SIGN:
     buy: 10.08
     sell: 2.52
@@ -722,7 +722,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "White-grained and clean,\nthe birch sign suits any entrance\nthat values simplicity over ornamentation."
   CHERRY_HANGING_SIGN:
     buy: 13.16
     sell: 3.32
@@ -730,7 +730,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Hanging above paths lined with blossoms,\nthis cherry sign is everything a waypoint\nshould be — beautiful and clear."
   CHERRY_SIGN:
     buy: 7.44
     sell: 1.88
@@ -738,7 +738,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Pink-grained and distinctive,\nthe cherry sign marks its location\nwith the warmth of a petal-strewn courtyard."
   CRIMSON_HANGING_SIGN:
     buy: 13.16
     sell: 3.32
@@ -746,7 +746,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Deep red and Nether-forged,\nthis sign swings above bastion halls\nwhere the messages are rarely polite."
   CRIMSON_SIGN:
     buy: 7.44
     sell: 1.88
@@ -754,7 +754,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Red as the stems it came from,\nthe crimson sign carries warnings\nand welcomes in equal measure from the Nether."
   DARK_OAK_HANGING_SIGN:
     buy: 14.48
     sell: 3.64
@@ -762,7 +762,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Dark-grained and heavy overhead,\nthe dark oak hanging sign suits\nthe entrance of every haunted manor."
   DARK_OAK_SIGN:
     buy: 10.08
     sell: 2.52
@@ -770,7 +770,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Rich and almost black in the grain,\nthe dark oak sign sets a tone\nthat every other wood struggles to match."
   JUNGLE_HANGING_SIGN:
     buy: 14.48
     sell: 3.64
@@ -778,7 +778,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Draped in vines by the time you find it,\nthis jungle hanging sign has been\npart of the canopy longer than you realize."
   JUNGLE_SIGN:
     buy: 10.08
     sell: 2.52
@@ -786,7 +786,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Orange-striped and tropical,\nthe jungle sign guides travelers\nthrough the densest canopy on the map."
   MANGROVE_HANGING_SIGN:
     buy: 13.16
     sell: 3.32
@@ -794,7 +794,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Rust-red and swamp-born,\nthis sign hangs where the roots meet the mud\nand every path leads deeper into water."
   MANGROVE_SIGN:
     buy: 7.44
     sell: 1.88
@@ -802,7 +802,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Dark orange and mangrove-grained,\nit marks the waypoints of wetland settlements\nwhere solid ground is never guaranteed."
   OAK_HANGING_SIGN:
     buy: 14.48
     sell: 3.64
@@ -810,7 +810,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "The classic tavern sign, the market notice,\nthe friendly warning above the door —\noak serves every message equally."
   OAK_SIGN:
     buy: 10.08
     sell: 2.52
@@ -818,7 +818,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Familiar and reliable as the tree it came from —\nthe oak sign has marked roads, shops,\nand graves since the first village."
   SPRUCE_HANGING_SIGN:
     buy: 14.48
     sell: 3.64
@@ -826,7 +826,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Dark and weathered above the mountain path,\nspruce hanging signs endure storms\nwith the same patience as the tree."
   SPRUCE_SIGN:
     buy: 10.08
     sell: 2.52
@@ -834,7 +834,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Dark-grained and cold-weather seasoned,\nthe spruce sign suits the taiga's\nfrost-rimmed doorways and snow-heavy eaves."
   WARPED_HANGING_SIGN:
     buy: 13.16
     sell: 3.32
@@ -842,7 +842,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Teal and otherworldly overhead,\nthis Nether sign hangs in warped forests\nwhere the rules of wood don't fully apply."
   WARPED_SIGN:
     buy: 7.44
     sell: 1.88
@@ -850,7 +850,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Blue-green as the fungal forest it came from,\nthe warped sign marks its Nether territory\nwith a color that belongs to no Overworld tree."
   GLOW_LICHEN:
     buy: 4.0
     sell: 1.0
@@ -858,7 +858,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Creeping across stone with cold patience,\nglow lichen illuminates the cave\nwithout burning and without fading."
   TWISTING_VINES:
     buy: 24.0
     sell: 6.0
@@ -866,7 +866,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Spiraling upward from the warped forest floor,\ntwisting vines climb toward a sky\nthat doesn't exist in the Nether."
   VINE:
     buy: 28.0
     sell: 7.0
@@ -874,7 +874,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Clinging to every surface it can find,\nthe vine covers the jungle's walls\nand turns every cliff into a climbing frame."
   WEEPING_VINES:
     buy: 24.0
     sell: 6.0
@@ -882,7 +882,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Hanging from crimson ceilings\nlike the Nether's own mourning veil —\nweeping vines descend and never stop."
   ANGLER_POTTERY_SHERD:
     buy: 119.64
     sell: 29.92
@@ -890,7 +890,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A clay fragment depicting the patient angler —\nline in the water, waiting for the tug\nthat makes every still moment worth it."
   ARCHER_POTTERY_SHERD:
     buy: 112.2
     sell: 28.08
@@ -898,7 +898,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "The drawn bow, the steady breath —\nthis sherd captures the archer\nin the moment before the arrow flies."
   ARMS_UP_POTTERY_SHERD:
     buy: 96.16
     sell: 24.04
@@ -906,7 +906,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A figure with arms raised —\nin celebration, surrender, or surprise,\nthe sherd preserves the ambiguity forever."
   BLADE_POTTERY_SHERD:
     buy: 119.64
     sell: 29.92
@@ -914,7 +914,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "The edge before the swing,\nthis sherd immortalizes the blade\nin the suspended moment of its purpose."
   BREWER_POTTERY_SHERD:
     buy: 96.16
     sell: 24.04
@@ -922,7 +922,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "The alchemist at their stand,\nthis sherd honors the craft\nof turning water and weeds into power."
   BURN_POTTERY_SHERD:
     buy: 117.56
     sell: 29.4
@@ -930,7 +930,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Fire captured in clay,\nthis sherd glows with the memory\nof something that burned and left its mark."
   DANGER_POTTERY_SHERD:
     buy: 117.56
     sell: 29.4
@@ -938,7 +938,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A warning etched into ancient clay —\nwhoever made this pot knew\nexactly what they were storing inside it."
   DECORATED_POT:
     buy: 370.44
     sell: 92.64
@@ -946,7 +946,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Four sherds arranged in clay —\nthe decorated pot tells a story\non every face without speaking a word."
   EXPLORER_POTTERY_SHERD:
     buy: 119.64
     sell: 29.92
@@ -954,7 +954,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A map, a figure, a horizon —\nthe explorer sherd honors those\nwho set out before the edges were known."
   FLOW_POTTERY_SHERD:
     buy: 128.2
     sell: 32.08
@@ -962,7 +962,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Movement frozen in fired clay —\nthe flow sherd captures the current\nin the moment it was always becoming."
   FRIEND_POTTERY_SHERD:
     buy: 117.56
     sell: 29.4
@@ -970,7 +970,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A figure with open arms,\nthe friend sherd is the warmest\npiece of ancient clay ever unearthed."
   GUSTER_POTTERY_SHERD:
     buy: 128.2
     sell: 32.08
@@ -978,7 +978,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Wind rendered in ancient clay —\nthe guster sherd carries the energy\nof something that was always moving."
   HEART_POTTERY_SHERD:
     buy: 117.56
     sell: 29.4
@@ -986,7 +986,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Carved with warmth and intention,\nthe heart sherd was made by someone\nwho wanted the message to last."
   HEARTBREAK_POTTERY_SHERD:
     buy: 117.56
     sell: 29.4
@@ -994,7 +994,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "The heart, but fractured —\nthis sherd preserves a grief\nthat outlasted the civilization that felt it."
   HOWL_POTTERY_SHERD:
     buy: 117.56
     sell: 29.4
@@ -1002,7 +1002,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Head thrown back, voice raised —\nthe howl sherd captures a sound\nthat clay was never supposed to hold."
   MINER_POTTERY_SHERD:
     buy: 112.2
     sell: 28.08
@@ -1010,7 +1010,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Pick in hand and purpose in posture,\nthe miner sherd celebrates the labor\nthat made every civilization possible."
   MOURNER_POTTERY_SHERD:
     buy: 119.64
     sell: 29.92
@@ -1018,7 +1018,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Head bowed, hands folded —\nthe mourner sherd is the quietest piece,\nthe one that says what words cannot."
   PLENTY_POTTERY_SHERD:
     buy: 119.64
     sell: 29.92
@@ -1026,7 +1026,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Overflowing bounty captured in clay —\nthe plenty sherd was made in good times\nand buried before they ended."
   PRIZE_POTTERY_SHERD:
     buy: 112.2
     sell: 28.08
@@ -1034,7 +1034,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A trophy, a reward, a hard-earned thing —\nthe prize sherd honors the achievement\nof whoever first held it."
   SCRAPE_POTTERY_SHERD:
     buy: 128.2
     sell: 32.08
@@ -1042,7 +1042,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "The texture of effort preserved —\nthe scrape sherd carries the marks\nof a tool dragged across something resistant."
   SHEAF_POTTERY_SHERD:
     buy: 117.56
     sell: 29.4
@@ -1050,7 +1050,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Grain gathered and bound at harvest —\nthe sheaf sherd carries the satisfaction\nof a season that delivered what was promised."
   SHELTER_POTTERY_SHERD:
     buy: 119.64
     sell: 29.92
@@ -1058,7 +1058,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A roof, four walls, safety inside —\nthe shelter sherd is the oldest story\nany civilization ever told in clay."
   SKULL_POTTERY_SHERD:
     buy: 112.2
     sell: 28.08
@@ -1066,7 +1066,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A grinning skull fixed in the firing —\nwhoever decorated this pot\nwanted its contents treated with respect."
   SNORT_POTTERY_SHERD:
     buy: 119.64
     sell: 29.92
@@ -1074,7 +1074,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A beast mid-snort, carved in profile —\nthis sherd has the energy\nof something that was never quite tame."
   BOLT_ARMOR_TRIM_SMITHING_TEMPLATE:
     buy: 1559.72
     sell: 389.96
@@ -1082,7 +1082,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Forged from the trial vaults' deepest rewards,\nthe bolt trim crackles with stored energy\nalong every edge of the armor it adorns."
   COAST_ARMOR_TRIM_SMITHING_TEMPLATE:
     buy: 773.2
     sell: 193.32
@@ -1090,7 +1090,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Wave-carved from shipwreck salvage,\nthe coast trim brings the ocean's edge\nto every piece of armor it touches."
   DUNE_ARMOR_TRIM_SMITHING_TEMPLATE:
     buy: 796.96
     sell: 199.24
@@ -1098,7 +1098,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Desert-wind patterns etched in metal,\nthe dune trim carries the memory\nof sand-carved stone and ancient tombs."
   EYE_ARMOR_TRIM_SMITHING_TEMPLATE:
     buy: 782.28
     sell: 195.6
@@ -1106,7 +1106,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Found in the stronghold's deepest rooms,\nthe eye trim watches from every edge\nof armor it has been pressed into."
   FLOW_ARMOR_TRIM_SMITHING_TEMPLATE:
     buy: 1627.52
     sell: 406.88
@@ -1114,7 +1114,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Fluid lines that move even in stillness —\nthe flow trim breathes motion\ninto every piece of armor it graces."
   HOST_ARMOR_TRIM_SMITHING_TEMPLATE:
     buy: 818.08
     sell: 204.52
@@ -1122,7 +1122,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Trial chamber-born and authority-shaped,\nthe host trim marks the wearer\nas someone the room was designed for."
   NETHERITE_UPGRADE_SMITHING_TEMPLATE:
     buy: 772.2
     sell: 193.08
@@ -1130,7 +1130,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "The final step in a diamond tool's journey —\nthis template channels ancient debris\ninto an upgrade nothing else can match."
   RAISER_ARMOR_TRIM_SMITHING_TEMPLATE:
     buy: 818.08
     sell: 204.52
@@ -1138,7 +1138,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Rising lines that suggest ascent —\nthe raiser trim belongs on armor\nworn by someone always moving upward."
   RIB_ARMOR_TRIM_SMITHING_TEMPLATE:
     buy: 772.2
     sell: 193.08
@@ -1146,7 +1146,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Bone-like ridges pressed along the edges,\nthe rib trim turns any chestplate\ninto something that looks like it has grown."
   SENTRY_ARMOR_TRIM_SMITHING_TEMPLATE:
     buy: 773.2
     sell: 193.32
@@ -1154,7 +1154,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "The trim of a guardian standing watch —\nsentry patterns line the armor\nof those who do not leave their post."
   SHAPER_ARMOR_TRIM_SMITHING_TEMPLATE:
     buy: 818.08
     sell: 204.52
@@ -1162,7 +1162,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Geometric and precise along every seam,\nthe shaper trim honors the craft\nof those who form the world to their will."
   SILENCE_ARMOR_TRIM_SMITHING_TEMPLATE:
     buy: 773.2
     sell: 193.32
@@ -1170,7 +1170,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "The rarest of all the trims —\nfound only in the deepest dark,\nsilence leaves no sound and no margin."
   SNOUT_ARMOR_TRIM_SMITHING_TEMPLATE:
     buy: 773.36
     sell: 193.36
@@ -1178,7 +1178,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Piglin-faced and bastion-born,\nthe snout trim carries the image\nof the Nether's most gold-obsessed residents."
   SPIRE_ARMOR_TRIM_SMITHING_TEMPLATE:
     buy: 778.72
     sell: 194.68
@@ -1186,7 +1186,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "End-city spires carved into the trim —\nthis pattern belongs on the armor\nof those who have reached the outer islands."
   TIDE_ARMOR_TRIM_SMITHING_TEMPLATE:
     buy: 833.52
     sell: 208.4
@@ -1194,7 +1194,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Wave after wave etched along the edge —\nthe tide trim marks the wearer\nas someone the ocean has not yet claimed."
   VEX_ARMOR_TRIM_SMITHING_TEMPLATE:
     buy: 773.2
     sell: 193.32
@@ -1202,7 +1202,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Angered-spirit patterns pressed in metal —\nthe vex trim carries the energy\nof the mansion's most aggressive tenants."
   WARD_ARMOR_TRIM_SMITHING_TEMPLATE:
     buy: 773.2
     sell: 193.32
@@ -1210,7 +1210,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Protective runes along every edge,\nthe ward trim was made to keep\nwhatever the ancient city awakens at bay."
   WAYFINDER_ARMOR_TRIM_SMITHING_TEMPLATE:
     buy: 818.08
     sell: 204.52
@@ -1218,7 +1218,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Trail ruins-born and direction-etched,\nthe wayfinder trim belongs on the armor\nof those who always know where they are going."
   WILD_ARMOR_TRIM_SMITHING_TEMPLATE:
     buy: 788.72
     sell: 197.2
@@ -1226,4 +1226,4 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Jungle-grown patterns pressed from jungle temple ruins —\nthe wild trim brings the overgrown world\nto the armor of those who explore it."

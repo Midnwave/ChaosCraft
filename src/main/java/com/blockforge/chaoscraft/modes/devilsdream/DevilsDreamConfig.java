@@ -4,6 +4,8 @@ import com.blockforge.chaoscraft.ChaosCraftPlugin;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
+import com.blockforge.chaoscraft.services.mobspawn.MobSpawnConfig;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -40,7 +42,8 @@ public class DevilsDreamConfig {
         boolean needsSave = false;
 
         // ── Base mode keys ───────────────────────────────────────────────────
-        if (!config.contains("config-version")) { config.set("config-version", 1); needsSave = true; }
+        if (!config.contains("config-version")) { config.set("config-version", 2); needsSave = true; }
+        if (config.getInt("config-version") < 2) { config.set("config-version", 2); needsSave = true; }
         if (!config.contains("timer.default-seconds")) { config.set("timer.default-seconds", 900); needsSave = true; }
         if (!config.contains("timer.max-seconds")) { config.set("timer.max-seconds", 1800); needsSave = true; }
         if (!config.contains("music.sound-id")) { config.set("music.sound-id", ""); needsSave = true; }
@@ -66,10 +69,19 @@ public class DevilsDreamConfig {
         if (!config.contains("mythicmobs.enabled")) { config.set("mythicmobs.enabled", true); needsSave = true; }
         if (!config.contains("mythicmobs.spawn-interval-ticks")) { config.set("mythicmobs.spawn-interval-ticks", 400); needsSave = true; }
         if (!config.contains("mythicmobs.max-alive")) { config.set("mythicmobs.max-alive", 8); needsSave = true; }
+
+        // ── Universal mob spawning ───────────────────────────────────
+        if (MobSpawnConfig.ensureKeys(config)) needsSave = true;
+
         if (needsSave) {
             save();
             config = YamlConfiguration.loadConfiguration(configFile);
         }
+    }
+
+    /** Returns a MobSpawnConfig backed by this mode's YAML. */
+    public MobSpawnConfig getMobSpawnConfig() {
+        return new MobSpawnConfig(config);
     }
 
     public void save() {
@@ -251,6 +263,15 @@ public class DevilsDreamConfig {
         defaults.set("on-end-commands", new ArrayList<>());
         defaults.set("exempt-players", new ArrayList<>());
         defaults.set("rewards.commands", new ArrayList<>());
+
+        // ── Universal Mob Spawning ──────────────────────────────────────
+        // Devil's Dream already has MythicMobs nightmare creatures above.
+        // This section supports additional vanilla or MythicMobs mob waves.
+        MobSpawnConfig.writeDefaults(defaults, List.of(
+                new MobSpawnConfig.MobSpawnDefaultEntry("NightmareHound", "mythicmobs", 10, 1, 2, 1.0, 1.0),
+                new MobSpawnConfig.MobSpawnDefaultEntry("DreamWraith", "mythicmobs", 8, 1, 1, 1.2, 1.0),
+                new MobSpawnConfig.MobSpawnDefaultEntry("PHANTOM", "vanilla", 5, 1, 3, 1.5, 1.0)
+        ));
 
         try {
             defaults.save(configFile);

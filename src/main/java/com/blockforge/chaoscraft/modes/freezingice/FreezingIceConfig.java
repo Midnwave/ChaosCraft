@@ -4,6 +4,8 @@ import com.blockforge.chaoscraft.ChaosCraftPlugin;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
+import com.blockforge.chaoscraft.services.mobspawn.MobSpawnConfig;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -39,7 +41,9 @@ public class FreezingIceConfig {
         boolean needsSave = false;
 
         // ── Base mode keys ──────────────────────────────────────────────
-        if (!config.contains("config-version")) { config.set("config-version", 1); needsSave = true; }
+        if (!config.contains("config-version")) { config.set("config-version", 2); needsSave = true; }
+        // Auto-upgrade from version 1 → 2 (adds mob-spawning section)
+        if (config.getInt("config-version") < 2) { config.set("config-version", 2); needsSave = true; }
         if (!config.contains("timer.default-seconds")) { config.set("timer.default-seconds", 600); needsSave = true; }
         if (!config.contains("timer.max-seconds")) { config.set("timer.max-seconds", 1800); needsSave = true; }
         if (!config.contains("music.sound-id")) { config.set("music.sound-id", ""); needsSave = true; }
@@ -84,10 +88,18 @@ public class FreezingIceConfig {
         if (!config.contains("timer-hud.flash-color")) { config.set("timer-hud.flash-color", "blue"); needsSave = true; }
         if (!config.contains("timer-hud.flash-threshold-seconds")) { config.set("timer-hud.flash-threshold-seconds", 60); needsSave = true; }
 
+        // ── Universal mob spawning ───────────────────────────────────
+        if (MobSpawnConfig.ensureKeys(config)) needsSave = true;
+
         if (needsSave) {
             save();
             config = YamlConfiguration.loadConfiguration(configFile);
         }
+    }
+
+    /** Returns a MobSpawnConfig backed by this mode's YAML. */
+    public MobSpawnConfig getMobSpawnConfig() {
+        return new MobSpawnConfig(config);
     }
 
     public void save() {
@@ -298,6 +310,13 @@ public class FreezingIceConfig {
         defaults.set("temperature.heat-source-radius", 3.0);
         defaults.setComments("temperature.heat-source-radius", List.of(
                 "Block radius to search for heat sources (torches, campfires, lava, fire)."));
+
+        // ── Universal Mob Spawning ──────────────────────────────────────
+        MobSpawnConfig.writeDefaults(defaults, List.of(
+                new MobSpawnConfig.MobSpawnDefaultEntry("STRAY", "vanilla", 10, 1, 3, 1.5, 1.0),
+                new MobSpawnConfig.MobSpawnDefaultEntry("SKELETON", "vanilla", 6, 1, 2, 1.2, 1.0),
+                new MobSpawnConfig.MobSpawnDefaultEntry("POLAR_BEAR", "vanilla", 4, 1, 1, 2.0, 1.5)
+        ));
 
         try {
             defaults.save(configFile);

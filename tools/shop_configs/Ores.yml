@@ -10,7 +10,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A geode's heart made solid,\npulsing with purple resonance\nand the hum of ancient crystal growth."
   AMETHYST_SHARD:
     buy: 5.28
     sell: 1.32
@@ -18,7 +18,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A fragment of crystalline wonder,\nchipped from the geode's interior —\nits glow never quite fades."
   ANCIENT_DEBRIS:
     buy: 2116.0
     sell: 529.0
@@ -26,7 +26,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Buried deep beneath the Nether's flame,\nthis relic survives lava and time —\nthe seed of the mightiest alloy."
   COAL:
     buy: 21.0
     sell: 5.28
@@ -34,7 +34,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "The miner's first friend and constant companion,\ncoal feeds every furnace\nand lights every torch in the deep."
   COAL_BLOCK:
     buy: 198.48
     sell: 49.64
@@ -42,7 +42,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Nine coals compressed into unity,\na dense block of stored heat\nthat burns for an age."
   COPPER_BLOCK:
     buy: 15.44
     sell: 3.88
@@ -50,7 +50,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Fresh-smelted and bright as a new coin,\ncopper gleams before time\ntakes it on a journey toward green."
   COPPER_INGOT:
     buy: 3.68
     sell: 0.92
@@ -58,7 +58,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Warm and workable,\ncopper is the craftsman's first step\ntoward mastering the metals."
   COPPER_ORE:
     buy: 60.0
     sell: -1
@@ -66,7 +66,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Speckled orange amid the stone,\ncopper ore waits patiently\nfor the pickaxe to free its potential."
   DIAMOND:
     buy: 210.0
     sell: 52.52
@@ -74,7 +74,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Forged under immense pressure,\nthis gem represents the pinnacle\nof underground fortune."
   DIAMOND_BLOCK:
     buy: 1984.52
     sell: 496.16
@@ -82,7 +82,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Nine diamonds bound together —\na treasury in block form,\nthe crowning achievement of any miner."
   EMERALD:
     buy: 157.52
     sell: 39.4
@@ -90,7 +90,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "The universal currency of villagers,\nthis rare green gem hides\nin mountain veins and guarded chests."
   EMERALD_BLOCK:
     buy: 1488.4
     sell: 372.12
@@ -98,7 +98,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A monument to mercantile success,\nnine emeralds stacked in tribute\nto the most prosperous of traders."
   GOLD_BLOCK:
     buy: 312.56
     sell: 78.16
@@ -106,7 +106,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Heavy and lustrous,\na block of pure gold radiates\nwealth and the envy of Piglins."
   GOLD_INGOT:
     buy: 33.08
     sell: 8.28
@@ -114,7 +114,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Soft and gleaming, gold\nbribes Piglins, crafts armor,\nand drives adventurers to the deep."
   IRON_BLOCK:
     buy: 208.4
     sell: 52.12
@@ -122,7 +122,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "The skeleton of civilization,\nnine iron ingots fused in purpose —\nstrong enough to summon a golem."
   IRON_INGOT:
     buy: 22.08
     sell: 5.52
@@ -130,7 +130,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "The backbone of any fortress.\nMined from the earth's depths,\nshaping worlds since the beginning."
   LAPIS_BLOCK:
     buy: 272.88
     sell: 68.24
@@ -138,7 +138,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A deep blue monument to patience,\nlapis compressed into permanence,\nbeautiful and rich with arcane power."
   LAPIS_LAZULI:
     buy: 28.88
     sell: 7.24
@@ -146,7 +146,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Blue as the midnight sky,\nlapis feeds the enchanting table\nand paints banners with regal pride."
   NETHERITE_BLOCK:
     buy: 89496.0
     sell: 22374.0
@@ -154,7 +154,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Denser than obsidian and immune to flame,\na full block of netherite declares:\nno force in this world can harm me."
   NETHERITE_INGOT:
     buy: 9470.48
     sell: 2367.64
@@ -162,7 +162,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Forged from ancient debris in gold,\nthis dark metal transcends the finest diamond —\nthe final upgrade awaiting the worthy."
   QUARTZ:
     buy: 33.08
     sell: 8.28
@@ -170,7 +170,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Mined from the Nether's pale bluffs,\nquartz builds elegant structures\nand feeds the comparator's logic."
   QUARTZ_BLOCK:
     buy: 138.92
     sell: 34.76
@@ -178,7 +178,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Smooth and bright as bone china,\nquartz blocks line the halls\nof the finest Nether fortresses."
   REDSTONE:
     buy: 14.0
     sell: 3.52
@@ -186,7 +186,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "The blood of machines,\nredstone flows through circuits\nand breathes life into contraptions."
   REDSTONE_BLOCK:
     buy: 132.32
     sell: 33.08
@@ -194,4 +194,4 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A constant source of signal,\nthis block hums with perpetual\nredstone energy, never fading."

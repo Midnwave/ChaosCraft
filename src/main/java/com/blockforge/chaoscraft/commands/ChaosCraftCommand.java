@@ -8,12 +8,14 @@ import com.blockforge.chaoscraft.updater.UpdateChecker;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
+import org.bukkit.NamespacedKey;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.persistence.PersistentDataType;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -97,7 +99,10 @@ public class ChaosCraftCommand implements CommandExecutor, TabCompleter {
     private static final List<String> DEBUG_SUBS = List.of("calamitas", "dog", "attacks");
     private static final List<String> UPDATE_SUBS = List.of("check", "download");
     private static final List<String> MODE_ACTIONS = List.of("start", "stop");
-    private static final List<String> FUNCTION_SUBS = List.of("startmodetimer", "stopmodetimer");
+    private static final List<String> FUNCTION_SUBS = List.of(
+            "startmodetimer", "stopmodetimer",
+            "setbadgeobtaineditem", "setbadgeunobtaineditem", "setbadgenotobtainable"
+    );
 
     // Delegates for ported subcommands
     private final EnterTitleScreenCommand enterTitleScreenCmd;
@@ -698,27 +703,68 @@ public class ChaosCraftCommand implements CommandExecutor, TabCompleter {
             return true;
         }
         if (args.length < 2) {
-            sender.sendMessage(Component.text("Usage: /cc function <startmodetimer|stopmodetimer>", NamedTextColor.RED));
-            return true;
-        }
-
-        var timerHud = plugin.getModeTimerHud();
-        if (timerHud == null) {
-            sender.sendMessage(Component.text("Timer HUD not initialized.", NamedTextColor.RED));
+            sender.sendMessage(Component.text(
+                    "Usage: /cc function <startmodetimer|stopmodetimer|setbadgeobtaineditem|setbadgeunobtaineditem|setbadgenotobtainable>",
+                    NamedTextColor.RED));
             return true;
         }
 
         switch (args[1].toLowerCase()) {
             case "startmodetimer" -> {
+                var timerHud = plugin.getModeTimerHud();
+                if (timerHud == null) {
+                    sender.sendMessage(Component.text("Timer HUD not initialized.", NamedTextColor.RED));
+                    return true;
+                }
                 timerHud.startHud();
                 sender.sendMessage(Component.text("Mode timer HUD started.", NamedTextColor.GREEN));
             }
             case "stopmodetimer" -> {
+                var timerHud = plugin.getModeTimerHud();
+                if (timerHud == null) {
+                    sender.sendMessage(Component.text("Timer HUD not initialized.", NamedTextColor.RED));
+                    return true;
+                }
                 timerHud.stopHud();
                 sender.sendMessage(Component.text("Mode timer HUD stopped.", NamedTextColor.GREEN));
             }
+            case "setbadgeobtaineditem", "setbadgeunobtaineditem", "setbadgenotobtainable" -> {
+                if (!sender.hasPermission("chaoscraft.function.badge") && !sender.hasPermission("chaoscraft.admin")) {
+                    sender.sendMessage(Component.text("No permission.", NamedTextColor.RED));
+                    return true;
+                }
+                if (!(sender instanceof Player player)) {
+                    sender.sendMessage(Component.text("This command can only be used by a player.", NamedTextColor.RED));
+                    return true;
+                }
+                ItemStack heldItem = player.getInventory().getItemInMainHand();
+                if (heldItem.getType().isAir()) {
+                    sender.sendMessage(Component.text("Hold an item in your main hand.", NamedTextColor.RED));
+                    return true;
+                }
+                String badgeState = switch (args[1].toLowerCase()) {
+                    case "setbadgeobtaineditem"    -> "obtained";
+                    case "setbadgeunobtaineditem"  -> "unobtained";
+                    default                         -> "not_obtainable";
+                };
+                String friendlyState = switch (badgeState) {
+                    case "obtained"       -> "obtained";
+                    case "unobtained"     -> "unobtained";
+                    default               -> "not obtainable";
+                };
+                NamespacedKey key = new NamespacedKey(plugin, "badge_state");
+                var meta = heldItem.getItemMeta();
+                if (meta == null) {
+                    sender.sendMessage(Component.text("Unable to get item meta.", NamedTextColor.RED));
+                    return true;
+                }
+                meta.getPersistentDataContainer().set(key, PersistentDataType.STRING, badgeState);
+                heldItem.setItemMeta(meta);
+                sender.sendMessage(Component.text("Item marked as " + friendlyState + " badge display item.", NamedTextColor.GREEN));
+            }
             default -> sender.sendMessage(Component.text("Unknown function: " + args[1]
-                    + ". Available: startmodetimer, stopmodetimer", NamedTextColor.RED));
+                    + ". Available: startmodetimer, stopmodetimer, setbadgeobtaineditem, setbadgeunobtaineditem, setbadgenotobtainable",
+                    NamedTextColor.RED));
         }
         return true;
     }

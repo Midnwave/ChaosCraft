@@ -10,7 +10,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Swift and straight, the skeleton's\nfavorite gift — unwrapped\nat high velocity and close range."
   BLAZE_POWDER:
     buy: 10.52
     sell: 2.64
@@ -18,7 +18,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Milled from the Blaze's blazing rod,\nthis amber powder fuels\nevery brewing stand in the realm."
   BLAZE_ROD:
     buy: 20.0
     sell: 5.0
@@ -26,7 +26,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Torn from a Blaze at great peril,\nthis rod burns with contained fury —\nthe essential ingredient for potions."
   BONE:
     buy: 24.0
     sell: 6.0
@@ -34,7 +34,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "All that remains of a skeleton's\nlong and fruitless vigil —\nground to meal, it feeds the earth."
   BREEZE_ROD:
     buy: 80.0
     sell: 20.0
@@ -42,7 +42,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A captured gust made solid,\nthe Breeze Rod crackles\nwith wind that yearns to break free."
   ENDER_PEARL:
     buy: 28.0
     sell: 7.0
@@ -50,7 +50,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Toss it and follow — the Enderman's\nessence bound in a sphere,\nready to carry you across the void."
   FEATHER:
     buy: 24.0
     sell: 6.0
@@ -58,7 +58,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Light as a whispered promise,\nfeathers serve as quills, arrows,\nand the dreams of would-be flyers."
   FERMENTED_SPIDER_EYE:
     buy: 38.28
     sell: 9.6
@@ -66,7 +66,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A spider's eye gone sour\nwith sugar and brown mushroom —\nit inverts effects and twists fate."
   GHAST_TEAR:
     buy: 160.0
     sell: 40.0
@@ -74,7 +74,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A single tear from the Nether's\nsorrowful ghost, crystallized\ninto the essence of regeneration."
   GUNPOWDER:
     buy: 62.0
     sell: 15.52
@@ -82,7 +82,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "The Creeper's parting gift,\nthis volatile powder fuels fireworks\nand far too many unfortunate accidents."
   MAGMA_CREAM:
     buy: 32.04
     sell: 8.04
@@ -90,7 +90,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Fiery slime from the deep Nether,\nits bouncy resilience makes\nthe base of every fire resistance brew."
   NAUTILUS_SHELL:
     buy: 720.0
     sell: 180.0
@@ -98,7 +98,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Spiraled and sea-smoothed,\nthe nautilus carries the ocean's\nconduit secrets in its pale chambers."
   PHANTOM_MEMBRANE:
     buy: 500.6
     sell: 125.16
@@ -106,7 +106,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Flayed from the night's phantom,\nthis translucent sheet mends\nElytra and brews falling potions."
   RABBIT_FOOT:
     buy: 720.0
     sell: 180.0
@@ -114,7 +114,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Said to carry fortune for its owner,\nthough perhaps less so for the rabbit —\nthe key ingredient in Leaping brews."
   RABBIT_HIDE:
     buy: 32.0
     sell: 8.0
@@ -122,7 +122,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Soft and supple from the swift,\nfour hides stitched together\nbecomes a decent piece of leather."
   ROTTEN_FLESH:
     buy: 20.0
     sell: 5.0
@@ -130,7 +130,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "The zombie's only bequest —\neat it if you must,\nbut don't be surprised by the hunger."
   SLIME_BALL:
     buy: 20.0
     sell: 5.0
@@ -138,7 +138,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Bouncy and inexplicably useful,\nslime binds pistons, saddles, and leads —\nthe adhesive of the overworld."
   SPIDER_EYE:
     buy: 28.0
     sell: 7.0
@@ -146,7 +146,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Still glistening from the dark webs,\na spider's eye sees all eight ways —\nperfect for brewing poison brews."
   STRING:
     buy: 28.0
     sell: 7.0
@@ -154,4 +154,4 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Strung from spider silk and patience,\nthis fine thread crafts bows,\nwool, and trip-wire traps alike."

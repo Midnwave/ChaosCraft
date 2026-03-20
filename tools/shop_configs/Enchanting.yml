@@ -10,7 +10,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Breathe deep and dig freely —\nAqua Affinity breaks the water's\nresistance to your mining hands."
   ENCHANTED_BOOK_DAMAGE_ARTHROPODS_5:
     buy: 7779.24
     sell: 1944.84
@@ -18,7 +18,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Every spider, silverfish, and endermite\nshudders at this blade — Bane of Arthropods\nstrikes with a venomous fury."
   ENCHANTED_BOOK_BINDING_CURSE_1:
     buy: 800.0
     sell: 200.0
@@ -26,7 +26,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Once worn, never removed.\nThe Curse of Binding claims its host\nuntil death finally offers release."
   ENCHANTED_BOOK_BREACH_4:
     buy: 7408.8
     sell: 1852.2
@@ -34,7 +34,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Armor is no obstacle —\nBreach tears through defenses\nlike they were never there at all."
   ENCHANTED_BOOK_PROTECTION_EXPLOSIONS_4:
     buy: 5927.04
     sell: 1481.76
@@ -42,7 +42,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Stand in the crater's heart and survive.\nBlast Protection wraps you\nin a shield against every explosion."
   ENCHANTED_BOOK_CHANNELING_1:
     buy: 800.0
     sell: 200.0
@@ -50,7 +50,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Call the storm itself to fight for you —\nChanneling summons lightning\nwith every throw in the tempest."
   ENCHANTED_BOOK_DENSITY_5:
     buy: 15558.48
     sell: 3889.64
@@ -58,7 +58,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Heavier than stone and twice as punishing,\nDensity empowers every gravity-fueled\nsmash of the mace."
   ENCHANTED_BOOK_DEPTH_STRIDER_3:
     buy: 2822.4
     sell: 705.6
@@ -66,7 +66,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Walk the ocean floor\nas if the water were air —\nDepth Strider defies the deep."
   ENCHANTED_BOOK_DIG_SPEED_5:
     buy: 3889.64
     sell: 972.44
@@ -74,7 +74,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Rock yields like sand,\nEfficiency transforms the mundane pickaxe\ninto a blur of unstoppable mining."
   ENCHANTED_BOOK_PROTECTION_FALL_4:
     buy: 3704.4
     sell: 926.12
@@ -82,7 +82,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Leap from any height and land\nwith grace — Feather Falling\nturns every cliff into a casual stroll."
   ENCHANTED_BOOK_FIRE_ASPECT_2:
     buy: 1344.0
     sell: 336.0
@@ -90,7 +90,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Every strike ignites the enemy,\nFire Aspect turns your blade\ninto a torch that fights back."
   ENCHANTED_BOOK_PROTECTION_FIRE_4:
     buy: 3704.4
     sell: 926.12
@@ -98,7 +98,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Walk through lava and emerge unscathed.\nFire Protection cools the flames\nthat would consume the unenchanted."
   ENCHANTED_BOOK_ARROW_FIRE_1:
     buy: 640.0
     sell: 160.0
@@ -106,7 +106,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Each arrow leaves a trail of fire —\nFlame turns the humble bow\ninto a blazing weapon of war."
   ENCHANTED_BOOK_LOOT_BONUS_BLOCKS_3:
     buy: 2822.4
     sell: 705.6
@@ -114,7 +114,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Fortune favors the prepared.\nThis enchantment multiplies\nthe earth's generosity with every strike."
   ENCHANTED_BOOK_FROST_WALKER_2:
     buy: 1344.0
     sell: 336.0
@@ -122,7 +122,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Walk upon the sea itself —\nFrost Walker freezes water underfoot\nand leaves a path of crystal in your wake."
   ENCHANTED_BOOK_IMPALING_5:
     buy: 12446.8
     sell: 3111.72
@@ -130,7 +130,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "The ocean's creatures tremble\nas your trident descends —\nImpaling strikes deep and without mercy."
   ENCHANTED_BOOK_ARROW_INFINITE_1:
     buy: 800.0
     sell: 200.0
@@ -138,7 +138,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "One arrow is all you need.\nInfinity makes the quiver\nan eternal well of ranged destruction."
   ENCHANTED_BOOK_KNOCKBACK_2:
     buy: 840.0
     sell: 210.0
@@ -146,7 +146,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Send your enemies flying\nwith every swing — Knockback\nis the crowd control of every brawler."
   ENCHANTED_BOOK_LOOT_BONUS_MOBS_3:
     buy: 2822.4
     sell: 705.6
@@ -154,7 +154,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Every mob yields more,\nLooting ensures the battlefield\nis littered with generous drops."
   ENCHANTED_BOOK_LOYALTY_3:
     buy: 1764.0
     sell: 441.0
@@ -162,7 +162,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A trident that always returns,\nLoyalty is the bond between\nthe warrior and their most faithful weapon."
   ENCHANTED_BOOK_LUCK_3:
     buy: 2822.4
     sell: 705.6
@@ -170,7 +170,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Cast the line and believe —\nLuck of the Sea fills your net\nwith treasures the ocean hid away."
   ENCHANTED_BOOK_LURE_3:
     buy: 2822.4
     sell: 705.6
@@ -178,7 +178,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Fish come to the patient angler.\nLure whispers to the depths\nand shortens every wait at the water's edge."
   ENCHANTED_BOOK_MENDING_1:
     buy: 640.0
     sell: 160.0
@@ -186,7 +186,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Experience is the cure.\nMending channels the orbs you collect\ndirectly into the tools you trust."
   ENCHANTED_BOOK_MULTISHOT_1:
     buy: 640.0
     sell: 160.0
@@ -194,7 +194,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "One pull, three arrows —\nMultishot spreads the field\nand leaves nowhere to hide."
   ENCHANTED_BOOK_PIERCING_4:
     buy: 1852.2
     sell: 463.08
@@ -202,7 +202,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Nothing stands between you\nand your target — Piercing drives\nthe bolt through armor and flesh alike."
   ENCHANTED_BOOK_ARROW_DAMAGE_5:
     buy: 3889.64
     sell: 972.44
@@ -210,7 +210,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Power charges every arrow\nwith devastating force —\neach shot lands harder than the last."
   ENCHANTED_BOOK_PROTECTION_PROJECTILE_4:
     buy: 3704.4
     sell: 926.12
@@ -218,7 +218,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Arrows, fireballs, and tridents\nbounce harmlessly away —\nProjectile Protection turns you into a fortress."
   ENCHANTED_BOOK_PROTECTION_ENVIRONMENTAL_4:
     buy: 1852.2
     sell: 463.08
@@ -226,7 +226,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A shield against all harms,\nProtection is the adventurer's\nmost trusted companion in any armor."
   ENCHANTED_BOOK_ARROW_KNOCKBACK_2:
     buy: 1344.0
     sell: 336.0
@@ -234,7 +234,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "The arrow strikes and hurls —\nPunch sends targets reeling\nbefore they can even retaliate."
   ENCHANTED_BOOK_QUICK_CHARGE_3:
     buy: 1764.0
     sell: 441.0
@@ -242,7 +242,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Every second of draw time\nshaved away — Quick Charge turns\nthe crossbow into a rapid-fire weapon."
   ENCHANTED_BOOK_OXYGEN_3:
     buy: 2822.4
     sell: 705.6
@@ -250,7 +250,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Hold your breath longer,\nsee more clearly beneath the waves —\nRespiration is the diver's blessing."
   ENCHANTED_BOOK_RIPTIDE_3:
     buy: 2822.4
     sell: 705.6
@@ -258,7 +258,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Cast yourself into the storm!\nRiptide launches you skyward\nwith every throw into rain or water."
   ENCHANTED_BOOK_DAMAGE_ALL_5:
     buy: 3889.64
     sell: 972.44
@@ -266,7 +266,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Sharpness hones the edge\nbeyond any whetstone's power —\nevery blow cuts deeper than before."
   ENCHANTED_BOOK_SILK_TOUCH_1:
     buy: 800.0
     sell: 200.0
@@ -274,7 +274,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Mine the world as it truly is —\nSilk Touch extracts glass, ice,\nand ore in its pristine natural form."
   ENCHANTED_BOOK_DAMAGE_UNDEAD_5:
     buy: 7779.24
     sell: 1944.84
@@ -282,7 +282,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "The undead fear this blade.\nSmite calls upon holy fire\nthat destroys zombies and skeletons alike."
   ENCHANTED_BOOK_SOUL_SPEED_3:
     buy: 4410.0
     sell: 1102.52
@@ -290,7 +290,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Sprint across soul sand\nas if it were open road —\nSoul Speed turns the Nether's curse to power."
   ENCHANTED_BOOK_SWEEPING_EDGE_3:
     buy: 2822.4
     sell: 705.6
@@ -298,7 +298,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Clear the crowd with a single arc —\nSweeping Edge multiplies each swing\ninto a tide of damage."
   ENCHANTED_BOOK_SWIFT_SNEAK_3:
     buy: 1102.52
     sell: 275.64
@@ -306,7 +306,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Crouch without slowing down —\nSwift Sneak lets you skulk\nthrough the deep dark undetected."
   ENCHANTED_BOOK_THORNS_3:
     buy: 3528.0
     sell: 882.0
@@ -314,7 +314,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Every strike against you draws blood.\nThorns punishes the attacker\nfor daring to challenge your armor."
   ENCHANTED_BOOK_DURABILITY_3:
     buy: 1764.0
     sell: 441.0
@@ -322,7 +322,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Tools last, armor endures —\nUnbreaking stretches the life\nof every cherished piece of equipment."
   ENCHANTED_BOOK_VANISHING_CURSE_1:
     buy: 800.0
     sell: 200.0
@@ -330,7 +330,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Die holding this and it is gone forever.\nThe Curse of Vanishing leaves\nnothing behind but regret."
   ENCHANTED_BOOK_WIND_BURST_3:
     buy: 97020.0
     sell: 24255.0
@@ -338,4 +338,4 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "The sky is the arena —\nWind Burst launches you upward\nwith each devastating mace impact."

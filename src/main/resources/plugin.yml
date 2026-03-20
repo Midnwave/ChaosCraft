@@ -141,6 +141,7 @@ permissions:
       chaoscraft.ivory.test: true
       chaoscraft.badges.admin: true
       chaoscraft.shop.admin: true
+      chaoscraft.function.badge: true
 
   # ----- Mode System -----
   chaoscraft.mode.trigger:
@@ -260,4 +261,9 @@ permissions:
     default: true
   chaoscraft.shop.admin:
     description: Admin shop management (edit, add items, sections)
+    default: op
+
+  # ----- Function: Badge -----
+  chaoscraft.function.badge:
+    description: Mark held items with badge_state PDC tags via /cc function set badge*item commands
     default: op

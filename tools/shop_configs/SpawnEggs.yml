@@ -10,7 +10,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A gentle soul suspended in shell,\nwaiting to drift and sing\nand carry your items home."
   ARMADILLO_SPAWN_EGG:
     buy: 3999999996.0
     sell: -1
@@ -18,7 +18,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A creature built like living armor,\nrolling into safety the moment\ndanger decides to say hello."
   AXOLOTL_SPAWN_EGG:
     buy: 3999999996.0
     sell: -1
@@ -26,7 +26,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Ancient and adorable in equal measure,\nthis pink-gilled relic of the deep\nfights monsters and asks for nothing."
   BAT_SPAWN_EGG:
     buy: 3999999996.0
     sell: -1
@@ -34,7 +34,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Sleeping upside-down in the cave ceiling\nuntil the moment you light a torch —\nthen it panics and so do you."
   BLAZE_SPAWN_EGG:
     buy: 3999999996.0
     sell: -1
@@ -42,7 +42,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Spinning rods and spitting fire,\nthe blaze guards its fortress\nwith molten fury and no mercy."
   BOGGED_SPAWN_EGG:
     buy: 3999999996.0
     sell: -1
@@ -50,7 +50,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A skeleton dragged through the swamp,\nsoaked in poison and slow purpose —\nevery arrow carries rot."
   BREEZE_SPAWN_EGG:
     buy: 3999999996.0
     sell: -1
@@ -58,7 +58,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "An untouchable swirl of wind\nthat dances through trial chambers\nand laughs at your attempts to hit it."
   CAMEL_SPAWN_EGG:
     buy: 3999999996.0
     sell: -1
@@ -66,7 +66,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Tall enough to look mobs in the eye\nand too dignified to care —\nthe desert's most unbothered mount."
   CAT_SPAWN_EGG:
     buy: 3999999996.0
     sell: -1
@@ -74,7 +74,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Creepers flee at the sight of it\nyet it still manages to sleep\non your best crafting table."
   CAVE_SPIDER_SPAWN_EGG:
     buy: 3999999996.0
     sell: -1
@@ -82,7 +82,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Smaller, faster, and venomous —\nthe cave spider fits through gaps\nthe regular one could only dream of."
   CHICKEN_SPAWN_EGG:
     buy: 3999999996.0
     sell: -1
@@ -90,7 +90,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Feathers, eggs, and a complete lack\nof survival instinct — the chicken\nfalls from any height and survives."
   COD_SPAWN_EGG:
     buy: 3999999996.0
     sell: -1
@@ -98,7 +98,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A modest fish with modest dreams,\nswimming in quiet schools\nuntil a fishing rod disrupts the peace."
   COW_SPAWN_EGG:
     buy: 3999999996.0
     sell: -1
@@ -106,7 +106,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Leather and milk on four legs,\ngrazing through your fields\nwith supreme indifference to everything."
   CREEPER_SPAWN_EGG:
     buy: 3999999996.0
     sell: -1
@@ -114,7 +114,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "It approaches in perfect silence\nand waits just long enough\nfor you to notice before the end."
   DOLPHIN_SPAWN_EGG:
     buy: 3999999996.0
     sell: -1
@@ -122,7 +122,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Swift and playful in the open sea,\nthe dolphin grants a speed blessing\nto those who earn its company."
   DONKEY_SPAWN_EGG:
     buy: 3999999996.0
     sell: -1
@@ -130,7 +130,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Stubborn and slow but dependable,\nthe donkey hauls a chest full of goods\nacross mountains without complaint."
   DROWNED_SPAWN_EGG:
     buy: 3999999996.0
     sell: -1
@@ -138,7 +138,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "What the ocean keeps and transforms —\na waterlogged walker with a trident\nand no memory of who it was."
   ELDER_GUARDIAN_SPAWN_EGG:
     buy: 3999999996.0
     sell: -1
@@ -146,7 +146,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Ancient and immovable in its temple,\nthe elder guardian curses miners\nwith fatigue before they can even try."
   ENDERMAN_SPAWN_EGG:
     buy: 3999999996.0
     sell: -1
@@ -154,7 +154,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Three meters of silence and void,\nholding a block it borrowed\nfrom a world it will not return to."
   ENDERMITE_SPAWN_EGG:
     buy: 3999999996.0
     sell: -1
@@ -162,7 +162,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A splinter of the End itself,\nsmall enough to ignore\nuntil there are twelve of them."
   EVOKER_SPAWN_EGG:
     buy: 3999999996.0
     sell: -1
@@ -170,7 +170,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "The woodland mansion's most dangerous tenant,\nsummoning fangs from the floor\nwith a patience that borders on theatrical."
   FOX_SPAWN_EGG:
     buy: 3999999996.0
     sell: -1
@@ -178,7 +178,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Trusts no one and steals everything —\nthe fox pounces on prey and berries alike\nand sleeps through the consequences."
   FROG_SPAWN_EGG:
     buy: 3999999996.0
     sell: -1
@@ -186,7 +186,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Leaping from pad to pad in the swamp,\nthe frog swallows small slimes whole\nand leaves behind a glowing gift."
   GHAST_SPAWN_EGG:
     buy: 3999999996.0
     sell: -1
@@ -194,7 +194,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A ghostly cube of misery drifting\nthrough the Nether's red skies —\nits cry is the sound of a bad day beginning."
   GLOW_SQUID_SPAWN_EGG:
     buy: 3999999996.0
     sell: -1
@@ -202,7 +202,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Deep beneath the surface it pulses\nwith a bioluminescent glow,\na living lantern that asks only to swim."
   GOAT_SPAWN_EGG:
     buy: 3999999996.0
     sell: -1
@@ -210,7 +210,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Mountain-born and belligerent by choice,\nthe goat charges with no warning\nand knocks you clean off the cliff."
   GUARDIAN_SPAWN_EGG:
     buy: 3999999996.0
     sell: -1
@@ -218,7 +218,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A spined fish with a laser and a grudge,\nguarding the ocean monument\nagainst all visitors, invited or not."
   HOGLIN_SPAWN_EGG:
     buy: 3999999996.0
     sell: -1
@@ -226,7 +226,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Tusked and territorial in the Nether,\nthe hoglin charges first\nand never asks questions."
   HORSE_SPAWN_EGG:
     buy: 3999999996.0
     sell: -1
@@ -234,7 +234,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Wild until tamed and swift once saddled,\nthe horse carries its rider\nfaster than any road can handle."
   HUSK_SPAWN_EGG:
     buy: 3999999996.0
     sell: -1
@@ -242,7 +242,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "The desert's undead guardian,\nbaked dry under a merciless sun —\nevery hit inflicts the hunger."
   IRON_GOLEM_SPAWN_EGG:
     buy: 3999999996.0
     sell: -1
@@ -250,7 +250,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Built from iron and poppies and purpose,\nthe iron golem patrols the village\nwith an arm that sends mobs flying."
   LLAMA_SPAWN_EGG:
     buy: 3999999996.0
     sell: -1
@@ -258,7 +258,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A pack animal with a spitting habit\nand questionable loyalty —\nbut it carries your things without complaint."
   MAGMA_CUBE_SPAWN_EGG:
     buy: 3999999996.0
     sell: -1
@@ -266,7 +266,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A bouncing cube of Nether fire\nthat splits apart on death\ninto smaller, angrier versions of itself."
   MOOSHROOM_SPAWN_EGG:
     buy: 3999999996.0
     sell: -1
@@ -274,7 +274,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A cow colonized by mushrooms,\nthriving in the mushroom fields\nwhere it milks a different kind of soup."
   MULE_SPAWN_EGG:
     buy: 3999999996.0
     sell: -1
@@ -282,7 +282,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Neither horse nor donkey but both in spirit,\nthe mule accepts a chest and a saddle\nand asks nothing more of the journey."
   OCELOT_SPAWN_EGG:
     buy: 3999999996.0
     sell: -1
@@ -290,7 +290,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Wild and skittish in the jungle canopy,\nthe ocelot cannot be tamed\nbut may choose to trust you anyway."
   PANDA_SPAWN_EGG:
     buy: 3999999996.0
     sell: -1
@@ -298,7 +298,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Sitting in the bamboo and chewing,\nthe panda has found peace\nthat most adventurers never will."
   PARROT_SPAWN_EGG:
     buy: 3999999996.0
     sell: -1
@@ -306,7 +306,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Colorful and devoted from the shoulder,\nthe parrot mimics every hostile mob\nso you always hear what's coming."
   PHANTOM_SPAWN_EGG:
     buy: 3999999996.0
     sell: -1
@@ -314,7 +314,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Sleep deprivation given wings and teeth —\nthe phantom circles overhead\nas the nights without rest accumulate."
   PIG_SPAWN_EGG:
     buy: 3999999996.0
     sell: -1
@@ -322,7 +322,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Rooting through the fields for carrots,\nthe pig becomes a mount\nwith a saddle and the right bait."
   PIGLIN_BRUTE_SPAWN_EGG:
     buy: 3999999996.0
     sell: -1
@@ -330,7 +330,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Gold means nothing to this one —\nthe piglin brute guards its bastion\nwith an axe and absolute intolerance."
   PIGLIN_SPAWN_EGG:
     buy: 3999999996.0
     sell: -1
@@ -338,7 +338,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Distracted by the glint of gold\nand easily bartered with —\nbut remove your armor and see what happens."
   PILLAGER_SPAWN_EGG:
     buy: 3999999996.0
     sell: -1
@@ -346,7 +346,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "An outpost raider with a crossbow\nand an ominous flag it carries\ninto every village it chooses to terrorize."
   POLAR_BEAR_SPAWN_EGG:
     buy: 3999999996.0
     sell: -1
@@ -354,7 +354,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Peaceful alone, furious with cubs —\nthe polar bear roams the ice\nwith the quiet authority of the frozen north."
   PUFFERFISH_SPAWN_EGG:
     buy: 3999999996.0
     sell: -1
@@ -362,7 +362,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A masterpiece of natural deterrence,\nit inflates at the slightest provocation\nand poisons whatever dares get close."
   RABBIT_SPAWN_EGG:
     buy: 3999999996.0
     sell: -1
@@ -370,7 +370,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Fast, small, and perpetually alarmed,\nthe rabbit bolts at your approach\nand hides what luck it carries."
   RAVAGER_SPAWN_EGG:
     buy: 3999999996.0
     sell: -1
@@ -378,7 +378,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "The raid's battering ram in beast form,\ncrashing through villages and crops alike\nwith the elegance of a runaway siege engine."
   SALMON_SPAWN_EGG:
     buy: 3999999996.0
     sell: -1
@@ -386,7 +386,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Swimming upstream against every current,\nthe salmon braves rivers and lakes\nfor reasons the world may never understand."
   SHEEP_SPAWN_EGG:
     buy: 3999999996.0
     sell: -1
@@ -394,7 +394,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Wool and mutton and the occasional\njawed grass in the wrong pasture —\nthe sheep asks only to graze in peace."
   SHULKER_SPAWN_EGG:
     buy: 3999999996.0
     sell: -1
@@ -402,7 +402,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Camouflaged as a purple block\nuntil it opens and shoots\na homing bullet that will not forgive."
   SILVERFISH_SPAWN_EGG:
     buy: 3999999996.0
     sell: -1
@@ -410,7 +410,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Hidden inside the stone of strongholds,\nwaking to summon its siblings\nwhen you make the mistake of digging there."
   SKELETON_HORSE_SPAWN_EGG:
     buy: 3999999996.0
     sell: -1
@@ -418,7 +418,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A rider's bones still astride its bones,\nstruck by lightning and cursed to gallop\nthrough every storm that follows."
   SKELETON_SPAWN_EGG:
     buy: 3999999996.0
     sell: -1
@@ -426,7 +426,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Rattling bones and perfect aim —\nthe skeleton never misses at range\nand never stops moving when you charge."
   SLIME_SPAWN_EGG:
     buy: 3999999996.0
     sell: -1
@@ -434,7 +434,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Bouncing and splitting and growing\nin the deepest chunks of the swamp —\nkill the big one and the problem multiplies."
   SNIFFER_SPAWN_EGG:
     buy: 3999999996.0
     sell: -1
@@ -442,7 +442,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Ancient and gentle, resurrected from\na sniffer egg dredged from the deep —\nit sniffs out seeds the world forgot."
   SNOW_GOLEM_SPAWN_EGG:
     buy: 3999999996.0
     sell: -1
@@ -450,7 +450,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Two snowballs, a pumpkin, and a dream —\nthe snow golem throws itself\ninto battle with cheerful futility."
   SPIDER_SPAWN_EGG:
     buy: 3999999996.0
     sell: -1
@@ -458,7 +458,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Eight eyes that glow red at night\nand a body that fits through\nevery gap you thought was too small."
   SQUID_SPAWN_EGG:
     buy: 3999999996.0
     sell: -1
@@ -466,7 +466,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Drifting without purpose or direction,\nthe squid offers ink and indifference\nto anyone willing to approach."
   STRAY_SPAWN_EGG:
     buy: 3999999996.0
     sell: -1
@@ -474,7 +474,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A skeleton adapted to the cold,\nhooded in tattered cloth and slowing\neverything it touches with icy arrows."
   STRIDER_SPAWN_EGG:
     buy: 3999999996.0
     sell: -1
@@ -482,7 +482,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Wading through lava seas on long legs,\nthe strider shivers in rain\nbut strides fearlessly through fire."
   TADPOLE_SPAWN_EGG:
     buy: 3999999996.0
     sell: -1
@@ -490,7 +490,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Every frog was this first —\na small wriggling promise\nof what the swamp will make of it."
   TRADER_LLAMA_SPAWN_EGG:
     buy: 3999999996.0
     sell: -1
@@ -498,7 +498,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Leashed to the wandering trader\nand wearing a carpet of status,\nit spits at strangers as a professional courtesy."
   TROPICAL_FISH_SPAWN_EGG:
     buy: 3999999996.0
     sell: -1
@@ -506,7 +506,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Painted in every color the ocean owns,\nthe tropical fish schools in warm waters\nwhere beauty and brevity coexist."
   TURTLE_SPAWN_EGG:
     buy: 3999999996.0
     sell: -1
@@ -514,7 +514,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Slow on land, graceful in the sea,\nthe turtle returns to the beach where\nit hatched to begin the cycle again."
   VEX_SPAWN_EGG:
     buy: 3999999996.0
     sell: -1
@@ -522,7 +522,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A spirit of pure aggression\nthat flies through walls and solid stone\nto reach whoever the evoker pointed at."
   VILLAGER_SPAWN_EGG:
     buy: 3999999996.0
     sell: -1
@@ -530,7 +530,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "The heartbeat of every trading post,\nthe villager offers deals and demands beds\nand expects you to protect the whole village."
   VINDICATOR_SPAWN_EGG:
     buy: 3999999996.0
     sell: -1
@@ -538,7 +538,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "The woodland mansion's axe-wielding enforcer,\nit charges with a fervor that suggests\nthis has been deeply personal for a long time."
   WANDERING_TRADER_SPAWN_EGG:
     buy: 3999999996.0
     sell: -1
@@ -546,7 +546,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Appearing without warning and vanishing\nbefore the deal feels worth it —\nthe wandering trader answers to no one."
   WARDEN_SPAWN_EGG:
     buy: 3999999996.0
     sell: -1
@@ -554,7 +554,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Summoned by sound from the deep dark,\nthe warden needs no eyes —\nit finds you by heartbeat alone."
   WITCH_SPAWN_EGG:
     buy: 3999999996.0
     sell: -1
@@ -562,7 +562,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Hurling potions from her swamp hut\nwith the efficiency of someone\nwho has been doing this far too long."
   WITHER_SKELETON_SPAWN_EGG:
     buy: 3999999996.0
     sell: -1
@@ -570,7 +570,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Charred by Nether fire and carrying\na stone sword and the wither effect —\nit haunts the fortress like a black memory."
   WOLF_SPAWN_EGG:
     buy: 3999999996.0
     sell: -1
@@ -578,7 +578,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Wild and wary until a bone is offered —\nthe wolf becomes the most loyal companion\nthe wilderness has ever produced."
   ZOGLIN_SPAWN_EGG:
     buy: 3999999996.0
     sell: -1
@@ -586,7 +586,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A hoglin that crossed into the Overworld\nand was twisted by the transition —\nit attacks everything without distinction."
   ZOMBIE_HORSE_SPAWN_EGG:
     buy: 3999999996.0
     sell: -1
@@ -594,7 +594,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Green-skinned and vacant-eyed,\nthe zombie horse wanders like a memory\nof the mount it used to be."
   ZOMBIE_SPAWN_EGG:
     buy: 3999999996.0
     sell: -1
@@ -602,7 +602,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Moaning through the night with relentless purpose,\nthe zombie knocks on doors it cannot open\nand chases the light it cannot stand."
   ZOMBIE_VILLAGER_SPAWN_EGG:
     buy: 3999999996.0
     sell: -1
@@ -610,7 +610,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A villager lost to the infection,\nwearing its old profession\nlike a costume it no longer understands."
   ZOMBIFIED_PIGLIN_SPAWN_EGG:
     buy: 3999999996.0
     sell: -1
@@ -618,4 +618,4 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Neutral until struck and vengeful ever after —\nthe zombified piglin crosses between worlds\nwith a golden sword and an eternal grudge."

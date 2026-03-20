@@ -115,6 +115,12 @@ public class FreezingIceMode extends AbstractMode {
         // Start schedulers
         attackScheduler.start();
 
+        // Universal mob spawning
+        if (plugin.getMobSpawnService() != null) {
+            plugin.getMobSpawnService().createSession("freezingice",
+                    iceConfig.getMobSpawnConfig(), world);
+        }
+
         plugin.getLogger().info("[FreezingIce] Mode fully started. Survive " + timerSeconds + " seconds!"
                 + " (" + attackCount + " attacks)");
     }
@@ -129,6 +135,11 @@ public class FreezingIceMode extends AbstractMode {
         if (world != null) {
             temperatureTracker.tick(world.getPlayers());
         }
+
+        // Universal mob spawning
+        if (plugin.getMobSpawnService() != null) {
+            plugin.getMobSpawnService().tick("freezingice", getExemptPlayers());
+        }
     }
 
     @Override
@@ -142,6 +153,11 @@ public class FreezingIceMode extends AbstractMode {
         World world = getIceWorld();
         if (world != null) {
             temperatureTracker.resetAll(world.getPlayers());
+        }
+
+        // Universal mob spawning cleanup
+        if (plugin.getMobSpawnService() != null) {
+            plugin.getMobSpawnService().destroySession("freezingice");
         }
 
         tickCounter = 0;

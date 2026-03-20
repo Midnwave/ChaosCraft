@@ -154,6 +154,12 @@ public class BlueMoonMode extends AbstractMode {
         // Start gimmick manager
         gimmickManager.loadConfig(moonConfig);
 
+        // Universal mob spawning
+        if (plugin.getMobSpawnService() != null) {
+            plugin.getMobSpawnService().createSession("bluemoon",
+                    moonConfig.getMobSpawnConfig(), world);
+        }
+
         plugin.getLogger().info("[BlueMoon] Mode fully started. Survive " + timerSeconds + " seconds or slay the moon! "
                 + "(" + attackCount + " attacks registered)");
     }
@@ -182,6 +188,11 @@ public class BlueMoonMode extends AbstractMode {
 
         // Tick gimmicks
         gimmickManager.tick(world);
+
+        // Universal mob spawning
+        if (plugin.getMobSpawnService() != null) {
+            plugin.getMobSpawnService().tick("bluemoon", getExemptPlayers());
+        }
     }
 
     @Override
@@ -194,6 +205,11 @@ public class BlueMoonMode extends AbstractMode {
         // Cleanup boss + gimmicks
         bossManager.cleanup();
         gimmickManager.cleanup();
+
+        // Universal mob spawning cleanup
+        if (plugin.getMobSpawnService() != null) {
+            plugin.getMobSpawnService().destroySession("bluemoon");
+        }
 
         // Restore world time
         if (moonConfig.isForceNight()) {

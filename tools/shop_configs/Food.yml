@@ -10,7 +10,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Fallen from old oak boughs,\nthis crisp fruit has fed travelers\nsince the first adventurer set out."
   BREAD:
     buy: 63.0
     sell: 15.76
@@ -18,7 +18,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Simple sustenance for the weary traveler.\nBaked from golden wheat,\na staple of every adventurer's pack."
   CAKE:
     buy: 317.28
     sell: 79.32
@@ -26,7 +26,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Crafted with milk, sugar, and egg,\nthis towering celebration of flavor\nis best shared with friends."
   COOKED_SALMON:
     buy: 25.2
     sell: 6.32
@@ -34,7 +34,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Seared over open coals\nuntil the scales turn golden,\na riverside feast for the patient angler."
   COOKIE:
     buy: 8.4
     sell: 2.12
@@ -42,7 +42,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Crisp and sweet, kissed\nwith cocoa from the jungle,\na small luxury for long marches."
   GLISTERING_MELON_SLICE:
     buy: 32.0
     sell: 8.0
@@ -50,7 +50,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Gold-plated sweetness,\nthis glittering slice brews potions\nthat mend even the deepest wounds."
   GLOW_BERRIES:
     buy: 4.0
     sell: 1.0
@@ -58,7 +58,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Tiny lanterns of the deep caves,\nthese luminous berries feed\nboth body and curiosity."
   GOLDEN_CARROT:
     buy: 48.8
     sell: 12.2
@@ -66,7 +66,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Wrapped in nuggets of pure gold,\nthis magical root sharpens the mind\nand brightens the darkest tunnels."
   HONEY_BOTTLE:
     buy: 31.76
     sell: 7.96
@@ -74,7 +74,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Bottled sunlight from the hive,\nthick and sweet as summer itself,\nit cures poison with every sip."
   BAKED_POTATO:
     buy: 21.0
     sell: 5.28
@@ -82,7 +82,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Roasted in the furnace glow,\nthe humble potato becomes\na warm and filling trail ration."
   COOKED_BEEF:
     buy: 25.2
     sell: 6.32
@@ -90,7 +90,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Charred over open flame\nuntil sizzling and rich,\nthe finest meal after a hard day's fight."
   COOKED_CHICKEN:
     buy: 25.2
     sell: 6.32
@@ -98,7 +98,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Crisped over the campfire,\nroasted chicken has warmed\ncountless cold evenings in the wild."
   COOKED_MUTTON:
     buy: 25.2
     sell: 6.32
@@ -106,7 +106,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Slow-roasted with herbs of the field,\nmutton is a shepherd's reward\nat the end of a long day's walk."
   COOKED_PORKCHOP:
     buy: 25.2
     sell: 6.32
@@ -114,7 +114,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Thick and savory from the spit,\na porkchop cooked right\ncan restore strength to even the weariest warrior."
   COOKED_RABBIT:
     buy: 25.2
     sell: 6.32
@@ -122,7 +122,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Lean and tender from the plains,\nrabbit cooked over coals\nfills a pack quickly and cheaply."
   BEEF:
     buy: 24.0
     sell: 6.0
@@ -130,7 +130,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Raw from the pasture,\nit needs fire to reach its potential\nbut feeds the boldest of appetites."
   CHICKEN:
     buy: 24.0
     sell: 6.0
@@ -138,7 +138,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Fresh from the farm yard,\nbest cooked before eating —\na raw gamble for the desperate traveler."
   MUTTON:
     buy: 24.0
     sell: 6.0
@@ -146,7 +146,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Carried fresh from the flock,\nmutton awaits the campfire\nand a night of well-deserved rest."
   PORKCHOP:
     buy: 24.0
     sell: 6.0
@@ -154,7 +154,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Heavy and raw, this chop\nfrom a Nether-fed hog\nis one fire away from perfection."
   RABBIT:
     buy: 24.0
     sell: 6.0
@@ -162,7 +162,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Swift in life and lean in the pot,\nrabbit is the hunter's consolation\nprize on a cold evening."
   BEETROOT_SOUP:
     buy: 154.88
     sell: 38.72
@@ -170,4 +170,4 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Deep crimson and earthy,\nthis hearty bowl warms from within\nand restores the spirit after battle."

@@ -10,7 +10,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Stave by stave and lid by lid,\nthe barrel stores goods through\nlong voyages and cold winters alike."
   BLAST_FURNACE:
     buy: 149.2
     sell: 37.32
@@ -18,7 +18,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Twice the heat, twice the speed —\nthis iron furnace smelts ores\nwith the efficiency of a master smith."
   BREWING_STAND:
     buy: 29.6
     sell: 7.4
@@ -26,7 +26,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "The alchemist's altar,\nwhere water becomes wonder\nand ingredients become destiny."
   CARTOGRAPHY_TABLE:
     buy: 19.44
     sell: 4.88
@@ -34,7 +34,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Stretched with parchment and purpose,\nthe cartography table charts\nthe unknown and expands the world."
   COMPOSTER:
     buy: 17.04
     sell: 4.28
@@ -42,7 +42,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "What the farm discards,\nthe composter transforms into\nrich bone meal for the next season."
   FLETCHING_TABLE:
     buy: 35.36
     sell: 8.84
@@ -50,7 +50,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Where feathers meet shafts\nand patience meets precision —\nthe fletcher's art begins here."
   GRINDSTONE:
     buy: 15.72
     sell: 3.96
@@ -58,7 +58,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Stone and muscle working together,\nthe grindstone strips enchantments\nand sharpens blades back to life."
   LECTERN:
     buy: 510.04
     sell: 127.52
@@ -66,7 +66,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Where knowledge is shared openly,\nthe lectern holds books aloft\nfor all who gather to learn."
   LOOM:
     buy: 68.08
     sell: 17.04
@@ -74,7 +74,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Thread by thread the pattern grows,\nthe loom weaves dye into banners\nthat tell the stories of great deeds."
   SMITHING_TABLE:
     buy: 64.84
     sell: 16.24
@@ -82,7 +82,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Where diamond meets ancient debris\nand becomes something greater —\nthe final forge of any hero's journey."
   SMOKER:
     buy: 74.4
     sell: 18.6
@@ -90,7 +90,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Low and slow over smoldering logs,\nthe smoker cooks food faster\nand fills the air with a welcoming aroma."
   STONECUTTER:
     buy: 32.16
     sell: 8.04
@@ -98,4 +98,4 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A blade against the bedrock's grain,\nthe stonecutter shapes stone\nwith a precision no crafting table can match."

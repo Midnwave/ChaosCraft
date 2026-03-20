@@ -138,6 +138,12 @@ public class CorruptionMode extends AbstractMode {
                 + ", Block replacement: " + (corruptionConfig.isBlockReplacementEnabled() ? "ON" : "OFF")
                 + ", Mob glitch: " + (corruptionConfig.isMobGlitchEnabled() ? "ON" : "OFF"));
 
+        // Universal mob spawning
+        if (plugin.getMobSpawnService() != null) {
+            plugin.getMobSpawnService().createSession("corruption",
+                    corruptionConfig.getMobSpawnConfig(), world);
+        }
+
         plugin.getLogger().info("[Corruption] Mode fully started. Survive " + timerSeconds + " seconds! "
                 + "(" + attackCount + " attacks registered)");
     }
@@ -148,6 +154,11 @@ public class CorruptionMode extends AbstractMode {
         attackScheduler.tick();
         // TODO: corruptionEngine.tick() — engine handles floating blocks, block replacement,
         //       mob glitch, and ambient effects. Created separately.
+
+        // Universal mob spawning
+        if (plugin.getMobSpawnService() != null) {
+            plugin.getMobSpawnService().tick("corruption", getExemptPlayers());
+        }
     }
 
     @Override
@@ -157,6 +168,11 @@ public class CorruptionMode extends AbstractMode {
         attackScheduler.stop();
         plugin.getMusicManager().stopAll();
         plugin.getModeTimer().stop();
+
+        // Universal mob spawning cleanup
+        if (plugin.getMobSpawnService() != null) {
+            plugin.getMobSpawnService().destroySession("corruption");
+        }
 
         // TODO: corruptionEngine.stop() — stops floating blocks, mob glitch, ambient effects
         // TODO: corruptionEngine.startRestoration() — begins block restoration process

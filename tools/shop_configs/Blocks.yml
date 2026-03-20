@@ -10,7 +10,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "White and fine-grained from mountain veins,\ncalcite forms in caverns and snowfields\nwhere the cold has pressed mineral to stone."
   DRIPSTONE_BLOCK:
     buy: 4.0
     sell: 1.0
@@ -18,7 +18,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Compacted from a thousand cave formations,\nthis block carries the texture of deep caverns\nwhere stalactites grow for centuries."
   HAY_BLOCK:
     buy: 189.0
     sell: 47.28
@@ -26,7 +26,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Bundled stalks of the harvest,\nthe hay block feeds horses and mules\nand softens any fall from great heights."
   HONEY_BLOCK:
     buy: 133.36
     sell: 33.36
@@ -34,7 +34,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Viscous and golden and thoroughly sticky,\nthe honey block slows everything it touches\nand makes every piston contraption interesting."
   MAGMA_BLOCK:
     buy: 134.52
     sell: 33.64
@@ -42,7 +42,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "The Nether's floor given solid form,\nmagma blocks glow and burn through\nevery careless step across the surface."
   PACKED_ICE:
     buy: 54.0
     sell: 13.52
@@ -50,7 +50,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Compressed by glacial weight over ages,\npacked ice never melts indoors\nand sends everything sliding across its surface."
   ROOTED_DIRT:
     buy: 4.0
     sell: 1.0
@@ -58,7 +58,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Dirt threaded through with hanging roots —\nthe azalea tree holds this soil together\nfrom the lush cave ceiling above."
   SLIME_BLOCK:
     buy: 189.0
     sell: 47.28
@@ -66,7 +66,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Bouncy and adhesive in equal measure,\nthe slime block launches, sticks, and connects\nin every flying machine and piston engine."
   SNOW_BLOCK:
     buy: 50.4
     sell: 12.6
@@ -74,7 +74,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Four snowballs pressed together\ninto a solid cube of silence —\nthe tundra compressed into a building block."
   SOUL_SAND:
     buy: 40.0
     sell: 10.0
@@ -82,7 +82,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Ancient souls are trapped within —\nevery step across it slows to a crawl,\nas if something beneath is pulling you down."
   TNT:
     buy: 426.32
     sell: 106.6
@@ -90,7 +90,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Sand and gunpowder bound in patience —\nlight the fuse and step back\nbefore the conversation ends abruptly."
   ANDESITE:
     buy: 2.88
     sell: 0.72
@@ -98,7 +98,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Speckled grey from underground veins,\nandesite is the workhorse stone\nof every builder who values utility."
   ANDESITE_SLAB:
     buy: 1.52
     sell: 0.4
@@ -106,7 +106,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Half the height, all the texture —\nthe andesite slab steps and edges\nevery path with grey-speckled stone."
   ANDESITE_STAIRS:
     buy: 3.0
     sell: 0.76
@@ -114,7 +114,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Carved to rise and turn,\nandesite stairs climb with the reliability\nof the stone they came from."
   POLISHED_ANDESITE:
     buy: 3.0
     sell: 0.76
@@ -122,7 +122,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "The roughness ground away to smoothness —\npolished andesite reflects light\nand turns the utilitarian into something elegant."
   POLISHED_ANDESITE_SLAB:
     buy: 1.52
     sell: 0.4
@@ -130,7 +130,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Smooth and even, half the block's height —\nthe polished andesite slab brings\nrefined geometry to every floor and step."
   POLISHED_ANDESITE_STAIRS:
     buy: 3.0
     sell: 0.76
@@ -138,7 +138,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A staircase that has been ground smooth —\npolished andesite steps suit the halls\nof buildings that take themselves seriously."
   BAMBOO_BLOCK:
     buy: 3.8
     sell: 0.96
@@ -146,7 +146,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Stalks packed together and compressed,\nthe bamboo block carries the vertical grain\nof the jungle's fastest-growing plant."
   BAMBOO_MOSAIC:
     buy: 2.2
     sell: 0.56
@@ -154,7 +154,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Bamboo strips woven into a pattern —\nthe mosaic tells the story of the jungle\nin its tight, repeating grain."
   BAMBOO_MOSAIC_SLAB:
     buy: 1.16
     sell: 0.32
@@ -162,7 +162,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Half-height and patterned with bamboo grain,\nthis slab steps down from any floor\nwith the delicacy of woven wood."
   BAMBOO_MOSAIC_STAIRS:
     buy: 3.16
     sell: 0.8
@@ -170,7 +170,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Rising in interlocking bamboo grain,\nthese stairs bring the jungle's texture\nto every level change they occupy."
   BAMBOO_PLANKS:
     buy: 2.0
     sell: 0.52
@@ -178,7 +178,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Split and flattened from the standing stalk,\nbamboo planks build faster than any wood\nand smell faintly of the green jungle."
   BAMBOO_SLAB:
     buy: 1.08
     sell: 0.28
@@ -186,7 +186,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Thin as a reed and useful as any slab —\nbamboo halved provides the step and edge\nfor every lightweight structure."
   BAMBOO_STAIRS:
     buy: 3.16
     sell: 0.8
@@ -194,7 +194,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Light and quick to place,\nbamboo stairs rise in the pale green grain\nof the jungle's most abundant material."
   BLACKSTONE:
     buy: 3.0
     sell: 0.76
@@ -202,7 +202,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Dark and dense from basalt depths,\nblackstone is the Nether's answer\nto cobblestone — rougher and more defiant."
   BLACKSTONE_SLAB:
     buy: 1.6
     sell: 0.4
@@ -210,7 +210,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Half a block of dark Nether stone,\nthe blackstone slab edges every build\nwith the weight of underground basalt."
   BLACKSTONE_STAIRS:
     buy: 3.16
     sell: 0.8
@@ -218,7 +218,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Steps carved from the Nether's own stone —\nblackstone stairs climb with the gravity\nof every basalt fortress built below."
   POLISHED_BLACKSTONE:
     buy: 3.16
     sell: 0.8
@@ -226,7 +226,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Smooth and near-black in the light,\npolished blackstone reflects the torch\nand brings order to the Nether's chaos."
   POLISHED_BLACKSTONE_BRICK_SLAB:
     buy: 1.6
     sell: 0.4
@@ -234,7 +234,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A precise half-brick of polished dark stone —\nthe bastion's favored flooring material\ncut down to the thinnest useful edge."
   POLISHED_BLACKSTONE_BRICK_STAIRS:
     buy: 3.16
     sell: 0.8
@@ -242,7 +242,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Dark bricks cut to rise in steps —\nthe blackstone brick stair belongs\nin the halls of every Nether fortress."
   POLISHED_BLACKSTONE_BRICKS:
     buy: 3.16
     sell: 0.8
@@ -250,7 +250,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Smoothed and mortared into even bricks —\npolished blackstone bricks are what bastions\nare built from and what builders covet."
   POLISHED_BLACKSTONE_SLAB:
     buy: 1.6
     sell: 0.4
@@ -258,7 +258,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Polished dark stone at half the height —\nthe slab steps between levels\nwith clean, dark precision."
   POLISHED_BLACKSTONE_STAIRS:
     buy: 3.16
     sell: 0.8
@@ -266,7 +266,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "The smoothest stairway the Nether offers —\npolished blackstone steps climb in silence\ntoward whatever the bastion holds at the top."
   BOOKSHELF:
     buy: 476.48
     sell: 119.12
@@ -274,7 +274,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Stacked with volumes and ambition,\nthe bookshelf surrounds enchanting tables\nwith the knowledge needed for the highest levels."
   CHISELED_BOOKSHELF:
     buy: 35.08
     sell: 8.8
@@ -282,7 +282,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A shelf carved to hold up to six books\nand remember which was placed last —\nredstone reads the stories you've stored."
   BRICK_SLAB:
     buy: 194.52
     sell: 48.64
@@ -290,7 +290,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Half the height and all the character —\nbrick slabs step down from paths\nwith the warm red tone of fired clay."
   BRICK_STAIRS:
     buy: 389.0
     sell: 97.28
@@ -298,7 +298,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Each step fired from red clay,\nbrick stairs climb toward the upper floors\nof every warm-toned build."
   BRICKS:
     buy: 370.44
     sell: 92.64
@@ -306,7 +306,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Clay and fire and mortar —\nthe brick is civilization's oldest promise:\nsolid walls and a roof that lasts."
   BASALT:
     buy: 5.72
     sell: 3.68
@@ -314,7 +314,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Columnar and volcanic from the Nether's depths,\nbasalt rises in perfect pillars\nwhere lava meets blue ice and transforms."
   COBBLESTONE:
     buy: 2.72
     sell: 0.68
@@ -322,7 +322,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "The first stone any pickaxe ever breaks —\ncobblestone has built every wall,\ntower, and road since the beginning."
   COBBLESTONE_SLAB:
     buy: 1.44
     sell: 0.36
@@ -330,7 +330,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Half a cobblestone, all the texture —\nthe slab steps and floors every path\nwith the familiar grey of natural stone."
   COBBLESTONE_STAIRS:
     buy: 2.88
     sell: 0.72
@@ -338,7 +338,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Rough-cut and dependable,\ncobblestone stairs have climbed every hill\nand castle wall in the known world."
   MOSSY_COBBLESTONE:
     buy: 30.28
     sell: 6.08
@@ -346,7 +346,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Stone touched by time and moisture —\nmossy cobblestone carries the weight\nof dungeon walls and jungle temple ruins."
   MOSSY_COBBLESTONE_SLAB:
     buy: 14.96
     sell: 2.24
@@ -354,7 +354,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Half a stone's height, carpeted in moss —\nthis slab belongs at the bottom of stairs\nin ruins that predate every map."
   MOSSY_COBBLESTONE_STAIRS:
     buy: 31.88
     sell: 6.48
@@ -362,7 +362,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Steps worn by rain and overgrown with vine —\nmossy cobblestone stairs lead down into ruins\nthat have been forgotten for generations."
   BLACK_CONCRETE:
     buy: 33.64
     sell: 8.44
@@ -370,7 +370,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Absolute and light-absorbing,\nblack concrete is the architect's shadow —\na color that ends every argument about contrast."
   BLUE_CONCRETE:
     buy: 34.88
     sell: 8.72
@@ -378,7 +378,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Deep ocean and clear sky in one block —\nblue concrete brings the coolness of water\nto every wall and floor it covers."
   BROWN_CONCRETE:
     buy: 34.2
     sell: 8.56
@@ -386,7 +386,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Earthy and grounded in tone,\nbrown concrete suits the bases of builds\nthat want to feel rooted in the world."
   CYAN_CONCRETE:
     buy: 31.24
     sell: 7.84
@@ -394,7 +394,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Between blue and green and brighter than both,\ncyan concrete carries the vibrancy\nof tropical water pressed into a perfect block."
   GRAY_CONCRETE:
     buy: 32.88
     sell: 8.24
@@ -402,7 +402,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Neutral and dependable in any palette —\ngray concrete holds the build together\nwithout demanding attention."
   GREEN_CONCRETE:
     buy: 30.96
     sell: 7.76
@@ -410,7 +410,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Deep forest compressed into a block —\ngreen concrete anchors builds\nwith the weight of ancient trees."
   LIGHT_BLUE_CONCRETE:
     buy: 31.48
     sell: 7.88
@@ -418,7 +418,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "The color of open skies solidified —\nlight blue concrete brightens every build\nand suggests unlimited space above."
   LIGHT_GRAY_CONCRETE:
     buy: 31.48
     sell: 7.88
@@ -426,7 +426,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Soft grey that catches light gently —\nlight gray concrete is the quiet\nbetween the louder colors on either side."
   LIME_CONCRETE:
     buy: 123.48
     sell: 30.88
@@ -434,7 +434,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Bright and insistent as new growth —\nlime concrete announces itself in any build\nand refuses to be overlooked."
   MAGENTA_CONCRETE:
     buy: 123.48
     sell: 30.88
@@ -442,7 +442,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Vivid and unapologetic in any palette,\nmagenta concrete is the block for builders\nwho do not believe in subtle."
   ORANGE_CONCRETE:
     buy: 123.48
     sell: 30.88
@@ -450,7 +450,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Warm as a hearth and twice as bright —\norange concrete brings the energy\nof an autumn sunset into every wall."
   PINK_CONCRETE:
     buy: 123.48
     sell: 30.88
@@ -458,7 +458,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Soft and warm and unmistakably itself —\npink concrete blooms across builds\nwith the confidence of cherry blossoms."
   PURPLE_CONCRETE:
     buy: 123.48
     sell: 30.88
@@ -466,7 +466,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Deep and commanding in any design,\npurple concrete is the color\nof sorcery and deliberate intent."
   RED_CONCRETE:
     buy: 31.48
     sell: 7.88
@@ -474,7 +474,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Bold and declarative across any wall —\nred concrete means what it says\nand says it loudly."
   WHITE_CONCRETE:
     buy: 32.04
     sell: 8.04
@@ -482,7 +482,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Clean and sharp as any blank page —\nwhite concrete is the foundation\nfor every palette that follows."
   YELLOW_CONCRETE:
     buy: 31.28
     sell: 7.84
@@ -490,7 +490,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Sunlight pressed solid and permanent —\nyellow concrete carries the warmth\nof open fields into every structure."
   CHISELED_COPPER:
     buy: 4.08
     sell: 1.04
@@ -498,7 +498,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Carved with the precision of a smith\nwho knew the pattern by heart —\nfresh copper before the air touches it."
   EXPOSED_CHISELED_COPPER:
     buy: 4.28
     sell: 1.08
@@ -506,7 +506,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "The carving has begun to weather —\nexposed chiseled copper shows the first\ntint of change along its etched edges."
   OXIDIZED_CHISELED_COPPER:
     buy: 4.72
     sell: 1.2
@@ -514,7 +514,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Green has claimed the carving fully —\noxidized chiseled copper is the end\nof copper's long conversation with the air."
   OXIDIZED_COPPER:
     buy: 17.88
     sell: 4.48
@@ -522,7 +522,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "The full transformation complete —\noxidized copper is green and permanent,\na monument to patient weathering."
   WAXED_COPPER_BLOCK:
     buy: 29.44
     sell: 7.36
@@ -530,7 +530,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Sealed against the air and preserved —\nwaxed copper holds its orange-gold tone\nexactly as the day it was sealed."
   WAXED_CUT_COPPER:
     buy: 7.76
     sell: 1.96
@@ -538,7 +538,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Cut into a grid pattern and waxed still —\nthis copper holds its shine\nbehind a layer of honeycomb protection."
   WAXED_CUT_COPPER_SLAB:
     buy: 3.88
     sell: 1.0
@@ -546,7 +546,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Half the height and sealed in wax —\nthis cut copper slab will stay bright\nno matter how long it sits in the weather."
   WAXED_CUT_COPPER_STAIRS:
     buy: 7.76
     sell: 1.96
@@ -554,7 +554,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Rising in cut copper sealed against time,\nthese stairs carry the gridded shine\nof fresh copper preserved indefinitely."
   WAXED_EXPOSED_COPPER:
     buy: 30.28
     sell: 7.6
@@ -562,7 +562,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "The first touch of weathering sealed in place —\nwaxed exposed copper keeps the blush\nof early oxidation permanently."
   WAXED_EXPOSED_CUT_COPPER:
     buy: 31.76
     sell: 4.92
@@ -570,7 +570,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Cut and slightly weathered and then waxed —\nthis copper holds the subtle blush\nof early oxidation in its grid pattern."
   WAXED_EXPOSED_CUT_COPPER_SLAB:
     buy: 4.0
     sell: 1.0
@@ -578,7 +578,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A half-slab of early-weathered copper\nsealed against further change —\nthe blush of exposure preserved at this stage."
   WAXED_EXPOSED_CUT_COPPER_STAIRS:
     buy: 7.96
     sell: 2.0
@@ -586,7 +586,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Steps of lightly weathered copper\nheld at this moment by wax —\na staircase that stopped changing mid-transition."
   WAXED_OXIDIZED_COPPER:
     buy: 32.0
     sell: 8.0
@@ -594,7 +594,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Fully green and finally sealed —\nwaxed oxidized copper is the last stage\nof a journey, preserved in perpetuity."
   WAXED_OXIDIZED_CUT_COPPER:
     buy: 33.6
     sell: 6.8
@@ -602,7 +602,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Green grid lines sealed against reversal —\nwaxed oxidized cut copper is the texture\nof old age held exactly at its peak."
   WAXED_OXIDIZED_CUT_COPPER_SLAB:
     buy: 4.2
     sell: 1.08
@@ -610,7 +610,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Half a block of green copper sealed in place —\nthis slab carries the final oxidized stage\npreserved at half the height."
   WAXED_OXIDIZED_CUT_COPPER_STAIRS:
     buy: 8.4
     sell: 2.12
@@ -618,7 +618,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Green stairs sealed at the end of their journey —\noxidized copper steps that will never\nchange color again, no matter what falls."
   WAXED_WEATHERED_COPPER:
     buy: 31.12
     sell: 7.8
@@ -626,7 +626,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Midway through its transformation and sealed —\nwaxed weathered copper holds the teal\nof copper in its third stage, forever."
   WAXED_WEATHERED_CUT_COPPER:
     buy: 32.68
     sell: 5.52
@@ -634,7 +634,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "The grid pattern in teal-green copper,\nsealed mid-transformation by honeycomb —\ntime arrested at its most interesting."
   WAXED_WEATHERED_CUT_COPPER_SLAB:
     buy: 4.12
     sell: 1.04
@@ -642,7 +642,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Half-height and mid-weathered and sealed —\nthis slab will carry its teal hue\nto the end of every build it edges."
   WAXED_WEATHERED_CUT_COPPER_STAIRS:
     buy: 8.2
     sell: 2.08
@@ -650,7 +650,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Teal steps sealed in the weathered stage —\nthese stairs rise with the soft green\nof copper caught between orange and oxidized."
   WEATHERED_CHISELED_COPPER:
     buy: 4.48
     sell: 1.12
@@ -658,7 +658,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "The carving has gone teal —\nweathered chiseled copper shows the pattern\nhalf-hidden beneath the advancing green."
   COBBLED_DEEPSLATE:
     buy: 2.72
     sell: 0.68
@@ -666,7 +666,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Broken from the deep-earth layer below stone,\ncobbled deepslate is darker and heavier\nthan anything quarried above Y=0."
   COBBLED_DEEPSLATE_SLAB:
     buy: 1.44
     sell: 0.36
@@ -674,7 +674,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Half the height of the deep earth's stone —\nthe cobbled deepslate slab steps down\nwith the weight of everything above it."
   COBBLED_DEEPSLATE_STAIRS:
     buy: 2.88
     sell: 0.72
@@ -682,7 +682,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Steps carved from the deepest stone —\ncobbled deepslate stairs descend\ntoward things that prefer not to be found."
   DEEPSLATE:
     buy: 2.88
     sell: 0.72
@@ -690,7 +690,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "The layer beneath regular stone,\ndeepslate is darker and twice as stubborn —\nit yields only to the most determined pickaxe."
   DEEPSLATE_TILE_SLAB:
     buy: 1.68
     sell: 0.44
@@ -698,7 +698,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Dark tiles at half the height —\ndeepslate tile slabs bring the deep earth's\ntexture to every floor they cover."
   DEEPSLATE_TILE_STAIRS:
     buy: 3.32
     sell: 0.84
@@ -706,7 +706,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Tiled deepslate cut into rising steps —\nthese stairs carry the dark and deliberate\ntexture of the underground's finest stone."
   DEEPSLATE_TILES:
     buy: 3.16
     sell: 0.8
@@ -714,7 +714,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Smooth tiles cut from the deep earth —\ndeepslate tiles bring a refined darkness\nto every wall and floor they line."
   DIORITE:
     buy: 2.88
     sell: 0.72
@@ -722,7 +722,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "White-speckled and contrasting with granite,\ndiorite is the light stone\nin every palette that needs balance."
   DIORITE_SLAB:
     buy: 1.52
     sell: 0.4
@@ -730,7 +730,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Half the height of pale speckled stone —\nthe diorite slab steps across floors\nwith the clean, white-flecked grace of granite's lighter cousin."
   DIORITE_STAIRS:
     buy: 3.0
     sell: 0.76
@@ -738,7 +738,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Pale and speckled as the mountain it came from —\ndiorite stairs rise in the lightest stone\nthe underground offers."
   POLISHED_DIORITE:
     buy: 3.0
     sell: 0.76
@@ -746,7 +746,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "The rough edges removed and the surface shone —\npolished diorite is white-flecked marble\nfor every build that wants brightness."
   POLISHED_DIORITE_SLAB:
     buy: 1.52
     sell: 0.4
@@ -754,7 +754,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Smooth and pale at half the height —\npolished diorite slabs step and edge\nwith the cleanest face the stone family offers."
   POLISHED_DIORITE_STAIRS:
     buy: 3.0
     sell: 0.76
@@ -762,7 +762,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "White-speckled steps polished to a shine —\npolished diorite stairs ascend\nwith the brightness of refined mountain stone."
   CLAY:
     buy: 84.0
     sell: 21.0
@@ -770,7 +770,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Pulled from riverbed and lakeshore,\nclay is the world's most patient material —\nsoft now, fired into permanence later."
   CRIMSON_NYLIUM:
     buy: 24.0
     sell: 6.0
@@ -778,7 +778,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Nether stone colonized by crimson fungi —\nthis red-veined ground covers the warped forest's\nneighbor with an alien carpet."
   DIRT:
     buy: 12.0
     sell: 3.0
@@ -786,7 +786,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "The world's most abundant material,\ndirt is what everything grows from\nand what every foundation rests upon."
   GRASS_BLOCK:
     buy: 32.0
     sell: 8.0
@@ -794,7 +794,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "The sunlit face of the world,\ngrass covers every Overworld plain\nand returns after every disturbance."
   GRAVEL:
     buy: 32.0
     sell: 8.0
@@ -802,7 +802,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Loose and unstable above any gap —\ngravel falls with a sound\nand occasionally yields the flint within."
   MYCELIUM:
     buy: 32.0
     sell: 8.0
@@ -810,7 +810,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "The mushroom island's living floor —\nmycelium spreads and spreads\nand resists every other grass's advance."
   PODZOL:
     buy: 32.0
     sell: 8.0
@@ -818,7 +818,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "The dark soil beneath the mega spruce —\npodzol holds the moisture of the taiga\nand grows mushrooms without complaint."
   WARPED_NYLIUM:
     buy: 24.0
     sell: 6.0
@@ -826,7 +826,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Teal fungal growth across Nether stone —\nwarped nylium carpets the twisted forest's floor\nwith an alien coolness."
   END_STONE:
     buy: 20.0
     sell: 5.0
@@ -834,7 +834,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "The pale foundation of the End itself,\nend stone resists explosions\nwith the stubbornness of a world that has no beginning."
   END_STONE_BRICK_SLAB:
     buy: 10.52
     sell: 2.64
@@ -842,7 +842,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Half a pale End brick at the step's edge —\nthis slab carries the otherworldly grey\nof the outer islands into every floor."
   END_STONE_BRICK_STAIRS:
     buy: 21.0
     sell: 5.28
@@ -850,7 +850,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Pale steps of the outer island's stone —\nend stone brick stairs lead toward\nthe towers that float above the void."
   END_STONE_BRICKS:
     buy: 21.0
     sell: 5.28
@@ -858,7 +858,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "The End's pale stone pressed into bricks —\nthe outer island's architecture in block form,\nperfect for builds that belong nowhere."
   GLASS:
     buy: 25.2
     sell: 6.32
@@ -866,7 +866,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Sand transformed by fire into clarity —\nglass lets in the light\nand asks only to be protected."
   GLASS_PANE:
     buy: 9.96
     sell: 2.52
@@ -874,7 +874,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Thin as the window it forms,\nglass pane fills every gap\nwith the transparent promise of the view beyond."
   TINTED_GLASS:
     buy: 24.28
     sell: 6.08
@@ -882,7 +882,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Amethyst-darkened sand and fire —\ntinted glass blocks the light completely\nwhile maintaining its transparent structure."
   GRANITE:
     buy: 2.88
     sell: 0.72
@@ -890,7 +890,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Pink-flecked and warm from the underground,\ngranite is the stone of choice for builders\nwho want earthy warmth in their walls."
   GRANITE_SLAB:
     buy: 1.52
     sell: 0.4
@@ -898,7 +898,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Half a block of warm pink-flecked stone —\ngranite slabs step and edge\nwith the familiar warmth of the underground."
   GRANITE_STAIRS:
     buy: 3.0
     sell: 0.76
@@ -906,7 +906,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Warm and pink-speckled as the mountain —\ngranite stairs ascend with the easy comfort\nof stone quarried from where it grew."
   POLISHED_GRANITE:
     buy: 3.0
     sell: 0.76
@@ -914,7 +914,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Ground smooth until it gleams with warmth —\npolished granite is the premium face\nof the world's most common pink stone."
   POLISHED_GRANITE_SLAB:
     buy: 1.52
     sell: 0.4
@@ -922,7 +922,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Smooth and warm at half the height —\npolished granite slabs bring a polished\nearthy tone to every step and threshold."
   POLISHED_GRANITE_STAIRS:
     buy: 3.0
     sell: 0.76
@@ -930,7 +930,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Smooth warm steps rising from the earth —\npolished granite stairs suit the halls\nof buildings that value warmth above all."
   GLOWSTONE:
     buy: 117.6
     sell: 29.4
@@ -938,7 +938,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "The Nether's ceiling compressed into blocks —\nglowstone shines without burning\nand charges potions to their most powerful form."
   MUD:
     buy: 12.76
     sell: 3.2
@@ -946,7 +946,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Water and dirt persuaded into softness —\nmud squelches underfoot in the mangrove swamp\nand remembers every impression."
   MUD_BRICK_SLAB:
     buy: 18.96
     sell: 4.76
@@ -954,7 +954,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Half a dried mud brick at the edge —\nthis slab carries the warm earthy tone\nof ancient construction into every step."
   MUD_BRICK_STAIRS:
     buy: 37.92
     sell: 9.48
@@ -962,7 +962,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Steps pressed from mud and dried to permanence —\nmud brick stairs rise with the warmth\nof the oldest human building material."
   MUD_BRICK_WALL:
     buy: 37.92
     sell: 9.48
@@ -970,7 +970,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A fence of dried mud bricks standing firm —\nthis wall separates the ancient settlement\nfrom whatever waits beyond it."
   MUD_BRICKS:
     buy: 36.12
     sell: 9.04
@@ -978,7 +978,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Mud pressed into bricks and left to dry —\nthe oldest building material on earth\nfound a home in the mangrove swamp."
   PACKED_MUD:
     buy: 34.4
     sell: 8.6
@@ -986,7 +986,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Compressed and dried until firm,\npacked mud holds its shape without crumbling —\nthe step before brick that still does the job."
   NETHERRACK:
     buy: 0.8
     sell: 0.2
@@ -994,7 +994,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "The Nether's red and endless foundation —\nnetherrack burns forever once lit\nand goes all the way down."
   NETHER_BRICK_SLAB:
     buy: 1.88
     sell: 0.48
@@ -1002,7 +1002,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Half a Nether brick at each step's edge —\nthis slab marks every floor and passage\nof the fortress built in fire."
   NETHER_BRICK_STAIRS:
     buy: 3.72
     sell: 0.96
@@ -1010,7 +1010,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Dark and purposeful in their rise —\nNether brick stairs climb through fortresses\nwhere the corridors were never safe."
   NETHER_BRICKS:
     buy: 3.56
     sell: 0.92
@@ -1018,7 +1018,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Fired from netherrack itself,\nNether bricks are the building material\nof every fortress that endures fire and time."
   RED_NETHER_BRICK_SLAB:
     buy: 17.12
     sell: 4.28
@@ -1026,7 +1026,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Darker red than its origin,\nthis slab carries the blood-brick tone\nof a fortress built for intimidation."
   RED_NETHER_BRICK_STAIRS:
     buy: 34.24
     sell: 8.56
@@ -1034,7 +1034,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Deep red steps rising through the heat —\nred Nether brick stairs belong in structures\nthat mean to be taken very seriously."
   RED_NETHER_BRICKS:
     buy: 32.64
     sell: 8.16
@@ -1042,7 +1042,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Deeper and more threatening than standard Nether brick —\nred Nether bricks carry the color of\na fortress that has seen more fire."
   CRYING_OBSIDIAN:
     buy: 250.0
     sell: 62.52
@@ -1050,7 +1050,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Obsidian that weeps purple light —\nit anchors the respawn point\nto the Nether with charged glowstone."
   OBSIDIAN:
     buy: 125.0
     sell: 31.28
@@ -1058,7 +1058,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Formed where lava meets water and hardens —\nobsidian resists nearly everything\nand frames every gateway to the Nether."
   PRISMARINE:
     buy: 117.6
     sell: 29.4
@@ -1066,7 +1066,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Slowly cycling through shades of blue-green —\nprismarine is the ocean monument's\nliving stone, never quite the same color twice."
   PRISMARINE_SLAB:
     buy: 61.76
     sell: 15.44
@@ -1074,7 +1074,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Half the height of ocean stone —\nprismarine slabs step and edge underwater\nwith the shifting blue of deep-sea architecture."
   PRISMARINE_STAIRS:
     buy: 123.48
     sell: 30.88
@@ -1082,7 +1082,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Steps of shifting ocean stone —\nprismarine stairs descend through the monument\nin colors that pulse with quiet bioluminescence."
   PRISMARINE_BRICK_SLAB:
     buy: 138.92
     sell: 34.76
@@ -1090,7 +1090,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Brick-cut ocean stone at half the height —\nprismarine brick slabs carry the monument's\ntexture to every underwater floor."
   PRISMARINE_BRICK_STAIRS:
     buy: 277.84
     sell: 69.48
@@ -1098,7 +1098,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Bricks of the deep pressed into steps —\nprismarine brick stairs ascend through the monument\nin the carefully laid stone of ancient builders."
   PRISMARINE_BRICKS:
     buy: 264.6
     sell: 66.16
@@ -1106,7 +1106,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Carefully mortared ocean bricks\nthat compose the inner walls of the monument —\neach one slowly shifting color in the current."
   DARK_PRISMARINE:
     buy: 256.2
     sell: 64.08
@@ -1114,7 +1114,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "The deep heart of the ocean monument —\ndark prismarine is nearly teal-black\nand guards the elder guardian's chamber."
   DARK_PRISMARINE_SLAB:
     buy: 134.52
     sell: 33.64
@@ -1122,7 +1122,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "The deepest ocean stone at half the height —\ndark prismarine slabs edge the innermost\nchambers of the monument's core."
   DARK_PRISMARINE_STAIRS:
     buy: 269.04
     sell: 67.28
@@ -1130,7 +1130,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Steps of the deepest monument stone —\ndark prismarine stairs descend toward\nthe chamber where the elder guardian waits."
   PURPUR_BLOCK:
     buy: 13.24
     sell: 3.32
@@ -1138,7 +1138,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "The End's own decorative stone —\npurpur is built from chorus flowers\nand carries the lavender of the outer islands."
   PURPUR_SLAB:
     buy: 6.96
     sell: 1.76
@@ -1146,7 +1146,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Half a block of the End's lavender stone —\npurpur slabs step through the outer islands\nin the color of chorus flowers."
   PURPUR_STAIRS:
     buy: 13.92
     sell: 3.48
@@ -1154,7 +1154,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Lavender steps rising through End city corridors —\npurpur stairs climb the towers\nbuilt from the outer islands' own material."
   QUARTZ_BRICKS:
     buy: 145.88
     sell: 36.48
@@ -1162,7 +1162,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "White quartz pressed into a brick pattern —\nclean lines and clean color\nin every wall these bricks are placed in."
   QUARTZ_SLAB:
     buy: 72.96
     sell: 18.24
@@ -1170,7 +1170,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Half a quartz block at the step's edge —\nthe quartz slab brings the brightness\nof Nether crystal to every floor it covers."
   QUARTZ_STAIRS:
     buy: 145.88
     sell: 36.48
@@ -1178,7 +1178,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "White and pristine in every direction they rise —\nquartz stairs ascend through modern builds\nwith the cleanest face any stone offers."
   RED_SAND:
     buy: 32.0
     sell: 8.0
@@ -1186,7 +1186,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Desert sands stained deep with iron —\nred sand builds the badlands mesas\nand falls with the same unstable grace as its paler cousin."
   SAND:
     buy: 24.0
     sell: 6.0
@@ -1194,7 +1194,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Shifted by every wind and every step —\nsand builds deserts and beaches\nand becomes glass when it meets the fire."
   SANDSTONE:
     buy: 48.0
     sell: 12.0
@@ -1202,7 +1202,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Compressed sand layers pressed into stone —\nsandstone carves beautifully and holds\nthe warmth of every desert it was born in."
   SANDSTONE_SLAB:
     buy: 25.2
     sell: 6.32
@@ -1210,7 +1210,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Half the height of desert stone —\nsandstone slabs step through temple corridors\nwith the warm gold of compressed sand."
   SANDSTONE_STAIRS:
     buy: 50.4
     sell: 12.6
@@ -1218,7 +1218,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Warm steps carved from desert stone —\nsandstone stairs ascend through temples\nand pyramids in the color of the dunes."
   SMOOTH_SANDSTONE:
     buy: 50.4
     sell: 12.6
@@ -1226,7 +1226,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "The rough face of the desert ground smooth —\nsmooth sandstone is clean and warm\nand complements every temple's interior."
   SMOOTH_SANDSTONE_SLAB:
     buy: 26.48
     sell: 6.64
@@ -1234,7 +1234,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Flat and smooth at half the height —\nsmooth sandstone slabs step down from\nevery desert floor with clean simplicity."
   SMOOTH_SANDSTONE_STAIRS:
     buy: 52.92
     sell: 13.24
@@ -1242,7 +1242,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "The cleanest steps the desert offers —\nsmooth sandstone stairs ascend without texture,\nwarm and uninterrupted."
   RED_SANDSTONE:
     buy: 134.4
     sell: 33.6
@@ -1250,7 +1250,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "The badlands' own stone compressed and ready —\nred sandstone carries the deep terracotta warmth\nof mesas that scrape every passing cloud."
   RED_SANDSTONE_SLAB:
     buy: 70.56
     sell: 17.64
@@ -1258,7 +1258,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Half a block of deep red desert stone —\nthis slab steps and edges\nwith the warmth of the badlands biome."
   RED_SANDSTONE_STAIRS:
     buy: 141.12
     sell: 35.28
@@ -1266,7 +1266,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Deep red steps from the desert's richest stone —\nred sandstone stairs ascend through mesa structures\nwith all the warmth of a sunset canyon."
   SMOOTH_RED_SANDSTONE:
     buy: 141.12
     sell: 35.28
@@ -1274,7 +1274,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "The rough face of badlands stone made smooth —\nsmooth red sandstone is deep and clean\nand carries the richest color the desert has."
   SMOOTH_RED_SANDSTONE_SLAB:
     buy: 74.12
     sell: 18.56
@@ -1282,7 +1282,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Smooth and deeply red at half the height —\nthis slab carries the mesa's warmth\nto every floor it edges."
   SMOOTH_RED_SANDSTONE_STAIRS:
     buy: 148.2
     sell: 37.08
@@ -1290,7 +1290,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "The smoothest version of the badlands' stone —\nthese stairs ascend in rich, unbroken red\nfrom every desert structure's finest floor."
   STONE:
     buy: 2.88
     sell: 0.72
@@ -1298,7 +1298,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "The world's most fundamental block —\nstone forms every mountain and every cave\nand yields to every pickaxe eventually."
   STONE_SLAB:
     buy: 1.52
     sell: 0.4
@@ -1306,7 +1306,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Half the height of the world's most common block —\nstone slabs step and edge every structure\nwith the reliable grey of mountain stone."
   STONE_STAIRS:
     buy: 3.0
     sell: 0.76
@@ -1314,7 +1314,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "The most fundamental staircase material —\nstone stairs climb every hill and tower\nwith steady grey reliability."
   STONE_BRICK_SLAB:
     buy: 1.52
     sell: 0.4
@@ -1322,7 +1322,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Mortared stone at half the height —\nstone brick slabs step down from\nfortresses and dungeons with precise grey edges."
   STONE_BRICK_STAIRS:
     buy: 3.0
     sell: 0.76
@@ -1330,7 +1330,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Cut and mortared steps of classic grey stone —\nstone brick stairs rise through every castle,\ndungeon, and stronghold in the world."
   STONE_BRICKS:
     buy: 3.0
     sell: 0.76
@@ -1338,7 +1338,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Mortared and even across every wall —\nstone bricks are the building block\nof every stronghold and every fortress."
   MOSSY_STONE_BRICK_SLAB:
     buy: 1.6
     sell: 0.4
@@ -1346,7 +1346,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Old stone brick carpeted in green at half the height —\nthis slab belongs at the bottom of stairs\nin rooms the sun has never reached."
   MOSSY_STONE_BRICK_STAIRS:
     buy: 32.2
     sell: 6.56
@@ -1354,7 +1354,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Mossy steps descending into the forgotten —\nthese stairs belong in structures where\nthe builders left and the moss moved in."
   MOSSY_STONE_BRICKS:
     buy: 30.56
     sell: 6.16
@@ -1362,7 +1362,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Stronghold stone reclaimed by the earth —\nmossy stone bricks carry the weight\nof centuries and the color of abandonment."
   TERRACOTTA:
     buy: 88.2
     sell: 22.08
@@ -1370,7 +1370,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Clay fired to amber warmth,\nterracotta builds the warm interior walls\nof every mesa temple and desert home."
   CHISELED_TUFF:
     buy: 8.4
     sell: 2.12
@@ -1378,7 +1378,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "The volcanic stone carved with deliberation —\nchiseled tuff carries the artisan's mark\nacross a material that once lay unmolded."
   CHISELED_TUFF_BRICKS:
     buy: 8.4
     sell: 2.12
@@ -1386,7 +1386,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Tuff bricks with the chisel's pattern applied —\nthis block combines the texture of mortar\nwith the detail of a skilled carver's hand."
   POLISHED_TUFF:
     buy: 8.4
     sell: 2.12
@@ -1394,7 +1394,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "The rough volcanic surface ground to smoothness —\npolished tuff is grey-green and clean\nand suits any build that needs subtlety."
   POLISHED_TUFF_SLAB:
     buy: 4.2
     sell: 1.08
@@ -1402,7 +1402,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Smooth tuff at half the height —\npolished tuff slabs step and edge\nwith the grey-green face of volcanic stone."
   POLISHED_TUFF_STAIRS:
     buy: 8.4
     sell: 2.12
@@ -1410,7 +1410,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Smoothed volcanic stone carved into steps —\npolished tuff stairs ascend with grey-green subtlety\nthrough any build that values restraint."
   TUFF:
     buy: 8.0
     sell: 2.0
@@ -1418,7 +1418,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Volcanic stone cooled and compressed underground —\ntuff is grey-green and quiet,\na building block from the earth's deep past."
   TUFF_BRICK_SLAB:
     buy: 4.2
     sell: 1.08
@@ -1426,7 +1426,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Tuff bricks at half the height —\nthis slab edges and steps\nwith the mortared grey of volcanic stone."
   TUFF_BRICK_STAIRS:
     buy: 8.4
     sell: 2.12
@@ -1434,7 +1434,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Bricks of volcanic stone carved into steps —\ntuff brick stairs ascend with the grey-green\ntexture of underground masonry."
   TUFF_BRICKS:
     buy: 8.4
     sell: 2.12
@@ -1442,31 +1442,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
-  CHERRY_LOG:
-    buy: 12.0
-    sell: 3.0
-    kills-required: 0
-    s-kills-required: 0
-    survivals-required: 0
-    badge-required: ""
-    lore: []
-  CHERRY_PLANKS:
-    buy: 3.16
-    sell: 0.8
-    kills-required: 0
-    s-kills-required: 0
-    survivals-required: 0
-    badge-required: ""
-    lore: []
-  CHERRY_SLAB:
-    buy: 1.68
-    sell: 0.44
-    kills-required: 0
-    s-kills-required: 0
-    survivals-required: 0
-    badge-required: ""
-    lore: []
+    lore: "Tuff mortared into even bricks —\nthe volcanic stone finds its purpose\nin the walls of every trial chamber."
   TUFF_SLAB:
     buy: 4.2
     sell: 1.08
@@ -1474,7 +1450,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Half the height of volcanic grey stone —\nthe tuff slab steps and edges\nwith the quiet color of underground geology."
   TUFF_STAIRS:
     buy: 8.4
     sell: 2.12
@@ -1482,327 +1458,31 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
-  ACACIA_LOG:
+    lore: "Volcanic stone carved into rising steps —\ntuff stairs climb with the subtle grey-green\nof stone formed far from any surface light."
+  CHERRY_LOG:
     buy: 12.0
     sell: 3.0
     kills-required: 0
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
-  ACACIA_PLANKS:
-    buy: 4.44
-    sell: 1.12
-    kills-required: 0
-    s-kills-required: 0
-    survivals-required: 0
-    badge-required: ""
-    lore: []
-  ACACIA_SLAB:
-    buy: 2.32
-    sell: 0.6
-    kills-required: 0
-    s-kills-required: 0
-    survivals-required: 0
-    badge-required: ""
-    lore: []
-  ACACIA_STAIRS:
-    buy: 6.96
-    sell: 1.76
-    kills-required: 0
-    s-kills-required: 0
-    survivals-required: 0
-    badge-required: ""
-    lore: []
-  ACACIA_WOOD:
-    buy: 16.8
-    sell: 4.2
-    kills-required: 0
-    s-kills-required: 0
-    survivals-required: 0
-    badge-required: ""
-    lore: []
-  BIRCH_LOG:
-    buy: 12.0
-    sell: 3.0
-    kills-required: 0
-    s-kills-required: 0
-    survivals-required: 0
-    badge-required: ""
-    lore: []
-  BIRCH_PLANKS:
-    buy: 4.44
-    sell: 1.12
-    kills-required: 0
-    s-kills-required: 0
-    survivals-required: 0
-    badge-required: ""
-    lore: []
-  BIRCH_SLAB:
-    buy: 2.32
-    sell: 0.6
-    kills-required: 0
-    s-kills-required: 0
-    survivals-required: 0
-    badge-required: ""
-    lore: []
-  BIRCH_STAIRS:
-    buy: 6.96
-    sell: 1.76
-    kills-required: 0
-    s-kills-required: 0
-    survivals-required: 0
-    badge-required: ""
-    lore: []
-  BIRCH_WOOD:
-    buy: 16.8
-    sell: 4.2
-    kills-required: 0
-    s-kills-required: 0
-    survivals-required: 0
-    badge-required: ""
-    lore: []
-  CRIMSON_HYPHAE:
-    buy: 16.8
-    sell: 4.2
-    kills-required: 0
-    s-kills-required: 0
-    survivals-required: 0
-    badge-required: ""
-    lore: []
-  CRIMSON_PLANKS:
+    lore: "Pink-barked and soft in the grove,\nthe cherry log stands under its own blossoms\nand falls in a shower of petals."
+  CHERRY_PLANKS:
     buy: 3.16
     sell: 0.8
     kills-required: 0
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
-  CRIMSON_SLAB:
+    lore: "Pale pink-toned wood split from the cherry log —\ncherry planks build warmly and subtly\nin the color of spring mornings."
+  CHERRY_SLAB:
     buy: 1.68
     sell: 0.44
     kills-required: 0
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
-  CRIMSON_STAIRS:
-    buy: 5.0
-    sell: 1.28
-    kills-required: 0
-    s-kills-required: 0
-    survivals-required: 0
-    badge-required: ""
-    lore: []
-  CRIMSON_STEM:
-    buy: 12.0
-    sell: 3.0
-    kills-required: 0
-    s-kills-required: 0
-    survivals-required: 0
-    badge-required: ""
-    lore: []
-  DARK_OAK_LOG:
-    buy: 12.0
-    sell: 3.0
-    kills-required: 0
-    s-kills-required: 0
-    survivals-required: 0
-    badge-required: ""
-    lore: []
-  DARK_OAK_PLANKS:
-    buy: 4.44
-    sell: 1.12
-    kills-required: 0
-    s-kills-required: 0
-    survivals-required: 0
-    badge-required: ""
-    lore: []
-  DARK_OAK_SLAB:
-    buy: 2.32
-    sell: 0.6
-    kills-required: 0
-    s-kills-required: 0
-    survivals-required: 0
-    badge-required: ""
-    lore: []
-  DARK_OAK_STAIRS:
-    buy: 6.96
-    sell: 1.76
-    kills-required: 0
-    s-kills-required: 0
-    survivals-required: 0
-    badge-required: ""
-    lore: []
-  DARK_OAK_WOOD:
-    buy: 16.8
-    sell: 4.2
-    kills-required: 0
-    s-kills-required: 0
-    survivals-required: 0
-    badge-required: ""
-    lore: []
-  JUNGLE_LOG:
-    buy: 12.0
-    sell: 3.0
-    kills-required: 0
-    s-kills-required: 0
-    survivals-required: 0
-    badge-required: ""
-    lore: []
-  JUNGLE_PLANKS:
-    buy: 4.44
-    sell: 1.12
-    kills-required: 0
-    s-kills-required: 0
-    survivals-required: 0
-    badge-required: ""
-    lore: []
-  JUNGLE_SLAB:
-    buy: 2.32
-    sell: 0.6
-    kills-required: 0
-    s-kills-required: 0
-    survivals-required: 0
-    badge-required: ""
-    lore: []
-  JUNGLE_STAIRS:
-    buy: 6.96
-    sell: 1.76
-    kills-required: 0
-    s-kills-required: 0
-    survivals-required: 0
-    badge-required: ""
-    lore: []
-  JUNGLE_WOOD:
-    buy: 16.8
-    sell: 4.2
-    kills-required: 0
-    s-kills-required: 0
-    survivals-required: 0
-    badge-required: ""
-    lore: []
-  MANGROVE_LOG:
-    buy: 12.0
-    sell: 3.0
-    kills-required: 0
-    s-kills-required: 0
-    survivals-required: 0
-    badge-required: ""
-    lore: []
-  MANGROVE_PLANKS:
-    buy: 3.16
-    sell: 0.8
-    kills-required: 0
-    s-kills-required: 0
-    survivals-required: 0
-    badge-required: ""
-    lore: []
-  MANGROVE_SLAB:
-    buy: 1.68
-    sell: 0.44
-    kills-required: 0
-    s-kills-required: 0
-    survivals-required: 0
-    badge-required: ""
-    lore: []
-  MANGROVE_STAIRS:
-    buy: 5.0
-    sell: 1.28
-    kills-required: 0
-    s-kills-required: 0
-    survivals-required: 0
-    badge-required: ""
-    lore: []
-  MANGROVE_WOOD:
-    buy: 16.8
-    sell: 4.2
-    kills-required: 0
-    s-kills-required: 0
-    survivals-required: 0
-    badge-required: ""
-    lore: []
-  OAK_LOG:
-    buy: 12.0
-    sell: 3.0
-    kills-required: 0
-    s-kills-required: 0
-    survivals-required: 0
-    badge-required: ""
-    lore: []
-  OAK_PLANKS:
-    buy: 4.44
-    sell: 1.12
-    kills-required: 0
-    s-kills-required: 0
-    survivals-required: 0
-    badge-required: ""
-    lore: []
-  OAK_SLAB:
-    buy: 2.32
-    sell: 0.6
-    kills-required: 0
-    s-kills-required: 0
-    survivals-required: 0
-    badge-required: ""
-    lore: []
-  OAK_STAIRS:
-    buy: 6.96
-    sell: 1.76
-    kills-required: 0
-    s-kills-required: 0
-    survivals-required: 0
-    badge-required: ""
-    lore: []
-  OAK_WOOD:
-    buy: 16.8
-    sell: 4.2
-    kills-required: 0
-    s-kills-required: 0
-    survivals-required: 0
-    badge-required: ""
-    lore: []
-  SPRUCE_LOG:
-    buy: 12.0
-    sell: 3.0
-    kills-required: 0
-    s-kills-required: 0
-    survivals-required: 0
-    badge-required: ""
-    lore: []
-  SPRUCE_PLANKS:
-    buy: 4.44
-    sell: 1.12
-    kills-required: 0
-    s-kills-required: 0
-    survivals-required: 0
-    badge-required: ""
-    lore: []
-  SPRUCE_SLAB:
-    buy: 2.32
-    sell: 0.6
-    kills-required: 0
-    s-kills-required: 0
-    survivals-required: 0
-    badge-required: ""
-    lore: []
-  SPRUCE_STAIRS:
-    buy: 6.96
-    sell: 1.76
-    kills-required: 0
-    s-kills-required: 0
-    survivals-required: 0
-    badge-required: ""
-    lore: []
-  SPRUCE_WOOD:
-    buy: 16.8
-    sell: 4.2
-    kills-required: 0
-    s-kills-required: 0
-    survivals-required: 0
-    badge-required: ""
-    lore: []
+    lore: "Half the height of pink-warm wood —\ncherry slabs step down from every floor\nwith the delicacy of the grove they came from."
   CHERRY_STAIRS:
     buy: 5.0
     sell: 1.28
@@ -1810,7 +1490,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Pale rose-toned steps that rise lightly —\ncherry stairs suit any build\nthat wants the warmth of spring underfoot."
   CHERRY_WOOD:
     buy: 16.8
     sell: 4.2
@@ -1818,7 +1498,327 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "The full log bark-covered on every face —\ncherry wood brings the pink bark\nof the grove's trees indoors as a block."
+  ACACIA_LOG:
+    buy: 12.0
+    sell: 3.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: "Grey-barked and broad from the savanna —\nthe acacia log holds the flat canopy\nthat defines the open plains."
+  ACACIA_PLANKS:
+    buy: 4.44
+    sell: 1.12
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: "Orange-warm and distinctively grained —\nacacia planks build with the color\nof the savanna's long afternoon light."
+  ACACIA_SLAB:
+    buy: 2.32
+    sell: 0.6
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: "Half the height of orange-warm wood —\nacacia slabs step and edge structures\nwith the savanna's most distinctive grain."
+  ACACIA_STAIRS:
+    buy: 6.96
+    sell: 1.76
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: "Orange-grained steps from the flat savanna —\nacacia stairs rise with the warmth\nof the sun-baked plains."
+  ACACIA_WOOD:
+    buy: 16.8
+    sell: 4.2
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: "The whole log kept intact and bark-on —\nacacia wood carries the full grey exterior\nof the savanna tree into every build."
+  BIRCH_LOG:
+    buy: 12.0
+    sell: 3.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: "White bark with horizontal marks —\nthe birch log stands in pale groves\nand falls in a whisper of clean wood."
+  BIRCH_PLANKS:
+    buy: 4.44
+    sell: 1.12
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: "Light and consistent in the grain,\nbirch planks build with a brightness\nthat suits every interior that values space."
+  BIRCH_SLAB:
+    buy: 2.32
+    sell: 0.6
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: "Half the height of pale birch wood —\nbirch slabs step and edge with the cleanest,\nmost consistent grain any tree offers."
+  BIRCH_STAIRS:
+    buy: 6.96
+    sell: 1.76
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: "Light and clean steps rising in birch grain —\nbirch stairs ascend through any structure\nthat values brightness and simplicity."
+  BIRCH_WOOD:
+    buy: 16.8
+    sell: 4.2
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: "The pale log bark-on and whole —\nbirch wood carries the white-bark exterior\nof the forest's most distinctive tree."
+  CRIMSON_HYPHAE:
+    buy: 16.8
+    sell: 4.2
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: "The bark-on version of the Nether's red fungus stem —\ncrimson hyphae wraps every face\nin the deep red skin of the underworld forest."
+  CRIMSON_PLANKS:
+    buy: 3.16
+    sell: 0.8
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: "Deep red planks from Nether fungal stems —\ncrimson planks build with the color\nof the warped forest's rival."
+  CRIMSON_SLAB:
+    buy: 1.68
+    sell: 0.44
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: "Half the height of deep red Nether wood —\ncrimson slabs edge and step\nthrough every dark-toned build."
+  CRIMSON_STAIRS:
+    buy: 5.0
+    sell: 1.28
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: "Deep red Nether steps rising through the dark —\ncrimson stairs climb with the weight\nof everything the Nether's fungal forest holds."
+  CRIMSON_STEM:
+    buy: 12.0
+    sell: 3.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: "The core of the crimson forest giant —\nthe stem is deep red and directional\nand rises straight toward the Nether ceiling."
+  DARK_OAK_LOG:
+    buy: 12.0
+    sell: 3.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: "Dark bark from the roofed forest canopy —\ndark oak logs fall heavy and rich\nfrom trees that need four saplings to grow."
+  DARK_OAK_PLANKS:
+    buy: 4.44
+    sell: 1.12
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: "Deep and nearly-brown grained wood —\ndark oak planks build with the weight\nof a forest that keeps its light."
+  DARK_OAK_SLAB:
+    buy: 2.32
+    sell: 0.6
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: "Half the height of the darkest plank —\ndark oak slabs step and edge\nwith a gravity no lighter wood can match."
+  DARK_OAK_STAIRS:
+    buy: 6.96
+    sell: 1.76
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: "Dark steps descending through the roofed forest —\ndark oak stairs suit structures that want\nthe mood of ancient wood."
+  DARK_OAK_WOOD:
+    buy: 16.8
+    sell: 4.2
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: "The full dark oak log with bark kept —\ndark oak wood wraps every face\nin the deep-grain exterior of the roofed forest."
+  JUNGLE_LOG:
+    buy: 12.0
+    sell: 3.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: "A column of tropical wood reaching skyward —\nthe jungle log holds up the canopy\nand cocoa beans cling to its bark."
+  JUNGLE_PLANKS:
+    buy: 4.44
+    sell: 1.12
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: "Orange-striped and tropical in the grain —\njungle planks build with the warmth\nof a forest that never stops growing."
+  JUNGLE_SLAB:
+    buy: 2.32
+    sell: 0.6
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: "Half the height of tropical wood —\njungle slabs step and edge every build\nwith the orange-warm stripe of the canopy floor."
+  JUNGLE_STAIRS:
+    buy: 6.96
+    sell: 1.76
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: "Orange-grained steps rising through the jungle —\njungle stairs climb with the warmth\nof a canopy that goes all the way up."
+  JUNGLE_WOOD:
+    buy: 16.8
+    sell: 4.2
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: "The full jungle log bark-on on every face —\njungle wood brings the tropical exterior\nof the world's largest trees indoors."
+  MANGROVE_LOG:
+    buy: 12.0
+    sell: 3.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: "Deep red bark from the swamp's tangled trees —\nthe mangrove log rises above the water\non roots that keep the whole wetland in place."
+  MANGROVE_PLANKS:
+    buy: 3.16
+    sell: 0.8
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: "Rust-red and richly grained from the swamp —\nmangrove planks build warmly and distinctively\nin the color of muddy waterways."
+  MANGROVE_SLAB:
+    buy: 1.68
+    sell: 0.44
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: "Half the height of rust-red swamp wood —\nmangrove slabs step and edge every build\nwith the warmth of the wetland's color."
+  MANGROVE_STAIRS:
+    buy: 5.0
+    sell: 1.28
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: "Rust-colored steps from the swamp trees —\nmangrove stairs ascend with the warmth\nof the wetland world that made them."
+  MANGROVE_WOOD:
+    buy: 16.8
+    sell: 4.2
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: "The full mangrove log bark-on —\nmangrove wood wraps every face\nin the dark orange-red of the swamp tree."
+  OAK_LOG:
+    buy: 12.0
+    sell: 3.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: "The most familiar tree in any forest —\nthe oak log has built every first shelter\nand every final fortress in the known world."
+  OAK_PLANKS:
+    buy: 4.44
+    sell: 1.12
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: "The plank that built civilization —\noak is the builder's default and\nthe most versatile wood in any palette."
+  OAK_SLAB:
+    buy: 2.32
+    sell: 0.6
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: "Half the height of the world's most familiar wood —\noak slabs step and edge every structure\nwith the dependability of the forest's oldest tree."
+  OAK_STAIRS:
+    buy: 6.96
+    sell: 1.76
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: "The first stairs anyone ever builds —\noak steps ascend with the warmth\nof the world's most dependable wood."
+  OAK_WOOD:
+    buy: 16.8
+    sell: 4.2
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: "The full oak log with bark on every side —\noak wood wraps its familiar exterior\naround any build that wants it."
+  SPRUCE_LOG:
+    buy: 12.0
+    sell: 3.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: "Dark-barked and cold-country grown —\nthe spruce log rises straight and tall\nin taiga forests where the snow never fully leaves."
+  SPRUCE_PLANKS:
+    buy: 4.44
+    sell: 1.12
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: "Dark and warm in the grain —\nspruce planks build with the color\nof winter cabins and mountain lodges."
+  SPRUCE_SLAB:
+    buy: 2.32
+    sell: 0.6
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: "Half the height of cold-country wood —\nspruce slabs step and edge every build\nwith the dark warmth of the taiga."
+  SPRUCE_STAIRS:
+    buy: 6.96
+    sell: 1.76
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: "Dark steps from the mountain forest —\nspruce stairs ascend through cabins\nand lodges built where the cold is permanent."
+  SPRUCE_WOOD:
+    buy: 16.8
+    sell: 4.2
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: "The full spruce log bark-on and whole —\nspruce wood carries the dark exterior\nof the cold forest's tallest tree."
   WARPED_HYPHAE:
     buy: 16.8
     sell: 4.2
@@ -1826,7 +1826,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "The teal fungal stem wrapped on every face —\nwarped hyphae brings the blue-green exterior\nof the Nether's most alien forest indoors."
   WARPED_PLANKS:
     buy: 3.16
     sell: 0.8
@@ -1834,7 +1834,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Teal-blue and otherworldly in the grain —\nwarped planks build with the color\nof the Nether's coolest biome."
   WARPED_SLAB:
     buy: 1.68
     sell: 0.44
@@ -1842,7 +1842,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Half the height of teal Nether wood —\nwarped slabs step and edge every build\nwith the blue-green of the warped forest."
   WARPED_STAIRS:
     buy: 5.0
     sell: 1.28
@@ -1850,7 +1850,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Teal Nether steps rising through the blue forest —\nwarped stairs ascend with the coolness\nof the underworld's most peaceful biome."
   WARPED_STEM:
     buy: 12.0
     sell: 3.0
@@ -1858,7 +1858,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "The core of the warped forest giant —\nteal-blue and directional,\nrising toward a sky that is not the sky."
   BLACK_WOOL:
     buy: 117.6
     sell: 29.4
@@ -1866,7 +1866,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Spun from the darkest fleece,\nblack wool builds with absolute depth —\nthe color that absorbs every surrounding light."
   BLUE_WOOL:
     buy: 117.6
     sell: 29.4
@@ -1874,7 +1874,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Ocean-dyed and soft underfoot —\nblue wool brings the calm of deep water\nto every floor and wall it covers."
   BROWN_WOOL:
     buy: 117.6
     sell: 29.4
@@ -1882,7 +1882,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Earthy and warm as undyed cacao —\nbrown wool builds with the comfort\nof a floor that feels like the forest."
   CYAN_WOOL:
     buy: 117.6
     sell: 29.4
@@ -1890,7 +1890,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Bright between blue and green —\ncyan wool builds with the vibrancy\nof tropical water seen from above."
   GRAY_WOOL:
     buy: 117.6
     sell: 29.4
@@ -1898,7 +1898,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Neutral and dependable in any build —\ngray wool holds the middle ground\nbetween every louder color on the palette."
   GREEN_WOOL:
     buy: 117.6
     sell: 29.4
@@ -1906,7 +1906,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Forest and fern compressed into soft fiber —\ngreen wool carries the density\nof the jungle without the humidity."
   LIGHT_BLUE_WOOL:
     buy: 117.6
     sell: 29.4
@@ -1914,7 +1914,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Sky-colored and airy underfoot —\nlight blue wool opens every room\nwith the brightness of a cloudless morning."
   LIGHT_GRAY_WOOL:
     buy: 117.6
     sell: 29.4
@@ -1922,7 +1922,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "The lightest grey, almost white —\nlight gray wool fills the space\nbetween the bright and the neutral."
   LIME_WOOL:
     buy: 117.6
     sell: 29.4
@@ -1930,7 +1930,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Bright as new leaves after the rain —\nlime wool announces itself in any room\nand brings the energy of spring growth."
   MAGENTA_WOOL:
     buy: 117.6
     sell: 29.4
@@ -1938,7 +1938,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Bold and uncompromising in any palette —\nmagenta wool builds for builders\nwho do not believe in subtle."
   ORANGE_WOOL:
     buy: 117.6
     sell: 29.4
@@ -1946,7 +1946,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Warm as a hearth-lit evening —\norange wool carries the energy\nof autumn harvests into every room."
   PINK_WOOL:
     buy: 117.6
     sell: 29.4
@@ -1954,7 +1954,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Soft and spring-toned in every build —\npink wool brings the warmth\nof peonies and cherry groves wherever it goes."
   PURPLE_WOOL:
     buy: 117.6
     sell: 29.4
@@ -1962,7 +1962,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Deep and deliberate in its color —\npurple wool builds with the weight\nof sorcery and regal intent."
   RED_WOOL:
     buy: 117.6
     sell: 29.4
@@ -1970,7 +1970,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Bold and declarative across any floor —\nred wool means what it says\nand says it at full saturation."
   WHITE_WOOL:
     buy: 117.6
     sell: 29.4
@@ -1978,7 +1978,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "The undyed fleece of any untamed flock —\nwhite wool is the blank page\nthat every other dye writes upon."
   YELLOW_WOOL:
     buy: 117.6
     sell: 29.4
@@ -1986,4 +1986,4 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Sunflower-bright and warm underfoot —\nyellow wool fills any room\nwith the cheerfulness of an open field."

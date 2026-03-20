@@ -74,6 +74,7 @@ public class ChaosCraftPlugin extends JavaPlugin {
     private com.blockforge.chaoscraft.services.badges.BadgeService badgeService;
     private com.blockforge.chaoscraft.services.shop.ShopService shopService;
     private com.blockforge.chaoscraft.services.shop.gui.ShopGUIListener shopGUIListener;
+    private com.blockforge.chaoscraft.services.mobspawn.MobSpawnService mobSpawnService;
 
     @Override
     public void onEnable() {
@@ -165,6 +166,9 @@ public class ChaosCraftPlugin extends JavaPlugin {
         // Initialize Shop service
         shopService = new com.blockforge.chaoscraft.services.shop.ShopService(this);
         shopService.initialize();
+
+        // Initialize universal mob spawn service
+        mobSpawnService = new com.blockforge.chaoscraft.services.mobspawn.MobSpawnService(this);
 
         // Initialize Mode Timer HUD
         modeTimerHud = new ModeTimerHud(this);
@@ -298,6 +302,11 @@ public class ChaosCraftPlugin extends JavaPlugin {
         // Shutdown claims
         if (claimsService != null) {
             claimsService.shutdown();
+        }
+
+        // Shutdown mob spawn service
+        if (mobSpawnService != null) {
+            mobSpawnService.shutdown();
         }
 
         // Shutdown stats
@@ -681,6 +690,7 @@ public class ChaosCraftPlugin extends JavaPlugin {
     public com.blockforge.chaoscraft.services.shop.gui.ShopGUIListener getShopGUIListener() { return shopGUIListener; }
     public com.blockforge.chaoscraft.updater.UpdateChecker getUpdateChecker() { return updateChecker; }
     public com.blockforge.chaoscraft.weapons.ivory.IvoryService getIvoryService() { return ivoryService; }
+    public com.blockforge.chaoscraft.services.mobspawn.MobSpawnService getMobSpawnService() { return mobSpawnService; }
 
     public void debug(String message) {
         if (getConfig().getBoolean("debug", false)) {

@@ -119,6 +119,12 @@ public class ChainMode extends AbstractMode {
         // Start the attack scheduler
         attackScheduler.start();
 
+        // Universal mob spawning
+        if (plugin.getMobSpawnService() != null) {
+            plugin.getMobSpawnService().createSession("chain",
+                    chainConfig.getMobSpawnConfig(), world);
+        }
+
         plugin.getLogger().info("[Chain] Mode fully started. Survive " + timerSeconds + " seconds! "
                 + "(" + attackCount + " attacks registered)");
     }
@@ -133,6 +139,11 @@ public class ChainMode extends AbstractMode {
         if (world != null) {
             mobManager.tick(world);
         }
+
+        // Universal mob spawning
+        if (plugin.getMobSpawnService() != null) {
+            plugin.getMobSpawnService().tick("chain", getExemptPlayers());
+        }
     }
 
     @Override
@@ -142,6 +153,11 @@ public class ChainMode extends AbstractMode {
         attackScheduler.stop();
         mobManager.cleanup();
         plugin.getMusicManager().stopAll();
+
+        // Universal mob spawning cleanup
+        if (plugin.getMobSpawnService() != null) {
+            plugin.getMobSpawnService().destroySession("chain");
+        }
 
         // NOTE: runEndCommands() and giveRewards() are called by ModeManager — do NOT call here
 

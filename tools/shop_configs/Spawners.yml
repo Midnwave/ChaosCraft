@@ -10,7 +10,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A cage of iron bars that hums\nwith a gentle, musical frequency —\nand fills the room with helpful wings."
   AXOLOTL_SPAWNER:
     buy: 600000.0
     sell: -1
@@ -18,7 +18,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Place it near water and watch\nthe pink-gilled ancients multiply —\nan army of adorable guardians."
   BAT_SPAWNER:
     buy: 40000.0
     sell: -1
@@ -26,7 +26,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Fills the dark with squeaking wings\nand not much else — a spawner\nfor atmosphere over utility."
   BLAZE_SPAWNER:
     buy: 500000.0
     sell: -1
@@ -34,7 +34,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Spinning rods emerge endlessly\nfrom this cage of Nether iron,\neach one burning for a fight."
   BOGGED_SPAWNER:
     buy: 400000.0
     sell: -1
@@ -42,7 +42,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Dripping with swamp water and intent,\nthis spawner fills the floor\nwith arrows of poison and slow inevitability."
   BREEZE_SPAWNER:
     buy: 400000.0
     sell: -1
@@ -50,7 +50,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "The air itself becomes restless\nas wind-formed figures pour out —\nuntouchable, relentless, and endlessly annoying."
   CAMEL_SPAWNER:
     buy: 200000.0
     sell: -1
@@ -58,7 +58,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A ceaseless supply of tall, dignified mounts\nemerges here — a caravan\nis only a few spawns away."
   CAT_SPAWNER:
     buy: 100000.0
     sell: -1
@@ -66,7 +66,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A perpetual feline population machine\nthat keeps creepers at bay\nand beds perpetually occupied."
   CAVE_SPIDER_SPAWNER:
     buy: 200000.0
     sell: -1
@@ -74,7 +74,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Small enough to slip through anything,\nthis spawner produces a relentless stream\nof venomous, fast-moving nightmares."
   CHICKEN_SPAWNER:
     buy: 60000.0
     sell: -1
@@ -82,7 +82,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Feathers, eggs, and frantic clucking —\nthis spawner turns any room\ninto the world's most chaotic farm."
   COD_SPAWNER:
     buy: 40000.0
     sell: -1
@@ -90,7 +90,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Submerge it and watch the school\ngrow without end — a fish farm\nrequiring only water and patience."
   COW_SPAWNER:
     buy: 400000.0
     sell: -1
@@ -98,7 +98,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "An endless herd emerges\nfrom this iron cage, providing\nleather and milk in perpetuity."
   CREEPER_SPAWNER:
     buy: 600000.0
     sell: -1
@@ -106,7 +106,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Handle with extreme care —\nthe silence it produces\nis always the most dangerous kind."
   ENDERMAN_SPAWNER:
     buy: 700000.0
     sell: -1
@@ -114,7 +114,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Tall shadows pour endlessly from this cage,\neach one carrying a block\nand looking for eye contact."
   FROG_SPAWNER:
     buy: 1580000.0
     sell: -1
@@ -122,7 +122,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Froglights accumulate wherever this sits —\na swamp chorus in perpetual motion,\nleaping toward every small slime."
   GLOW_SQUID_SPAWNER:
     buy: 400000.0
     sell: -1
@@ -130,7 +130,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "The dark around it pulses with light\nas glowing squid fill the water,\na living aurora of the deep."
   GOAT_SPAWNER:
     buy: 480000.0
     sell: -1
@@ -138,7 +138,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Place it on any ledge\nand watch the mountain come alive —\na constant procession of horned chaos."
   HORSE_SPAWNER:
     buy: 260000.0
     sell: -1
@@ -146,7 +146,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A stable that fills itself —\nhorses in every coat emerge,\nwaiting for saddles and open plains."
   HUSK_SPAWNER:
     buy: 500000.0
     sell: -1
@@ -154,7 +154,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "The desert's undead march in endless waves —\na desiccated horde that inflicts hunger\nwith every tireless swing."
   IRON_GOLEM_SPAWNER:
     buy: 4000000.0
     sell: -1
@@ -162,7 +162,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Iron and purpose materialize from this cage,\neach golem ready to protect\nwhatever it is placed beside."
   MAGMA_CUBE_SPAWNER:
     buy: 2000000.0
     sell: -1
@@ -170,7 +170,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "The floor bounces with molten cubes\nthat split on death into smaller ones —\na magma cream engine in perpetual motion."
   MUSHROOM_COW_SPAWNER:
     buy: 500000.0
     sell: -1
@@ -178,7 +178,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Mooshrooms spill from this cage\nin a parade of fungal bovines —\neach one a soup dispenser on legs."
   PANDA_SPAWNER:
     buy: 200000.0
     sell: -1
@@ -186,7 +186,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A bamboo grove comes alive\nwith chunky black-and-white visitors,\neach one chewing in deep contentment."
   PARROT_SPAWNER:
     buy: 120000.0
     sell: -1
@@ -194,7 +194,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Every color of the jungle emerges here —\na cacophony of mimicry and loyalty\nperched on every available shoulder."
   PHANTOM_SPAWNER:
     buy: 1000000.0
     sell: -1
@@ -202,7 +202,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Wings slice through the dark above\nas membranous shapes pour out —\na flock of airborne retribution, always circling."
   PIGLIN_BRUTE_SPAWNER:
     buy: 8000000.0
     sell: -1
@@ -210,7 +210,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "The most dangerous cage in the shop —\narmored axe-wielders emerge without pause,\nuninterested in gold or negotiation."
   RABBIT_SPAWNER:
     buy: 180000.0
     sell: -1
@@ -218,7 +218,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A soft thunder of paws\nfills the room as rabbits scatter\nand flee from every sound you make."
   SHEEP_SPAWNER:
     buy: 180000.0
     sell: -1
@@ -226,7 +226,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Wool of every color accumulates\nas the sheep emerge in steady rows —\na rainbow flock that never stops growing."
   SHULKER_SPAWNER:
     buy: 2000000.0
     sell: -1
@@ -234,7 +234,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Purple shells click open and close\nas the End's sentinels pour out,\ntracking everything that moves."
   SKELETON_SPAWNER:
     buy: 500000.0
     sell: -1
@@ -242,7 +242,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Bones and bows emerge in an endless column —\na relentless archer factory\nproducing arrows and XP in equal measure."
   SLIME_SPAWNER:
     buy: 2200000.0
     sell: -1
@@ -250,7 +250,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "The floor glistens and bounces\nas slime fills the room in layers —\nthe most productive cage for crafting."
   SNIFFER_SPAWNER:
     buy: 180000.0
     sell: -1
@@ -258,7 +258,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Ancient giants shuffle from this cage,\neach nose to the ground in search\nof seeds that time had buried."
   SPIDER_SPAWNER:
     buy: 180000.0
     sell: -1
@@ -266,7 +266,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Eight legs click against the floor\nas spiders pour from the dark —\nstring and eyes accumulate quickly."
   SQUID_SPAWNER:
     buy: 400000.0
     sell: -1
@@ -274,7 +274,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "An ink sac factory disguised as water —\nsubmerge this cage and let the squid\nfill every tank you build."
   STRIDER_SPAWNER:
     buy: 180000.0
     sell: -1
@@ -282,7 +282,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Long legs stride endlessly from this cage —\nplace it over lava and watch\nyour Nether transport fleet grow."
   WITCH_SPAWNER:
     buy: 2000000.0
     sell: -1
@@ -290,7 +290,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "The swamp hut replicated in iron —\nan endless supply of potion-hurling experts\nwho have never heard of diplomacy."
   WOLF_SPAWNER:
     buy: 1000000.0
     sell: -1
@@ -298,7 +298,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A pack assembles itself from this cage —\nthe woods fill with yellow eyes\nwaiting for a bone and a reason to follow."
   ZOMBIE_SPAWNER:
     buy: 480000.0
     sell: -1
@@ -306,7 +306,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "The dungeon's classic fixture —\nan iron cage that moans\nand delivers an endless shuffling harvest."
   ZOMBIFIED_PIGLIN_SPAWNER:
     buy: 480000.0
     sell: -1
@@ -314,4 +314,4 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Golden swords clatter to the floor\nas the Nether's neutral undead pour out —\nneutral only until the first hit."

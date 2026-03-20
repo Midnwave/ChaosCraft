@@ -10,7 +10,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "An iron basin of infinite patience,\nit holds water, lava, or powder snow —\na witch's workspace and a traveler's laundry."
   CRAFTER:
     buy: 201.04
     sell: 50.28
@@ -18,7 +18,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "The automated artisan,\nthis redstone-powered crafter\nbends recipes to your will without hands."
   DAYLIGHT_DETECTOR:
     buy: 190.88
     sell: 47.72
@@ -26,7 +26,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "An eye turned always skyward,\nit reads the sun's position\nand speaks in redstone pulses."
   DISPENSER:
     buy: 134.96
     sell: 33.76
@@ -34,7 +34,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Point and trigger — the dispenser\nspits arrows, potions, and fire\nwith mechanical precision."
   DROPPER:
     buy: 34.72
     sell: 8.68
@@ -42,7 +42,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "The gentler cousin of the dispenser,\nit passes items forward\nwithout projectiles or drama."
   HOPPER:
     buy: 154.68
     sell: 38.68
@@ -50,7 +50,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "The tireless transport worker,\nthe hopper channels items\nfrom chest to chest without complaint."
   IRON_DOOR:
     buy: 23.16
     sell: 5.8
@@ -58,7 +58,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Heavy and unyielding,\nan iron door opens only\nwhen it is told to — by redstone."
   JUKEBOX:
     buy: 257.56
     sell: 64.4
@@ -66,7 +66,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Slip in a disc and let the music\nfill the base — the jukebox turns\nany dungeon into a celebration."
   LEVER:
     buy: 5.32
     sell: 1.36
@@ -74,7 +74,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A small stick with enormous authority —\nflip it and machines wake,\ndoors open, and traps spring."
   LIGHTNING_ROD:
     buy: 11.6
     sell: 2.92
@@ -82,7 +82,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Pointing defiantly at the storm,\nthe lightning rod draws bolts\nand converts fury into redstone signal."
   NOTE_BLOCK:
     buy: 51.76
     sell: 12.96
@@ -90,7 +90,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "The composer's canvas,\neach block beneath changes its voice —\nstrike it and music follows."
   OBSERVER:
     buy: 81.28
     sell: 20.32
@@ -98,7 +98,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Always watching, never blinking,\nthe observer pulses the moment\nanything dares change before it."
   REDSTONE_LAMP:
     buy: 182.28
     sell: 45.6
@@ -106,7 +106,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Glowstone wired with intention,\nthis lamp blazes bright\nwhenever the circuit wills it."
   REDSTONE_TORCH:
     buy: 17.16
     sell: 4.32
@@ -114,7 +114,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A tiny flame of constant signal,\nthe redstone torch illuminates\nand inverts, the inverter's best friend."
   RESPAWN_ANCHOR:
     buy: 1945.44
     sell: 486.36
@@ -122,7 +122,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Charged with crying obsidian\nand glowstone, this anchor\nbinds your soul to the Nether itself."
   TARGET:
     buy: 257.28
     sell: 64.32
@@ -130,7 +130,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A red bullseye that speaks in signal,\nstrike it true with an arrow\nand watch the contraption come to life."
   TRIPWIRE_HOOK:
     buy: 15.12
     sell: 3.8
@@ -138,7 +138,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A patient conspirator in the dark,\nthe tripwire hook waits silently\nfor the unsuspecting to trip the line."
   COMPARATOR:
     buy: 97.72
     sell: 24.44
@@ -146,7 +146,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Three torches on a slab of stone —\nthe comparator weighs signals,\ncompares states, and makes decisions."
   REPEATER:
     buy: 59.68
     sell: 14.92
@@ -154,7 +154,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Delay and refresh,\nthe repeater carries redstone\nfurther than it could ever reach alone."
   CHERRY_BUTTON:
     buy: 3.32
     sell: 0.84
@@ -162,7 +162,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A single press, a single pulse —\nthe cherry button opens doors,\ntriggers traps, or starts machines."
   OAK_BUTTON:
     buy: 4.64
     sell: 1.16
@@ -170,7 +170,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Simple as a knock on the door,\nthe wooden button pulses once\nand returns to patient silence."
   STONE_BUTTON:
     buy: 3.0
     sell: 0.76
@@ -178,7 +178,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Harder and cooler than wood,\nthe stone button holds its ground\nagainst arrows and chance."
   PISTON:
     buy: 63.2
     sell: 15.8
@@ -186,7 +186,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "One mechanical arm of the builder,\nthe piston pushes what needs pushing\nand retracts when the signal is done."
   STICKY_PISTON:
     buy: 87.36
     sell: 21.84
@@ -194,7 +194,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Coated in slime and determination,\nthe sticky piston pulls as well as pushes —\nmastering it is mastering redstone."
   CHERRY_PRESSURE_PLATE:
     buy: 6.64
     sell: 1.68
@@ -202,7 +202,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A soft wood plate that triggers\nwhen any weight steps upon it —\nwelcoming to friends, deadly to foes."
   OAK_PRESSURE_PLATE:
     buy: 9.28
     sell: 2.32
@@ -210,7 +210,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "The oldest trick in the entry hall —\nstep here and the mechanism knows\nsomeone is home."
   STONE_PRESSURE_PLATE:
     buy: 6.0
     sell: 1.52
@@ -218,7 +218,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Sturdier underfoot than wood,\nstone plates trigger only for\nplayers and mobs — not items."
   LIGHT_WEIGHTED_PRESSURE_PLATE:
     buy: 69.48
     sell: 17.4
@@ -226,7 +226,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Forged from gold and sensitivity,\nthis plate reads the count of entities\nand adjusts its signal accordingly."
   HEAVY_WEIGHTED_PRESSURE_PLATE:
     buy: 46.32
     sell: 11.6
@@ -234,7 +234,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Iron and measured,\nthe heavy plate requires many\nfeet to generate a full signal."
   CALIBRATED_SCULK_SENSOR:
     buy: 66.96
     sell: 16.76
@@ -242,7 +242,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Tuned to a specific frequency,\nthis refined sensor listens only\nfor the vibrations it is told to hear."
   SCULK_SENSOR:
     buy: 500.0
     sell: 125.0
@@ -250,7 +250,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Born in the deep dark,\nit hears every footfall and heartbeat —\nno sound escapes its restless tendrils."
   CHERRY_TRAPDOOR:
     buy: 9.96
     sell: 2.52
@@ -258,7 +258,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A hinged panel of cherry wood,\nit flips open to reveal\nladders, passages, or carefully set traps."
   OAK_TRAPDOOR:
     buy: 13.92
     sell: 3.48
@@ -266,7 +266,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "The classic trapdoor,\nhalf a door worth of wood\nthat opens worlds both above and below."
   IRON_TRAPDOOR:
     buy: 92.64
     sell: 23.16
@@ -274,4 +274,4 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Heavy iron that will not budge\nuntil a redstone signal commands it —\nthe vault-keeper's favorite floor."

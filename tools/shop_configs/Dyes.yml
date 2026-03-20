@@ -10,7 +10,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Darkness distilled into pigment.\nA single drop can stain silk\nor swallow light whole."
   BLUE_DYE:
     buy: 4.2
     sell: 1.08
@@ -18,7 +18,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Crushed from lapis and cornflower,\nthis pigment captures the sky\nat its deepest hour."
   BROWN_DYE:
     buy: 25.2
     sell: 6.32
@@ -26,7 +26,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "The humble color of the earth,\nground from cocoa beans\nharvested in the jungle depths."
   CYAN_DYE:
     buy: 2.44
     sell: 0.64
@@ -34,7 +34,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Where sea meets sky in color,\nthis vibrant pigment blends\nthe best of both worlds."
   GRAY_DYE:
     buy: 14.48
     sell: 3.64
@@ -42,7 +42,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Neither light nor dark,\ngray walks the line between worlds,\nsteady and unassuming."
   GREEN_DYE:
     buy: 0.44
     sell: 0.12
@@ -50,7 +50,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Born from cactus in the furnace flame,\nthis earthy green carries\nthe spirit of desert survival."
   LIGHT_BLUE_DYE:
     buy: 4.2
     sell: 1.08
@@ -58,7 +58,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Soft as a clear winter morning,\nthis gentle pigment whispers\nof open skies and calm waters."
   LIGHT_GRAY_DYE:
     buy: 4.2
     sell: 1.08
@@ -66,7 +66,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Faded like an old memory,\nlight gray softens any surface\nwith quiet, understated grace."
   LIME_DYE:
     buy: 25.2
     sell: 3.48
@@ -74,7 +74,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Vivid as new growth after rain,\nthis bright pigment bursts\nwith the energy of spring."
   MAGENTA_DYE:
     buy: 4.2
     sell: 1.08
@@ -82,7 +82,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A bold bloom of color,\nmagenta demands attention\nwherever it is applied."
   ORANGE_DYE:
     buy: 4.2
     sell: 1.08
@@ -90,7 +90,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "The color of autumn harvest\nand desert sunsets — warm,\nvibrant, and full of life."
   PINK_DYE:
     buy: 4.2
     sell: 1.08
@@ -98,7 +98,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Delicate as cherry blossoms\nin the pale spring light,\ngentle and endlessly cheerful."
   PURPLE_DYE:
     buy: 4.44
     sell: 1.12
@@ -106,7 +106,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "The color of royalty and mystery,\nblended from the deepest red\nand most noble blue."
   RED_DYE:
     buy: 4.2
     sell: 1.08
@@ -114,7 +114,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Drawn from rose petals and tulips,\nthis fierce pigment burns bright\nas embers in the dark."
   WHITE_DYE:
     buy: 6.52
     sell: 1.64
@@ -122,7 +122,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Pure and unmarked as fresh snow,\nwhite restores and brightens\nwhatever it touches."
   YELLOW_DYE:
     buy: 2.8
     sell: 0.72
@@ -130,7 +130,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Bright as sunflowers at high noon,\nthis cheerful pigment carries\nthe warmth of golden fields."
   AZURE_BLUET:
     buy: 4.0
     sell: 1.0
@@ -138,7 +138,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A tiny four-petaled wildflower\nthat dots the meadows,\nbrave against the breeze."
   BLUE_ORCHID:
     buy: 4.0
     sell: 1.0
@@ -146,7 +146,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A rare beauty found only\nin the swampy margins,\nits petals the color of deep sky."
   CORNFLOWER:
     buy: 4.0
     sell: 1.0
@@ -154,7 +154,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A proud sentinel of open plains,\nthis vivid blue blossom\nstands tall among the wheat."
   LILAC:
     buy: 4.0
     sell: 1.0
@@ -162,7 +162,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Tall and sweet-scented,\nthe lilac towers over lesser blooms\nwith clusters of soft purple."
   LILY_OF_THE_VALLEY:
     buy: 4.0
     sell: 1.0
@@ -170,7 +170,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Small bells of white innocence\ntucked in the forest shade,\ndelicate yet enduring."
   ORANGE_TULIP:
     buy: 4.0
     sell: 1.0
@@ -178,7 +178,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A cup of flame-bright petals\nthat catches every eye\nacross the sunlit meadow."
   OXEYE_DAISY:
     buy: 4.0
     sell: 1.0
@@ -186,7 +186,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A cheerful white disc\nwith a golden heart,\nthe humble hero of any garden."
   PEONY:
     buy: 4.0
     sell: 1.0
@@ -194,7 +194,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Lush and full of petals,\nthe peony blooms magnificently\nat the edge of the forest path."
   PINK_PETALS:
     buy: 4.0
     sell: 1.0
@@ -202,7 +202,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Scattered like rose confetti,\nthese soft petals drift\nbeneath the cherry boughs."
   PINK_TULIP:
     buy: 4.0
     sell: 1.0
@@ -210,7 +210,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A gentle blush of spring,\nthe pink tulip stands proud\nand elegant in the field."
   PITCHER_PLANT:
     buy: 83.0
     sell: 20.76
@@ -218,7 +218,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "An ancient pitcher of crimson and gold,\nonce home to nectar and mystery,\nnow a prize for any collector."
   POPPY:
     buy: 4.0
     sell: 1.0
@@ -226,7 +226,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Bright red and wind-kissed,\nthe poppy blooms wherever\nthe earth has been disturbed."
   RED_TULIP:
     buy: 4.0
     sell: 1.0
@@ -234,7 +234,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Bold as a declaration,\nthe red tulip proclaims itself\nthe queen of the flower patch."
   SUNFLOWER:
     buy: 4.0
     sell: 1.0
@@ -242,7 +242,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Always facing toward the light,\nthe sunflower stands tall and faithful,\na golden beacon in any field."
   TORCHFLOWER:
     buy: 83.0
     sell: 20.76
@@ -250,7 +250,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A prehistoric bloom reborn from seed,\nits fiery petals glow like embers\ncarried from an ancient age."
   INK_SAC:
     buy: 20.0
     sell: 5.0
@@ -258,4 +258,4 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Harvested from the depths of the sea,\nthis dark ink can color cloth\nor mark scrolls with bold strokes."

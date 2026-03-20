@@ -5,6 +5,8 @@ import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
+import com.blockforge.chaoscraft.services.mobspawn.MobSpawnConfig;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -43,7 +45,8 @@ public class CorruptionConfig {
         boolean needsSave = false;
 
         // ── Base mode keys ───────────────────────────────────────────────────
-        if (!config.contains("config-version")) { config.set("config-version", 1); needsSave = true; }
+        if (!config.contains("config-version")) { config.set("config-version", 2); needsSave = true; }
+        if (config.getInt("config-version") < 2) { config.set("config-version", 2); needsSave = true; }
         if (!config.contains("timer.default-seconds")) { config.set("timer.default-seconds", 1200); needsSave = true; }
         if (!config.contains("timer.max-seconds")) { config.set("timer.max-seconds", 1800); needsSave = true; }
         if (!config.contains("music.sound-id")) { config.set("music.sound-id", ""); needsSave = true; }
@@ -62,10 +65,19 @@ public class CorruptionConfig {
         if (!config.contains("ambient")) { ensureCorruptionDefaults(); needsSave = true; }
         if (!config.contains("world")) { config.set("world", "world"); needsSave = true; }
         if (!config.contains("respect-claims")) { config.set("respect-claims", true); needsSave = true; }
+
+        // ── Universal mob spawning ───────────────────────────────────
+        if (MobSpawnConfig.ensureKeys(config)) needsSave = true;
+
         if (needsSave) {
             save();
             config = YamlConfiguration.loadConfiguration(configFile);
         }
+    }
+
+    /** Returns a MobSpawnConfig backed by this mode's YAML. */
+    public MobSpawnConfig getMobSpawnConfig() {
+        return new MobSpawnConfig(config);
     }
 
     /**
@@ -705,6 +717,13 @@ public class CorruptionConfig {
         defaults.setComments("rewards.commands", List.of(
                 "Commands run for each surviving player when the mode ends successfully.",
                 "Use %player% as a placeholder for each player's name."));
+
+        // ── Universal Mob Spawning ──────────────────────────────────────
+        MobSpawnConfig.writeDefaults(defaults, List.of(
+                new MobSpawnConfig.MobSpawnDefaultEntry("ZOMBIE", "vanilla", 10, 2, 4, 1.5, 1.0),
+                new MobSpawnConfig.MobSpawnDefaultEntry("PHANTOM", "vanilla", 5, 1, 2, 1.2, 1.0),
+                new MobSpawnConfig.MobSpawnDefaultEntry("ENDERMITE", "vanilla", 3, 2, 5, 1.0, 0.8)
+        ));
 
         try {
             defaults.save(configFile);

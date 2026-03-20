@@ -10,7 +10,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Fragmented and haunting,\nthis disc sounds like something\nwas chasing whoever recorded it."
   MUSIC_DISC_13:
     buy: 300.0
     sell: 75.0
@@ -18,7 +18,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Crackling and ambient,\nold disc 13 evokes rain on stone\nand hollow caves without torches."
   MUSIC_DISC_5:
     buy: 3780.0
     sell: 945.0
@@ -26,7 +26,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Assembled from nine fragments\nscattered across the deep dark,\nthis disc rewards the fearless explorer."
   MUSIC_DISC_BLOCKS:
     buy: 300.0
     sell: 75.0
@@ -34,7 +34,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Upbeat and industrious,\nit plays like the sound of a city\nbeing built one block at a time."
   MUSIC_DISC_CAT:
     buy: 300.0
     sell: 75.0
@@ -42,7 +42,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Playful and bright,\nthis disc purrs like a feline\ncontent by a warm furnace."
   MUSIC_DISC_CHIRP:
     buy: 300.0
     sell: 75.0
@@ -50,7 +50,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Retro and bouncy,\nchirp sounds like it was made\nfor a tavern full of happy miners."
   MUSIC_DISC_CREATOR:
     buy: 400.0
     sell: 100.0
@@ -58,7 +58,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A meditation on origins,\nthis rare disc hums with\nthe quiet joy of making something new."
   MUSIC_DISC_CREATOR_MUSIC_BOX:
     buy: 400.0
     sell: 100.0
@@ -66,7 +66,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Delicate as a music box lid\nbeing opened in a dusty attic,\nfull of forgotten wonder."
   MUSIC_DISC_FAR:
     buy: 300.0
     sell: 75.0
@@ -74,7 +74,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Distant and dreamlike,\nthis disc evokes lands beyond\nthe edge of the explored map."
   MUSIC_DISC_MALL:
     buy: 300.0
     sell: 75.0
@@ -82,7 +82,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Wandering and curious,\nit captures the feeling of exploring\na market you have never visited before."
   MUSIC_DISC_MELLOHI:
     buy: 300.0
     sell: 75.0
@@ -90,7 +90,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A melancholy waltz that echoes\nthrough empty halls — beautiful,\nbut carrying an unmistakable sadness."
   MUSIC_DISC_OTHERSIDE:
     buy: 300.0
     sell: 75.0
@@ -98,7 +98,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Energetic and almost frantic,\nit sounds like the world viewed\nfrom the other side of a mirror."
   MUSIC_DISC_PIGSTEP:
     buy: 300.0
     sell: 75.0
@@ -106,7 +106,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Forged in the fire of the Nether,\nthis disc has a driving beat\nthat makes even Piglins want to dance."
   MUSIC_DISC_PRECIPICE:
     buy: 400.0
     sell: 100.0
@@ -114,7 +114,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Teetering and tense,\nthis disc sounds like the moment\nbefore a very long fall."
   MUSIC_DISC_RELIC:
     buy: 400.0
     sell: 100.0
@@ -122,7 +122,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Unearthed from ancient ruins,\nthis weathered disc carries\nmelodies older than the oldest village."
   MUSIC_DISC_STAL:
     buy: 300.0
     sell: 75.0
@@ -130,7 +130,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Cool and jazzy,\nstal plays like a late night\nin an underground musician's haunt."
   MUSIC_DISC_STRAD:
     buy: 300.0
     sell: 75.0
@@ -138,7 +138,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Sweeping and orchestral,\nstrad fills any space with the sound\nof grand adventure just beginning."
   MUSIC_DISC_WAIT:
     buy: 300.0
     sell: 75.0
@@ -146,7 +146,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Patient and ethereal,\nwait hums like the world holding\nits breath before something wonderful."
   MUSIC_DISC_WARD:
     buy: 300.0
     sell: 75.0
@@ -154,7 +154,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Eerie and deliberate,\nward sounds like a guardian\npatrolling a forgotten monument."
   GOAT_HORN:
     buy: 400.0
     sell: 100.0
@@ -162,7 +162,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A horn pried from a mountain goat,\nits bellowing call echoes\nacross valleys and rallies all who hear it."
   GOAT_HORN:
     buy: 400.0
     sell: 100.0
@@ -170,7 +170,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A horn pried from a mountain goat,\nits bellowing call echoes\nacross valleys and rallies all who hear it."
   GOAT_HORN:
     buy: 400.0
     sell: 100.0
@@ -178,7 +178,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A horn pried from a mountain goat,\nits bellowing call echoes\nacross valleys and rallies all who hear it."
   GOAT_HORN:
     buy: 400.0
     sell: 100.0
@@ -186,7 +186,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A horn pried from a mountain goat,\nits bellowing call echoes\nacross valleys and rallies all who hear it."
   GOAT_HORN:
     buy: 400.0
     sell: 100.0
@@ -194,7 +194,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A horn pried from a mountain goat,\nits bellowing call echoes\nacross valleys and rallies all who hear it."
   GOAT_HORN:
     buy: 400.0
     sell: 100.0
@@ -202,7 +202,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A horn pried from a mountain goat,\nits bellowing call echoes\nacross valleys and rallies all who hear it."
   GOAT_HORN:
     buy: 400.0
     sell: 100.0
@@ -210,7 +210,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A horn pried from a mountain goat,\nits bellowing call echoes\nacross valleys and rallies all who hear it."
   GOAT_HORN:
     buy: 400.0
     sell: 100.0
@@ -218,4 +218,4 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A horn pried from a mountain goat,\nits bellowing call echoes\nacross valleys and rallies all who hear it."

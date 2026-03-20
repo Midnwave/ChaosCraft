@@ -4,6 +4,8 @@ import com.blockforge.chaoscraft.ChaosCraftPlugin;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
+import com.blockforge.chaoscraft.services.mobspawn.MobSpawnConfig;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -15,7 +17,7 @@ import java.util.List;
  */
 public class BlueMoonConfig {
 
-    private static final int CURRENT_CONFIG_VERSION = 1;
+    private static final int CURRENT_CONFIG_VERSION = 2;
 
     private final ChaosCraftPlugin plugin;
     private final File configFile;
@@ -86,10 +88,18 @@ public class BlueMoonConfig {
         if (!config.contains("timer-hud.display-name")) { config.set("timer-hud.display-name", "BLUE MOON"); needsSave = true; }
         if (!config.contains("timer-hud.color")) { config.set("timer-hud.color", "#88CCFF"); needsSave = true; }
 
+        // ── Universal mob spawning ───────────────────────────────────
+        if (MobSpawnConfig.ensureKeys(config)) needsSave = true;
+
         if (needsSave) {
             save();
             config = YamlConfiguration.loadConfiguration(configFile);
         }
+    }
+
+    /** Returns a MobSpawnConfig backed by this mode's YAML. */
+    public MobSpawnConfig getMobSpawnConfig() {
+        return new MobSpawnConfig(config);
     }
 
     private void save() {
@@ -172,6 +182,13 @@ public class BlueMoonConfig {
 
         defaults.set("timer-hud.display-name", "BLUE MOON");
         defaults.set("timer-hud.color", "#88CCFF");
+
+        // ── Universal Mob Spawning ──────────────────────────────────────
+        MobSpawnConfig.writeDefaults(defaults, List.of(
+                new MobSpawnConfig.MobSpawnDefaultEntry("PHANTOM", "vanilla", 8, 1, 3, 1.5, 1.2),
+                new MobSpawnConfig.MobSpawnDefaultEntry("VEX", "vanilla", 5, 2, 4, 1.0, 1.0),
+                new MobSpawnConfig.MobSpawnDefaultEntry("SKELETON", "vanilla", 6, 1, 2, 1.3, 1.0)
+        ));
 
         try {
             defaults.save(configFile);

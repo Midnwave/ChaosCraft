@@ -4,6 +4,8 @@ import com.blockforge.chaoscraft.ChaosCraftPlugin;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
+import com.blockforge.chaoscraft.services.mobspawn.MobSpawnConfig;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -42,7 +44,8 @@ public class ChainConfig {
         boolean needsSave = false;
 
         // ── Base mode keys (same as ModeConfig) ──────────────────────────────
-        if (!config.contains("config-version")) { config.set("config-version", 1); needsSave = true; }
+        if (!config.contains("config-version")) { config.set("config-version", 2); needsSave = true; }
+        if (config.getInt("config-version") < 2) { config.set("config-version", 2); needsSave = true; }
         if (!config.contains("timer.default-seconds")) { config.set("timer.default-seconds", 600); needsSave = true; }
         if (!config.contains("timer.max-seconds")) { config.set("timer.max-seconds", 1800); needsSave = true; }
         if (!config.contains("music.sound-id")) { config.set("music.sound-id", ""); needsSave = true; }
@@ -81,10 +84,18 @@ public class ChainConfig {
         if (!config.contains("timer-hud.flash-color")) { config.set("timer-hud.flash-color", "red"); needsSave = true; }
         if (!config.contains("timer-hud.flash-threshold-seconds")) { config.set("timer-hud.flash-threshold-seconds", 60); needsSave = true; }
 
+        // ── Universal mob spawning ───────────────────────────────────
+        if (MobSpawnConfig.ensureKeys(config)) needsSave = true;
+
         if (needsSave) {
             save();
             config = YamlConfiguration.loadConfiguration(configFile);
         }
+    }
+
+    /** Returns a MobSpawnConfig backed by this mode's YAML. */
+    public MobSpawnConfig getMobSpawnConfig() {
+        return new MobSpawnConfig(config);
     }
 
     public void save() {
@@ -350,6 +361,11 @@ public class ChainConfig {
         defaults.setComments("mobs.max-total", List.of(
                 "Maximum total chain mobs alive at once across the entire mode.",
                 "Prevents server overload. Recommended: 10–20 depending on player count."));
+
+        // ── Universal Mob Spawning ──────────────────────────────────────
+        // Chain Mode already has Citizens NPC mobs above. This section is for
+        // additional MythicMobs or vanilla mob waves alongside the chain walkers.
+        MobSpawnConfig.writeDefaults(defaults, List.of());
 
         try {
             defaults.save(configFile);

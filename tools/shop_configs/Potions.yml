@@ -10,7 +10,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Swallow this and step into the lava.\nFire Resistance turns the Nether's\ngreatest hazard into a warm bath."
   POTION_HARMING:
     buy: 86.48
     sell: 21.64
@@ -18,7 +18,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Sour and violet, a single sip\ndeals instant damage — use it\nagainst the undead or save it for enemies."
   POTION_HEALING:
     buy: 47.56
     sell: 11.92
@@ -26,7 +26,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A rosy draught of instant restoration,\none gulp mends wounds\nthat steel alone could not close."
   POTION_INFESTED:
     buy: 16.68
     sell: 4.2
@@ -34,7 +34,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A vile brew that spreads\nthe infestation — silverfish may emerge\nfrom those unfortunate enough to be struck."
   POTION_INVISIBILITY:
     buy: 109.84
     sell: 27.48
@@ -42,7 +42,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Drink and vanish from sight.\nInvisibility grants the gift\nof passing unseen through hostile territory."
   POTION_LEAPING:
     buy: 776.88
     sell: 194.24
@@ -50,7 +50,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Rabbit foot and creativity distilled —\nJump Boost launches the drinker\nover walls, cliffs, and common sense."
   POTION_NIGHT_VISION:
     buy: 65.36
     sell: 16.36
@@ -58,7 +58,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "The dark holds no secrets\nfrom those who drink this draught —\nNight Vision turns midnight to noon."
   POTION_OOZING:
     buy: 214.0
     sell: 53.52
@@ -66,7 +66,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A sticky, slimy affliction —\nthose affected by oozing\nleave slimes in their wake upon dying."
   POTION_POISON:
     buy: 43.36
     sell: 10.84
@@ -74,7 +74,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Green and creeping, poison\ndrains hearts over time —\nit will not kill, but it will make you beg."
   POTION_REGENERATION:
     buy: 183.28
     sell: 45.84
@@ -82,7 +82,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A ghast's tear made drinkable —\nRegeneration heals the body\nsecond by patient second."
   POTION_SLOW_FALLING:
     buy: 544.28
     sell: 136.08
@@ -90,7 +90,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Phantom membrane whispers:\nthere is no need to hurry down.\nSlow Falling makes every height manageable."
   POTION_SLOWNESS:
     buy: 55.48
     sell: 13.88
@@ -98,7 +98,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Shackles made liquid —\nSlowness binds the legs and drags\nevery step into sluggish misery."
   POTION_STRENGTH:
     buy: 24.8
     sell: 6.2
@@ -106,7 +106,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Blaze powder and willpower combined —\nStrength amplifies each blow\nuntil foes fall with a single strike."
   POTION_SWIFTNESS:
     buy: 14.12
     sell: 3.56
@@ -114,7 +114,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Sugar in the veins,\nSwiftness carries the drinker faster\nthan any enemy can track."
   POTION_TURTLE_MASTER:
     buy: 11811.48
     sell: 2952.88
@@ -122,7 +122,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Slow as a mountain, tough as stone —\nTurtle Master trades speed\nfor near-invulnerability in battle."
   POTION_WATER_BREATHING:
     buy: 39.12
     sell: 9.8
@@ -130,7 +130,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "The ocean becomes another room —\nWater Breathing grants unlimited time\nexploring the deep without a care."
   POTION_WEAKNESS:
     buy: 40.72
     sell: 10.2
@@ -138,7 +138,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Every blow lands softer,\nevery strike rings hollow —\nWeakness turns warriors into worriers."
   POTION_WEAVING:
     buy: 183.28
     sell: 45.84
@@ -146,7 +146,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Cobwebs trail behind the afflicted,\nWeaving tangles the battlefield\nwith sticky strands of spider silk."
   POTION_WIND_CHARGED:
     buy: 98.48
     sell: 24.64
@@ -154,7 +154,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Crackling with compressed breeze,\nWind Charged pulses bursts of wind\nat nearby targets upon taking damage."
   POTION_LONG_FIRE_RESISTANCE:
     buy: 65.32
     sell: 16.36
@@ -162,7 +162,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "More time in the furnace heat —\nextended Fire Resistance keeps you\nwalking through flame twice as long."
   POTION_LONG_INVISIBILITY:
     buy: 131.24
     sell: 32.84
@@ -170,7 +170,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "An extended cloak of nothing —\nstay unseen for the full expedition\nwith this stretched invisibility brew."
   POTION_LONG_NIGHT_VISION:
     buy: 84.12
     sell: 21.04
@@ -178,7 +178,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A longer night, a brighter darkness —\nthe extended brew keeps your eyes\nsharp through the deepest spelunking session."
   POTION_LONG_POISON:
     buy: 60.8
     sell: 15.2
@@ -186,7 +186,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Slow green suffering stretched out\nover twice the normal duration —\nenemies will not soon forget this brew."
   POTION_LONG_REGENERATION:
     buy: 209.08
     sell: 52.28
@@ -194,7 +194,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Extended healing flows through the body,\nmending wounds across a longer span —\nessential for the longest of boss fights."
   POTION_LONG_SLOW_FALLING:
     buy: 591.8
     sell: 147.96
@@ -202,7 +202,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A longer drift toward the ground —\nextended Slow Falling gives you time\nto plan your landing in great detail."
   POTION_LONG_SLOWNESS:
     buy: 73.64
     sell: 18.44
@@ -210,7 +210,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Extended sluggishness — enemies crawl\nthrough time at a fraction of their speed\nfor what feels like forever."
   POTION_LONG_STRENGTH:
     buy: 41.12
     sell: 10.28
@@ -218,7 +218,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Power held longer — the extended brew\nkeeps your strikes thunderous\nthrough a full dungeon sweep."
   POTION_LONG_SWIFTNESS:
     buy: 29.8
     sell: 7.48
@@ -226,7 +226,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Speed that does not fade quickly —\nextended Swiftness carries you\nacross vast distances before wearing off."
   POTION_LONG_TURTLE_MASTER:
     buy: 12535.0
     sell: 3133.76
@@ -234,7 +234,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A fortress of a body for twice the time —\nextended Turtle Master is for\nthose who plan to tank the entire raid."
   POTION_LONG_WATER_BREATHING:
     buy: 56.28
     sell: 14.08
@@ -242,7 +242,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "The ocean monument is a long dive —\nextended Water Breathing ensures\nyou surface only when you choose to."
   POTION_LONG_WEAKNESS:
     buy: 58.0
     sell: 14.52
@@ -250,7 +250,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Extended Weakness lingers long enough\nto cure a zombie villager and reset\nthe balance of a village."
   POTION_STRONG_HARMING:
     buy: 216.32
     sell: 54.08
@@ -258,7 +258,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Double the damage, same single gulp —\nStrong Harming is for situations\nthat cannot afford a second attempt."
   POTION_STRONG_HEALING:
     buy: 175.08
     sell: 43.8
@@ -266,7 +266,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Deep crimson and potent,\nStrong Healing mends twice the hearts\nin a single desperate swallow."
   POTION_STRONG_LEAPING:
     buy: 948.12
     sell: 237.04
@@ -274,7 +274,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Leap high enough to graze the clouds —\nStrong Leaping defies gravity\nwith absurd, soaring confidence."
   POTION_STRONG_POISON:
     buy: 170.6
     sell: 42.68
@@ -282,7 +282,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Double-strength venom drains hearts\nat terrifying speed — even the hardiest\nfoes tremble at this concentrated blight."
   POTION_STRONG_REGENERATION:
     buy: 318.92
     sell: 79.76
@@ -290,7 +290,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Mending at twice the pace —\nStrong Regeneration stitches wounds\nfast enough to keep up with the fiercest battles."
   POTION_STRONG_STRENGTH:
     buy: 150.92
     sell: 37.76
@@ -298,7 +298,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Raw power amplified —\nStrong Strength makes every hit\na statement no enemy can ignore."
   POTION_STRONG_SWIFTNESS:
     buy: 139.6
     sell: 34.92
@@ -306,7 +306,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A blur of motion — Strong Swiftness\npushes speed to its absolute limit,\nleaving only afterimages behind."
   POTION_STRONG_TURTLE_MASTER:
     buy: 12644.8
     sell: 3161.2
@@ -314,7 +314,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Nearly immovable and nearly invulnerable —\nStrong Turtle Master is the last resort\nfor those who refuse to fall."
   SPLASH_POTION_FIRE_RESISTANCE:
     buy: 116.2
     sell: 29.08
@@ -322,7 +322,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Shatter it underfoot and share\nFire Resistance with all allies —\nprotection deployed in one throw."
   SPLASH_POTION_HARMING:
     buy: 157.4
     sell: 39.36
@@ -330,7 +330,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A glass bomb of instant hurt —\nthrow it into the crowd and watch\nhealth bars plummet all at once."
   SPLASH_POTION_HEALING:
     buy: 116.12
     sell: 29.04
@@ -338,7 +338,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A battlefield medic's best tool —\nshatter this among allies to restore\nmultiple hearts across the front lines."
   SPLASH_POTION_INFESTED:
     buy: 83.4
     sell: 20.88
@@ -346,7 +346,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A thrown vial of creeping infestation —\nshatter it on enemies and let\nthe silverfish do the rest."
   SPLASH_POTION_INVISIBILITY:
     buy: 182.12
     sell: 45.56
@@ -354,7 +354,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Vanish yourself or your whole group —\na splash of Invisibility disappears\neveryone within its cloud of grey mist."
   SPLASH_POTION_LEAPING:
     buy: 889.2
     sell: 222.32
@@ -362,7 +362,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A thrown Jump Boost for the whole team —\nshatter it and watch your party\nleap over obstacles as one."
   SPLASH_POTION_NIGHT_VISION:
     buy: 135.0
     sell: 33.76
@@ -370,7 +370,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Throw it and illuminate the night\nfor everyone nearby — splashed Night Vision\nequips an entire party for the dark."
   SPLASH_POTION_OOZING:
     buy: 292.56
     sell: 73.16
@@ -378,7 +378,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Splash it on a crowd and their deaths\nbirth slimes on the battlefield —\nthe chaos compounds itself."
   SPLASH_POTION_POISON:
     buy: 111.68
     sell: 27.92
@@ -386,7 +386,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A vial of creeping doom thrown at enemies —\nPoison splash corrupts several\nfoes at once with a single throw."
   SPLASH_POTION_REGENERATION:
     buy: 259.96
     sell: 65.0
@@ -394,7 +394,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A healer's grenade — shatter it\namid your allies and let Regeneration\nflow freely across the battlefield."
   SPLASH_POTION_SLOW_FALLING:
     buy: 642.68
     sell: 160.68
@@ -402,7 +402,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A safety net in a bottle —\nshatter it beneath a falling party\nand float everyone gently to the ground."
   SPLASH_POTION_SLOWNESS:
     buy: 124.52
     sell: 31.16
@@ -410,7 +410,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A tactical throw — shatter this\namong approaching enemies and watch\ntheir advance crawl to a halt."
   SPLASH_POTION_STRENGTH:
     buy: 92.0
     sell: 23.0
@@ -418,7 +418,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Empower your whole warband at once —\nstrength splash fills every nearby warrior\nwith battle-ready fury."
   SPLASH_POTION_SWIFTNESS:
     buy: 80.68
     sell: 20.2
@@ -426,7 +426,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A burst of speed for the whole group —\nswiftness splash sends everyone nearby\nsprinting together toward victory."
   SPLASH_POTION_TURTLE_MASTER:
     buy: 12585.88
     sell: 3146.48
@@ -434,7 +434,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Make a tank out of your whole team —\nTurtle Master splash slows and hardens\nevery ally who stands in its cloud."
   SPLASH_POTION_WATER_BREATHING:
     buy: 107.16
     sell: 26.8
@@ -442,7 +442,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Shared gills for the whole dive team —\nWater Breathing splash keeps everyone\nbreathing comfortably in the depths."
   SPLASH_POTION_WEAKNESS:
     buy: 108.88
     sell: 27.24
@@ -450,7 +450,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Debilitate the whole enemy line —\nWeakness splash softens every foe\ncaught in the spreading mist."
   SPLASH_POTION_WEAVING:
     buy: 259.96
     sell: 65.0
@@ -458,7 +458,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Throw it and let spider silk\nspread across the battlefield —\nWeaving splash ensnares all in its cloud."
   SPLASH_POTION_WIND_CHARGED:
     buy: 170.08
     sell: 42.52
@@ -466,7 +466,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A thrown storm front —\nWind Charged splash crackles\nall caught in the blast with electrical gusts."
   SPLASH_POTION_LONG_FIRE_RESISTANCE:
     buy: 134.96
     sell: 33.76
@@ -474,7 +474,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Extended flame immunity shared freely —\nlong Fire Resistance splash keeps\nan entire party fire-proof through the Nether."
   SPLASH_POTION_LONG_INVISIBILITY:
     buy: 204.84
     sell: 51.24
@@ -482,7 +482,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A longer shared cloak of nothing —\nhide your whole party for an extended\nstealth operation with a single throw."
   SPLASH_POTION_LONG_NIGHT_VISION:
     buy: 154.88
     sell: 38.72
@@ -490,7 +490,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Extended shared sight in the dark —\none bottle equips your entire party\nfor the longest cave system."
   SPLASH_POTION_LONG_POISON:
     buy: 130.16
     sell: 32.56
@@ -498,7 +498,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Prolonged suffering for all nearby enemies —\nlong Poison splash corrupts a crowd\nfor twice the normal duration."
   SPLASH_POTION_LONG_REGENERATION:
     buy: 287.36
     sell: 71.84
@@ -506,7 +506,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Extended healing splashed across the team —\na single throw sustains everyone\nthrough the longest battles."
   SPLASH_POTION_LONG_SLOW_FALLING:
     buy: 693.04
     sell: 173.28
@@ -514,7 +514,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A longer safety net thrown wide —\nlong Slow Falling splash gives every nearby\nadventurer a gentle, extended drift."
   SPLASH_POTION_LONG_SLOWNESS:
     buy: 143.8
     sell: 35.96
@@ -522,7 +522,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Extended crowd control in a bottle —\nlong Slowness splash pins the crowd\nin molasses for twice as long."
   SPLASH_POTION_LONG_STRENGTH:
     buy: 109.32
     sell: 27.36
@@ -530,7 +530,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Extended power for the whole party —\nlong Strength splash sustains\nyour warband through even the longest siege."
   SPLASH_POTION_LONG_SWIFTNESS:
     buy: 97.28
     sell: 24.32
@@ -538,7 +538,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A shared sprint that lasts —\nlong Swiftness splash keeps your whole\nparty moving fast for the full expedition."
   SPLASH_POTION_LONG_TURTLE_MASTER:
     buy: 13352.8
     sell: 3338.2
@@ -546,7 +546,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Extended mutual fortification —\nlong Turtle Master splash turns\nyour entire group into a slow, unbreakable wall."
   SPLASH_POTION_LONG_WATER_BREATHING:
     buy: 125.4
     sell: 31.36
@@ -554,7 +554,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "For the long undersea expedition —\nlong Water Breathing splash keeps\nthe whole dive team breathing deep below."
   SPLASH_POTION_LONG_WEAKNESS:
     buy: 127.2
     sell: 31.8
@@ -562,7 +562,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A prolonged group debuff —\nlong Weakness splash softens\nall nearby enemies for the duration of the fight."
   SPLASH_POTION_STRONG_HARMING:
     buy: 295.0
     sell: 73.76
@@ -570,7 +570,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Double damage spread wide —\nStrong Harming splash devastates\nany crowd foolish enough to cluster."
   SPLASH_POTION_STRONG_HEALING:
     buy: 251.28
     sell: 62.84
@@ -578,7 +578,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Powerful healing for the whole team —\nStrong Healing splash mends deep wounds\nacross all allies in a single throw."
   SPLASH_POTION_STRONG_LEAPING:
     buy: 1070.72
     sell: 267.68
@@ -586,7 +586,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Launch your whole party skyward —\nStrong Leaping splash gives everyone\na gravity-defying boost at once."
   SPLASH_POTION_STRONG_POISON:
     buy: 246.56
     sell: 61.64
@@ -594,7 +594,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Concentrated blight hurled into a group —\nStrong Poison splash corrodes\neveryone caught in the spreading cloud."
   SPLASH_POTION_STRONG_REGENERATION:
     buy: 403.76
     sell: 100.96
@@ -602,7 +602,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Powerful mending shared across the team —\nStrong Regeneration splash heals\neveryone at twice the normal rate."
   SPLASH_POTION_STRONG_STRENGTH:
     buy: 225.72
     sell: 56.44
@@ -610,7 +610,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Maximum power for the entire party —\nStrong Strength splash makes every warrior\nstrike like a battering ram."
   SPLASH_POTION_STRONG_SWIFTNESS:
     buy: 213.72
     sell: 53.44
@@ -618,7 +618,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Maximum speed shared freely —\nStrong Swiftness splash launches\nyour entire group into blurring motion."
   SPLASH_POTION_STRONG_TURTLE_MASTER:
     buy: 13469.2
     sell: 3367.32
@@ -626,7 +626,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "The ultimate defensive splash —\nStrong Turtle Master makes your group\nmassively tough but barely able to move."
   LINGERING_POTION_FIRE_RESISTANCE:
     buy: 589.24
     sell: 147.32
@@ -634,7 +634,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A persistent zone of flame immunity —\nstep through the cloud to claim\nFire Resistance as the battle rages on."
   LINGERING_POTION_HARMING:
     buy: 632.88
     sell: 158.24
@@ -642,7 +642,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A cloud that keeps on hurting —\nHarming Lingering holds a spot\nof instant damage that punishes every arrival."
   LINGERING_POTION_HEALING:
     buy: 589.16
     sell: 147.32
@@ -650,7 +650,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A healing zone placed with purpose —\nstep through the lingering cloud\nand emerge restored, repeatedly if needed."
   LINGERING_POTION_INFESTED:
     buy: 554.48
     sell: 138.64
@@ -658,7 +658,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A persistent zone of infestation —\nfoes that linger in this cloud\nrisk hatching tiny, angry companions."
   LINGERING_POTION_INVISIBILITY:
     buy: 659.12
     sell: 164.8
@@ -666,7 +666,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A cloud of nothing, persistent and patient —\nstep through the lingering Invisibility\nand vanish from the battlefield entirely."
   LINGERING_POTION_LEAPING:
     buy: 1408.6
     sell: 352.16
@@ -674,7 +674,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A jump pad made of potion mist —\nstep through the cloud and be launched\nhigher than any structure around you."
   LINGERING_POTION_NIGHT_VISION:
     buy: 609.2
     sell: 152.32
@@ -682,7 +682,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A persistent zone of sight in the dark —\nstep through the Night Vision cloud\nand see everything clearly in any darkness."
   LINGERING_POTION_OOZING:
     buy: 776.2
     sell: 194.08
@@ -690,7 +690,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A persistent ooze zone that inflicts\nthe infestation over time —\na territory of slime-spawning hazard."
   LINGERING_POTION_POISON:
     buy: 584.44
     sell: 146.12
@@ -698,7 +698,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A cloud of creeping venom —\nhazardous territory that drains hearts\nfrom anyone foolish enough to stand in it."
   LINGERING_POTION_REGENERATION:
     buy: 741.64
     sell: 185.44
@@ -706,7 +706,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Stand in the healing cloud\nand feel your wounds close —\nRegeneration Lingering claims the ground."
   LINGERING_POTION_SLOW_FALLING:
     buy: 1147.32
     sell: 286.84
@@ -714,7 +714,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A cloud that softens the world —\nstep through Slow Falling Lingering\nand land from any height unharmed."
   LINGERING_POTION_SLOWNESS:
     buy: 598.08
     sell: 149.52
@@ -722,7 +722,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A zone of sluggishness that persists —\nherd enemies into the Slowness cloud\nand dispatch them at your leisure."
   LINGERING_POTION_STRENGTH:
     buy: 563.6
     sell: 140.92
@@ -730,7 +730,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A power zone, persistent on the ground —\nstep through the Strength Lingering\nand your next strikes will land like boulders."
   LINGERING_POTION_SWIFTNESS:
     buy: 551.6
     sell: 137.92
@@ -738,7 +738,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A speed boost waiting on the ground —\nrun through the Swiftness Lingering\nand accelerate into the battle ahead."
   LINGERING_POTION_TURTLE_MASTER:
     buy: 13807.08
     sell: 3451.8
@@ -746,7 +746,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A defensive zone of toughness —\nstep through the Turtle Master cloud\nand become briefly unstoppable."
   LINGERING_POTION_WATER_BREATHING:
     buy: 579.68
     sell: 144.92
@@ -754,7 +754,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A persistent zone of undersea survival —\nstep through Water Breathing Lingering\nand breathe freely in any depth."
   LINGERING_POTION_WEAKNESS:
     buy: 581.48
     sell: 145.4
@@ -762,7 +762,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A field of diminished strikes —\nenemies that pass through the cloud\nfind their attacks suddenly hollow."
   LINGERING_POTION_WEAVING:
     buy: 741.64
     sell: 185.44
@@ -770,7 +770,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A persistent web zone that afflicts\nenemies with weaving as they move —\nthe battlefield becomes a spider's domain."
   LINGERING_POTION_WIND_CHARGED:
     buy: 646.36
     sell: 161.6
@@ -778,7 +778,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A field of crackling wind energy —\nenemies that enter the Wind Charged cloud\nleave bursting with dangerous gusts."
   LINGERING_POTION_LONG_FIRE_RESISTANCE:
     buy: 609.12
     sell: 152.28
@@ -786,7 +786,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "An extended safe zone amid the flames —\nlong Fire Resistance Lingering protects\nanyone who steps through for longer."
   LINGERING_POTION_LONG_INVISIBILITY:
     buy: 683.2
     sell: 170.8
@@ -794,7 +794,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A longer-lasting vanishing cloud —\nstep through and the extended\nInvisibility covers your escape fully."
   LINGERING_POTION_LONG_NIGHT_VISION:
     buy: 630.28
     sell: 157.6
@@ -802,7 +802,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Extended sight in a persistent zone —\nstep through the cloud and carry\nlong Night Vision through the deepest dark."
   LINGERING_POTION_LONG_POISON:
     buy: 604.04
     sell: 151.04
@@ -810,7 +810,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A longer-lasting toxic zone —\nenemies that linger in this cloud\nsuffer extended, relentless poisoning."
   LINGERING_POTION_LONG_REGENERATION:
     buy: 770.68
     sell: 192.68
@@ -818,7 +818,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "An extended healing zone —\nstand in the long Regeneration cloud\nand watch health recover at a steady pace."
   LINGERING_POTION_LONG_SLOW_FALLING:
     buy: 1200.68
     sell: 300.2
@@ -826,7 +826,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A longer floating zone —\nstep through the cloud and drift\nnot just slowly but at a leisurely stroll."
   LINGERING_POTION_LONG_SLOWNESS:
     buy: 618.48
     sell: 154.64
@@ -834,7 +834,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Extended crowd control on the ground —\nthe long Slowness Lingering cloud\nholds enemies in place far longer."
   LINGERING_POTION_LONG_STRENGTH:
     buy: 581.92
     sell: 145.48
@@ -842,7 +842,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "An extended power zone —\nstep through the long Strength cloud\nand carry amplified force into the fight."
   LINGERING_POTION_LONG_SWIFTNESS:
     buy: 569.2
     sell: 142.32
@@ -850,7 +850,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A longer speed boost waiting on the ground —\nlong Swiftness Lingering accelerates\nanyone who dares step through."
   LINGERING_POTION_LONG_TURTLE_MASTER:
     buy: 14620.04
     sell: 3655.04
@@ -858,7 +858,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Extended fortification in a persistent zone —\nlong Turtle Master Lingering anchors\ndefenders in impenetrable endurance."
   LINGERING_POTION_LONG_WATER_BREATHING:
     buy: 598.96
     sell: 149.76
@@ -866,7 +866,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "An extended undersea survival zone —\nlong Water Breathing Lingering sustains\nanyone in the cloud for a full deep dive."
   LINGERING_POTION_LONG_WEAKNESS:
     buy: 600.88
     sell: 150.24
@@ -874,7 +874,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "An extended debuff zone —\nlong Weakness Lingering softens\nenemies that pass through for the entire fight."
   LINGERING_POTION_STRONG_HARMING:
     buy: 778.8
     sell: 194.72
@@ -882,7 +882,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A field of doubled instant damage —\nStrong Harming Lingering punishes\neveryone who dares cross its territory."
   LINGERING_POTION_STRONG_HEALING:
     buy: 732.44
     sell: 183.12
@@ -890,7 +890,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A powerful healing zone on the ground —\nwalk through Strong Healing Lingering\nand emerge with hearts fully restored."
   LINGERING_POTION_STRONG_LEAPING:
     buy: 1601.04
     sell: 400.28
@@ -898,7 +898,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A launch pad of maximum force —\nstep through Strong Leaping Lingering\nand reach heights no staircase can match."
   LINGERING_POTION_STRONG_POISON:
     buy: 727.4
     sell: 181.88
@@ -906,7 +906,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A field of concentrated venom —\nStrong Poison Lingering drains hearts\nat terrifying speed from all who enter."
   LINGERING_POTION_STRONG_REGENERATION:
     buy: 894.08
     sell: 223.52
@@ -914,7 +914,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Maximum healing in a persistent zone —\nStrong Regeneration Lingering mends\nalmost faster than damage can accumulate."
   LINGERING_POTION_STRONG_STRENGTH:
     buy: 705.32
     sell: 176.36
@@ -922,7 +922,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A field of overwhelming power —\nstep through Strong Strength Lingering\nand every next strike feels like a siege weapon."
   LINGERING_POTION_STRONG_SWIFTNESS:
     buy: 692.6
     sell: 173.16
@@ -930,7 +930,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Maximum speed in a cloud on the ground —\nStrong Swiftness Lingering launches\nanyone through it into a full sprint."
   LINGERING_POTION_STRONG_TURTLE_MASTER:
     buy: 14743.44
     sell: 3685.88
@@ -938,7 +938,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Maximum defense in a persistent zone —\nStrong Turtle Master Lingering makes\nthe ground itself a fortress."
   TIPPED_ARROW_FIRE_RESISTANCE:
     buy: 86.8
     sell: 21.72
@@ -946,7 +946,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Strike an ally and grant them flame immunity —\nFire Resistance arrows are the ranged\nmedic's tool in the Nether's heat."
   TIPPED_ARROW_HARMING:
     buy: 92.56
     sell: 23.16
@@ -954,7 +954,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "The arrowhead delivers instant damage —\na Harming arrow combines piercing\nand pain into a single cruel shot."
   TIPPED_ARROW_HEALING:
     buy: 86.8
     sell: 21.72
@@ -962,7 +962,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Shoot an ally to heal from range —\nor devastate the undead with\na burst of restorative energy they cannot bear."
   TIPPED_ARROW_INFESTED:
     buy: 11.68
     sell: 2.92
@@ -970,7 +970,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Strike the target and seed infestation —\neven after death they may leave\ntiny angry silverfish in their wake."
   TIPPED_ARROW_INVISIBILITY:
     buy: 96.0
     sell: 24.0
@@ -978,7 +978,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Tag an ally from afar and vanish them —\nInvisibility arrows are the sniper's\ngift to the infiltration specialist."
   TIPPED_ARROW_LEAPING:
     buy: 194.36
     sell: 48.6
@@ -986,7 +986,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Hit the target and send them leaping —\nor boost an ally over any obstacle\nfrom across the battlefield."
   TIPPED_ARROW_LONG_FIRE_RESISTANCE:
     buy: 89.44
     sell: 22.36
@@ -994,7 +994,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Extended flame immunity on the arrowhead —\nlong Fire Resistance arrows keep\nallies protected deep into the Nether."
   TIPPED_ARROW_LONG_INVISIBILITY:
     buy: 99.16
     sell: 24.8
@@ -1002,7 +1002,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A longer vanish delivered at range —\nlong Invisibility arrows keep\nthe target unseen for the full mission."
   TIPPED_ARROW_LONG_NIGHT_VISION:
     buy: 92.2
     sell: 23.08
@@ -1010,7 +1010,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Extended sight from a single shot —\nlong Night Vision arrows keep\nalert eyes sharp through the whole dark dungeon."
   TIPPED_ARROW_LONG_POISON:
     buy: 88.76
     sell: 22.2
@@ -1018,7 +1018,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Longer venom embedded in the shaft —\nlong Poison arrows drain the target\nfor an agonizing extended duration."
   TIPPED_ARROW_LONG_REGENERATION:
     buy: 110.64
     sell: 27.68
@@ -1026,7 +1026,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Extended healing fired from the bow —\nlong Regeneration arrows keep\nally health climbing through a long fight."
   TIPPED_ARROW_LONG_SLOW_FALLING:
     buy: 167.08
     sell: 41.8
@@ -1034,7 +1034,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Give an ally a longer, safer descent —\nlong Slow Falling arrows carry the target\ngently to earth from any height."
   TIPPED_ARROW_LONG_SLOWNESS:
     buy: 90.64
     sell: 22.68
@@ -1042,7 +1042,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Pin an enemy in extended sluggishness —\nlong Slowness arrows shackle\nthe target's legs for a prolonged sentence."
   TIPPED_ARROW_LONG_STRENGTH:
     buy: 85.84
     sell: 21.48
@@ -1050,7 +1050,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Extended power from a well-aimed shot —\nlong Strength arrows keep\nwarriors swinging hard for the full fight."
   TIPPED_ARROW_LONG_SWIFTNESS:
     buy: 84.2
     sell: 21.08
@@ -1058,7 +1058,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Extended speed delivered at range —\nlong Swiftness arrows keep\nallies sprinting for the whole engagement."
   TIPPED_ARROW_LONG_TURTLE_MASTER:
     buy: 1928.36
     sell: 482.12
@@ -1066,7 +1066,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Extended fortification via arrow —\nlong Turtle Master arrows harden\nthe target for a prolonged defensive stand."
   TIPPED_ARROW_LONG_WATER_BREATHING:
     buy: 88.08
     sell: 22.04
@@ -1074,7 +1074,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Extended underwater survival from a shot —\nlong Water Breathing arrows keep\nallies breathing far below the surface."
   TIPPED_ARROW_LONG_WEAKNESS:
     buy: 88.36
     sell: 22.12
@@ -1082,7 +1082,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Extended debilitation on a single arrow —\nlong Weakness arrows strip the target's\nstrike power for the entire skirmish."
   TIPPED_ARROW_NIGHT_VISION:
     buy: 89.44
     sell: 22.36
@@ -1090,7 +1090,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "The ranged gift of clear sight —\nNight Vision arrows illuminate the world\nfor any ally struck in the dark."
   TIPPED_ARROW_OOZING:
     buy: 37.56
     sell: 9.4
@@ -1098,7 +1098,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Strike the target and mark them —\nOozing arrows ensure the enemy\nleaves slimes upon their eventual demise."
   TIPPED_ARROW_POISON:
     buy: 86.2
     sell: 21.56
@@ -1106,7 +1106,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "The archer's venomous payload —\nPoison arrows deliver a creeping drain\nthat follows the target after the shot."
   TIPPED_ARROW_REGENERATION:
     buy: 106.8
     sell: 26.72
@@ -1114,7 +1114,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Healing fired from the string —\nRegeneration arrows are the archer's\ngift to distant allies in need."
   TIPPED_ARROW_SLOW_FALLING:
     buy: 160.04
     sell: 40.04
@@ -1122,7 +1122,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Save a falling ally mid-air —\nSlow Falling arrows carry the gift\nof a gentle landing to those who need it most."
   TIPPED_ARROW_SLOWNESS:
     buy: 87.96
     sell: 22.0
@@ -1130,7 +1130,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Stick an enemy in their tracks —\nSlowness arrows make the fastest foe\na stationary target for the next volley."
   TIPPED_ARROW_STRENGTH:
     buy: 83.44
     sell: 20.88
@@ -1138,7 +1138,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A shot that empowers —\nStrength arrows amplify an ally's\nnext strikes with a well-aimed gift."
   TIPPED_ARROW_STRONG_HARMING:
     buy: 111.68
     sell: 27.92
@@ -1146,7 +1146,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Double-dose pain on the arrowhead —\nStrong Harming arrows punch through\ndamage resistances with surgical cruelty."
   TIPPED_ARROW_STRONG_HEALING:
     buy: 105.6
     sell: 26.4
@@ -1154,7 +1154,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Powerful healing from a single shot —\nStrong Healing arrows are the emergency\nmeasure for allies on the brink."
   TIPPED_ARROW_STRONG_LEAPING:
     buy: 219.6
     sell: 54.92
@@ -1162,7 +1162,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Maximum jump boost via projectile —\nStrong Leaping arrows launch targets\nover anything standing in their path."
   TIPPED_ARROW_STRONG_POISON:
     buy: 104.96
     sell: 26.24
@@ -1170,7 +1170,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Double-strength venom in the shaft —\nStrong Poison arrows drain health\nat alarming speed from the first moment of impact."
   TIPPED_ARROW_STRONG_REGENERATION:
     buy: 126.84
     sell: 31.72
@@ -1178,7 +1178,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Powerful mending from a single shot —\nStrong Regeneration arrows restore\nan ally's health quickly from afar."
   TIPPED_ARROW_STRONG_STRENGTH:
     buy: 102.04
     sell: 25.52
@@ -1186,7 +1186,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Maximum power in arrow form —\nStrong Strength arrows make your ally\nstrike like a charging golem."
   TIPPED_ARROW_STRONG_SWIFTNESS:
     buy: 100.36
     sell: 25.12
@@ -1194,7 +1194,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Maximum speed delivered at range —\nStrong Swiftness arrows are the archer's\nway of helping allies outrun everything."
   TIPPED_ARROW_STRONG_TURTLE_MASTER:
     buy: 1944.56
     sell: 486.16
@@ -1202,7 +1202,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Maximum fortification via arrow —\nStrong Turtle Master arrows turn allies\ninto nearly immovable bulwarks."
   TIPPED_ARROW_SWIFTNESS:
     buy: 81.88
     sell: 20.48
@@ -1210,7 +1210,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A speed boost from a single shot —\nSwiftness arrows accelerate allies\ninto the thick of battle from a distance."
   TIPPED_ARROW_TURTLE_MASTER:
     buy: 1821.64
     sell: 455.44
@@ -1218,7 +1218,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Hit an ally to fortify them —\nTurtle Master arrows slow the target\nbut armor them against overwhelming force."
   TIPPED_ARROW_WATER_BREATHING:
     buy: 85.56
     sell: 21.4
@@ -1226,7 +1226,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Grant underwater survival from the bow —\nWater Breathing arrows give allies\ngills without even a moment's warning."
   TIPPED_ARROW_WEAKNESS:
     buy: 85.8
     sell: 21.48
@@ -1234,7 +1234,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "A shot that softens the target —\nWeakness arrows are the duelist's\nsecret weapon before the real fight begins."
   TIPPED_ARROW_WEAVING:
     buy: 33.52
     sell: 8.4
@@ -1242,7 +1242,7 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Inflict weaving from the bow —\nWeaving arrows tag enemies\nto leave cobwebs in their dying moment."
   TIPPED_ARROW_WIND_CHARGED:
     buy: 22.4
     sell: 5.6
@@ -1250,4 +1250,4 @@ items:
     s-kills-required: 0
     survivals-required: 0
     badge-required: ""
-    lore: []
+    lore: "Embed a gust in the target —\nWind Charged arrows make enemies\nburst with wind energy on their next hit."
