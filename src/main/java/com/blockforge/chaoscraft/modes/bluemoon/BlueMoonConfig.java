@@ -87,6 +87,8 @@ public class BlueMoonConfig {
         // ── Timer HUD ───────────────────────────────────────────────────
         if (!config.contains("timer-hud.display-name")) { config.set("timer-hud.display-name", "BLUE MOON"); needsSave = true; }
         if (!config.contains("timer-hud.color")) { config.set("timer-hud.color", "#88CCFF"); needsSave = true; }
+        if (!config.contains("timer-hud.flash-color")) { config.set("timer-hud.flash-color", "red"); needsSave = true; }
+        if (!config.contains("timer-hud.flash-threshold-seconds")) { config.set("timer-hud.flash-threshold-seconds", 60); needsSave = true; }
 
         // ── Universal mob spawning ───────────────────────────────────
         if (MobSpawnConfig.ensureKeys(config)) needsSave = true;
@@ -182,6 +184,12 @@ public class BlueMoonConfig {
 
         defaults.set("timer-hud.display-name", "BLUE MOON");
         defaults.set("timer-hud.color", "#88CCFF");
+        defaults.set("timer-hud.flash-color", "red");
+        defaults.setComments("timer-hud.flash-color", List.of(
+                "Color name when timer is flashing (below threshold). Default: red."));
+        defaults.set("timer-hud.flash-threshold-seconds", 60);
+        defaults.setComments("timer-hud.flash-threshold-seconds", List.of(
+                "Seconds remaining when the timer starts flashing. Default: 60."));
 
         // ── Universal Mob Spawning ──────────────────────────────────────
         MobSpawnConfig.writeDefaults(defaults, List.of(
