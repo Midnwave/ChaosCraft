@@ -48,7 +48,9 @@ public class ChaosCraftCommand implements CommandExecutor, TabCompleter {
             "help", "modes", "timer", "devs", "reload", "exempt", "dog", "debug", "update",
             "function", "entertitlescreen", "exittitlescreen", "item", "itemtag",
             "settings", "codes", "useragreement", "play",
-            "kills", "setkills", "addkills", "setskills", "addskills", "setsurvivals", "addsurvivals"
+            "kills", "setkills", "addkills", "setskills", "addskills", "setsurvivals", "addsurvivals",
+            "badges", "createbadge", "deletebadge", "assignbadge", "removebadge",
+            "setbadgelimited", "setbadgedescription", "shop"
     );
 
     // Permission required for each subcommand (for tab-complete filtering and help display)
@@ -77,7 +79,15 @@ public class ChaosCraftCommand implements CommandExecutor, TabCompleter {
             Map.entry("setskills", "chaoscraft.admin"),
             Map.entry("addskills", "chaoscraft.admin"),
             Map.entry("setsurvivals", "chaoscraft.admin"),
-            Map.entry("addsurvivals", "chaoscraft.admin")
+            Map.entry("addsurvivals", "chaoscraft.admin"),
+            Map.entry("badges", "chaoscraft.badges.view"),
+            Map.entry("createbadge", "chaoscraft.badges.admin"),
+            Map.entry("deletebadge", "chaoscraft.badges.admin"),
+            Map.entry("assignbadge", "chaoscraft.badges.admin"),
+            Map.entry("removebadge", "chaoscraft.badges.admin"),
+            Map.entry("setbadgelimited", "chaoscraft.badges.admin"),
+            Map.entry("setbadgedescription", "chaoscraft.badges.admin"),
+            Map.entry("shop", "chaoscraft.shop.use")
     );
 
     private static final List<String> TIMER_SUBS = List.of("set", "add", "remove", "pause", "resume");
@@ -169,6 +179,28 @@ public class ChaosCraftCommand implements CommandExecutor, TabCompleter {
                 }
                 yield new com.blockforge.chaoscraft.services.stats.StatsCommand(plugin, statsService)
                         .handle(sender, args[0], subArgs);
+            }
+            case "badges", "createbadge", "deletebadge", "assignbadge", "removebadge",
+                 "setbadgelimited", "setbadgedescription" -> {
+                var badgeSvc = plugin.getBadgeService();
+                if (badgeSvc == null) {
+                    sender.sendMessage(Component.text("Badge service not available.", NamedTextColor.RED));
+                    yield true;
+                }
+                var badgeGui = new com.blockforge.chaoscraft.services.badges.BadgeGUI(plugin, badgeSvc);
+                var calendarGui = new com.blockforge.chaoscraft.services.badges.CalendarGUI(plugin);
+                yield new com.blockforge.chaoscraft.services.badges.BadgeCommand(plugin, badgeSvc, badgeGui, calendarGui)
+                        .handle(sender, args[0], subArgs);
+            }
+            case "shop" -> {
+                var shopSvc = plugin.getShopService();
+                var shopGui = plugin.getShopGUIListener();
+                if (shopSvc == null || shopGui == null) {
+                    sender.sendMessage(Component.text("Shop service not available.", NamedTextColor.RED));
+                    yield true;
+                }
+                yield new com.blockforge.chaoscraft.services.shop.ShopCommand(plugin, shopSvc, shopGui)
+                        .onCommand(sender, command, label, subArgs);
             }
             default -> {
                 sender.sendMessage(Component.text("Unknown subcommand: " + args[0] + ". Use /cc help for a full list.", NamedTextColor.RED));

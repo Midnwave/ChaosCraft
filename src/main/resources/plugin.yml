@@ -89,6 +89,13 @@ commands:
     usage: /ivory <give|state|ability|list|reload>
     permission: chaoscraft.ivory.test
 
+  # ===== Shop =====
+  shop:
+    description: Open the server shop
+    aliases: [market]
+    usage: /shop
+    permission: chaoscraft.shop.use
+
   # ===== Player-Facing =====
   settings:
     description: Open the player settings menu
@@ -132,6 +139,8 @@ permissions:
       chaoscraft.claims.admin: true
       chaoscraft.corruption.admin: true
       chaoscraft.ivory.test: true
+      chaoscraft.badges.admin: true
+      chaoscraft.shop.admin: true
 
   # ----- Mode System -----
   chaoscraft.mode.trigger:
@@ -230,4 +239,25 @@ permissions:
   # ----- Corruption Mode -----
   chaoscraft.corruption.admin:
     description: Corruption mode admin/test commands
+    default: op
+
+  # ----- Stats -----
+  chaoscraft.stats.view:
+    description: View player stats (/cc kills)
+    default: true
+
+  # ----- Badges -----
+  chaoscraft.badges.view:
+    description: View own badges (/cc badges)
+    default: true
+  chaoscraft.badges.admin:
+    description: Create/delete/assign/revoke badges
+    default: op
+
+  # ----- Shop -----
+  chaoscraft.shop.use:
+    description: Use the shop (/shop, /market, /cc shop)
+    default: true
+  chaoscraft.shop.admin:
+    description: Admin shop management (edit, add items, sections)
     default: op

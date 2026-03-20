@@ -264,7 +264,18 @@ public class PlaceholderExpansion extends me.clip.placeholderapi.expansion.Place
                 yield stats != null ? String.valueOf(stats.getModeSurvivals(player.getUniqueId())) : "0";
             }
 
-            default -> null;
+            default -> {
+                // Badge ownership check (%chaoscraft_has_badge_<id>%)
+                if (identifier.startsWith("has_badge_")) {
+                    String badgeId = identifier.substring("has_badge_".length());
+                    var badgeSvc = plugin.getBadgeService();
+                    if (badgeSvc != null && player != null) {
+                        yield String.valueOf(badgeSvc.hasBadge(player.getUniqueId(), badgeId));
+                    }
+                    yield "false";
+                }
+                yield null;
+            }
         };
     }
 }

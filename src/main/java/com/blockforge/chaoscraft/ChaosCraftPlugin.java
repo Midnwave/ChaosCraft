@@ -71,6 +71,9 @@ public class ChaosCraftPlugin extends JavaPlugin {
     private com.blockforge.chaoscraft.weapons.ivory.IvoryService ivoryService;
     private com.blockforge.chaoscraft.updater.UpdateChecker updateChecker;
     private com.blockforge.chaoscraft.services.stats.PlayerStatsService playerStatsService;
+    private com.blockforge.chaoscraft.services.badges.BadgeService badgeService;
+    private com.blockforge.chaoscraft.services.shop.ShopService shopService;
+    private com.blockforge.chaoscraft.services.shop.gui.ShopGUIListener shopGUIListener;
 
     @Override
     public void onEnable() {
@@ -155,6 +158,14 @@ public class ChaosCraftPlugin extends JavaPlugin {
         playerStatsService = new com.blockforge.chaoscraft.services.stats.PlayerStatsService(this);
         playerStatsService.initialize();
 
+        // Initialize Badge service
+        badgeService = new com.blockforge.chaoscraft.services.badges.BadgeService(this);
+        badgeService.initialize();
+
+        // Initialize Shop service
+        shopService = new com.blockforge.chaoscraft.services.shop.ShopService(this);
+        shopService.initialize();
+
         // Initialize Mode Timer HUD
         modeTimerHud = new ModeTimerHud(this);
 
@@ -172,6 +183,18 @@ public class ChaosCraftPlugin extends JavaPlugin {
         if (playerStatsService != null) {
             getServer().getPluginManager().registerEvents(
                     new com.blockforge.chaoscraft.services.stats.KillTrackingListener(this, playerStatsService), this);
+        }
+
+        // Register Badge listener
+        if (badgeService != null) {
+            getServer().getPluginManager().registerEvents(
+                    new com.blockforge.chaoscraft.services.badges.BadgeListener(this, badgeService), this);
+        }
+
+        // Register Shop GUI listener
+        if (shopService != null) {
+            shopGUIListener = new com.blockforge.chaoscraft.services.shop.gui.ShopGUIListener(this, shopService);
+            getServer().getPluginManager().registerEvents(shopGUIListener, this);
         }
 
         // Register claims listener
@@ -282,6 +305,16 @@ public class ChaosCraftPlugin extends JavaPlugin {
             playerStatsService.shutdown();
         }
 
+        // Shutdown badges
+        if (badgeService != null) {
+            badgeService.shutdown();
+        }
+
+        // Shutdown shop
+        if (shopService != null) {
+            shopService.shutdown();
+        }
+
         // Stop timer
         if (modeTimer != null) {
             modeTimer.stop();
@@ -368,6 +401,14 @@ public class ChaosCraftPlugin extends JavaPlugin {
             itemTagCmd.setTabCompleter(handler);
         }
 
+        // /shop command (standalone, opens shop GUI)
+        var shopCmd = getCommand("shop");
+        if (shopCmd != null && shopService != null && shopGUIListener != null) {
+            var handler = new com.blockforge.chaoscraft.services.shop.ShopCommand(this, shopService, shopGUIListener);
+            shopCmd.setExecutor(handler);
+            shopCmd.setTabCompleter(handler);
+        }
+
         // /points command
         var pointsCmd = getCommand("points");
         if (pointsCmd != null) {
@@ -398,6 +439,8 @@ public class ChaosCraftPlugin extends JavaPlugin {
         if (claimsService != null) claimsService.reload();
         if (modePointsService != null) modePointsService.reload();
         if (playerStatsService != null) playerStatsService.reload();
+        if (badgeService != null) badgeService.reload();
+        if (shopService != null) shopService.reload();
 
         getLogger().info("[Reload] Services in " + (System.currentTimeMillis() - reloadStart) + "ms");
 
@@ -633,6 +676,9 @@ public class ChaosCraftPlugin extends JavaPlugin {
     public ModePointsService getModePointsService() { return modePointsService; }
     public ModeTimerHud getModeTimerHud() { return modeTimerHud; }
     public com.blockforge.chaoscraft.services.stats.PlayerStatsService getPlayerStatsService() { return playerStatsService; }
+    public com.blockforge.chaoscraft.services.badges.BadgeService getBadgeService() { return badgeService; }
+    public com.blockforge.chaoscraft.services.shop.ShopService getShopService() { return shopService; }
+    public com.blockforge.chaoscraft.services.shop.gui.ShopGUIListener getShopGUIListener() { return shopGUIListener; }
     public com.blockforge.chaoscraft.updater.UpdateChecker getUpdateChecker() { return updateChecker; }
     public com.blockforge.chaoscraft.weapons.ivory.IvoryService getIvoryService() { return ivoryService; }
 
