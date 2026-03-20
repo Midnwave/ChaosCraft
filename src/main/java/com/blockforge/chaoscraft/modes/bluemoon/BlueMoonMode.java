@@ -6,6 +6,8 @@ import com.blockforge.chaoscraft.modes.calamity.attacks.AttackRegistry;
 import com.blockforge.chaoscraft.modes.calamity.attacks.AttackType;
 import com.blockforge.chaoscraft.modes.bluemoon.attacks.blockdisplay.*;
 import com.blockforge.chaoscraft.modes.bluemoon.attacks.environmental.*;
+import com.blockforge.chaoscraft.modes.bluemoon.attacks.boss.BlueMoonBossAttacks;
+import org.bukkit.Bukkit;
 import org.bukkit.GameRule;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -27,14 +29,20 @@ public class BlueMoonMode extends AbstractMode {
     private final BlueMoonConfig moonConfig;
     private final AttackRegistry attackRegistry;
     private final BlueMoonScheduler attackScheduler;
+    private final BlueMoonBossManager bossManager;
+    private final LunarGimmickManager gimmickManager;
     private long tickCounter = 0;
     private long savedTime = -1; // Original world time to restore on end
+    private int bossSpawnDelay = 0;
+    private boolean bossSpawnScheduled = false;
 
     public BlueMoonMode(ChaosCraftPlugin plugin) {
         super(plugin, "bluemoon");
         this.moonConfig = new BlueMoonConfig(plugin);
         this.attackRegistry = new AttackRegistry(plugin);
         this.attackScheduler = new BlueMoonScheduler(plugin, attackRegistry, moonConfig);
+        this.bossManager = new BlueMoonBossManager(plugin, moonConfig);
+        this.gimmickManager = new LunarGimmickManager(plugin);
         registerAllAttacks();
     }
 
@@ -59,8 +67,8 @@ public class BlueMoonMode extends AbstractMode {
         EclipseDarkness.registerAll(plugin, attackRegistry);
         CosmicRadiation.registerAll(plugin, attackRegistry);
 
-        // Boss attacks (11) — TODO: implement
-        // BlueMoonBossAttacks.registerAll(plugin, attackRegistry);
+        // Boss attacks (11)
+        BlueMoonBossAttacks.registerAll(plugin, attackRegistry);
 
         attackRegistry.reloadConfigs();
         plugin.getLogger().info("[BlueMoon] Registered " + attackRegistry.size() + " attacks, configs loaded.");
@@ -126,8 +134,25 @@ public class BlueMoonMode extends AbstractMode {
         // Start attack scheduler
         attackScheduler.start();
 
-        // TODO: Start boss manager after spawn delay
-        // TODO: Start gimmick manager
+        // Schedule boss spawn after delay
+        if (moonConfig.isBossEnabled()) {
+            bossSpawnDelay = moonConfig.getBossSpawnDelayTicks();
+            bossSpawnScheduled = true;
+            plugin.getLogger().info("[BlueMoon] Boss will spawn in " + bossSpawnDelay + " ticks.");
+            bossManager.setEarlyKillCallback(() -> {
+                plugin.getLogger().info("[BlueMoon] Boss killed early! Bonus rewards triggered.");
+                // Run early kill bonus commands
+                for (String cmd : moonConfig.getEarlyKillBonusCommands()) {
+                    for (Player p : world.getPlayers()) {
+                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(),
+                                cmd.replace("%player%", p.getName()));
+                    }
+                }
+            });
+        }
+
+        // Start gimmick manager
+        gimmickManager.loadConfig(moonConfig);
 
         plugin.getLogger().info("[BlueMoon] Mode fully started. Survive " + timerSeconds + " seconds or slay the moon! "
                 + "(" + attackCount + " attacks registered)");
@@ -138,8 +163,25 @@ public class BlueMoonMode extends AbstractMode {
         tickCounter++;
         attackScheduler.tick();
 
-        // TODO: Tick boss manager
-        // TODO: Tick gimmick manager
+        World world = getBlueMoonWorld();
+        if (world == null) return;
+
+        // Boss spawn delay
+        if (bossSpawnScheduled) {
+            bossSpawnDelay--;
+            if (bossSpawnDelay <= 0) {
+                bossSpawnScheduled = false;
+                bossManager.spawnBoss(world);
+            }
+        }
+
+        // Tick boss
+        if (bossManager.isBossAlive()) {
+            bossManager.tick(world);
+        }
+
+        // Tick gimmicks
+        gimmickManager.tick(world);
     }
 
     @Override
@@ -148,6 +190,10 @@ public class BlueMoonMode extends AbstractMode {
 
         attackScheduler.stop();
         plugin.getMusicManager().stopAll();
+
+        // Cleanup boss + gimmicks
+        bossManager.cleanup();
+        gimmickManager.cleanup();
 
         // Restore world time
         if (moonConfig.isForceNight()) {
@@ -160,9 +206,6 @@ public class BlueMoonMode extends AbstractMode {
                 plugin.getLogger().info("[BlueMoon] Restored world time.");
             }
         }
-
-        // TODO: Cleanup boss manager
-        // TODO: Cleanup gimmick manager
 
         tickCounter = 0;
         plugin.getLogger().info("[BlueMoon] Mode ended. All systems cleaned up.");
@@ -192,6 +235,8 @@ public class BlueMoonMode extends AbstractMode {
     public BlueMoonConfig getMoonConfig() { return moonConfig; }
     public AttackRegistry getAttackRegistry() { return attackRegistry; }
     public BlueMoonScheduler getAttackScheduler() { return attackScheduler; }
+    public BlueMoonBossManager getBossManager() { return bossManager; }
+    public LunarGimmickManager getGimmickManager() { return gimmickManager; }
     public long getTickCounter() { return tickCounter; }
 
     public World getBlueMoonWorld() {

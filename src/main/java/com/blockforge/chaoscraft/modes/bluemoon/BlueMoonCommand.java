@@ -49,6 +49,8 @@ public class BlueMoonCommand implements CommandExecutor, TabCompleter {
             case "toggleexempt" -> handleToggleExempt(sender, args);
             case "list" -> handleList(sender);
             case "reload" -> handleReload(sender);
+            case "boss" -> handleBoss(sender, args);
+            case "gimmick" -> handleGimmick(sender, args);
             default -> { sendHelp(sender); yield true; }
         };
     }
@@ -218,6 +220,92 @@ public class BlueMoonCommand implements CommandExecutor, TabCompleter {
         return true;
     }
 
+    private boolean handleBoss(CommandSender sender, String[] args) {
+        BlueMoonMode mode = getMode();
+        if (mode == null) { sender.sendMessage(Component.text("Not registered.", NamedTextColor.RED)); return true; }
+        var boss = mode.getBossManager();
+
+        if (args.length < 2) {
+            sender.sendMessage(Component.text("Boss commands: spawn, kill, phase <1-4>, laser, status", NamedTextColor.AQUA));
+            return true;
+        }
+
+        String sub = args[1].toLowerCase();
+        switch (sub) {
+            case "spawn" -> {
+                var world = mode.getBlueMoonWorld();
+                if (world == null) { sender.sendMessage(Component.text("World not found.", NamedTextColor.RED)); return true; }
+                boss.forceSpawn(world);
+                sender.sendMessage(Component.text("Boss force-spawned.", NamedTextColor.GREEN));
+            }
+            case "kill" -> {
+                boss.forceKill();
+                sender.sendMessage(Component.text("Boss force-killed.", NamedTextColor.GREEN));
+            }
+            case "phase" -> {
+                if (args.length < 3) { sender.sendMessage(Component.text("Usage: boss phase <1-4>", NamedTextColor.YELLOW)); return true; }
+                try {
+                    int phase = Integer.parseInt(args[2]);
+                    if (phase < 1 || phase > 4) { sender.sendMessage(Component.text("Phase must be 1-4.", NamedTextColor.RED)); return true; }
+                    boss.forcePhase(phase);
+                    sender.sendMessage(Component.text("Boss forced to phase " + phase + ".", NamedTextColor.GREEN));
+                } catch (NumberFormatException e) {
+                    sender.sendMessage(Component.text("Invalid number.", NamedTextColor.RED));
+                }
+            }
+            case "laser" -> {
+                boss.forceLaser();
+                sender.sendMessage(Component.text("Lunar Super Laser triggered!", NamedTextColor.LIGHT_PURPLE));
+            }
+            case "status" -> {
+                sender.sendMessage(Component.text("--- Boss Status ---", NamedTextColor.BLUE));
+                sender.sendMessage(Component.text("Alive: " + boss.isBossAlive(), boss.isBossAlive() ? NamedTextColor.GREEN : NamedTextColor.RED));
+                sender.sendMessage(Component.text("Phase: " + boss.getCurrentPhase(), NamedTextColor.AQUA));
+                sender.sendMessage(Component.text("HP: " + String.format("%.0f%%", boss.getHealthRatio() * 100), NamedTextColor.YELLOW));
+                sender.sendMessage(Component.text("Laser active: " + boss.isLaserActive(), NamedTextColor.LIGHT_PURPLE));
+            }
+            default -> sender.sendMessage(Component.text("Unknown boss command. Use: spawn, kill, phase, laser, status", NamedTextColor.RED));
+        }
+        return true;
+    }
+
+    private boolean handleGimmick(CommandSender sender, String[] args) {
+        BlueMoonMode mode = getMode();
+        if (mode == null) { sender.sendMessage(Component.text("Not registered.", NamedTextColor.RED)); return true; }
+        var gimmicks = mode.getGimmickManager();
+
+        if (args.length < 2) {
+            sender.sendMessage(Component.text("Gimmick commands: list, toggle <name>", NamedTextColor.AQUA));
+            return true;
+        }
+
+        String sub = args[1].toLowerCase();
+        switch (sub) {
+            case "list" -> {
+                sender.sendMessage(Component.text("=== Gimmicks (" + gimmicks.getEnabledGimmicks().size() + "/" + gimmicks.getGimmickNames().size() + " enabled) ===", NamedTextColor.BLUE));
+                for (String name : gimmicks.getGimmickNames()) {
+                    boolean enabled = gimmicks.isGimmickEnabled(name);
+                    sender.sendMessage(Component.text("  " + name + ": " + (enabled ? "ON" : "OFF"),
+                            enabled ? NamedTextColor.GREEN : NamedTextColor.GRAY));
+                }
+            }
+            case "toggle" -> {
+                if (args.length < 3) { sender.sendMessage(Component.text("Usage: gimmick toggle <name>", NamedTextColor.YELLOW)); return true; }
+                String name = args[2].toLowerCase();
+                if (!gimmicks.getGimmickNames().contains(name)) {
+                    sender.sendMessage(Component.text("Unknown gimmick: " + name, NamedTextColor.RED));
+                    return true;
+                }
+                gimmicks.toggleGimmick(name);
+                boolean nowEnabled = gimmicks.isGimmickEnabled(name);
+                sender.sendMessage(Component.text(name + " is now " + (nowEnabled ? "ON" : "OFF"),
+                        nowEnabled ? NamedTextColor.GREEN : NamedTextColor.RED));
+            }
+            default -> sender.sendMessage(Component.text("Unknown gimmick command. Use: list, toggle <name>", NamedTextColor.RED));
+        }
+        return true;
+    }
+
     // ========================
     // Tab completion
     // ========================
@@ -230,7 +318,7 @@ public class BlueMoonCommand implements CommandExecutor, TabCompleter {
 
         if (args.length == 1) {
             return filterStartsWith(args[0], "status", "debug", "test", "clearattacks",
-                    "spawninterval", "toggleexempt", "list", "reload");
+                    "spawninterval", "toggleexempt", "list", "reload", "boss", "gimmick");
         }
 
         if (args.length == 2) {
@@ -246,6 +334,19 @@ public class BlueMoonCommand implements CommandExecutor, TabCompleter {
             }
             if ("toggleexempt".equals(sub)) return null;
             if ("spawninterval".equals(sub)) return List.of("20", "40", "60", "100");
+            if ("boss".equals(sub)) return filterStartsWith(args[1], "spawn", "kill", "phase", "laser", "status");
+            if ("gimmick".equals(sub)) return filterStartsWith(args[1], "list", "toggle");
+        }
+
+        if (args.length == 3) {
+            String sub = args[0].toLowerCase();
+            BlueMoonMode mode = getMode();
+            if ("boss".equals(sub) && "phase".equals(args[1].toLowerCase())) {
+                return List.of("1", "2", "3", "4");
+            }
+            if ("gimmick".equals(sub) && "toggle".equals(args[1].toLowerCase()) && mode != null) {
+                return filterStartsWith(args[2], mode.getGimmickManager().getGimmickNames());
+            }
         }
 
         return Collections.emptyList();

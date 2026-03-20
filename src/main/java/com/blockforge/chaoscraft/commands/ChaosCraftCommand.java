@@ -865,7 +865,7 @@ public class ChaosCraftCommand implements CommandExecutor, TabCompleter {
                 case "bluemoon" -> {
                     if (sender.hasPermission("chaoscraft.bluemoon.admin") || sender.hasPermission("chaoscraft.admin")) {
                         actions.addAll(List.of("status", "debug", "test", "clearattacks",
-                                "spawninterval", "toggleexempt", "list", "reload"));
+                                "spawninterval", "toggleexempt", "list", "reload", "boss", "gimmick"));
                     }
                 }
             }
