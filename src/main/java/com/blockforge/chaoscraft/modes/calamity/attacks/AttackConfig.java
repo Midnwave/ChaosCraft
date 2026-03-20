@@ -246,6 +246,7 @@ public class AttackConfig {
             case BLOCK_DISPLAY -> "blockdisplays";
             case ENVIRONMENTAL -> "environmental";
             case BOSS -> "boss";
+            case MODEL_ENGINE -> "modelengine";
         };
     }
 

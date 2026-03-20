@@ -101,7 +101,8 @@ public class ChaosCraftCommand implements CommandExecutor, TabCompleter {
     private static final List<String> MODE_ACTIONS = List.of("start", "stop");
     private static final List<String> FUNCTION_SUBS = List.of(
             "startmodetimer", "stopmodetimer",
-            "setbadgeobtaineditem", "setbadgeunobtaineditem", "setbadgenotobtainable"
+            "setbadgeobtaineditem", "setbadgeunobtaineditem", "setbadgenotobtainable",
+            "setdoommodepos1", "setdoommodepos2"
     );
 
     // Delegates for ported subcommands
@@ -762,8 +763,35 @@ public class ChaosCraftCommand implements CommandExecutor, TabCompleter {
                 heldItem.setItemMeta(meta);
                 sender.sendMessage(Component.text("Item marked as " + friendlyState + " badge display item.", NamedTextColor.GREEN));
             }
+            case "setdoommodepos1", "setdoommodepos2" -> {
+                if (!sender.hasPermission("chaoscraft.admin")) {
+                    sender.sendMessage(Component.text("No permission.", NamedTextColor.RED));
+                    return true;
+                }
+                if (!(sender instanceof Player player)) {
+                    sender.sendMessage(Component.text("Must be a player to set arena positions.", NamedTextColor.RED));
+                    return true;
+                }
+                var mode = plugin.getModeManager().getMode("doom");
+                if (!(mode instanceof com.blockforge.chaoscraft.modes.doom.DoomMode doomMode)) {
+                    sender.sendMessage(Component.text("Doom Mode not found!", NamedTextColor.RED));
+                    return true;
+                }
+                var loc = player.getLocation();
+                if (args[1].equalsIgnoreCase("setdoommodepos1")) {
+                    doomMode.getDoomConfig().setArenaPos1(loc);
+                    sender.sendMessage(Component.text("Doom Mode pos1 set to: "
+                            + loc.getBlockX() + ", " + loc.getBlockY() + ", " + loc.getBlockZ()
+                            + " in world " + (loc.getWorld() != null ? loc.getWorld().getName() : "?"), NamedTextColor.GREEN));
+                } else {
+                    doomMode.getDoomConfig().setArenaPos2(loc);
+                    sender.sendMessage(Component.text("Doom Mode pos2 set to: "
+                            + loc.getBlockX() + ", " + loc.getBlockY() + ", " + loc.getBlockZ()
+                            + " in world " + (loc.getWorld() != null ? loc.getWorld().getName() : "?"), NamedTextColor.GREEN));
+                }
+            }
             default -> sender.sendMessage(Component.text("Unknown function: " + args[1]
-                    + ". Available: startmodetimer, stopmodetimer, setbadgeobtaineditem, setbadgeunobtaineditem, setbadgenotobtainable",
+                    + ". Available: startmodetimer, stopmodetimer, setbadgeobtaineditem, setbadgeunobtaineditem, setbadgenotobtainable, setdoommodepos1, setdoommodepos2",
                     NamedTextColor.RED));
         }
         return true;

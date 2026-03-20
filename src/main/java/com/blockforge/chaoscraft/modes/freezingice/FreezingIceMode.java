@@ -61,6 +61,9 @@ public class FreezingIceMode extends AbstractMode {
         HypothermiaPulse.registerAll(plugin, attackRegistry);
         ThawAndRefreeze.registerAll(plugin, attackRegistry);
 
+        // ModelEngine VFX attacks (25)
+        IceModelEngine.registerAll(plugin, attackRegistry);
+
         // Generate/load per-attack YAML config files
         attackRegistry.reloadConfigs();
         plugin.getLogger().info("[FreezingIce] Registered " + attackRegistry.size() + " attacks, configs loaded.");

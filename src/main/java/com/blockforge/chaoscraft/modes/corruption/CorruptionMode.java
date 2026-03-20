@@ -65,6 +65,9 @@ public class CorruptionMode extends AbstractMode {
         CorruptionStorms.registerAll(plugin, attackRegistry);
         AbyssalConstructs.registerAll(plugin, attackRegistry);
 
+        // ModelEngine VFX attacks (30)
+        CorruptionModelEngine.registerAll(plugin, attackRegistry);
+
         // Generate/load per-attack YAML config files
         attackRegistry.reloadConfigs();
         plugin.getLogger().info("[Corruption] Registered " + attackRegistry.size() + " attacks, configs loaded.");

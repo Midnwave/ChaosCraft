@@ -115,6 +115,10 @@ public class ChaosCraftPlugin extends JavaPlugin {
                 new com.blockforge.chaoscraft.modes.freezingice.FreezingIceMode(this);
         modeManager.registerMode(freezingIceMode);
 
+        com.blockforge.chaoscraft.modes.doom.DoomMode doomMode =
+                new com.blockforge.chaoscraft.modes.doom.DoomMode(this);
+        modeManager.registerMode(doomMode);
+
         // Initialize performance service
         performanceService = new PerformanceService(this);
         performanceService.initialize();

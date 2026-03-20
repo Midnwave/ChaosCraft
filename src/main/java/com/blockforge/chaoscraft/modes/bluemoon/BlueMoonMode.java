@@ -7,6 +7,7 @@ import com.blockforge.chaoscraft.modes.calamity.attacks.AttackType;
 import com.blockforge.chaoscraft.modes.bluemoon.attacks.blockdisplay.*;
 import com.blockforge.chaoscraft.modes.bluemoon.attacks.environmental.*;
 import com.blockforge.chaoscraft.modes.bluemoon.attacks.boss.BlueMoonBossAttacks;
+import com.blockforge.chaoscraft.modes.bluemoon.attacks.BlueMoonModelEngine;
 import org.bukkit.Bukkit;
 import org.bukkit.GameRule;
 import org.bukkit.World;
@@ -69,6 +70,9 @@ public class BlueMoonMode extends AbstractMode {
 
         // Boss attacks (11)
         BlueMoonBossAttacks.registerAll(plugin, attackRegistry);
+
+        // ModelEngine VFX attacks (25)
+        BlueMoonModelEngine.registerAll(plugin, attackRegistry);
 
         attackRegistry.reloadConfigs();
         plugin.getLogger().info("[BlueMoon] Registered " + attackRegistry.size() + " attacks, configs loaded.");
