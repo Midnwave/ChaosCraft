@@ -139,6 +139,7 @@ public abstract class AbstractAttack {
     /**
      * Apply continuous radius damage (for non-impact attacks).
      * Respects tick interval between damage, exempt players.
+     * Uses Minecraft's damage pipeline so armor and resistance apply.
      */
     private void applyRadiusDamage() {
         if (center == null || center.getWorld() == null) return;
@@ -155,12 +156,9 @@ public abstract class AbstractAttack {
         for (Player player : world.getPlayers()) {
             if (isExempt(player)) continue;
             if (player.getLocation().distanceSquared(center) <= radius * radius) {
-                // Apply TRUE damage — bypasses armor so config value = actual hearts lost
-                // damage is in half-hearts: 10.0 = 5 hearts
-                double newHealth = Math.max(0, player.getHealth() - damage);
-                player.setHealth(newHealth);
-                // Visual damage indicator (red flash, knockback sound)
-                player.damage(0.01); // Triggers damage animation without meaningful HP loss
+                // Use Minecraft damage pipeline — respects armor, resistance, enchantments
+                player.damage(damage);
+                player.setNoDamageTicks(0); // Allow rapid hits from overlapping attacks
             }
         }
     }
@@ -225,10 +223,9 @@ public abstract class AbstractAttack {
         for (Player player : world.getPlayers()) {
             if (isExempt(player)) continue;
             if (player.getLocation().distanceSquared(impactLocation) <= radius * radius) {
-                // TRUE damage — bypasses armor
-                double newHealth = Math.max(0, player.getHealth() - damage);
-                player.setHealth(newHealth);
-                player.damage(0.01); // Damage animation
+                // Use Minecraft damage pipeline — respects armor, resistance, enchantments
+                player.damage(damage);
+                player.setNoDamageTicks(0);
             }
         }
 
@@ -239,6 +236,10 @@ public abstract class AbstractAttack {
      * Check if a player is exempt from this attack's damage.
      */
     protected boolean isExempt(Player player) {
+        // Skip non-survival players (creative, spectator, adventure)
+        if (player.getGameMode() != org.bukkit.GameMode.SURVIVAL) return true;
+        // Skip invulnerable / god mode players
+        if (player.isInvulnerable()) return true;
         // Check mode-level exempt list
         var modeManager = plugin.getModeManager();
         if (modeManager.isAnyModeActive()) {

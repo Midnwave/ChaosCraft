@@ -94,6 +94,8 @@ public class ChaosCraftCommand implements CommandExecutor, TabCompleter {
     // Mode-specific command handlers (used for /cc modes <mode> delegation)
     private final CalamityCommand calamityHandler;
     private final ChainCommand chainHandler;
+    private final com.blockforge.chaoscraft.modes.corruption.CorruptionCommand corruptionHandler;
+    private final com.blockforge.chaoscraft.modes.devilsdream.DevilsDreamCommand devilsDreamHandler;
 
     // Dev GUI
     private final DevGUI devGUI;
@@ -110,6 +112,8 @@ public class ChaosCraftCommand implements CommandExecutor, TabCompleter {
         this.playCmd = new PlayCommand(plugin);
         this.calamityHandler = new CalamityCommand(plugin);
         this.chainHandler = new ChainCommand(plugin);
+        this.corruptionHandler = new com.blockforge.chaoscraft.modes.corruption.CorruptionCommand(plugin);
+        this.devilsDreamHandler = new com.blockforge.chaoscraft.modes.devilsdream.DevilsDreamCommand(plugin);
         this.devGUI = new DevGUI(plugin);
 
         // Register the DevGUI listener
@@ -325,6 +329,20 @@ public class ChaosCraftCommand implements CommandExecutor, TabCompleter {
                     yield true;
                 }
                 yield chainHandler.onCommand(sender, command, label, modeArgs);
+            }
+            case "corruption" -> {
+                if (!sender.hasPermission("chaoscraft.corruption.admin") && !sender.hasPermission("chaoscraft.admin")) {
+                    sender.sendMessage(Component.text("No permission.", NamedTextColor.RED));
+                    yield true;
+                }
+                yield corruptionHandler.onCommand(sender, command, label, modeArgs);
+            }
+            case "devilsdream" -> {
+                if (!sender.hasPermission("chaoscraft.devilsdream.admin") && !sender.hasPermission("chaoscraft.admin")) {
+                    sender.sendMessage(Component.text("No permission.", NamedTextColor.RED));
+                    yield true;
+                }
+                yield devilsDreamHandler.onCommand(sender, command, label, modeArgs);
             }
             default -> {
                 sender.sendMessage(Component.text("Mode '" + modeName + "' does not have admin commands yet.", NamedTextColor.YELLOW));
@@ -823,6 +841,18 @@ public class ChaosCraftCommand implements CommandExecutor, TabCompleter {
                                 "spawninterval", "toggleexempt", "list", "reload"));
                     }
                 }
+                case "corruption" -> {
+                    if (sender.hasPermission("chaoscraft.corruption.admin") || sender.hasPermission("chaoscraft.admin")) {
+                        actions.addAll(List.of("status", "debug", "test", "clearattacks",
+                                "spawninterval", "toggleexempt", "list", "reload", "corruption", "restore"));
+                    }
+                }
+                case "devilsdream" -> {
+                    if (sender.hasPermission("chaoscraft.devilsdream.admin") || sender.hasPermission("chaoscraft.admin")) {
+                        actions.addAll(List.of("status", "debug", "test", "clearattacks",
+                                "spawninterval", "toggleexempt", "list", "reload", "adaptation", "resetadaptation"));
+                    }
+                }
             }
 
             // Filter start/stop by permission
@@ -845,6 +875,16 @@ public class ChaosCraftCommand implements CommandExecutor, TabCompleter {
             case "chain" -> {
                 if (!sender.hasPermission("chaoscraft.chain.admin")) yield List.of();
                 List<String> result = chainHandler.onTabComplete(sender, null, "", modeArgs);
+                yield result != null ? result : List.of();
+            }
+            case "corruption" -> {
+                if (!sender.hasPermission("chaoscraft.corruption.admin") && !sender.hasPermission("chaoscraft.admin")) yield List.of();
+                List<String> result = corruptionHandler.onTabComplete(sender, null, "", modeArgs);
+                yield result != null ? result : List.of();
+            }
+            case "devilsdream" -> {
+                if (!sender.hasPermission("chaoscraft.devilsdream.admin") && !sender.hasPermission("chaoscraft.admin")) yield List.of();
+                List<String> result = devilsDreamHandler.onTabComplete(sender, null, "", modeArgs);
                 yield result != null ? result : List.of();
             }
             default -> List.of();

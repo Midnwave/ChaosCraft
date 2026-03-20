@@ -203,6 +203,7 @@ public class DevilsDreamScheduler {
     public int getActiveAttackCount() { return activeAttacks.size(); }
     public List<AbstractAttack> getActiveAttacks() { return Collections.unmodifiableList(activeAttacks); }
     public boolean isActive() { return active; }
+    public void setBaseSpawnInterval(int ticks) { this.baseSpawnInterval = ticks; }
 
     public void clearActiveAttacks() {
         for (AbstractAttack attack : new ArrayList<>(activeAttacks)) {
