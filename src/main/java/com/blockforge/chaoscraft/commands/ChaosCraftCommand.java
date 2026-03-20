@@ -121,6 +121,8 @@ public class ChaosCraftCommand implements CommandExecutor, TabCompleter {
     private final com.blockforge.chaoscraft.modes.corruption.CorruptionCommand corruptionHandler;
     private final com.blockforge.chaoscraft.modes.devilsdream.DevilsDreamCommand devilsDreamHandler;
     private final com.blockforge.chaoscraft.modes.bluemoon.BlueMoonCommand blueMoonHandler;
+    private final com.blockforge.chaoscraft.modes.freezingice.FreezingIceCommand freezingIceHandler;
+    private final com.blockforge.chaoscraft.modes.doom.DoomCommand doomHandler;
 
     // Dev GUI
     private final DevGUI devGUI;
@@ -140,6 +142,8 @@ public class ChaosCraftCommand implements CommandExecutor, TabCompleter {
         this.corruptionHandler = new com.blockforge.chaoscraft.modes.corruption.CorruptionCommand(plugin);
         this.devilsDreamHandler = new com.blockforge.chaoscraft.modes.devilsdream.DevilsDreamCommand(plugin);
         this.blueMoonHandler = new com.blockforge.chaoscraft.modes.bluemoon.BlueMoonCommand(plugin);
+        this.freezingIceHandler = new com.blockforge.chaoscraft.modes.freezingice.FreezingIceCommand(plugin);
+        this.doomHandler = new com.blockforge.chaoscraft.modes.doom.DoomCommand(plugin);
         this.devGUI = new DevGUI(plugin);
 
         // Register the DevGUI listener
@@ -407,6 +411,20 @@ public class ChaosCraftCommand implements CommandExecutor, TabCompleter {
                     yield true;
                 }
                 yield blueMoonHandler.onCommand(sender, command, label, modeArgs);
+            }
+            case "freezingice" -> {
+                if (!sender.hasPermission("chaoscraft.freezingice.admin") && !sender.hasPermission("chaoscraft.admin")) {
+                    sender.sendMessage(Component.text("No permission.", NamedTextColor.RED));
+                    yield true;
+                }
+                yield freezingIceHandler.onCommand(sender, command, label, modeArgs);
+            }
+            case "doom" -> {
+                if (!sender.hasPermission("chaoscraft.doom.admin") && !sender.hasPermission("chaoscraft.admin")) {
+                    sender.sendMessage(Component.text("No permission.", NamedTextColor.RED));
+                    yield true;
+                }
+                yield doomHandler.onCommand(sender, command, label, modeArgs);
             }
             default -> {
                 sender.sendMessage(Component.text("Mode '" + modeName + "' does not have admin commands yet.", NamedTextColor.YELLOW));
@@ -991,6 +1009,18 @@ public class ChaosCraftCommand implements CommandExecutor, TabCompleter {
                                 "spawninterval", "toggleexempt", "list", "reload", "boss", "gimmick"));
                     }
                 }
+                case "freezingice" -> {
+                    if (sender.hasPermission("chaoscraft.freezingice.admin") || sender.hasPermission("chaoscraft.admin")) {
+                        actions.addAll(List.of("status", "debug", "test", "clearattacks",
+                                "spawninterval", "toggleexempt", "list", "reload"));
+                    }
+                }
+                case "doom" -> {
+                    if (sender.hasPermission("chaoscraft.doom.admin") || sender.hasPermission("chaoscraft.admin")) {
+                        actions.addAll(List.of("status", "debug", "test", "clearattacks",
+                                "spawninterval", "toggleexempt", "list", "reload"));
+                    }
+                }
             }
 
             // Filter start/stop by permission
@@ -1028,6 +1058,16 @@ public class ChaosCraftCommand implements CommandExecutor, TabCompleter {
             case "bluemoon" -> {
                 if (!sender.hasPermission("chaoscraft.bluemoon.admin") && !sender.hasPermission("chaoscraft.admin")) yield List.of();
                 List<String> result = blueMoonHandler.onTabComplete(sender, null, "", modeArgs);
+                yield result != null ? result : List.of();
+            }
+            case "freezingice" -> {
+                if (!sender.hasPermission("chaoscraft.freezingice.admin") && !sender.hasPermission("chaoscraft.admin")) yield List.of();
+                List<String> result = freezingIceHandler.onTabComplete(sender, null, "", modeArgs);
+                yield result != null ? result : List.of();
+            }
+            case "doom" -> {
+                if (!sender.hasPermission("chaoscraft.doom.admin") && !sender.hasPermission("chaoscraft.admin")) yield List.of();
+                List<String> result = doomHandler.onTabComplete(sender, null, "", modeArgs);
                 yield result != null ? result : List.of();
             }
             default -> List.of();

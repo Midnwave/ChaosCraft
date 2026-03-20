@@ -212,8 +212,10 @@ public class DoomMode extends AbstractMode {
     public DoomArenaManager getArenaManager() { return arenaManager; }
     public DoomLavaRise getLavaRise() { return lavaRise; }
     public DoomScheduler getAttackScheduler() { return attackScheduler; }
+    public AttackRegistry getAttackRegistry() { return attackRegistry; }
+    public int getTickCounter() { return tickCounter; }
 
-    private World getDoomWorld() {
+    public World getDoomWorld() {
         String arenaWorld = arenaManager.getWorldName();
         if (arenaWorld != null && !arenaWorld.isEmpty()) {
             return Bukkit.getWorld(arenaWorld);

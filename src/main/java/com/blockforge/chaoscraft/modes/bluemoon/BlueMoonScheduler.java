@@ -91,19 +91,19 @@ public class BlueMoonScheduler {
         World world = getBlueMoonWorld();
         if (world == null) return;
 
-        List<Player> players = world.getPlayers();
-        if (players.isEmpty()) return;
+        // Filter to valid survival targets only
+        List<Player> validPlayers = new ArrayList<>();
+        for (Player p : world.getPlayers()) {
+            if (p.getGameMode() == GameMode.SURVIVAL && !p.isInvulnerable() && !isExempt(p)) {
+                int currentEvents = playerEventCounts.getOrDefault(p.getUniqueId(), 0);
+                if (currentEvents < config.getSpawnMaxEventsPerPlayer()) {
+                    validPlayers.add(p);
+                }
+            }
+        }
+        if (validPlayers.isEmpty()) return;
 
-        Player target = players.get(new Random().nextInt(players.size()));
-
-        if (target.getGameMode() != GameMode.SURVIVAL) return;
-        if (target.isInvulnerable()) return;
-
-        int maxEvents = config.getSpawnMaxEventsPerPlayer();
-        int currentEvents = playerEventCounts.getOrDefault(target.getUniqueId(), 0);
-        if (currentEvents >= maxEvents) return;
-
-        if (isExempt(target)) return;
+        Player target = validPlayers.get(new Random().nextInt(validPlayers.size()));
 
         // Alternate between BLOCK_DISPLAY and ENVIRONMENTAL
         AttackType type = Math.random() < 0.5 ? AttackType.BLOCK_DISPLAY : AttackType.ENVIRONMENTAL;
@@ -116,6 +116,11 @@ public class BlueMoonScheduler {
         }
         if (attack == null) return;
 
+        // Try up to 3 times if the selected attack is on cooldown
+        for (int attempt = 0; attempt < 3 && attackCooldowns.containsKey(attack.getId()); attempt++) {
+            attack = registry.selectRandom(1, type);
+            if (attack == null) return;
+        }
         if (attackCooldowns.containsKey(attack.getId())) return;
 
         Location spawnLoc = target.getLocation().clone();
