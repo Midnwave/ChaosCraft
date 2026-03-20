@@ -51,6 +51,9 @@ public class ChainMode extends AbstractMode {
         WeaponsTools.registerAll(plugin, attackRegistry);
         EnvironmentalAmbient.registerAll(plugin, attackRegistry);
 
+        // Environmental attacks (40)
+        ChainEnvironmental.registerAll(plugin, attackRegistry);
+
         // Generate/load per-attack YAML config files
         attackRegistry.reloadConfigs();
         plugin.getLogger().info("[Chain] Registered " + attackRegistry.size() + " attacks, configs loaded.");

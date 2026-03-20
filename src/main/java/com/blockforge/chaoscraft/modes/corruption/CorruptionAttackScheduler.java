@@ -151,8 +151,14 @@ public class CorruptionAttackScheduler {
             return;
         }
 
-        // Corruption Mode only has BLOCK_DISPLAY attacks, all phase 1
-        AbstractAttack attack = registry.selectRandom(1, AttackType.BLOCK_DISPLAY);
+        // Alternate between BLOCK_DISPLAY and ENVIRONMENTAL attacks
+        AttackType type = Math.random() < 0.5 ? AttackType.BLOCK_DISPLAY : AttackType.ENVIRONMENTAL;
+        AbstractAttack attack = registry.selectRandom(1, type);
+        if (attack == null) {
+            // Fallback to other type
+            type = (type == AttackType.BLOCK_DISPLAY) ? AttackType.ENVIRONMENTAL : AttackType.BLOCK_DISPLAY;
+            attack = registry.selectRandom(1, type);
+        }
         if (attack == null) {
             plugin.debug("[CorruptionScheduler] No enabled attack found. Check attack configs.");
             return;
