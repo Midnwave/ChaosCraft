@@ -276,7 +276,7 @@ public class ChainMobManager {
                 Navigator nav = npc.getNavigator();
                 if (!nav.isNavigating() || nav.getEntityTarget() == null
                         || !nav.getEntityTarget().getTarget().getUniqueId().equals(target.getUniqueId())) {
-                    nav.setTarget(target, false); // non-aggressive — we handle damage ourselves
+                    nav.setTarget(target, true); // aggressive pathfinding — safe since NPCs are ZOMBIE type (PvE not PvP)
                 }
             }
 

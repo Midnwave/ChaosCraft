@@ -77,19 +77,19 @@ public class MobSpawnConfig {
         if (config.isList(ROOT + ".mobs")) {
             var mobList = config.getMapList(ROOT + ".mobs");
             for (var map : mobList) {
-                String id = String.valueOf(map.getOrDefault("id", "ZOMBIE"));
-                String typeStr = String.valueOf(map.getOrDefault("type", "vanilla")).toUpperCase();
+                String id = String.valueOf(map.get("id") != null ? map.get("id") : "ZOMBIE");
+                String typeStr = String.valueOf(map.get("type") != null ? map.get("type") : "vanilla").toUpperCase();
                 MobSpawnEntry.MobType type;
                 try {
                     type = MobSpawnEntry.MobType.valueOf(typeStr);
                 } catch (IllegalArgumentException e) {
                     type = MobSpawnEntry.MobType.VANILLA;
                 }
-                int weight = toInt(map.getOrDefault("weight", 10));
-                int minCount = toInt(map.getOrDefault("min-count", 1));
-                int maxCount = toInt(map.getOrDefault("max-count", 1));
-                double healthMult = toDouble(map.getOrDefault("health-multiplier", 1.0));
-                double damageMult = toDouble(map.getOrDefault("damage-multiplier", 1.0));
+                int weight = toInt(map.get("weight") != null ? map.get("weight") : 10);
+                int minCount = toInt(map.get("min-count") != null ? map.get("min-count") : 1);
+                int maxCount = toInt(map.get("max-count") != null ? map.get("max-count") : 1);
+                double healthMult = toDouble(map.get("health-multiplier") != null ? map.get("health-multiplier") : 1.0);
+                double damageMult = toDouble(map.get("damage-multiplier") != null ? map.get("damage-multiplier") : 1.0);
                 mobs.add(new MobSpawnEntry(id, type, weight, minCount, maxCount, healthMult, damageMult));
             }
         }

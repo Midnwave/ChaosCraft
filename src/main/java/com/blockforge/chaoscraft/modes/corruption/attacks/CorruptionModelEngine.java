@@ -163,11 +163,11 @@ public final class CorruptionModelEngine {
      * @param radius damage radius in blocks
      * @param damage damage in half-hearts
      */
-    private static void damageNearby(ModelEngineAttack attack, Location loc, double radius, double damage) {
+    static void damageNearby(ModelEngineAttack attack, Location loc, double radius, double damage) {
         if (loc.getWorld() == null) return;
         double r2 = radius * radius;
         for (Player p : loc.getWorld().getPlayers()) {
-            if (attack.isExempt(p)) continue;
+            if (p.getGameMode() != org.bukkit.GameMode.SURVIVAL || p.isInvulnerable()) continue;
             if (p.getLocation().distanceSquared(loc) <= r2) {
                 p.damage(damage);
                 p.setNoDamageTicks(0);
