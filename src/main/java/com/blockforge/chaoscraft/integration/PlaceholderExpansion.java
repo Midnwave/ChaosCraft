@@ -247,6 +247,23 @@ public class PlaceholderExpansion extends me.clip.placeholderapi.expansion.Place
                 yield ping >= 0 ? String.valueOf(ping) : "0";
             }
 
+            // Player Stats (kills, s-kills, mode survivals)
+            case "kills" -> {
+                if (player == null) yield "0";
+                var stats = plugin.getPlayerStatsService();
+                yield stats != null ? String.valueOf(stats.getKills(player.getUniqueId())) : "0";
+            }
+            case "s_kills" -> {
+                if (player == null) yield "0";
+                var stats = plugin.getPlayerStatsService();
+                yield stats != null ? String.valueOf(stats.getSKills(player.getUniqueId())) : "0";
+            }
+            case "mode_survivals" -> {
+                if (player == null) yield "0";
+                var stats = plugin.getPlayerStatsService();
+                yield stats != null ? String.valueOf(stats.getModeSurvivals(player.getUniqueId())) : "0";
+            }
+
             default -> null;
         };
     }

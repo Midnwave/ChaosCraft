@@ -118,6 +118,16 @@ public class ModeManager implements Listener {
         // Stop timer
         plugin.getModeTimer().stop();
 
+        // Track mode survivals for surviving players
+        var statsService = plugin.getPlayerStatsService();
+        if (statsService != null) {
+            for (org.bukkit.entity.Player p : org.bukkit.Bukkit.getOnlinePlayers()) {
+                if (activeMode.hasSurvived(p)) {
+                    statsService.incrementModeSurvivals(p.getUniqueId());
+                }
+            }
+        }
+
         // Give rewards to survivors
         activeMode.giveRewards();
 

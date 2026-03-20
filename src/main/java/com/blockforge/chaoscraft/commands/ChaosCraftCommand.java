@@ -47,7 +47,8 @@ public class ChaosCraftCommand implements CommandExecutor, TabCompleter {
     private static final List<String> ROOT_SUBS = List.of(
             "help", "modes", "timer", "devs", "reload", "exempt", "dog", "debug", "update",
             "function", "entertitlescreen", "exittitlescreen", "item", "itemtag",
-            "settings", "codes", "useragreement", "play"
+            "settings", "codes", "useragreement", "play",
+            "kills", "setkills", "addkills", "setskills", "addskills", "setsurvivals", "addsurvivals"
     );
 
     // Permission required for each subcommand (for tab-complete filtering and help display)
@@ -69,7 +70,14 @@ public class ChaosCraftCommand implements CommandExecutor, TabCompleter {
             Map.entry("codes", "chaoscraft.codes.create"),
             Map.entry("useragreement", "chaoscraft.useragreement.admin"),
             Map.entry("play", "chaoscraft.play.admin"),
-            Map.entry("function", "chaoscraft.admin")
+            Map.entry("function", "chaoscraft.admin"),
+            Map.entry("kills", "chaoscraft.stats.view"),
+            Map.entry("setkills", "chaoscraft.admin"),
+            Map.entry("addkills", "chaoscraft.admin"),
+            Map.entry("setskills", "chaoscraft.admin"),
+            Map.entry("addskills", "chaoscraft.admin"),
+            Map.entry("setsurvivals", "chaoscraft.admin"),
+            Map.entry("addsurvivals", "chaoscraft.admin")
     );
 
     private static final List<String> TIMER_SUBS = List.of("set", "add", "remove", "pause", "resume");
@@ -153,6 +161,15 @@ public class ChaosCraftCommand implements CommandExecutor, TabCompleter {
             case "codes" -> adminCodesCmd.onCommand(sender, command, label, subArgs);
             case "useragreement" -> userAgreementCmd.onCommand(sender, command, label, subArgs);
             case "play" -> playCmd.onCommand(sender, command, label, subArgs);
+            case "kills", "setkills", "addkills", "setskills", "addskills", "setsurvivals", "addsurvivals" -> {
+                var statsService = plugin.getPlayerStatsService();
+                if (statsService == null) {
+                    sender.sendMessage(Component.text("Stats service not available.", NamedTextColor.RED));
+                    yield true;
+                }
+                yield new com.blockforge.chaoscraft.services.stats.StatsCommand(plugin, statsService)
+                        .handle(sender, args[0], subArgs);
+            }
             default -> {
                 sender.sendMessage(Component.text("Unknown subcommand: " + args[0] + ". Use /cc help for a full list.", NamedTextColor.RED));
                 yield true;

@@ -70,6 +70,7 @@ public class ChaosCraftPlugin extends JavaPlugin {
     private ModeTimerHud modeTimerHud;
     private com.blockforge.chaoscraft.weapons.ivory.IvoryService ivoryService;
     private com.blockforge.chaoscraft.updater.UpdateChecker updateChecker;
+    private com.blockforge.chaoscraft.services.stats.PlayerStatsService playerStatsService;
 
     @Override
     public void onEnable() {
@@ -150,6 +151,10 @@ public class ChaosCraftPlugin extends JavaPlugin {
         modePointsService = new ModePointsService(this);
         modePointsService.initialize();
 
+        // Initialize Player Stats service (kills, s-kills, mode survivals)
+        playerStatsService = new com.blockforge.chaoscraft.services.stats.PlayerStatsService(this);
+        playerStatsService.initialize();
+
         // Initialize Mode Timer HUD
         modeTimerHud = new ModeTimerHud(this);
 
@@ -162,6 +167,12 @@ public class ChaosCraftPlugin extends JavaPlugin {
 
         // Register Mode Points listener
         getServer().getPluginManager().registerEvents(new ModePointsListener(this, modePointsService), this);
+
+        // Register Kill Tracking listener
+        if (playerStatsService != null) {
+            getServer().getPluginManager().registerEvents(
+                    new com.blockforge.chaoscraft.services.stats.KillTrackingListener(this, playerStatsService), this);
+        }
 
         // Register claims listener
         if (claimsService.isEnabled()) {
@@ -264,6 +275,11 @@ public class ChaosCraftPlugin extends JavaPlugin {
         // Shutdown claims
         if (claimsService != null) {
             claimsService.shutdown();
+        }
+
+        // Shutdown stats
+        if (playerStatsService != null) {
+            playerStatsService.shutdown();
         }
 
         // Stop timer
@@ -381,6 +397,7 @@ public class ChaosCraftPlugin extends JavaPlugin {
         if (playService != null) playService.reload();
         if (claimsService != null) claimsService.reload();
         if (modePointsService != null) modePointsService.reload();
+        if (playerStatsService != null) playerStatsService.reload();
 
         getLogger().info("[Reload] Services in " + (System.currentTimeMillis() - reloadStart) + "ms");
 
@@ -615,6 +632,7 @@ public class ChaosCraftPlugin extends JavaPlugin {
     public ClaimsService getClaimsService() { return claimsService; }
     public ModePointsService getModePointsService() { return modePointsService; }
     public ModeTimerHud getModeTimerHud() { return modeTimerHud; }
+    public com.blockforge.chaoscraft.services.stats.PlayerStatsService getPlayerStatsService() { return playerStatsService; }
     public com.blockforge.chaoscraft.updater.UpdateChecker getUpdateChecker() { return updateChecker; }
     public com.blockforge.chaoscraft.weapons.ivory.IvoryService getIvoryService() { return ivoryService; }
 
