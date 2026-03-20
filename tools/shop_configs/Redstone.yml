@@ -1,0 +1,277 @@
+# Auto-generated shop config — prices are 4x EconomyShopGUI defaults
+config-version: 1
+display-name: "&#FF5555Redstone"
+icon: REDSTONE
+items:
+  CAULDRON:
+    buy: 115.8
+    sell: 28.96
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  CRAFTER:
+    buy: 201.04
+    sell: 50.28
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  DAYLIGHT_DETECTOR:
+    buy: 190.88
+    sell: 47.72
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  DISPENSER:
+    buy: 134.96
+    sell: 33.76
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  DROPPER:
+    buy: 34.72
+    sell: 8.68
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  HOPPER:
+    buy: 154.68
+    sell: 38.68
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  IRON_DOOR:
+    buy: 23.16
+    sell: 5.8
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  JUKEBOX:
+    buy: 257.56
+    sell: 64.4
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  LEVER:
+    buy: 5.32
+    sell: 1.36
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  LIGHTNING_ROD:
+    buy: 11.6
+    sell: 2.92
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  NOTE_BLOCK:
+    buy: 51.76
+    sell: 12.96
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  OBSERVER:
+    buy: 81.28
+    sell: 20.32
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  REDSTONE_LAMP:
+    buy: 182.28
+    sell: 45.6
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  REDSTONE_TORCH:
+    buy: 17.16
+    sell: 4.32
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  RESPAWN_ANCHOR:
+    buy: 1945.44
+    sell: 486.36
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  TARGET:
+    buy: 257.28
+    sell: 64.32
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  TRIPWIRE_HOOK:
+    buy: 15.12
+    sell: 3.8
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  COMPARATOR:
+    buy: 97.72
+    sell: 24.44
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  REPEATER:
+    buy: 59.68
+    sell: 14.92
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  CHERRY_BUTTON:
+    buy: 3.32
+    sell: 0.84
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  OAK_BUTTON:
+    buy: 4.64
+    sell: 1.16
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  STONE_BUTTON:
+    buy: 3.0
+    sell: 0.76
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  PISTON:
+    buy: 63.2
+    sell: 15.8
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  STICKY_PISTON:
+    buy: 87.36
+    sell: 21.84
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  CHERRY_PRESSURE_PLATE:
+    buy: 6.64
+    sell: 1.68
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  OAK_PRESSURE_PLATE:
+    buy: 9.28
+    sell: 2.32
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  STONE_PRESSURE_PLATE:
+    buy: 6.0
+    sell: 1.52
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  LIGHT_WEIGHTED_PRESSURE_PLATE:
+    buy: 69.48
+    sell: 17.4
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  HEAVY_WEIGHTED_PRESSURE_PLATE:
+    buy: 46.32
+    sell: 11.6
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  CALIBRATED_SCULK_SENSOR:
+    buy: 66.96
+    sell: 16.76
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  SCULK_SENSOR:
+    buy: 500.0
+    sell: 125.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  CHERRY_TRAPDOOR:
+    buy: 9.96
+    sell: 2.52
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  OAK_TRAPDOOR:
+    buy: 13.92
+    sell: 3.48
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  IRON_TRAPDOOR:
+    buy: 92.64
+    sell: 23.16
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []

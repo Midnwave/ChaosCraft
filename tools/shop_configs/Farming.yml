@@ -1,0 +1,237 @@
+# Auto-generated shop config — prices are 4x EconomyShopGUI defaults
+config-version: 1
+display-name: "&#55FF55Farming"
+icon: WHEAT
+items:
+  BAMBOO:
+    buy: 0.4
+    sell: 0.12
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  BEE_NEST:
+    buy: -1
+    sell: 40.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  BEEHIVE:
+    buy: 67.48
+    sell: 16.88
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  BEETROOT:
+    buy: 24.0
+    sell: 6.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  BEETROOT_SEEDS:
+    buy: 12.0
+    sell: 3.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  BROWN_MUSHROOM:
+    buy: 8.0
+    sell: 2.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  CACTUS:
+    buy: 0.4
+    sell: 0.12
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  CARROT:
+    buy: 20.0
+    sell: 5.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  CHORUS_FLOWER:
+    buy: 4.0
+    sell: 1.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  CHORUS_FRUIT:
+    buy: 12.0
+    sell: 3.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  COCOA_BEANS:
+    buy: 24.0
+    sell: 6.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  CRIMSON_FUNGUS:
+    buy: 24.0
+    sell: 6.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  EGG:
+    buy: 20.0
+    sell: 5.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  KELP:
+    buy: 0.4
+    sell: 0.12
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  LEATHER:
+    buy: 134.4
+    sell: 33.6
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  MELON:
+    buy: 37.8
+    sell: 9.48
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  MELON_SEEDS:
+    buy: 12.0
+    sell: 3.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  MELON_SLICE:
+    buy: 4.0
+    sell: 1.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  NETHER_WART:
+    buy: 12.0
+    sell: 3.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  PITCHER_POD:
+    buy: 82.0
+    sell: 20.52
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  POTATO:
+    buy: 20.0
+    sell: 5.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  PUMPKIN:
+    buy: 20.0
+    sell: 5.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  PUMPKIN_SEEDS:
+    buy: 4.76
+    sell: 1.2
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  RED_MUSHROOM:
+    buy: 8.0
+    sell: 2.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  SUGAR_CANE:
+    buy: 0.4
+    sell: 0.12
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  TORCHFLOWER_SEEDS:
+    buy: 82.0
+    sell: 20.52
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  WARPED_FUNGUS:
+    buy: 24.0
+    sell: 6.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  WHEAT:
+    buy: 20.0
+    sell: 5.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  WHEAT_SEEDS:
+    buy: 12.0
+    sell: 3.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []

@@ -1,0 +1,541 @@
+# Auto-generated shop config — prices are 4x EconomyShopGUI defaults
+config-version: 1
+display-name: "&#FF5555Miscellaneous"
+icon: SADDLE
+items:
+  ANVIL:
+    buy: 749.0
+    sell: 187.28
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  AXOLOTL_BUCKET:
+    buy: 77.88
+    sell: 19.48
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  BELL:
+    buy: 4000.0
+    sell: 1000.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  BRUSH:
+    buy: 31.52
+    sell: 7.88
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  CARROT_ON_A_STICK:
+    buy: 28.32
+    sell: 7.08
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  COBWEB:
+    buy: 160.0
+    sell: 40.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  COD_BUCKET:
+    buy: 103.08
+    sell: 25.8
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  ELYTRA:
+    buy: 9660.8
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  ENDER_CHEST:
+    buy: 1092.48
+    sell: 273.12
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  ENDER_EYE:
+    buy: 40.44
+    sell: 10.12
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  EXPERIENCE_BOTTLE:
+    buy: 431.76
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  GLOW_INK_SAC:
+    buy: 22.0
+    sell: 5.52
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  GLOWSTONE_DUST:
+    buy: 28.0
+    sell: 7.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  HONEYCOMB:
+    buy: 12.6
+    sell: 3.16
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  LAVA_BUCKET:
+    buy: 73.6
+    sell: 18.4
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  LEAD:
+    buy: 69.32
+    sell: 17.36
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  LILY_PAD:
+    buy: 112.0
+    sell: 28.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  LODESTONE:
+    buy: 2600.0
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  MAP:
+    buy: 116.24
+    sell: 29.08
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  MOSS_BLOCK:
+    buy: 4.0
+    sell: 1.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  NAME_TAG:
+    buy: 400.0
+    sell: 100.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  NETHER_STAR:
+    buy: 5600.0
+    sell: 1400.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  POWDER_SNOW_BUCKET:
+    buy: 135.96
+    sell: 34.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  PUFFERFISH_BUCKET:
+    buy: 103.08
+    sell: 25.8
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  RED_BED:
+    buy: 384.36
+    sell: 96.12
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  SADDLE:
+    buy: 240.0
+    sell: 60.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  SALMON_BUCKET:
+    buy: 103.08
+    sell: 25.8
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  SCAFFOLDING:
+    buy: 5.32
+    sell: 1.36
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  SHULKER_SHELL:
+    buy: 28.0
+    sell: 7.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  SNIFFER_EGG:
+    buy: 92.0
+    sell: 23.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  SNOW:
+    buy: 26.48
+    sell: 6.64
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  SNOWBALL:
+    buy: 12.0
+    sell: 3.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  SPONGE:
+    buy: 2100.0
+    sell: 525.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  SPYGLASS:
+    buy: 13.24
+    sell: 3.32
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  TADPOLE_BUCKET:
+    buy: 77.88
+    sell: 19.48
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  TOTEM_OF_UNDYING:
+    buy: 400.0
+    sell: 100.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  TRIDENT:
+    buy: 720.0
+    sell: 180.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  TROPICAL_FISH_BUCKET:
+    buy: 103.08
+    sell: 25.8
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  TURTLE_EGG:
+    buy: 60.0
+    sell: 15.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  WARPED_FUNGUS_ON_A_STICK:
+    buy: 94.6
+    sell: 23.68
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  WATER_BUCKET:
+    buy: 73.36
+    sell: 18.36
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  WIND_CHARGE:
+    buy: 21.0
+    sell: 5.28
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  WRITABLE_BOOK:
+    buy: 195.8
+    sell: 48.96
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  CREEPER_BANNER_PATTERN:
+    buy: 2520.48
+    sell: 630.12
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  FIREWORK:
+    buy: 1212.0
+    sell: 300.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  FLOW_BANNER_PATTERN:
+    buy: 4800.0
+    sell: 1200.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  FLOWER_BANNER_PATTERN:
+    buy: 4.68
+    sell: 1.2
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  GLOBE_BANNER_PATTERN:
+    buy: 1323.0
+    sell: 330.76
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  GUSTER_BANNER_PATTERN:
+    buy: 3200.0
+    sell: 800.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  MOJANG_BANNER_PATTERN:
+    buy: 42000.48
+    sell: 10500.12
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  PIGLIN_BANNER_PATTERN:
+    buy: 40000.0
+    sell: 10000.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  SKULL_BANNER_PATTERN:
+    buy: 4200.48
+    sell: 1050.12
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  CLOCK:
+    buy: 153.64
+    sell: 38.44
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  COMPASS:
+    buy: 107.32
+    sell: 26.84
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  RECOVERY_COMPASS:
+    buy: 3472.68
+    sell: 868.2
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  BIG_DRIPLEAF:
+    buy: 40.0
+    sell: 10.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  SMALL_DRIPLEAF:
+    buy: 40.0
+    sell: 10.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  BEACON:
+    buy: 6406.08
+    sell: 1601.52
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  END_ROD:
+    buy: 8.56
+    sell: 2.16
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  LANTERN:
+    buy: 26.0
+    sell: 6.52
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  SOUL_LANTERN:
+    buy: 37.04
+    sell: 9.28
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  CAMPFIRE:
+    buy: 67.16
+    sell: 16.8
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  SOUL_CAMPFIRE:
+    buy: 87.12
+    sell: 21.8
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  SCULK:
+    buy: 48.0
+    sell: 12.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  SCULK_CATALYST:
+    buy: 20000.0
+    sell: 5000.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  SCULK_SHRIEKER:
+    buy: 80000.0
+    sell: 20000.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  OMINOUS_BOTTLE:
+    buy: 70000.0
+    sell: 15500.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []

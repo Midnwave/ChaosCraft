@@ -1,0 +1,101 @@
+# Auto-generated shop config — prices are 4x EconomyShopGUI defaults
+config-version: 1
+display-name: "&#AAAAAAWorkstations"
+icon: GRINDSTONE
+items:
+  BARREL:
+    buy: 32.68
+    sell: 8.2
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  BLAST_FURNACE:
+    buy: 149.2
+    sell: 37.32
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  BREWING_STAND:
+    buy: 29.6
+    sell: 7.4
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  CARTOGRAPHY_TABLE:
+    buy: 19.44
+    sell: 4.88
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  COMPOSTER:
+    buy: 17.04
+    sell: 4.28
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  FLETCHING_TABLE:
+    buy: 35.36
+    sell: 8.84
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  GRINDSTONE:
+    buy: 15.72
+    sell: 3.96
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  LECTERN:
+    buy: 510.04
+    sell: 127.52
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  LOOM:
+    buy: 68.08
+    sell: 17.04
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  SMITHING_TABLE:
+    buy: 64.84
+    sell: 16.24
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  SMOKER:
+    buy: 74.4
+    sell: 18.6
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  STONECUTTER:
+    buy: 32.16
+    sell: 8.04
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []

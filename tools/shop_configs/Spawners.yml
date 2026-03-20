@@ -1,0 +1,317 @@
+# Auto-generated shop config — prices are 4x EconomyShopGUI defaults
+config-version: 1
+display-name: "&#555555Spawners"
+icon: SPAWNER
+items:
+  ALLAY_SPAWNER:
+    buy: 900000.0
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  AXOLOTL_SPAWNER:
+    buy: 600000.0
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  BAT_SPAWNER:
+    buy: 40000.0
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  BLAZE_SPAWNER:
+    buy: 500000.0
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  BOGGED_SPAWNER:
+    buy: 400000.0
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  BREEZE_SPAWNER:
+    buy: 400000.0
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  CAMEL_SPAWNER:
+    buy: 200000.0
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  CAT_SPAWNER:
+    buy: 100000.0
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  CAVE_SPIDER_SPAWNER:
+    buy: 200000.0
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  CHICKEN_SPAWNER:
+    buy: 60000.0
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  COD_SPAWNER:
+    buy: 40000.0
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  COW_SPAWNER:
+    buy: 400000.0
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  CREEPER_SPAWNER:
+    buy: 600000.0
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  ENDERMAN_SPAWNER:
+    buy: 700000.0
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  FROG_SPAWNER:
+    buy: 1580000.0
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  GLOW_SQUID_SPAWNER:
+    buy: 400000.0
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  GOAT_SPAWNER:
+    buy: 480000.0
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  HORSE_SPAWNER:
+    buy: 260000.0
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  HUSK_SPAWNER:
+    buy: 500000.0
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  IRON_GOLEM_SPAWNER:
+    buy: 4000000.0
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  MAGMA_CUBE_SPAWNER:
+    buy: 2000000.0
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  MUSHROOM_COW_SPAWNER:
+    buy: 500000.0
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  PANDA_SPAWNER:
+    buy: 200000.0
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  PARROT_SPAWNER:
+    buy: 120000.0
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  PHANTOM_SPAWNER:
+    buy: 1000000.0
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  PIGLIN_BRUTE_SPAWNER:
+    buy: 8000000.0
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  RABBIT_SPAWNER:
+    buy: 180000.0
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  SHEEP_SPAWNER:
+    buy: 180000.0
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  SHULKER_SPAWNER:
+    buy: 2000000.0
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  SKELETON_SPAWNER:
+    buy: 500000.0
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  SLIME_SPAWNER:
+    buy: 2200000.0
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  SNIFFER_SPAWNER:
+    buy: 180000.0
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  SPIDER_SPAWNER:
+    buy: 180000.0
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  SQUID_SPAWNER:
+    buy: 400000.0
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  STRIDER_SPAWNER:
+    buy: 180000.0
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  WITCH_SPAWNER:
+    buy: 2000000.0
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  WOLF_SPAWNER:
+    buy: 1000000.0
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  ZOMBIE_SPAWNER:
+    buy: 480000.0
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  ZOMBIFIED_PIGLIN_SPAWNER:
+    buy: 480000.0
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []

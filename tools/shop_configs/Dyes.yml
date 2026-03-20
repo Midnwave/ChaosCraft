@@ -1,0 +1,261 @@
+# Auto-generated shop config — prices are 4x EconomyShopGUI defaults
+config-version: 1
+display-name: "&#00AA00Dyes"
+icon: CYAN_DYE
+items:
+  BLACK_DYE:
+    buy: 21.0
+    sell: 5.28
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  BLUE_DYE:
+    buy: 4.2
+    sell: 1.08
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  BROWN_DYE:
+    buy: 25.2
+    sell: 6.32
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  CYAN_DYE:
+    buy: 2.44
+    sell: 0.64
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  GRAY_DYE:
+    buy: 14.48
+    sell: 3.64
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  GREEN_DYE:
+    buy: 0.44
+    sell: 0.12
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  LIGHT_BLUE_DYE:
+    buy: 4.2
+    sell: 1.08
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  LIGHT_GRAY_DYE:
+    buy: 4.2
+    sell: 1.08
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  LIME_DYE:
+    buy: 25.2
+    sell: 3.48
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  MAGENTA_DYE:
+    buy: 4.2
+    sell: 1.08
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  ORANGE_DYE:
+    buy: 4.2
+    sell: 1.08
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  PINK_DYE:
+    buy: 4.2
+    sell: 1.08
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  PURPLE_DYE:
+    buy: 4.44
+    sell: 1.12
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  RED_DYE:
+    buy: 4.2
+    sell: 1.08
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  WHITE_DYE:
+    buy: 6.52
+    sell: 1.64
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  YELLOW_DYE:
+    buy: 2.8
+    sell: 0.72
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  AZURE_BLUET:
+    buy: 4.0
+    sell: 1.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  BLUE_ORCHID:
+    buy: 4.0
+    sell: 1.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  CORNFLOWER:
+    buy: 4.0
+    sell: 1.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  LILAC:
+    buy: 4.0
+    sell: 1.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  LILY_OF_THE_VALLEY:
+    buy: 4.0
+    sell: 1.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  ORANGE_TULIP:
+    buy: 4.0
+    sell: 1.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  OXEYE_DAISY:
+    buy: 4.0
+    sell: 1.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  PEONY:
+    buy: 4.0
+    sell: 1.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  PINK_PETALS:
+    buy: 4.0
+    sell: 1.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  PINK_TULIP:
+    buy: 4.0
+    sell: 1.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  PITCHER_PLANT:
+    buy: 83.0
+    sell: 20.76
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  POPPY:
+    buy: 4.0
+    sell: 1.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  RED_TULIP:
+    buy: 4.0
+    sell: 1.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  SUNFLOWER:
+    buy: 4.0
+    sell: 1.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  TORCHFLOWER:
+    buy: 83.0
+    sell: 20.76
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  INK_SAC:
+    buy: 20.0
+    sell: 5.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []

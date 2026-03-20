@@ -1,0 +1,197 @@
+# Auto-generated shop config — prices are 4x EconomyShopGUI defaults
+config-version: 1
+display-name: "&#FFFFFFOres"
+icon: IRON_INGOT
+items:
+  AMETHYST_BLOCK:
+    buy: 22.08
+    sell: 5.52
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  AMETHYST_SHARD:
+    buy: 5.28
+    sell: 1.32
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  ANCIENT_DEBRIS:
+    buy: 2116.0
+    sell: 529.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  COAL:
+    buy: 21.0
+    sell: 5.28
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  COAL_BLOCK:
+    buy: 198.48
+    sell: 49.64
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  COPPER_BLOCK:
+    buy: 15.44
+    sell: 3.88
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  COPPER_INGOT:
+    buy: 3.68
+    sell: 0.92
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  COPPER_ORE:
+    buy: 60.0
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  DIAMOND:
+    buy: 210.0
+    sell: 52.52
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  DIAMOND_BLOCK:
+    buy: 1984.52
+    sell: 496.16
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  EMERALD:
+    buy: 157.52
+    sell: 39.4
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  EMERALD_BLOCK:
+    buy: 1488.4
+    sell: 372.12
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  GOLD_BLOCK:
+    buy: 312.56
+    sell: 78.16
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  GOLD_INGOT:
+    buy: 33.08
+    sell: 8.28
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  IRON_BLOCK:
+    buy: 208.4
+    sell: 52.12
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  IRON_INGOT:
+    buy: 22.08
+    sell: 5.52
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  LAPIS_BLOCK:
+    buy: 272.88
+    sell: 68.24
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  LAPIS_LAZULI:
+    buy: 28.88
+    sell: 7.24
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  NETHERITE_BLOCK:
+    buy: 89496.0
+    sell: 22374.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  NETHERITE_INGOT:
+    buy: 9470.48
+    sell: 2367.64
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  QUARTZ:
+    buy: 33.08
+    sell: 8.28
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  QUARTZ_BLOCK:
+    buy: 138.92
+    sell: 34.76
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  REDSTONE:
+    buy: 14.0
+    sell: 3.52
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  REDSTONE_BLOCK:
+    buy: 132.32
+    sell: 33.08
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []

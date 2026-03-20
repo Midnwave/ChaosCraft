@@ -1,0 +1,621 @@
+# Auto-generated shop config — prices are 4x EconomyShopGUI defaults
+config-version: 1
+display-name: "&#555555SpawnEggs"
+icon: BAT_SPAWN_EGG
+items:
+  ALLAY_SPAWN_EGG:
+    buy: 3999999996.0
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  ARMADILLO_SPAWN_EGG:
+    buy: 3999999996.0
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  AXOLOTL_SPAWN_EGG:
+    buy: 3999999996.0
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  BAT_SPAWN_EGG:
+    buy: 3999999996.0
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  BLAZE_SPAWN_EGG:
+    buy: 3999999996.0
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  BOGGED_SPAWN_EGG:
+    buy: 3999999996.0
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  BREEZE_SPAWN_EGG:
+    buy: 3999999996.0
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  CAMEL_SPAWN_EGG:
+    buy: 3999999996.0
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  CAT_SPAWN_EGG:
+    buy: 3999999996.0
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  CAVE_SPIDER_SPAWN_EGG:
+    buy: 3999999996.0
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  CHICKEN_SPAWN_EGG:
+    buy: 3999999996.0
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  COD_SPAWN_EGG:
+    buy: 3999999996.0
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  COW_SPAWN_EGG:
+    buy: 3999999996.0
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  CREEPER_SPAWN_EGG:
+    buy: 3999999996.0
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  DOLPHIN_SPAWN_EGG:
+    buy: 3999999996.0
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  DONKEY_SPAWN_EGG:
+    buy: 3999999996.0
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  DROWNED_SPAWN_EGG:
+    buy: 3999999996.0
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  ELDER_GUARDIAN_SPAWN_EGG:
+    buy: 3999999996.0
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  ENDERMAN_SPAWN_EGG:
+    buy: 3999999996.0
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  ENDERMITE_SPAWN_EGG:
+    buy: 3999999996.0
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  EVOKER_SPAWN_EGG:
+    buy: 3999999996.0
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  FOX_SPAWN_EGG:
+    buy: 3999999996.0
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  FROG_SPAWN_EGG:
+    buy: 3999999996.0
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  GHAST_SPAWN_EGG:
+    buy: 3999999996.0
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  GLOW_SQUID_SPAWN_EGG:
+    buy: 3999999996.0
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  GOAT_SPAWN_EGG:
+    buy: 3999999996.0
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  GUARDIAN_SPAWN_EGG:
+    buy: 3999999996.0
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  HOGLIN_SPAWN_EGG:
+    buy: 3999999996.0
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  HORSE_SPAWN_EGG:
+    buy: 3999999996.0
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  HUSK_SPAWN_EGG:
+    buy: 3999999996.0
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  IRON_GOLEM_SPAWN_EGG:
+    buy: 3999999996.0
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  LLAMA_SPAWN_EGG:
+    buy: 3999999996.0
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  MAGMA_CUBE_SPAWN_EGG:
+    buy: 3999999996.0
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  MOOSHROOM_SPAWN_EGG:
+    buy: 3999999996.0
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  MULE_SPAWN_EGG:
+    buy: 3999999996.0
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  OCELOT_SPAWN_EGG:
+    buy: 3999999996.0
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  PANDA_SPAWN_EGG:
+    buy: 3999999996.0
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  PARROT_SPAWN_EGG:
+    buy: 3999999996.0
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  PHANTOM_SPAWN_EGG:
+    buy: 3999999996.0
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  PIG_SPAWN_EGG:
+    buy: 3999999996.0
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  PIGLIN_BRUTE_SPAWN_EGG:
+    buy: 3999999996.0
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  PIGLIN_SPAWN_EGG:
+    buy: 3999999996.0
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  PILLAGER_SPAWN_EGG:
+    buy: 3999999996.0
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  POLAR_BEAR_SPAWN_EGG:
+    buy: 3999999996.0
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  PUFFERFISH_SPAWN_EGG:
+    buy: 3999999996.0
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  RABBIT_SPAWN_EGG:
+    buy: 3999999996.0
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  RAVAGER_SPAWN_EGG:
+    buy: 3999999996.0
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  SALMON_SPAWN_EGG:
+    buy: 3999999996.0
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  SHEEP_SPAWN_EGG:
+    buy: 3999999996.0
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  SHULKER_SPAWN_EGG:
+    buy: 3999999996.0
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  SILVERFISH_SPAWN_EGG:
+    buy: 3999999996.0
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  SKELETON_HORSE_SPAWN_EGG:
+    buy: 3999999996.0
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  SKELETON_SPAWN_EGG:
+    buy: 3999999996.0
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  SLIME_SPAWN_EGG:
+    buy: 3999999996.0
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  SNIFFER_SPAWN_EGG:
+    buy: 3999999996.0
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  SNOW_GOLEM_SPAWN_EGG:
+    buy: 3999999996.0
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  SPIDER_SPAWN_EGG:
+    buy: 3999999996.0
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  SQUID_SPAWN_EGG:
+    buy: 3999999996.0
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  STRAY_SPAWN_EGG:
+    buy: 3999999996.0
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  STRIDER_SPAWN_EGG:
+    buy: 3999999996.0
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  TADPOLE_SPAWN_EGG:
+    buy: 3999999996.0
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  TRADER_LLAMA_SPAWN_EGG:
+    buy: 3999999996.0
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  TROPICAL_FISH_SPAWN_EGG:
+    buy: 3999999996.0
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  TURTLE_SPAWN_EGG:
+    buy: 3999999996.0
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  VEX_SPAWN_EGG:
+    buy: 3999999996.0
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  VILLAGER_SPAWN_EGG:
+    buy: 3999999996.0
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  VINDICATOR_SPAWN_EGG:
+    buy: 3999999996.0
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  WANDERING_TRADER_SPAWN_EGG:
+    buy: 3999999996.0
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  WARDEN_SPAWN_EGG:
+    buy: 3999999996.0
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  WITCH_SPAWN_EGG:
+    buy: 3999999996.0
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  WITHER_SKELETON_SPAWN_EGG:
+    buy: 3999999996.0
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  WOLF_SPAWN_EGG:
+    buy: 3999999996.0
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  ZOGLIN_SPAWN_EGG:
+    buy: 3999999996.0
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  ZOMBIE_HORSE_SPAWN_EGG:
+    buy: 3999999996.0
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  ZOMBIE_SPAWN_EGG:
+    buy: 3999999996.0
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  ZOMBIE_VILLAGER_SPAWN_EGG:
+    buy: 3999999996.0
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  ZOMBIFIED_PIGLIN_SPAWN_EGG:
+    buy: 3999999996.0
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []

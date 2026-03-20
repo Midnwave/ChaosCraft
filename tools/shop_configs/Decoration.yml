@@ -1,0 +1,1229 @@
+# Auto-generated shop config — prices are 4x EconomyShopGUI defaults
+config-version: 1
+display-name: "&#5555FFDecoration"
+icon: TUBE_CORAL
+items:
+  CHAIN:
+    buy: 28.08
+    sell: 7.04
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  FLOWER_POT:
+    buy: 277.84
+    sell: 69.48
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  HONEYCOMB_BLOCK:
+    buy: 52.92
+    sell: 13.24
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  JACK_O_LANTERN:
+    buy: 27.44
+    sell: 6.88
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  POINTED_DRIPSTONE:
+    buy: 4.0
+    sell: 1.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  SPORE_BLOSSOM:
+    buy: 14.0
+    sell: 3.52
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  BLACK_CANDLE:
+    buy: 66.84
+    sell: 16.72
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  BLUE_CANDLE:
+    buy: 49.2
+    sell: 12.32
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  BROWN_CANDLE:
+    buy: 71.24
+    sell: 17.84
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  CANDLE:
+    buy: 42.64
+    sell: 10.68
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  CYAN_CANDLE:
+    buy: 47.32
+    sell: 11.84
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  GRAY_CANDLE:
+    buy: 59.96
+    sell: 15.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  GREEN_CANDLE:
+    buy: 45.24
+    sell: 11.32
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  LIGHT_BLUE_CANDLE:
+    buy: 49.2
+    sell: 12.32
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  LIGHT_GRAY_CANDLE:
+    buy: 49.2
+    sell: 12.32
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  LIME_CANDLE:
+    buy: 71.24
+    sell: 17.84
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  MAGENTA_CANDLE:
+    buy: 49.2
+    sell: 12.32
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  ORANGE_CANDLE:
+    buy: 49.2
+    sell: 12.32
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  PINK_CANDLE:
+    buy: 49.2
+    sell: 12.32
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  PURPLE_CANDLE:
+    buy: 49.4
+    sell: 12.36
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  RED_CANDLE:
+    buy: 49.2
+    sell: 12.32
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  WHITE_CANDLE:
+    buy: 51.6
+    sell: 12.92
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  YELLOW_CANDLE:
+    buy: 47.72
+    sell: 11.96
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  BRAIN_CORAL:
+    buy: 20.0
+    sell: 5.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  BRAIN_CORAL_BLOCK:
+    buy: 64.0
+    sell: 16.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  BRAIN_CORAL_FAN:
+    buy: 12.0
+    sell: 3.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  BUBBLE_CORAL:
+    buy: 20.0
+    sell: 5.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  BUBBLE_CORAL_BLOCK:
+    buy: 64.0
+    sell: 16.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  BUBBLE_CORAL_FAN:
+    buy: 12.0
+    sell: 3.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  DEAD_BRAIN_CORAL:
+    buy: 20.0
+    sell: 5.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  DEAD_BRAIN_CORAL_BLOCK:
+    buy: 64.0
+    sell: 16.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  DEAD_BRAIN_CORAL_FAN:
+    buy: 12.0
+    sell: 3.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  DEAD_BUBBLE_CORAL:
+    buy: 20.0
+    sell: 5.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  DEAD_BUBBLE_CORAL_BLOCK:
+    buy: 64.0
+    sell: 16.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  DEAD_BUBBLE_CORAL_FAN:
+    buy: 12.0
+    sell: 3.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  DEAD_FIRE_CORAL:
+    buy: 20.0
+    sell: 5.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  DEAD_FIRE_CORAL_BLOCK:
+    buy: 64.0
+    sell: 16.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  DEAD_FIRE_CORAL_FAN:
+    buy: 12.0
+    sell: 3.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  DEAD_HORN_CORAL:
+    buy: 20.0
+    sell: 5.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  DEAD_HORN_CORAL_BLOCK:
+    buy: 64.0
+    sell: 16.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  DEAD_HORN_CORAL_FAN:
+    buy: 12.0
+    sell: 3.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  DEAD_TUBE_CORAL:
+    buy: 20.0
+    sell: 5.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  DEAD_TUBE_CORAL_BLOCK:
+    buy: 64.0
+    sell: 16.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  DEAD_TUBE_CORAL_FAN:
+    buy: 12.0
+    sell: 3.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  FIRE_CORAL:
+    buy: 20.0
+    sell: 5.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  FIRE_CORAL_BLOCK:
+    buy: 64.0
+    sell: 16.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  FIRE_CORAL_FAN:
+    buy: 12.0
+    sell: 3.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  HORN_CORAL:
+    buy: 20.0
+    sell: 5.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  HORN_CORAL_BLOCK:
+    buy: 64.0
+    sell: 16.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  HORN_CORAL_FAN:
+    buy: 12.0
+    sell: 3.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  TUBE_CORAL:
+    buy: 20.0
+    sell: 5.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  TUBE_CORAL_BLOCK:
+    buy: 64.0
+    sell: 16.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  TUBE_CORAL_FAN:
+    buy: 24.0
+    sell: 6.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  ACACIA_LEAVES:
+    buy: 12.0
+    sell: 3.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  AZALEA_LEAVES:
+    buy: 12.6
+    sell: 3.16
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  BIRCH_LEAVES:
+    buy: 12.0
+    sell: 3.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  CHERRY_LEAVES:
+    buy: 12.0
+    sell: 3.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  DARK_OAK_LEAVES:
+    buy: 12.0
+    sell: 3.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  FLOWERING_AZALEA_LEAVES:
+    buy: 12.6
+    sell: 3.16
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  JUNGLE_LEAVES:
+    buy: 12.0
+    sell: 3.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  OAK_LEAVES:
+    buy: 12.0
+    sell: 3.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  SPRUCE_LEAVES:
+    buy: 12.0
+    sell: 3.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  COPPER_BULB:
+    buy: 21.12
+    sell: 5.28
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  EXPOSED_COPPER_BULB:
+    buy: 21.72
+    sell: 5.44
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  OXIDIZED_COPPER_BULB:
+    buy: 23.0
+    sell: 5.76
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  SEA_LANTERN:
+    buy: 264.6
+    sell: 66.16
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  SHROOMLIGHT:
+    buy: 32.0
+    sell: 8.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  WEATHERED_COPPER_BULB:
+    buy: 22.36
+    sell: 5.6
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  OCHRE_FROGLIGHT:
+    buy: 24.0
+    sell: 6.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  PEARLESCENT_FROGLIGHT:
+    buy: 24.0
+    sell: 6.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  VERDANT_FROGLIGHT:
+    buy: 24.0
+    sell: 6.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  MANGROVE_LEAVES:
+    buy: 12.0
+    sell: 3.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  MANGROVE_ROOTS:
+    buy: 12.0
+    sell: 3.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  MUDDY_MANGROVE_ROOTS:
+    buy: 12.0
+    sell: 3.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  ACACIA_SAPLING:
+    buy: 12.0
+    sell: 3.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  AZALEA:
+    buy: 12.0
+    sell: 3.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  BIRCH_SAPLING:
+    buy: 12.0
+    sell: 3.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  CHERRY_SAPLING:
+    buy: 12.0
+    sell: 3.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  DARK_OAK_SAPLING:
+    buy: 12.0
+    sell: 3.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  FLOWERING_AZALEA:
+    buy: 12.0
+    sell: 3.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  JUNGLE_SAPLING:
+    buy: 12.0
+    sell: 3.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  MANGROVE_PROPAGULE:
+    buy: 12.0
+    sell: 3.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  OAK_SAPLING:
+    buy: 12.0
+    sell: 3.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  SPRUCE_SAPLING:
+    buy: 12.0
+    sell: 3.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  ACACIA_HANGING_SIGN:
+    buy: 14.48
+    sell: 3.64
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  ACACIA_SIGN:
+    buy: 10.08
+    sell: 2.52
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  BAMBOO_HANGING_SIGN:
+    buy: 11.92
+    sell: 3.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  BAMBOO_SIGN:
+    buy: 5.0
+    sell: 1.28
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  BIRCH_HANGING_SIGN:
+    buy: 14.48
+    sell: 3.64
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  BIRCH_SIGN:
+    buy: 10.08
+    sell: 2.52
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  CHERRY_HANGING_SIGN:
+    buy: 13.16
+    sell: 3.32
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  CHERRY_SIGN:
+    buy: 7.44
+    sell: 1.88
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  CRIMSON_HANGING_SIGN:
+    buy: 13.16
+    sell: 3.32
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  CRIMSON_SIGN:
+    buy: 7.44
+    sell: 1.88
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  DARK_OAK_HANGING_SIGN:
+    buy: 14.48
+    sell: 3.64
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  DARK_OAK_SIGN:
+    buy: 10.08
+    sell: 2.52
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  JUNGLE_HANGING_SIGN:
+    buy: 14.48
+    sell: 3.64
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  JUNGLE_SIGN:
+    buy: 10.08
+    sell: 2.52
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  MANGROVE_HANGING_SIGN:
+    buy: 13.16
+    sell: 3.32
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  MANGROVE_SIGN:
+    buy: 7.44
+    sell: 1.88
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  OAK_HANGING_SIGN:
+    buy: 14.48
+    sell: 3.64
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  OAK_SIGN:
+    buy: 10.08
+    sell: 2.52
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  SPRUCE_HANGING_SIGN:
+    buy: 14.48
+    sell: 3.64
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  SPRUCE_SIGN:
+    buy: 10.08
+    sell: 2.52
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  WARPED_HANGING_SIGN:
+    buy: 13.16
+    sell: 3.32
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  WARPED_SIGN:
+    buy: 7.44
+    sell: 1.88
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  GLOW_LICHEN:
+    buy: 4.0
+    sell: 1.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  TWISTING_VINES:
+    buy: 24.0
+    sell: 6.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  VINE:
+    buy: 28.0
+    sell: 7.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  WEEPING_VINES:
+    buy: 24.0
+    sell: 6.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  ANGLER_POTTERY_SHERD:
+    buy: 119.64
+    sell: 29.92
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  ARCHER_POTTERY_SHERD:
+    buy: 112.2
+    sell: 28.08
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  ARMS_UP_POTTERY_SHERD:
+    buy: 96.16
+    sell: 24.04
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  BLADE_POTTERY_SHERD:
+    buy: 119.64
+    sell: 29.92
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  BREWER_POTTERY_SHERD:
+    buy: 96.16
+    sell: 24.04
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  BURN_POTTERY_SHERD:
+    buy: 117.56
+    sell: 29.4
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  DANGER_POTTERY_SHERD:
+    buy: 117.56
+    sell: 29.4
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  DECORATED_POT:
+    buy: 370.44
+    sell: 92.64
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  EXPLORER_POTTERY_SHERD:
+    buy: 119.64
+    sell: 29.92
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  FLOW_POTTERY_SHERD:
+    buy: 128.2
+    sell: 32.08
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  FRIEND_POTTERY_SHERD:
+    buy: 117.56
+    sell: 29.4
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  GUSTER_POTTERY_SHERD:
+    buy: 128.2
+    sell: 32.08
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  HEART_POTTERY_SHERD:
+    buy: 117.56
+    sell: 29.4
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  HEARTBREAK_POTTERY_SHERD:
+    buy: 117.56
+    sell: 29.4
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  HOWL_POTTERY_SHERD:
+    buy: 117.56
+    sell: 29.4
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  MINER_POTTERY_SHERD:
+    buy: 112.2
+    sell: 28.08
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  MOURNER_POTTERY_SHERD:
+    buy: 119.64
+    sell: 29.92
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  PLENTY_POTTERY_SHERD:
+    buy: 119.64
+    sell: 29.92
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  PRIZE_POTTERY_SHERD:
+    buy: 112.2
+    sell: 28.08
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  SCRAPE_POTTERY_SHERD:
+    buy: 128.2
+    sell: 32.08
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  SHEAF_POTTERY_SHERD:
+    buy: 117.56
+    sell: 29.4
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  SHELTER_POTTERY_SHERD:
+    buy: 119.64
+    sell: 29.92
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  SKULL_POTTERY_SHERD:
+    buy: 112.2
+    sell: 28.08
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  SNORT_POTTERY_SHERD:
+    buy: 119.64
+    sell: 29.92
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  BOLT_ARMOR_TRIM_SMITHING_TEMPLATE:
+    buy: 1559.72
+    sell: 389.96
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  COAST_ARMOR_TRIM_SMITHING_TEMPLATE:
+    buy: 773.2
+    sell: 193.32
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  DUNE_ARMOR_TRIM_SMITHING_TEMPLATE:
+    buy: 796.96
+    sell: 199.24
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  EYE_ARMOR_TRIM_SMITHING_TEMPLATE:
+    buy: 782.28
+    sell: 195.6
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  FLOW_ARMOR_TRIM_SMITHING_TEMPLATE:
+    buy: 1627.52
+    sell: 406.88
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  HOST_ARMOR_TRIM_SMITHING_TEMPLATE:
+    buy: 818.08
+    sell: 204.52
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  NETHERITE_UPGRADE_SMITHING_TEMPLATE:
+    buy: 772.2
+    sell: 193.08
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  RAISER_ARMOR_TRIM_SMITHING_TEMPLATE:
+    buy: 818.08
+    sell: 204.52
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  RIB_ARMOR_TRIM_SMITHING_TEMPLATE:
+    buy: 772.2
+    sell: 193.08
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  SENTRY_ARMOR_TRIM_SMITHING_TEMPLATE:
+    buy: 773.2
+    sell: 193.32
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  SHAPER_ARMOR_TRIM_SMITHING_TEMPLATE:
+    buy: 818.08
+    sell: 204.52
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  SILENCE_ARMOR_TRIM_SMITHING_TEMPLATE:
+    buy: 773.2
+    sell: 193.32
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  SNOUT_ARMOR_TRIM_SMITHING_TEMPLATE:
+    buy: 773.36
+    sell: 193.36
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  SPIRE_ARMOR_TRIM_SMITHING_TEMPLATE:
+    buy: 778.72
+    sell: 194.68
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  TIDE_ARMOR_TRIM_SMITHING_TEMPLATE:
+    buy: 833.52
+    sell: 208.4
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  VEX_ARMOR_TRIM_SMITHING_TEMPLATE:
+    buy: 773.2
+    sell: 193.32
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  WARD_ARMOR_TRIM_SMITHING_TEMPLATE:
+    buy: 773.2
+    sell: 193.32
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  WAYFINDER_ARMOR_TRIM_SMITHING_TEMPLATE:
+    buy: 818.08
+    sell: 204.52
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  WILD_ARMOR_TRIM_SMITHING_TEMPLATE:
+    buy: 788.72
+    sell: 197.2
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []

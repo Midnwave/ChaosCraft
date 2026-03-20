@@ -1,0 +1,173 @@
+# Auto-generated shop config — prices are 4x EconomyShopGUI defaults
+config-version: 1
+display-name: "&#FFAA00Food"
+icon: COOKED_BEEF
+items:
+  APPLE:
+    buy: 40.0
+    sell: 10.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  BREAD:
+    buy: 63.0
+    sell: 15.76
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  CAKE:
+    buy: 317.28
+    sell: 79.32
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  COOKED_SALMON:
+    buy: 25.2
+    sell: 6.32
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  COOKIE:
+    buy: 8.4
+    sell: 2.12
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  GLISTERING_MELON_SLICE:
+    buy: 32.0
+    sell: 8.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  GLOW_BERRIES:
+    buy: 4.0
+    sell: 1.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  GOLDEN_CARROT:
+    buy: 48.8
+    sell: 12.2
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  HONEY_BOTTLE:
+    buy: 31.76
+    sell: 7.96
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  BAKED_POTATO:
+    buy: 21.0
+    sell: 5.28
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  COOKED_BEEF:
+    buy: 25.2
+    sell: 6.32
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  COOKED_CHICKEN:
+    buy: 25.2
+    sell: 6.32
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  COOKED_MUTTON:
+    buy: 25.2
+    sell: 6.32
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  COOKED_PORKCHOP:
+    buy: 25.2
+    sell: 6.32
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  COOKED_RABBIT:
+    buy: 25.2
+    sell: 6.32
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  BEEF:
+    buy: 24.0
+    sell: 6.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  CHICKEN:
+    buy: 24.0
+    sell: 6.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  MUTTON:
+    buy: 24.0
+    sell: 6.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  PORKCHOP:
+    buy: 24.0
+    sell: 6.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  RABBIT:
+    buy: 24.0
+    sell: 6.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  BEETROOT_SOUP:
+    buy: 154.88
+    sell: 38.72
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []

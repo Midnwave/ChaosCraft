@@ -1,0 +1,4293 @@
+# Auto-generated shop config — prices are 4x EconomyShopGUI defaults
+config-version: 1
+display-name: "&#555555Z_EverythingElse"
+icon: BEDROCK
+items:
+  ACACIA_BUTTON:
+    buy: 4.64
+    sell: 1.16
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  ACACIA_DOOR:
+    buy: 9.28
+    sell: 2.32
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  ACACIA_FENCE:
+    buy: 7.8
+    sell: 1.96
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  ACACIA_FENCE_GATE:
+    buy: 19.0
+    sell: 4.76
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  ACACIA_PRESSURE_PLATE:
+    buy: 9.28
+    sell: 2.32
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  ACACIA_TRAPDOOR:
+    buy: 13.92
+    sell: 3.48
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  ACTIVATOR_RAIL:
+    buy: 27.0
+    sell: 6.76
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  ALLIUM:
+    buy: 4.0
+    sell: 1.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  AMETHYST_CLUSTER:
+    buy: 20.0
+    sell: 5.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  ANDESITE_WALL:
+    buy: 3.0
+    sell: 0.76
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  ARMADILLO_SCUTE:
+    buy: 2120.0
+    sell: 530.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  ARMOR_STAND:
+    buy: 16.2
+    sell: 4.08
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  BAMBOO_BUTTON:
+    buy: 2.12
+    sell: 0.56
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  BAMBOO_DOOR:
+    buy: 4.2
+    sell: 1.08
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  BAMBOO_FENCE:
+    buy: 4.4
+    sell: 1.12
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  BAMBOO_FENCE_GATE:
+    buy: 13.92
+    sell: 3.48
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  BAMBOO_PRESSURE_PLATE:
+    buy: 4.2
+    sell: 1.08
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  BAMBOO_TRAPDOOR:
+    buy: 6.28
+    sell: 1.6
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  BIRCH_BUTTON:
+    buy: 4.64
+    sell: 1.16
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  BIRCH_DOOR:
+    buy: 9.28
+    sell: 2.32
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  BIRCH_FENCE:
+    buy: 7.8
+    sell: 1.96
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  BIRCH_FENCE_GATE:
+    buy: 19.0
+    sell: 4.76
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  BIRCH_PRESSURE_PLATE:
+    buy: 9.28
+    sell: 2.32
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  BIRCH_TRAPDOOR:
+    buy: 13.92
+    sell: 3.48
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  BLACK_BANNER:
+    buy: 743.32
+    sell: 185.84
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  BLACK_BED:
+    buy: 384.36
+    sell: 96.12
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  BLACK_CARPET:
+    buy: 82.32
+    sell: 20.6
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  BLACK_CONCRETE_POWDER:
+    buy: 32.04
+    sell: 8.04
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  BLACK_GLAZED_TERRACOTTA:
+    buy: 100.0
+    sell: 25.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  BLACK_SHULKER_BOX:
+    buy: 124.64
+    sell: 31.16
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  BLACK_STAINED_GLASS:
+    buy: 29.24
+    sell: 7.32
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  BLACK_STAINED_GLASS_PANE:
+    buy: 11.52
+    sell: 2.88
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  BLACK_TERRACOTTA:
+    buy: 95.24
+    sell: 23.84
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  BLACKSTONE_WALL:
+    buy: 3.16
+    sell: 0.8
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  BLUE_BANNER:
+    buy: 743.32
+    sell: 185.84
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  BLUE_BED:
+    buy: 384.36
+    sell: 96.12
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  BLUE_CARPET:
+    buy: 82.32
+    sell: 20.6
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  BLUE_CONCRETE_POWDER:
+    buy: 33.2
+    sell: 8.32
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  BLUE_GLAZED_TERRACOTTA:
+    buy: 101.24
+    sell: 25.32
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  BLUE_ICE:
+    buy: 243.0
+    sell: 60.76
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  BLUE_SHULKER_BOX:
+    buy: 107.0
+    sell: 26.76
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  BLUE_STAINED_GLASS:
+    buy: 27.04
+    sell: 6.76
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  BLUE_STAINED_GLASS_PANE:
+    buy: 10.64
+    sell: 2.68
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  BLUE_TERRACOTTA:
+    buy: 96.4
+    sell: 24.12
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  BONE_BLOCK:
+    buy: 79.4
+    sell: 19.88
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  SMOOTH_BASALT:
+    buy: 13.72
+    sell: 5.68
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  SMOOTH_QUARTZ:
+    buy: 145.88
+    sell: 36.48
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  SMOOTH_QUARTZ_SLAB:
+    buy: 76.6
+    sell: 19.16
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  SMOOTH_QUARTZ_STAIRS:
+    buy: 153.16
+    sell: 38.32
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  SMOOTH_STONE:
+    buy: 3.0
+    sell: 0.76
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  SMOOTH_STONE_SLAB:
+    buy: 1.6
+    sell: 0.4
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  SOUL_SOIL:
+    buy: 40.0
+    sell: 10.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  SOUL_TORCH:
+    buy: 16.64
+    sell: 4.16
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  SPECTRAL_ARROW:
+    buy: 63.56
+    sell: 15.92
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  SPRUCE_BUTTON:
+    buy: 4.64
+    sell: 1.16
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  SPRUCE_DOOR:
+    buy: 9.28
+    sell: 2.32
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  SPRUCE_FENCE:
+    buy: 7.8
+    sell: 1.96
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  SPRUCE_FENCE_GATE:
+    buy: 19.0
+    sell: 4.76
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  SPRUCE_PRESSURE_PLATE:
+    buy: 9.28
+    sell: 2.32
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  SPRUCE_TRAPDOOR:
+    buy: 13.92
+    sell: 3.48
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  STICK:
+    buy: 2.32
+    sell: 0.6
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  STONE_AXE:
+    buy: 13.44
+    sell: 3.36
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  STONE_BRICK_WALL:
+    buy: 3.16
+    sell: 0.8
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  STONE_HOE:
+    buy: 10.6
+    sell: 2.68
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  STONE_PICKAXE:
+    buy: 13.44
+    sell: 3.36
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  STONE_SHOVEL:
+    buy: 7.72
+    sell: 1.96
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  STONE_SWORD:
+    buy: 8.16
+    sell: 2.04
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  STRIPPED_ACACIA_LOG:
+    buy: 12.6
+    sell: 3.16
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  STRIPPED_ACACIA_WOOD:
+    buy: 17.64
+    sell: 4.44
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  STRIPPED_BIRCH_LOG:
+    buy: 12.6
+    sell: 3.16
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  STRIPPED_BIRCH_WOOD:
+    buy: 17.64
+    sell: 4.44
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  STRIPPED_CRIMSON_HYPHAE:
+    buy: 17.64
+    sell: 4.44
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  STRIPPED_CRIMSON_STEM:
+    buy: 12.6
+    sell: 3.16
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  STRIPPED_DARK_OAK_LOG:
+    buy: 12.6
+    sell: 3.16
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  STRIPPED_DARK_OAK_WOOD:
+    buy: 17.64
+    sell: 4.44
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  STRIPPED_JUNGLE_LOG:
+    buy: 12.6
+    sell: 3.16
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  STRIPPED_JUNGLE_WOOD:
+    buy: 17.64
+    sell: 4.44
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  STRIPPED_OAK_LOG:
+    buy: 12.6
+    sell: 3.16
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  STRIPPED_OAK_WOOD:
+    buy: 17.64
+    sell: 4.44
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  STRIPPED_SPRUCE_LOG:
+    buy: 12.6
+    sell: 3.16
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  STRIPPED_SPRUCE_WOOD:
+    buy: 17.64
+    sell: 4.44
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  STRIPPED_WARPED_HYPHAE:
+    buy: 17.64
+    sell: 4.44
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  STRIPPED_WARPED_STEM:
+    buy: 12.6
+    sell: 3.16
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  SUGAR:
+    buy: 0.44
+    sell: 0.12
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  SWEET_BERRIES:
+    buy: 20.0
+    sell: 5.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  TNT_MINECART:
+    buy: 569.2
+    sell: 142.32
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  TORCH:
+    buy: 6.16
+    sell: 1.56
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  TRAPPED_CHEST:
+    buy: 54.76
+    sell: 13.72
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  TRIAL_KEY:
+    buy: 40000.0
+    sell: 10000.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  TROPICAL_FISH:
+    buy: 24.0
+    sell: 6.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  TUFF_BRICK_WALL:
+    buy: 8.4
+    sell: 2.12
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  TUFF_WALL:
+    buy: 8.4
+    sell: 2.12
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  TURTLE_HELMET:
+    buy: 11130.0
+    sell: 2782.52
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  VAULT:
+    buy: 480000.0
+    sell: 120000.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  WARPED_BUTTON:
+    buy: 3.32
+    sell: 0.84
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  WARPED_DOOR:
+    buy: 6.64
+    sell: 1.68
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  WARPED_FENCE:
+    buy: 6.04
+    sell: 1.52
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  WARPED_FENCE_GATE:
+    buy: 16.36
+    sell: 4.12
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  WARPED_PRESSURE_PLATE:
+    buy: 3.32
+    sell: 0.84
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  WARPED_ROOTS:
+    buy: 20.0
+    sell: 5.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  WARPED_TRAPDOOR:
+    buy: 9.96
+    sell: 2.52
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  WARPED_WART_BLOCK:
+    buy: 108.0
+    sell: 27.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  WAXED_CHISELED_COPPER:
+    buy: 17.52
+    sell: 4.4
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  WAXED_COPPER_BULB:
+    buy: 35.4
+    sell: 8.88
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  WAXED_COPPER_DOOR:
+    buy: 47.28
+    sell: 11.84
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  WAXED_COPPER_GRATE:
+    buy: 17.52
+    sell: 4.4
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  WAXED_COPPER_TRAPDOOR:
+    buy: 64.32
+    sell: 16.08
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  WAXED_EXPOSED_CHISELED_COPPER:
+    buy: 17.72
+    sell: 4.44
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  WAXED_EXPOSED_COPPER_BULB:
+    buy: 36.04
+    sell: 9.04
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  WAXED_EXPOSED_COPPER_DOOR:
+    buy: 49.0
+    sell: 12.28
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  WAXED_EXPOSED_COPPER_GRATE:
+    buy: 17.72
+    sell: 4.44
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  WAXED_EXPOSED_COPPER_TRAPDOOR:
+    buy: 66.84
+    sell: 16.72
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  WAXED_OXIDIZED_CHISELED_COPPER:
+    buy: 18.16
+    sell: 4.56
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  WAXED_OXIDIZED_COPPER_BULB:
+    buy: 37.4
+    sell: 9.36
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  WAXED_OXIDIZED_COPPER_DOOR:
+    buy: 52.64
+    sell: 13.16
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  WAXED_OXIDIZED_COPPER_GRATE:
+    buy: 18.16
+    sell: 4.56
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  WAXED_OXIDIZED_COPPER_TRAPDOOR:
+    buy: 72.36
+    sell: 18.12
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  WAXED_WEATHERED_CHISELED_COPPER:
+    buy: 17.96
+    sell: 4.52
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  WAXED_WEATHERED_COPPER_BULB:
+    buy: 36.68
+    sell: 9.2
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  WAXED_WEATHERED_COPPER_DOOR:
+    buy: 50.76
+    sell: 12.72
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  WAXED_WEATHERED_COPPER_GRATE:
+    buy: 17.96
+    sell: 4.52
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  WAXED_WEATHERED_COPPER_TRAPDOOR:
+    buy: 69.52
+    sell: 17.4
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  WEATHERED_COPPER:
+    buy: 17.04
+    sell: 4.28
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  WEATHERED_COPPER_DOOR:
+    buy: 35.76
+    sell: 8.96
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  WEATHERED_COPPER_GRATE:
+    buy: 4.48
+    sell: 1.12
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  WEATHERED_COPPER_TRAPDOOR:
+    buy: 53.64
+    sell: 13.44
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  WEATHERED_CUT_COPPER:
+    buy: 17.88
+    sell: 4.48
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  WEATHERED_CUT_COPPER_SLAB:
+    buy: 0.16
+    sell: 0.04
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  WEATHERED_CUT_COPPER_STAIRS:
+    buy: 0.28
+    sell: 0.08
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  WET_SPONGE:
+    buy: -1
+    sell: 500.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  WHITE_BANNER:
+    buy: 743.32
+    sell: 185.84
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  WHITE_BED:
+    buy: 384.36
+    sell: 96.12
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  WHITE_CARPET:
+    buy: 82.32
+    sell: 20.6
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  WHITE_CONCRETE_POWDER:
+    buy: 30.52
+    sell: 7.64
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  WHITE_GLAZED_TERRACOTTA:
+    buy: 98.4
+    sell: 24.6
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  WHITE_SHULKER_BOX:
+    buy: 109.44
+    sell: 27.36
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  WHITE_STAINED_GLASS:
+    buy: 27.32
+    sell: 6.84
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  WHITE_STAINED_GLASS_PANE:
+    buy: 10.76
+    sell: 2.72
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  WHITE_TERRACOTTA:
+    buy: 93.72
+    sell: 23.44
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  WHITE_TULIP:
+    buy: 4.0
+    sell: 1.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  WITHER_ROSE:
+    buy: 8.0
+    sell: 2.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  WITHER_SKELETON_SKULL:
+    buy: -1
+    sell: 1000.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  WOLF_ARMOR:
+    buy: 13356.0
+    sell: 3339.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  WOODEN_AXE:
+    buy: 18.76
+    sell: 4.72
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  WOODEN_HOE:
+    buy: 14.16
+    sell: 3.56
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  WOODEN_PICKAXE:
+    buy: 18.76
+    sell: 4.72
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  WOODEN_SHOVEL:
+    buy: 9.52
+    sell: 2.4
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  WOODEN_SWORD:
+    buy: 14.16
+    sell: 3.56
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  YELLOW_BANNER:
+    buy: 743.32
+    sell: 185.84
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  YELLOW_BED:
+    buy: 384.36
+    sell: 96.12
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  YELLOW_CARPET:
+    buy: 82.32
+    sell: 20.6
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  YELLOW_CONCRETE_POWDER:
+    buy: 29.8
+    sell: 7.48
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  YELLOW_GLAZED_TERRACOTTA:
+    buy: 97.64
+    sell: 24.44
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  YELLOW_SHULKER_BOX:
+    buy: 105.56
+    sell: 26.4
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  YELLOW_STAINED_GLASS:
+    buy: 26.84
+    sell: 6.72
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  YELLOW_STAINED_GLASS_PANE:
+    buy: 10.6
+    sell: 2.68
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  YELLOW_TERRACOTTA:
+    buy: 93.0
+    sell: 23.28
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  ZOMBIE_HEAD:
+    buy: -1
+    sell: 600.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  ACACIA_BOAT:
+    buy: 23.16
+    sell: 5.8
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  ACACIA_CHEST_BOAT:
+    buy: 63.24
+    sell: 15.84
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  BAMBOO_CHEST_RAFT:
+    buy: 49.32
+    sell: 12.36
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  BAMBOO_RAFT:
+    buy: 10.44
+    sell: 2.64
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  BIRCH_BOAT:
+    buy: 23.16
+    sell: 5.8
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  BIRCH_CHEST_BOAT:
+    buy: 63.24
+    sell: 15.84
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  CHERRY_BOAT:
+    buy: 16.56
+    sell: 4.16
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  CHERRY_CHEST_BOAT:
+    buy: 56.28
+    sell: 14.08
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  DARK_OAK_BOAT:
+    buy: 23.16
+    sell: 5.8
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  DARK_OAK_CHEST_BOAT:
+    buy: 63.24
+    sell: 15.84
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  JUNGLE_BOAT:
+    buy: 23.16
+    sell: 5.8
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  JUNGLE_CHEST_BOAT:
+    buy: 63.24
+    sell: 15.84
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  MANGROVE_BOAT:
+    buy: 16.56
+    sell: 4.16
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  MANGROVE_CHEST_BOAT:
+    buy: 56.28
+    sell: 14.08
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  OAK_BOAT:
+    buy: 23.16
+    sell: 5.8
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  OAK_CHEST_BOAT:
+    buy: 63.24
+    sell: 15.84
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  SPRUCE_BOAT:
+    buy: 23.16
+    sell: 5.8
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  SPRUCE_CHEST_BOAT:
+    buy: 63.24
+    sell: 15.84
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  BONE_MEAL:
+    buy: 8.4
+    sell: 2.12
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  BOOK:
+    buy: 142.48
+    sell: 35.64
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  BOW:
+    buy: 95.52
+    sell: 23.88
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  BOWL:
+    buy: 3.48
+    sell: 0.88
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  BRICK:
+    buy: 88.2
+    sell: 22.08
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  BRICK_WALL:
+    buy: 389.0
+    sell: 97.28
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  BROWN_BANNER:
+    buy: 743.32
+    sell: 185.84
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  BROWN_BED:
+    buy: 384.36
+    sell: 96.12
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  BROWN_CARPET:
+    buy: 82.32
+    sell: 20.6
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  BROWN_CONCRETE_POWDER:
+    buy: 32.56
+    sell: 8.16
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  BROWN_GLAZED_TERRACOTTA:
+    buy: 100.56
+    sell: 25.16
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  BROWN_MUSHROOM_BLOCK:
+    buy: 0.24
+    sell: 0.08
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  BROWN_SHULKER_BOX:
+    buy: 129.08
+    sell: 32.28
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  BROWN_STAINED_GLASS:
+    buy: 29.8
+    sell: 7.48
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  BROWN_STAINED_GLASS_PANE:
+    buy: 11.76
+    sell: 2.96
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  BROWN_TERRACOTTA:
+    buy: 95.76
+    sell: 23.96
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  BUCKET:
+    buy: 69.48
+    sell: 17.4
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  BUNDLE:
+    buy: 260.4
+    sell: 65.12
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  CARVED_PUMPKIN:
+    buy: 24.0
+    sell: 6.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  CHAINMAIL_BOOTS:
+    buy: 160.0
+    sell: 40.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  CHAINMAIL_CHESTPLATE:
+    buy: 240.0
+    sell: 60.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  CHAINMAIL_HELMET:
+    buy: 160.0
+    sell: 40.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  CHAINMAIL_LEGGINGS:
+    buy: 240.0
+    sell: 60.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  CHARCOAL:
+    buy: 25.2
+    sell: 6.32
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  CHEST:
+    buy: 37.08
+    sell: 9.28
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  CHEST_MINECART:
+    buy: 160.48
+    sell: 40.12
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  CHISELED_DEEPSLATE:
+    buy: 3.0
+    sell: 0.76
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  CHISELED_NETHER_BRICKS:
+    buy: 1.96
+    sell: 0.52
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  CHISELED_POLISHED_BLACKSTONE:
+    buy: 3.16
+    sell: 0.8
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  CHISELED_QUARTZ_BLOCK:
+    buy: 145.88
+    sell: 36.48
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  CHISELED_RED_SANDSTONE:
+    buy: 141.12
+    sell: 35.28
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  CHISELED_SANDSTONE:
+    buy: 50.4
+    sell: 12.6
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  CHISELED_STONE_BRICKS:
+    buy: 3.0
+    sell: 0.76
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  CLAY_BALL:
+    buy: 20.0
+    sell: 5.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  COAL_ORE:
+    buy: 80.0
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  COARSE_DIRT:
+    buy: 23.12
+    sell: 5.8
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  COBBLED_DEEPSLATE_WALL:
+    buy: 2.88
+    sell: 0.72
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  COBBLESTONE_WALL:
+    buy: 2.88
+    sell: 0.72
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  COD:
+    buy: 24.0
+    sell: 6.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  CONDUIT:
+    buy: 8363.28
+    sell: 2090.84
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  COOKED_COD:
+    buy: 25.2
+    sell: 6.32
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  COPPER_DOOR:
+    buy: 32.44
+    sell: 8.12
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  COPPER_GRATE:
+    buy: 4.08
+    sell: 1.04
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  COPPER_TRAPDOOR:
+    buy: 48.64
+    sell: 12.16
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  CRACKED_DEEPSLATE_BRICKS:
+    buy: 3.16
+    sell: 0.8
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  CRACKED_DEEPSLATE_TILES:
+    buy: 3.32
+    sell: 0.84
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  CRACKED_NETHER_BRICKS:
+    buy: 3.72
+    sell: 0.96
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  CRACKED_POLISHED_BLACKSTONE_BRICKS:
+    buy: 3.32
+    sell: 0.84
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  CRACKED_STONE_BRICKS:
+    buy: 3.16
+    sell: 0.8
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  CRAFTING_TABLE:
+    buy: 18.56
+    sell: 4.64
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  CREEPER_HEAD:
+    buy: -1
+    sell: 600.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  CRIMSON_BUTTON:
+    buy: 3.32
+    sell: 0.84
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  CRIMSON_DOOR:
+    buy: 6.64
+    sell: 1.68
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  CRIMSON_FENCE:
+    buy: 6.04
+    sell: 1.52
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  CRIMSON_FENCE_GATE:
+    buy: 16.36
+    sell: 4.12
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  CRIMSON_PRESSURE_PLATE:
+    buy: 6.64
+    sell: 1.68
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  CRIMSON_ROOTS:
+    buy: 20.0
+    sell: 5.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  CRIMSON_TRAPDOOR:
+    buy: 9.96
+    sell: 2.52
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  CROSSBOW:
+    buy: 105.12
+    sell: 26.28
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  CUT_COPPER:
+    buy: 16.24
+    sell: 4.08
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  CUT_COPPER_SLAB:
+    buy: 2.04
+    sell: 0.52
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  CUT_COPPER_STAIRS:
+    buy: 4.08
+    sell: 1.04
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  CUT_RED_SANDSTONE:
+    buy: 141.12
+    sell: 35.28
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  CUT_RED_SANDSTONE_SLAB:
+    buy: 70.56
+    sell: 17.64
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  CUT_SANDSTONE:
+    buy: 50.4
+    sell: 12.6
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  CUT_SANDSTONE_SLAB:
+    buy: 25.2
+    sell: 6.32
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  CYAN_BANNER:
+    buy: 743.32
+    sell: 185.84
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  CYAN_BED:
+    buy: 384.36
+    sell: 96.12
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  CYAN_CARPET:
+    buy: 82.32
+    sell: 20.6
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  CYAN_CONCRETE_POWDER:
+    buy: 29.72
+    sell: 7.44
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  CYAN_GLAZED_TERRACOTTA:
+    buy: 97.6
+    sell: 24.4
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  CYAN_SHULKER_BOX:
+    buy: 105.16
+    sell: 26.32
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  CYAN_STAINED_GLASS:
+    buy: 26.8
+    sell: 6.72
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  CYAN_STAINED_GLASS_PANE:
+    buy: 10.56
+    sell: 2.64
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  CYAN_TERRACOTTA:
+    buy: 92.96
+    sell: 23.24
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  DANDELION:
+    buy: 4.0
+    sell: 1.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  DARK_OAK_BUTTON:
+    buy: 4.64
+    sell: 1.16
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  DARK_OAK_DOOR:
+    buy: 9.28
+    sell: 2.32
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  DARK_OAK_FENCE:
+    buy: 7.8
+    sell: 1.96
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  DARK_OAK_FENCE_GATE:
+    buy: 19.0
+    sell: 4.76
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  DARK_OAK_PRESSURE_PLATE:
+    buy: 9.28
+    sell: 2.32
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  DARK_OAK_TRAPDOOR:
+    buy: 13.92
+    sell: 3.48
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  DEAD_BUSH:
+    buy: 120.0
+    sell: 30.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  DEEPSLATE_BRICK_SLAB:
+    buy: 1.6
+    sell: 0.4
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  DEEPSLATE_BRICK_STAIRS:
+    buy: 3.16
+    sell: 0.8
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  DEEPSLATE_BRICK_WALL:
+    buy: 3.16
+    sell: 0.8
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  DEEPSLATE_BRICKS:
+    buy: 3.0
+    sell: 0.76
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  DEEPSLATE_COAL_ORE:
+    buy: 80.0
+    sell: 20.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  DEEPSLATE_COPPER_ORE:
+    buy: 60.0
+    sell: 15.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  DEEPSLATE_DIAMOND_ORE:
+    buy: 800.0
+    sell: 200.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  DEEPSLATE_EMERALD_ORE:
+    buy: 600.0
+    sell: 150.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  DEEPSLATE_GOLD_ORE:
+    buy: 120.0
+    sell: 30.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  DEEPSLATE_IRON_ORE:
+    buy: 80.0
+    sell: 20.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  DEEPSLATE_LAPIS_ORE:
+    buy: 220.0
+    sell: 55.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  DEEPSLATE_REDSTONE_ORE:
+    buy: 80.0
+    sell: 20.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  DEEPSLATE_TILE_WALL:
+    buy: 3.32
+    sell: 0.84
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  DETECTOR_RAIL:
+    buy: 26.68
+    sell: 6.68
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  DIAMOND_AXE:
+    buy: 666.4
+    sell: 166.6
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  DIAMOND_BOOTS:
+    buy: 882.0
+    sell: 220.52
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  DIAMOND_CHESTPLATE:
+    buy: 1764.0
+    sell: 441.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  DIAMOND_HELMET:
+    buy: 1102.52
+    sell: 275.64
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  DIAMOND_HOE:
+    buy: 445.88
+    sell: 111.48
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  DIAMOND_HORSE_ARMOR:
+    buy: 9000.0
+    sell: 2250.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  DIAMOND_LEGGINGS:
+    buy: 1543.52
+    sell: 385.88
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  DIAMOND_ORE:
+    buy: 4000.0
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  DIAMOND_PICKAXE:
+    buy: 666.4
+    sell: 166.6
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  DIAMOND_SHOVEL:
+    buy: 225.4
+    sell: 56.36
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  DIAMOND_SWORD:
+    buy: 443.44
+    sell: 110.88
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  DIORITE_WALL:
+    buy: 3.0
+    sell: 0.76
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  DISC_FRAGMENT:
+    buy: 400.0
+    sell: 100.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  DRAGON_BREATH:
+    buy: 439.72
+    sell: 109.96
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  DRAGON_EGG:
+    buy: 20000.0
+    sell: 5000.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  DRAGON_HEAD:
+    buy: -1
+    sell: 5000.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  DRIED_KELP:
+    buy: 0.44
+    sell: 0.12
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  DRIED_KELP_BLOCK:
+    buy: 4.0
+    sell: 1.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  ECHO_SHARD:
+    buy: 400.0
+    sell: 100.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  EMERALD_ORE:
+    buy: 600.0
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  ENCHANTED_GOLDEN_APPLE:
+    buy: -1
+    sell: 10000.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  ENCHANTING_TABLE:
+    buy: 1115.6
+    sell: 278.92
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  END_CRYSTAL:
+    buy: -1
+    sell: 98.92
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  END_STONE_BRICK_WALL:
+    buy: 21.0
+    sell: 5.28
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  EXPOSED_COPPER:
+    buy: 16.24
+    sell: 4.08
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  EXPOSED_COPPER_DOOR:
+    buy: 34.04
+    sell: 8.52
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  EXPOSED_COPPER_GRATE:
+    buy: 4.28
+    sell: 1.08
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  EXPOSED_COPPER_TRAPDOOR:
+    buy: 51.08
+    sell: 12.8
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  EXPOSED_CUT_COPPER:
+    buy: 17.04
+    sell: 4.28
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  EXPOSED_CUT_COPPER_SLAB:
+    buy: 0.56
+    sell: 0.16
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  EXPOSED_CUT_COPPER_STAIRS:
+    buy: 1.08
+    sell: 0.28
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  FERN:
+    buy: 24.0
+    sell: 6.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  FIRE_CHARGE:
+    buy: 32.76
+    sell: 8.2
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  FIREWORK_ROCKET:
+    buy: 21.88
+    sell: 5.48
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  FIREWORK_STAR:
+    buy: 69.52
+    sell: 17.4
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  FISHING_ROD:
+    buy: 66.12
+    sell: 16.56
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  FLINT:
+    buy: 8.0
+    sell: 2.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  FLINT_AND_STEEL:
+    buy: 31.56
+    sell: 7.92
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  FURNACE:
+    buy: 22.88
+    sell: 5.72
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  FURNACE_MINECART:
+    buy: 145.56
+    sell: 36.4
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  GILDED_BLACKSTONE:
+    buy: 68.0
+    sell: 17.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  GLASS_BOTTLE:
+    buy: 26.48
+    sell: 6.64
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  GLOW_ITEM_FRAME:
+    buy: 191.72
+    sell: 47.96
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  GOLD_NUGGET:
+    buy: 3.32
+    sell: 0.84
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  GOLD_ORE:
+    buy: 120.0
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  GOLDEN_APPLE:
+    buy: 319.84
+    sell: 79.96
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  GOLDEN_AXE:
+    buy: 109.08
+    sell: 27.28
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  GOLDEN_BOOTS:
+    buy: 138.92
+    sell: 34.76
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  GOLDEN_CHESTPLATE:
+    buy: 277.84
+    sell: 69.48
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  GOLDEN_HELMET:
+    buy: 173.68
+    sell: 43.44
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  GOLDEN_HOE:
+    buy: 74.32
+    sell: 18.6
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  GOLDEN_HORSE_ARMOR:
+    buy: 3100.0
+    sell: 775.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  GOLDEN_LEGGINGS:
+    buy: 243.12
+    sell: 60.8
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  GOLDEN_PICKAXE:
+    buy: 109.08
+    sell: 27.28
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  GOLDEN_SHOVEL:
+    buy: 39.6
+    sell: 9.92
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  GOLDEN_SWORD:
+    buy: 71.92
+    sell: 18.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  GRANITE_WALL:
+    buy: 3.0
+    sell: 0.76
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  GRASS:
+    buy: 24.0
+    sell: 6.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  GRAY_BANNER:
+    buy: 743.32
+    sell: 185.84
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  GRAY_BED:
+    buy: 384.36
+    sell: 96.12
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  GRAY_CARPET:
+    buy: 82.32
+    sell: 20.6
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  GRAY_CONCRETE_POWDER:
+    buy: 31.32
+    sell: 7.84
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  GRAY_GLAZED_TERRACOTTA:
+    buy: 99.24
+    sell: 24.84
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  GRAY_SHULKER_BOX:
+    buy: 117.76
+    sell: 29.44
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  GRAY_STAINED_GLASS:
+    buy: 28.36
+    sell: 7.12
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  GRAY_STAINED_GLASS_PANE:
+    buy: 11.2
+    sell: 2.8
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  GRAY_TERRACOTTA:
+    buy: 94.52
+    sell: 23.64
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  GREEN_BANNER:
+    buy: 743.32
+    sell: 185.84
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  GREEN_BED:
+    buy: 384.36
+    sell: 96.12
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  GREEN_CARPET:
+    buy: 82.32
+    sell: 20.6
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  GREEN_CONCRETE_POWDER:
+    buy: 29.48
+    sell: 7.4
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  GREEN_GLAZED_TERRACOTTA:
+    buy: 97.32
+    sell: 24.36
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  GREEN_SHULKER_BOX:
+    buy: 103.04
+    sell: 25.76
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  GREEN_STAINED_GLASS:
+    buy: 26.52
+    sell: 6.64
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  GREEN_STAINED_GLASS_PANE:
+    buy: 10.48
+    sell: 2.64
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  GREEN_TERRACOTTA:
+    buy: 92.68
+    sell: 23.2
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  HANGING_ROOTS:
+    buy: 4.0
+    sell: 1.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  HEART_OF_THE_SEA:
+    buy: 2205.0
+    sell: 551.28
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  HOPPER_MINECART:
+    buy: 283.96
+    sell: 71.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  ICE:
+    buy: 12.0
+    sell: 3.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  IRON_AXE:
+    buy: 74.32
+    sell: 18.6
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  IRON_BARS:
+    buy: 8.72
+    sell: 2.2
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  IRON_BOOTS:
+    buy: 92.64
+    sell: 23.16
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  IRON_CHESTPLATE:
+    buy: 185.24
+    sell: 46.32
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  IRON_HELMET:
+    buy: 115.8
+    sell: 28.96
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  IRON_HOE:
+    buy: 51.2
+    sell: 12.8
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  IRON_HORSE_ARMOR:
+    buy: 700.0
+    sell: 175.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  IRON_LEGGINGS:
+    buy: 162.08
+    sell: 40.52
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  IRON_NUGGET:
+    buy: 2.36
+    sell: 0.6
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  IRON_ORE:
+    buy: 80.0
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  IRON_PICKAXE:
+    buy: 74.32
+    sell: 18.6
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  IRON_SHOVEL:
+    buy: 28.04
+    sell: 7.04
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  IRON_SWORD:
+    buy: 48.76
+    sell: 12.2
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  ITEM_FRAME:
+    buy: 160.6
+    sell: 40.16
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  JUNGLE_BUTTON:
+    buy: 4.64
+    sell: 1.16
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  JUNGLE_DOOR:
+    buy: 9.28
+    sell: 2.32
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  JUNGLE_FENCE:
+    buy: 7.8
+    sell: 1.96
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  JUNGLE_FENCE_GATE:
+    buy: 19.0
+    sell: 4.76
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  JUNGLE_PRESSURE_PLATE:
+    buy: 9.28
+    sell: 2.32
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  JUNGLE_TRAPDOOR:
+    buy: 13.92
+    sell: 3.48
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  LADDER:
+    buy: 5.68
+    sell: 1.44
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  LAPIS_ORE:
+    buy: 220.0
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  LARGE_AMETHYST_BUD:
+    buy: 16.0
+    sell: 4.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  LARGE_FERN:
+    buy: 28.0
+    sell: 7.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  LEATHER_BOOTS:
+    buy: 564.48
+    sell: 141.12
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  LEATHER_CHESTPLATE:
+    buy: 1128.96
+    sell: 282.24
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  LEATHER_HELMET:
+    buy: 705.6
+    sell: 176.4
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  LEATHER_HORSE_ARMOR:
+    buy: 400.0
+    sell: 100.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  LEATHER_LEGGINGS:
+    buy: 987.84
+    sell: 246.96
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  LIGHT_BLUE_BANNER:
+    buy: 743.32
+    sell: 185.84
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  LIGHT_BLUE_BED:
+    buy: 384.36
+    sell: 96.12
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  LIGHT_BLUE_CARPET:
+    buy: 82.32
+    sell: 20.6
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  LIGHT_BLUE_CONCRETE_POWDER:
+    buy: 29.96
+    sell: 7.52
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  LIGHT_BLUE_GLAZED_TERRACOTTA:
+    buy: 97.84
+    sell: 24.48
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  LIGHT_BLUE_SHULKER_BOX:
+    buy: 107.0
+    sell: 26.76
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  LIGHT_BLUE_STAINED_GLASS:
+    buy: 27.04
+    sell: 6.76
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  LIGHT_BLUE_STAINED_GLASS_PANE:
+    buy: 10.64
+    sell: 2.68
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  LIGHT_BLUE_TERRACOTTA:
+    buy: 93.2
+    sell: 23.32
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  LIGHT_GRAY_BANNER:
+    buy: 743.32
+    sell: 185.84
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  LIGHT_GRAY_BED:
+    buy: 384.36
+    sell: 96.12
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  LIGHT_GRAY_CARPET:
+    buy: 82.32
+    sell: 20.6
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  LIGHT_GRAY_CONCRETE_POWDER:
+    buy: 29.96
+    sell: 7.52
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  LIGHT_GRAY_GLAZED_TERRACOTTA:
+    buy: 97.84
+    sell: 24.48
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  LIGHT_GRAY_SHULKER_BOX:
+    buy: 107.0
+    sell: 26.76
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  LIGHT_GRAY_STAINED_GLASS:
+    buy: 27.04
+    sell: 6.76
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  LIGHT_GRAY_STAINED_GLASS_PANE:
+    buy: 10.64
+    sell: 2.68
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  LIGHT_GRAY_TERRACOTTA:
+    buy: 93.2
+    sell: 23.32
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  LIME_BANNER:
+    buy: 743.32
+    sell: 185.84
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  LIME_BED:
+    buy: 384.36
+    sell: 96.12
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  LIME_CARPET:
+    buy: 82.32
+    sell: 20.6
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  LIME_CONCRETE_POWDER:
+    buy: 44.84
+    sell: 11.24
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  LIME_GLAZED_TERRACOTTA:
+    buy: 100.72
+    sell: 25.2
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  LIME_SHULKER_BOX:
+    buy: 129.08
+    sell: 32.28
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  LIME_STAINED_GLASS:
+    buy: 29.8
+    sell: 7.48
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  LIME_STAINED_GLASS_PANE:
+    buy: 11.76
+    sell: 2.96
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  LIME_TERRACOTTA:
+    buy: 95.92
+    sell: 24.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  MACE:
+    buy: 84084.0
+    sell: 21021.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  MAGENTA_BANNER:
+    buy: 743.32
+    sell: 185.84
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  MAGENTA_BED:
+    buy: 384.36
+    sell: 96.12
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  MAGENTA_CARPET:
+    buy: 82.32
+    sell: 20.6
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  MAGENTA_CONCRETE_POWDER:
+    buy: 44.84
+    sell: 11.24
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  MAGENTA_GLAZED_TERRACOTTA:
+    buy: 97.84
+    sell: 24.48
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  MAGENTA_SHULKER_BOX:
+    buy: 107.0
+    sell: 26.76
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  MAGENTA_STAINED_GLASS:
+    buy: 27.04
+    sell: 6.76
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  MAGENTA_STAINED_GLASS_PANE:
+    buy: 10.64
+    sell: 2.68
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  MAGENTA_TERRACOTTA:
+    buy: 93.2
+    sell: 23.32
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  MEDIUM_AMETHYST_BUD:
+    buy: 12.0
+    sell: 3.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  MILK_BUCKET:
+    buy: 73.8
+    sell: 18.48
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  MINECART:
+    buy: 115.8
+    sell: 28.96
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  MOSS_CARPET:
+    buy: 2.8
+    sell: 0.72
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  MOSSY_COBBLESTONE_WALL:
+    buy: 30.88
+    sell: 6.08
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  MOSSY_STONE_BRICK_WALL:
+    buy: 31.0
+    sell: 6.16
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  MUSHROOM_STEM:
+    buy: 1.6
+    sell: 0.4
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  MUSHROOM_STEW:
+    buy: 20.48
+    sell: 5.12
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  NETHER_BRICK:
+    buy: 0.84
+    sell: 0.24
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  NETHER_BRICK_FENCE:
+    buy: 2.8
+    sell: 0.72
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  NETHER_BRICK_WALL:
+    buy: 3.72
+    sell: 0.96
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  NETHER_GOLD_ORE:
+    buy: 100.0
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  NETHER_QUARTZ_ORE:
+    buy: 126.0
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  NETHER_SPROUTS:
+    buy: 20.0
+    sell: 5.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  NETHER_WART_BLOCK:
+    buy: 113.4
+    sell: 28.36
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  NETHERITE_AXE:
+    buy: 10643.68
+    sell: 2660.92
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  NETHERITE_BOOTS:
+    buy: 10870.12
+    sell: 2717.56
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  NETHERITE_CHESTPLATE:
+    buy: 11796.2
+    sell: 2949.08
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  NETHERITE_HELMET:
+    buy: 11101.64
+    sell: 2775.44
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  NETHERITE_HOE:
+    buy: 10412.16
+    sell: 2603.04
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  NETHERITE_LEGGINGS:
+    buy: 11564.68
+    sell: 2891.2
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  NETHERITE_PICKAXE:
+    buy: 10643.68
+    sell: 2660.92
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  NETHERITE_SCRAP:
+    buy: 2221.8
+    sell: 555.48
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  NETHERITE_SHOVEL:
+    buy: 10180.64
+    sell: 2545.16
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  NETHERITE_SWORD:
+    buy: 10409.64
+    sell: 2602.44
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  OAK_DOOR:
+    buy: 9.28
+    sell: 2.32
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  OAK_FENCE:
+    buy: 7.8
+    sell: 1.96
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  OAK_FENCE_GATE:
+    buy: 19.0
+    sell: 4.76
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  OMINOUS_TRIAL_KEY:
+    buy: 60000.0
+    sell: 15000.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  ORANGE_BANNER:
+    buy: 743.32
+    sell: 185.84
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  ORANGE_BED:
+    buy: 384.36
+    sell: 96.12
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  ORANGE_CARPET:
+    buy: 82.32
+    sell: 20.6
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  ORANGE_CONCRETE_POWDER:
+    buy: 29.96
+    sell: 7.52
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  ORANGE_GLAZED_TERRACOTTA:
+    buy: 123.48
+    sell: 30.88
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  ORANGE_SHULKER_BOX:
+    buy: 107.0
+    sell: 26.76
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  ORANGE_STAINED_GLASS:
+    buy: 27.04
+    sell: 6.76
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  ORANGE_STAINED_GLASS_PANE:
+    buy: 10.64
+    sell: 2.68
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  ORANGE_TERRACOTTA:
+    buy: 93.2
+    sell: 23.32
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  OXIDIZED_COPPER_DOOR:
+    buy: 37.56
+    sell: 9.4
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  OXIDIZED_COPPER_GRATE:
+    buy: 4.72
+    sell: 1.2
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  OXIDIZED_COPPER_TRAPDOOR:
+    buy: 56.32
+    sell: 14.08
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  OXIDIZED_CUT_COPPER:
+    buy: 18.8
+    sell: 4.72
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  OXIDIZED_CUT_COPPER_SLAB:
+    buy: 0.04
+    sell: 0.04
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  OXIDIZED_CUT_COPPER_STAIRS:
+    buy: 0.08
+    sell: 0.04
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  PAINTING:
+    buy: 142.96
+    sell: 35.76
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  PAPER:
+    buy: 0.44
+    sell: 0.12
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  PIGLIN_HEAD:
+    buy: 2400.0
+    sell: 600.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  PINK_BANNER:
+    buy: 743.32
+    sell: 185.84
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  PINK_BED:
+    buy: 384.36
+    sell: 96.12
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  PINK_CARPET:
+    buy: 82.32
+    sell: 20.6
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  PINK_CONCRETE_POWDER:
+    buy: 29.96
+    sell: 7.52
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  PINK_GLAZED_TERRACOTTA:
+    buy: 97.84
+    sell: 24.48
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  PINK_SHULKER_BOX:
+    buy: 107.0
+    sell: 26.76
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  PINK_STAINED_GLASS:
+    buy: 27.04
+    sell: 6.76
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  PINK_STAINED_GLASS_PANE:
+    buy: 10.64
+    sell: 2.68
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  PINK_TERRACOTTA:
+    buy: 93.2
+    sell: 23.32
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  POISONOUS_POTATO:
+    buy: -1
+    sell: 60.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  POLISHED_BASALT:
+    buy: 13.72
+    sell: 5.68
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  POLISHED_BLACKSTONE_BRICK_WALL:
+    buy: 3.16
+    sell: 0.8
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  POLISHED_BLACKSTONE_BUTTON:
+    buy: 3.32
+    sell: 0.84
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  POLISHED_BLACKSTONE_PRESSURE_PLATE:
+    buy: 6.64
+    sell: 1.68
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  POLISHED_BLACKSTONE_WALL:
+    buy: 3.16
+    sell: 0.8
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  POLISHED_DEEPSLATE:
+    buy: 2.88
+    sell: 0.72
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  POLISHED_DEEPSLATE_SLAB:
+    buy: 1.52
+    sell: 0.4
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  POLISHED_DEEPSLATE_STAIRS:
+    buy: 3.0
+    sell: 0.76
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  POLISHED_DEEPSLATE_WALL:
+    buy: 3.0
+    sell: 0.76
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  POLISHED_TUFF_WALL:
+    buy: 8.4
+    sell: 2.12
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  POPPED_CHORUS_FRUIT:
+    buy: 12.6
+    sell: 3.16
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  POWERED_RAIL:
+    buy: 37.6
+    sell: 9.4
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  PRISMARINE_CRYSTALS:
+    buy: 28.0
+    sell: 7.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  PRISMARINE_SHARD:
+    buy: 28.0
+    sell: 7.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  PRISMARINE_WALL:
+    buy: 123.48
+    sell: 30.88
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  PUFFERFISH:
+    buy: 24.0
+    sell: 6.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  PUMPKIN_PIE:
+    buy: 42.48
+    sell: 10.64
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  PURPLE_BANNER:
+    buy: 743.32
+    sell: 185.84
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  PURPLE_BED:
+    buy: 384.36
+    sell: 96.12
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  PURPLE_CARPET:
+    buy: 82.32
+    sell: 20.6
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  PURPLE_CONCRETE_POWDER:
+    buy: 44.84
+    sell: 11.24
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  PURPLE_GLAZED_TERRACOTTA:
+    buy: 97.88
+    sell: 24.48
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  PURPLE_SHULKER_BOX:
+    buy: 107.24
+    sell: 26.84
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  PURPLE_STAINED_GLASS:
+    buy: 27.04
+    sell: 6.76
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  PURPLE_STAINED_GLASS_PANE:
+    buy: 10.68
+    sell: 2.68
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  PURPLE_TERRACOTTA:
+    buy: 93.2
+    sell: 23.32
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  PURPUR_PILLAR:
+    buy: 13.92
+    sell: 3.48
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  QUARTZ_PILLAR:
+    buy: 145.88
+    sell: 36.48
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  RABBIT_STEW:
+    buy: 81.56
+    sell: 20.4
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  RAIL:
+    buy: 8.84
+    sell: 2.24
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  RAW_COPPER:
+    buy: 3.52
+    sell: 0.88
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  RAW_COPPER_BLOCK:
+    buy: 33.08
+    sell: 8.28
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  RAW_GOLD:
+    buy: 31.52
+    sell: 7.88
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  RAW_GOLD_BLOCK:
+    buy: 297.68
+    sell: 74.44
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  RAW_IRON:
+    buy: 21.0
+    sell: 5.28
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  RAW_IRON_BLOCK:
+    buy: 198.48
+    sell: 49.64
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  RED_BANNER:
+    buy: 743.32
+    sell: 185.84
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  RED_CARPET:
+    buy: 82.32
+    sell: 20.6
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  RED_CONCRETE_POWDER:
+    buy: 29.96
+    sell: 7.52
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  RED_GLAZED_TERRACOTTA:
+    buy: 97.84
+    sell: 24.48
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  RED_MUSHROOM_BLOCK:
+    buy: 0.24
+    sell: 0.08
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  RED_NETHER_BRICK_WALL:
+    buy: 34.24
+    sell: 8.56
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  RED_SANDSTONE_WALL:
+    buy: 141.12
+    sell: 35.28
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  RED_SHULKER_BOX:
+    buy: 107.0
+    sell: 26.76
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  RED_STAINED_GLASS:
+    buy: 27.04
+    sell: 6.76
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  RED_STAINED_GLASS_PANE:
+    buy: 10.64
+    sell: 2.68
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  RED_TERRACOTTA:
+    buy: 93.2
+    sell: 23.32
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  REDSTONE_ORE:
+    buy: 80.0
+    sell: -1
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  ROSE_BUSH:
+    buy: 4.0
+    sell: 1.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  SALMON:
+    buy: 24.0
+    sell: 6.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  SANDSTONE_WALL:
+    buy: 50.4
+    sell: 12.6
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  SCULK_VEIN:
+    buy: 8.0
+    sell: 2.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  SCUTE:
+    buy: 2120.0
+    sell: 530.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  SEA_PICKLE:
+    buy: 24.0
+    sell: 6.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  SEAGRASS:
+    buy: 28.0
+    sell: 7.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  SHEARS:
+    buy: 46.32
+    sell: 11.6
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  SHIELD:
+    buy: 50.96
+    sell: 12.76
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  SHULKER_BOX:
+    buy: 97.72
+    sell: 24.44
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  SKELETON_SKULL:
+    buy: -1
+    sell: 600.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  SMALL_AMETHYST_BUD:
+    buy: 8.0
+    sell: 2.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []

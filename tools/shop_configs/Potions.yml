@@ -1,0 +1,1253 @@
+# Auto-generated shop config — prices are 4x EconomyShopGUI defaults
+config-version: 1
+display-name: "&#FF55FFPotions + Tipped Arrows"
+icon: POTION
+items:
+  POTION_FIRE_RESISTANCE:
+    buy: 47.6
+    sell: 11.92
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  POTION_HARMING:
+    buy: 86.48
+    sell: 21.64
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  POTION_HEALING:
+    buy: 47.56
+    sell: 11.92
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  POTION_INFESTED:
+    buy: 16.68
+    sell: 4.2
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  POTION_INVISIBILITY:
+    buy: 109.84
+    sell: 27.48
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  POTION_LEAPING:
+    buy: 776.88
+    sell: 194.24
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  POTION_NIGHT_VISION:
+    buy: 65.36
+    sell: 16.36
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  POTION_OOZING:
+    buy: 214.0
+    sell: 53.52
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  POTION_POISON:
+    buy: 43.36
+    sell: 10.84
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  POTION_REGENERATION:
+    buy: 183.28
+    sell: 45.84
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  POTION_SLOW_FALLING:
+    buy: 544.28
+    sell: 136.08
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  POTION_SLOWNESS:
+    buy: 55.48
+    sell: 13.88
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  POTION_STRENGTH:
+    buy: 24.8
+    sell: 6.2
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  POTION_SWIFTNESS:
+    buy: 14.12
+    sell: 3.56
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  POTION_TURTLE_MASTER:
+    buy: 11811.48
+    sell: 2952.88
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  POTION_WATER_BREATHING:
+    buy: 39.12
+    sell: 9.8
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  POTION_WEAKNESS:
+    buy: 40.72
+    sell: 10.2
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  POTION_WEAVING:
+    buy: 183.28
+    sell: 45.84
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  POTION_WIND_CHARGED:
+    buy: 98.48
+    sell: 24.64
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  POTION_LONG_FIRE_RESISTANCE:
+    buy: 65.32
+    sell: 16.36
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  POTION_LONG_INVISIBILITY:
+    buy: 131.24
+    sell: 32.84
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  POTION_LONG_NIGHT_VISION:
+    buy: 84.12
+    sell: 21.04
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  POTION_LONG_POISON:
+    buy: 60.8
+    sell: 15.2
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  POTION_LONG_REGENERATION:
+    buy: 209.08
+    sell: 52.28
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  POTION_LONG_SLOW_FALLING:
+    buy: 591.8
+    sell: 147.96
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  POTION_LONG_SLOWNESS:
+    buy: 73.64
+    sell: 18.44
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  POTION_LONG_STRENGTH:
+    buy: 41.12
+    sell: 10.28
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  POTION_LONG_SWIFTNESS:
+    buy: 29.8
+    sell: 7.48
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  POTION_LONG_TURTLE_MASTER:
+    buy: 12535.0
+    sell: 3133.76
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  POTION_LONG_WATER_BREATHING:
+    buy: 56.28
+    sell: 14.08
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  POTION_LONG_WEAKNESS:
+    buy: 58.0
+    sell: 14.52
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  POTION_STRONG_HARMING:
+    buy: 216.32
+    sell: 54.08
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  POTION_STRONG_HEALING:
+    buy: 175.08
+    sell: 43.8
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  POTION_STRONG_LEAPING:
+    buy: 948.12
+    sell: 237.04
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  POTION_STRONG_POISON:
+    buy: 170.6
+    sell: 42.68
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  POTION_STRONG_REGENERATION:
+    buy: 318.92
+    sell: 79.76
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  POTION_STRONG_STRENGTH:
+    buy: 150.92
+    sell: 37.76
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  POTION_STRONG_SWIFTNESS:
+    buy: 139.6
+    sell: 34.92
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  POTION_STRONG_TURTLE_MASTER:
+    buy: 12644.8
+    sell: 3161.2
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  SPLASH_POTION_FIRE_RESISTANCE:
+    buy: 116.2
+    sell: 29.08
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  SPLASH_POTION_HARMING:
+    buy: 157.4
+    sell: 39.36
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  SPLASH_POTION_HEALING:
+    buy: 116.12
+    sell: 29.04
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  SPLASH_POTION_INFESTED:
+    buy: 83.4
+    sell: 20.88
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  SPLASH_POTION_INVISIBILITY:
+    buy: 182.12
+    sell: 45.56
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  SPLASH_POTION_LEAPING:
+    buy: 889.2
+    sell: 222.32
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  SPLASH_POTION_NIGHT_VISION:
+    buy: 135.0
+    sell: 33.76
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  SPLASH_POTION_OOZING:
+    buy: 292.56
+    sell: 73.16
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  SPLASH_POTION_POISON:
+    buy: 111.68
+    sell: 27.92
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  SPLASH_POTION_REGENERATION:
+    buy: 259.96
+    sell: 65.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  SPLASH_POTION_SLOW_FALLING:
+    buy: 642.68
+    sell: 160.68
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  SPLASH_POTION_SLOWNESS:
+    buy: 124.52
+    sell: 31.16
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  SPLASH_POTION_STRENGTH:
+    buy: 92.0
+    sell: 23.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  SPLASH_POTION_SWIFTNESS:
+    buy: 80.68
+    sell: 20.2
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  SPLASH_POTION_TURTLE_MASTER:
+    buy: 12585.88
+    sell: 3146.48
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  SPLASH_POTION_WATER_BREATHING:
+    buy: 107.16
+    sell: 26.8
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  SPLASH_POTION_WEAKNESS:
+    buy: 108.88
+    sell: 27.24
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  SPLASH_POTION_WEAVING:
+    buy: 259.96
+    sell: 65.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  SPLASH_POTION_WIND_CHARGED:
+    buy: 170.08
+    sell: 42.52
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  SPLASH_POTION_LONG_FIRE_RESISTANCE:
+    buy: 134.96
+    sell: 33.76
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  SPLASH_POTION_LONG_INVISIBILITY:
+    buy: 204.84
+    sell: 51.24
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  SPLASH_POTION_LONG_NIGHT_VISION:
+    buy: 154.88
+    sell: 38.72
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  SPLASH_POTION_LONG_POISON:
+    buy: 130.16
+    sell: 32.56
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  SPLASH_POTION_LONG_REGENERATION:
+    buy: 287.36
+    sell: 71.84
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  SPLASH_POTION_LONG_SLOW_FALLING:
+    buy: 693.04
+    sell: 173.28
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  SPLASH_POTION_LONG_SLOWNESS:
+    buy: 143.8
+    sell: 35.96
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  SPLASH_POTION_LONG_STRENGTH:
+    buy: 109.32
+    sell: 27.36
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  SPLASH_POTION_LONG_SWIFTNESS:
+    buy: 97.28
+    sell: 24.32
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  SPLASH_POTION_LONG_TURTLE_MASTER:
+    buy: 13352.8
+    sell: 3338.2
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  SPLASH_POTION_LONG_WATER_BREATHING:
+    buy: 125.4
+    sell: 31.36
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  SPLASH_POTION_LONG_WEAKNESS:
+    buy: 127.2
+    sell: 31.8
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  SPLASH_POTION_STRONG_HARMING:
+    buy: 295.0
+    sell: 73.76
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  SPLASH_POTION_STRONG_HEALING:
+    buy: 251.28
+    sell: 62.84
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  SPLASH_POTION_STRONG_LEAPING:
+    buy: 1070.72
+    sell: 267.68
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  SPLASH_POTION_STRONG_POISON:
+    buy: 246.56
+    sell: 61.64
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  SPLASH_POTION_STRONG_REGENERATION:
+    buy: 403.76
+    sell: 100.96
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  SPLASH_POTION_STRONG_STRENGTH:
+    buy: 225.72
+    sell: 56.44
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  SPLASH_POTION_STRONG_SWIFTNESS:
+    buy: 213.72
+    sell: 53.44
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  SPLASH_POTION_STRONG_TURTLE_MASTER:
+    buy: 13469.2
+    sell: 3367.32
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  LINGERING_POTION_FIRE_RESISTANCE:
+    buy: 589.24
+    sell: 147.32
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  LINGERING_POTION_HARMING:
+    buy: 632.88
+    sell: 158.24
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  LINGERING_POTION_HEALING:
+    buy: 589.16
+    sell: 147.32
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  LINGERING_POTION_INFESTED:
+    buy: 554.48
+    sell: 138.64
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  LINGERING_POTION_INVISIBILITY:
+    buy: 659.12
+    sell: 164.8
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  LINGERING_POTION_LEAPING:
+    buy: 1408.6
+    sell: 352.16
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  LINGERING_POTION_NIGHT_VISION:
+    buy: 609.2
+    sell: 152.32
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  LINGERING_POTION_OOZING:
+    buy: 776.2
+    sell: 194.08
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  LINGERING_POTION_POISON:
+    buy: 584.44
+    sell: 146.12
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  LINGERING_POTION_REGENERATION:
+    buy: 741.64
+    sell: 185.44
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  LINGERING_POTION_SLOW_FALLING:
+    buy: 1147.32
+    sell: 286.84
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  LINGERING_POTION_SLOWNESS:
+    buy: 598.08
+    sell: 149.52
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  LINGERING_POTION_STRENGTH:
+    buy: 563.6
+    sell: 140.92
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  LINGERING_POTION_SWIFTNESS:
+    buy: 551.6
+    sell: 137.92
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  LINGERING_POTION_TURTLE_MASTER:
+    buy: 13807.08
+    sell: 3451.8
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  LINGERING_POTION_WATER_BREATHING:
+    buy: 579.68
+    sell: 144.92
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  LINGERING_POTION_WEAKNESS:
+    buy: 581.48
+    sell: 145.4
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  LINGERING_POTION_WEAVING:
+    buy: 741.64
+    sell: 185.44
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  LINGERING_POTION_WIND_CHARGED:
+    buy: 646.36
+    sell: 161.6
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  LINGERING_POTION_LONG_FIRE_RESISTANCE:
+    buy: 609.12
+    sell: 152.28
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  LINGERING_POTION_LONG_INVISIBILITY:
+    buy: 683.2
+    sell: 170.8
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  LINGERING_POTION_LONG_NIGHT_VISION:
+    buy: 630.28
+    sell: 157.6
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  LINGERING_POTION_LONG_POISON:
+    buy: 604.04
+    sell: 151.04
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  LINGERING_POTION_LONG_REGENERATION:
+    buy: 770.68
+    sell: 192.68
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  LINGERING_POTION_LONG_SLOW_FALLING:
+    buy: 1200.68
+    sell: 300.2
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  LINGERING_POTION_LONG_SLOWNESS:
+    buy: 618.48
+    sell: 154.64
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  LINGERING_POTION_LONG_STRENGTH:
+    buy: 581.92
+    sell: 145.48
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  LINGERING_POTION_LONG_SWIFTNESS:
+    buy: 569.2
+    sell: 142.32
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  LINGERING_POTION_LONG_TURTLE_MASTER:
+    buy: 14620.04
+    sell: 3655.04
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  LINGERING_POTION_LONG_WATER_BREATHING:
+    buy: 598.96
+    sell: 149.76
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  LINGERING_POTION_LONG_WEAKNESS:
+    buy: 600.88
+    sell: 150.24
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  LINGERING_POTION_STRONG_HARMING:
+    buy: 778.8
+    sell: 194.72
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  LINGERING_POTION_STRONG_HEALING:
+    buy: 732.44
+    sell: 183.12
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  LINGERING_POTION_STRONG_LEAPING:
+    buy: 1601.04
+    sell: 400.28
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  LINGERING_POTION_STRONG_POISON:
+    buy: 727.4
+    sell: 181.88
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  LINGERING_POTION_STRONG_REGENERATION:
+    buy: 894.08
+    sell: 223.52
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  LINGERING_POTION_STRONG_STRENGTH:
+    buy: 705.32
+    sell: 176.36
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  LINGERING_POTION_STRONG_SWIFTNESS:
+    buy: 692.6
+    sell: 173.16
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  LINGERING_POTION_STRONG_TURTLE_MASTER:
+    buy: 14743.44
+    sell: 3685.88
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  TIPPED_ARROW_FIRE_RESISTANCE:
+    buy: 86.8
+    sell: 21.72
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  TIPPED_ARROW_HARMING:
+    buy: 92.56
+    sell: 23.16
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  TIPPED_ARROW_HEALING:
+    buy: 86.8
+    sell: 21.72
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  TIPPED_ARROW_INFESTED:
+    buy: 11.68
+    sell: 2.92
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  TIPPED_ARROW_INVISIBILITY:
+    buy: 96.0
+    sell: 24.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  TIPPED_ARROW_LEAPING:
+    buy: 194.36
+    sell: 48.6
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  TIPPED_ARROW_LONG_FIRE_RESISTANCE:
+    buy: 89.44
+    sell: 22.36
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  TIPPED_ARROW_LONG_INVISIBILITY:
+    buy: 99.16
+    sell: 24.8
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  TIPPED_ARROW_LONG_NIGHT_VISION:
+    buy: 92.2
+    sell: 23.08
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  TIPPED_ARROW_LONG_POISON:
+    buy: 88.76
+    sell: 22.2
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  TIPPED_ARROW_LONG_REGENERATION:
+    buy: 110.64
+    sell: 27.68
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  TIPPED_ARROW_LONG_SLOW_FALLING:
+    buy: 167.08
+    sell: 41.8
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  TIPPED_ARROW_LONG_SLOWNESS:
+    buy: 90.64
+    sell: 22.68
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  TIPPED_ARROW_LONG_STRENGTH:
+    buy: 85.84
+    sell: 21.48
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  TIPPED_ARROW_LONG_SWIFTNESS:
+    buy: 84.2
+    sell: 21.08
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  TIPPED_ARROW_LONG_TURTLE_MASTER:
+    buy: 1928.36
+    sell: 482.12
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  TIPPED_ARROW_LONG_WATER_BREATHING:
+    buy: 88.08
+    sell: 22.04
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  TIPPED_ARROW_LONG_WEAKNESS:
+    buy: 88.36
+    sell: 22.12
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  TIPPED_ARROW_NIGHT_VISION:
+    buy: 89.44
+    sell: 22.36
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  TIPPED_ARROW_OOZING:
+    buy: 37.56
+    sell: 9.4
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  TIPPED_ARROW_POISON:
+    buy: 86.2
+    sell: 21.56
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  TIPPED_ARROW_REGENERATION:
+    buy: 106.8
+    sell: 26.72
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  TIPPED_ARROW_SLOW_FALLING:
+    buy: 160.04
+    sell: 40.04
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  TIPPED_ARROW_SLOWNESS:
+    buy: 87.96
+    sell: 22.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  TIPPED_ARROW_STRENGTH:
+    buy: 83.44
+    sell: 20.88
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  TIPPED_ARROW_STRONG_HARMING:
+    buy: 111.68
+    sell: 27.92
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  TIPPED_ARROW_STRONG_HEALING:
+    buy: 105.6
+    sell: 26.4
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  TIPPED_ARROW_STRONG_LEAPING:
+    buy: 219.6
+    sell: 54.92
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  TIPPED_ARROW_STRONG_POISON:
+    buy: 104.96
+    sell: 26.24
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  TIPPED_ARROW_STRONG_REGENERATION:
+    buy: 126.84
+    sell: 31.72
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  TIPPED_ARROW_STRONG_STRENGTH:
+    buy: 102.04
+    sell: 25.52
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  TIPPED_ARROW_STRONG_SWIFTNESS:
+    buy: 100.36
+    sell: 25.12
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  TIPPED_ARROW_STRONG_TURTLE_MASTER:
+    buy: 1944.56
+    sell: 486.16
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  TIPPED_ARROW_SWIFTNESS:
+    buy: 81.88
+    sell: 20.48
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  TIPPED_ARROW_TURTLE_MASTER:
+    buy: 1821.64
+    sell: 455.44
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  TIPPED_ARROW_WATER_BREATHING:
+    buy: 85.56
+    sell: 21.4
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  TIPPED_ARROW_WEAKNESS:
+    buy: 85.8
+    sell: 21.48
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  TIPPED_ARROW_WEAVING:
+    buy: 33.52
+    sell: 8.4
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  TIPPED_ARROW_WIND_CHARGED:
+    buy: 22.4
+    sell: 5.6
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []

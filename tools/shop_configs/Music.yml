@@ -1,0 +1,221 @@
+# Auto-generated shop config — prices are 4x EconomyShopGUI defaults
+config-version: 1
+display-name: "&#FFAA00Music"
+icon: MUSIC_DISC_STRAD
+items:
+  MUSIC_DISC_11:
+    buy: 300.0
+    sell: 75.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  MUSIC_DISC_13:
+    buy: 300.0
+    sell: 75.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  MUSIC_DISC_5:
+    buy: 3780.0
+    sell: 945.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  MUSIC_DISC_BLOCKS:
+    buy: 300.0
+    sell: 75.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  MUSIC_DISC_CAT:
+    buy: 300.0
+    sell: 75.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  MUSIC_DISC_CHIRP:
+    buy: 300.0
+    sell: 75.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  MUSIC_DISC_CREATOR:
+    buy: 400.0
+    sell: 100.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  MUSIC_DISC_CREATOR_MUSIC_BOX:
+    buy: 400.0
+    sell: 100.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  MUSIC_DISC_FAR:
+    buy: 300.0
+    sell: 75.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  MUSIC_DISC_MALL:
+    buy: 300.0
+    sell: 75.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  MUSIC_DISC_MELLOHI:
+    buy: 300.0
+    sell: 75.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  MUSIC_DISC_OTHERSIDE:
+    buy: 300.0
+    sell: 75.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  MUSIC_DISC_PIGSTEP:
+    buy: 300.0
+    sell: 75.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  MUSIC_DISC_PRECIPICE:
+    buy: 400.0
+    sell: 100.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  MUSIC_DISC_RELIC:
+    buy: 400.0
+    sell: 100.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  MUSIC_DISC_STAL:
+    buy: 300.0
+    sell: 75.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  MUSIC_DISC_STRAD:
+    buy: 300.0
+    sell: 75.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  MUSIC_DISC_WAIT:
+    buy: 300.0
+    sell: 75.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  MUSIC_DISC_WARD:
+    buy: 300.0
+    sell: 75.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  GOAT_HORN:
+    buy: 400.0
+    sell: 100.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  GOAT_HORN:
+    buy: 400.0
+    sell: 100.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  GOAT_HORN:
+    buy: 400.0
+    sell: 100.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  GOAT_HORN:
+    buy: 400.0
+    sell: 100.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  GOAT_HORN:
+    buy: 400.0
+    sell: 100.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  GOAT_HORN:
+    buy: 400.0
+    sell: 100.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  GOAT_HORN:
+    buy: 400.0
+    sell: 100.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  GOAT_HORN:
+    buy: 400.0
+    sell: 100.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []

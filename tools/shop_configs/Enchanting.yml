@@ -1,0 +1,341 @@
+# Auto-generated shop config — prices are 4x EconomyShopGUI defaults
+config-version: 1
+display-name: "&#FF55FFEnchanting"
+icon: ENCHANTED_BOOK
+items:
+  ENCHANTED_BOOK_WATER_WORKER_1:
+    buy: 640.0
+    sell: 160.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  ENCHANTED_BOOK_DAMAGE_ARTHROPODS_5:
+    buy: 7779.24
+    sell: 1944.84
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  ENCHANTED_BOOK_BINDING_CURSE_1:
+    buy: 800.0
+    sell: 200.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  ENCHANTED_BOOK_BREACH_4:
+    buy: 7408.8
+    sell: 1852.2
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  ENCHANTED_BOOK_PROTECTION_EXPLOSIONS_4:
+    buy: 5927.04
+    sell: 1481.76
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  ENCHANTED_BOOK_CHANNELING_1:
+    buy: 800.0
+    sell: 200.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  ENCHANTED_BOOK_DENSITY_5:
+    buy: 15558.48
+    sell: 3889.64
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  ENCHANTED_BOOK_DEPTH_STRIDER_3:
+    buy: 2822.4
+    sell: 705.6
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  ENCHANTED_BOOK_DIG_SPEED_5:
+    buy: 3889.64
+    sell: 972.44
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  ENCHANTED_BOOK_PROTECTION_FALL_4:
+    buy: 3704.4
+    sell: 926.12
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  ENCHANTED_BOOK_FIRE_ASPECT_2:
+    buy: 1344.0
+    sell: 336.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  ENCHANTED_BOOK_PROTECTION_FIRE_4:
+    buy: 3704.4
+    sell: 926.12
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  ENCHANTED_BOOK_ARROW_FIRE_1:
+    buy: 640.0
+    sell: 160.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  ENCHANTED_BOOK_LOOT_BONUS_BLOCKS_3:
+    buy: 2822.4
+    sell: 705.6
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  ENCHANTED_BOOK_FROST_WALKER_2:
+    buy: 1344.0
+    sell: 336.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  ENCHANTED_BOOK_IMPALING_5:
+    buy: 12446.8
+    sell: 3111.72
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  ENCHANTED_BOOK_ARROW_INFINITE_1:
+    buy: 800.0
+    sell: 200.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  ENCHANTED_BOOK_KNOCKBACK_2:
+    buy: 840.0
+    sell: 210.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  ENCHANTED_BOOK_LOOT_BONUS_MOBS_3:
+    buy: 2822.4
+    sell: 705.6
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  ENCHANTED_BOOK_LOYALTY_3:
+    buy: 1764.0
+    sell: 441.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  ENCHANTED_BOOK_LUCK_3:
+    buy: 2822.4
+    sell: 705.6
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  ENCHANTED_BOOK_LURE_3:
+    buy: 2822.4
+    sell: 705.6
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  ENCHANTED_BOOK_MENDING_1:
+    buy: 640.0
+    sell: 160.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  ENCHANTED_BOOK_MULTISHOT_1:
+    buy: 640.0
+    sell: 160.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  ENCHANTED_BOOK_PIERCING_4:
+    buy: 1852.2
+    sell: 463.08
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  ENCHANTED_BOOK_ARROW_DAMAGE_5:
+    buy: 3889.64
+    sell: 972.44
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  ENCHANTED_BOOK_PROTECTION_PROJECTILE_4:
+    buy: 3704.4
+    sell: 926.12
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  ENCHANTED_BOOK_PROTECTION_ENVIRONMENTAL_4:
+    buy: 1852.2
+    sell: 463.08
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  ENCHANTED_BOOK_ARROW_KNOCKBACK_2:
+    buy: 1344.0
+    sell: 336.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  ENCHANTED_BOOK_QUICK_CHARGE_3:
+    buy: 1764.0
+    sell: 441.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  ENCHANTED_BOOK_OXYGEN_3:
+    buy: 2822.4
+    sell: 705.6
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  ENCHANTED_BOOK_RIPTIDE_3:
+    buy: 2822.4
+    sell: 705.6
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  ENCHANTED_BOOK_DAMAGE_ALL_5:
+    buy: 3889.64
+    sell: 972.44
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  ENCHANTED_BOOK_SILK_TOUCH_1:
+    buy: 800.0
+    sell: 200.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  ENCHANTED_BOOK_DAMAGE_UNDEAD_5:
+    buy: 7779.24
+    sell: 1944.84
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  ENCHANTED_BOOK_SOUL_SPEED_3:
+    buy: 4410.0
+    sell: 1102.52
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  ENCHANTED_BOOK_SWEEPING_EDGE_3:
+    buy: 2822.4
+    sell: 705.6
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  ENCHANTED_BOOK_SWIFT_SNEAK_3:
+    buy: 1102.52
+    sell: 275.64
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  ENCHANTED_BOOK_THORNS_3:
+    buy: 3528.0
+    sell: 882.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  ENCHANTED_BOOK_DURABILITY_3:
+    buy: 1764.0
+    sell: 441.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  ENCHANTED_BOOK_VANISHING_CURSE_1:
+    buy: 800.0
+    sell: 200.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
+  ENCHANTED_BOOK_WIND_BURST_3:
+    buy: 97020.0
+    sell: 24255.0
+    kills-required: 0
+    s-kills-required: 0
+    survivals-required: 0
+    badge-required: ""
+    lore: []
