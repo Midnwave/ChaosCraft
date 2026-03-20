@@ -106,6 +106,10 @@ public class ChaosCraftPlugin extends JavaPlugin {
                 new com.blockforge.chaoscraft.modes.bluemoon.BlueMoonMode(this);
         modeManager.registerMode(blueMoonMode);
 
+        com.blockforge.chaoscraft.modes.freezingice.FreezingIceMode freezingIceMode =
+                new com.blockforge.chaoscraft.modes.freezingice.FreezingIceMode(this);
+        modeManager.registerMode(freezingIceMode);
+
         // Initialize performance service
         performanceService = new PerformanceService(this);
         performanceService.initialize();
