@@ -453,10 +453,15 @@ public class LunarGimmickManager {
 
             preyPlayerUUID = newPrey.getUniqueId();
 
-            // Announce
+            // Announce only in debug mode
+            if (plugin.getConfig().getBoolean("debug", false)) {
+                for (Player p : world.getPlayers()) {
+                    p.sendMessage(ChatColor.RED + "" + ChatColor.BOLD + "The Hunt targets " +
+                            ChatColor.WHITE + newPrey.getName() + ChatColor.RED + ChatColor.BOLD + "!");
+                }
+            }
+            // Howl sound always plays (atmospheric)
             for (Player p : world.getPlayers()) {
-                p.sendMessage(ChatColor.RED + "" + ChatColor.BOLD + "The Hunt targets " +
-                        ChatColor.WHITE + newPrey.getName() + ChatColor.RED + ChatColor.BOLD + "!");
                 DisplayBuilder.playSound(p.getLocation(), Sound.ENTITY_WOLF_HOWL, 0.7f, 0.8f);
             }
         }

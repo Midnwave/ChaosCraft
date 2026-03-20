@@ -32,6 +32,7 @@ public final class BlueMoonBossAttacks {
         registry.register(new MoonstoneCage(plugin));
         registry.register(new HowlingResonance(plugin));
         registry.register(new LunarSuperLaserDisplay(plugin));
+        registry.register(new LunarFireworkBarrage(plugin));
     }
 
     // ================================================================
@@ -1225,5 +1226,205 @@ public final class BlueMoonBossAttacks {
 
         @Override
         public AbstractAttack newInstance() { return new LunarSuperLaserDisplay(plugin); }
+    }
+
+    // ================================================================
+    // 12. LUNAR FIREWORK BARRAGE — Massive firework rockets launched
+    //     from the moon that track toward players and explode with
+    //     huge damage on burst. Visual spectacle + deadly.
+    // ================================================================
+    public static class LunarFireworkBarrage extends BlockDisplayAttack {
+        private final List<FireworkRocket> rockets = new ArrayList<>();
+
+        public LunarFireworkBarrage(ChaosCraftPlugin p) {
+            super(p, new AttackConfig("lunar_firework_barrage", AttackType.BOSS, 1, "modes/bluemoon/attacks"));
+            config.setDamage(0); // Damage handled manually per rocket
+            config.setDamageRadius(0);
+            config.setDurationTicks(200);
+            config.setCooldownTicks(400);
+            config.setTicksBetweenDamage(20);
+            config.setDamageOnImpactOnly(true);
+            config.setImpactDamage(16.0);
+            config.setImpactRadius(6.0);
+        }
+
+        @Override
+        public AttackType getType() { return AttackType.BOSS; }
+
+        private static class FireworkRocket {
+            Location pos;
+            Vector velocity;
+            List<Entity> trail = new ArrayList<>();
+            BlockDisplayHandle head;
+            int age = 0;
+            boolean exploded = false;
+            Player target;
+        }
+
+        @Override
+        protected void onSpawn(Location center) {
+            // displayBuilder already initialized by parent
+            Location bossLoc = center.clone().add(0, 25, 0);
+
+            // Launch 8 firework rockets in spread pattern
+            World w = center.getWorld();
+            if (w == null) return;
+
+            List<Player> players = new ArrayList<>();
+            for (Player p : w.getPlayers()) {
+                if (p.getGameMode() == org.bukkit.GameMode.SURVIVAL && !p.isInvulnerable()) {
+                    players.add(p);
+                }
+            }
+            if (players.isEmpty()) return;
+
+            DisplayBuilder.playSound(bossLoc, Sound.ENTITY_FIREWORK_ROCKET_LAUNCH, 2.0f, 0.5f);
+            DisplayBuilder.playSound(bossLoc, Sound.ENTITY_FIREWORK_ROCKET_LAUNCH, 2.0f, 0.8f);
+
+            for (int i = 0; i < 8; i++) {
+                FireworkRocket rocket = new FireworkRocket();
+                // Stagger launch positions around the boss
+                double angle = (2 * Math.PI * i) / 8;
+                rocket.pos = bossLoc.clone().add(Math.cos(angle) * 3, 0, Math.sin(angle) * 3);
+                // Pick a target player (distribute across players)
+                rocket.target = players.get(i % players.size());
+                // Initial upward + outward velocity
+                rocket.velocity = new Vector(Math.cos(angle) * 0.3, -0.5, Math.sin(angle) * 0.3);
+                // Spawn the rocket head as a glowing block
+                rocket.head = displayBuilder.spawnBlock(rocket.pos, Material.SEA_LANTERN);
+                rocket.head.scale(0.6f, 0.6f, 0.6f).glow(180, 210, 255).brightness(15, 15);
+                spawnedEntities.add(rocket.head.entity());
+                rockets.add(rocket);
+
+                // Launch sound staggered
+                Bukkit.getScheduler().runTaskLater(plugin, () ->
+                    DisplayBuilder.playSound(rocket.pos, Sound.ENTITY_FIREWORK_ROCKET_LAUNCH, 1.5f, 0.6f + (float)(Math.random() * 0.4)),
+                    i * 3L);
+            }
+        }
+
+        @Override
+        protected void onTick(int ticksAlive) {
+            for (FireworkRocket rocket : rockets) {
+                if (rocket.exploded) continue;
+                rocket.age++;
+
+                // Home toward target player
+                if (rocket.target != null && rocket.target.isOnline()) {
+                    Location targetLoc = rocket.target.getLocation().clone().add(0, 1, 0);
+                    Vector toTarget = targetLoc.toVector().subtract(rocket.pos.toVector());
+                    double dist = toTarget.length();
+
+                    if (dist < 2.5) {
+                        // EXPLODE — close enough to target
+                        explodeRocket(rocket);
+                        continue;
+                    }
+
+                    // Steer toward target (homing)
+                    if (dist > 0.1) {
+                        Vector desired = toTarget.normalize().multiply(0.8);
+                        rocket.velocity.add(desired.subtract(rocket.velocity).multiply(0.15));
+                        // Cap speed
+                        if (rocket.velocity.length() > 1.2) {
+                            rocket.velocity.normalize().multiply(1.2);
+                        }
+                    }
+                }
+
+                // Move rocket
+                rocket.pos.add(rocket.velocity);
+
+                // Teleport head display
+                if (rocket.head != null && rocket.head.entity().isValid()) {
+                    rocket.head.entity().teleport(rocket.pos);
+                }
+
+                // Trail particles
+                if (rocket.age % 2 == 0) {
+                    DisplayBuilder.dustParticles(rocket.pos, 5, 0.3, 180, 210, 255, 1.2f);
+                    rocket.pos.getWorld().spawnParticle(Particle.FIREWORK, rocket.pos, 3, 0.1, 0.1, 0.1, 0.02);
+                }
+
+                // Spark trail block displays (fade after 15 ticks)
+                if (rocket.age % 4 == 0) {
+                    BlockDisplayHandle spark = displayBuilder.spawnBlock(rocket.pos.clone(), Material.LIGHT_BLUE_STAINED_GLASS);
+                    spark.scale(0.3f, 0.3f, 0.3f).glow(150, 230, 255).brightness(15, 15);
+                    spawnedEntities.add(spark.entity());
+                    rocket.trail.add(spark.entity());
+                    // Auto-remove old trail
+                    if (rocket.trail.size() > 6) {
+                        Entity old = rocket.trail.remove(0);
+                        if (old.isValid()) old.remove();
+                    }
+                }
+
+                // Timeout — explode after 120 ticks if hasn't hit
+                if (rocket.age > 120) {
+                    explodeRocket(rocket);
+                }
+            }
+        }
+
+        private void explodeRocket(FireworkRocket rocket) {
+            rocket.exploded = true;
+            Location loc = rocket.pos.clone();
+            World w = loc.getWorld();
+            if (w == null) return;
+
+            // Remove head
+            if (rocket.head != null && rocket.head.entity().isValid()) {
+                rocket.head.entity().remove();
+            }
+            // Remove trail
+            for (Entity e : rocket.trail) {
+                if (e != null && e.isValid()) e.remove();
+            }
+
+            // MASSIVE firework explosion
+            DisplayBuilder.playSound(loc, Sound.ENTITY_FIREWORK_ROCKET_BLAST, 2.0f, 0.4f);
+            DisplayBuilder.playSound(loc, Sound.ENTITY_FIREWORK_ROCKET_LARGE_BLAST, 2.0f, 0.5f);
+            DisplayBuilder.playSound(loc, Sound.ENTITY_FIREWORK_ROCKET_TWINKLE, 1.5f, 0.6f);
+            DisplayBuilder.playSound(loc, Sound.ENTITY_GENERIC_EXPLODE, 1.0f, 0.8f);
+
+            // Particle explosion — multi-color firework burst
+            w.spawnParticle(Particle.FIREWORK, loc, 80, 2, 2, 2, 0.3);
+            DisplayBuilder.dustParticles(loc, 40, 3.0, 180, 210, 255, 2.5f); // pale blue
+            DisplayBuilder.dustParticles(loc, 30, 2.5, 200, 200, 220, 2.0f); // silver
+            DisplayBuilder.dustParticles(loc, 30, 2.5, 150, 230, 255, 2.0f); // frost cyan
+            w.spawnParticle(Particle.END_ROD, loc, 30, 2, 2, 2, 0.15);
+            w.spawnParticle(Particle.FLASH, loc, 3, 0, 0, 0, 0);
+
+            // Spawn expanding ring of block displays for visual impact
+            List<BlockDisplayHandle> ring = displayBuilder.spawnRing(loc, Material.SEA_LANTERN, 4.0, 12);
+            for (BlockDisplayHandle h : ring) {
+                h.scale(0.5f, 0.5f, 0.5f).glow(180, 210, 255).brightness(15, 15);
+                spawnedEntities.add(h.entity());
+            }
+            // Remove ring after 20 ticks
+            Bukkit.getScheduler().runTaskLater(plugin, () -> {
+                for (BlockDisplayHandle h : ring) {
+                    if (h.entity().isValid()) h.entity().remove();
+                }
+            }, 20L);
+
+            // Deal impact damage
+            triggerImpactDamage(loc);
+        }
+
+        @Override
+        protected void onCleanup() {
+            for (FireworkRocket rocket : rockets) {
+                if (rocket.head != null && rocket.head.entity().isValid()) rocket.head.entity().remove();
+                for (Entity e : rocket.trail) {
+                    if (e != null && e.isValid()) e.remove();
+                }
+            }
+            rockets.clear();
+            displayBuilder.removeAll();
+        }
+
+        @Override
+        public AbstractAttack newInstance() { return new LunarFireworkBarrage(plugin); }
     }
 }
