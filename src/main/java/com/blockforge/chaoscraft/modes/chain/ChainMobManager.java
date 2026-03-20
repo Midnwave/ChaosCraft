@@ -270,7 +270,7 @@ public class ChainMobManager {
                 Navigator nav = npc.getNavigator();
                 if (!nav.isNavigating() || nav.getEntityTarget() == null
                         || !nav.getEntityTarget().getTarget().getUniqueId().equals(target.getUniqueId())) {
-                    nav.setTarget(target, true); // true = aggressive
+                    nav.setTarget(target, false); // non-aggressive — we handle damage ourselves
                 }
             }
 
@@ -319,6 +319,7 @@ public class ChainMobManager {
 
         // Chain line from NPC to player
         double dist = npcLoc.distance(targetLoc);
+        if (dist < 0.5) return; // Too close — normalize would produce NaN
         int chainCount = Math.min(12, (int)(dist / 0.8));
         List<Entity> displays = new ArrayList<>();
 
@@ -339,11 +340,8 @@ public class ChainMobManager {
         Vector pull = npcLoc.toVector().subtract(targetLoc.toVector()).normalize().multiply(0.8).setY(0.3);
         target.setVelocity(target.getVelocity().add(pull));
 
-        // Deal damage
-        double damage = config.getMobDamage();
-        double newHealth = Math.max(0, target.getHealth() - damage);
-        target.setHealth(newHealth);
-        target.damage(0.01);
+        // Deal damage (respects armor/resistance, no PvP trigger)
+        applyDamage(target, config.getMobDamage(), npc);
 
         // Sound + particles
         DisplayBuilder.playSound(targetLoc, Sound.BLOCK_CHAIN_PLACE, 1.0f, 0.5f);
@@ -370,6 +368,9 @@ public class ChainMobManager {
         World w = npcLoc.getWorld();
         if (w == null) return;
 
+        double dist = npcLoc.distance(targetLoc);
+        if (dist < 0.5) return; // Too close — normalize would produce NaN
+
         DisplayBuilder builder = new DisplayBuilder(plugin);
         List<Entity> displays = new ArrayList<>();
 
@@ -380,9 +381,9 @@ public class ChainMobManager {
         // Arc of 8 chain blocks sweeping 90 degrees
         for (int i = 0; i < 8; i++) {
             double angle = baseAngle - 0.8 + (1.6 * i / 7);
-            double dist = 2.0 + i * 0.3;
+            double arcDist = 2.0 + i * 0.3;
             Location chainLoc = npcLoc.clone().add(
-                    Math.cos(angle) * dist, 1.0 + Math.sin(i * 0.3) * 0.5, Math.sin(angle) * dist);
+                    Math.cos(angle) * arcDist, 1.0 + Math.sin(i * 0.3) * 0.5, Math.sin(angle) * arcDist);
             BlockDisplayHandle chain = builder.spawnBlock(chainLoc, Material.CHAIN);
             chain.scale(0.5f, 1.5f, 0.5f).glow(200, 200, 210).interpolation(2, 0);
             displays.add(chain.entity());
@@ -391,10 +392,7 @@ public class ChainMobManager {
         npcBlockDisplays.put(npc.getId(), displays);
 
         // Damage + knockback
-        double damage = config.getMobDamage() * 0.8;
-        double newHealth = Math.max(0, target.getHealth() - damage);
-        target.setHealth(newHealth);
-        target.damage(0.01);
+        applyDamage(target, config.getMobDamage() * 0.8, npc);
 
         // Knockback away from NPC
         Vector knockback = targetLoc.toVector().subtract(npcLoc.toVector()).normalize().multiply(0.6).setY(0.2);
@@ -437,9 +435,8 @@ public class ChainMobManager {
         for (Player p : w.getPlayers()) {
             if (isExempt(p)) continue;
             if (p.getLocation().distanceSquared(npcLoc) <= slamRadius * slamRadius) {
-                double newHealth = Math.max(0, p.getHealth() - damage);
-                p.setHealth(newHealth);
-                p.damage(0.01);
+                p.damage(damage);
+                p.setNoDamageTicks(0);
                 // Launch upward
                 p.setVelocity(p.getVelocity().add(new Vector(0, 0.6, 0)));
             }
@@ -502,16 +499,16 @@ public class ChainMobManager {
                 Location currentNpcLoc = snareNpc.getEntity().getLocation();
 
                 // Pull player toward NPC
-                Vector pull = currentNpcLoc.toVector().subtract(target.getLocation().toVector())
-                        .normalize().multiply(0.15);
+                Vector diff = currentNpcLoc.toVector().subtract(target.getLocation().toVector());
+                if (diff.lengthSquared() < 0.25) return; // Too close
+                Vector pull = diff.normalize().multiply(0.15);
                 target.setVelocity(target.getVelocity().add(pull));
 
                 // Damage every 10 ticks
                 if (ticks % 10 == 0) {
                     double damage = config.getMobDamage() * 0.4;
-                    double newHealth = Math.max(0, target.getHealth() - damage);
-                    target.setHealth(newHealth);
-                    target.damage(0.01);
+                    target.damage(damage);
+                    target.setNoDamageTicks(0);
                 }
 
                 // Chain particles constricting
@@ -554,12 +551,30 @@ public class ChainMobManager {
     }
 
     private boolean isExempt(Player player) {
+        // Skip non-survival players (creative, spectator, adventure)
+        if (player.getGameMode() != GameMode.SURVIVAL) return true;
+        // Skip invulnerable / god mode players
+        if (player.isInvulnerable()) return true;
         var modeManager = plugin.getModeManager();
         if (modeManager.isAnyModeActive()) {
             var activeMode = modeManager.getActiveMode();
             if (activeMode.isExempt(player)) return true;
         }
         return player.hasPermission("chaoscraft.mode.exempt");
+    }
+
+    /**
+     * Apply damage to a player respecting armor and resistance.
+     * Uses player.damage() with a non-player source to avoid PvP detection.
+     */
+    private void applyDamage(Player target, double damage, NPC npc) {
+        if (target.isInvulnerable() || target.getGameMode() != GameMode.SURVIVAL) return;
+        if (target.isDead() || target.getHealth() <= 0) return;
+        // Use the NPC entity as the damage source — but since it's a Player entity,
+        // we use damage(amount) without a source to avoid PvP plugins.
+        // Armor and resistance are applied by Minecraft's damage system.
+        target.damage(damage);
+        target.setNoDamageTicks(0); // Allow rapid hits from skills
     }
 
     private int countMobsNear(Player player, double radius) {
