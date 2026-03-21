@@ -224,8 +224,14 @@ public class SeerBossManager {
 
         if (primaryTarget == null) return;
 
-        // Calculate desired position (above target at float height)
-        Location desired = primaryTarget.getLocation().clone().add(0, config.getBossFloatHeight(), 0);
+        // Calculate desired position — offset to the side so it looks down at an angle
+        // Use the boss's current orbit angle for a dynamic offset
+        double offsetDist = 8.0; // blocks to the side
+        double orbitAngle = (System.currentTimeMillis() * 0.0005) % (Math.PI * 2); // slow orbit
+        double offsetX = Math.cos(orbitAngle) * offsetDist;
+        double offsetZ = Math.sin(orbitAngle) * offsetDist;
+        Location desired = primaryTarget.getLocation().clone()
+                .add(offsetX, config.getBossFloatHeight(), offsetZ);
 
         // Obstacle avoidance
         desired = avoidObstacles(bossEntity.getLocation(), desired);
@@ -240,12 +246,21 @@ public class SeerBossManager {
 
         // Apply movement
         Location newLoc = bossEntity.getLocation().add(currentVelocity);
-        // Face the target
-        Vector lookDir = primaryTarget.getLocation().toVector().subtract(newLoc.toVector());
+        // Face the target — set both yaw and pitch so the entity looks down at player
+        Vector lookDir = primaryTarget.getLocation().add(0, 1, 0).toVector().subtract(newLoc.toVector());
         if (lookDir.lengthSquared() > 0.01) {
             newLoc.setDirection(lookDir);
+            // Also explicitly set pitch to look down (negative = down in MC)
+            double horizontalDist = Math.sqrt(lookDir.getX() * lookDir.getX() + lookDir.getZ() * lookDir.getZ());
+            float pitch = (float) -Math.toDegrees(Math.atan2(lookDir.getY(), horizontalDist));
+            newLoc.setPitch(pitch);
         }
         bossEntity.teleport(newLoc);
+
+        plugin.debug("[Seer] Boss at " + String.format("%.0f,%.0f,%.0f", newLoc.getX(), newLoc.getY(), newLoc.getZ())
+                + " target=" + (primaryTarget != null ? primaryTarget.getName() : "null")
+                + " dist=" + String.format("%.0f", primaryTarget != null ? newLoc.distance(primaryTarget.getLocation()) : -1)
+                + " beam=" + (beamActive ? "ACTIVE" : beamCharging ? "CHARGING" : "OFF"));
     }
 
     /**

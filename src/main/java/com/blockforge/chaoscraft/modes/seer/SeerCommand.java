@@ -10,6 +10,8 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
+import org.bukkit.Location;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
 import java.util.*;
@@ -80,6 +82,45 @@ public class SeerCommand implements CommandExecutor, TabCompleter {
             if (world != null) {
                 sender.sendMessage(Component.text("World: " + world.getName()
                         + " (" + world.getPlayers().size() + " players)", NamedTextColor.LIGHT_PURPLE));
+            }
+
+            // Boss info
+            var boss = mode.getBossManager();
+            sender.sendMessage(Component.text("--- Boss ---", NamedTextColor.DARK_PURPLE));
+            sender.sendMessage(Component.text("Alive: " + boss.isBossAlive(),
+                    boss.isBossAlive() ? NamedTextColor.GREEN : NamedTextColor.RED));
+            if (boss.isBossAlive()) {
+                sender.sendMessage(Component.text("Beam: " + (boss.isBeamActive() ? "FIRING" : "OFF"),
+                        boss.isBeamActive() ? NamedTextColor.RED : NamedTextColor.GRAY));
+                long maxHp = (long) boss.getOrbsRemaining() * mode.getSeerConfig().getOrbHealthPerOrb();
+                sender.sendMessage(Component.text("Max HP: " + String.format("%,d", maxHp), NamedTextColor.YELLOW));
+                Entity bossEntity = boss.getBossEntity();
+                if (bossEntity != null) {
+                    Location bLoc = bossEntity.getLocation();
+                    sender.sendMessage(Component.text("Position: " + String.format("%.0f, %.0f, %.0f",
+                            bLoc.getX(), bLoc.getY(), bLoc.getZ()), NamedTextColor.GRAY));
+                    if (bossEntity instanceof org.bukkit.entity.LivingEntity living) {
+                        sender.sendMessage(Component.text("Entity HP: " + String.format("%.0f/%.0f",
+                                living.getHealth(), living.getMaxHealth()), NamedTextColor.YELLOW));
+                    }
+                }
+            }
+
+            // Orb info
+            var orbs = mode.getOrbManager();
+            int orbCount = mode.getSeerConfig().getOrbCount();
+            int destroyed = orbs.getDestroyedCount();
+            sender.sendMessage(Component.text("--- Orbs ---", NamedTextColor.DARK_PURPLE));
+            sender.sendMessage(Component.text("Remaining: " + (orbCount - destroyed) + "/" + orbCount,
+                    destroyed > 0 ? NamedTextColor.YELLOW : NamedTextColor.GREEN));
+            for (int i = 1; i <= orbCount; i++) {
+                boolean isDest = orbs.isOrbDestroyed(i);
+                var pos = mode.getSeerConfig().getOrbPosition(i);
+                String posStr = pos != null
+                        ? String.format("(%.0f, %.0f, %.0f)", pos.getX(), pos.getY(), pos.getZ())
+                        : "(not set)";
+                sender.sendMessage(Component.text("  Orb " + i + ": " + (isDest ? "DESTROYED" : "INTACT") + " " + posStr,
+                        isDest ? NamedTextColor.RED : NamedTextColor.GREEN));
             }
         }
 
