@@ -84,7 +84,7 @@ public class SeerFlightGoal extends Goal {
         // PRIORITY 2: Fly toward position above the player, offset 5-10 blocks to the side
         // Use a slow-changing angle based on game time so it drifts slightly but stays consistent
         double offsetAngle = mob.level().getGameTime() * 0.002; // very slow drift
-        double offsetDist = 7.0; // blocks to the side
+        double offsetDist = 12.0; // blocks to the side
         double targetX = currentTarget.getX() + Math.cos(offsetAngle) * offsetDist;
         double targetY = currentTarget.getY() + hoverHeight;
         double targetZ = currentTarget.getZ() + Math.sin(offsetAngle) * offsetDist;
