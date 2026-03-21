@@ -111,34 +111,30 @@ public class SeerFlightGoal extends Goal {
             pickNewAnchor();
         }
 
-        // Move toward anchor position
+        // Move toward anchor position — NO momentum, direct velocity
         double dx = anchorX - mob.getX();
         double dy = anchorY - mob.getY();
         double dz = anchorZ - mob.getZ();
         double dist = Math.sqrt(dx * dx + dy * dy + dz * dz);
 
-        Vec3 currentVel = mob.getDeltaMovement();
-
-        if (dist > 1.5) {
-            // Fly toward anchor at reasonable speed
-            double speed = Math.min(moveSpeed * 0.5, dist * 0.04);
-            Vec3 desiredVel = new Vec3(
+        if (dist > 2.0) {
+            // Direct velocity toward anchor — no lerp, no momentum buildup
+            double speed = Math.min(moveSpeed * 0.4, dist * 0.03);
+            mob.setDeltaMovement(new Vec3(
                     (dx / dist) * speed,
                     (dy / dist) * speed,
                     (dz / dist) * speed
-            );
-            // Smooth: 70% old + 30% new
-            mob.setDeltaMovement(new Vec3(
-                    currentVel.x * 0.7 + desiredVel.x * 0.3,
-                    currentVel.y * 0.7 + desiredVel.y * 0.3,
-                    currentVel.z * 0.7 + desiredVel.z * 0.3
             ));
         } else {
-            // At anchor — hover still
+            // At anchor — HARD STOP, no drift
             mob.setDeltaMovement(Vec3.ZERO);
+            // Nudge to exact anchor position to prevent micro-drift
+            mob.setPos(
+                    mob.getX() + dx * 0.1,
+                    mob.getY() + dy * 0.1,
+                    mob.getZ() + dz * 0.1
+            );
         }
-
-        // Look control already set at top of tick (priority 1)
     }
 
     /**
