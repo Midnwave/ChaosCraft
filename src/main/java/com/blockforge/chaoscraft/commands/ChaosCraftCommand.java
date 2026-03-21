@@ -102,7 +102,8 @@ public class ChaosCraftCommand implements CommandExecutor, TabCompleter {
     private static final List<String> FUNCTION_SUBS = List.of(
             "startmodetimer", "stopmodetimer",
             "setbadgeobtaineditem", "setbadgeunobtaineditem", "setbadgenotobtainable",
-            "setdoommodepos1", "setdoommodepos2"
+            "setdoommodepos1", "setdoommodepos2",
+            "setorbspawn"
     );
 
     // Delegates for ported subcommands
@@ -817,8 +818,41 @@ public class ChaosCraftCommand implements CommandExecutor, TabCompleter {
                             + " in world " + (loc.getWorld() != null ? loc.getWorld().getName() : "?"), NamedTextColor.GREEN));
                 }
             }
+            case "setorbspawn" -> {
+                if (!sender.hasPermission("chaoscraft.admin")) {
+                    sender.sendMessage(Component.text("No permission.", NamedTextColor.RED));
+                    return true;
+                }
+                if (!(sender instanceof Player player)) {
+                    sender.sendMessage(Component.text("Must be a player.", NamedTextColor.RED));
+                    return true;
+                }
+                if (args.length < 3) {
+                    sender.sendMessage(Component.text("Usage: /cc function setorbspawn <1-10>", NamedTextColor.YELLOW));
+                    return true;
+                }
+                try {
+                    int index = Integer.parseInt(args[2]);
+                    var mode = plugin.getModeManager().getMode("seer");
+                    if (!(mode instanceof com.blockforge.chaoscraft.modes.seer.SeerMode seerMode)) {
+                        sender.sendMessage(Component.text("Seer Mode not found!", NamedTextColor.RED));
+                        return true;
+                    }
+                    int maxOrbs = seerMode.getSeerConfig().getOrbCount();
+                    if (index < 1 || index > maxOrbs) {
+                        sender.sendMessage(Component.text("Orb index must be 1-" + maxOrbs + ".", NamedTextColor.RED));
+                        return true;
+                    }
+                    seerMode.getSeerConfig().setOrbPosition(index, player.getLocation());
+                    sender.sendMessage(Component.text("Orb " + index + " position set to: "
+                            + player.getLocation().getBlockX() + ", " + player.getLocation().getBlockY() + ", " + player.getLocation().getBlockZ()
+                            + " in world " + (player.getWorld() != null ? player.getWorld().getName() : "?"), NamedTextColor.GREEN));
+                } catch (NumberFormatException e) {
+                    sender.sendMessage(Component.text("Invalid number. Usage: /cc function setorbspawn <1-10>", NamedTextColor.RED));
+                }
+            }
             default -> sender.sendMessage(Component.text("Unknown function: " + args[1]
-                    + ". Available: startmodetimer, stopmodetimer, setbadgeobtaineditem, setbadgeunobtaineditem, setbadgenotobtainable, setdoommodepos1, setdoommodepos2",
+                    + ". Available: startmodetimer, stopmodetimer, setbadgeobtaineditem, setbadgeunobtaineditem, setbadgenotobtainable, setdoommodepos1, setdoommodepos2, setorbspawn",
                     NamedTextColor.RED));
         }
         return true;

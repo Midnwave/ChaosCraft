@@ -329,7 +329,13 @@ public class BadgeGUI implements Listener {
     @EventHandler(priority = EventPriority.MONITOR)
     public void onInventoryClose(InventoryCloseEvent event) {
         if (event.getPlayer() instanceof Player player) {
-            openSessions.remove(player.getUniqueId());
+            // Delay removal by 1 tick to avoid race condition with page changes
+            // (new page opens before old close event removes the session)
+            Bukkit.getScheduler().runTaskLater(plugin, () -> {
+                // Only remove if the player doesn't have the GUI open anymore
+                if (player.getOpenInventory().getTopInventory().getHolder() instanceof BadgeGUIHolder) return;
+                openSessions.remove(player.getUniqueId());
+            }, 1L);
         }
     }
 
