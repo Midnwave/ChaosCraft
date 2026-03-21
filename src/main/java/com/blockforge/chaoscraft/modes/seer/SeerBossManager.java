@@ -142,8 +142,6 @@ public class SeerBossManager {
             // Add custom flight goal
             seerFlightGoal = new SeerFlightGoal(nmsMob);
             seerFlightGoal.setHoverHeight(config.getBossFloatHeight());
-            seerFlightGoal.setOrbitRadius(15.0, 25.0); // 15-25 blocks from player
-            seerFlightGoal.setOrbitSpeed(0.015);
             seerFlightGoal.setMoveSpeed(config.getBossMoveSpeed());
             seerFlightGoal.setDetectionRange(config.getBossDetectionRange());
             nmsMob.goalSelector.addGoal(1, seerFlightGoal);
