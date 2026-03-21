@@ -668,28 +668,47 @@ public class SeerBossManager {
     private void playAnimation(String name) {
         if (bossEntity == null) return;
         try {
+            // Use Entity-based lookup (not UUID) — matches the working pattern from ModelEngineAttack
             Class<?> modelEngineAPI = Class.forName("com.ticxo.modelengine.api.ModelEngineAPI");
-            Method getModeledEntity = modelEngineAPI.getMethod("getModeledEntity", UUID.class);
-            Object modeled = getModeledEntity.invoke(null, bossUUID);
-            if (modeled == null) return;
+
+            // Try getModeledEntity(Entity) first
+            Method getModeledEntity;
+            Object modeled;
+            try {
+                getModeledEntity = modelEngineAPI.getMethod("getModeledEntity", org.bukkit.entity.Entity.class);
+                modeled = getModeledEntity.invoke(null, bossEntity);
+            } catch (NoSuchMethodException e) {
+                // Fallback to UUID-based lookup
+                getModeledEntity = modelEngineAPI.getMethod("getModeledEntity", UUID.class);
+                modeled = getModeledEntity.invoke(null, bossUUID);
+            }
+            if (modeled == null) {
+                plugin.debug("[Seer] ModeledEntity not found for boss");
+                return;
+            }
 
             Method getModels = modeled.getClass().getMethod("getModels");
             @SuppressWarnings("unchecked")
             Map<String, Object> models = (Map<String, Object>) getModels.invoke(modeled);
-            if (models == null || models.isEmpty()) return;
+            if (models == null || models.isEmpty()) {
+                plugin.debug("[Seer] No models found on boss entity");
+                return;
+            }
 
             Object activeModel = models.values().iterator().next();
             Method getAnimationHandler = activeModel.getClass().getMethod("getAnimationHandler");
             Object animHandler = getAnimationHandler.invoke(activeModel);
 
-            Method playAnimation = animHandler.getClass().getMethod("playAnimation", String.class, double.class, double.class, double.class, boolean.class);
-            playAnimation.invoke(animHandler, name, 0.0, 0.0, 1.0, false);
+            // Force = true to override any current animation
+            Method playAnimation = animHandler.getClass().getMethod("playAnimation",
+                    String.class, double.class, double.class, double.class, boolean.class);
+            playAnimation.invoke(animHandler, name, 0.0, 0.0, 1.0, true);
 
             plugin.debug("[Seer] Played animation: " + name);
         } catch (ClassNotFoundException ignored) {
-            // ModelEngine not installed — no animation
+            // ModelEngine not installed
         } catch (Exception e) {
-            plugin.debug("[Seer] Failed to play animation '" + name + "': " + e.getMessage());
+            plugin.getLogger().warning("[Seer] Failed to play animation '" + name + "': " + e.getClass().getSimpleName() + ": " + e.getMessage());
         }
     }
 
