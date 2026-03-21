@@ -78,7 +78,26 @@ public class SeerFlightGoal extends Goal {
 
         mob.getNavigation().stop();
 
-        // Pick an anchor spot near the player and STAY there
+        // PRIORITY 1: Always face the player FIRST before anything else
+        // Force both head AND body rotation instantly
+        double lookDx = currentTarget.getX() - mob.getX();
+        double lookDz = currentTarget.getZ() - mob.getZ();
+        double lookDy = (currentTarget.getY() + 1.0) - mob.getY();
+        float yaw = (float)(Math.toDegrees(Math.atan2(-lookDx, lookDz)));
+        float pitch = (float)(-Math.toDegrees(Math.atan2(lookDy, Math.sqrt(lookDx * lookDx + lookDz * lookDz))));
+        // Set body rotation directly (NMS)
+        mob.setYRot(yaw);
+        mob.yRotO = yaw;
+        mob.setYHeadRot(yaw);
+        mob.setYBodyRot(yaw);
+        mob.setXRot(pitch);
+        mob.xRotO = pitch;
+        // Also use look control as backup
+        mob.getLookControl().setLookAt(
+                currentTarget.getX(), currentTarget.getY() + 1.0, currentTarget.getZ(),
+                360.0f, 360.0f);
+
+        // PRIORITY 2: Pick an anchor spot near the player and STAY there
         if (!hasAnchor || anchorTicks >= anchorDuration) {
             pickNewAnchor();
         }
@@ -119,13 +138,7 @@ public class SeerFlightGoal extends Goal {
             mob.setDeltaMovement(Vec3.ZERO);
         }
 
-        // Always look at the player — max possible speed for instant tracking
-        // 360f yaw + 360f pitch = no rotation limit per tick
-        mob.getLookControl().setLookAt(
-                currentTarget.getX(),
-                currentTarget.getY() + 1.0,
-                currentTarget.getZ(),
-                360.0f, 360.0f);
+        // Look control already set at top of tick (priority 1)
     }
 
     /**
