@@ -67,12 +67,9 @@ public class SeerBossManager {
         }
         center = center.clone().add(0, config.getBossFloatHeight(), 0);
 
-        Entity spawned = trySpawnMythicMob(config.getBossMythicMobId(), center);
-
-        if (spawned == null) {
-            // Fallback: spawn invisible Zombie
-            spawned = spawnFallbackEntity(center);
-        }
+        // Spawn our own zombie entity (no MythicMobs dependency)
+        // ModelEngine model is applied via reflection after spawn
+        Entity spawned = spawnSeerEntity(center);
 
         bossEntity = spawned;
         bossUUID = spawned.getUniqueId();
@@ -168,57 +165,79 @@ public class SeerBossManager {
     }
 
     /**
-     * Attempt to spawn a MythicMobs mob via reflection.
-     * Returns the spawned Entity, or null if MythicMobs is not available.
+     * Spawn the Seer boss entity — our own Zombie with custom tag.
+     * ModelEngine model is applied via reflection if available.
+     * No MythicMobs dependency.
      */
-    private Entity trySpawnMythicMob(String mythicId, Location location) {
-        try {
-            Class<?> mythicBukkitClass = Class.forName("io.lumine.mythic.bukkit.MythicBukkit");
-            Method instMethod = mythicBukkitClass.getMethod("inst");
-            Object mythicBukkit = instMethod.invoke(null);
+    private Entity spawnSeerEntity(Location location) {
+        Zombie zombie = location.getWorld().spawn(location, Zombie.class, z -> {
+            z.setInvisible(true);  // Model provides the visual
+            z.setSilent(true);
+            z.setPersistent(true);
+            z.setRemoveWhenFarAway(false);
+            z.setShouldBurnInDay(false);
+            z.setBaby(false);
+            z.customName(net.kyori.adventure.text.Component.text("The Seer")
+                    .color(net.kyori.adventure.text.format.TextColor.color(0xAA00FF)));
+            z.setCustomNameVisible(false); // Model has its own name display
 
-            Method getMobManager = mythicBukkit.getClass().getMethod("getMobManager");
-            Object mobManager = getMobManager.invoke(mythicBukkit);
+            // Add custom scoreboard tag to identify this entity
+            z.addScoreboardTag("chaoscraft_seer_boss");
+        });
 
-            Method spawnMob = mobManager.getClass().getMethod("spawnMob", String.class, Location.class);
-            Object activeMob = spawnMob.invoke(mobManager, mythicId, location);
+        // Try to apply ModelEngine model via reflection
+        applyModelEngineModel(zombie, config.getBossModelEngineId(), config.getBossScale());
 
-            if (activeMob == null) {
-                plugin.getLogger().warning("[Seer] MythicMobs returned null for mob ID: " + mythicId);
-                return null;
-            }
-
-            Method getEntity = activeMob.getClass().getMethod("getEntity");
-            Object abstractEntity = getEntity.invoke(activeMob);
-
-            Method getBukkitEntity = abstractEntity.getClass().getMethod("getBukkitEntity");
-            Object bukkitEntity = getBukkitEntity.invoke(abstractEntity);
-
-            if (bukkitEntity instanceof Entity entity) {
-                plugin.getLogger().info("[Seer] MythicMobs boss spawned: " + mythicId);
-                return entity;
-            }
-        } catch (ClassNotFoundException e) {
-            plugin.getLogger().info("[Seer] MythicMobs not found, using fallback entity.");
-        } catch (Exception e) {
-            plugin.getLogger().log(Level.WARNING, "[Seer] Failed to spawn MythicMobs boss, using fallback.", e);
-        }
-        return null;
+        plugin.getLogger().info("[Seer] Seer boss entity spawned (custom zombie + ModelEngine).");
+        return zombie;
     }
 
     /**
-     * Fallback boss: an invisible, glowing Zombie with no AI and custom name.
+     * Apply a ModelEngine model to an entity via reflection.
      */
-    private Entity spawnFallbackEntity(Location location) {
+    private void applyModelEngineModel(Entity entity, String modelId, double scale) {
+        try {
+            Class<?> meApiClass = Class.forName("com.ticxo.modelengine.api.ModelEngineAPI");
+
+            // Create ActiveModel
+            Method createModel = meApiClass.getMethod("createActiveModel", String.class);
+            Object activeModel = createModel.invoke(null, modelId);
+            if (activeModel == null) {
+                plugin.getLogger().warning("[Seer] ModelEngine model '" + modelId + "' not found.");
+                return;
+            }
+
+            // Set scale
+            if (scale != 1.0) {
+                Method setScale = activeModel.getClass().getMethod("setScale", double.class);
+                setScale.invoke(activeModel, scale);
+            }
+
+            // Create ModeledEntity
+            Method createModeledEntity = meApiClass.getMethod("createModeledEntity", Entity.class);
+            Object modeledEntity = createModeledEntity.invoke(null, entity);
+
+            // Add model
+            Class<?> activeModelClass = Class.forName("com.ticxo.modelengine.api.model.ActiveModel");
+            Method addModel = modeledEntity.getClass().getMethod("addModel", activeModelClass, boolean.class);
+            addModel.invoke(modeledEntity, activeModel, true);
+
+            plugin.getLogger().info("[Seer] ModelEngine model '" + modelId + "' applied (scale " + scale + ").");
+        } catch (ClassNotFoundException e) {
+            plugin.getLogger().info("[Seer] ModelEngine not installed — boss will appear as invisible zombie.");
+        } catch (Exception e) {
+            plugin.getLogger().warning("[Seer] Failed to apply ModelEngine model: " + e.getMessage());
+        }
+    }
+
+    // Keep the old fallback reference for cleanup compatibility
+    @SuppressWarnings("unused")
+    private Entity spawnFallbackEntity_deprecated(Location location) {
         Zombie zombie = location.getWorld().spawn(location, Zombie.class, z -> {
-            z.setGlowing(true);
             z.setInvisible(true);
-            z.setAI(false);
             z.setSilent(true);
             z.setPersistent(true);
-            z.customName(net.kyori.adventure.text.Component.text("Seer")
-                    .color(net.kyori.adventure.text.format.TextColor.color(0xAA00FF)));
-            z.setCustomNameVisible(true);
+            z.addScoreboardTag("chaoscraft_seer_boss");
         });
 
         plugin.getLogger().info("[Seer] Fallback Zombie boss spawned.");
@@ -602,6 +621,14 @@ public class SeerBossManager {
         Location loc = bossEntity.getLocation();
         World world = loc.getWorld();
         if (world == null) return;
+
+        // Boss ambient sound — plays configurable sound at boss location
+        String ambientSound = config.getBossAmbientSound();
+        int soundInterval = config.getBossAmbientSoundInterval();
+        float soundVolume = config.getBossAmbientSoundVolume();
+        if (!ambientSound.isEmpty() && soundInterval > 0 && world.getGameTime() % soundInterval == 0) {
+            world.playSound(loc, ambientSound, SoundCategory.HOSTILE, soundVolume, 1.0f);
+        }
 
         // Purple aura particles
         if (world.getGameTime() % 3 == 0) {

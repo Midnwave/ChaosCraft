@@ -49,8 +49,6 @@ public class SeerOrbManager implements Listener {
             orbMaterial = Material.valueOf(config.getOrbMaterial());
         } catch (IllegalArgumentException e) {
             orbMaterial = Material.CRYING_OBSIDIAN;
-            plugin.getLogger().warning("[Seer] Invalid orb material '" + config.getOrbMaterial()
-                    + "', defaulting to CRYING_OBSIDIAN.");
         }
 
         for (int i = 0; i < count; i++) {
@@ -58,20 +56,24 @@ public class SeerOrbManager implements Listener {
             Location loc = config.getOrbPosition(i + 1); // 1-based in config
 
             if (loc == null) {
-                // Fallback: use world spawn with offset
                 loc = world.getSpawnLocation().clone().add(i * 10, 0, 0);
                 plugin.getLogger().warning("[Seer] Orb " + (i + 1) + " has no position set, using fallback.");
             }
 
             orbLocations[i] = loc.clone();
 
-            // Place the block
-            Block block = loc.getBlock();
-            block.setType(orbMaterial);
+            // Build obsidian tower base (3 blocks tall pillar)
+            Block base = loc.getBlock();
+            base.getRelative(0, -3, 0).setType(Material.OBSIDIAN);
+            base.getRelative(0, -2, 0).setType(Material.OBSIDIAN);
+            base.getRelative(0, -1, 0).setType(Material.OBSIDIAN);
+
+            // Place the crying obsidian orb on top
+            base.setType(orbMaterial);
 
             // Spawn placement effects
-            world.spawnParticle(Particle.END_ROD, loc.clone().add(0.5, 0.5, 0.5), 20, 0.5, 0.5, 0.5, 0.05);
-            world.playSound(loc, Sound.BLOCK_RESPAWN_ANCHOR_CHARGE, SoundCategory.BLOCKS, 1.0f, 0.5f);
+            world.spawnParticle(Particle.END_ROD, loc.clone().add(0.5, 0.5, 0.5), 30, 0.5, 1, 0.5, 0.05);
+            world.playSound(loc, Sound.BLOCK_RESPAWN_ANCHOR_CHARGE, SoundCategory.BLOCKS, 1.5f, 0.5f);
 
             plugin.debug("[Seer] Placed orb " + (i + 1) + " at " + formatLoc(loc));
         }
@@ -92,21 +94,39 @@ public class SeerOrbManager implements Listener {
 
             Location orbCenter = orbLocations[i].clone().add(0.5, 0.5, 0.5);
 
-            // Every 5 ticks: vertical beacon beam (END_ROD line from orb to Y+50)
-            if (gameTime % 5 == 0) {
-                for (double y = orbCenter.getY(); y < orbCenter.getY() + 50; y += 2.0) {
+            // Every 3 ticks: vertical beacon beam (purple dust line from orb to Y+60)
+            if (gameTime % 3 == 0) {
+                for (double y = orbCenter.getY(); y < orbCenter.getY() + 60; y += 1.5) {
+                    world.spawnParticle(Particle.DUST,
+                            orbCenter.getX(), y, orbCenter.getZ(),
+                            1, 0.15, 0, 0.15, 0.01,
+                            new Particle.DustOptions(Color.fromRGB(180, 0, 255), 1.8f));
+                }
+                // END_ROD scattered along beam for sparkle
+                for (double y = orbCenter.getY(); y < orbCenter.getY() + 60; y += 4.0) {
                     world.spawnParticle(Particle.END_ROD,
                             orbCenter.getX(), y, orbCenter.getZ(),
-                            1, 0.1, 0, 0.1, 0.01);
+                            1, 0.2, 0, 0.2, 0.01);
                 }
             }
 
-            // Every 20 ticks: ambient purple dust around orb
-            if (gameTime % 20 == 0) {
-                world.spawnParticle(Particle.DUST, orbCenter, 8, 1, 1, 1, 0.02,
+            // Every tick: rotating purple dust ring around the orb
+            double angle = (gameTime * 0.1) + (i * 0.7); // offset per orb
+            double ringRadius = 1.5;
+            for (int p = 0; p < 4; p++) {
+                double a = angle + (p * Math.PI / 2);
+                double px = orbCenter.getX() + Math.cos(a) * ringRadius;
+                double pz = orbCenter.getZ() + Math.sin(a) * ringRadius;
+                double py = orbCenter.getY() + Math.sin(a * 2) * 0.5;
+                world.spawnParticle(Particle.DUST, px, py, pz, 1, 0, 0, 0, 0,
+                        new Particle.DustOptions(Color.fromRGB(200, 50, 255), 1.2f));
+            }
+
+            // Every 10 ticks: ambient purple burst around orb
+            if (gameTime % 10 == 0) {
+                world.spawnParticle(Particle.DUST, orbCenter, 10, 1.2, 1.2, 1.2, 0.02,
                         new Particle.DustOptions(Color.fromRGB(160, 0, 200), 1.5f));
-                world.spawnParticle(Particle.DUST, orbCenter, 5, 0.5, 0.5, 0.5, 0.01,
-                        new Particle.DustOptions(Color.fromRGB(120, 0, 160), 1.0f));
+                world.spawnParticle(Particle.ENCHANT, orbCenter, 8, 1, 1, 1, 0.5);
             }
         }
     }
@@ -293,8 +313,13 @@ public class SeerOrbManager implements Listener {
      */
     public void cleanup() {
         for (int i = 0; i < orbLocations.length; i++) {
-            if (orbLocations[i] != null && !orbDestroyed[i]) {
-                orbLocations[i].getBlock().setType(Material.AIR);
+            if (orbLocations[i] != null) {
+                // Remove orb block + obsidian tower
+                Block base = orbLocations[i].getBlock();
+                base.setType(Material.AIR);
+                base.getRelative(0, -1, 0).setType(Material.AIR);
+                base.getRelative(0, -2, 0).setType(Material.AIR);
+                base.getRelative(0, -3, 0).setType(Material.AIR);
             }
             orbLocations[i] = null;
         }
