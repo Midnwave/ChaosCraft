@@ -496,20 +496,24 @@ public class SeerBossManager {
      * No charge phase — instant on/off based on distance.
      */
     private void tickBeam(World world) {
-        if (primaryTarget == null || !primaryTarget.isOnline()) {
-            if (beamActive) stopBeam();
-            return;
+        // If no target, try to find one
+        if (primaryTarget == null || !primaryTarget.isOnline() || primaryTarget.isDead()) {
+            // Don't turn beam off — just skip damage this tick
+            // Try to reacquire target
+            for (Player p : world.getPlayers()) {
+                if (p.getGameMode() == org.bukkit.GameMode.SURVIVAL && !p.isInvulnerable()) {
+                    primaryTarget = p;
+                    break;
+                }
+            }
+            if (primaryTarget == null) {
+                if (beamActive) stopBeam();
+                return;
+            }
         }
 
-        double distToTarget = bossEntity.getLocation().distance(primaryTarget.getLocation());
-
-        // Beam ON when player within range, OFF when out of range
-        if (distToTarget > config.getBossBeamRange()) {
-            if (beamActive) stopBeam();
-            return;
-        }
-
-        // Activate beam if not already active
+        // Beam is ALWAYS on when there's a valid target — no range check
+        // (the boss follows the player anyway, so it's always in range)
         if (!beamActive) {
             beamActive = true;
             playAnimation("beam_fire");
