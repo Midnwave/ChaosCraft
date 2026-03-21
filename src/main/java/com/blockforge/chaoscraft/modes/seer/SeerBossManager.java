@@ -256,11 +256,6 @@ public class SeerBossManager {
             newLoc.setPitch(pitch);
         }
         bossEntity.teleport(newLoc);
-
-        plugin.debug("[Seer] Boss at " + String.format("%.0f,%.0f,%.0f", newLoc.getX(), newLoc.getY(), newLoc.getZ())
-                + " target=" + (primaryTarget != null ? primaryTarget.getName() : "null")
-                + " dist=" + String.format("%.0f", primaryTarget != null ? newLoc.distance(primaryTarget.getLocation()) : -1)
-                + " beam=" + (beamActive ? "ACTIVE" : beamCharging ? "CHARGING" : "OFF"));
     }
 
     /**
@@ -572,8 +567,8 @@ public class SeerBossManager {
         plugin.getLogger().info("[Seer] Orb destroyed! Orbs remaining: " + orbsRemaining
                 + ", new boss max HP: " + newMaxHealth);
 
-        // Broadcast
-        if (bossEntity != null && bossEntity.getWorld() != null) {
+        // Debug-only broadcast
+        if (plugin.getConfig().getBoolean("debug", false) && bossEntity != null && bossEntity.getWorld() != null) {
             for (Player p : bossEntity.getWorld().getPlayers()) {
                 p.sendMessage(ChatColor.LIGHT_PURPLE + "An orb shatters! The Seer weakens... ("
                         + orbsRemaining + " orbs remain)");
