@@ -270,13 +270,27 @@ public class SeerBossManager {
             bossEntity = found;
         }
 
-        // 1. AI movement handled by NMS SeerFlightGoal (not Bukkit teleport)
-        // Update primaryTarget from NMS goal for beam targeting
+        // 1. AI movement handled by NMS SeerFlightGoal
+        // Update primaryTarget — try NMS goal first, fallback to nearest player
         if (seerFlightGoal != null && seerFlightGoal.getCurrentTarget() != null) {
             net.minecraft.world.entity.LivingEntity nmsTarget = seerFlightGoal.getCurrentTarget();
             if (nmsTarget.getBukkitEntity() instanceof Player p) {
                 primaryTarget = p;
             }
+        }
+        // Fallback: if NMS goal hasn't found target, find nearest player ourselves
+        if (primaryTarget == null || !primaryTarget.isOnline() || primaryTarget.isDead()) {
+            Player nearest = null;
+            double nearestDist = config.getBossBeamRange() * config.getBossBeamRange();
+            for (Player p : world.getPlayers()) {
+                if (p.getGameMode() != org.bukkit.GameMode.SURVIVAL) continue;
+                double d = p.getLocation().distanceSquared(bossEntity.getLocation());
+                if (d < nearestDist) {
+                    nearestDist = d;
+                    nearest = p;
+                }
+            }
+            primaryTarget = nearest;
         }
 
         // 2. Beam logic
