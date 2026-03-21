@@ -596,11 +596,11 @@ public class SeerBossManager {
                     if (p.getGameMode() != GameMode.SURVIVAL || p.isInvulnerable()) continue;
                     if (distanceToLine(p.getLocation().add(0, 1, 0), from, to) <= 2.5) {
                         // Check absorption first
-                        float absorption = p.getAbsorptionAmount();
+                        double absorption = p.getAbsorptionAmount();
                         if (absorption > 0) {
                             // Subtract from absorption first
-                            float newAbsorption = Math.max(0, absorption - 1.0f);
-                            p.setAbsorptionAmount(newAbsorption);
+                            double newAbsorption = Math.max(0, absorption - 1.0);
+                            p.setAbsorptionAmount((float) newAbsorption);
                         } else {
                             // Subtract from health directly — no damage event, no screen shake
                             double newHealth = Math.max(1.0, p.getHealth() - 1.0);

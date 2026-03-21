@@ -1,8 +1,10 @@
 package com.blockforge.chaoscraft.modes.seer;
 
 import com.blockforge.chaoscraft.ChaosCraftPlugin;
+import com.blockforge.chaoscraft.modes.calamity.display.DisplayBuilder;
 import org.bukkit.*;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -26,6 +28,8 @@ public class SeerOrbManager implements Listener {
     private final boolean[] orbDestroyed;
     private final Location[] orbLocations;
     private SeerBossManager bossManager;
+    // Floating block displays around each orb (4 per orb)
+    private final java.util.List<Entity> orbDisplayEntities = new java.util.ArrayList<>();
 
     public SeerOrbManager(ChaosCraftPlugin plugin, SeerConfig config) {
         this.plugin = plugin;
@@ -62,17 +66,40 @@ public class SeerOrbManager implements Listener {
 
             orbLocations[i] = loc.clone();
 
-            // Build obsidian tower base (3 blocks tall pillar)
+            // Build 3-layer obsidian pyramid base
             Block base = loc.getBlock();
-            base.getRelative(0, -3, 0).setType(Material.OBSIDIAN);
+            // Layer 1 (bottom) — 3x3 obsidian
+            for (int dx = -1; dx <= 1; dx++) {
+                for (int dz = -1; dz <= 1; dz++) {
+                    base.getRelative(dx, -3, dz).setType(Material.OBSIDIAN);
+                }
+            }
+            // Layer 2 (middle) — cross pattern (5 blocks)
             base.getRelative(0, -2, 0).setType(Material.OBSIDIAN);
+            base.getRelative(1, -2, 0).setType(Material.OBSIDIAN);
+            base.getRelative(-1, -2, 0).setType(Material.OBSIDIAN);
+            base.getRelative(0, -2, 1).setType(Material.OBSIDIAN);
+            base.getRelative(0, -2, -1).setType(Material.OBSIDIAN);
+            // Layer 3 (top pillar) — single obsidian
             base.getRelative(0, -1, 0).setType(Material.OBSIDIAN);
 
-            // Place the crying obsidian orb on top
+            // Place the crying obsidian orb on top of pyramid
             base.setType(orbMaterial);
 
+            // Spawn 4 floating block displays around the orb
+            DisplayBuilder builder = new DisplayBuilder(plugin);
+            Location orbCenter = loc.clone().add(0.5, 0.5, 0.5);
+            Material[] displayMats = {Material.AMETHYST_BLOCK, Material.CRYING_OBSIDIAN, Material.PURPUR_BLOCK, Material.END_STONE};
+            for (int d = 0; d < 4; d++) {
+                double angle = (Math.PI * 2 * d) / 4;
+                Location displayLoc = orbCenter.clone().add(Math.cos(angle) * 1.5, 0.3, Math.sin(angle) * 1.5);
+                var handle = builder.spawnBlock(displayLoc, displayMats[d]);
+                handle.scale(0.4f, 0.4f, 0.4f).glow(220, 0, 220).brightness(15, 15);
+                orbDisplayEntities.add(handle.entity());
+            }
+
             // Spawn placement effects
-            world.spawnParticle(Particle.END_ROD, loc.clone().add(0.5, 0.5, 0.5), 30, 0.5, 1, 0.5, 0.05);
+            world.spawnParticle(Particle.END_ROD, orbCenter, 30, 0.5, 1, 0.5, 0.05);
             world.playSound(loc, Sound.BLOCK_RESPAWN_ANCHOR_CHARGE, SoundCategory.BLOCKS, 1.5f, 0.5f);
 
             plugin.debug("[Seer] Placed orb " + (i + 1) + " at " + formatLoc(loc));
@@ -110,23 +137,45 @@ public class SeerOrbManager implements Listener {
                 }
             }
 
-            // Every tick: rotating purple dust ring around the orb
-            double angle = (gameTime * 0.1) + (i * 0.7); // offset per orb
-            double ringRadius = 1.5;
-            for (int p = 0; p < 4; p++) {
-                double a = angle + (p * Math.PI / 2);
-                double px = orbCenter.getX() + Math.cos(a) * ringRadius;
-                double pz = orbCenter.getZ() + Math.sin(a) * ringRadius;
-                double py = orbCenter.getY() + Math.sin(a * 2) * 0.5;
-                world.spawnParticle(Particle.DUST, px, py, pz, 1, 0, 0, 0, 0,
-                        new Particle.DustOptions(Color.fromRGB(200, 50, 255), 1.2f));
+            // Rotate floating block displays around the orb
+            int baseIdx = i * 4; // 4 displays per orb
+            for (int d = 0; d < 4; d++) {
+                int entityIdx = baseIdx + d;
+                if (entityIdx >= orbDisplayEntities.size()) break;
+                Entity display = orbDisplayEntities.get(entityIdx);
+                if (display == null || !display.isValid()) continue;
+
+                double angle = (gameTime * 0.05) + (d * Math.PI / 2) + (i * 0.5);
+                double radius = 1.8;
+                double bobY = Math.sin(gameTime * 0.08 + d) * 0.4;
+                Location newLoc = orbCenter.clone().add(
+                        Math.cos(angle) * radius,
+                        bobY + 0.3,
+                        Math.sin(angle) * radius
+                );
+                display.teleport(newLoc);
+
+                // Magenta glow particles trailing each floating block
+                world.spawnParticle(Particle.DUST, newLoc, 1, 0.1, 0.1, 0.1, 0,
+                        new Particle.DustOptions(Color.fromRGB(220, 0, 220), 1.0f));
             }
 
-            // Every 10 ticks: ambient purple burst around orb
+            // Magenta glow ring around the crying obsidian itself
+            if (gameTime % 2 == 0) {
+                for (int p = 0; p < 6; p++) {
+                    double a = (gameTime * 0.12) + (p * Math.PI / 3);
+                    double px = orbCenter.getX() + Math.cos(a) * 0.8;
+                    double pz = orbCenter.getZ() + Math.sin(a) * 0.8;
+                    world.spawnParticle(Particle.DUST, px, orbCenter.getY(), pz, 1, 0, 0, 0, 0,
+                            new Particle.DustOptions(Color.fromRGB(220, 0, 220), 1.5f));
+                }
+            }
+
+            // Every 10 ticks: ambient magenta burst
             if (gameTime % 10 == 0) {
-                world.spawnParticle(Particle.DUST, orbCenter, 10, 1.2, 1.2, 1.2, 0.02,
-                        new Particle.DustOptions(Color.fromRGB(160, 0, 200), 1.5f));
-                world.spawnParticle(Particle.ENCHANT, orbCenter, 8, 1, 1, 1, 0.5);
+                world.spawnParticle(Particle.DUST, orbCenter, 8, 0.8, 0.8, 0.8, 0.02,
+                        new Particle.DustOptions(Color.fromRGB(220, 0, 220), 1.8f));
+                world.spawnParticle(Particle.ENCHANT, orbCenter, 5, 0.5, 0.5, 0.5, 0.3);
             }
         }
     }
@@ -314,15 +363,30 @@ public class SeerOrbManager implements Listener {
     public void cleanup() {
         for (int i = 0; i < orbLocations.length; i++) {
             if (orbLocations[i] != null) {
-                // Remove orb block + obsidian tower
+                // Remove orb block + obsidian pyramid
                 Block base = orbLocations[i].getBlock();
                 base.setType(Material.AIR);
                 base.getRelative(0, -1, 0).setType(Material.AIR);
+                // Layer 2 cross
                 base.getRelative(0, -2, 0).setType(Material.AIR);
-                base.getRelative(0, -3, 0).setType(Material.AIR);
+                base.getRelative(1, -2, 0).setType(Material.AIR);
+                base.getRelative(-1, -2, 0).setType(Material.AIR);
+                base.getRelative(0, -2, 1).setType(Material.AIR);
+                base.getRelative(0, -2, -1).setType(Material.AIR);
+                // Layer 1 3x3
+                for (int dx = -1; dx <= 1; dx++) {
+                    for (int dz = -1; dz <= 1; dz++) {
+                        base.getRelative(dx, -3, dz).setType(Material.AIR);
+                    }
+                }
             }
             orbLocations[i] = null;
         }
+        // Remove floating block displays
+        for (Entity e : orbDisplayEntities) {
+            if (e != null && e.isValid()) e.remove();
+        }
+        orbDisplayEntities.clear();
 
         // Unregister this listener
         HandlerList.unregisterAll(this);
