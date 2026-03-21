@@ -42,6 +42,10 @@ public class SeerBossManager {
     private int beamChargeTick = 0;
     private Vector currentVelocity = new Vector(0, 0, 0);
     private SeerOrbManager orbManager; // set after construction
+
+    // Target priority: tracks who broke orbs recently
+    private final java.util.Map<UUID, Integer> orbBreakScores = new java.util.HashMap<>();
+    private int targetSwapCooldown = 0;
     private SeerFlightGoal seerFlightGoal; // NMS AI goal
 
     public SeerBossManager(ChaosCraftPlugin plugin, SeerConfig config) {
@@ -269,27 +273,46 @@ public class SeerBossManager {
             bossEntity = found;
         }
 
-        // 1. AI movement handled by NMS SeerFlightGoal
-        // Update primaryTarget — try NMS goal first, fallback to nearest player
-        if (seerFlightGoal != null && seerFlightGoal.getCurrentTarget() != null) {
-            net.minecraft.world.entity.LivingEntity nmsTarget = seerFlightGoal.getCurrentTarget();
-            if (nmsTarget.getBukkitEntity() instanceof Player p) {
-                primaryTarget = p;
-            }
+        // 1. Target selection: mix of closest player + orb breaker priority
+        targetSwapCooldown = Math.max(0, targetSwapCooldown - 1);
+
+        // Decay orb break scores over time (1 point per second)
+        if (world.getGameTime() % 20 == 0) {
+            orbBreakScores.entrySet().removeIf(e -> {
+                e.setValue(e.getValue() - 1);
+                return e.getValue() <= 0;
+            });
         }
-        // Fallback: if NMS goal hasn't found target, find nearest player ourselves
-        if (primaryTarget == null || !primaryTarget.isOnline() || primaryTarget.isDead()) {
-            Player nearest = null;
-            double nearestDist = config.getBossBeamRange() * config.getBossBeamRange();
+
+        // Pick target every 2 seconds or if current target is invalid
+        boolean needsNewTarget = primaryTarget == null || !primaryTarget.isOnline()
+                || primaryTarget.isDead() || primaryTarget.getGameMode() != org.bukkit.GameMode.SURVIVAL
+                || targetSwapCooldown <= 0;
+
+        if (needsNewTarget) {
+            targetSwapCooldown = 40; // Re-evaluate every 2 seconds
+            Player bestTarget = null;
+            double bestScore = -1;
+
             for (Player p : world.getPlayers()) {
-                if (p.getGameMode() != org.bukkit.GameMode.SURVIVAL) continue;
-                double d = p.getLocation().distanceSquared(bossEntity.getLocation());
-                if (d < nearestDist) {
-                    nearestDist = d;
-                    nearest = p;
+                if (p.getGameMode() != org.bukkit.GameMode.SURVIVAL || p.isInvulnerable()) continue;
+
+                double dist = p.getLocation().distance(bossEntity.getLocation());
+                // Base score: closer = higher (inverse distance, max 100)
+                double score = Math.max(0, 100 - dist);
+
+                // Orb breaker bonus: +50 per recent orb broken
+                int orbScore = orbBreakScores.getOrDefault(p.getUniqueId(), 0);
+                score += orbScore * 50;
+
+                if (score > bestScore) {
+                    bestScore = score;
+                    bestTarget = p;
                 }
             }
-            primaryTarget = nearest;
+            if (bestTarget != null) {
+                primaryTarget = bestTarget;
+            }
         }
 
         // 2. Beam logic
@@ -970,6 +993,17 @@ public class SeerBossManager {
 
     public void setOrbManager(SeerOrbManager orbManager) {
         this.orbManager = orbManager;
+    }
+
+    /**
+     * Called by OrbManager when a player breaks an orb.
+     * Increases that player's targeting priority so the boss focuses them.
+     */
+    public void onPlayerBrokeOrb(Player player) {
+        orbBreakScores.merge(player.getUniqueId(), 5, Integer::sum); // +5 score, decays 1/sec
+        // Immediately swap target to the orb breaker
+        primaryTarget = player;
+        targetSwapCooldown = 100; // Stay on them for 5 seconds
     }
 
     // ========================================================================

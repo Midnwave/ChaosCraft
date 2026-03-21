@@ -237,6 +237,7 @@ public class SeerOrbManager implements Listener {
 
         if (bossManager != null) {
             bossManager.updateMaxHealth(newMaxHealth);
+            bossManager.onPlayerBrokeOrb(breaker);
         }
     }
 
