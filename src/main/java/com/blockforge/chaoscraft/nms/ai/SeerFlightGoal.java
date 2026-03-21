@@ -101,13 +101,13 @@ public class SeerFlightGoal extends Goal {
             mob.setDeltaMovement(new Vec3(0, Math.sin(orbitAngle * 3) * 0.02, 0));
         }
 
-        // Look at target's feet (lower) so the beam aligns with the player body
-        // The h_head bone pivot is above the beam origin, so aiming at eye level overshoots
+        // Smooth look at target — low turn speed to prevent jitter/tweaking
+        // ySpeed=10 and xSpeed=10 means slow smooth tracking (default is 30-60)
         mob.getLookControl().setLookAt(
                 currentTarget.getX(),
-                currentTarget.getY() - 1.0,  // Aim below player center to compensate for beam offset
+                currentTarget.getY() - 0.5,
                 currentTarget.getZ(),
-                60.0f, 60.0f);
+                10.0f, 10.0f);
     }
 
     /**

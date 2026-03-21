@@ -461,42 +461,30 @@ public class SeerBossManager {
     // ========================================================================
 
     /**
-     * Tick the beam: charge, fire, and damage cycle.
+     * Tick the beam: always active when player in range, off when not.
+     * No charge phase — instant on/off based on distance.
      */
     private void tickBeam(World world) {
         if (primaryTarget == null || !primaryTarget.isOnline()) {
-            stopBeam();
+            if (beamActive) stopBeam();
             return;
         }
 
         double distToTarget = bossEntity.getLocation().distance(primaryTarget.getLocation());
 
-        // Power down if too far
+        // Beam ON when player within range, OFF when out of range
         if (distToTarget > config.getBossBeamRange()) {
-            stopBeam();
+            if (beamActive) stopBeam();
             return;
         }
 
-        if (!beamCharging && !beamActive) {
-            // Start charging
-            beamCharging = true;
-            beamChargeTick = 0;
-            playAnimation("beam_charge");
+        // Activate beam if not already active
+        if (!beamActive) {
+            beamActive = true;
+            playAnimation("beam_fire");
         }
 
-        if (beamCharging) {
-            beamChargeTick++;
-            // Charge particles (intensify over time)
-            Location eyeLoc = bossEntity.getLocation();
-            int particleCount = beamChargeTick / 5;
-            DisplayBuilder.dustParticles(eyeLoc, particleCount, 2.0, 160, 0, 200, 1.5f);
-
-            if (beamChargeTick >= config.getBossBeamChargeTicks()) {
-                beamCharging = false;
-                beamActive = true;
-                playAnimation("beam_fire");
-            }
-            return;
+        {
         }
 
         if (beamActive) {
