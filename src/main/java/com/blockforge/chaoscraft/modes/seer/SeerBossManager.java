@@ -424,10 +424,21 @@ public class SeerBossManager {
             Location from = bossEntity.getLocation();
             Location to = primaryTarget.getLocation().add(0, 1, 0);
 
-            // Dense purple particle beam
-            DisplayBuilder.particleLine(from, to, Particle.DUST, 3,
-                    new Particle.DustOptions(Color.fromRGB(160, 0, 200), 2.0f));
-            DisplayBuilder.particleLine(from, to, Particle.END_ROD, 2, null);
+            // HUGE obvious particles at boss — debug if beam visuals work at all
+            world.spawnParticle(Particle.END_ROD, from, 30, 1, 1, 1, 0.1);
+
+            // Dense purple particle beam — direct world.spawnParticle approach
+            double dist = from.distance(to);
+            int points = (int)(dist * 3);
+            Particle.DustOptions beamDust = new Particle.DustOptions(Color.fromRGB(200, 0, 255), 2.5f);
+            for (int i = 0; i <= points; i++) {
+                double t = (double) i / Math.max(1, points);
+                double px = from.getX() + (to.getX() - from.getX()) * t;
+                double py = from.getY() + (to.getY() - from.getY()) * t;
+                double pz = from.getZ() + (to.getZ() - from.getZ()) * t;
+                world.spawnParticle(Particle.DUST, px, py, pz, 1, 0, 0, 0, 0, beamDust);
+                world.spawnParticle(Particle.END_ROD, px, py, pz, 1, 0.05, 0.05, 0.05, 0.01);
+            }
 
             // Spiral particles around beam axis
             Vector beamDir = to.toVector().subtract(from.toVector());
