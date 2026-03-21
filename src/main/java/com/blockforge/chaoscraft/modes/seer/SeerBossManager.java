@@ -179,8 +179,9 @@ public class SeerBossManager {
                     .color(net.kyori.adventure.text.format.TextColor.color(0xAA00FF)));
             z.setCustomNameVisible(false); // Model has its own name display
 
-            // Add custom scoreboard tag to identify this entity
+            // Add custom scoreboard tags
             z.addScoreboardTag("chaoscraft_seer_boss");
+            z.addScoreboardTag("boss_target");
         });
 
         // Try to apply ModelEngine model via reflection
@@ -584,21 +585,26 @@ public class SeerBossManager {
                 }
             }
 
-            // Damage: subtract health every 2 ticks (not player.damage — no screen shake)
-            // Respects absorption but bypasses armor
-            if (gameTime % 2 == 0) {
+            // Damage: subtract health every X ticks (configurable)
+            // Only damages players within beam range AND within beam line radius
+            // Respects absorption but bypasses armor — no screen shake
+            double beamRange = config.getBossBeamRange();
+            double beamDamage = config.getBossBeamDamagePerTick();
+            int beamDamageInterval = config.getBossBeamDamageInterval();
+            if (beamDamageInterval > 0 && gameTime % beamDamageInterval == 0) {
                 for (Player p : world.getPlayers()) {
                     if (p.getGameMode() != GameMode.SURVIVAL || p.isInvulnerable()) continue;
+                    // Must be within beam range of boss
+                    double distToBoss = p.getLocation().distance(from);
+                    if (distToBoss > beamRange) continue;
+                    // Must be within 2.5 blocks of beam line
                     if (distanceToLine(p.getLocation().add(0, 1, 0), from, to) <= 2.5) {
-                        // Check absorption first
                         double absorption = p.getAbsorptionAmount();
                         if (absorption > 0) {
-                            // Subtract from absorption first
-                            double newAbsorption = Math.max(0, absorption - 1.0);
+                            double newAbsorption = Math.max(0, absorption - beamDamage);
                             p.setAbsorptionAmount((float) newAbsorption);
                         } else {
-                            // Subtract from health directly — no damage event, no screen shake
-                            double newHealth = Math.max(1.0, p.getHealth() - 1.0);
+                            double newHealth = Math.max(1.0, p.getHealth() - beamDamage);
                             p.setHealth(newHealth);
                         }
                     }

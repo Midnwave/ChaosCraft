@@ -69,6 +69,7 @@ public class SeerConfig {
         if (!config.contains("boss.beam-range")) { config.set("boss.beam-range", 50.0); needsSave = true; }
         if (!config.contains("boss.beam-charge-ticks")) { config.set("boss.beam-charge-ticks", 100); needsSave = true; }
         if (!config.contains("boss.beam-damage-per-tick")) { config.set("boss.beam-damage-per-tick", 1.0); needsSave = true; }
+        if (!config.contains("boss.beam-damage-interval")) { config.set("boss.beam-damage-interval", 2); needsSave = true; }
         if (!config.contains("boss.ambient-sound")) { config.set("boss.ambient-sound", ""); needsSave = true; }
         if (!config.contains("boss.ambient-sound-interval")) { config.set("boss.ambient-sound-interval", 40); needsSave = true; }
         if (!config.contains("boss.ambient-sound-volume")) { config.set("boss.ambient-sound-volume", 2.0); needsSave = true; }
@@ -225,6 +226,7 @@ public class SeerConfig {
     public double getBossBeamRange() { return config.getDouble("boss.beam-range", 50.0); }
     public int getBossBeamChargeTicks() { return config.getInt("boss.beam-charge-ticks", 100); }
     public double getBossBeamDamagePerTick() { return config.getDouble("boss.beam-damage-per-tick", 1.0); }
+    public int getBossBeamDamageInterval() { return config.getInt("boss.beam-damage-interval", 2); }
     public String getBossAmbientSound() { return config.getString("boss.ambient-sound", ""); }
     public int getBossAmbientSoundInterval() { return config.getInt("boss.ambient-sound-interval", 40); }
     public float getBossAmbientSoundVolume() { return (float) config.getDouble("boss.ambient-sound-volume", 2.0); }
