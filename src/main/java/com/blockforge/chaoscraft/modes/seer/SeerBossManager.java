@@ -496,31 +496,26 @@ public class SeerBossManager {
      * No charge phase — instant on/off based on distance.
      */
     private void tickBeam(World world) {
-        // If no target, try to find one
+        // Beam is ALWAYS on — never turns off once boss is alive
+        if (!beamActive) {
+            beamActive = true;
+            playAnimation("beam_fire");
+        }
+
+        // Re-play beam_fire every 10 ticks to prevent ModelEngine idle override
+        if (world.getGameTime() % 10 == 0) {
+            playAnimation("beam_fire");
+        }
+
+        // Reacquire target if needed
         if (primaryTarget == null || !primaryTarget.isOnline() || primaryTarget.isDead()) {
-            // Don't turn beam off — just skip damage this tick
-            // Try to reacquire target
             for (Player p : world.getPlayers()) {
                 if (p.getGameMode() == org.bukkit.GameMode.SURVIVAL && !p.isInvulnerable()) {
                     primaryTarget = p;
                     break;
                 }
             }
-            if (primaryTarget == null) {
-                if (beamActive) stopBeam();
-                return;
-            }
-        }
-
-        // Beam is ALWAYS on when there's a valid target
-        if (!beamActive) {
-            beamActive = true;
-        }
-
-        // Re-play beam_fire animation every 10 ticks to prevent ModelEngine
-        // default "idle" animation from overriding it
-        if (beamActive && bossEntity.getWorld().getGameTime() % 10 == 0) {
-            playAnimation("beam_fire");
+            if (primaryTarget == null) return; // No players — skip damage/particles but beam stays on
         }
 
         if (beamActive) {
