@@ -119,12 +119,13 @@ public class SeerFlightGoal extends Goal {
             mob.setDeltaMovement(Vec3.ZERO);
         }
 
-        // Always look at the player — high speed for instant tracking
+        // Always look at the player — max possible speed for instant tracking
+        // 360f yaw + 360f pitch = no rotation limit per tick
         mob.getLookControl().setLookAt(
                 currentTarget.getX(),
                 currentTarget.getY() + 1.0,
                 currentTarget.getZ(),
-                90.0f, 90.0f);
+                360.0f, 360.0f);
     }
 
     /**
