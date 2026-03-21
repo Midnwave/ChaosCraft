@@ -96,31 +96,31 @@ public class SeerFlightGoal extends Goal {
 
         Vec3 currentVel = mob.getDeltaMovement();
 
-        if (dist > 0.5) {
-            // Speed: gentle approach, capped at moveSpeed * 0.05
-            double speed = Math.min(moveSpeed * 0.05, dist * 0.02);
+        if (dist > 1.0) {
+            // Speed scales with distance but capped
+            double speed = Math.min(moveSpeed * 0.8, dist * 0.06);
             Vec3 desiredVel = new Vec3(
                     (dx / dist) * speed,
                     (dy / dist) * speed,
                     (dz / dist) * speed
             );
-            // Smooth lerp: 80% old velocity + 20% new (prevents jitter/overshoot)
+            // Smooth lerp: 60% old + 40% new
             mob.setDeltaMovement(new Vec3(
-                    currentVel.x * 0.8 + desiredVel.x * 0.2,
-                    currentVel.y * 0.8 + desiredVel.y * 0.2,
-                    currentVel.z * 0.8 + desiredVel.z * 0.2
+                    currentVel.x * 0.6 + desiredVel.x * 0.4,
+                    currentVel.y * 0.6 + desiredVel.y * 0.4,
+                    currentVel.z * 0.6 + desiredVel.z * 0.4
             ));
         } else {
-            // Close enough — dampen to near zero
-            mob.setDeltaMovement(currentVel.scale(0.5));
+            // Close — slow drift
+            mob.setDeltaMovement(currentVel.scale(0.3));
         }
 
-        // Look at target — moderate speed for smooth head tracking
+        // Look at target — fast enough to track but not jittery
         mob.getLookControl().setLookAt(
                 currentTarget.getX(),
                 currentTarget.getY() + 1.0,
                 currentTarget.getZ(),
-                20.0f, 20.0f);
+                30.0f, 30.0f);
     }
 
     /**
