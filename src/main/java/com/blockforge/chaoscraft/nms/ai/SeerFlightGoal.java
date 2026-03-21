@@ -21,13 +21,18 @@ public class SeerFlightGoal extends Goal {
 
     private final Mob mob;
     private double hoverHeight = 15.0;
-    private double orbitRadius = 8.0;
+    private double orbitRadius = 8.0;      // min distance from player
+    private double maxOrbitRadius = 20.0;  // max distance from player
     private double orbitSpeed = 0.015;   // radians per tick
     private double moveSpeed = 0.8;
     private double detectionRange = 500.0;
 
-    private double orbitAngle = 0;
     private LivingEntity currentTarget;
+    private double anchorX, anchorY, anchorZ; // The spot the boss picked to hover at
+    private boolean hasAnchor = false;
+    private int anchorTicks = 0;
+    private int anchorDuration = 200; // Stay at anchor for 10 seconds before picking new spot
+    private static final java.util.Random RAND = new java.util.Random();
 
     public SeerFlightGoal(Mob mob) {
         this.mob = mob;
@@ -71,51 +76,50 @@ public class SeerFlightGoal extends Goal {
             }
         }
 
-        // Stop any pathfinding navigation that might fight our movement
         mob.getNavigation().stop();
 
-        // Only advance orbit angle when close to desired position (prevents chasing a moving target)
-        double desiredX = currentTarget.getX() + Math.cos(orbitAngle) * orbitRadius;
-        double desiredZ = currentTarget.getZ() + Math.sin(orbitAngle) * orbitRadius;
-        double distToDesired = Math.sqrt(Math.pow(desiredX - mob.getX(), 2) + Math.pow(desiredZ - mob.getZ(), 2));
-        if (distToDesired < 3.0) {
-            orbitAngle += orbitSpeed;
-            if (orbitAngle > Math.PI * 2) orbitAngle -= Math.PI * 2;
+        // Pick an anchor spot near the player and STAY there
+        if (!hasAnchor || anchorTicks >= anchorDuration) {
+            pickNewAnchor();
+        }
+        anchorTicks++;
+
+        // If player moved far from anchor, pick a new one sooner
+        double playerDistToAnchor = Math.sqrt(
+                Math.pow(currentTarget.getX() - anchorX, 2) +
+                Math.pow(currentTarget.getZ() - anchorZ, 2));
+        if (playerDistToAnchor > 30) {
+            pickNewAnchor();
         }
 
-        // Desired position: offset from target, hovering above at an angle
-        double targetX = currentTarget.getX() + Math.cos(orbitAngle) * orbitRadius;
-        double targetY = currentTarget.getY() + hoverHeight;
-        double targetZ = currentTarget.getZ() + Math.sin(orbitAngle) * orbitRadius;
-
-        // Smooth movement — lerp current velocity toward desired direction
-        double dx = targetX - mob.getX();
-        double dy = targetY - mob.getY();
-        double dz = targetZ - mob.getZ();
+        // Move toward anchor position
+        double dx = anchorX - mob.getX();
+        double dy = anchorY - mob.getY();
+        double dz = anchorZ - mob.getZ();
         double dist = Math.sqrt(dx * dx + dy * dy + dz * dz);
 
         Vec3 currentVel = mob.getDeltaMovement();
 
-        if (dist > 1.0) {
-            // Speed scales with distance but capped
-            double speed = Math.min(moveSpeed * 0.8, dist * 0.06);
+        if (dist > 1.5) {
+            // Fly toward anchor at reasonable speed
+            double speed = Math.min(moveSpeed * 0.5, dist * 0.04);
             Vec3 desiredVel = new Vec3(
                     (dx / dist) * speed,
                     (dy / dist) * speed,
                     (dz / dist) * speed
             );
-            // Smooth lerp: 60% old + 40% new
+            // Smooth: 70% old + 30% new
             mob.setDeltaMovement(new Vec3(
-                    currentVel.x * 0.6 + desiredVel.x * 0.4,
-                    currentVel.y * 0.6 + desiredVel.y * 0.4,
-                    currentVel.z * 0.6 + desiredVel.z * 0.4
+                    currentVel.x * 0.7 + desiredVel.x * 0.3,
+                    currentVel.y * 0.7 + desiredVel.y * 0.3,
+                    currentVel.z * 0.7 + desiredVel.z * 0.3
             ));
         } else {
-            // Close — slow drift
-            mob.setDeltaMovement(currentVel.scale(0.3));
+            // At anchor — hover still
+            mob.setDeltaMovement(Vec3.ZERO);
         }
 
-        // Look at target — fast enough to track but not jittery
+        // Always look at the player
         mob.getLookControl().setLookAt(
                 currentTarget.getX(),
                 currentTarget.getY() + 1.0,
@@ -149,8 +153,25 @@ public class SeerFlightGoal extends Goal {
 
     // --- Config setters ---
 
+    /**
+     * Pick a random spot near the player to hover at.
+     * Stays 8-15 blocks away horizontally, at hover height above.
+     */
+    private void pickNewAnchor() {
+        if (currentTarget == null) return;
+        double angle = RAND.nextDouble() * Math.PI * 2;
+        double dist = orbitRadius + RAND.nextDouble() * (maxOrbitRadius - orbitRadius);
+        anchorX = currentTarget.getX() + Math.cos(angle) * dist;
+        anchorY = currentTarget.getY() + hoverHeight;
+        anchorZ = currentTarget.getZ() + Math.sin(angle) * dist;
+        hasAnchor = true;
+        anchorTicks = 0;
+        anchorDuration = 150 + RAND.nextInt(100); // 7.5-12.5 seconds
+    }
+
     public void setHoverHeight(double height) { this.hoverHeight = height; }
-    public void setOrbitRadius(double radius) { this.orbitRadius = radius; }
+    public void setOrbitRadius(double min, double max) { this.orbitRadius = min; this.maxOrbitRadius = max; }
+    public void setOrbitRadius(double radius) { this.orbitRadius = radius; this.maxOrbitRadius = radius + 10; }
     public void setOrbitSpeed(double speed) { this.orbitSpeed = speed; }
     public void setMoveSpeed(double speed) { this.moveSpeed = speed; }
     public void setDetectionRange(double range) { this.detectionRange = range; }
