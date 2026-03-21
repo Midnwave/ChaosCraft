@@ -524,52 +524,89 @@ public class SeerBossManager {
         }
 
         if (beamActive) {
-            // Beam visual: particle line from boss to target
             Location from = bossEntity.getLocation();
             Location to = primaryTarget.getLocation().add(0, 1, 0);
+            long gameTime = world.getGameTime();
 
-            // HUGE obvious particles at boss — debug if beam visuals work at all
-            world.spawnParticle(Particle.END_ROD, from, 30, 1, 1, 1, 0.1);
-
-            // Dense purple particle beam — direct world.spawnParticle approach
-            double dist = from.distance(to);
-            int points = (int)(dist * 3);
-            Particle.DustOptions beamDust = new Particle.DustOptions(Color.fromRGB(200, 0, 255), 2.5f);
-            for (int i = 0; i <= points; i++) {
-                double t = (double) i / Math.max(1, points);
-                double px = from.getX() + (to.getX() - from.getX()) * t;
-                double py = from.getY() + (to.getY() - from.getY()) * t;
-                double pz = from.getZ() + (to.getZ() - from.getZ()) * t;
-                world.spawnParticle(Particle.DUST, px, py, pz, 1, 0, 0, 0, 0, beamDust);
-                world.spawnParticle(Particle.END_ROD, px, py, pz, 1, 0.05, 0.05, 0.05, 0.01);
-            }
-
-            // Spiral particles around beam axis
+            // Circling magenta dust particles spiraling from boss to player
             Vector beamDir = to.toVector().subtract(from.toVector());
             double beamLen = beamDir.length();
-            if (beamLen > 0) {
+            if (beamLen > 0.5) {
                 Vector norm = beamDir.normalize();
-                for (double d = 0; d < beamLen; d += 1.0) {
-                    double spiralAngle = d * 0.5 + System.currentTimeMillis() * 0.005;
-                    // perpendicular offset using spiral
-                    Location spiralLoc = from.clone().add(norm.clone().multiply(d));
-                    spiralLoc.add(Math.cos(spiralAngle) * 0.8, Math.sin(spiralAngle) * 0.8, 0);
-                    world.spawnParticle(Particle.DUST, spiralLoc, 1, 0, 0, 0, 0,
-                            new Particle.DustOptions(Color.fromRGB(200, 0, 180), 1.0f));
+                // Two perpendicular vectors for the spiral plane
+                Vector perp1 = norm.clone().crossProduct(new Vector(0, 1, 0)).normalize();
+                Vector perp2 = norm.clone().crossProduct(perp1).normalize();
+                // Handle edge case where beam is nearly vertical
+                if (perp1.lengthSquared() < 0.01) {
+                    perp1 = new Vector(1, 0, 0);
+                    perp2 = new Vector(0, 0, 1);
+                }
+
+                Particle.DustOptions magenta = new Particle.DustOptions(Color.fromRGB(220, 0, 220), 1.8f);
+                Particle.DustOptions purple = new Particle.DustOptions(Color.fromRGB(160, 0, 200), 1.3f);
+                double timeOffset = gameTime * 0.15; // animation speed
+
+                for (double d = 0; d < beamLen; d += 0.6) {
+                    double t = d / beamLen;
+                    // Base position along beam
+                    double bx = from.getX() + (to.getX() - from.getX()) * t;
+                    double by = from.getY() + (to.getY() - from.getY()) * t;
+                    double bz = from.getZ() + (to.getZ() - from.getZ()) * t;
+
+                    // Spiral 1 — clockwise
+                    double angle1 = d * 0.8 + timeOffset;
+                    double radius = 1.2;
+                    double sx = bx + perp1.getX() * Math.cos(angle1) * radius + perp2.getX() * Math.sin(angle1) * radius;
+                    double sy = by + perp1.getY() * Math.cos(angle1) * radius + perp2.getY() * Math.sin(angle1) * radius;
+                    double sz = bz + perp1.getZ() * Math.cos(angle1) * radius + perp2.getZ() * Math.sin(angle1) * radius;
+                    world.spawnParticle(Particle.DUST, sx, sy, sz, 1, 0, 0, 0, 0, magenta);
+
+                    // Spiral 2 — counter-clockwise, offset by 180 degrees
+                    double angle2 = d * 0.8 - timeOffset + Math.PI;
+                    sx = bx + perp1.getX() * Math.cos(angle2) * radius + perp2.getX() * Math.sin(angle2) * radius;
+                    sy = by + perp1.getY() * Math.cos(angle2) * radius + perp2.getY() * Math.sin(angle2) * radius;
+                    sz = bz + perp1.getZ() * Math.cos(angle2) * radius + perp2.getZ() * Math.sin(angle2) * radius;
+                    world.spawnParticle(Particle.DUST, sx, sy, sz, 1, 0, 0, 0, 0, purple);
+                }
+
+                // Impact glow at player
+                world.spawnParticle(Particle.DUST, to, 5, 0.3, 0.3, 0.3, 0.01,
+                        new Particle.DustOptions(Color.fromRGB(200, 50, 255), 2.0f));
+            }
+
+            // Debug: show beam damage radius on the ground
+            if (plugin.getConfig().getBoolean("debug", false) && gameTime % 3 == 0) {
+                // Draw circle on the ground where beam intersects ground level
+                // The beam goes from 'from' to 'to' — find ground impact point
+                Location groundPoint = to.clone();
+                groundPoint.setY(primaryTarget.getLocation().getY());
+                Particle.DustOptions debugDust = new Particle.DustOptions(Color.fromRGB(255, 50, 50), 0.8f);
+                for (int deg = 0; deg < 360; deg += 15) {
+                    double rad = Math.toRadians(deg);
+                    double rx = groundPoint.getX() + Math.cos(rad) * 2.5; // 2.5 = damage radius
+                    double rz = groundPoint.getZ() + Math.sin(rad) * 2.5;
+                    world.spawnParticle(Particle.DUST, rx, groundPoint.getY() + 0.1, rz, 1, 0, 0, 0, 0, debugDust);
                 }
             }
 
-            // Ground impact particles
-            world.spawnParticle(Particle.DUST, to, 10, 1, 0.5, 1, 0.01,
-                    new Particle.DustOptions(Color.fromRGB(120, 0, 160), 1.5f));
-
-            // Damage ALL players in beam path (within 2 blocks of beam line)
-            double dmgPerTick = config.getBossBeamDamagePerTick();
-            for (Player p : world.getPlayers()) {
-                if (p.getGameMode() != GameMode.SURVIVAL || p.isInvulnerable()) continue;
-                if (distanceToLine(p.getLocation().add(0, 1, 0), from, to) <= 2.0) {
-                    p.damage(dmgPerTick);
-                    p.setNoDamageTicks(0);
+            // Damage: subtract health every 2 ticks (not player.damage — no screen shake)
+            // Respects absorption but bypasses armor
+            if (gameTime % 2 == 0) {
+                for (Player p : world.getPlayers()) {
+                    if (p.getGameMode() != GameMode.SURVIVAL || p.isInvulnerable()) continue;
+                    if (distanceToLine(p.getLocation().add(0, 1, 0), from, to) <= 2.5) {
+                        // Check absorption first
+                        float absorption = p.getAbsorptionAmount();
+                        if (absorption > 0) {
+                            // Subtract from absorption first
+                            float newAbsorption = Math.max(0, absorption - 1.0f);
+                            p.setAbsorptionAmount(newAbsorption);
+                        } else {
+                            // Subtract from health directly — no damage event, no screen shake
+                            double newHealth = Math.max(1.0, p.getHealth() - 1.0);
+                            p.setHealth(newHealth);
+                        }
+                    }
                 }
             }
 
