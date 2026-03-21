@@ -512,14 +512,15 @@ public class SeerBossManager {
             }
         }
 
-        // Beam is ALWAYS on when there's a valid target — no range check
-        // (the boss follows the player anyway, so it's always in range)
+        // Beam is ALWAYS on when there's a valid target
         if (!beamActive) {
             beamActive = true;
-            playAnimation("beam_fire");
         }
 
-        {
+        // Re-play beam_fire animation every 10 ticks to prevent ModelEngine
+        // default "idle" animation from overriding it
+        if (beamActive && bossEntity.getWorld().getGameTime() % 10 == 0) {
+            playAnimation("beam_fire");
         }
 
         if (beamActive) {
@@ -790,47 +791,54 @@ public class SeerBossManager {
     private void playAnimation(String name) {
         if (bossEntity == null) return;
         try {
-            // Use Entity-based lookup (not UUID) — matches the working pattern from ModelEngineAttack
             Class<?> modelEngineAPI = Class.forName("com.ticxo.modelengine.api.ModelEngineAPI");
 
-            // Try getModeledEntity(Entity) first
             Method getModeledEntity;
             Object modeled;
             try {
                 getModeledEntity = modelEngineAPI.getMethod("getModeledEntity", org.bukkit.entity.Entity.class);
                 modeled = getModeledEntity.invoke(null, bossEntity);
             } catch (NoSuchMethodException e) {
-                // Fallback to UUID-based lookup
                 getModeledEntity = modelEngineAPI.getMethod("getModeledEntity", UUID.class);
                 modeled = getModeledEntity.invoke(null, bossUUID);
             }
-            if (modeled == null) {
-                plugin.debug("[Seer] ModeledEntity not found for boss");
-                return;
-            }
+            if (modeled == null) return;
 
             Method getModels = modeled.getClass().getMethod("getModels");
             @SuppressWarnings("unchecked")
             Map<String, Object> models = (Map<String, Object>) getModels.invoke(modeled);
-            if (models == null || models.isEmpty()) {
-                plugin.debug("[Seer] No models found on boss entity");
-                return;
-            }
+            if (models == null || models.isEmpty()) return;
 
             Object activeModel = models.values().iterator().next();
             Method getAnimationHandler = activeModel.getClass().getMethod("getAnimationHandler");
             Object animHandler = getAnimationHandler.invoke(activeModel);
 
-            // Force = true to override any current animation
+            // Stop ALL default animations that ModelEngine auto-plays based on entity state
+            // These override our custom animations when the entity is stationary
+            try {
+                Method stopAnim = animHandler.getClass().getMethod("stopAnimation", String.class);
+                stopAnim.invoke(animHandler, "idle");
+                stopAnim.invoke(animHandler, "walk");
+                stopAnim.invoke(animHandler, "strafe");
+                stopAnim.invoke(animHandler, "jump");
+                stopAnim.invoke(animHandler, "jump_start");
+                stopAnim.invoke(animHandler, "jump_end");
+                stopAnim.invoke(animHandler, "hover");
+                stopAnim.invoke(animHandler, "fly");
+                stopAnim.invoke(animHandler, "spawn");
+                stopAnim.invoke(animHandler, "death");
+            } catch (Exception ignored) {
+                // stopAnimation might not exist — ignore
+            }
+
+            // Now play our custom animation with force=true
             Method playAnimation = animHandler.getClass().getMethod("playAnimation",
                     String.class, double.class, double.class, double.class, boolean.class);
             playAnimation.invoke(animHandler, name, 0.0, 0.0, 1.0, true);
 
-            plugin.debug("[Seer] Played animation: " + name);
         } catch (ClassNotFoundException ignored) {
-            // ModelEngine not installed
         } catch (Exception e) {
-            plugin.getLogger().warning("[Seer] Failed to play animation '" + name + "': " + e.getClass().getSimpleName() + ": " + e.getMessage());
+            plugin.getLogger().warning("[Seer] Failed to play animation '" + name + "': " + e.getMessage());
         }
     }
 
