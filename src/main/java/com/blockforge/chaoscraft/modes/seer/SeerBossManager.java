@@ -2,8 +2,11 @@ package com.blockforge.chaoscraft.modes.seer;
 
 import com.blockforge.chaoscraft.ChaosCraftPlugin;
 import com.blockforge.chaoscraft.modes.calamity.display.DisplayBuilder;
+import com.blockforge.chaoscraft.nms.ai.SeerFlightGoal;
+import net.minecraft.world.entity.Mob;
 import org.bukkit.*;
 import org.bukkit.attribute.Attribute;
+import org.bukkit.craftbukkit.entity.CraftLivingEntity;
 import org.bukkit.entity.*;
 import org.bukkit.util.RayTraceResult;
 import org.bukkit.util.Vector;
@@ -39,6 +42,7 @@ public class SeerBossManager {
     private int beamChargeTick = 0;
     private Vector currentVelocity = new Vector(0, 0, 0);
     private SeerOrbManager orbManager; // set after construction
+    private SeerFlightGoal seerFlightGoal; // NMS AI goal
 
     public SeerBossManager(ChaosCraftPlugin plugin, SeerConfig config) {
         this.plugin = plugin;
@@ -90,6 +94,9 @@ public class SeerBossManager {
             }
         }
 
+        // Set up NMS AI — replace vanilla AI with custom flight goal
+        setupNmsAI();
+
         // Force-load chunks around boss
         forceLoadChunksAround(bossEntity.getLocation(), 3);
 
@@ -106,6 +113,55 @@ public class SeerBossManager {
 
         plugin.getLogger().info("[Seer] Boss spawned at " + formatLoc(center)
                 + " (HP: " + totalHealth + ", orbs: " + orbsRemaining + ")");
+    }
+
+    /**
+     * Replace vanilla AI with NMS SeerFlightGoal.
+     * Uses setDeltaMovement + getLookControl instead of Bukkit teleport
+     * so ModelEngine model renders properly with head tracking.
+     */
+    private void setupNmsAI() {
+        if (!(bossEntity instanceof LivingEntity living)) return;
+
+        try {
+            // Get NMS Mob handle
+            net.minecraft.world.entity.Entity nmsEntity = ((CraftLivingEntity) living).getHandle();
+            if (!(nmsEntity instanceof Mob nmsMob)) {
+                plugin.getLogger().warning("[Seer] Boss entity is not a Mob — cannot set NMS AI");
+                return;
+            }
+
+            // Clear ALL default AI goals
+            nmsMob.goalSelector.removeAllGoals(g -> true);
+            nmsMob.targetSelector.removeAllGoals(g -> true);
+
+            // Set no gravity for floating
+            nmsMob.setNoGravity(true);
+
+            // Set follow range attribute for detection
+            var followAttr = nmsMob.getAttribute(net.minecraft.world.entity.ai.attributes.Attributes.FOLLOW_RANGE);
+            if (followAttr != null) followAttr.setBaseValue(config.getBossDetectionRange());
+
+            // Add custom flight goal
+            seerFlightGoal = new SeerFlightGoal(nmsMob);
+            seerFlightGoal.setHoverHeight(config.getBossFloatHeight());
+            seerFlightGoal.setOrbitRadius(8.0);
+            seerFlightGoal.setOrbitSpeed(0.015);
+            seerFlightGoal.setMoveSpeed(config.getBossMoveSpeed());
+            seerFlightGoal.setDetectionRange(config.getBossDetectionRange());
+            nmsMob.goalSelector.addGoal(1, seerFlightGoal);
+
+            // Make zombie silent + disable burn in sun
+            if (living instanceof Zombie zombie) {
+                zombie.setShouldBurnInDay(false);
+            }
+            living.setSilent(true);
+
+            plugin.getLogger().info("[Seer] NMS AI set up: flight goal active, detection range " + config.getBossDetectionRange());
+        } catch (Exception e) {
+            plugin.getLogger().warning("[Seer] Failed to set up NMS AI: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -192,8 +248,14 @@ public class SeerBossManager {
             bossEntity = found;
         }
 
-        // 1. AI movement
-        tickAI(world);
+        // 1. AI movement handled by NMS SeerFlightGoal (not Bukkit teleport)
+        // Update primaryTarget from NMS goal for beam targeting
+        if (seerFlightGoal != null && seerFlightGoal.getCurrentTarget() != null) {
+            net.minecraft.world.entity.LivingEntity nmsTarget = seerFlightGoal.getCurrentTarget();
+            if (nmsTarget.getBukkitEntity() instanceof Player p) {
+                primaryTarget = p;
+            }
+        }
 
         // 2. Beam logic
         tickBeam(world);
@@ -244,18 +306,33 @@ public class SeerBossManager {
             currentVelocity = currentVelocity.multiply(0.85).add(desiredVel.multiply(0.15)); // smooth lerp
         }
 
-        // Apply movement
-        Location newLoc = bossEntity.getLocation().add(currentVelocity);
-        // Face the target — set both yaw and pitch so the entity looks down at player
-        Vector lookDir = primaryTarget.getLocation().add(0, 1, 0).toVector().subtract(newLoc.toVector());
-        if (lookDir.lengthSquared() > 0.01) {
-            newLoc.setDirection(lookDir);
-            // Also explicitly set pitch to look down (negative = down in MC)
-            double horizontalDist = Math.sqrt(lookDir.getX() * lookDir.getX() + lookDir.getZ() * lookDir.getZ());
-            float pitch = (float) -Math.toDegrees(Math.atan2(lookDir.getY(), horizontalDist));
-            newLoc.setPitch(pitch);
+        // Apply movement using velocity instead of teleport
+        // Teleporting every tick breaks ModelEngine model rendering
+        if (bossEntity instanceof LivingEntity living) {
+            // Set velocity for smooth movement (ModelEngine-friendly)
+            living.setVelocity(currentVelocity);
+
+            // Disable gravity so the zombie floats
+            living.setGravity(false);
+
+            // Face the target using entity rotation (not teleport)
+            Vector lookDir = primaryTarget.getLocation().add(0, 1, 0).toVector()
+                    .subtract(bossEntity.getLocation().toVector());
+            if (lookDir.lengthSquared() > 0.01) {
+                Location loc = bossEntity.getLocation();
+                loc.setDirection(lookDir);
+                // Only teleport for rotation, keep same position
+                living.teleport(loc);
+            }
+        } else {
+            // Fallback for non-living entities
+            Location newLoc = bossEntity.getLocation().add(currentVelocity);
+            Vector lookDir = primaryTarget.getLocation().add(0, 1, 0).toVector().subtract(newLoc.toVector());
+            if (lookDir.lengthSquared() > 0.01) {
+                newLoc.setDirection(lookDir);
+            }
+            bossEntity.teleport(newLoc);
         }
-        bossEntity.teleport(newLoc);
     }
 
     /**
