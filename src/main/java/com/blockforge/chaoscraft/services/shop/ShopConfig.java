@@ -142,7 +142,8 @@ public class ShopConfig {
                 String id = file.getName().replace(".yml", "").toLowerCase(Locale.ROOT);
 
                 String displayName = catConfig.getString("display-name", id);
-                String iconMaterial = catConfig.getString("icon-material", "CHEST");
+                String iconMaterial = catConfig.getString("icon-material",
+                        catConfig.getString("icon", "CHEST")); // fallback to "icon" key
                 int customModelData = catConfig.getInt("custom-model-data", 0);
                 int slot = catConfig.getInt("slot", -1);
 
@@ -155,14 +156,26 @@ public class ShopConfig {
                         ConfigurationSection itemSection = itemsSection.getConfigurationSection(itemKey);
                         if (itemSection == null) continue;
 
-                        String material = itemSection.getString("material", "STONE");
-                        double buyPrice = itemSection.getDouble("buy-price", -1);
-                        double sellPrice = itemSection.getDouble("sell-price", -1);
+                        // Material: use "material" key, or fall back to the section key name itself
+                        String material = itemSection.getString("material", itemKey);
+                        // Prices: support both "buy-price"/"sell-price" and "buy"/"sell"
+                        double buyPrice = itemSection.contains("buy-price")
+                                ? itemSection.getDouble("buy-price", -1)
+                                : itemSection.getDouble("buy", -1);
+                        double sellPrice = itemSection.contains("sell-price")
+                                ? itemSection.getDouble("sell-price", -1)
+                                : itemSection.getDouble("sell", -1);
                         int killsReq = itemSection.getInt("kills-required", 0);
-                        int sKillsReq = itemSection.getInt("skills-required", 0);
+                        int sKillsReq = itemSection.getInt("s-kills-required",
+                                itemSection.getInt("skills-required", 0));
                         int survivalsReq = itemSection.getInt("survivals-required", 0);
                         String badge = itemSection.getString("badge-required", null);
-                        List<String> lore = itemSection.getStringList("shop-lore");
+                        // Lore: support both "shop-lore" (list) and "lore" (string with \n)
+                        List<String> lore = itemSection.isList("shop-lore")
+                                ? itemSection.getStringList("shop-lore")
+                                : (itemSection.contains("lore")
+                                    ? List.of(itemSection.getString("lore", "").split("\n"))
+                                    : List.of());
                         int itemSlot = itemSection.getInt("slot", -1);
                         String itemDisplayName = itemSection.getString("display-name", null);
 
