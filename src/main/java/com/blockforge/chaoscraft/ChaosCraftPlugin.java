@@ -119,6 +119,10 @@ public class ChaosCraftPlugin extends JavaPlugin {
                 new com.blockforge.chaoscraft.modes.doom.DoomMode(this);
         modeManager.registerMode(doomMode);
 
+        com.blockforge.chaoscraft.modes.seer.SeerMode seerMode =
+                new com.blockforge.chaoscraft.modes.seer.SeerMode(this);
+        modeManager.registerMode(seerMode);
+
         // Initialize performance service
         performanceService = new PerformanceService(this);
         performanceService.initialize();
