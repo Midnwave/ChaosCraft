@@ -74,40 +74,53 @@ public class SeerFlightGoal extends Goal {
         // Stop any pathfinding navigation that might fight our movement
         mob.getNavigation().stop();
 
-        orbitAngle += orbitSpeed;
-        if (orbitAngle > Math.PI * 2) orbitAngle -= Math.PI * 2;
+        // Only advance orbit angle when close to desired position (prevents chasing a moving target)
+        double desiredX = currentTarget.getX() + Math.cos(orbitAngle) * orbitRadius;
+        double desiredZ = currentTarget.getZ() + Math.sin(orbitAngle) * orbitRadius;
+        double distToDesired = Math.sqrt(Math.pow(desiredX - mob.getX(), 2) + Math.pow(desiredZ - mob.getZ(), 2));
+        if (distToDesired < 3.0) {
+            orbitAngle += orbitSpeed;
+            if (orbitAngle > Math.PI * 2) orbitAngle -= Math.PI * 2;
+        }
 
         // Desired position: offset from target, hovering above at an angle
         double targetX = currentTarget.getX() + Math.cos(orbitAngle) * orbitRadius;
         double targetY = currentTarget.getY() + hoverHeight;
         double targetZ = currentTarget.getZ() + Math.sin(orbitAngle) * orbitRadius;
 
-        // Smooth movement via NMS velocity
+        // Smooth movement — lerp current velocity toward desired direction
         double dx = targetX - mob.getX();
         double dy = targetY - mob.getY();
         double dz = targetZ - mob.getZ();
         double dist = Math.sqrt(dx * dx + dy * dy + dz * dz);
 
-        if (dist > 1.0) {
-            // Speed scales with distance — faster when far, slows when close
-            double speed = Math.min(moveSpeed, dist * 0.15);
-            mob.setDeltaMovement(new Vec3(
+        Vec3 currentVel = mob.getDeltaMovement();
+
+        if (dist > 0.5) {
+            // Speed: gentle approach, capped at moveSpeed * 0.05
+            double speed = Math.min(moveSpeed * 0.05, dist * 0.02);
+            Vec3 desiredVel = new Vec3(
                     (dx / dist) * speed,
                     (dy / dist) * speed,
                     (dz / dist) * speed
+            );
+            // Smooth lerp: 80% old velocity + 20% new (prevents jitter/overshoot)
+            mob.setDeltaMovement(new Vec3(
+                    currentVel.x * 0.8 + desiredVel.x * 0.2,
+                    currentVel.y * 0.8 + desiredVel.y * 0.2,
+                    currentVel.z * 0.8 + desiredVel.z * 0.2
             ));
         } else {
-            // Close enough — hover with tiny drift
-            mob.setDeltaMovement(new Vec3(0, Math.sin(orbitAngle * 3) * 0.02, 0));
+            // Close enough — dampen to near zero
+            mob.setDeltaMovement(currentVel.scale(0.5));
         }
 
-        // Smooth look at target — low turn speed to prevent jitter/tweaking
-        // ySpeed=10 and xSpeed=10 means slow smooth tracking (default is 30-60)
+        // Look at target — moderate speed for smooth head tracking
         mob.getLookControl().setLookAt(
                 currentTarget.getX(),
-                currentTarget.getY() - 0.5,
+                currentTarget.getY() + 1.0,
                 currentTarget.getZ(),
-                10.0f, 10.0f);
+                20.0f, 20.0f);
     }
 
     /**
