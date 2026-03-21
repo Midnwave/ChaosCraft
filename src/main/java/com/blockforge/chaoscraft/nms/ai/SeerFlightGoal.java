@@ -101,8 +101,13 @@ public class SeerFlightGoal extends Goal {
             mob.setDeltaMovement(new Vec3(0, Math.sin(orbitAngle * 3) * 0.02, 0));
         }
 
-        // Look at target — this makes ModelEngine h_head bone track the player
-        mob.getLookControl().setLookAt(currentTarget, 60.0f, 60.0f);
+        // Look at target's feet (lower) so the beam aligns with the player body
+        // The h_head bone pivot is above the beam origin, so aiming at eye level overshoots
+        mob.getLookControl().setLookAt(
+                currentTarget.getX(),
+                currentTarget.getY() - 1.0,  // Aim below player center to compensate for beam offset
+                currentTarget.getZ(),
+                60.0f, 60.0f);
     }
 
     /**
