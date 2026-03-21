@@ -716,17 +716,14 @@ public class SeerBossManager {
         orbsRemaining--;
         if (orbsRemaining < 0) orbsRemaining = 0;
 
+        // Max health stays at 100M — only current health drops
         if (bossEntity instanceof LivingEntity living) {
-            var attr = living.getAttribute(Attribute.MAX_HEALTH);
-            if (attr != null) {
-                double currentHealth = living.getHealth();
-                attr.setBaseValue(Math.max(1, newMaxHealth));
-                living.setHealth(Math.min(currentHealth, Math.max(1, newMaxHealth)));
-            }
+            double newCurrentHealth = Math.max(1, newMaxHealth);
+            living.setHealth(Math.min(living.getHealth(), newCurrentHealth));
         }
 
         plugin.getLogger().info("[Seer] Orb destroyed! Orbs remaining: " + orbsRemaining
-                + ", new boss max HP: " + newMaxHealth);
+                + ", boss current HP set to: " + newMaxHealth);
 
         // Debug-only broadcast
         if (plugin.getConfig().getBoolean("debug", false) && bossEntity != null && bossEntity.getWorld() != null) {
