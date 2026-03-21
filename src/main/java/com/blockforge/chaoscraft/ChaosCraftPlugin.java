@@ -488,6 +488,51 @@ public class ChaosCraftPlugin extends JavaPlugin {
         }
         getLogger().info("[Reload] Chain in " + (System.currentTimeMillis() - t) + "ms");
 
+        // Reload Devil's Dream
+        t = System.currentTimeMillis();
+        var dd = modeManager.getMode("devilsdream");
+        if (dd instanceof com.blockforge.chaoscraft.modes.devilsdream.DevilsDreamMode ddMode) {
+            ddMode.getDreamConfig().load();
+            ddMode.getAttackRegistry().reloadConfigs();
+        }
+        getLogger().info("[Reload] DevilsDream in " + (System.currentTimeMillis() - t) + "ms");
+
+        // Reload Blue Moon
+        t = System.currentTimeMillis();
+        var bm = modeManager.getMode("bluemoon");
+        if (bm instanceof com.blockforge.chaoscraft.modes.bluemoon.BlueMoonMode bmMode) {
+            bmMode.getMoonConfig().load();
+            bmMode.getAttackRegistry().reloadConfigs();
+        }
+        getLogger().info("[Reload] BlueMoon in " + (System.currentTimeMillis() - t) + "ms");
+
+        // Reload Freezing Ice
+        t = System.currentTimeMillis();
+        var fi = modeManager.getMode("freezingice");
+        if (fi instanceof com.blockforge.chaoscraft.modes.freezingice.FreezingIceMode fiMode) {
+            fiMode.getIceConfig().load();
+            fiMode.getAttackRegistry().reloadConfigs();
+        }
+        getLogger().info("[Reload] FreezingIce in " + (System.currentTimeMillis() - t) + "ms");
+
+        // Reload Doom
+        t = System.currentTimeMillis();
+        var doom = modeManager.getMode("doom");
+        if (doom instanceof com.blockforge.chaoscraft.modes.doom.DoomMode doomMode) {
+            doomMode.getDoomConfig().load();
+            doomMode.getAttackRegistry().reloadConfigs();
+        }
+        getLogger().info("[Reload] Doom in " + (System.currentTimeMillis() - t) + "ms");
+
+        // Reload Seer
+        t = System.currentTimeMillis();
+        var seer = modeManager.getMode("seer");
+        if (seer instanceof com.blockforge.chaoscraft.modes.seer.SeerMode seerMode) {
+            seerMode.getSeerConfig().load();
+            seerMode.getAttackRegistry().reloadConfigs();
+        }
+        getLogger().info("[Reload] Seer in " + (System.currentTimeMillis() - t) + "ms");
+
         long totalMs = System.currentTimeMillis() - reloadStart;
         getLogger().info("ChaosCraft configuration reloaded in " + totalMs + "ms");
     }
