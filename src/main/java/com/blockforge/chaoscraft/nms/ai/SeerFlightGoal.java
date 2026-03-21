@@ -71,6 +71,9 @@ public class SeerFlightGoal extends Goal {
             }
         }
 
+        // Stop any pathfinding navigation that might fight our movement
+        mob.getNavigation().stop();
+
         orbitAngle += orbitSpeed;
         if (orbitAngle > Math.PI * 2) orbitAngle -= Math.PI * 2;
 
@@ -85,23 +88,17 @@ public class SeerFlightGoal extends Goal {
         double dz = targetZ - mob.getZ();
         double dist = Math.sqrt(dx * dx + dy * dy + dz * dz);
 
-        if (dist > 0.5) {
-            double speed = Math.min(moveSpeed * 0.05, dist * 0.08);
-            Vec3 current = mob.getDeltaMovement();
-            Vec3 desired = new Vec3(
+        if (dist > 1.0) {
+            // Speed scales with distance — faster when far, slows when close
+            double speed = Math.min(moveSpeed, dist * 0.15);
+            mob.setDeltaMovement(new Vec3(
                     (dx / dist) * speed,
                     (dy / dist) * speed,
                     (dz / dist) * speed
-            );
-            // Smooth lerp velocity (85% old + 15% new)
-            mob.setDeltaMovement(
-                    current.x * 0.85 + desired.x * 0.15,
-                    current.y * 0.85 + desired.y * 0.15,
-                    current.z * 0.85 + desired.z * 0.15
-            );
+            ));
         } else {
-            // Close enough — hover in place
-            mob.setDeltaMovement(Vec3.ZERO);
+            // Close enough — hover with tiny drift
+            mob.setDeltaMovement(new Vec3(0, Math.sin(orbitAngle * 3) * 0.02, 0));
         }
 
         // Look at target — this makes ModelEngine h_head bone track the player

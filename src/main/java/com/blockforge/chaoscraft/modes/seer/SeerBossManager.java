@@ -157,6 +157,9 @@ public class SeerBossManager {
             }
             living.setSilent(true);
 
+            // Stop any navigation pathfinding that might conflict
+            nmsMob.getNavigation().stop();
+
             plugin.getLogger().info("[Seer] NMS AI set up: flight goal active, detection range " + config.getBossDetectionRange());
         } catch (Exception e) {
             plugin.getLogger().warning("[Seer] Failed to set up NMS AI: " + e.getMessage());
