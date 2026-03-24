@@ -75,6 +75,12 @@ public class ModeManager implements Listener {
         // Set the expire callback so when the timer eventually runs out, mode ends.
         plugin.getModeTimer().setOnExpire(this::onTimerExpire);
 
+        // Start music immediately (before on-start-commands and done)
+        String musicId = mode.getModeConfig().getMusic();
+        if (musicId != null && !musicId.isEmpty()) {
+            plugin.getMusicManager().playModeMusic(mode);
+        }
+
         // Start the tick loop early so HUD ticks and placeholders update during chargeup
         startTicking();
 

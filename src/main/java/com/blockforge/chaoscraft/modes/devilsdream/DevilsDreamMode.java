@@ -112,12 +112,6 @@ public class DevilsDreamMode extends AbstractMode implements Listener {
         plugin.getLogger().info("[DevilsDream] " + bd + " BLOCK_DISPLAY + " + env + " ENVIRONMENTAL = "
                 + attackCount + " total attacks.");
 
-        // Music
-        String musicId = dreamConfig.getMusicSoundId();
-        if (!musicId.isEmpty()) {
-            plugin.getMusicManager().playModeMusic(this);
-        }
-
         // NOTE: runStartCommands() is called by ModeManager — do NOT call here
 
         // Register event listener for adaptation tracking

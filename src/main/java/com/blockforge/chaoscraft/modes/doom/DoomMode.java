@@ -110,12 +110,6 @@ public class DoomMode extends AbstractMode {
         plugin.getLogger().info("[Doom] " + bd + " BLOCK_DISPLAY, " + env + " ENVIRONMENTAL, "
                 + me + " MODEL_ENGINE attacks registered (" + attackCount + " total).");
 
-        // Start music
-        String musicId = doomConfig.getMusicSoundId();
-        if (!musicId.isEmpty()) {
-            plugin.getMusicManager().playModeMusic(this);
-        }
-
         // Start lava rise
         lavaRise.start();
 

@@ -101,12 +101,6 @@ public class FreezingIceMode extends AbstractMode {
         int bd = attackRegistry.getByPhaseAndType(1, AttackType.BLOCK_DISPLAY).size();
         plugin.getLogger().info("[FreezingIce] " + bd + " BLOCK_DISPLAY attacks registered. " + attackCount + " total.");
 
-        // Music
-        String musicId = iceConfig.getMusicSoundId();
-        if (!musicId.isEmpty()) {
-            plugin.getMusicManager().playModeMusic(this);
-        }
-
         // Start schedulers
         attackScheduler.start();
 

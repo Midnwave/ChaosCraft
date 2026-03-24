@@ -95,12 +95,6 @@ public class SeerMode extends AbstractMode {
         plugin.getLogger().info("[Seer] " + bd + " BLOCK_DISPLAY, " + env + " ENVIRONMENTAL attacks registered ("
                 + attackCount + " total).");
 
-        // Music
-        String musicId = seerConfig.getMusicSoundId();
-        if (!musicId.isEmpty()) {
-            plugin.getMusicManager().playModeMusic(this);
-        }
-
         // Start attack scheduler
         attackScheduler.start();
 

@@ -103,12 +103,6 @@ public class ChainMode extends AbstractMode {
             plugin.getLogger().info("[Chain] " + bd + " BLOCK_DISPLAY attacks registered.");
         }
 
-        // Start music (reads from ChainConfig which shares the same yml file as ModeConfig)
-        String musicId = chainConfig.getMusicSoundId();
-        if (!musicId.isEmpty()) {
-            plugin.getMusicManager().playModeMusic(this);
-        }
-
         // NOTE: runStartCommands() is called by ModeManager — do NOT call it here to avoid double execution
 
         // Start the attack scheduler

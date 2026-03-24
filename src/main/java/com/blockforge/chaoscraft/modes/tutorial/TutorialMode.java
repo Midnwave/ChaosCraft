@@ -6,6 +6,7 @@ import com.blockforge.chaoscraft.modes.calamity.attacks.AttackRegistry;
 import com.blockforge.chaoscraft.modes.calamity.attacks.AttackType;
 import com.blockforge.chaoscraft.modes.tutorial.attacks.*;
 import org.bukkit.*;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
 import org.bukkit.inventory.ShapedRecipe;
@@ -31,6 +32,15 @@ public class TutorialMode extends AbstractMode {
     // Tutorial Diamond recipe key
     private NamespacedKey tutorialDiamondKey;
     private boolean recipeRegistered = false;
+
+    // Vanilla hostile mob spawning
+    private static final EntityType[] TUTORIAL_MOBS = {
+            EntityType.ZOMBIE, EntityType.SKELETON, EntityType.SPIDER, EntityType.CREEPER
+    };
+    private static final int MOB_SPAWN_INTERVAL = 200; // Every 10 seconds
+    private static final int MAX_MOBS_PER_PLAYER = 3;
+    private static final double MOB_SPAWN_DISTANCE = 20.0;
+    private final Random mobRandom = new Random();
 
     public TutorialMode(ChaosCraftPlugin plugin) {
         super(plugin, "tutorial");
@@ -97,12 +107,6 @@ public class TutorialMode extends AbstractMode {
         int bd = attackRegistry.getByPhaseAndType(1, AttackType.BLOCK_DISPLAY).size();
         plugin.getLogger().info("[Tutorial] " + bd + " BLOCK_DISPLAY attacks available.");
 
-        // Music
-        String musicId = tutorialConfig.getMusicSoundId();
-        if (!musicId.isEmpty()) {
-            plugin.getMusicManager().playModeMusic(this);
-        }
-
         // Start scheduler
         attackScheduler.start();
 
@@ -125,6 +129,34 @@ public class TutorialMode extends AbstractMode {
         // Send chat reminder every 200 ticks (10 seconds)
         if (tickCounter % 200 == 0) {
             tracker.tickChatReminder();
+        }
+
+        // Spawn vanilla hostile mobs around players
+        if (tickCounter % MOB_SPAWN_INTERVAL == 0) {
+            spawnTutorialMobs();
+        }
+    }
+
+    private void spawnTutorialMobs() {
+        World world = getTutorialWorld();
+        if (world == null) return;
+
+        for (Player player : world.getPlayers()) {
+            if (isExempt(player)) continue;
+
+            // Count nearby hostile mobs
+            long nearbyMobs = player.getLocation().getNearbyEntities(30, 30, 30).stream()
+                    .filter(e -> e instanceof org.bukkit.entity.Monster).count();
+            if (nearbyMobs >= MAX_MOBS_PER_PLAYER) continue;
+
+            // Spawn at random position around player
+            double angle = mobRandom.nextDouble() * Math.PI * 2;
+            Location spawnLoc = player.getLocation().clone().add(
+                    Math.cos(angle) * MOB_SPAWN_DISTANCE, 0, Math.sin(angle) * MOB_SPAWN_DISTANCE);
+            spawnLoc.setY(world.getHighestBlockYAt(spawnLoc) + 1);
+
+            EntityType mobType = TUTORIAL_MOBS[mobRandom.nextInt(TUTORIAL_MOBS.length)];
+            world.spawnEntity(spawnLoc, mobType);
         }
     }
 

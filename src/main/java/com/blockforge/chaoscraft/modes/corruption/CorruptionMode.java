@@ -120,12 +120,6 @@ public class CorruptionMode extends AbstractMode {
             plugin.getLogger().info("[Corruption] " + bd + " BLOCK_DISPLAY attacks registered.");
         }
 
-        // Start music
-        String musicId = corruptionConfig.getMusicSoundId();
-        if (!musicId.isEmpty()) {
-            plugin.getMusicManager().playModeMusic(this);
-        }
-
         // NOTE: runStartCommands() is called by ModeManager — do NOT call here
 
         // Start the attack scheduler

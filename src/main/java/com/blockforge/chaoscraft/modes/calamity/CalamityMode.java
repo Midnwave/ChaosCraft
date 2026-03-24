@@ -397,10 +397,7 @@ public class CalamityMode extends AbstractMode {
         // 7. Register phase music
         registerPhaseMusic();
 
-        // 8. Play initial mode music
-        plugin.getMusicManager().playModeMusic(this);
-
-        // 9. Load attack configs and start scheduler
+        // 8. Load attack configs and start scheduler
         attackRegistry.reloadConfigs();
 
         // Validate attack registry

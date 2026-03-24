@@ -121,12 +121,6 @@ public class BlueMoonMode extends AbstractMode {
         plugin.getLogger().info("[BlueMoon] " + bd + " BLOCK_DISPLAY, " + env + " ENVIRONMENTAL, "
                 + boss + " BOSS attacks registered (" + attackCount + " total).");
 
-        // Music
-        String musicId = moonConfig.getMusicSoundId();
-        if (!musicId.isEmpty()) {
-            plugin.getMusicManager().playModeMusic(this);
-        }
-
         // Start attack scheduler
         attackScheduler.start();
 
