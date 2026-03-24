@@ -29,6 +29,10 @@ public class ModeTimerHud {
     private long flashThresholdTicks = 60 * 20L; // default 60 seconds
     private boolean expired = false;
 
+    // Slide animation — counts 0→20 ticks after HUD activates, then stays at 20
+    private int slideTick = 0;
+    private static final int SLIDE_DURATION = 20; // 20 ticks = 1 second at 20fps
+
     // Per-mode display info
     private String displayName = "";
     private String color = "white";
@@ -47,6 +51,7 @@ public class ModeTimerHud {
         flashing = false;
         flashCounter = 0;
         expired = false;
+        slideTick = 0;
         flashThresholdTicks = flashAtSeconds * 20L;
 
         // Start the actual countdown timer
@@ -75,6 +80,7 @@ public class ModeTimerHud {
         flashing = false;
         flashCounter = 0;
         expired = false;
+        slideTick = 0;
 
         // Read flash threshold from mode config
         var manager = plugin.getModeManager();
@@ -103,6 +109,7 @@ public class ModeTimerHud {
         flashing = false;
         flashCounter = 0;
         expired = false;
+        slideTick = 0;
         flashThresholdTicks = 60 * 20L;
         displayName = "";
         color = "white";
@@ -116,6 +123,12 @@ public class ModeTimerHud {
      */
     public void tick() {
         if (!active) return;
+
+        // Slide animation counter — counts 0→20 then stops
+        if (slideTick < SLIDE_DURATION) {
+            slideTick++;
+        }
+
         if (expired) return; // Flash locked to true at 0:00
 
         var timer = plugin.getModeTimer();
@@ -167,6 +180,12 @@ public class ModeTimerHud {
     public boolean isFlashing() { return flashing; }
     public String getDisplayName() { return displayName; }
     public String getColor() { return color; }
+
+    /** Slide tick counter: 0→20 after HUD starts, then stays at 20. */
+    public int getSlideTick() { return slideTick; }
+
+    /** True when the slide-down animation is complete (tick >= 20). */
+    public boolean isSlideComplete() { return slideTick >= SLIDE_DURATION; }
 
     public void setDisplayName(String displayName) { this.displayName = displayName; }
     public void setColor(String color) { this.color = color; }

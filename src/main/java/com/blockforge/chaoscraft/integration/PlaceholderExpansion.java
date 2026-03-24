@@ -181,6 +181,16 @@ public class PlaceholderExpansion extends me.clip.placeholderapi.expansion.Place
                 var hud = plugin.getModeTimerHud();
                 yield hud != null ? String.valueOf(hud.isFlashing()) : "false";
             }
+            // Slide animation: 0→20 tick counter for BetterHud y-equation
+            case "mode_timer_slide" -> {
+                var hud = plugin.getModeTimerHud();
+                yield hud != null ? String.valueOf(hud.getSlideTick()) : "0";
+            }
+            // True when slide animation is done (static position)
+            case "mode_timer_slide_done" -> {
+                var hud = plugin.getModeTimerHud();
+                yield hud != null ? String.valueOf(hud.isSlideComplete()) : "false";
+            }
             case "mode_color" -> {
                 var hud = plugin.getModeTimerHud();
                 yield hud != null ? hud.getColor() : "white";
