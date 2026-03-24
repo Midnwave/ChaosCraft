@@ -51,6 +51,19 @@ public class TutorialConfig {
         if (!config.contains("exempt-players")) { config.set("exempt-players", new ArrayList<>()); needsSave = true; }
         if (!config.contains("max-events-per-player")) { config.set("max-events-per-player", 3); needsSave = true; }
         if (!config.contains("rewards.commands")) { config.set("rewards.commands", new ArrayList<>()); needsSave = true; }
+        if (!config.contains("rewards.survived.money")) { config.set("rewards.survived.money", 0); needsSave = true; }
+        if (!config.contains("rewards.survived.items")) { config.set("rewards.survived.items", new ArrayList<>()); needsSave = true; }
+        if (!config.contains("rewards.survived.badges")) { config.set("rewards.survived.badges", new ArrayList<>()); needsSave = true; }
+        if (!config.contains("rewards.survived.commands")) { config.set("rewards.survived.commands", new ArrayList<>()); needsSave = true; }
+        if (!config.contains("rewards.died.money")) { config.set("rewards.died.money", 0); needsSave = true; }
+        if (!config.contains("rewards.died.items")) { config.set("rewards.died.items", new ArrayList<>()); needsSave = true; }
+        if (!config.contains("rewards.died.badges")) { config.set("rewards.died.badges", new ArrayList<>()); needsSave = true; }
+        if (!config.contains("rewards.died.commands")) { config.set("rewards.died.commands", new ArrayList<>()); needsSave = true; }
+        if (!config.contains("restrictions.allow-world-change")) { config.set("restrictions.allow-world-change", false); needsSave = true; }
+        if (!config.contains("restrictions.water-to-glass")) { config.set("restrictions.water-to-glass", false); needsSave = true; }
+        if (!config.contains("restrictions.allow-respawn")) { config.set("restrictions.allow-respawn", true); needsSave = true; }
+        if (!config.contains("restrictions.allow-elytra")) { config.set("restrictions.allow-elytra", false); needsSave = true; }
+        if (!config.contains("restrictions.blocked-commands")) { config.set("restrictions.blocked-commands", new ArrayList<>()); needsSave = true; }
 
         // ── Tutorial-specific keys ──
         if (!config.contains("tutorial.random-design")) { config.set("tutorial.random-design", true); needsSave = true; }
@@ -188,6 +201,23 @@ public class TutorialConfig {
         d.set("max-events-per-player", 3);
         d.set("rewards.commands", new ArrayList<>());
         d.setComments("rewards.commands", List.of("Commands run for each surviving player when tutorial ends.", "Use %player% placeholder."));
+
+        // ── Player Restrictions ──────────────────────────────────────────────────
+        d.set("restrictions.allow-world-change", false);
+        d.setComments("restrictions.allow-world-change", List.of(
+            "Whether players can change worlds during this mode. Default: false."));
+        d.set("restrictions.water-to-glass", false);
+        d.setComments("restrictions.water-to-glass", List.of(
+            "Replace water with light blue glass to prevent AI abuse. Default: false."));
+        d.set("restrictions.allow-respawn", true);
+        d.setComments("restrictions.allow-respawn", List.of(
+            "If false, dead players enter spectator mode until the mode ends. Default: true."));
+        d.set("restrictions.allow-elytra", false);
+        d.setComments("restrictions.allow-elytra", List.of(
+            "Whether players can use elytra during this mode. Default: false."));
+        d.set("restrictions.blocked-commands", new ArrayList<>());
+        d.setComments("restrictions.blocked-commands", List.of(
+            "Commands blocked during this mode. Example: home, tpa, spawn, warp"));
 
         d.set("timer-hud.display-name", "TUTORIAL");
         d.setComments("timer-hud.display-name", List.of("Text shown on the BetterHud timer bar."));

@@ -146,6 +146,33 @@ public class ModeConfig {
         return config.getStringList("rewards.commands");
     }
 
+    // ── Player Restriction Getters ────────────────────────────────────────────
+
+    /** Whether players can change worlds during this mode. Default false. */
+    public boolean isWorldChangeAllowed() {
+        return config.getBoolean("restrictions.allow-world-change", false);
+    }
+
+    /** Whether water/lakes are replaced with light blue glass to prevent AI abuse. Default false. */
+    public boolean isWaterToGlassEnabled() {
+        return config.getBoolean("restrictions.water-to-glass", false);
+    }
+
+    /** Whether players respawn normally on death. If false, they go to spectator mode. Default true. */
+    public boolean isRespawnAllowed() {
+        return config.getBoolean("restrictions.allow-respawn", true);
+    }
+
+    /** Whether players can use elytra during this mode. Default false. */
+    public boolean isElytraAllowed() {
+        return config.getBoolean("restrictions.allow-elytra", false);
+    }
+
+    /** List of blocked command aliases (e.g. "home", "tpa", "spawn"). */
+    public List<String> getBlockedCommands() {
+        return config.getStringList("restrictions.blocked-commands");
+    }
+
     private void createDefaults() {
         FileConfiguration defaults = new YamlConfiguration();
 
@@ -234,6 +261,35 @@ public class ModeConfig {
         defaults.setComments("max-events-per-player", List.of(
                 "Maximum number of simultaneous active attacks that can target one player at once.",
                 "Higher = more chaotic but also higher server load. Recommended range: 3–8."));
+
+        // ── Player Restrictions ──────────────────────────────────────────────────
+        defaults.set("restrictions.allow-world-change", false);
+        defaults.setComments("restrictions.allow-world-change", List.of(
+                "Whether players can change worlds/dimensions during this mode.",
+                "If false, world change events are cancelled (player stays in mode world)."));
+        defaults.set("restrictions.water-to-glass", false);
+        defaults.setComments("restrictions.water-to-glass", List.of(
+                "If true, water and lakes in the mode world are visually replaced with",
+                "light blue stained glass to prevent AI abuse (mobs can't swim/drown).",
+                "Blocks are restored when the mode ends."));
+        defaults.set("restrictions.allow-respawn", true);
+        defaults.setComments("restrictions.allow-respawn", List.of(
+                "Whether players respawn normally on death during this mode.",
+                "If false, dead players are put in spectator mode to watch others.",
+                "They are restored to survival mode at a safe position when the mode ends."));
+        defaults.set("restrictions.allow-elytra", false);
+        defaults.setComments("restrictions.allow-elytra", List.of(
+                "Whether players can use elytra during this mode.",
+                "If false, elytra gliding is cancelled."));
+        defaults.set("restrictions.blocked-commands", new ArrayList<>());
+        defaults.setComments("restrictions.blocked-commands", List.of(
+                "Command aliases that players cannot use during this mode.",
+                "Blocks the command for non-exempt, non-op players.",
+                "Example:",
+                "  - \"home\"",
+                "  - \"tpa\"",
+                "  - \"spawn\"",
+                "  - \"warp\""));
 
         // ── Rewards (tiered) ──────────────────────────────────────────────────
         // Survived rewards — given to players who stayed alive the entire mode

@@ -55,6 +55,19 @@ public class SeerConfig {
         if (!config.contains("exempt-players")) { config.set("exempt-players", new ArrayList<>()); needsSave = true; }
         if (!config.contains("max-events-per-player")) { config.set("max-events-per-player", 4); needsSave = true; }
         if (!config.contains("rewards.commands")) { config.set("rewards.commands", new ArrayList<>()); needsSave = true; }
+        if (!config.contains("rewards.survived.money")) { config.set("rewards.survived.money", 0); needsSave = true; }
+        if (!config.contains("rewards.survived.items")) { config.set("rewards.survived.items", new ArrayList<>()); needsSave = true; }
+        if (!config.contains("rewards.survived.badges")) { config.set("rewards.survived.badges", new ArrayList<>()); needsSave = true; }
+        if (!config.contains("rewards.survived.commands")) { config.set("rewards.survived.commands", new ArrayList<>()); needsSave = true; }
+        if (!config.contains("rewards.died.money")) { config.set("rewards.died.money", 0); needsSave = true; }
+        if (!config.contains("rewards.died.items")) { config.set("rewards.died.items", new ArrayList<>()); needsSave = true; }
+        if (!config.contains("rewards.died.badges")) { config.set("rewards.died.badges", new ArrayList<>()); needsSave = true; }
+        if (!config.contains("rewards.died.commands")) { config.set("rewards.died.commands", new ArrayList<>()); needsSave = true; }
+        if (!config.contains("restrictions.allow-world-change")) { config.set("restrictions.allow-world-change", false); needsSave = true; }
+        if (!config.contains("restrictions.water-to-glass")) { config.set("restrictions.water-to-glass", false); needsSave = true; }
+        if (!config.contains("restrictions.allow-respawn")) { config.set("restrictions.allow-respawn", true); needsSave = true; }
+        if (!config.contains("restrictions.allow-elytra")) { config.set("restrictions.allow-elytra", false); needsSave = true; }
+        if (!config.contains("restrictions.blocked-commands")) { config.set("restrictions.blocked-commands", new ArrayList<>()); needsSave = true; }
 
         // ── Seer specific keys ──────────────────────────────────────────
         if (!config.contains("world")) { config.set("world", "seer_arena"); needsSave = true; }
@@ -198,6 +211,23 @@ public class SeerConfig {
         defaults.setComments("timer-hud.flash-color", List.of(
                 "Color name when timer is flashing (below threshold). Default: dark_purple."));
         defaults.set("timer-hud.flash-threshold-seconds", 60);
+
+        // ── Player Restrictions ──────────────────────────────────────────────────
+        defaults.set("restrictions.allow-world-change", false);
+        defaults.setComments("restrictions.allow-world-change", List.of(
+            "Whether players can change worlds during this mode. Default: false."));
+        defaults.set("restrictions.water-to-glass", false);
+        defaults.setComments("restrictions.water-to-glass", List.of(
+            "Replace water with light blue glass to prevent AI abuse. Default: false."));
+        defaults.set("restrictions.allow-respawn", true);
+        defaults.setComments("restrictions.allow-respawn", List.of(
+            "If false, dead players enter spectator mode until the mode ends. Default: true."));
+        defaults.set("restrictions.allow-elytra", false);
+        defaults.setComments("restrictions.allow-elytra", List.of(
+            "Whether players can use elytra during this mode. Default: false."));
+        defaults.set("restrictions.blocked-commands", new ArrayList<>());
+        defaults.setComments("restrictions.blocked-commands", List.of(
+            "Commands blocked during this mode. Example: home, tpa, spawn, warp"));
 
         try {
             defaults.save(configFile);

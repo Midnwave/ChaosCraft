@@ -169,6 +169,12 @@ public class ModeManager implements Listener {
             modeResults.scheduleResults(activeMode);
         }
 
+        // Restore spectating players to survival mode
+        var restrictionListener = plugin.getModeRestrictionListener();
+        if (restrictionListener != null) {
+            restrictionListener.restoreSpectators();
+        }
+
         // Call mode's onEnd
         activeMode.onEnd();
 
