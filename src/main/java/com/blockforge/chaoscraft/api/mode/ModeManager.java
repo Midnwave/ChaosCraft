@@ -228,6 +228,45 @@ public class ModeManager implements Listener {
     public void onWorldChange(PlayerChangedWorldEvent event) {
         if (activeMode != null && activeMode.isActive()) {
             activeMode.onPlayerChangeDimension(event.getPlayer());
+            // Run on-player-ready-commands for this player (world change during mode)
+            runPlayerReadyCommands(event.getPlayer());
         }
+    }
+
+    @EventHandler
+    public void onPlayerQuit(org.bukkit.event.player.PlayerQuitEvent event) {
+        // No action needed on quit — player UUID stays in tracking sets.
+        // On rejoin: title screen → verifyexittitlescreen → on-player-ready-commands
+        if (activeMode != null && activeMode.isActive()) {
+            plugin.debug("[Mode] " + event.getPlayer().getName() + " quit during active mode "
+                    + activeMode.getName());
+        }
+    }
+
+    /**
+     * Run on-player-ready-commands for a specific player.
+     * Called when: player exits title screen (verifyexittitlescreen), changes world.
+     * Uses CommandScriptRunner with full wait/done/PAPI support.
+     */
+    public void runPlayerReadyCommands(org.bukkit.entity.Player player) {
+        if (activeMode == null || !activeMode.isActive()) return;
+
+        var commands = activeMode.getModeConfig().getOnPlayerReadyCommands();
+        if (commands.isEmpty()) return;
+
+        // Replace %player% in all commands
+        var resolved = new java.util.ArrayList<String>();
+        for (String cmd : commands) {
+            resolved.add(cmd.replace("%player%", player.getName()));
+        }
+
+        new CommandScriptRunner(plugin, resolved, () -> {
+            // on-player-ready "done" callback — no special action needed
+        }, player).execute();
+
+        // Ensure music is playing
+        plugin.getMusicManager().playForPlayer(player);
+
+        plugin.debug("[Mode] Ran on-player-ready-commands for " + player.getName());
     }
 }

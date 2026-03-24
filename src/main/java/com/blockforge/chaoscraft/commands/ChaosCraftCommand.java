@@ -101,6 +101,7 @@ public class ChaosCraftCommand implements CommandExecutor, TabCompleter {
     private static final List<String> MODE_ACTIONS = List.of("start", "stop");
     private static final List<String> FUNCTION_SUBS = List.of(
             "startmodetimer", "stopmodetimer", "addtime", "removetime", "pausetimer", "resumetimer",
+            "verifyexittitlescreen",
             "setbadgeobtaineditem", "setbadgeunobtaineditem", "setbadgenotobtainable",
             "setdoommodepos1", "setdoommodepos2",
             "setorbspawn"
@@ -812,6 +813,21 @@ public class ChaosCraftCommand implements CommandExecutor, TabCompleter {
             case "resumetimer" -> {
                 plugin.getModeTimer().resume();
                 sender.sendMessage(Component.text("Timer resumed.", NamedTextColor.GREEN));
+            }
+            case "verifyexittitlescreen" -> {
+                // /cc function verifyexittitlescreen <player>
+                if (args.length < 3) {
+                    sender.sendMessage(Component.text("Usage: /cc function verifyexittitlescreen <player>", NamedTextColor.YELLOW));
+                    return true;
+                }
+                Player target = plugin.getServer().getPlayerExact(args[2]);
+                if (target == null || !target.isOnline()) {
+                    sender.sendMessage(Component.text("Player not found or offline: " + args[2], NamedTextColor.RED));
+                    return true;
+                }
+                // Run on-player-ready-commands if a mode is active
+                plugin.getModeManager().runPlayerReadyCommands(target);
+                sender.sendMessage(Component.text("Verified title screen exit for " + target.getName(), NamedTextColor.GREEN));
             }
             case "setbadgeobtaineditem", "setbadgeunobtaineditem", "setbadgenotobtainable" -> {
                 if (!sender.hasPermission("chaoscraft.function.badge") && !sender.hasPermission("chaoscraft.admin")) {

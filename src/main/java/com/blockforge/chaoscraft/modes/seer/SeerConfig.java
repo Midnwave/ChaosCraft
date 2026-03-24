@@ -18,7 +18,7 @@ import java.util.List;
  */
 public class SeerConfig {
 
-    private static final int CURRENT_CONFIG_VERSION = 1;
+    private static final int CURRENT_CONFIG_VERSION = 2;
 
     private final ChaosCraftPlugin plugin;
     private final File configFile;
@@ -42,6 +42,7 @@ public class SeerConfig {
 
         // ── Base mode keys ──────────────────────────────────────────────
         if (!config.contains("config-version")) { config.set("config-version", CURRENT_CONFIG_VERSION); needsSave = true; }
+        if (config.getInt("config-version") < CURRENT_CONFIG_VERSION) { config.set("config-version", CURRENT_CONFIG_VERSION); needsSave = true; }
         if (!config.contains("timer.default-seconds")) { config.set("timer.default-seconds", 1200); needsSave = true; }
         if (!config.contains("timer.max-seconds")) { config.set("timer.max-seconds", 3600); needsSave = true; }
         if (!config.contains("music.sound-id")) { config.set("music.sound-id", ""); needsSave = true; }
@@ -49,6 +50,8 @@ public class SeerConfig {
         if (!config.contains("music.duration-ticks")) { config.set("music.duration-ticks", 6000); needsSave = true; }
         if (!config.contains("on-start-commands")) { config.set("on-start-commands", new ArrayList<>()); needsSave = true; }
         if (!config.contains("on-end-commands")) { config.set("on-end-commands", new ArrayList<>()); needsSave = true; }
+        if (!config.contains("on-player-ready-commands")) { config.set("on-player-ready-commands", new ArrayList<>()); needsSave = true; }
+        if (!config.contains("on-reset-commands")) { config.set("on-reset-commands", new ArrayList<>()); needsSave = true; }
         if (!config.contains("exempt-players")) { config.set("exempt-players", new ArrayList<>()); needsSave = true; }
         if (!config.contains("max-events-per-player")) { config.set("max-events-per-player", 4); needsSave = true; }
         if (!config.contains("rewards.commands")) { config.set("rewards.commands", new ArrayList<>()); needsSave = true; }
@@ -128,6 +131,13 @@ public class SeerConfig {
 
         defaults.set("on-start-commands", new ArrayList<>());
         defaults.set("on-end-commands", new ArrayList<>());
+        defaults.set("on-player-ready-commands", new ArrayList<>());
+        defaults.setComments("on-player-ready-commands", List.of(
+                "Commands run for each player when they exit title screen or change world during this mode.",
+                "Supports wait <ticks>, done, and PlaceholderAPI. Use %player% for the player's name."));
+        defaults.set("on-reset-commands", new ArrayList<>());
+        defaults.setComments("on-reset-commands", List.of(
+                "Per-mode reset commands. Available for manual use or future expansion."));
         defaults.set("exempt-players", new ArrayList<>());
         defaults.set("max-events-per-player", 4);
         defaults.set("rewards.commands", new ArrayList<>());

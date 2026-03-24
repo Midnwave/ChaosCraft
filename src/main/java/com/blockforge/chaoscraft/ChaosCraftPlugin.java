@@ -264,11 +264,22 @@ public class ChaosCraftPlugin extends JavaPlugin {
         getServer().getPluginManager().registerEvents(modeManager, this);
         getServer().getPluginManager().registerEvents(musicManager, this);
 
-        // Per-player join tick tracker (for BetterHud animation sync)
+        // Per-player join tick tracker + global reset commands
         getServer().getPluginManager().registerEvents(new org.bukkit.event.Listener() {
             @org.bukkit.event.EventHandler
             public void onJoin(org.bukkit.event.player.PlayerJoinEvent e) {
                 playerJoinTicks.put(e.getPlayer().getUniqueId(), (long) getServer().getCurrentTick());
+
+                // Global reset commands: run when player joins and NO mode is active
+                if (!modeManager.isAnyModeActive()) {
+                    var resetCmds = getConfig().getStringList("global-reset-commands");
+                    for (String cmd : resetCmds) {
+                        String resolved = cmd.replace("%player%", e.getPlayer().getName());
+                        getServer().getScheduler().runTaskLater(ChaosCraftPlugin.this, () -> {
+                            getServer().dispatchCommand(getServer().getConsoleSender(), resolved);
+                        }, 20L); // Small delay to let player fully load
+                    }
+                }
             }
             @org.bukkit.event.EventHandler
             public void onQuit(org.bukkit.event.player.PlayerQuitEvent e) {

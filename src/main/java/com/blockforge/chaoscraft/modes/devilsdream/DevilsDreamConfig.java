@@ -51,6 +51,8 @@ public class DevilsDreamConfig {
         if (!config.contains("music.duration-ticks")) { config.set("music.duration-ticks", 6000); needsSave = true; }
         if (!config.contains("on-start-commands")) { config.set("on-start-commands", new ArrayList<>()); needsSave = true; }
         if (!config.contains("on-end-commands")) { config.set("on-end-commands", new ArrayList<>()); needsSave = true; }
+        if (!config.contains("on-player-ready-commands")) { config.set("on-player-ready-commands", new ArrayList<>()); needsSave = true; }
+        if (!config.contains("on-reset-commands")) { config.set("on-reset-commands", new ArrayList<>()); needsSave = true; }
         if (!config.contains("exempt-players")) { config.set("exempt-players", new ArrayList<>()); needsSave = true; }
         if (!config.contains("max-events-per-player")) { config.set("max-events-per-player", 6); needsSave = true; }
         if (!config.contains("rewards.commands")) { config.set("rewards.commands", new ArrayList<>()); needsSave = true; }
@@ -261,6 +263,13 @@ public class DevilsDreamConfig {
         defaults.setComments("on-start-commands", List.of(
                 "Console commands run when Devil's Dream starts. Use %player% for the starting player."));
         defaults.set("on-end-commands", new ArrayList<>());
+        defaults.set("on-player-ready-commands", new ArrayList<>());
+        defaults.setComments("on-player-ready-commands", List.of(
+                "Commands run for each player when they exit title screen or change world during this mode.",
+                "Supports wait <ticks>, done, and PlaceholderAPI. Use %player% for the player's name."));
+        defaults.set("on-reset-commands", new ArrayList<>());
+        defaults.setComments("on-reset-commands", List.of(
+                "Per-mode reset commands. Available for manual use or future expansion."));
         defaults.set("exempt-players", new ArrayList<>());
         defaults.set("rewards.commands", new ArrayList<>());
 

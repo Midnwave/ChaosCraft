@@ -15,7 +15,7 @@ import java.util.List;
  */
 public class TutorialConfig {
 
-    private static final int CURRENT_CONFIG_VERSION = 1;
+    private static final int CURRENT_CONFIG_VERSION = 2;
     private final ChaosCraftPlugin plugin;
     private final File configFile;
     private FileConfiguration config;
@@ -38,6 +38,7 @@ public class TutorialConfig {
 
         // ── Base mode keys ──
         if (!config.contains("config-version")) { config.set("config-version", CURRENT_CONFIG_VERSION); needsSave = true; }
+        if (config.getInt("config-version") < CURRENT_CONFIG_VERSION) { config.set("config-version", CURRENT_CONFIG_VERSION); needsSave = true; }
         if (!config.contains("timer.default-seconds")) { config.set("timer.default-seconds", 210); needsSave = true; }
         if (!config.contains("timer.max-seconds")) { config.set("timer.max-seconds", 300); needsSave = true; }
         if (!config.contains("music.sound-id")) { config.set("music.sound-id", ""); needsSave = true; }
@@ -45,6 +46,8 @@ public class TutorialConfig {
         if (!config.contains("music.duration-ticks")) { config.set("music.duration-ticks", 4200); needsSave = true; }
         if (!config.contains("on-start-commands")) { config.set("on-start-commands", new ArrayList<>()); needsSave = true; }
         if (!config.contains("on-end-commands")) { config.set("on-end-commands", new ArrayList<>()); needsSave = true; }
+        if (!config.contains("on-player-ready-commands")) { config.set("on-player-ready-commands", new ArrayList<>()); needsSave = true; }
+        if (!config.contains("on-reset-commands")) { config.set("on-reset-commands", new ArrayList<>()); needsSave = true; }
         if (!config.contains("exempt-players")) { config.set("exempt-players", new ArrayList<>()); needsSave = true; }
         if (!config.contains("max-events-per-player")) { config.set("max-events-per-player", 3); needsSave = true; }
         if (!config.contains("rewards.commands")) { config.set("rewards.commands", new ArrayList<>()); needsSave = true; }
@@ -173,6 +176,13 @@ public class TutorialConfig {
         d.setComments("on-start-commands", List.of("Console commands run when tutorial starts."));
         d.set("on-end-commands", new ArrayList<>());
         d.setComments("on-end-commands", List.of("Console commands run when tutorial ends."));
+        d.set("on-player-ready-commands", new ArrayList<>());
+        d.setComments("on-player-ready-commands", List.of(
+                "Commands run for each player when they exit title screen or change world during this mode.",
+                "Supports wait <ticks>, done, and PlaceholderAPI. Use %player% for the player's name."));
+        d.set("on-reset-commands", new ArrayList<>());
+        d.setComments("on-reset-commands", List.of(
+                "Per-mode reset commands. Available for manual use or future expansion."));
         d.set("exempt-players", new ArrayList<>());
         d.setComments("exempt-players", List.of("Players exempt from tutorial attacks."));
         d.set("max-events-per-player", 3);

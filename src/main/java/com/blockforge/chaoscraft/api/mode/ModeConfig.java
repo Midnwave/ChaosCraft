@@ -18,7 +18,7 @@ public class ModeConfig {
      * Bump when adding new config keys or changing defaults.
      * Files with an older version are re-saved with new keys while preserving user edits.
      */
-    public static final int CURRENT_CONFIG_VERSION = 1;
+    public static final int CURRENT_CONFIG_VERSION = 2;
 
     private final ChaosCraftPlugin plugin;
     private final String modeName;
@@ -100,6 +100,14 @@ public class ModeConfig {
         return config.getStringList("on-end-commands");
     }
 
+    public List<String> getOnPlayerReadyCommands() {
+        return config.getStringList("on-player-ready-commands");
+    }
+
+    public List<String> getOnResetCommands() {
+        return config.getStringList("on-reset-commands");
+    }
+
     public List<String> getExemptPlayers() {
         return config.getStringList("exempt-players");
     }
@@ -156,6 +164,24 @@ public class ModeConfig {
         defaults.setComments("on-end-commands", List.of(
                 "Console commands run when this mode ends (naturally or via /cc modes stop).",
                 "Same %player% placeholder support as on-start-commands."));
+
+        defaults.set("on-player-ready-commands", new ArrayList<>());
+        defaults.setComments("on-player-ready-commands", List.of(
+                "Commands run for each player when they become ready during an active mode.",
+                "Triggers: exiting title screen (via /cc function verifyexittitlescreen),",
+                "          changing world/dimension during an active mode.",
+                "Fires EVERY time the trigger occurs (not just once per session).",
+                "Supports wait <ticks>, done, and PlaceholderAPI placeholders.",
+                "Use %player% for the player's name.",
+                "Example:",
+                "  - \"playsound minecraft:chaoscraft.chain master %player%\"",
+                "  - \"title %player% subtitle {\\\"text\\\":\\\"Mode Active!\\\"}\""));
+
+        defaults.set("on-reset-commands", new ArrayList<>());
+        defaults.setComments("on-reset-commands", List.of(
+                "Per-mode reset commands. Available for manual use or future expansion.",
+                "Not auto-triggered — use global-reset-commands in config.yml for join resets.",
+                "Use %player% for the player's name."));
 
         // ── Exempt Players ─────────────────────────────────────────────────────
         defaults.set("exempt-players", new ArrayList<>());
