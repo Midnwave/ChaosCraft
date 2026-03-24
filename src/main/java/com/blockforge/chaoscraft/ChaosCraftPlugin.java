@@ -76,6 +76,9 @@ public class ChaosCraftPlugin extends JavaPlugin {
     private com.blockforge.chaoscraft.services.shop.gui.ShopGUIListener shopGUIListener;
     private com.blockforge.chaoscraft.services.mobspawn.MobSpawnService mobSpawnService;
 
+    // Per-player join tick tracker for BetterHud animation sync
+    private final Map<UUID, Long> playerJoinTicks = new HashMap<>();
+
     @Override
     public void onEnable() {
         instance = this;
@@ -260,6 +263,18 @@ public class ChaosCraftPlugin extends JavaPlugin {
         // Register event listeners
         getServer().getPluginManager().registerEvents(modeManager, this);
         getServer().getPluginManager().registerEvents(musicManager, this);
+
+        // Per-player join tick tracker (for BetterHud animation sync)
+        getServer().getPluginManager().registerEvents(new org.bukkit.event.Listener() {
+            @org.bukkit.event.EventHandler
+            public void onJoin(org.bukkit.event.player.PlayerJoinEvent e) {
+                playerJoinTicks.put(e.getPlayer().getUniqueId(), (long) getServer().getCurrentTick());
+            }
+            @org.bukkit.event.EventHandler
+            public void onQuit(org.bukkit.event.player.PlayerQuitEvent e) {
+                playerJoinTicks.remove(e.getPlayer().getUniqueId());
+            }
+        }, this);
 
         // Register Calamity mode sub-system listeners
         getServer().getPluginManager().registerEvents(calamityMode.getEggDetector(), this);
@@ -757,6 +772,14 @@ public class ChaosCraftPlugin extends JavaPlugin {
     public com.blockforge.chaoscraft.updater.UpdateChecker getUpdateChecker() { return updateChecker; }
     public com.blockforge.chaoscraft.weapons.ivory.IvoryService getIvoryService() { return ivoryService; }
     public com.blockforge.chaoscraft.services.mobspawn.MobSpawnService getMobSpawnService() { return mobSpawnService; }
+
+    /** Ticks since player joined, capped at 20. For BetterHud animation sync. */
+    public int getPlayerJoinTicks(Player player) {
+        Long joinTick = playerJoinTicks.get(player.getUniqueId());
+        if (joinTick == null) return 20; // Default to "done" if not tracked
+        long elapsed = (long) getServer().getCurrentTick() - joinTick;
+        return (int) Math.min(20, Math.max(0, elapsed));
+    }
 
     public void debug(String message) {
         if (getConfig().getBoolean("debug", false)) {

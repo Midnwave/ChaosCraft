@@ -109,14 +109,6 @@ public class CorruptionMode extends AbstractMode {
         // Load exempt players from config
         loadExemptPlayers();
 
-        // Start timer
-        int timerSeconds = corruptionConfig.getTimerSeconds();
-        plugin.getModeTimer().start(timerSeconds);
-        plugin.getModeTimer().setOnExpire(() -> {
-            plugin.getLogger().info("[Corruption] Timer expired — mode complete! Players survived the corruption!");
-            plugin.getModeManager().endActiveMode();
-        });
-
         // Load attack configs and validate
         attackRegistry.reloadConfigs();
 
@@ -150,7 +142,7 @@ public class CorruptionMode extends AbstractMode {
                     corruptionConfig.getMobSpawnConfig(), world);
         }
 
-        plugin.getLogger().info("[Corruption] Mode fully started. Survive " + timerSeconds + " seconds! "
+        plugin.getLogger().info("[Corruption] Mode fully started. "
                 + "(" + attackCount + " attacks registered)");
     }
 

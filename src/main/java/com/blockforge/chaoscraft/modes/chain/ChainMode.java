@@ -92,14 +92,6 @@ public class ChainMode extends AbstractMode {
         // Load exempt players from config
         loadExemptPlayers();
 
-        // Start timer
-        long timerSeconds = chainConfig.getDefaultTimerSeconds();
-        plugin.getModeTimer().start((int) timerSeconds);
-        plugin.getModeTimer().setOnExpire(() -> {
-            plugin.getLogger().info("[Chain] Timer expired — mode complete! Players survived!");
-            plugin.getModeManager().endActiveMode();
-        });
-
         // Load attack configs and validate
         attackRegistry.reloadConfigs();
 
@@ -128,7 +120,7 @@ public class ChainMode extends AbstractMode {
                     chainConfig.getMobSpawnConfig(), world);
         }
 
-        plugin.getLogger().info("[Chain] Mode fully started. Survive " + timerSeconds + " seconds! "
+        plugin.getLogger().info("[Chain] Mode fully started. "
                 + "(" + attackCount + " attacks registered)");
     }
 

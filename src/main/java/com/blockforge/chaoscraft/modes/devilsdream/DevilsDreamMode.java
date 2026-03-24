@@ -104,14 +104,6 @@ public class DevilsDreamMode extends AbstractMode implements Listener {
 
         loadExemptPlayers();
 
-        // Start timer
-        long timerSeconds = dreamConfig.getDefaultTimerSeconds();
-        plugin.getModeTimer().start((int) timerSeconds);
-        plugin.getModeTimer().setOnExpire(() -> {
-            plugin.getLogger().info("[DevilsDream] Timer expired — players have awakened!");
-            plugin.getModeManager().endActiveMode();
-        });
-
         attackRegistry.reloadConfigs();
 
         int attackCount = attackRegistry.size();
@@ -141,7 +133,7 @@ public class DevilsDreamMode extends AbstractMode implements Listener {
                     dreamConfig.getMobSpawnConfig(), world);
         }
 
-        plugin.getLogger().info("[DevilsDream] Mode fully started. Survive " + timerSeconds + " seconds! "
+        plugin.getLogger().info("[DevilsDream] Mode fully started. "
                 + "Dream Adaptation active. MythicMobs: " + (mobSpawner.isMythicMobsAvailable() ? "ENABLED" : "DISABLED"));
     }
 

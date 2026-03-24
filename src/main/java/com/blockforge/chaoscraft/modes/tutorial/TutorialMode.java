@@ -90,14 +90,6 @@ public class TutorialMode extends AbstractMode {
             }
         }
 
-        // Start timer
-        long timerSeconds = tutorialConfig.getDefaultTimerSeconds();
-        plugin.getModeTimer().start((int) timerSeconds);
-        plugin.getModeTimer().setOnExpire(() -> {
-            plugin.getLogger().info("[Tutorial] Timer expired — tutorial over!");
-            plugin.getModeManager().endActiveMode();
-        });
-
         // Load attack configs
         attackRegistry.reloadConfigs();
 
@@ -117,8 +109,7 @@ public class TutorialMode extends AbstractMode {
         // Register listener
         plugin.getServer().getPluginManager().registerEvents(listener, plugin);
 
-        plugin.getLogger().info("[Tutorial] Mode fully started. Complete the tutorial in "
-                + timerSeconds + " seconds!");
+        plugin.getLogger().info("[Tutorial] Mode fully started.");
     }
 
     @Override

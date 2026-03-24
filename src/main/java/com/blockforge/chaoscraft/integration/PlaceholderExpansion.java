@@ -73,7 +73,14 @@ public class PlaceholderExpansion extends me.clip.placeholderapi.expansion.Place
             // Timer formats
             case "timer_hh_mm_ss" -> timer.formatHhMmSs();
             case "timer_mm_ss" -> timer.formatMmSs();
-            case "timer_m_ss" -> timer.formatMSs();
+            case "timer_m_ss" -> {
+                // If timer HUD is active with a delay, return blank during delay
+                var timerHud = plugin.getModeTimerHud();
+                if (timerHud != null && timerHud.isActive() && timerHud.isDelaying()) {
+                    yield "";
+                }
+                yield timer.formatMSs();
+            }
             case "timer_ss_ms" -> timer.formatSsMs();
             case "timer_raw" -> timer.formatRaw();
 
@@ -172,6 +179,12 @@ public class PlaceholderExpansion extends me.clip.placeholderapi.expansion.Place
                 yield pts != null && pts.isSessionActive() ? "true" : "false";
             }
 
+            // Per-player join ticks (0→20, for BetterHud animation sync)
+            case "join_ticks" -> {
+                if (player == null) yield "20";
+                yield String.valueOf(plugin.getPlayerJoinTicks(player));
+            }
+
             // Mode Timer HUD placeholders
             case "mode_timer_active" -> {
                 var hud = plugin.getModeTimerHud();
@@ -181,16 +194,7 @@ public class PlaceholderExpansion extends me.clip.placeholderapi.expansion.Place
                 var hud = plugin.getModeTimerHud();
                 yield hud != null ? String.valueOf(hud.isFlashing()) : "false";
             }
-            // Slide animation: 0→20 tick counter for BetterHud y-equation
-            case "mode_timer_slide" -> {
-                var hud = plugin.getModeTimerHud();
-                yield hud != null ? String.valueOf(hud.getSlideTick()) : "0";
-            }
-            // True when slide animation is done (static position)
-            case "mode_timer_slide_done" -> {
-                var hud = plugin.getModeTimerHud();
-                yield hud != null ? String.valueOf(hud.isSlideComplete()) : "false";
-            }
+            // Slide animation now uses join_ticks placeholder instead
             case "mode_color" -> {
                 var hud = plugin.getModeTimerHud();
                 yield hud != null ? hud.getColor() : "white";

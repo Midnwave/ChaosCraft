@@ -1,23 +1,25 @@
 package com.blockforge.chaoscraft.api.timer;
 
 import com.blockforge.chaoscraft.ChaosCraftPlugin;
+import org.bukkit.Bukkit;
 
 /**
  * Manages the BetterHud mode timer display state.
  *
- * Activated automatically by ModeManager when a mode starts. Reads the
- * countdown from the existing ModeTimer (which modes start themselves).
+ * Started via: /cc function startmodetimer <MM:SS> <flash_at> [delay_seconds]
  *
- * Can also be started manually via: /cc function startmodetimer <MM:SS> <flash_at>
- * which overrides the mode's timer with explicit values.
+ * The timer counts down from the given duration. When remaining time hits
+ * the flash threshold, isFlashing() alternates 10 ticks on / 10 ticks off.
+ * At 0:00, flash stays permanently true (red).
  *
- * Flash logic: when remaining time <= flash threshold, alternates true/false
- * every 10 ticks. At 0:00, flash stays permanently true (red).
+ * Optional delay: bar appears immediately but timer text is blank until
+ * the delay expires, then the countdown begins.
  *
  * PlaceholderAPI:
  *   %chaoscraft_mode_timer_active%   — "true"/"false" — BetterHud visibility
- *   %chaoscraft_mode_timer_flash%    — "true"/"false" — 10-tick alternation
- *   %chaoscraft_timer_m_ss%          — countdown text (from ModeTimer)
+ *   %chaoscraft_mode_timer_flash%    — "true"/"false" — red flash alternation
+ *   %chaoscraft_mode_timer_text%     — timer text (blank during delay, "m:ss" during countdown, "0:00" at end)
+ *   %chaoscraft_join_ticks%          — 0→20 per-player for slide animation
  */
 public class ModeTimerHud {
 
@@ -26,12 +28,13 @@ public class ModeTimerHud {
     private boolean active = false;
     private boolean flashing = false;
     private int flashCounter = 0;
-    private long flashThresholdTicks = 60 * 20L; // default 60 seconds
+    private long flashThresholdTicks = 60 * 20L;
     private boolean expired = false;
 
-    // Slide animation — counts 0→20 ticks after HUD activates, then stays at 20
-    private int slideTick = 0;
-    private static final int SLIDE_DURATION = 20; // 20 ticks = 1 second at 20fps
+    // Delay: bar visible but timer text blank until delay expires
+    private long delayTicksRemaining = 0;
+    private boolean delaying = false;
+    private long pendingDurationSeconds = 0; // Timer starts after delay
 
     // Per-mode display info
     private String displayName = "";
@@ -42,19 +45,60 @@ public class ModeTimerHud {
     }
 
     /**
-     * Start the HUD with explicit duration and flash threshold.
-     * Called from /cc function startmodetimer <duration> <flash_at>.
-     * This ALSO starts the ModeTimer countdown.
+     * Start the HUD with explicit duration, flash threshold, and optional delay.
+     * Called from /cc function startmodetimer <duration> <flash_at> [delay].
+     *
+     * @param durationSeconds  countdown duration
+     * @param flashAtSeconds   seconds remaining when flashing begins
+     * @param delaySeconds     seconds before countdown starts (bar visible, text blank)
      */
-    public void startHud(long durationSeconds, long flashAtSeconds) {
+    public void startHud(long durationSeconds, long flashAtSeconds, long delaySeconds) {
         active = true;
         flashing = false;
         flashCounter = 0;
         expired = false;
-        slideTick = 0;
         flashThresholdTicks = flashAtSeconds * 20L;
 
-        // Start the actual countdown timer
+        loadModeDisplayInfo();
+
+        if (delaySeconds > 0) {
+            // Delay mode: bar visible but text blank
+            delaying = true;
+            delayTicksRemaining = delaySeconds * 20L;
+            pendingDurationSeconds = durationSeconds;
+            plugin.debug("[TimerHud] Started with " + delaySeconds + "s delay, then " + durationSeconds + "s timer");
+        } else {
+            // No delay: start countdown immediately
+            delaying = false;
+            delayTicksRemaining = 0;
+            startCountdown(durationSeconds);
+            plugin.debug("[TimerHud] Started: " + durationSeconds + "s, flash at " + flashAtSeconds + "s");
+        }
+    }
+
+    /** Convenience: no delay. */
+    public void startHud(long durationSeconds, long flashAtSeconds) {
+        startHud(durationSeconds, flashAtSeconds, 0);
+    }
+
+    /** Convenience: use mode config values. */
+    public void startHud() {
+        var manager = plugin.getModeManager();
+        long duration = 600;
+        long flashAt = 60;
+
+        if (manager.isAnyModeActive()) {
+            var config = manager.getActiveMode().getModeConfig().get();
+            if (config != null) {
+                duration = config.getLong("timer.default-seconds", 600);
+                flashAt = config.getInt("timer-hud.flash-threshold-seconds", 60);
+            }
+        }
+
+        startHud(duration, flashAt, 0);
+    }
+
+    private void startCountdown(long durationSeconds) {
         var timer = plugin.getModeTimer();
         timer.start(durationSeconds);
         timer.setOnExpire(() -> {
@@ -62,55 +106,15 @@ public class ModeTimerHud {
             flashing = true;
             plugin.debug("[TimerHud] Timer expired — flash locked to true.");
         });
-
-        loadModeDisplayInfo();
-        plugin.debug("[TimerHud] Started with explicit timer: " + durationSeconds + "s, flash at: "
-                + flashAtSeconds + "s");
     }
 
-    /**
-     * Activate the HUD display without starting a new timer.
-     * The mode has already started its own ModeTimer — we just
-     * piggyback on it for the BetterHud display.
-     *
-     * Called by ModeManager when a mode starts.
-     */
-    public void startHud() {
-        active = true;
-        flashing = false;
-        flashCounter = 0;
-        expired = false;
-        slideTick = 0;
-
-        // Read flash threshold from mode config
-        var manager = plugin.getModeManager();
-        if (manager.isAnyModeActive()) {
-            var config = manager.getActiveMode().getModeConfig().get();
-            if (config != null) {
-                flashThresholdTicks = config.getInt("timer-hud.flash-threshold-seconds", 60) * 20L;
-            }
-        }
-
-        // Listen for timer expiry
-        var timer = plugin.getModeTimer();
-        // Only set expire callback if the mode didn't already set one that ends the mode
-        // We add our flash behavior via tick() instead
-
-        loadModeDisplayInfo();
-        plugin.debug("[TimerHud] Activated (piggyback on mode's timer). Flash threshold: "
-                + (flashThresholdTicks / 20) + "s");
-    }
-
-    /**
-     * Stop the timer HUD and reset all state.
-     */
     public void stopHud() {
         active = false;
         flashing = false;
         flashCounter = 0;
         expired = false;
-        slideTick = 0;
-        flashThresholdTicks = 60 * 20L;
+        delaying = false;
+        delayTicksRemaining = 0;
         displayName = "";
         color = "white";
 
@@ -119,21 +123,25 @@ public class ModeTimerHud {
 
     /**
      * Called every tick from ModeManager's tick loop.
-     * Handles the 10-tick-on / 10-tick-off flash alternation.
      */
     public void tick() {
         if (!active) return;
 
-        // Slide animation counter — counts 0→20 then stops
-        if (slideTick < SLIDE_DURATION) {
-            slideTick++;
+        // Delay countdown: bar visible, text blank
+        if (delaying) {
+            delayTicksRemaining--;
+            if (delayTicksRemaining <= 0) {
+                delaying = false;
+                startCountdown(pendingDurationSeconds);
+                plugin.debug("[TimerHud] Delay over — countdown started: " + pendingDurationSeconds + "s");
+            }
+            return;
         }
 
-        if (expired) return; // Flash locked to true at 0:00
+        if (expired) return;
 
         var timer = plugin.getModeTimer();
         if (!timer.isRunning()) {
-            // Timer finished — lock flash to true
             expired = true;
             flashing = true;
             return;
@@ -142,7 +150,6 @@ public class ModeTimerHud {
         long remainingTicks = timer.getRemainingTicks();
 
         if (remainingTicks <= flashThresholdTicks && remainingTicks > 0) {
-            // In flash zone — alternate every 10 ticks
             flashCounter++;
             if (flashCounter >= 10) {
                 flashing = !flashing;
@@ -160,8 +167,7 @@ public class ModeTimerHud {
     private void loadModeDisplayInfo() {
         var manager = plugin.getModeManager();
         if (manager.isAnyModeActive()) {
-            var modeConfig = manager.getActiveMode().getModeConfig();
-            var config = modeConfig.get();
+            var config = manager.getActiveMode().getModeConfig().get();
             if (config != null) {
                 displayName = config.getString("timer-hud.display-name",
                         manager.getActiveModeName().toUpperCase());
@@ -178,14 +184,17 @@ public class ModeTimerHud {
 
     public boolean isActive() { return active; }
     public boolean isFlashing() { return flashing; }
+    public boolean isDelaying() { return delaying; }
     public String getDisplayName() { return displayName; }
     public String getColor() { return color; }
 
-    /** Slide tick counter: 0→20 after HUD starts, then stays at 20. */
-    public int getSlideTick() { return slideTick; }
-
-    /** True when the slide-down animation is complete (tick >= 20). */
-    public boolean isSlideComplete() { return slideTick >= SLIDE_DURATION; }
+    /**
+     * Timer text for the HUD. Returns "" during delay, "m:ss" during countdown, "0:00" at end.
+     */
+    public String getTimerText() {
+        if (delaying) return "";
+        return plugin.getModeTimer().formatMSs();
+    }
 
     public void setDisplayName(String displayName) { this.displayName = displayName; }
     public void setColor(String color) { this.color = color; }

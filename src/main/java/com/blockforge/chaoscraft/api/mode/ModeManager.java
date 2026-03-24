@@ -70,15 +70,32 @@ public class ModeManager implements Listener {
             activeMode.trackPlayer(p);
         }
 
-        // Start the mode timer
-        var timer = plugin.getModeTimer();
-        timer.start(mode.getModeConfig().getDefaultTimerSeconds());
-        timer.setOnExpire(this::onTimerExpire);
+        // Timer is NOT started here — it's controlled by /cc function startmodetimer
+        // in the on-start-commands. This allows each mode to set its own duration/flash.
+        // Set the expire callback so when the timer eventually runs out, mode ends.
+        plugin.getModeTimer().setOnExpire(this::onTimerExpire);
 
-        // Run on-start commands (Skript hooks etc.)
-        activeMode.runStartCommands();
+        // Start the tick loop early so HUD ticks and placeholders update during chargeup
+        startTicking();
 
-        // Call mode's onStart
+        // Execute on-start-commands with scripting support (wait, done).
+        // "done" in the command list triggers finishModeStart() — this is when
+        // attacks/spawning/music actually begin. If no "done", it fires after all commands.
+        var commands = mode.getModeConfig().getOnStartCommands();
+        new CommandScriptRunner(plugin, commands, this::finishModeStart).execute();
+
+        plugin.getLogger().info("Mode starting: " + mode.getName() + " (running on-start-commands...)");
+        return true;
+    }
+
+    /**
+     * Called by CommandScriptRunner when "done" is reached (or end of commands).
+     * This triggers the mode's actual gameplay — attacks, spawning, music, etc.
+     */
+    private void finishModeStart() {
+        if (activeMode == null) return;
+
+        // Call mode's onStart — this starts attacks, schedulers, music
         activeMode.onStart();
         activeMode.setState(ModeState.ACTIVE);
 
@@ -88,17 +105,7 @@ public class ModeManager implements Listener {
             pointsService.startSession();
         }
 
-        // Activate the timer HUD display — piggybacks on the mode's own ModeTimer
-        var timerHud = plugin.getModeTimerHud();
-        if (timerHud != null) {
-            timerHud.startHud();
-        }
-
-        // Start the tick loop
-        startTicking();
-
-        plugin.getLogger().info("Mode started: " + mode.getName());
-        return true;
+        plugin.getLogger().info("Mode fully started: " + activeMode.getName());
     }
 
     /**

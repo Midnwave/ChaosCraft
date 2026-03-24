@@ -100,14 +100,6 @@ public class DoomMode extends AbstractMode {
         }
         loadExemptPlayers();
 
-        // Start timer
-        long timerSeconds = doomConfig.getDefaultTimerSeconds();
-        plugin.getModeTimer().start((int) timerSeconds);
-        plugin.getModeTimer().setOnExpire(() -> {
-            plugin.getLogger().info("[Doom] Timer expired — players survived the doom!");
-            plugin.getModeManager().endActiveMode();
-        });
-
         // Reload attack configs
         attackRegistry.reloadConfigs();
 
@@ -139,7 +131,7 @@ public class DoomMode extends AbstractMode {
                     doomConfig.getMobSpawnConfig(), world);
         }
 
-        plugin.getLogger().info("[Doom] Mode fully started. Survive " + timerSeconds + " seconds! "
+        plugin.getLogger().info("[Doom] Mode fully started. "
                 + "Arena: (" + arenaManager.getMinX() + "," + arenaManager.getMinY() + "," + arenaManager.getMinZ()
                 + ") to (" + arenaManager.getMaxX() + "," + arenaManager.getMaxY() + "," + arenaManager.getMaxZ() + ")"
                 + " | Lava start Y=" + doomConfig.getLavaRiseStartY()

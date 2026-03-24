@@ -86,14 +86,6 @@ public class SeerMode extends AbstractMode {
         }
         loadExemptPlayers();
 
-        // Start timer
-        long timerSeconds = seerConfig.getDefaultTimerSeconds();
-        plugin.getModeTimer().start((int) timerSeconds);
-        plugin.getModeTimer().setOnExpire(() -> {
-            plugin.getLogger().info("[Seer] Timer expired — the Seer endures!");
-            plugin.getModeManager().endActiveMode();
-        });
-
         // Load attack configs
         attackRegistry.reloadConfigs();
 
@@ -125,7 +117,7 @@ public class SeerMode extends AbstractMode {
         plugin.getLogger().info("[Seer] Boss will spawn in " + bossSpawnDelay + " ticks.");
 
         plugin.getLogger().info("[Seer] Mode fully started. Destroy all orbs to vanquish the Seer! "
-                + "(" + attackCount + " attacks registered, timer: " + timerSeconds + "s)");
+                + "(" + attackCount + " attacks registered)");
     }
 
     @Override

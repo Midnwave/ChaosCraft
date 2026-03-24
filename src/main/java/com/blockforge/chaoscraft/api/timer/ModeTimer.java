@@ -141,7 +141,7 @@ public class ModeTimer {
      * Format as m:ss (e.g. "5:03" — no leading zero on minutes)
      */
     public String formatMSs() {
-        if (!running) return "0";
+        if (!running || remainingTicks <= 0) return "0:00";
         long totalSeconds = getRemainingSeconds();
         long minutes = totalSeconds / 60;
         long seconds = totalSeconds % 60;

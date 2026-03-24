@@ -111,14 +111,6 @@ public class BlueMoonMode extends AbstractMode {
             plugin.getLogger().info("[BlueMoon] Forced nighttime (saved time: " + savedTime + ")");
         }
 
-        // Start timer
-        long timerSeconds = moonConfig.getDefaultTimerSeconds();
-        plugin.getModeTimer().start((int) timerSeconds);
-        plugin.getModeTimer().setOnExpire(() -> {
-            plugin.getLogger().info("[BlueMoon] Timer expired — players survived the Blue Moon!");
-            plugin.getModeManager().endActiveMode();
-        });
-
         // Load attack configs
         attackRegistry.reloadConfigs();
 
@@ -164,7 +156,7 @@ public class BlueMoonMode extends AbstractMode {
                     moonConfig.getMobSpawnConfig(), world);
         }
 
-        plugin.getLogger().info("[BlueMoon] Mode fully started. Survive " + timerSeconds + " seconds or slay the moon! "
+        plugin.getLogger().info("[BlueMoon] Mode fully started. Survive or slay the moon! "
                 + "(" + attackCount + " attacks registered)");
     }
 

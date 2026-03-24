@@ -94,14 +94,6 @@ public class FreezingIceMode extends AbstractMode {
 
         loadExemptPlayers();
 
-        // Start timer
-        long timerSeconds = iceConfig.getDefaultTimerSeconds();
-        plugin.getModeTimer().start((int) timerSeconds);
-        plugin.getModeTimer().setOnExpire(() -> {
-            plugin.getLogger().info("[FreezingIce] Timer expired — players survived the cold!");
-            plugin.getModeManager().endActiveMode();
-        });
-
         // Reload configs
         attackRegistry.reloadConfigs();
 
@@ -124,8 +116,8 @@ public class FreezingIceMode extends AbstractMode {
                     iceConfig.getMobSpawnConfig(), world);
         }
 
-        plugin.getLogger().info("[FreezingIce] Mode fully started. Survive " + timerSeconds + " seconds!"
-                + " (" + attackCount + " attacks)");
+        plugin.getLogger().info("[FreezingIce] Mode fully started. "
+                + "(" + attackCount + " attacks)");
     }
 
     @Override

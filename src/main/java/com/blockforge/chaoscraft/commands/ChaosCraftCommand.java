@@ -754,25 +754,27 @@ public class ChaosCraftCommand implements CommandExecutor, TabCompleter {
                     sender.sendMessage(Component.text("Timer HUD not initialized.", NamedTextColor.RED));
                     return true;
                 }
-                // Usage: /cc function startmodetimer <duration MM:SS> <flash_at MM:SS>
+                // Usage: /cc function startmodetimer <duration> <flash_at> [delay_seconds]
                 if (args.length < 4) {
                     sender.sendMessage(Component.text(
-                            "Usage: /cc function startmodetimer <duration MM:SS> <flash_at MM:SS>",
+                            "Usage: /cc function startmodetimer <duration> <flash_at> [delay_seconds]",
                             NamedTextColor.YELLOW));
                     sender.sendMessage(Component.text(
-                            "Example: /cc function startmodetimer 2:30 0:30",
+                            "Example: /cc function startmodetimer 2:30 0:30 5",
                             NamedTextColor.GRAY));
                     return true;
                 }
                 long duration = ModeTimer.parseTime(args[2]);
                 long flashAt = ModeTimer.parseTime(args[3]);
+                long delay = args.length >= 5 ? ModeTimer.parseTime(args[4]) : 0;
                 if (duration <= 0) {
                     sender.sendMessage(Component.text("Invalid duration: " + args[2], NamedTextColor.RED));
                     return true;
                 }
-                timerHud.startHud(duration, flashAt);
-                sender.sendMessage(Component.text("Mode timer started: " + args[2]
-                        + " (flash at " + args[3] + " remaining)", NamedTextColor.GREEN));
+                timerHud.startHud(duration, flashAt, delay);
+                String msg = "Mode timer started: " + args[2] + " (flash at " + args[3] + " remaining)";
+                if (delay > 0) msg += " with " + delay + "s delay";
+                sender.sendMessage(Component.text(msg, NamedTextColor.GREEN));
             }
             case "stopmodetimer" -> {
                 var timerHud = plugin.getModeTimerHud();
