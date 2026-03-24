@@ -125,6 +125,7 @@ public class ChaosCraftCommand implements CommandExecutor, TabCompleter {
     private final com.blockforge.chaoscraft.modes.freezingice.FreezingIceCommand freezingIceHandler;
     private final com.blockforge.chaoscraft.modes.doom.DoomCommand doomHandler;
     private final com.blockforge.chaoscraft.modes.seer.SeerCommand seerHandler;
+    private final com.blockforge.chaoscraft.modes.tutorial.TutorialCommand tutorialHandler;
 
     // Dev GUI
     private final DevGUI devGUI;
@@ -147,6 +148,7 @@ public class ChaosCraftCommand implements CommandExecutor, TabCompleter {
         this.freezingIceHandler = new com.blockforge.chaoscraft.modes.freezingice.FreezingIceCommand(plugin);
         this.doomHandler = new com.blockforge.chaoscraft.modes.doom.DoomCommand(plugin);
         this.seerHandler = new com.blockforge.chaoscraft.modes.seer.SeerCommand(plugin);
+        this.tutorialHandler = new com.blockforge.chaoscraft.modes.tutorial.TutorialCommand(plugin);
         this.devGUI = new DevGUI(plugin);
 
         // Register the DevGUI listener
@@ -435,6 +437,13 @@ public class ChaosCraftCommand implements CommandExecutor, TabCompleter {
                     yield true;
                 }
                 yield seerHandler.onCommand(sender, command, label, modeArgs);
+            }
+            case "tutorial" -> {
+                if (!sender.hasPermission("chaoscraft.tutorial.admin") && !sender.hasPermission("chaoscraft.admin")) {
+                    sender.sendMessage(Component.text("No permission.", NamedTextColor.RED));
+                    yield true;
+                }
+                yield tutorialHandler.onCommand(sender, command, label, modeArgs);
             }
             default -> {
                 sender.sendMessage(Component.text("Mode '" + modeName + "' does not have admin commands yet.", NamedTextColor.YELLOW));
@@ -1122,6 +1131,11 @@ public class ChaosCraftCommand implements CommandExecutor, TabCompleter {
             case "seer" -> {
                 if (!sender.hasPermission("chaoscraft.seer.admin") && !sender.hasPermission("chaoscraft.admin")) yield List.of();
                 List<String> result = seerHandler.onTabComplete(sender, null, "", modeArgs);
+                yield result != null ? result : List.of();
+            }
+            case "tutorial" -> {
+                if (!sender.hasPermission("chaoscraft.tutorial.admin") && !sender.hasPermission("chaoscraft.admin")) yield List.of();
+                List<String> result = tutorialHandler.onTabComplete(sender, null, "", modeArgs);
                 yield result != null ? result : List.of();
             }
             default -> List.of();

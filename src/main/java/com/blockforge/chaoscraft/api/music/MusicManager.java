@@ -2,9 +2,7 @@ package com.blockforge.chaoscraft.api.music;
 
 import com.blockforge.chaoscraft.ChaosCraftPlugin;
 import com.blockforge.chaoscraft.api.mode.AbstractMode;
-import net.kyori.adventure.key.Key;
-import net.kyori.adventure.sound.Sound;
-import net.kyori.adventure.sound.SoundStop;
+import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -18,6 +16,9 @@ import java.util.*;
 /**
  * Manages per-mode music playback. Supports looping and per-phase music overrides.
  * Music replays on: join, dimension change, phase change.
+ *
+ * Uses Bukkit's native playSound(Location, String, SoundCategory, volume, pitch)
+ * with the player's current location and world for reliable custom resource pack sounds.
  */
 public class MusicManager implements Listener {
 
@@ -43,13 +44,27 @@ public class MusicManager implements Listener {
         stopAll();
         var config = mode.getModeConfig();
         String soundId = config.getMusic();
-        if (soundId == null || soundId.isEmpty()) return;
+        if (soundId == null || soundId.isEmpty()) {
+            plugin.debug("[Music] No sound-id configured for mode " + mode.getName() + " — skipping.");
+            return;
+        }
 
         currentSoundId = soundId;
         looping = config.isMusicLooped();
         durationTicks = config.getMusicDurationTicks();
 
-        playForAll();
+        plugin.getLogger().info("[Music] Playing '" + soundId + "' for mode " + mode.getName()
+                + " (loop=" + looping + ", duration=" + durationTicks + " ticks)");
+
+        // Small delay to ensure mode is fully initialized before sound packets
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                if (currentSoundId != null) {
+                    playForAll();
+                }
+            }
+        }.runTaskLater(plugin, 10L);
 
         if (looping && durationTicks > 0) {
             startLoop();
@@ -91,15 +106,22 @@ public class MusicManager implements Listener {
 
     /**
      * Play current music for a specific player (used on join/dimension change).
+     * Uses Bukkit's native playSound with explicit Location for reliable playback.
      */
     public void playForPlayer(Player player) {
         if (currentSoundId == null || currentSoundId.isEmpty()) return;
+        if (!player.isOnline()) return;
+
         stopForPlayer(player);
-        player.playSound(Sound.sound(
-                Key.key(currentSoundId),
-                Sound.Source.MUSIC,
-                1.0f, 1.0f
-        ));
+
+        // Use Bukkit native API with explicit location in the player's world
+        // This is more reliable than Adventure API for custom resource pack sounds
+        player.playSound(player.getLocation(), currentSoundId, SoundCategory.MASTER, 1.0f, 1.0f);
+        plugin.debug("[Music] Played '" + currentSoundId + "' for " + player.getName()
+                + " at " + player.getLocation().getWorld().getName()
+                + " (" + (int) player.getLocation().getX() + ", "
+                + (int) player.getLocation().getY() + ", "
+                + (int) player.getLocation().getZ() + ")");
     }
 
     /**
@@ -114,6 +136,7 @@ public class MusicManager implements Listener {
             for (Player p : plugin.getServer().getOnlinePlayers()) {
                 stopForPlayer(p);
             }
+            plugin.debug("[Music] Stopped '" + currentSoundId + "' for all players.");
         }
         currentSoundId = null;
     }
@@ -122,21 +145,30 @@ public class MusicManager implements Listener {
         phaseMusic.clear();
     }
 
+    public String getCurrentSoundId() {
+        return currentSoundId;
+    }
+
     // ---- Internal ----
 
     private void playForAll() {
+        int count = 0;
         for (Player p : plugin.getServer().getOnlinePlayers()) {
             playForPlayer(p);
+            count++;
         }
+        plugin.debug("[Music] playForAll — sent to " + count + " players.");
     }
 
     private void stopForPlayer(Player player) {
         if (currentSoundId != null) {
-            player.stopSound(SoundStop.named(Key.key(currentSoundId)));
+            // Stop by both name+category to ensure it actually stops
+            player.stopSound(currentSoundId, SoundCategory.MASTER);
         }
     }
 
     private void startLoop() {
+        // Offset loop start by the initial delay (10 ticks) so first loop fires at the right time
         loopTask = new BukkitRunnable() {
             @Override
             public void run() {
@@ -144,6 +176,7 @@ public class MusicManager implements Listener {
                     cancel();
                     return;
                 }
+                plugin.debug("[Music] Loop tick — replaying '" + currentSoundId + "'");
                 playForAll();
             }
         }.runTaskTimer(plugin, durationTicks, durationTicks);
@@ -154,7 +187,7 @@ public class MusicManager implements Listener {
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
         if (currentSoundId != null) {
-            // Slight delay to let client load
+            // Delay to let client fully load and resource pack apply
             new BukkitRunnable() {
                 @Override
                 public void run() {

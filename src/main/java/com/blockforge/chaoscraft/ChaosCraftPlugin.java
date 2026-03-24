@@ -123,6 +123,10 @@ public class ChaosCraftPlugin extends JavaPlugin {
                 new com.blockforge.chaoscraft.modes.seer.SeerMode(this);
         modeManager.registerMode(seerMode);
 
+        com.blockforge.chaoscraft.modes.tutorial.TutorialMode tutorialMode =
+                new com.blockforge.chaoscraft.modes.tutorial.TutorialMode(this);
+        modeManager.registerMode(tutorialMode);
+
         // Initialize performance service
         performanceService = new PerformanceService(this);
         performanceService.initialize();
@@ -532,6 +536,15 @@ public class ChaosCraftPlugin extends JavaPlugin {
             seerMode.getAttackRegistry().reloadConfigs();
         }
         getLogger().info("[Reload] Seer in " + (System.currentTimeMillis() - t) + "ms");
+
+        // Reload Tutorial
+        t = System.currentTimeMillis();
+        var tutorial = modeManager.getMode("tutorial");
+        if (tutorial instanceof com.blockforge.chaoscraft.modes.tutorial.TutorialMode tutorialMode) {
+            tutorialMode.getTutorialConfig().load();
+            tutorialMode.getAttackRegistry().reloadConfigs();
+        }
+        getLogger().info("[Reload] Tutorial in " + (System.currentTimeMillis() - t) + "ms");
 
         long totalMs = System.currentTimeMillis() - reloadStart;
         getLogger().info("ChaosCraft configuration reloaded in " + totalMs + "ms");

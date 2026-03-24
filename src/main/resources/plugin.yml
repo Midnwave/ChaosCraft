@@ -142,6 +142,7 @@ permissions:
       chaoscraft.badges.admin: true
       chaoscraft.shop.admin: true
       chaoscraft.function.badge: true
+      chaoscraft.tutorial.admin: true
 
   # ----- Mode System -----
   chaoscraft.mode.trigger:
@@ -153,6 +154,11 @@ permissions:
   chaoscraft.mode.exempt:
     description: Exempt from mode attacks (no damage from events)
     default: false
+
+  # ----- Tutorial Mode -----
+  chaoscraft.tutorial.admin:
+    description: Tutorial mode admin/test commands
+    default: op
 
   # ----- Chain Mode -----
   chaoscraft.chain.admin:
