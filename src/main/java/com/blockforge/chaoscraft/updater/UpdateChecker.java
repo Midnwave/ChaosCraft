@@ -126,9 +126,9 @@ public class UpdateChecker {
     }
 
     /**
-     * Download the latest JAR from the repo's release/ folder.
-     * Uses the GitHub API to find the latest dev build number and downloads
-     * the specific versioned JAR to avoid raw.githubusercontent caching issues.
+     * Download the latest JAR using the GitHub Contents API (no CDN caching).
+     * Fetches the download_url from the API response which points to a fresh,
+     * uncached blob URL — unlike raw.githubusercontent.com which caches for 5+ min.
      */
     public void downloadUpdate(CommandSender notifyTarget) {
         if (!updateAvailable && latestVersion == null) {
@@ -136,54 +136,76 @@ public class UpdateChecker {
             return;
         }
 
-        String downloadUrl;
-        if (latestDownloadUrl != null) {
-            downloadUrl = latestDownloadUrl;
-        } else {
-            // Try to find the latest build number for a specific versioned JAR
-            int buildNum = fetchLatestBuildNumber();
-            if (buildNum > 0) {
-                downloadUrl = "https://raw.githubusercontent.com/" + githubOwner + "/" + githubRepo
-                        + "/main/release/ChaosCraft-dev-" + buildNum + ".jar";
-            } else {
-                downloadUrl = "https://raw.githubusercontent.com/" + githubOwner + "/" + githubRepo
-                        + "/main/release/ChaosCraft-latest.jar";
-            }
-        }
+        // Determine which JAR file to download via the Contents API
+        int buildNum = fetchLatestBuildNumber();
+        String jarName = buildNum > 0 ? "ChaosCraft-dev-" + buildNum + ".jar" : "ChaosCraft-latest.jar";
 
-        String versionLabel = latestVersion != null ? "v" + latestVersion : "latest dev build";
-        notifyTarget.sendMessage(Component.text("Downloading ChaosCraft " + versionLabel + "...", NamedTextColor.YELLOW));
+        String versionLabel = latestVersion != null ? "v" + latestVersion : "dev build #" + buildNum;
+        notifyTarget.sendMessage(Component.text("Downloading ChaosCraft " + versionLabel + " (" + jarName + ")...", NamedTextColor.YELLOW));
 
-        final String finalUrl = downloadUrl;
         new BukkitRunnable() {
             @Override
             public void run() {
                 try {
-                    HttpURLConnection conn = (HttpURLConnection) URI.create(finalUrl).toURL().openConnection();
-                    conn.setRequestProperty("User-Agent", "ChaosCraft-Updater");
-                    conn.setConnectTimeout(30000);
-                    conn.setReadTimeout(60000);
+                    // Step 1: Use GitHub Contents API to get the actual download_url (bypasses CDN cache)
+                    String contentsUrl = "https://api.github.com/repos/" + githubOwner + "/" + githubRepo
+                            + "/contents/release/" + jarName + "?ref=main";
 
-                    if (conn.getResponseCode() != 200) {
-                        notifyAsync(notifyTarget, Component.text("Download failed (HTTP " + conn.getResponseCode() + ")", NamedTextColor.RED));
+                    HttpURLConnection apiConn = (HttpURLConnection) URI.create(contentsUrl).toURL().openConnection();
+                    apiConn.setRequestMethod("GET");
+                    apiConn.setRequestProperty("Accept", "application/vnd.github+json");
+                    apiConn.setRequestProperty("User-Agent", "ChaosCraft-Updater");
+                    apiConn.setConnectTimeout(10000);
+                    apiConn.setReadTimeout(10000);
+
+                    int apiCode = apiConn.getResponseCode();
+                    if (apiCode != 200) {
+                        notifyAsync(notifyTarget, Component.text("Contents API failed (HTTP " + apiCode + ") for " + jarName, NamedTextColor.RED));
                         return;
                     }
 
-                    // Stage in /plugins/update/ folder (Spigot/Paper auto-update mechanism)
+                    String apiBody;
+                    try (var reader = new BufferedReader(new InputStreamReader(apiConn.getInputStream()))) {
+                        var sb = new StringBuilder();
+                        String line;
+                        while ((line = reader.readLine()) != null) sb.append(line);
+                        apiBody = sb.toString();
+                    }
+
+                    JsonObject fileInfo = JsonParser.parseString(apiBody).getAsJsonObject();
+                    String downloadUrl = fileInfo.get("download_url").getAsString();
+                    String fileSha = fileInfo.get("sha").getAsString().substring(0, 7);
+
+                    plugin.getLogger().info("[Updater] Downloading from: " + downloadUrl + " (blob " + fileSha + ")");
+
+                    // Step 2: Download the actual JAR from the blob URL
+                    HttpURLConnection dlConn = (HttpURLConnection) URI.create(downloadUrl).toURL().openConnection();
+                    dlConn.setRequestProperty("User-Agent", "ChaosCraft-Updater");
+                    // Force no-cache to bypass any intermediary caches
+                    dlConn.setRequestProperty("Cache-Control", "no-cache, no-store");
+                    dlConn.setRequestProperty("Pragma", "no-cache");
+                    dlConn.setConnectTimeout(30000);
+                    dlConn.setReadTimeout(60000);
+
+                    if (dlConn.getResponseCode() != 200) {
+                        notifyAsync(notifyTarget, Component.text("Download failed (HTTP " + dlConn.getResponseCode() + ")", NamedTextColor.RED));
+                        return;
+                    }
+
+                    // Stage in /plugins/update/ folder (Paper auto-update mechanism)
                     Path updateDir = plugin.getDataFolder().getParentFile().toPath().resolve("update");
                     Files.createDirectories(updateDir);
 
-                    // Get the original JAR name
                     File pluginJar = new File(plugin.getClass().getProtectionDomain().getCodeSource().getLocation().toURI());
                     Path targetPath = updateDir.resolve(pluginJar.getName());
 
-                    try (InputStream in = conn.getInputStream()) {
+                    try (InputStream in = dlConn.getInputStream()) {
                         Files.copy(in, targetPath, StandardCopyOption.REPLACE_EXISTING);
                     }
 
                     long size = Files.size(targetPath);
                     notifyAsync(notifyTarget, Component.text("Update downloaded! ", NamedTextColor.GREEN)
-                            .append(Component.text(String.format("(%.1f MB)", size / 1048576.0), NamedTextColor.GRAY)));
+                            .append(Component.text(String.format("(%.1f MB, blob %s)", size / 1048576.0, fileSha), NamedTextColor.GRAY)));
                     notifyAsync(notifyTarget, Component.text("Staged at: plugins/update/" + pluginJar.getName(), NamedTextColor.GRAY));
                     notifyAsync(notifyTarget, Component.text("Restart the server to apply the update.", NamedTextColor.YELLOW));
 
@@ -231,17 +253,9 @@ public class UpdateChecker {
 
             String currentVersion = plugin.getDescription().getVersion();
 
-            // Get the latest CI build number from workflow runs
-            int latestBuildNum = fetchLatestBuildNumber();
-            if (latestBuildNum > 0) {
-                // Use specific versioned JAR to avoid raw.githubusercontent caching
-                latestDownloadUrl = "https://raw.githubusercontent.com/" + githubOwner + "/" + githubRepo
-                        + "/main/release/ChaosCraft-dev-" + latestBuildNum + ".jar";
-            } else {
-                // Fallback to the GitHub Contents API (avoids CDN caching)
-                latestDownloadUrl = "https://api.github.com/repos/" + githubOwner + "/" + githubRepo
-                        + "/contents/release/ChaosCraft-latest.jar?ref=main";
-            }
+            // Download URL is resolved at download time via Contents API
+            // (no raw.githubusercontent — that caches for 5+ minutes)
+            latestDownloadUrl = null; // Will be resolved fresh in downloadUpdate()
             latestVersion = currentVersion + "-" + sha;
 
             if (buildSha.equals(sha)) {
