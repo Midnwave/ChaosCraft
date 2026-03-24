@@ -88,11 +88,9 @@ public class ModeManager implements Listener {
             pointsService.startSession();
         }
 
-        // Start Mode Timer HUD
-        var timerHud = plugin.getModeTimerHud();
-        if (timerHud != null) {
-            timerHud.startHud();
-        }
+        // Note: Mode Timer HUD is started via on-start-commands or manually via
+        // /cc function startmodetimer <duration> <flash_at>
+        // This allows each mode to configure its own timer parameters.
 
         // Start the tick loop
         startTicking();

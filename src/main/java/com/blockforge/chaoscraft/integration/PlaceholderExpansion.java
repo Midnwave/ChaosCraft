@@ -23,6 +23,8 @@ import java.util.Optional;
  *   %chaoscraft_timer_raw%
  *   %chaoscraft_mode%             - active mode name or "none"
  *   %chaoscraft_mode_active%      - "true" or "false"
+ *   %chaoscraft_mode_timer_active% - "true"/"false" — BetterHud visibility
+ *   %chaoscraft_mode_timer_flash%  - "true"/"false" — 10-tick alternation when low, permanent at 0:00
  *   %chaoscraft_survived%         - "true"/"false" for the requesting player
  *   %chaoscraft_gems%             - global gem count (Calamity specific)
  *   %chaoscraft_gems_deposited%   - deposited gem count (Calamity specific)
@@ -171,10 +173,6 @@ public class PlaceholderExpansion extends me.clip.placeholderapi.expansion.Place
             }
 
             // Mode Timer HUD placeholders
-            case "mode_timer_ticks" -> {
-                var hud = plugin.getModeTimerHud();
-                yield hud != null ? String.valueOf(hud.getSyncTick()) : "0";
-            }
             case "mode_timer_active" -> {
                 var hud = plugin.getModeTimerHud();
                 yield hud != null ? String.valueOf(hud.isActive()) : "false";
@@ -182,10 +180,6 @@ public class PlaceholderExpansion extends me.clip.placeholderapi.expansion.Place
             case "mode_timer_flash" -> {
                 var hud = plugin.getModeTimerHud();
                 yield hud != null ? String.valueOf(hud.isFlashing()) : "false";
-            }
-            case "mode_timer_low" -> {
-                var hud = plugin.getModeTimerHud();
-                yield hud != null ? String.valueOf(hud.isLow()) : "false";
             }
             case "mode_color" -> {
                 var hud = plugin.getModeTimerHud();

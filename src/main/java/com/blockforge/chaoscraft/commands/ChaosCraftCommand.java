@@ -100,7 +100,7 @@ public class ChaosCraftCommand implements CommandExecutor, TabCompleter {
     private static final List<String> UPDATE_SUBS = List.of("check", "download");
     private static final List<String> MODE_ACTIONS = List.of("start", "stop");
     private static final List<String> FUNCTION_SUBS = List.of(
-            "startmodetimer", "stopmodetimer",
+            "startmodetimer", "stopmodetimer", "addtime", "removetime", "pausetimer", "resumetimer",
             "setbadgeobtaineditem", "setbadgeunobtaineditem", "setbadgenotobtainable",
             "setdoommodepos1", "setdoommodepos2",
             "setorbspawn"
@@ -754,8 +754,25 @@ public class ChaosCraftCommand implements CommandExecutor, TabCompleter {
                     sender.sendMessage(Component.text("Timer HUD not initialized.", NamedTextColor.RED));
                     return true;
                 }
-                timerHud.startHud();
-                sender.sendMessage(Component.text("Mode timer HUD started.", NamedTextColor.GREEN));
+                // Usage: /cc function startmodetimer <duration MM:SS> <flash_at MM:SS>
+                if (args.length < 4) {
+                    sender.sendMessage(Component.text(
+                            "Usage: /cc function startmodetimer <duration MM:SS> <flash_at MM:SS>",
+                            NamedTextColor.YELLOW));
+                    sender.sendMessage(Component.text(
+                            "Example: /cc function startmodetimer 2:30 0:30",
+                            NamedTextColor.GRAY));
+                    return true;
+                }
+                long duration = ModeTimer.parseTime(args[2]);
+                long flashAt = ModeTimer.parseTime(args[3]);
+                if (duration <= 0) {
+                    sender.sendMessage(Component.text("Invalid duration: " + args[2], NamedTextColor.RED));
+                    return true;
+                }
+                timerHud.startHud(duration, flashAt);
+                sender.sendMessage(Component.text("Mode timer started: " + args[2]
+                        + " (flash at " + args[3] + " remaining)", NamedTextColor.GREEN));
             }
             case "stopmodetimer" -> {
                 var timerHud = plugin.getModeTimerHud();
@@ -765,6 +782,34 @@ public class ChaosCraftCommand implements CommandExecutor, TabCompleter {
                 }
                 timerHud.stopHud();
                 sender.sendMessage(Component.text("Mode timer HUD stopped.", NamedTextColor.GREEN));
+            }
+            case "addtime" -> {
+                // /cc function addtime <seconds or MM:SS>
+                if (args.length < 3) {
+                    sender.sendMessage(Component.text("Usage: /cc function addtime <seconds or MM:SS>", NamedTextColor.YELLOW));
+                    return true;
+                }
+                long addSecs = ModeTimer.parseTime(args[2]);
+                plugin.getModeTimer().addTime(addSecs);
+                sender.sendMessage(Component.text("Added " + addSecs + "s to timer.", NamedTextColor.GREEN));
+            }
+            case "removetime" -> {
+                // /cc function removetime <seconds or MM:SS>
+                if (args.length < 3) {
+                    sender.sendMessage(Component.text("Usage: /cc function removetime <seconds or MM:SS>", NamedTextColor.YELLOW));
+                    return true;
+                }
+                long removeSecs = ModeTimer.parseTime(args[2]);
+                plugin.getModeTimer().removeTime(removeSecs);
+                sender.sendMessage(Component.text("Removed " + removeSecs + "s from timer.", NamedTextColor.GREEN));
+            }
+            case "pausetimer" -> {
+                plugin.getModeTimer().pause();
+                sender.sendMessage(Component.text("Timer paused.", NamedTextColor.GREEN));
+            }
+            case "resumetimer" -> {
+                plugin.getModeTimer().resume();
+                sender.sendMessage(Component.text("Timer resumed.", NamedTextColor.GREEN));
             }
             case "setbadgeobtaineditem", "setbadgeunobtaineditem", "setbadgenotobtainable" -> {
                 if (!sender.hasPermission("chaoscraft.function.badge") && !sender.hasPermission("chaoscraft.admin")) {
