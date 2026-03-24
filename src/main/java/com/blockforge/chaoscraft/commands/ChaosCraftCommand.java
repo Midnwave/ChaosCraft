@@ -1064,6 +1064,22 @@ public class ChaosCraftCommand implements CommandExecutor, TabCompleter {
                 default -> List.of();
             };
         }
+        // Badge subcommand tab completion (args[0] = badge sub, args[1+] = badge args)
+        if (args.length >= 2) {
+            String badgeSub = args[0].toLowerCase();
+            if (List.of("createbadge", "deletebadge", "assignbadge", "removebadge",
+                    "setbadgelimited", "setbadgedescription").contains(badgeSub)) {
+                String[] badgeArgs = java.util.Arrays.copyOfRange(args, 1, args.length);
+                var badgeSvc = plugin.getBadgeService();
+                if (badgeSvc != null) {
+                    var badgeGui = new com.blockforge.chaoscraft.services.badges.BadgeGUI(plugin, badgeSvc);
+                    var calGui = new com.blockforge.chaoscraft.services.badges.CalendarGUI(plugin);
+                    return new com.blockforge.chaoscraft.services.badges.BadgeCommand(plugin, badgeSvc, badgeGui, calGui)
+                            .tabComplete(badgeSub, badgeArgs);
+                }
+            }
+        }
+
         if (args.length == 3) {
             if (args[0].equalsIgnoreCase("exempt") &&
                     (args[1].equalsIgnoreCase("add") || args[1].equalsIgnoreCase("remove"))) {

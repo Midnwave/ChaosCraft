@@ -96,6 +96,12 @@ commands:
     usage: /shop
     permission: chaoscraft.shop.use
 
+  # ===== Badges =====
+  badges:
+    description: View your badges collection
+    usage: /badges
+    permission: chaoscraft.badges.view
+
   # ===== Player-Facing =====
   settings:
     description: Open the player settings menu

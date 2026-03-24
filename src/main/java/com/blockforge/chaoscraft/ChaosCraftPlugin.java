@@ -456,6 +456,19 @@ public class ChaosCraftPlugin extends JavaPlugin {
             shopCmd.setTabCompleter(handler);
         }
 
+        // /badges command (standalone, opens badge GUI)
+        var badgesCmd = getCommand("badges");
+        if (badgesCmd != null && badgeService != null) {
+            badgesCmd.setExecutor((sender, cmd, label, args) -> {
+                if (!(sender instanceof Player player)) {
+                    sender.sendMessage(net.kyori.adventure.text.Component.text("Players only.", net.kyori.adventure.text.format.NamedTextColor.RED));
+                    return true;
+                }
+                new com.blockforge.chaoscraft.services.badges.BadgeGUI(this, badgeService).open(player);
+                return true;
+            });
+        }
+
         // /points command
         var pointsCmd = getCommand("points");
         if (pointsCmd != null) {
