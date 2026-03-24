@@ -30,6 +30,9 @@ public class ModeTimerHud {
     private int flashCounter = 0;
     private long flashThresholdTicks = 60 * 20L;
     private boolean expired = false;
+    private int expireDelayTicks = 0; // 5-second delay after 0:00 before mode ends
+    private static final int EXPIRE_DELAY = 100; // 5 seconds = 100 ticks
+    private long lastSecond = -1; // Track when seconds change for flash sync
 
     // Delay: bar visible but timer text blank until delay expires
     private long delayTicksRemaining = 0;
@@ -57,6 +60,8 @@ public class ModeTimerHud {
         flashing = false;
         flashCounter = 0;
         expired = false;
+        expireDelayTicks = 0;
+        lastSecond = -1;
         flashThresholdTicks = flashAtSeconds * 20L;
 
         loadModeDisplayInfo();
@@ -113,6 +118,8 @@ public class ModeTimerHud {
         flashing = false;
         flashCounter = 0;
         expired = false;
+        expireDelayTicks = 0;
+        lastSecond = -1;
         delaying = false;
         delayTicksRemaining = 0;
         displayName = "";
@@ -138,28 +145,49 @@ public class ModeTimerHud {
             return;
         }
 
-        if (expired) return;
+        // After timer expires: wait 5 seconds then end the mode
+        if (expired) {
+            expireDelayTicks++;
+            if (expireDelayTicks >= EXPIRE_DELAY) {
+                plugin.debug("[TimerHud] 5s post-expire delay done — ending mode.");
+                plugin.getModeManager().endActiveMode();
+            }
+            return;
+        }
 
         var timer = plugin.getModeTimer();
         if (!timer.isRunning()) {
             expired = true;
             flashing = true;
+            expireDelayTicks = 0;
             return;
         }
 
         long remainingTicks = timer.getRemainingTicks();
 
         if (remainingTicks <= flashThresholdTicks && remainingTicks > 0) {
-            flashCounter++;
-            if (flashCounter >= 10) {
-                flashing = !flashing;
+            // Flash sync: reset counter when a new second begins
+            long currentSecond = remainingTicks / 20;
+            if (currentSecond != lastSecond) {
+                lastSecond = currentSecond;
                 flashCounter = 0;
+                flashing = true; // Red starts on the tick the second changes
+            }
+
+            flashCounter++;
+            if (flashCounter == 10) {
+                flashing = false; // Switch to white after 10 ticks
+            } else if (flashCounter == 20) {
+                flashCounter = 0;
+                flashing = true; // Back to red
             }
         } else if (remainingTicks <= 0) {
             expired = true;
             flashing = true;
+            expireDelayTicks = 0;
         } else {
             flashing = false;
+            lastSecond = -1;
             flashCounter = 0;
         }
     }

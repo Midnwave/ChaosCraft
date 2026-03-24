@@ -100,12 +100,38 @@ public class ModeConfig {
         return config.getStringList("on-end-commands");
     }
 
+    /**
+     * Returns on-player-ready-commands PLUS any on-start-commands flagged with --includeplayerready.
+     * Flags are stripped from the returned command strings.
+     */
     public List<String> getOnPlayerReadyCommands() {
-        return config.getStringList("on-player-ready-commands");
+        List<String> result = new ArrayList<>(config.getStringList("on-player-ready-commands"));
+        for (String cmd : config.getStringList("on-start-commands")) {
+            if (cmd.contains("--includeplayerready")) {
+                result.add(stripFlags(cmd));
+            }
+        }
+        return result;
     }
 
+    /**
+     * Returns on-reset-commands PLUS any on-start-commands flagged with --includereset.
+     * Flags are stripped from the returned command strings.
+     */
     public List<String> getOnResetCommands() {
-        return config.getStringList("on-reset-commands");
+        List<String> result = new ArrayList<>(config.getStringList("on-reset-commands"));
+        for (String cmd : config.getStringList("on-start-commands")) {
+            if (cmd.contains("--includereset")) {
+                result.add(stripFlags(cmd));
+            }
+        }
+        return result;
+    }
+
+    /** Strip --includeplayerready and --includereset flags from a command string. */
+    private static String stripFlags(String cmd) {
+        return cmd.replace("--includeplayerready", "").replace("--includereset", "").trim()
+                .replaceAll("\\s+", " "); // Collapse double spaces
     }
 
     public List<String> getExemptPlayers() {
@@ -156,10 +182,22 @@ public class ModeConfig {
         defaults.set("on-start-commands", new ArrayList<>());
         defaults.setComments("on-start-commands", List.of(
                 "Console commands run automatically when this mode starts.",
-                "Use %player% for the player who triggered the start, or omit for global effects.",
+                "Supports scripting: 'wait <ticks>' to pause, 'done' to start attacks/spawning.",
+                "Supports PlaceholderAPI: %chaoscraft_join_ticks%, %player%, etc.",
+                "",
+                "FLAGS (append to any command):",
+                "  --includeplayerready  Also run this command when a player exits title screen or changes world",
+                "  --includereset        Also run this command as a reset when a player joins with no active mode",
+                "",
                 "Example:",
-                "  - \"broadcast &aThe mode has started!\"",
-                "  - \"give %player% golden_apple 1\""));
+                "  - \"playsound minecraft:chaoscraft.chain master %player% --includeplayerready\"",
+                "  - \"wait %chaoscraft_join_ticks%\"",
+                "  - \"betterhud hud a all cc_timer\"",
+                "  - \"wait 20\"",
+                "  - \"betterhud hud r all cc_timer\"",
+                "  - \"betterhud hud a all cc_timer_static\"",
+                "  - \"cc function startmodetimer 2:30 0:30 1\"",
+                "  - \"done\""));
         defaults.set("on-end-commands", new ArrayList<>());
         defaults.setComments("on-end-commands", List.of(
                 "Console commands run when this mode ends (naturally or via /cc modes stop).",

@@ -80,6 +80,10 @@ public class CommandScriptRunner {
                 return; // Stop the loop — processNext will be called after the delay
             }
 
+            // Strip flags before dispatching (--includeplayerready, --includereset are config-only)
+            cmd = cmd.replace("--includeplayerready", "").replace("--includereset", "").trim()
+                    .replaceAll("\\s+", " ");
+
             // Regular command — dispatch as console
             try {
                 Bukkit.dispatchCommand(Bukkit.getConsoleSender(), cmd);

@@ -784,12 +784,13 @@ public class ChaosCraftPlugin extends JavaPlugin {
     public com.blockforge.chaoscraft.weapons.ivory.IvoryService getIvoryService() { return ivoryService; }
     public com.blockforge.chaoscraft.services.mobspawn.MobSpawnService getMobSpawnService() { return mobSpawnService; }
 
-    /** Ticks since player joined, loops 0→19 continuously. For BetterHud animation sync. */
+    /** Ticks remaining until next 20-tick cycle reset. Counts down 19→0, loops. */
     public int getPlayerJoinTicks(Player player) {
         Long joinTick = playerJoinTicks.get(player.getUniqueId());
         if (joinTick == null) return 0;
         long elapsed = (long) getServer().getCurrentTick() - joinTick;
-        return (int) (elapsed % 20); // Loops 0→19, never reaches 20
+        int inCycle = (int) (elapsed % 20); // 0→19
+        return 19 - inCycle; // 19→0 countdown
     }
 
     public void debug(String message) {
