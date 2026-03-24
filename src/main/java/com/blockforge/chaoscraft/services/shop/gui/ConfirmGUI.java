@@ -69,7 +69,7 @@ public class ConfirmGUI {
         );
 
         // Fill with glass
-        ItemStack grayPane = createGlassPane(Material.GRAY_STAINED_GLASS_PANE, " ");
+        ItemStack grayPane = createGlassPane(Material.GRAY_DYE, " ");
         for (int i = 0; i < SIZE; i++) {
             inv.setItem(i, grayPane);
         }

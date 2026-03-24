@@ -171,21 +171,39 @@ public class ShopGUIListener implements Listener {
     // ========================
 
     private void handleMainCategoriesClick(Player player, ShopSession session, int slot, InventoryClickEvent event) {
-        // Close button
-        if (slot == 49) {
+        // Close button (bottom-right)
+        if (slot == MainShopGUI.getCloseSlot()) {
             Bukkit.getScheduler().runTask(plugin, (Runnable) player::closeInventory);
             return;
         }
 
+        // Claim button (center) — open virtual storage
+        if (slot == MainShopGUI.getClaimSlot()) {
+            Bukkit.getScheduler().runTask(plugin, (Runnable) () -> openVirtualStorage(player));
+            return;
+        }
+
+        // Player head (bottom-left) — open badges
+        if (slot == MainShopGUI.getPlayerHeadSlot()) {
+            var badgeService = plugin.getBadgeService();
+            if (badgeService != null) {
+                Bukkit.getScheduler().runTask(plugin, (Runnable) () -> {
+                    player.closeInventory();
+                    new com.blockforge.chaoscraft.services.badges.BadgeGUI(plugin, badgeService).open(player);
+                });
+            }
+            return;
+        }
+
         // Prev page
-        if (slot == 45 && session.getPage() > 0) {
+        if (slot == MainShopGUI.getPrevSlot() && session.getPage() > 0) {
             session.setPage(session.getPage() - 1);
             Bukkit.getScheduler().runTask(plugin, (Runnable) () -> mainShopGUI.open(player, session));
             return;
         }
 
         // Next page
-        if (slot == 53) {
+        if (slot == MainShopGUI.getNextSlot()) {
             session.setPage(session.getPage() + 1);
             Bukkit.getScheduler().runTask(plugin, (Runnable) () -> mainShopGUI.open(player, session));
             return;

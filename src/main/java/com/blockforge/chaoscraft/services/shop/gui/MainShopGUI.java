@@ -20,29 +20,33 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Main shop GUI showing category icons, player info, and navigation.
- * 54-slot (6 rows) layout with categories in the center and player stats on the right column.
+ * Main shop GUI — 54 slots (6 rows).
+ *
+ * Layout:
+ *   Row 1: gray dye border
+ *   Row 2-4: category icons in center (7 per row, 21 total), claim button at center slot 22
+ *   Row 5: gray dye border
+ *   Row 6: player head (bottom-left), prev/next page, close (bottom-right)
  */
 public class MainShopGUI {
 
     private static final int SIZE = 54;
     private static final String TITLE = "Shop";
-    private static final int CATEGORIES_PER_PAGE = 21; // 7 per row * 3 rows
+    private static final int CATEGORIES_PER_PAGE = 20; // 21 slots minus 1 for claim button
 
-    // Category grid slots: rows 2-4, columns 0-6 (slots 9-15, 18-24, 27-33)
+    // Category grid: rows 2-4, columns 1-7 (excluding borders and claim button)
     private static final int[] CATEGORY_SLOTS = {
-            9, 10, 11, 12, 13, 14, 15,
-            18, 19, 20, 21, 22, 23, 24,
-            27, 28, 29, 30, 31, 32, 33
+            10, 11, 12, 13, 14, 15, 16,
+            19, 20, 21, /* 22 = claim */ 23, 24, 25,
+            28, 29, 30, 31, 32, 33, 34
     };
 
-    // Player info column slots
-    private static final int SLOT_PLAYER_HEAD = 16;
-    private static final int SLOT_BALANCE = 17;
-    private static final int SLOT_KILLS = 25;
-    private static final int SLOT_SKILLS = 26;
-    private static final int SLOT_SURVIVALS = 34;
-    private static final int SLOT_BADGES = 35;
+    // Special slots
+    private static final int SLOT_CLAIM = 22;       // Center of the grid — claim your goods
+    private static final int SLOT_PLAYER_HEAD = 45;  // Bottom-left corner
+    private static final int SLOT_CLOSE = 53;        // Bottom-right corner
+    private static final int SLOT_PREV = 47;         // Bottom row, left of center
+    private static final int SLOT_NEXT = 51;         // Bottom row, right of center
 
     private final ChaosCraftPlugin plugin;
     private final ShopService shopService;
@@ -52,18 +56,12 @@ public class MainShopGUI {
         this.shopService = shopService;
     }
 
-    /**
-     * Open the main shop GUI for a player.
-     */
     public void open(Player player, ShopSession session) {
         session.setCurrentType(ShopSession.ShopGUIType.MAIN_CATEGORIES);
         Inventory inv = buildInventory(player, session);
         player.openInventory(inv);
     }
 
-    /**
-     * Build the main shop inventory for the given session state.
-     */
     public Inventory buildInventory(Player player, ShopSession session) {
         Inventory inv = Bukkit.createInventory(
                 new ShopGUIListener.ShopInventoryHolder(player.getUniqueId()),
@@ -71,21 +69,11 @@ public class MainShopGUI {
                 Component.text(TITLE, NamedTextColor.DARK_PURPLE, TextDecoration.BOLD)
         );
 
-        ItemStack grayPane = createGlassPane(Material.GRAY_STAINED_GLASS_PANE, " ");
+        ItemStack border = createDyePane(Material.GRAY_DYE, " ");
 
-        // Row 1 (0-8): border
-        for (int i = 0; i < 9; i++) {
-            inv.setItem(i, grayPane);
-        }
-
-        // Row 5 (36-44): border
-        for (int i = 36; i < 45; i++) {
-            inv.setItem(i, grayPane);
-        }
-
-        // Row 6 (45-53): navigation row
-        for (int i = 45; i < 54; i++) {
-            inv.setItem(i, grayPane);
+        // Fill all with border first
+        for (int i = 0; i < SIZE; i++) {
+            inv.setItem(i, border);
         }
 
         // Categories
@@ -107,21 +95,21 @@ public class MainShopGUI {
             inv.setItem(CATEGORY_SLOTS[slotIdx], icon);
         }
 
-        // Player info column
+        // Claim button (center of grid)
+        inv.setItem(SLOT_CLAIM, createClaimButton(player));
+
+        // Player head (bottom-left) — shows balance, rank, kills, s-kills, survivals, badges
         inv.setItem(SLOT_PLAYER_HEAD, createPlayerHead(player));
-        inv.setItem(SLOT_BALANCE, createBalanceItem(player));
-        inv.setItem(SLOT_KILLS, createKillsItem(player));
-        inv.setItem(SLOT_SKILLS, createSKillsItem(player));
-        inv.setItem(SLOT_SURVIVALS, createSurvivalsItem(player));
-        inv.setItem(SLOT_BADGES, createBadgesItem(player));
+
+        // Close button (bottom-right)
+        inv.setItem(SLOT_CLOSE, createCloseItem());
 
         // Navigation
         if (page > 0) {
-            inv.setItem(45, createNavItem(Material.ARROW, "Previous Page", page));
+            inv.setItem(SLOT_PREV, createNavItem(Material.ARROW, "Previous Page", page));
         }
-        inv.setItem(49, createCloseItem());
         if (page < maxPage) {
-            inv.setItem(53, createNavItem(Material.ARROW, "Next Page", page + 2));
+            inv.setItem(SLOT_NEXT, createNavItem(Material.ARROW, "Next Page", page + 2));
         }
 
         return inv;
@@ -165,102 +153,81 @@ public class MainShopGUI {
         SkullMeta meta = (SkullMeta) head.getItemMeta();
         meta.setOwningPlayer(player);
 
-        String rank = shopService.getRankDisplay(player);
-        Component nameComponent = Component.text(player.getName(), NamedTextColor.GOLD, TextDecoration.BOLD)
-                .decoration(TextDecoration.ITALIC, false);
-        meta.displayName(nameComponent);
+        meta.displayName(Component.text(player.getName(), NamedTextColor.GOLD, TextDecoration.BOLD)
+                .decoration(TextDecoration.ITALIC, false));
 
         List<Component> lore = new ArrayList<>();
+
+        // Rank
+        String rank = shopService.getRankDisplay(player);
         if (rank != null && !rank.isEmpty()) {
             lore.add(Component.text("Rank: ", NamedTextColor.GRAY)
                     .append(LegacyComponentSerializer.legacySection().deserialize(rank))
                     .decoration(TextDecoration.ITALIC, false));
         }
+
+        // Balance
         lore.add(Component.text("Balance: ", NamedTextColor.GRAY)
                 .append(Component.text("$" + String.format("%.2f", shopService.getBalance(player)), NamedTextColor.GREEN))
                 .decoration(TextDecoration.ITALIC, false));
-        meta.lore(lore);
 
+        lore.add(Component.empty());
+
+        // Stats
+        PlayerStatsService stats = plugin.getPlayerStatsService();
+        int kills = stats != null ? stats.getKills(player.getUniqueId()) : 0;
+        int sKills = stats != null ? stats.getSKills(player.getUniqueId()) : 0;
+        int survivals = stats != null ? stats.getModeSurvivals(player.getUniqueId()) : 0;
+
+        lore.add(Component.text("Kills: ", NamedTextColor.GRAY)
+                .append(Component.text(String.valueOf(kills), NamedTextColor.RED))
+                .decoration(TextDecoration.ITALIC, false));
+        lore.add(Component.text("S-Kills: ", NamedTextColor.GRAY)
+                .append(Component.text(String.valueOf(sKills), NamedTextColor.LIGHT_PURPLE))
+                .decoration(TextDecoration.ITALIC, false));
+        lore.add(Component.text("Mode Survivals: ", NamedTextColor.GRAY)
+                .append(Component.text(String.valueOf(survivals), NamedTextColor.AQUA))
+                .decoration(TextDecoration.ITALIC, false));
+
+        // Badges
+        var badgeService = plugin.getBadgeService();
+        if (badgeService != null) {
+            int earned = badgeService.getPlayerBadges(player.getUniqueId()).size();
+            int total = badgeService.getAllBadgeIds().size();
+            lore.add(Component.text("Badges: ", NamedTextColor.GRAY)
+                    .append(Component.text(earned + "/" + total, NamedTextColor.DARK_PURPLE))
+                    .decoration(TextDecoration.ITALIC, false));
+        }
+
+        meta.lore(lore);
         head.setItemMeta(meta);
         return head;
     }
 
-    private ItemStack createBalanceItem(Player player) {
-        ItemStack item = new ItemStack(Material.GOLD_INGOT);
+    private ItemStack createClaimButton(Player player) {
+        ItemStack item = new ItemStack(Material.BUNDLE);
         ItemMeta meta = item.getItemMeta();
-        meta.displayName(Component.text("Balance", NamedTextColor.GOLD, TextDecoration.BOLD)
-                .decoration(TextDecoration.ITALIC, false));
-        meta.lore(List.of(
-                Component.text("$" + String.format("%.2f", shopService.getBalance(player)), NamedTextColor.GREEN)
-                        .decoration(TextDecoration.ITALIC, false)
-        ));
-        item.setItemMeta(meta);
-        return item;
-    }
-
-    private ItemStack createKillsItem(Player player) {
-        ItemStack item = new ItemStack(Material.DIAMOND_SWORD);
-        ItemMeta meta = item.getItemMeta();
-        meta.displayName(Component.text("Kills", NamedTextColor.RED, TextDecoration.BOLD)
+        meta.displayName(Component.text("Claim Your Goods", NamedTextColor.GREEN, TextDecoration.BOLD)
                 .decoration(TextDecoration.ITALIC, false));
 
-        int kills = 0;
-        PlayerStatsService stats = plugin.getPlayerStatsService();
-        if (stats != null) kills = stats.getKills(player.getUniqueId());
+        List<Component> lore = new ArrayList<>();
+        lore.add(Component.empty());
 
-        meta.lore(List.of(
-                Component.text(String.valueOf(kills), NamedTextColor.WHITE)
-                        .decoration(TextDecoration.ITALIC, false)
-        ));
-        item.setItemMeta(meta);
-        return item;
-    }
+        // Show pending item count
+        var storage = shopService.getVirtualStorage();
+        int pending = storage != null ? storage.getItems(player.getUniqueId()).size() : 0;
+        if (pending > 0) {
+            lore.add(Component.text(pending + " item(s) waiting!", NamedTextColor.YELLOW)
+                    .decoration(TextDecoration.ITALIC, false));
+        } else {
+            lore.add(Component.text("No items to claim", NamedTextColor.GRAY)
+                    .decoration(TextDecoration.ITALIC, false));
+        }
 
-    private ItemStack createSKillsItem(Player player) {
-        ItemStack item = new ItemStack(Material.NETHER_STAR);
-        ItemMeta meta = item.getItemMeta();
-        meta.displayName(Component.text("S-Kills", NamedTextColor.LIGHT_PURPLE, TextDecoration.BOLD)
+        lore.add(Component.empty());
+        lore.add(Component.text("Click to open storage", NamedTextColor.AQUA)
                 .decoration(TextDecoration.ITALIC, false));
-
-        int sKills = 0;
-        PlayerStatsService stats = plugin.getPlayerStatsService();
-        if (stats != null) sKills = stats.getSKills(player.getUniqueId());
-
-        meta.lore(List.of(
-                Component.text(String.valueOf(sKills), NamedTextColor.WHITE)
-                        .decoration(TextDecoration.ITALIC, false)
-        ));
-        item.setItemMeta(meta);
-        return item;
-    }
-
-    private ItemStack createSurvivalsItem(Player player) {
-        ItemStack item = new ItemStack(Material.TOTEM_OF_UNDYING);
-        ItemMeta meta = item.getItemMeta();
-        meta.displayName(Component.text("Mode Survivals", NamedTextColor.AQUA, TextDecoration.BOLD)
-                .decoration(TextDecoration.ITALIC, false));
-
-        int survivals = 0;
-        PlayerStatsService stats = plugin.getPlayerStatsService();
-        if (stats != null) survivals = stats.getModeSurvivals(player.getUniqueId());
-
-        meta.lore(List.of(
-                Component.text(String.valueOf(survivals), NamedTextColor.WHITE)
-                        .decoration(TextDecoration.ITALIC, false)
-        ));
-        item.setItemMeta(meta);
-        return item;
-    }
-
-    private ItemStack createBadgesItem(Player player) {
-        ItemStack item = new ItemStack(Material.ENDER_EYE);
-        ItemMeta meta = item.getItemMeta();
-        meta.displayName(Component.text("Badges", NamedTextColor.DARK_PURPLE, TextDecoration.BOLD)
-                .decoration(TextDecoration.ITALIC, false));
-        meta.lore(List.of(
-                Component.text("View your earned badges", NamedTextColor.GRAY)
-                        .decoration(TextDecoration.ITALIC, false)
-        ));
+        meta.lore(lore);
         item.setItemMeta(meta);
         return item;
     }
@@ -283,7 +250,7 @@ public class MainShopGUI {
         return item;
     }
 
-    private ItemStack createGlassPane(Material material, String name) {
+    private ItemStack createDyePane(Material material, String name) {
         ItemStack item = new ItemStack(material);
         ItemMeta meta = item.getItemMeta();
         meta.displayName(Component.text(name).decoration(TextDecoration.ITALIC, false));
@@ -301,5 +268,25 @@ public class MainShopGUI {
 
     public static int getCategoriesPerPage() {
         return CATEGORIES_PER_PAGE;
+    }
+
+    public static int getClaimSlot() {
+        return SLOT_CLAIM;
+    }
+
+    public static int getCloseSlot() {
+        return SLOT_CLOSE;
+    }
+
+    public static int getPlayerHeadSlot() {
+        return SLOT_PLAYER_HEAD;
+    }
+
+    public static int getPrevSlot() {
+        return SLOT_PREV;
+    }
+
+    public static int getNextSlot() {
+        return SLOT_NEXT;
     }
 }

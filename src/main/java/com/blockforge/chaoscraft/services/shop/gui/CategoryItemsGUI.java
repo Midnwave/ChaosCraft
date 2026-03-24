@@ -68,7 +68,7 @@ public class CategoryItemsGUI {
                 SIZE, title
         );
 
-        ItemStack grayPane = createGlassPane(Material.GRAY_STAINED_GLASS_PANE, " ");
+        ItemStack grayPane = createDyePane(Material.GRAY_DYE, " ");
 
         // Top row
         for (int i = 0; i < 9; i++) {
@@ -308,6 +308,10 @@ public class CategoryItemsGUI {
         meta.displayName(Component.text(name).decoration(TextDecoration.ITALIC, false));
         item.setItemMeta(meta);
         return item;
+    }
+
+    private ItemStack createDyePane(Material material, String name) {
+        return createGlassPane(material, name);
     }
 
     private String formatMaterialName(String name) {
