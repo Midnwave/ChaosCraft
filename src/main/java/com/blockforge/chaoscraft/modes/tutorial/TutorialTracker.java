@@ -258,6 +258,30 @@ public class TutorialTracker {
         }
     }
 
+    /**
+     * Sends the current tutorial step as a chat message for all tracked players.
+     * Called every 200 ticks (10 seconds) from TutorialMode.onTick().
+     */
+    public void tickChatReminder() {
+        for (Map.Entry<UUID, PlayerProgress> entry : progress.entrySet()) {
+            PlayerProgress pp = entry.getValue();
+            if (pp.completed) continue;
+            Player player = plugin.getServer().getPlayer(entry.getKey());
+            if (player == null || !player.isOnline()) continue;
+            TutorialStep step = pp.design.getSteps().get(pp.currentStepIndex);
+            int stepNum = pp.currentStepIndex + 1;
+            int total = pp.design.getStepCount();
+            String progressSuffix = step.getRequiredCount() > 1
+                    ? " (" + pp.currentStepProgress + "/" + step.getRequiredCount() + ")"
+                    : "";
+            player.sendMessage(
+                    Component.text("[Tutorial] ", NamedTextColor.YELLOW)
+                            .append(Component.text("Step " + stepNum + "/" + total + ": ", NamedTextColor.WHITE))
+                            .append(Component.text(step.getDescription() + progressSuffix, NamedTextColor.GREEN))
+            );
+        }
+    }
+
     public Set<UUID> getCompletedPlayers() {
         Set<UUID> completed = new HashSet<>();
         for (Map.Entry<UUID, PlayerProgress> entry : progress.entrySet()) {

@@ -130,6 +130,11 @@ public class TutorialMode extends AbstractMode {
         if (tickCounter % 20 == 0) {
             tracker.tickActionbar();
         }
+
+        // Send chat reminder every 200 ticks (10 seconds)
+        if (tickCounter % 200 == 0) {
+            tracker.tickChatReminder();
+        }
     }
 
     @Override

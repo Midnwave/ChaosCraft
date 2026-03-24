@@ -14,6 +14,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
@@ -71,6 +72,11 @@ public class IvoryAttackHandler implements Listener {
     public void onEntityDamage(EntityDamageByEntityEvent event) {
         if (!config.isEnabled()) return;
         if (!(event.getDamager() instanceof Player player)) return;
+
+        // Only activate on direct player attacks - ignore thorns, fire, and other passive damage sources
+        EntityDamageEvent.DamageCause cause = event.getCause();
+        if (cause != EntityDamageEvent.DamageCause.ENTITY_ATTACK
+                && cause != EntityDamageEvent.DamageCause.ENTITY_SWEEP_ATTACK) return;
 
         ItemStack item = player.getInventory().getItemInMainHand();
         if (item == null || item.getType() == Material.AIR) return;
