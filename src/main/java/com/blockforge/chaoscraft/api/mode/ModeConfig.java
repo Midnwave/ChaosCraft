@@ -235,14 +235,46 @@ public class ModeConfig {
                 "Maximum number of simultaneous active attacks that can target one player at once.",
                 "Higher = more chaotic but also higher server load. Recommended range: 3–8."));
 
-        // ── Rewards ────────────────────────────────────────────────────────────
-        defaults.set("rewards.commands", new ArrayList<>());
-        defaults.setComments("rewards.commands", List.of(
-                "Commands run for each surviving player when the mode ends successfully.",
-                "Use %player% as a placeholder for each player's name.",
+        // ── Rewards (tiered) ──────────────────────────────────────────────────
+        // Survived rewards — given to players who stayed alive the entire mode
+        defaults.set("rewards.survived.money", 0);
+        defaults.setComments("rewards.survived.money", List.of(
+                "Vault money given to players who survived the mode. 0 = no money reward."));
+        defaults.set("rewards.survived.items", new ArrayList<>());
+        defaults.setComments("rewards.survived.items", List.of(
+                "Items given to survivors. Format: \"material_name quantity\"",
                 "Example:",
-                "  - \"give %player% diamond 5\"",
-                "  - \"eco give %player% 1000\""));
+                "  - \"diamond 3\"",
+                "  - \"golden_apple 1\""));
+        defaults.set("rewards.survived.badges", new ArrayList<>());
+        defaults.setComments("rewards.survived.badges", List.of(
+                "Badge IDs granted to survivors. Must match badge IDs in badges.yml.",
+                "Example:",
+                "  - \"survivor_chain\""));
+        defaults.set("rewards.survived.commands", new ArrayList<>());
+        defaults.setComments("rewards.survived.commands", List.of(
+                "Console commands run for each survivor. Use %player%.",
+                "Example:",
+                "  - \"give %player% experience_bottle 5\""));
+
+        // Died rewards — given to players who died during the mode
+        defaults.set("rewards.died.money", 0);
+        defaults.setComments("rewards.died.money", List.of(
+                "Consolation money for players who died. 0 = nothing."));
+        defaults.set("rewards.died.items", new ArrayList<>());
+        defaults.set("rewards.died.badges", new ArrayList<>());
+        defaults.set("rewards.died.commands", new ArrayList<>());
+
+        // Bonus rewards — triggered by mode-specific events (e.g., tutorial completion)
+        defaults.setComments("rewards.bonus", List.of(
+                "Bonus rewards triggered by mode-specific events.",
+                "Each key is a bonus ID that mode code can trigger via ModeResultsService.grantBonus().",
+                "Example:",
+                "  tutorial-complete:",
+                "    money: 1000",
+                "    badge: \"tutorial_master\"",
+                "    commands:",
+                "      - \"broadcast %player% completed the tutorial!\""));
 
         try {
             defaults.save(configFile);

@@ -66,8 +66,12 @@ public class ModeManager implements Listener {
         activeMode.loadExemptPlayers();
 
         // Track all online players as surviving (they haven't died yet)
+        var resultsService = plugin.getModeResultsService();
         for (Player p : plugin.getServer().getOnlinePlayers()) {
             activeMode.trackPlayer(p);
+            if (resultsService != null) {
+                resultsService.trackPlayer(p.getUniqueId());
+            }
         }
 
         // Timer is NOT started here — it's controlled by /cc function startmodetimer
@@ -157,6 +161,12 @@ public class ModeManager implements Listener {
         var timerHud = plugin.getModeTimerHud();
         if (timerHud != null) {
             timerHud.stopHud();
+        }
+
+        // Schedule results display (10 seconds after mode ends)
+        var modeResults = plugin.getModeResultsService();
+        if (modeResults != null) {
+            modeResults.scheduleResults(activeMode);
         }
 
         // Call mode's onEnd

@@ -6,3 +6,20 @@ debug: false
 # Title screen toggle
 title-screen:
   enabled: true
+
+# ── Mode Results ──────────────────────────────────────────────────────────────
+# Global settings for end-of-mode results (titles, sounds, chat summary).
+# Per-mode rewards are configured in each mode's YAML under the "rewards" section.
+results:
+  # Sound played for players who survived the mode
+  survived-sound: "minecraft:entity.player.levelup"
+  # Sound played for players who did not survive
+  died-sound: "minecraft:entity.villager.no"
+
+# ── Global Reset Commands ─────────────────────────────────────────────────────
+# Commands run for every player on join when NO mode is active.
+# Cleans up lingering sounds, effects, scoreboards from previous sessions.
+# Use %player% for the player's name.
+global-reset-commands: []
+  # - "stopsound %player%"
+  # - "effect clear %player%"

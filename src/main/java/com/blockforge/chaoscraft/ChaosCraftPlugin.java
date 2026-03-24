@@ -68,6 +68,7 @@ public class ChaosCraftPlugin extends JavaPlugin {
     private ClaimsService claimsService;
     private ModePointsService modePointsService;
     private ModeTimerHud modeTimerHud;
+    private com.blockforge.chaoscraft.api.mode.ModeResultsService modeResultsService;
     private com.blockforge.chaoscraft.weapons.ivory.IvoryService ivoryService;
     private com.blockforge.chaoscraft.updater.UpdateChecker updateChecker;
     private com.blockforge.chaoscraft.services.stats.PlayerStatsService playerStatsService;
@@ -187,6 +188,9 @@ public class ChaosCraftPlugin extends JavaPlugin {
 
         // Initialize Mode Timer HUD
         modeTimerHud = new ModeTimerHud(this);
+
+        // Initialize Mode Results Service
+        modeResultsService = new com.blockforge.chaoscraft.api.mode.ModeResultsService(this);
 
         // Initialize update checker
         updateChecker = new com.blockforge.chaoscraft.updater.UpdateChecker(this);
@@ -789,6 +793,7 @@ public class ChaosCraftPlugin extends JavaPlugin {
     public ClaimsService getClaimsService() { return claimsService; }
     public ModePointsService getModePointsService() { return modePointsService; }
     public ModeTimerHud getModeTimerHud() { return modeTimerHud; }
+    public com.blockforge.chaoscraft.api.mode.ModeResultsService getModeResultsService() { return modeResultsService; }
     public com.blockforge.chaoscraft.services.stats.PlayerStatsService getPlayerStatsService() { return playerStatsService; }
     public com.blockforge.chaoscraft.services.badges.BadgeService getBadgeService() { return badgeService; }
     public com.blockforge.chaoscraft.services.shop.ShopService getShopService() { return shopService; }
