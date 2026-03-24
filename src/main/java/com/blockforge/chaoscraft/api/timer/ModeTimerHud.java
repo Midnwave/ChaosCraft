@@ -5,27 +5,29 @@ import com.blockforge.chaoscraft.ChaosCraftPlugin;
 /**
  * Manages the BetterHud mode timer display state.
  *
- * Started via: /cc function starttimer <duration MM:SS> <flash_at MM:SS>
- * Stopped via: /cc function stopmodetimer  (or automatically when timer expires)
+ * Activated automatically by ModeManager when a mode starts. Reads the
+ * countdown from the existing ModeTimer (which modes start themselves).
  *
- * The timer counts down from the given duration. When the remaining time hits
- * the flash threshold, {@link #isFlashing()} alternates: true for 10 ticks,
- * false for 10 ticks. When the timer reaches 0:00, flash stays permanently true.
+ * Can also be started manually via: /cc function startmodetimer <MM:SS> <flash_at>
+ * which overrides the mode's timer with explicit values.
  *
- * PlaceholderAPI placeholders:
- *   %chaoscraft_mode_timer_active%   — "true"/"false" — controls BetterHud visibility
- *   %chaoscraft_mode_timer_flash%    — "true"/"false" — 10-tick alternation when low
- *   %chaoscraft_timer_m_ss%          — countdown text like "2:30" (from ModeTimer)
+ * Flash logic: when remaining time <= flash threshold, alternates true/false
+ * every 10 ticks. At 0:00, flash stays permanently true (red).
+ *
+ * PlaceholderAPI:
+ *   %chaoscraft_mode_timer_active%   — "true"/"false" — BetterHud visibility
+ *   %chaoscraft_mode_timer_flash%    — "true"/"false" — 10-tick alternation
+ *   %chaoscraft_timer_m_ss%          — countdown text (from ModeTimer)
  */
 public class ModeTimerHud {
 
     private final ChaosCraftPlugin plugin;
 
     private boolean active = false;
-    private boolean flashing = false;     // Current flash state (alternates 10 ticks on/off)
-    private int flashCounter = 0;         // Ticks within current flash half-cycle
-    private long flashThresholdTicks = 0; // Remaining ticks at which flashing begins
-    private boolean expired = false;      // Timer hit 0:00 — flash stays true permanently
+    private boolean flashing = false;
+    private int flashCounter = 0;
+    private long flashThresholdTicks = 60 * 20L; // default 60 seconds
+    private boolean expired = false;
 
     // Per-mode display info
     private String displayName = "";
@@ -36,11 +38,9 @@ public class ModeTimerHud {
     }
 
     /**
-     * Start the timer HUD with explicit duration and flash threshold.
-     * Called from /cc function starttimer <duration> <flash_at>.
-     *
-     * @param durationSeconds  total timer duration in seconds (e.g. 150 for 2:30)
-     * @param flashAtSeconds   seconds remaining when flashing begins (e.g. 30 for 0:30)
+     * Start the HUD with explicit duration and flash threshold.
+     * Called from /cc function startmodetimer <duration> <flash_at>.
+     * This ALSO starts the ModeTimer countdown.
      */
     public void startHud(long durationSeconds, long flashAtSeconds) {
         active = true;
@@ -54,11 +54,97 @@ public class ModeTimerHud {
         timer.start(durationSeconds);
         timer.setOnExpire(() -> {
             expired = true;
-            flashing = true; // Stays red permanently at 0:00
+            flashing = true;
             plugin.debug("[TimerHud] Timer expired — flash locked to true.");
         });
 
-        // Load display info from active mode config if available
+        loadModeDisplayInfo();
+        plugin.debug("[TimerHud] Started with explicit timer: " + durationSeconds + "s, flash at: "
+                + flashAtSeconds + "s");
+    }
+
+    /**
+     * Activate the HUD display without starting a new timer.
+     * The mode has already started its own ModeTimer — we just
+     * piggyback on it for the BetterHud display.
+     *
+     * Called by ModeManager when a mode starts.
+     */
+    public void startHud() {
+        active = true;
+        flashing = false;
+        flashCounter = 0;
+        expired = false;
+
+        // Read flash threshold from mode config
+        var manager = plugin.getModeManager();
+        if (manager.isAnyModeActive()) {
+            var config = manager.getActiveMode().getModeConfig().get();
+            if (config != null) {
+                flashThresholdTicks = config.getInt("timer-hud.flash-threshold-seconds", 60) * 20L;
+            }
+        }
+
+        // Listen for timer expiry
+        var timer = plugin.getModeTimer();
+        // Only set expire callback if the mode didn't already set one that ends the mode
+        // We add our flash behavior via tick() instead
+
+        loadModeDisplayInfo();
+        plugin.debug("[TimerHud] Activated (piggyback on mode's timer). Flash threshold: "
+                + (flashThresholdTicks / 20) + "s");
+    }
+
+    /**
+     * Stop the timer HUD and reset all state.
+     */
+    public void stopHud() {
+        active = false;
+        flashing = false;
+        flashCounter = 0;
+        expired = false;
+        flashThresholdTicks = 60 * 20L;
+        displayName = "";
+        color = "white";
+
+        plugin.debug("[TimerHud] Stopped.");
+    }
+
+    /**
+     * Called every tick from ModeManager's tick loop.
+     * Handles the 10-tick-on / 10-tick-off flash alternation.
+     */
+    public void tick() {
+        if (!active) return;
+        if (expired) return; // Flash locked to true at 0:00
+
+        var timer = plugin.getModeTimer();
+        if (!timer.isRunning()) {
+            // Timer finished — lock flash to true
+            expired = true;
+            flashing = true;
+            return;
+        }
+
+        long remainingTicks = timer.getRemainingTicks();
+
+        if (remainingTicks <= flashThresholdTicks && remainingTicks > 0) {
+            // In flash zone — alternate every 10 ticks
+            flashCounter++;
+            if (flashCounter >= 10) {
+                flashing = !flashing;
+                flashCounter = 0;
+            }
+        } else if (remainingTicks <= 0) {
+            expired = true;
+            flashing = true;
+        } else {
+            flashing = false;
+            flashCounter = 0;
+        }
+    }
+
+    private void loadModeDisplayInfo() {
         var manager = plugin.getModeManager();
         if (manager.isAnyModeActive()) {
             var modeConfig = manager.getActiveMode().getModeConfig();
@@ -71,91 +157,15 @@ public class ModeTimerHud {
                 displayName = manager.getActiveModeName().toUpperCase();
             }
         }
-
-        plugin.debug("[TimerHud] Started. Duration: " + durationSeconds + "s, Flash at: "
-                + flashAtSeconds + "s remaining, Display: " + displayName);
-    }
-
-    /**
-     * Start HUD using active mode's config values (backwards compat for modes
-     * that call startHud() without explicit args).
-     */
-    public void startHud() {
-        var manager = plugin.getModeManager();
-        long duration = 600;
-        long flashAt = 60;
-
-        if (manager.isAnyModeActive()) {
-            var modeConfig = manager.getActiveMode().getModeConfig();
-            var config = modeConfig.get();
-            if (config != null) {
-                duration = config.getLong("timer.default-seconds", 600);
-                flashAt = config.getInt("timer-hud.flash-threshold-seconds", 60);
-            }
-        }
-
-        startHud(duration, flashAt);
-    }
-
-    /**
-     * Stop the timer HUD and reset all state.
-     */
-    public void stopHud() {
-        active = false;
-        flashing = false;
-        flashCounter = 0;
-        expired = false;
-        flashThresholdTicks = 0;
-        displayName = "";
-        color = "white";
-
-        plugin.getModeTimer().stop();
-        plugin.debug("[TimerHud] Stopped.");
-    }
-
-    /**
-     * Called every tick from the mode tick loop or the main plugin tick.
-     * Handles the 10-tick-on / 10-tick-off flash alternation.
-     */
-    public void tick() {
-        if (!active) return;
-        if (expired) return; // Flash locked to true at 0:00
-
-        var timer = plugin.getModeTimer();
-        long remainingTicks = timer.getRemainingTicks();
-
-        if (remainingTicks <= flashThresholdTicks && remainingTicks > 0) {
-            // In flash zone — alternate every 10 ticks
-            flashCounter++;
-            if (flashCounter >= 10) {
-                flashing = !flashing;
-                flashCounter = 0;
-            }
-        } else if (remainingTicks <= 0) {
-            // Timer expired — handled by onExpire callback
-            expired = true;
-            flashing = true;
-        } else {
-            // Not in flash zone yet
-            flashing = false;
-            flashCounter = 0;
-        }
     }
 
     // ========================
     // Placeholder getters
     // ========================
 
-    /** Whether the timer HUD is currently active/visible. */
     public boolean isActive() { return active; }
-
-    /** Whether the timer text should currently show as red. */
     public boolean isFlashing() { return flashing; }
-
-    /** The display name for the current mode (e.g. "CHAIN MODE"). */
     public String getDisplayName() { return displayName; }
-
-    /** The color name for the current mode (e.g. "gray", "dark_purple"). */
     public String getColor() { return color; }
 
     public void setDisplayName(String displayName) { this.displayName = displayName; }
