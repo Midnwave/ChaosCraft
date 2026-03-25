@@ -55,14 +55,8 @@ public class TutorialListener implements Listener {
         Material crafted = event.getRecipe().getResult().getType();
         int amount = event.getRecipe().getResult().getAmount();
 
-        // Handle shift-click crafting (crafts multiple)
-        if (event.isShiftClick()) {
-            // For shift-click, count as 1 craft event regardless of batch size
-            // This simplifies tracking and avoids over-counting
-            tracker.incrementProgress(player, TutorialStepType.CRAFT_ITEM, crafted);
-        } else {
-            tracker.incrementProgress(player, TutorialStepType.CRAFT_ITEM, crafted);
-        }
+        // Pass actual crafted amount (e.g. planks give 4 per craft)
+        tracker.incrementProgress(player, TutorialStepType.CRAFT_ITEM, crafted, amount);
     }
 
     // ========================

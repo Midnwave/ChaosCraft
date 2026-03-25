@@ -67,6 +67,10 @@ public class TutorialTracker {
      * Increment progress on the current step. Returns true if the step was completed.
      */
     public boolean incrementProgress(Player player, TutorialStepType type, Material material) {
+        return incrementProgress(player, type, material, 1);
+    }
+
+    public boolean incrementProgress(Player player, TutorialStepType type, Material material, int amount) {
         PlayerProgress pp = progress.get(player.getUniqueId());
         if (pp == null || pp.completed) return false;
 
@@ -74,7 +78,7 @@ public class TutorialTracker {
         if (step.getType() != type) return false;
         if (!step.matchesMaterial(material)) return false;
 
-        pp.currentStepProgress++;
+        pp.currentStepProgress += amount;
         plugin.debug("[Tutorial] " + player.getName() + " progress: " + step.getStepId()
                 + " " + pp.currentStepProgress + "/" + step.getRequiredCount());
 
