@@ -309,6 +309,10 @@ public class PlaceholderExpansion extends me.clip.placeholderapi.expansion.Place
                 int absorption = (int) Math.ceil(player.getAbsorptionAmount());
                 yield absorption > 0 ? String.valueOf(absorption) : "";
             }
+            case "has_absorption" -> {
+                if (player == null) yield "false";
+                yield String.valueOf(player.getAbsorptionAmount() > 0);
+            }
             case "health_pct" -> {
                 if (player == null) yield "0";
                 int pct = (int) Math.round((player.getHealth() / player.getMaxHealth()) * 100);
