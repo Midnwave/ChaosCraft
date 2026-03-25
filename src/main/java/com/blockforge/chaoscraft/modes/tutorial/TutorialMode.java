@@ -29,9 +29,7 @@ public class TutorialMode extends AbstractMode {
     private String forcedDesignOverride = null;
     private TutorialDesign activeDesign = null;
 
-    // Tutorial Diamond recipe key
-    private NamespacedKey tutorialDiamondKey;
-    private boolean recipeRegistered = false;
+    // (Tutorial Diamond recipe removed — all steps are vanilla now)
 
     // Vanilla hostile mob spawning
     private static final EntityType[] TUTORIAL_MOBS = {
@@ -49,7 +47,7 @@ public class TutorialMode extends AbstractMode {
         this.attackScheduler = new TutorialScheduler(plugin, attackRegistry, tutorialConfig);
         this.tracker = new TutorialTracker(plugin, tutorialConfig);
         this.listener = new TutorialListener(plugin, tracker);
-        this.tutorialDiamondKey = new NamespacedKey(plugin, "tutorial_diamond");
+        // No custom recipes needed — all tutorial steps use vanilla crafting
         registerAllAttacks();
     }
 
@@ -91,7 +89,7 @@ public class TutorialMode extends AbstractMode {
                 + " (" + activeDesign.getStepCount() + " steps)");
 
         // Register tutorial diamond recipe
-        registerTutorialDiamondRecipe();
+        // All tutorial steps use vanilla recipes — no custom registration needed
 
         // Start tutorial tracking for each player
         for (Player player : world.getPlayers()) {
@@ -171,7 +169,7 @@ public class TutorialMode extends AbstractMode {
         HandlerList.unregisterAll(listener);
 
         // Remove tutorial diamond recipe
-        unregisterTutorialDiamondRecipe();
+        // No custom recipes to clean up
 
         // Cleanup tracking
         tracker.cleanup();
@@ -226,36 +224,7 @@ public class TutorialMode extends AbstractMode {
         return TutorialDesign.getRandom(new Random());
     }
 
-    // ========================
-    // Tutorial Diamond Recipe
-    // ========================
-
-    private void registerTutorialDiamondRecipe() {
-        if (recipeRegistered) return;
-        try {
-            ShapedRecipe recipe = new ShapedRecipe(tutorialDiamondKey,
-                    new org.bukkit.inventory.ItemStack(Material.DIAMOND, 1));
-            recipe.shape("III", "IEI", "III");
-            recipe.setIngredient('I', Material.IRON_INGOT);
-            recipe.setIngredient('E', Material.EMERALD);
-            plugin.getServer().addRecipe(recipe);
-            recipeRegistered = true;
-            plugin.debug("[Tutorial] Registered tutorial diamond recipe (8 iron + 1 emerald = diamond)");
-        } catch (Exception e) {
-            plugin.getLogger().warning("[Tutorial] Failed to register diamond recipe: " + e.getMessage());
-        }
-    }
-
-    private void unregisterTutorialDiamondRecipe() {
-        if (!recipeRegistered) return;
-        try {
-            plugin.getServer().removeRecipe(tutorialDiamondKey);
-            recipeRegistered = false;
-            plugin.debug("[Tutorial] Removed tutorial diamond recipe.");
-        } catch (Exception e) {
-            plugin.getLogger().warning("[Tutorial] Failed to remove diamond recipe: " + e.getMessage());
-        }
-    }
+    // (Tutorial Diamond recipe removed — all steps are vanilla now)
 
     // ========================
     // API

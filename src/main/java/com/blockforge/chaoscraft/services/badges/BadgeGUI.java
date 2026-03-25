@@ -62,7 +62,7 @@ public class BadgeGUI implements Listener {
                 Component.text("Badges", NamedTextColor.DARK_PURPLE).decoration(TextDecoration.BOLD, true));
 
         // Top and bottom row background
-        ItemStack background = createItem(Material.BLACK_STAINED_GLASS_PANE, " ");
+        ItemStack background = createItem(Material.BLACK_DYE, " ");
         for (int i = 0; i < 9; i++) {
             inv.setItem(i, background);
         }
@@ -93,7 +93,7 @@ public class BadgeGUI implements Listener {
                 item = createExpiredBadgeItem(badge);
             } else {
                 // Unearned
-                item = createUnearnedBadgeItem();
+                item = createUnearnedBadgeItem(badge);
             }
 
             inv.setItem(slot, item);
@@ -194,17 +194,41 @@ public class BadgeGUI implements Listener {
         return item;
     }
 
-    private ItemStack createUnearnedBadgeItem() {
-        ItemStack item = new ItemStack(Material.GRAY_STAINED_GLASS_PANE);
+    private ItemStack createUnearnedBadgeItem(BadgeDefinition badge) {
+        ItemStack item = new ItemStack(Material.GRAY_DYE);
         ItemMeta meta = item.getItemMeta();
-        meta.displayName(Component.text("???", NamedTextColor.DARK_GRAY)
-                .decoration(TextDecoration.ITALIC, false)
-                .decoration(TextDecoration.BOLD, true));
+
+        // Show the actual badge name but in gray with a lock indicator
+        Component displayName = BadgeService.parseDisplayName(badge.getDisplayName());
+        meta.displayName(Component.text("\u274C ", NamedTextColor.DARK_GRAY) // ❌
+                .append(displayName.color(NamedTextColor.GRAY))
+                .decoration(TextDecoration.ITALIC, false));
 
         List<Component> lore = new ArrayList<>();
         lore.add(Component.empty());
-        lore.add(Component.text("You haven't earned this badge yet.", NamedTextColor.GRAY)
+
+        // Show full description so players know what to work toward
+        if (badge.getDescription() != null && !badge.getDescription().isEmpty()) {
+            for (String line : wrapText(badge.getDescription(), 30)) {
+                lore.add(Component.text(line, NamedTextColor.DARK_GRAY).decoration(TextDecoration.ITALIC, false));
+            }
+            lore.add(Component.empty());
+        }
+
+        lore.add(Component.text("Status: ", NamedTextColor.YELLOW)
+                .append(Component.text("Not Obtained", NamedTextColor.GRAY))
                 .decoration(TextDecoration.ITALIC, false));
+
+        if (badge.isLimited()) {
+            String expiryStr = DATE_FORMAT.format(new Date(badge.getExpiryDate()));
+            lore.add(Component.text("Limited Edition — Expires: ", NamedTextColor.LIGHT_PURPLE)
+                    .append(Component.text(expiryStr, NamedTextColor.WHITE))
+                    .decoration(TextDecoration.ITALIC, false));
+        }
+
+        if (badge.getCustomModelData() > 0) {
+            meta.setCustomModelData(badge.getCustomModelData());
+        }
 
         meta.lore(lore);
         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
@@ -213,18 +237,40 @@ public class BadgeGUI implements Listener {
     }
 
     private ItemStack createExpiredBadgeItem(BadgeDefinition badge) {
-        ItemStack item = new ItemStack(Material.RED_STAINED_GLASS_PANE);
+        ItemStack item = new ItemStack(Material.RED_DYE);
         ItemMeta meta = item.getItemMeta();
-        meta.displayName(Component.text("??? (Expired)", NamedTextColor.RED)
-                .decoration(TextDecoration.ITALIC, false)
-                .decoration(TextDecoration.BOLD, true));
+
+        // Show the actual badge name in dark red with strikethrough
+        Component displayName = BadgeService.parseDisplayName(badge.getDisplayName());
+        meta.displayName(Component.text("\u26D4 ", NamedTextColor.DARK_RED) // ⛔
+                .append(displayName.color(NamedTextColor.DARK_RED).decoration(TextDecoration.STRIKETHROUGH, true))
+                .decoration(TextDecoration.ITALIC, false));
 
         List<Component> lore = new ArrayList<>();
         lore.add(Component.empty());
-        lore.add(Component.text("This limited badge has expired.", NamedTextColor.DARK_RED)
+
+        // Show full description
+        if (badge.getDescription() != null && !badge.getDescription().isEmpty()) {
+            for (String line : wrapText(badge.getDescription(), 30)) {
+                lore.add(Component.text(line, NamedTextColor.DARK_GRAY).decoration(TextDecoration.ITALIC, false));
+            }
+            lore.add(Component.empty());
+        }
+
+        lore.add(Component.text("Status: ", NamedTextColor.YELLOW)
+                .append(Component.text("Unobtainable", NamedTextColor.DARK_RED))
                 .decoration(TextDecoration.ITALIC, false));
-        lore.add(Component.text("It is no longer obtainable.", NamedTextColor.DARK_RED)
+
+        String expiryStr = DATE_FORMAT.format(new Date(badge.getExpiryDate()));
+        lore.add(Component.text("Expired: ", NamedTextColor.RED)
+                .append(Component.text(expiryStr, NamedTextColor.GRAY))
                 .decoration(TextDecoration.ITALIC, false));
+        lore.add(Component.text("This badge is no longer available.", NamedTextColor.DARK_RED)
+                .decoration(TextDecoration.ITALIC, true));
+
+        if (badge.getCustomModelData() > 0) {
+            meta.setCustomModelData(badge.getCustomModelData());
+        }
 
         meta.lore(lore);
         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);

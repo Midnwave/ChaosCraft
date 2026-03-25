@@ -67,7 +67,7 @@ public class TutorialDesign {
                 step("mine_iron", "Mine iron ore", BLOCK_BREAK).materials(Material.IRON_ORE, Material.DEEPSLATE_IRON_ORE).build(),
                 step("craft_furnace", "Craft a furnace", CRAFT_ITEM).materials(Material.FURNACE).build(),
                 step("smelt_iron", "Smelt an iron ingot", FURNACE_EXTRACT).materials(Material.IRON_INGOT).reward(Material.IRON_INGOT, 7).build(),
-                step("craft_diamond", "Craft the Tutorial Diamond", CRAFT_ITEM).materials(Material.DIAMOND).build()
+                step("craft_iron_pick", "Craft an Iron Pickaxe", CRAFT_ITEM).materials(Material.IRON_PICKAXE).build()
         )));
 
         // 2. TOOLSMITH
@@ -83,7 +83,7 @@ public class TutorialDesign {
                 step("craft_stone_sword", "Craft a stone sword", CRAFT_ITEM).materials(Material.STONE_SWORD).build(),
                 step("craft_stone_pick", "Craft a stone pickaxe", CRAFT_ITEM).materials(Material.STONE_PICKAXE).build(),
                 step("smelt_iron", "Smelt an iron ingot", FURNACE_EXTRACT).materials(Material.IRON_INGOT).reward(Material.IRON_INGOT, 7).build(),
-                step("craft_diamond", "Craft the Tutorial Diamond", CRAFT_ITEM).materials(Material.DIAMOND).build()
+                step("craft_iron_pick", "Craft an Iron Pickaxe", CRAFT_ITEM).materials(Material.IRON_PICKAXE).build()
         )));
 
         // 3. BUILDER
@@ -98,7 +98,7 @@ public class TutorialDesign {
                 step("place_cobble", "Place 8 cobblestone", BLOCK_PLACE).materials(Material.COBBLESTONE).count(8).build(),
                 step("craft_furnace", "Craft a furnace", CRAFT_ITEM).materials(Material.FURNACE).build(),
                 step("smelt_iron", "Smelt an iron ingot", FURNACE_EXTRACT).materials(Material.IRON_INGOT).reward(Material.IRON_INGOT, 7).build(),
-                step("craft_diamond", "Craft the Tutorial Diamond", CRAFT_ITEM).materials(Material.DIAMOND).build()
+                step("craft_iron_pick", "Craft an Iron Pickaxe", CRAFT_ITEM).materials(Material.IRON_PICKAXE).build()
         )));
 
         // 4. FARMER
@@ -114,7 +114,7 @@ public class TutorialDesign {
                 step("craft_stone_pick", "Craft a stone pickaxe", CRAFT_ITEM).materials(Material.STONE_PICKAXE).build(),
                 step("mine_iron", "Mine iron ore", BLOCK_BREAK).materials(Material.IRON_ORE, Material.DEEPSLATE_IRON_ORE).build(),
                 step("smelt_iron", "Smelt an iron ingot", FURNACE_EXTRACT).materials(Material.IRON_INGOT).reward(Material.IRON_INGOT, 7).build(),
-                step("craft_diamond", "Craft the Tutorial Diamond", CRAFT_ITEM).materials(Material.DIAMOND).build()
+                step("craft_iron_pick", "Craft an Iron Pickaxe", CRAFT_ITEM).materials(Material.IRON_PICKAXE).build()
         )));
 
         // 5. EXPLORER
@@ -129,7 +129,7 @@ public class TutorialDesign {
                 step("climb_high", "Reach Y=100", PLAYER_MOVE).moveMinY(100).build(),
                 step("mine_iron", "Mine iron ore", BLOCK_BREAK).materials(Material.IRON_ORE, Material.DEEPSLATE_IRON_ORE).build(),
                 step("smelt_iron", "Smelt an iron ingot", FURNACE_EXTRACT).materials(Material.IRON_INGOT).reward(Material.IRON_INGOT, 7).build(),
-                step("craft_diamond", "Craft the Tutorial Diamond", CRAFT_ITEM).materials(Material.DIAMOND).build()
+                step("craft_iron_pick", "Craft an Iron Pickaxe", CRAFT_ITEM).materials(Material.IRON_PICKAXE).build()
         )));
 
         // 6. LUMBERJACK
@@ -144,7 +144,7 @@ public class TutorialDesign {
                 step("mine_cobble", "Mine 3 cobblestone", BLOCK_BREAK).materials(Material.COBBLESTONE).count(3).build(),
                 step("craft_stone_pick", "Craft a stone pickaxe", CRAFT_ITEM).materials(Material.STONE_PICKAXE).build(),
                 step("smelt_iron", "Smelt an iron ingot", FURNACE_EXTRACT).materials(Material.IRON_INGOT).reward(Material.IRON_INGOT, 7).build(),
-                step("craft_diamond", "Craft the Tutorial Diamond", CRAFT_ITEM).materials(Material.DIAMOND).build()
+                step("craft_iron_pick", "Craft an Iron Pickaxe", CRAFT_ITEM).materials(Material.IRON_PICKAXE).build()
         )));
 
         // 7. MINER
@@ -159,7 +159,7 @@ public class TutorialDesign {
                 step("mine_iron", "Mine 3 iron ore", BLOCK_BREAK).materials(Material.IRON_ORE, Material.DEEPSLATE_IRON_ORE).count(3).build(),
                 step("craft_furnace", "Craft a furnace", CRAFT_ITEM).materials(Material.FURNACE).build(),
                 step("smelt_iron", "Smelt 3 iron ingots", FURNACE_EXTRACT).materials(Material.IRON_INGOT).count(3).reward(Material.IRON_INGOT, 5).build(),
-                step("craft_diamond", "Craft the Tutorial Diamond", CRAFT_ITEM).materials(Material.DIAMOND).build()
+                step("craft_iron_pick", "Craft an Iron Pickaxe", CRAFT_ITEM).materials(Material.IRON_PICKAXE).build()
         )));
 
         // 8. WARRIOR
@@ -173,7 +173,7 @@ public class TutorialDesign {
                 step("craft_stone_sword", "Craft a stone sword", CRAFT_ITEM).materials(Material.STONE_SWORD).build(),
                 step("kill_more", "Kill 3 more mobs", ENTITY_KILL).count(3).build(),
                 step("smelt_iron", "Smelt an iron ingot", FURNACE_EXTRACT).materials(Material.IRON_INGOT).reward(Material.IRON_INGOT, 7).build(),
-                step("craft_diamond", "Craft the Tutorial Diamond", CRAFT_ITEM).materials(Material.DIAMOND).build()
+                step("craft_iron_sword", "Craft an Iron Sword", CRAFT_ITEM).materials(Material.IRON_SWORD).build()
         )));
 
         // 9. SURVIVALIST
@@ -189,7 +189,7 @@ public class TutorialDesign {
                 step("mine_cobble", "Mine 5 cobblestone", BLOCK_BREAK).materials(Material.COBBLESTONE).count(5).build(),
                 step("craft_stone_pick", "Craft a stone pickaxe", CRAFT_ITEM).materials(Material.STONE_PICKAXE).build(),
                 step("smelt_iron", "Smelt an iron ingot", FURNACE_EXTRACT).materials(Material.IRON_INGOT).reward(Material.IRON_INGOT, 7).build(),
-                step("craft_diamond", "Craft the Tutorial Diamond", CRAFT_ITEM).materials(Material.DIAMOND).build()
+                step("craft_iron_pick", "Craft an Iron Pickaxe", CRAFT_ITEM).materials(Material.IRON_PICKAXE).build()
         )));
 
         // 10. ARMORSMITH
@@ -202,7 +202,7 @@ public class TutorialDesign {
                 step("mine_iron", "Mine 5 iron ore", BLOCK_BREAK).materials(Material.IRON_ORE, Material.DEEPSLATE_IRON_ORE).count(5).build(),
                 step("smelt_iron", "Smelt 5 iron ingots", FURNACE_EXTRACT).materials(Material.IRON_INGOT).count(5).reward(Material.IRON_INGOT, 3).build(),
                 step("craft_helmet", "Craft an iron helmet", CRAFT_ITEM).materials(Material.IRON_HELMET).build(),
-                step("craft_diamond", "Craft the Tutorial Diamond", CRAFT_ITEM).materials(Material.DIAMOND).build()
+                step("craft_chestplate", "Craft an Iron Chestplate", CRAFT_ITEM).materials(Material.IRON_CHESTPLATE).build()
         )));
 
         // 11. ENCHANTER
@@ -215,8 +215,7 @@ public class TutorialDesign {
                 step("mine_obsidian", "Mine 4 obsidian", BLOCK_BREAK).materials(Material.OBSIDIAN).count(4).reward(Material.OBSIDIAN, 4).build(),
                 step("craft_books", "Craft 3 books", CRAFT_ITEM).materials(Material.BOOK).count(3).reward(Material.BOOK, 3).build(),
                 step("mine_diamonds", "Mine 2 diamond ore", BLOCK_BREAK).materials(Material.DIAMOND_ORE, Material.DEEPSLATE_DIAMOND_ORE).count(2).reward(Material.DIAMOND, 2).build(),
-                step("craft_ench_table", "Craft an enchanting table", CRAFT_ITEM).materials(Material.ENCHANTING_TABLE).build(),
-                step("craft_diamond", "Craft the Tutorial Diamond", CRAFT_ITEM).materials(Material.DIAMOND).reward(Material.IRON_INGOT, 8).build()
+                step("craft_ench_table", "Craft an Enchanting Table", CRAFT_ITEM).materials(Material.ENCHANTING_TABLE).build()
         )));
 
         // 12. SMELTER
@@ -230,7 +229,7 @@ public class TutorialDesign {
                 step("smelt_stone", "Smelt 4 smooth stone", FURNACE_EXTRACT).materials(Material.STONE).count(4).build(),
                 step("smelt_iron", "Smelt 3 iron ingots", FURNACE_EXTRACT).materials(Material.IRON_INGOT).count(3).build(),
                 step("craft_blast", "Craft a blast furnace", CRAFT_ITEM).materials(Material.BLAST_FURNACE).reward(Material.IRON_INGOT, 5).build(),
-                step("craft_diamond", "Craft the Tutorial Diamond", CRAFT_ITEM).materials(Material.DIAMOND).build()
+                step("craft_iron_pick", "Craft an Iron Pickaxe", CRAFT_ITEM).materials(Material.IRON_PICKAXE).build()
         )));
 
         // 13. FLETCHER
@@ -244,7 +243,7 @@ public class TutorialDesign {
                 step("craft_bow", "Craft a bow", CRAFT_ITEM).materials(Material.BOW).reward(Material.STRING, 3).build(),
                 step("craft_stone_pick", "Craft a stone pickaxe", CRAFT_ITEM).materials(Material.STONE_PICKAXE).build(),
                 step("smelt_iron", "Smelt an iron ingot", FURNACE_EXTRACT).materials(Material.IRON_INGOT).reward(Material.IRON_INGOT, 7).build(),
-                step("craft_diamond", "Craft the Tutorial Diamond", CRAFT_ITEM).materials(Material.DIAMOND).build()
+                step("craft_iron_pick", "Craft an Iron Pickaxe", CRAFT_ITEM).materials(Material.IRON_PICKAXE).build()
         )));
 
         // 14. DECORATOR
@@ -258,7 +257,7 @@ public class TutorialDesign {
                 step("place_deco", "Place 10 decorative blocks", BLOCK_PLACE).count(10).build(),
                 step("craft_wood_pick", "Craft a wooden pickaxe", CRAFT_ITEM).materials(Material.WOODEN_PICKAXE).build(),
                 step("smelt_iron", "Smelt an iron ingot", FURNACE_EXTRACT).materials(Material.IRON_INGOT).reward(Material.IRON_INGOT, 7).build(),
-                step("craft_diamond", "Craft the Tutorial Diamond", CRAFT_ITEM).materials(Material.DIAMOND).build()
+                step("craft_iron_pick", "Craft an Iron Pickaxe", CRAFT_ITEM).materials(Material.IRON_PICKAXE).build()
         )));
 
         // 15. SHEPHERD
@@ -272,7 +271,7 @@ public class TutorialDesign {
                 step("craft_wood_pick", "Craft a wooden pickaxe", CRAFT_ITEM).materials(Material.WOODEN_PICKAXE).build(),
                 step("mine_cobble", "Mine 3 cobblestone", BLOCK_BREAK).materials(Material.COBBLESTONE).count(3).build(),
                 step("smelt_iron", "Smelt an iron ingot", FURNACE_EXTRACT).materials(Material.IRON_INGOT).reward(Material.IRON_INGOT, 7).build(),
-                step("craft_diamond", "Craft the Tutorial Diamond", CRAFT_ITEM).materials(Material.DIAMOND).build()
+                step("craft_iron_pick", "Craft an Iron Pickaxe", CRAFT_ITEM).materials(Material.IRON_PICKAXE).build()
         )));
 
         // 16. FISHERMAN
@@ -286,7 +285,7 @@ public class TutorialDesign {
                 step("craft_wood_pick", "Craft a wooden pickaxe", CRAFT_ITEM).materials(Material.WOODEN_PICKAXE).build(),
                 step("craft_stone_pick", "Craft a stone pickaxe", CRAFT_ITEM).materials(Material.STONE_PICKAXE).build(),
                 step("smelt_iron", "Smelt an iron ingot", FURNACE_EXTRACT).materials(Material.IRON_INGOT).reward(Material.IRON_INGOT, 7).build(),
-                step("craft_diamond", "Craft the Tutorial Diamond", CRAFT_ITEM).materials(Material.DIAMOND).build()
+                step("craft_iron_pick", "Craft an Iron Pickaxe", CRAFT_ITEM).materials(Material.IRON_PICKAXE).build()
         )));
 
         // 17. REDSTONE ROOKIE
@@ -301,7 +300,7 @@ public class TutorialDesign {
                 step("craft_piston", "Craft a piston", CRAFT_ITEM).materials(Material.PISTON).reward(Material.IRON_INGOT, 1).build(),
                 step("place_redstone", "Place the piston and lever", BLOCK_PLACE).materials(Material.PISTON, Material.LEVER).count(2).build(),
                 step("smelt_iron", "Smelt an iron ingot", FURNACE_EXTRACT).materials(Material.IRON_INGOT).reward(Material.IRON_INGOT, 7).build(),
-                step("craft_diamond", "Craft the Tutorial Diamond", CRAFT_ITEM).materials(Material.DIAMOND).build()
+                step("craft_iron_pick", "Craft an Iron Pickaxe", CRAFT_ITEM).materials(Material.IRON_PICKAXE).build()
         )));
 
         // 18. POTIONEER
@@ -314,7 +313,7 @@ public class TutorialDesign {
                 step("craft_bottles", "Craft 3 glass bottles", CRAFT_ITEM).materials(Material.GLASS_BOTTLE).count(3).build(),
                 step("craft_brewing", "Craft a brewing stand", CRAFT_ITEM).materials(Material.BREWING_STAND).reward(Material.BLAZE_ROD, 1).build(),
                 step("smelt_iron", "Smelt an iron ingot", FURNACE_EXTRACT).materials(Material.IRON_INGOT).reward(Material.IRON_INGOT, 7).build(),
-                step("craft_diamond", "Craft the Tutorial Diamond", CRAFT_ITEM).materials(Material.DIAMOND).build()
+                step("craft_iron_pick", "Craft an Iron Pickaxe", CRAFT_ITEM).materials(Material.IRON_PICKAXE).build()
         )));
 
         // 19. CRAFTER SUPREME
@@ -329,7 +328,7 @@ public class TutorialDesign {
                 step("mine_cobble", "Mine 8 cobblestone", BLOCK_BREAK).materials(Material.COBBLESTONE).count(8).build(),
                 step("craft_furnace", "Craft a furnace", CRAFT_ITEM).materials(Material.FURNACE).build(),
                 step("smelt_iron", "Smelt an iron ingot", FURNACE_EXTRACT).materials(Material.IRON_INGOT).reward(Material.IRON_INGOT, 7).build(),
-                step("craft_diamond", "Craft the Tutorial Diamond", CRAFT_ITEM).materials(Material.DIAMOND).build()
+                step("craft_iron_pick", "Craft an Iron Pickaxe", CRAFT_ITEM).materials(Material.IRON_PICKAXE).build()
         )));
 
         // 20. SPEEDRUNNER
@@ -341,7 +340,7 @@ public class TutorialDesign {
                 step("craft_stone_pick", "Craft a stone pickaxe", CRAFT_ITEM).materials(Material.STONE_PICKAXE).build(),
                 step("mine_iron", "Mine iron ore", BLOCK_BREAK).materials(Material.IRON_ORE, Material.DEEPSLATE_IRON_ORE).build(),
                 step("smelt_iron", "Smelt an iron ingot", FURNACE_EXTRACT).materials(Material.IRON_INGOT).reward(Material.IRON_INGOT, 7).build(),
-                step("craft_diamond", "Craft the Tutorial Diamond", CRAFT_ITEM).materials(Material.DIAMOND).build()
+                step("craft_iron_pick", "Craft an Iron Pickaxe", CRAFT_ITEM).materials(Material.IRON_PICKAXE).build()
         )));
 
         return map;
