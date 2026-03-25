@@ -45,10 +45,19 @@ public class BlueMoonBossManager {
     // Callback for early kill rewards
     private Runnable earlyKillCallback;
 
+    // Boss attack cycle — fires BOSS-type attacks from the registry
+    private com.blockforge.chaoscraft.modes.calamity.attacks.AttackRegistry attackRegistry;
+    private int bossAttackCooldown = 0;
+
     public BlueMoonBossManager(ChaosCraftPlugin plugin, BlueMoonConfig config) {
         this.plugin = plugin;
         this.config = config;
         this.displayBuilder = new DisplayBuilder(plugin);
+    }
+
+    /** Set the attack registry so the boss can fire BOSS-type attacks. */
+    public void setAttackRegistry(com.blockforge.chaoscraft.modes.calamity.attacks.AttackRegistry registry) {
+        this.attackRegistry = registry;
     }
 
     // ========================================================================
@@ -218,6 +227,9 @@ public class BlueMoonBossManager {
 
         // Phase-specific ambient effects
         tickPhaseAmbient(world);
+
+        // Boss attack cycle — fire BOSS-type attacks at the boss's position
+        tickBossAttacks(world);
 
         // Phase 4 enrage mechanic
         if (currentPhase == 4) {
@@ -402,6 +414,55 @@ public class BlueMoonBossManager {
     // ========================================================================
     // Super Laser
     // ========================================================================
+
+    /**
+     * Boss attack cycle — periodically picks a BOSS-type attack from the registry
+     * and spawns it at the boss's location, targeting a nearby player.
+     * Attack frequency scales with phase: P1=every 6s, P2=5s, P3=4s, P4=3s.
+     */
+    private void tickBossAttacks(World world) {
+        if (attackRegistry == null || !bossAlive || bossEntity == null) return;
+        if (laserActive) return; // Don't attack during laser
+
+        if (bossAttackCooldown > 0) {
+            bossAttackCooldown--;
+            return;
+        }
+
+        // Select a random BOSS-type attack
+        var attack = attackRegistry.selectRandom(1, com.blockforge.chaoscraft.modes.calamity.attacks.AttackType.BOSS);
+        if (attack == null) return;
+
+        // Spawn at boss location, aimed at ground level below boss
+        Location spawnLoc = bossEntity.getLocation().clone();
+        // Find nearest player to use as target location
+        Player nearest = null;
+        double nearestDist = Double.MAX_VALUE;
+        for (Player p : world.getPlayers()) {
+            double d = p.getLocation().distanceSquared(spawnLoc);
+            if (d < nearestDist) {
+                nearestDist = d;
+                nearest = p;
+            }
+        }
+        if (nearest != null) {
+            spawnLoc = nearest.getLocation().clone();
+        }
+        spawnLoc.setYaw(0);
+        spawnLoc.setPitch(0);
+
+        attack.spawn(spawnLoc, nearest);
+        plugin.debug("[BlueMoon] Boss fired attack: " + attack.getId());
+
+        // Cooldown scales with phase: P1=120t(6s), P2=100t(5s), P3=80t(4s), P4=60t(3s)
+        bossAttackCooldown = switch (currentPhase) {
+            case 1 -> 120;
+            case 2 -> 100;
+            case 3 -> 80;
+            case 4 -> 60;
+            default -> 120;
+        };
+    }
 
     /**
      * Fire the Lunar Super Laser. Picks a random player as the initial target

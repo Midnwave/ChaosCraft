@@ -43,6 +43,7 @@ public class BlueMoonMode extends AbstractMode {
         this.attackRegistry = new AttackRegistry(plugin);
         this.attackScheduler = new BlueMoonScheduler(plugin, attackRegistry, moonConfig);
         this.bossManager = new BlueMoonBossManager(plugin, moonConfig);
+        this.bossManager.setAttackRegistry(attackRegistry);
         this.gimmickManager = new LunarGimmickManager(plugin);
         registerAllAttacks();
     }
