@@ -72,10 +72,9 @@ public class BlueMoonBossManager {
     public void spawnBoss(World world) {
         if (bossAlive) return;
 
-        // Find center of all online players in this world
-        Location center = findPlayerCenter(world);
+        // Pick spawn location near the densest cluster of players
+        Location center = findDensestPlayerCluster(world);
         if (center == null) {
-            // No players in world — use world spawn
             center = world.getSpawnLocation();
         }
         center = center.clone().add(0, config.getBossFloatHeight(), 0);
@@ -613,7 +612,10 @@ public class BlueMoonBossManager {
             // ── End phase ─────────────────────────────────────────────────
             laserActive = false;
             laserTick = 0;
-            clearLaserDisplays();
+            // Play end animation on model before cleanup
+            playLaserAnimation("end");
+            // Delay cleanup by 10 ticks so end animation plays
+            Bukkit.getScheduler().runTaskLater(plugin, this::clearLaserDisplays, 10L);
             String endSound = config.getLaserEndSound();
             world.playSound(bossLoc, endSound, SoundCategory.HOSTILE,
                     config.getLaserEndSoundVolume(), config.getLaserEndSoundPitch());
@@ -683,9 +685,9 @@ public class BlueMoonBossManager {
     }
 
     /**
-     * Play the fire animation on the laser model.
+     * Play a named animation on the laser model (charge, fire, idle, end).
      */
-    private void playLaserFireAnimation() {
+    private void playLaserAnimation(String animationName) {
         if (laserModelEntity == null || laserModelEntity.isDead()) return;
         String modelId = config.getLaserModelEngineId();
         if (modelId == null || modelId.isEmpty()) return;
@@ -705,8 +707,16 @@ public class BlueMoonBossManager {
             var getAnimHandler = activeModel.getClass().getMethod("getAnimationHandler");
             var animHandler = getAnimHandler.invoke(activeModel);
             var playMethod = animHandler.getClass().getMethod("playAnimation", String.class, double.class, double.class, double.class, boolean.class);
-            playMethod.invoke(animHandler, "fire", 0.0, 0.0, 1.0, false);
-        } catch (Exception ignored) {}
+            playMethod.invoke(animHandler, animationName, 0.0, 0.0, 1.0, false);
+            plugin.debug("[BlueMoon] Laser animation: " + animationName);
+        } catch (ClassNotFoundException ignored) {
+        } catch (Exception e) {
+            plugin.debug("[BlueMoon] Failed to play laser animation '" + animationName + "': " + e.getMessage());
+        }
+    }
+
+    private void playLaserFireAnimation() {
+        playLaserAnimation("fire");
     }
 
     /**
@@ -880,6 +890,47 @@ public class BlueMoonBossManager {
         }
         int count = players.size();
         return new Location(world, x / count, y / count, z / count);
+    }
+
+    /**
+     * Find the player in the densest cluster and spawn above them.
+     * For each player, count how many other players are within 30 blocks.
+     * Pick the player with the most neighbors — this ensures the boss
+     * spawns where the most action is happening.
+     * If tied, picks randomly among the top candidates.
+     */
+    private Location findDensestPlayerCluster(World world) {
+        List<Player> players = world.getPlayers();
+        if (players.isEmpty()) return null;
+        if (players.size() == 1) return players.get(0).getLocation();
+
+        double clusterRadius = 30.0;
+        double clusterRadiusSq = clusterRadius * clusterRadius;
+
+        Player bestPlayer = null;
+        int bestNeighbors = -1;
+        List<Player> topCandidates = new ArrayList<>();
+
+        for (Player p : players) {
+            int neighbors = 0;
+            for (Player other : players) {
+                if (other == p) continue;
+                if (p.getLocation().distanceSquared(other.getLocation()) <= clusterRadiusSq) {
+                    neighbors++;
+                }
+            }
+            if (neighbors > bestNeighbors) {
+                bestNeighbors = neighbors;
+                topCandidates.clear();
+                topCandidates.add(p);
+            } else if (neighbors == bestNeighbors) {
+                topCandidates.add(p);
+            }
+        }
+
+        // Pick randomly among top candidates
+        bestPlayer = topCandidates.get(new Random().nextInt(topCandidates.size()));
+        return bestPlayer.getLocation();
     }
 
     /**

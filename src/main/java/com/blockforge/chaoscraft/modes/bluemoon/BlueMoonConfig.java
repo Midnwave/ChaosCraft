@@ -300,7 +300,7 @@ public class BlueMoonConfig {
     public float getLaserEndSoundPitch() { return (float) config.getDouble("boss.super-laser.sounds.end-pitch", 0.8); }
 
     // Laser ModelEngine model (spawns inside the boss during laser)
-    public String getLaserModelEngineId() { return config.getString("boss.super-laser.modelengine-id", "blue_moon_laser"); }
+    public String getLaserModelEngineId() { return config.getString("boss.super-laser.modelengine-id", "chaoscraft_laser"); }
 
     // Timer HUD
     public String getTimerHudDisplayName() { return config.getString("timer-hud.display-name", "BLUE MOON"); }
