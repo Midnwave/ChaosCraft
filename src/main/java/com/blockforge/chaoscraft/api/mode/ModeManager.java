@@ -148,6 +148,20 @@ public class ModeManager implements Listener {
         // Give rewards to survivors
         activeMode.giveRewards();
 
+        // Grant tutorial completion bonus to players who finished all steps
+        if (activeMode instanceof com.blockforge.chaoscraft.modes.tutorial.TutorialMode tutorialMode) {
+            var modeResults = plugin.getModeResultsService();
+            if (modeResults != null) {
+                var tutTracker = tutorialMode.getTracker();
+                for (java.util.UUID uuid : tutTracker.getCompletedPlayers()) {
+                    Player completedPlayer = plugin.getServer().getPlayer(uuid);
+                    if (completedPlayer != null && completedPlayer.isOnline()) {
+                        modeResults.grantBonus(completedPlayer, "tutorial-complete", activeMode.getModeConfig().get());
+                    }
+                }
+            }
+        }
+
         // Run on-end commands
         activeMode.runEndCommands();
 

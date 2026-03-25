@@ -189,17 +189,8 @@ public class TutorialTracker {
         player.getWorld().spawnParticle(org.bukkit.Particle.FIREWORK, player.getLocation().clone().add(0, 2, 0),
                 30, 1, 1, 1, 0.1);
 
-        // Bonus message
-        String bonusMsg = config.getCompletionBonusMessage();
-        if (!bonusMsg.isEmpty()) {
-            player.sendMessage(Component.text(bonusMsg.replace("&", "§")));
-        }
-
-        // Bonus commands
-        for (String cmd : config.getCompletionBonusCommands()) {
-            String resolved = cmd.replace("%player%", player.getName());
-            plugin.getServer().dispatchCommand(plugin.getServer().getConsoleSender(), resolved);
-        }
+        // Tutorial completion bonus is now granted as part of mode end rewards
+        // via ModeResultsService.grantBonus("tutorial-complete") — see TutorialMode / ModeManager
 
         plugin.getLogger().info("[Tutorial] " + player.getName() + " completed the tutorial! ("
                 + pp.design.getDisplayName() + ")");
@@ -218,6 +209,16 @@ public class TutorialTracker {
         if (config.showStepActionbar()) {
             showActionbarProgress(player, step, 0);
         }
+
+        // Always send a chat message showing the new current step
+        String progressSuffix = step.getRequiredCount() > 1
+                ? " (0/" + step.getRequiredCount() + ")"
+                : "";
+        player.sendMessage(
+                Component.text("[Tutorial] ", NamedTextColor.YELLOW)
+                        .append(Component.text("Step " + stepNum + "/" + total + ": ", NamedTextColor.WHITE))
+                        .append(Component.text(step.getDescription() + progressSuffix, NamedTextColor.GREEN))
+        );
 
         if (config.showStepTitles() && pp.currentStepIndex > 0) {
             // Don't show title for first step (it was just shown by startTutorial)

@@ -118,7 +118,7 @@ public class ModeResultsService {
         }
 
         player.showTitle(Title.title(title, subtitle,
-                Title.Times.times(Duration.ofMillis(500), Duration.ofSeconds(3), Duration.ofMillis(500))));
+                Title.Times.times(Duration.ofMillis(500), Duration.ofSeconds(8), Duration.ofMillis(1000))));
     }
 
     /**
@@ -151,9 +151,14 @@ public class ModeResultsService {
 
             player.sendMessage(Component.text(" Rewards:", NamedTextColor.GOLD, TextDecoration.BOLD));
 
+            // Build context string: "for Surviving Tutorial" or "for Not Surviving Tutorial"
+            String modeDisplayName = modeName.substring(0, 1).toUpperCase() + modeName.substring(1);
+            String reason = survived ? "Surviving " + modeDisplayName : "Playing " + modeDisplayName;
+
             if (money > 0) {
                 player.sendMessage(Component.text("  + ", NamedTextColor.GREEN)
-                        .append(Component.text("$" + String.format("%.0f", money), NamedTextColor.GOLD)));
+                        .append(Component.text("$" + String.format("%.0f", money), NamedTextColor.GOLD))
+                        .append(Component.text(" for " + reason, NamedTextColor.GRAY)));
             }
 
             for (String itemStr : items) {
@@ -161,12 +166,14 @@ public class ModeResultsService {
                 String name = parts[0].replace("_", " ");
                 String qty = parts.length > 1 ? parts[1] : "1";
                 player.sendMessage(Component.text("  + ", NamedTextColor.GREEN)
-                        .append(Component.text(qty + "x " + name, NamedTextColor.WHITE)));
+                        .append(Component.text(qty + "x " + name, NamedTextColor.WHITE))
+                        .append(Component.text(" for " + reason, NamedTextColor.GRAY)));
             }
 
             for (String badge : badges) {
                 player.sendMessage(Component.text("  + ", NamedTextColor.GREEN)
-                        .append(Component.text("Badge: " + badge, NamedTextColor.LIGHT_PURPLE)));
+                        .append(Component.text("Badge: " + badge, NamedTextColor.LIGHT_PURPLE))
+                        .append(Component.text(" for " + reason, NamedTextColor.GRAY)));
             }
 
             if (money <= 0 && items.isEmpty() && badges.isEmpty()) {
@@ -256,7 +263,9 @@ public class ModeResultsService {
         }
 
         // Notify player
+        String bonusLabel = bonusKey.replace("-", " ");
+        bonusLabel = bonusLabel.substring(0, 1).toUpperCase() + bonusLabel.substring(1);
         player.sendMessage(Component.text(" ★ Bonus: ", NamedTextColor.GOLD, TextDecoration.BOLD)
-                .append(Component.text(bonusKey.replace("-", " "), NamedTextColor.YELLOW)));
+                .append(Component.text("for " + bonusLabel, NamedTextColor.YELLOW)));
     }
 }
