@@ -309,6 +309,16 @@ public class PlaceholderExpansion extends me.clip.placeholderapi.expansion.Place
                 int absorption = (int) Math.ceil(player.getAbsorptionAmount());
                 yield absorption > 0 ? String.valueOf(absorption) : "";
             }
+            case "health_pct" -> {
+                if (player == null) yield "0";
+                int pct = (int) Math.round((player.getHealth() / player.getMaxHealth()) * 100);
+                yield String.valueOf(Math.max(0, Math.min(100, pct)));
+            }
+            case "hunger_pct" -> {
+                if (player == null) yield "0";
+                int pct = (int) Math.round((player.getFoodLevel() / 20.0) * 100);
+                yield String.valueOf(Math.max(0, Math.min(100, pct)));
+            }
 
             default -> {
                 // Badge ownership check (%chaoscraft_has_badge_<id>%)
