@@ -319,6 +319,26 @@ public class PlaceholderExpansion extends me.clip.placeholderapi.expansion.Place
                 int pct = (int) Math.round((player.getFoodLevel() / 20.0) * 100);
                 yield String.valueOf(Math.max(0, Math.min(100, pct)));
             }
+            case "has_wither" -> {
+                if (player == null) yield "false";
+                yield String.valueOf(player.hasPotionEffect(org.bukkit.potion.PotionEffectType.WITHER));
+            }
+            case "has_poison" -> {
+                if (player == null) yield "false";
+                yield String.valueOf(player.hasPotionEffect(org.bukkit.potion.PotionEffectType.POISON));
+            }
+            case "has_regen" -> {
+                if (player == null) yield "false";
+                yield String.valueOf(player.hasPotionEffect(org.bukkit.potion.PotionEffectType.REGENERATION));
+            }
+            case "saturation" -> {
+                if (player == null) yield "0";
+                yield String.valueOf((int) player.getSaturation());
+            }
+            case "has_saturation" -> {
+                if (player == null) yield "false";
+                yield String.valueOf(player.getSaturation() > 0);
+            }
 
             default -> {
                 // Badge ownership check (%chaoscraft_has_badge_<id>%)
