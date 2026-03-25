@@ -82,18 +82,15 @@ public class BadgeCommand {
     public List<String> tabComplete(String sub, String[] args) {
         switch (sub.toLowerCase()) {
             case "createbadge" -> {
-                // createbadge <id> <display_name...> <limited> <function>
-                if (args.length == 0) return List.of("<id>");
-                if (args.length >= 3) {
-                    // Last two args are limited and function
-                    String lastArg = args[args.length - 1].toLowerCase();
-                    // Could be limited or function
-                    List<String> suggestions = new ArrayList<>();
-                    suggestions.addAll(List.of("true", "false"));
-                    suggestions.addAll(List.of("dummy", "command:", "on_mode_survive:", "above_placeholderapi:", "greaterthanequal_placeholderapi:"));
-                    return suggestions.stream().filter(s -> s.startsWith(lastArg)).collect(Collectors.toList());
-                }
-                return Collections.emptyList();
+                // createbadge <id> <display_name...> <true/false> <function>
+                if (args.length == 1) return List.of("<badge_id>");
+                if (args.length == 2) return List.of("<display_name...>");
+                // From arg 3+, offer true/false (limited) and function types
+                String lastArg = args[args.length - 1].toLowerCase();
+                List<String> suggestions = new ArrayList<>();
+                suggestions.addAll(List.of("true", "false"));
+                suggestions.addAll(List.of("dummy", "command:", "on_mode_survive:", "above_placeholderapi:", "greaterthanequal_placeholderapi:"));
+                return suggestions.stream().filter(s -> s.startsWith(lastArg)).collect(Collectors.toList());
             }
             case "deletebadge" -> {
                 if (args.length == 1) {
