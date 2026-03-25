@@ -10,6 +10,8 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.text.NumberFormat;
+import java.util.Locale;
 import java.util.Optional;
 
 /**
@@ -35,9 +37,15 @@ import java.util.Optional;
  *   %chaoscraft_dog_health_max%   - DoG max HP
  *   %chaoscraft_dog_health_pct%   - DoG health percentage (0.0-100.0)
  *   %chaoscraft_dog_phase2%       - "true"/"false" (Universal Collapse active)
+ *   %chaoscraft_health_formatted%  - "5,000/5,000" (current/max HP, comma-grouped integers)
+ *   %chaoscraft_hunger_formatted%  - "20/20" (food level / 20)
+ *   %chaoscraft_armor_formatted%   - "15/20" (armor points / 20)
+ *   %chaoscraft_air_formatted%     - "300/300" (air ticks, empty when full at 300)
+ *   %chaoscraft_absorption_formatted% - absorption hearts, empty if 0
  */
 public class PlaceholderExpansion extends me.clip.placeholderapi.expansion.PlaceholderExpansion {
 
+    private static final NumberFormat COMMA_FORMAT = NumberFormat.getIntegerInstance(Locale.US);
     private final ChaosCraftPlugin plugin;
 
     public PlaceholderExpansion(ChaosCraftPlugin plugin) {
@@ -270,6 +278,36 @@ public class PlaceholderExpansion extends me.clip.placeholderapi.expansion.Place
                 if (player == null) yield "0";
                 var stats = plugin.getPlayerStatsService();
                 yield stats != null ? String.valueOf(stats.getModeSurvivals(player.getUniqueId())) : "0";
+            }
+
+            // ── Formatted player stat placeholders ──
+            case "health_formatted" -> {
+                if (player == null) yield "";
+                int current = (int) Math.ceil(player.getHealth());
+                int max = (int) Math.ceil(player.getMaxHealth());
+                yield COMMA_FORMAT.format(current) + "/" + COMMA_FORMAT.format(max);
+            }
+            case "hunger_formatted" -> {
+                if (player == null) yield "";
+                yield player.getFoodLevel() + "/20";
+            }
+            case "armor_formatted" -> {
+                if (player == null) yield "";
+                var armorAttr = player.getAttribute(org.bukkit.attribute.Attribute.ARMOR);
+                int armorPoints = armorAttr != null ? (int) armorAttr.getValue() : 0;
+                yield armorPoints + "/20";
+            }
+            case "air_formatted" -> {
+                if (player == null) yield "";
+                int air = player.getRemainingAir();
+                int maxAir = player.getMaximumAir();
+                if (air >= maxAir) yield "";
+                yield air + "/" + maxAir;
+            }
+            case "absorption_formatted" -> {
+                if (player == null) yield "";
+                int absorption = (int) Math.ceil(player.getAbsorptionAmount());
+                yield absorption > 0 ? String.valueOf(absorption) : "";
             }
 
             default -> {
