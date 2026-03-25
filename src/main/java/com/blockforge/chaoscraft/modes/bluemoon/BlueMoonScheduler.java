@@ -105,14 +105,26 @@ public class BlueMoonScheduler {
 
         Player target = validPlayers.get(new Random().nextInt(validPlayers.size()));
 
-        // Alternate between BLOCK_DISPLAY and ENVIRONMENTAL
-        AttackType type = Math.random() < 0.5 ? AttackType.BLOCK_DISPLAY : AttackType.ENVIRONMENTAL;
+        // Pick attack type: 40% BD, 40% ENV, 20% MODEL_ENGINE
+        double roll = Math.random();
+        AttackType type;
+        if (roll < 0.4) {
+            type = AttackType.BLOCK_DISPLAY;
+        } else if (roll < 0.8) {
+            type = AttackType.ENVIRONMENTAL;
+        } else {
+            type = AttackType.MODEL_ENGINE;
+        }
         AbstractAttack attack = registry.selectRandom(1, type);
 
-        // Fallback to other type if none available
+        // Fallback chain if none available for selected type
         if (attack == null) {
-            type = (type == AttackType.BLOCK_DISPLAY) ? AttackType.ENVIRONMENTAL : AttackType.BLOCK_DISPLAY;
-            attack = registry.selectRandom(1, type);
+            for (AttackType fallback : AttackType.values()) {
+                if (fallback != type && fallback != AttackType.BOSS) {
+                    attack = registry.selectRandom(1, fallback);
+                    if (attack != null) break;
+                }
+            }
         }
         if (attack == null) return;
 
