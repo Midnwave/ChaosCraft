@@ -38,6 +38,7 @@ public class BlueMoonBossManager {
     private Location laserTarget;
     private double laserSweepAngle = 0;
     private List<Entity> laserDisplays = new ArrayList<>();
+    private Entity laserModelEntity = null; // ModelEngine laser model inside the boss
 
     // Display builder for laser beam visuals
     private final DisplayBuilder displayBuilder;
@@ -230,14 +231,6 @@ public class BlueMoonBossManager {
 
         // Boss attack cycle — fire BOSS-type attacks at the boss's position
         tickBossAttacks(world);
-
-        // Phase 4 enrage mechanic
-        if (currentPhase == 4) {
-            phase4EnrageTicks++;
-            if (phase4EnrageTicks >= config.getBossPhase4EnrageSeconds() * 20) {
-                enrageBoss();
-            }
-        }
     }
 
     // ========================================================================
@@ -486,11 +479,17 @@ public class BlueMoonBossManager {
 
         // Broadcast charge warning
         for (Player p : players) {
-            p.sendMessage(ChatColor.AQUA + "" + ChatColor.BOLD + "The Blue Moon is charging...");
+            p.sendMessage(ChatColor.AQUA + "" + ChatColor.BOLD + "The Blue Moon is charging its laser...");
         }
 
-        // Charge sound
-        world.playSound(bossEntity.getLocation(), Sound.BLOCK_BEACON_ACTIVATE, SoundCategory.HOSTILE, 3.0f, 0.3f);
+        // Charge sound (configurable)
+        String chargeSound = config.getLaserChargeSound();
+        float chargeVol = config.getLaserChargeSoundVolume();
+        float chargePitch = config.getLaserChargeSoundPitch();
+        world.playSound(bossEntity.getLocation(), chargeSound, SoundCategory.HOSTILE, chargeVol, chargePitch);
+
+        // Spawn ModelEngine laser model at boss location (inside the moon)
+        spawnLaserModel(bossEntity.getLocation());
     }
 
     /**
@@ -521,11 +520,22 @@ public class BlueMoonBossManager {
             // Rising pitch sound every 10 ticks
             if (laserTick % 10 == 0) {
                 float pitch = 0.5f + ((float) laserTick / chargeTicks) * 1.5f;
-                world.playSound(bossLoc, Sound.BLOCK_BEACON_AMBIENT, SoundCategory.HOSTILE, 2.0f, pitch);
+                String chargeSound = config.getLaserChargeSound();
+                world.playSound(bossLoc, chargeSound, SoundCategory.HOSTILE,
+                        config.getLaserChargeSoundVolume(), pitch);
+            }
+
+            // Move laser model to stay at boss position
+            if (laserModelEntity != null && laserModelEntity.isValid()) {
+                laserModelEntity.teleport(bossLoc.clone().add(0, -2, 0));
             }
 
         } else if (laserTick <= chargeTicks + durationTicks) {
             // ── Fire phase ────────────────────────────────────────────────
+            // Trigger fire animation on first fire tick
+            if (laserTick == chargeTicks + 1) {
+                playLaserFireAnimation();
+            }
             laserSweepAngle += 0.05;
 
             // Beam position: sweeping around the boss
@@ -587,9 +597,16 @@ public class BlueMoonBossManager {
                 }
             }
 
-            // Continuous low-pitch dragon growl
+            // Continuous fire sound (configurable)
             if (fireOffset % 15 == 0) {
-                world.playSound(bossLoc, Sound.ENTITY_ENDER_DRAGON_GROWL, SoundCategory.HOSTILE, 1.5f, 0.3f);
+                String fireSound = config.getLaserFireSound();
+                world.playSound(bossLoc, fireSound, SoundCategory.HOSTILE,
+                        config.getLaserFireSoundVolume(), config.getLaserFireSoundPitch());
+            }
+
+            // Move laser model to stay at boss
+            if (laserModelEntity != null && laserModelEntity.isValid()) {
+                laserModelEntity.teleport(bossLoc.clone().add(0, -2, 0));
             }
 
         } else {
@@ -597,12 +614,14 @@ public class BlueMoonBossManager {
             laserActive = false;
             laserTick = 0;
             clearLaserDisplays();
-            world.playSound(bossLoc, Sound.BLOCK_BEACON_DEACTIVATE, SoundCategory.HOSTILE, 2.0f, 0.8f);
+            String endSound = config.getLaserEndSound();
+            world.playSound(bossLoc, endSound, SoundCategory.HOSTILE,
+                    config.getLaserEndSoundVolume(), config.getLaserEndSoundPitch());
         }
     }
 
     /**
-     * Remove all laser beam display entities.
+     * Remove all laser beam display entities and the ModelEngine laser model.
      */
     private void clearLaserDisplays() {
         for (Entity e : laserDisplays) {
@@ -611,6 +630,95 @@ public class BlueMoonBossManager {
             }
         }
         laserDisplays.clear();
+        despawnLaserModel();
+    }
+
+    /**
+     * Spawn the ModelEngine laser model at the boss location.
+     * This creates a separate entity inside/below the boss that plays the laser animation.
+     */
+    private void spawnLaserModel(Location loc) {
+        despawnLaserModel(); // Clean up any existing
+        String modelId = config.getLaserModelEngineId();
+        if (modelId == null || modelId.isEmpty()) return;
+
+        try {
+            // Try ModelEngine API via reflection
+            Class<?> meClass = Class.forName("com.ticxo.modelengine.api.ModelEngineAPI");
+            var createMethod = meClass.getMethod("createModeledEntity", org.bukkit.entity.Entity.class);
+
+            // Spawn a marker armor stand as the model host
+            laserModelEntity = loc.getWorld().spawn(loc, org.bukkit.entity.ArmorStand.class, stand -> {
+                stand.setVisible(false);
+                stand.setGravity(false);
+                stand.setMarker(true);
+                stand.setInvulnerable(true);
+                stand.setSilent(true);
+            });
+
+            var modeledEntity = createMethod.invoke(null, laserModelEntity);
+            var getModelMethod = meClass.getMethod("createActiveModel", String.class);
+            var activeModel = getModelMethod.invoke(null, modelId);
+
+            if (activeModel != null && modeledEntity != null) {
+                var addModelMethod = modeledEntity.getClass().getMethod("addModel", activeModel.getClass().getInterfaces()[0]);
+                addModelMethod.invoke(modeledEntity, activeModel);
+
+                // Play charge animation
+                try {
+                    var getAnimHandler = activeModel.getClass().getMethod("getAnimationHandler");
+                    var animHandler = getAnimHandler.invoke(activeModel);
+                    var playMethod = animHandler.getClass().getMethod("playAnimation", String.class, double.class, double.class, double.class, boolean.class);
+                    playMethod.invoke(animHandler, "charge", 0.0, 0.0, 1.0, false);
+                } catch (Exception ignored) {}
+            }
+
+            plugin.debug("[BlueMoon] Spawned laser ModelEngine model: " + modelId);
+        } catch (ClassNotFoundException e) {
+            // ModelEngine not installed — skip model, block displays will still show
+            plugin.debug("[BlueMoon] ModelEngine not found, laser uses block displays only.");
+        } catch (Exception e) {
+            plugin.getLogger().warning("[BlueMoon] Failed to spawn laser model: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Play the fire animation on the laser model.
+     */
+    private void playLaserFireAnimation() {
+        if (laserModelEntity == null || laserModelEntity.isDead()) return;
+        String modelId = config.getLaserModelEngineId();
+        if (modelId == null || modelId.isEmpty()) return;
+
+        try {
+            Class<?> meClass = Class.forName("com.ticxo.modelengine.api.ModelEngineAPI");
+            var getModeledEntity = meClass.getMethod("getModeledEntity", java.util.UUID.class);
+            var modeledEntity = getModeledEntity.invoke(null, laserModelEntity.getUniqueId());
+            if (modeledEntity == null) return;
+
+            var getModels = modeledEntity.getClass().getMethod("getModels");
+            @SuppressWarnings("unchecked")
+            var models = (java.util.Map<String, ?>) getModels.invoke(modeledEntity);
+            var activeModel = models.get(modelId);
+            if (activeModel == null) return;
+
+            var getAnimHandler = activeModel.getClass().getMethod("getAnimationHandler");
+            var animHandler = getAnimHandler.invoke(activeModel);
+            var playMethod = animHandler.getClass().getMethod("playAnimation", String.class, double.class, double.class, double.class, boolean.class);
+            playMethod.invoke(animHandler, "fire", 0.0, 0.0, 1.0, false);
+        } catch (Exception ignored) {}
+    }
+
+    /**
+     * Remove the ModelEngine laser model entity.
+     */
+    private void despawnLaserModel() {
+        if (laserModelEntity != null) {
+            if (laserModelEntity.isValid() && !laserModelEntity.isDead()) {
+                laserModelEntity.remove();
+            }
+            laserModelEntity = null;
+        }
     }
 
     // ========================================================================
@@ -670,32 +778,7 @@ public class BlueMoonBossManager {
     /**
      * Phase 4 enrage: boss heals 10% of max HP and re-enters phase 3.
      */
-    private void enrageBoss() {
-        if (!bossAlive || !(bossEntity instanceof LivingEntity living)) return;
-
-        double healAmount = savedBossMaxHealth * 0.10;
-        double newHealth = Math.min(living.getHealth() + healAmount, living.getMaxHealth());
-        living.setHealth(newHealth);
-
-        phase4EnrageTicks = 0;
-        currentPhase = 3;
-
-        World world = bossEntity.getWorld();
-        Location loc = bossEntity.getLocation();
-
-        // Enrage effects
-        world.playSound(loc, Sound.ENTITY_ENDER_DRAGON_GROWL, SoundCategory.HOSTILE, 3.0f, 0.2f);
-        world.spawnParticle(Particle.DUST,
-                loc, 100, 6, 4, 6, 0.05,
-                new Particle.DustOptions(Color.fromRGB(255, 50, 50), 2.5f));
-        world.spawnParticle(Particle.HEART, loc, 30, 4, 2, 4, 0.1);
-
-        for (Player p : world.getPlayers()) {
-            p.sendMessage(ChatColor.RED + "" + ChatColor.BOLD + "The Blue Moon regenerates!");
-        }
-
-        plugin.getLogger().info("[BlueMoon] Boss enraged! Healed 10%, returning to phase 3.");
-    }
+    // Enrage mechanic removed — boss stays in Phase 4 until death.
 
     // ========================================================================
     // Cleanup

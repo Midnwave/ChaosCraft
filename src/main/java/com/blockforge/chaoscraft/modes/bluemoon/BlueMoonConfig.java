@@ -286,7 +286,21 @@ public class BlueMoonConfig {
     public double getSuperLaserBeamMultiplier() { return config.getDouble("boss.super-laser.beam-damage-multiplier", 3.0); }
     public int getSuperLaserChargeTicks() { return config.getInt("boss.super-laser.charge-ticks", 40); }
     public int getSuperLaserDurationTicks() { return config.getInt("boss.super-laser.duration-ticks", 60); }
-    public int getSuperLaserCooldownTicks() { return config.getInt("boss.super-laser.cooldown-ticks", 600); }
+    public int getSuperLaserCooldownTicks() { return config.getInt("boss.super-laser.cooldown-ticks", 200); }
+
+    // Laser sounds (all configurable)
+    public String getLaserChargeSound() { return config.getString("boss.super-laser.sounds.charge", "minecraft:block.beacon.activate"); }
+    public float getLaserChargeSoundVolume() { return (float) config.getDouble("boss.super-laser.sounds.charge-volume", 3.0); }
+    public float getLaserChargeSoundPitch() { return (float) config.getDouble("boss.super-laser.sounds.charge-pitch", 0.3); }
+    public String getLaserFireSound() { return config.getString("boss.super-laser.sounds.fire", "minecraft:entity.ender_dragon.growl"); }
+    public float getLaserFireSoundVolume() { return (float) config.getDouble("boss.super-laser.sounds.fire-volume", 2.0); }
+    public float getLaserFireSoundPitch() { return (float) config.getDouble("boss.super-laser.sounds.fire-pitch", 0.3); }
+    public String getLaserEndSound() { return config.getString("boss.super-laser.sounds.end", "minecraft:block.beacon.deactivate"); }
+    public float getLaserEndSoundVolume() { return (float) config.getDouble("boss.super-laser.sounds.end-volume", 2.0); }
+    public float getLaserEndSoundPitch() { return (float) config.getDouble("boss.super-laser.sounds.end-pitch", 0.8); }
+
+    // Laser ModelEngine model (spawns inside the boss during laser)
+    public String getLaserModelEngineId() { return config.getString("boss.super-laser.modelengine-id", "blue_moon_laser"); }
 
     // Timer HUD
     public String getTimerHudDisplayName() { return config.getString("timer-hud.display-name", "BLUE MOON"); }
