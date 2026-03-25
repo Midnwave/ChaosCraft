@@ -339,6 +339,18 @@ public class PlaceholderExpansion extends me.clip.placeholderapi.expansion.Place
                 if (player == null) yield "false";
                 yield String.valueOf(player.getSaturation() > 0);
             }
+            case "saturation_pct" -> {
+                if (player == null) yield "0";
+                // Saturation can be 0-20, same as food
+                int pct = (int) Math.round((player.getSaturation() / 20.0) * 100);
+                yield String.valueOf(Math.max(0, Math.min(100, pct)));
+            }
+            case "saturation_formatted" -> {
+                if (player == null) yield "";
+                int sat = (int) player.getSaturation();
+                if (sat <= 0) yield "";
+                yield sat + "/20";
+            }
 
             default -> {
                 // Badge ownership check (%chaoscraft_has_badge_<id>%)
