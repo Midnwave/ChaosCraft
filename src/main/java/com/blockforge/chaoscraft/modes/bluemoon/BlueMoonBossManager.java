@@ -102,6 +102,9 @@ public class BlueMoonBossManager {
             savedBossMaxHealth = (long) config.getBossHealth();
         }
 
+        // Keep the boss chunk loaded so it doesn't despawn
+        center.getChunk().setForceLoaded(true);
+
         // Spawn effects
         world.playSound(center, Sound.ENTITY_ENDER_DRAGON_GROWL, SoundCategory.HOSTILE, 2.0f, 0.5f);
         world.spawnParticle(Particle.END_ROD, center, 200, 5, 5, 5, 0.1);
@@ -281,6 +284,9 @@ public class BlueMoonBossManager {
         }
 
         bossEntity.teleport(target);
+
+        // Keep boss chunk force-loaded as it orbits
+        target.getChunk().setForceLoaded(true);
     }
 
     /**
@@ -446,13 +452,13 @@ public class BlueMoonBossManager {
         attack.spawn(spawnLoc, nearest);
         plugin.debug("[BlueMoon] Boss fired attack: " + attack.getId());
 
-        // Cooldown scales with phase: P1=120t(6s), P2=100t(5s), P3=80t(4s), P4=60t(3s)
+        // Cooldown scales with phase (configurable per phase)
         bossAttackCooldown = switch (currentPhase) {
-            case 1 -> 120;
-            case 2 -> 100;
-            case 3 -> 80;
-            case 4 -> 60;
-            default -> 120;
+            case 1 -> config.getBossAttackCooldownPhase1();
+            case 2 -> config.getBossAttackCooldownPhase2();
+            case 3 -> config.getBossAttackCooldownPhase3();
+            case 4 -> config.getBossAttackCooldownPhase4();
+            default -> config.getBossAttackCooldownPhase1();
         };
     }
 
@@ -472,6 +478,11 @@ public class BlueMoonBossManager {
         laserTick = 0;
         laserCooldown = config.getSuperLaserCooldownTicks();
         laserSweepAngle = 0;
+
+        // Boss is invincible during laser
+        if (bossEntity instanceof LivingEntity living) {
+            living.setInvulnerable(true);
+        }
 
         // Pick random player as initial target
         laserTarget = players.get(new Random().nextInt(players.size())).getLocation();
@@ -535,11 +546,12 @@ public class BlueMoonBossManager {
             if (laserTick == chargeTicks + 1) {
                 playLaserFireAnimation();
             }
-            laserSweepAngle += 0.05;
+            laserSweepAngle += config.getSuperLaserSweepSpeed();
 
             // Beam position: sweeping around the boss
-            double beamX = bossLoc.getX() + Math.cos(laserSweepAngle) * 5.0;
-            double beamZ = bossLoc.getZ() + Math.sin(laserSweepAngle) * 5.0;
+            double laserOrbitR = config.getSuperLaserOrbitRadius();
+            double beamX = bossLoc.getX() + Math.cos(laserSweepAngle) * laserOrbitR;
+            double beamZ = bossLoc.getZ() + Math.sin(laserSweepAngle) * laserOrbitR;
             double beamTopY = bossLoc.getY();
             double beamBottomY = world.getHighestBlockYAt((int) beamX, (int) beamZ);
 
@@ -579,14 +591,15 @@ public class BlueMoonBossManager {
 
             // Damage all players every 20 ticks
             int fireOffset = laserTick - chargeTicks;
-            if (fireOffset % 20 == 0) {
+            if (fireOffset % config.getSuperLaserDamageInterval() == 0) {
                 double baseDamage = config.getSuperLaserDamage();
                 double beamMultiplier = config.getSuperLaserBeamMultiplier();
+                double beamHitRadius = config.getSuperLaserBeamHitRadius();
 
                 for (Player p : world.getPlayers()) {
                     // Check proximity to beam
                     double distToBeam = horizontalDistance(p.getLocation(), beamX, beamZ);
-                    if (distToBeam <= 3.0) {
+                    if (distToBeam <= beamHitRadius) {
                         // Direct beam hit — multiplied damage
                         p.damage(baseDamage * beamMultiplier);
                     } else {
@@ -612,6 +625,12 @@ public class BlueMoonBossManager {
             // ── End phase ─────────────────────────────────────────────────
             laserActive = false;
             laserTick = 0;
+
+            // Boss is no longer invincible
+            if (bossEntity instanceof LivingEntity living) {
+                living.setInvulnerable(false);
+            }
+
             // Play end animation on model before cleanup
             playLaserAnimation("end");
             // Delay cleanup by 10 ticks so end animation plays
@@ -798,6 +817,11 @@ public class BlueMoonBossManager {
      * Full cleanup — remove boss entity, clear displays, reset all state.
      */
     public void cleanup() {
+        // Unforce-load all chunks we forced
+        if (bossEntity != null && bossEntity.isValid()) {
+            bossEntity.getLocation().getChunk().setForceLoaded(false);
+        }
+
         if (bossEntity != null && bossEntity.isValid() && !bossEntity.isDead()) {
             bossEntity.remove();
         }

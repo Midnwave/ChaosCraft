@@ -299,6 +299,22 @@ public class BlueMoonConfig {
     public float getLaserEndSoundVolume() { return (float) config.getDouble("boss.super-laser.sounds.end-volume", 2.0); }
     public float getLaserEndSoundPitch() { return (float) config.getDouble("boss.super-laser.sounds.end-pitch", 0.8); }
 
+    // Laser beam behavior
+    /** Radians per tick the beam sweeps. 0.05 = full 360° in ~125 ticks. Higher = faster sweep. */
+    public double getSuperLaserSweepSpeed() { return config.getDouble("boss.super-laser.sweep-speed", 0.05); }
+    /** Radius of the beam's circular sweep path around the boss (blocks). */
+    public double getSuperLaserOrbitRadius() { return config.getDouble("boss.super-laser.orbit-radius", 5.0); }
+    /** Players within this distance of the beam column take multiplied damage. */
+    public double getSuperLaserBeamHitRadius() { return config.getDouble("boss.super-laser.beam-hit-radius", 3.0); }
+    /** Ticks between each damage application during the fire phase. 20 = once per second. */
+    public int getSuperLaserDamageInterval() { return config.getInt("boss.super-laser.damage-interval-ticks", 20); }
+
+    // Boss attack cooldown per phase (ticks between BOSS-type attack spawns)
+    public int getBossAttackCooldownPhase1() { return config.getInt("boss.attack-cooldown.phase-1", 120); }
+    public int getBossAttackCooldownPhase2() { return config.getInt("boss.attack-cooldown.phase-2", 100); }
+    public int getBossAttackCooldownPhase3() { return config.getInt("boss.attack-cooldown.phase-3", 80); }
+    public int getBossAttackCooldownPhase4() { return config.getInt("boss.attack-cooldown.phase-4", 60); }
+
     // Laser ModelEngine model (spawns inside the boss during laser)
     public String getLaserModelEngineId() { return config.getString("boss.super-laser.modelengine-id", "chaoscraft_laser"); }
 
