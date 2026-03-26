@@ -112,7 +112,7 @@ public class BlueMoonCommand implements CommandExecutor, TabCompleter {
         }
 
         if (args.length < 2) {
-            for (AttackType type : List.of(AttackType.BLOCK_DISPLAY, AttackType.ENVIRONMENTAL, AttackType.BOSS)) {
+            for (AttackType type : AttackType.values()) {
                 List<String> ids = mode.getAttackRegistry().getIds(1, type);
                 if (!ids.isEmpty()) {
                     sender.sendMessage(Component.text(type.name() + " (" + ids.size() + "):", NamedTextColor.AQUA));
@@ -124,7 +124,7 @@ public class BlueMoonCommand implements CommandExecutor, TabCompleter {
 
         String id = args[1].toLowerCase();
         AbstractAttack attack = null;
-        for (AttackType type : List.of(AttackType.BLOCK_DISPLAY, AttackType.ENVIRONMENTAL, AttackType.BOSS)) {
+        for (AttackType type : AttackType.values()) {
             attack = mode.getAttackRegistry().get(1, type, id);
             if (attack != null) break;
         }
@@ -193,7 +193,7 @@ public class BlueMoonCommand implements CommandExecutor, TabCompleter {
         if (mode == null) { sender.sendMessage(Component.text("Not registered.", NamedTextColor.RED)); return true; }
 
         sender.sendMessage(Component.text("=== Blue Moon Attacks ===", NamedTextColor.BLUE));
-        for (AttackType type : List.of(AttackType.BLOCK_DISPLAY, AttackType.ENVIRONMENTAL, AttackType.BOSS)) {
+        for (AttackType type : AttackType.values()) {
             List<String> ids = mode.getAttackRegistry().getIds(1, type);
             if (ids.isEmpty()) continue;
             sender.sendMessage(Component.text("--- " + type.name() + " (" + ids.size() + ") ---", NamedTextColor.AQUA));
