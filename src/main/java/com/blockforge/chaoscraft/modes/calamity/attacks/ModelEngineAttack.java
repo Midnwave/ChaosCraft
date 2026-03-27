@@ -68,10 +68,30 @@ public abstract class ModelEngineAttack extends AbstractAttack {
     protected abstract String getModelId();
 
     /**
-     * Scale multiplier for the model. Default 1.0.
-     * Override to make the model bigger or smaller.
+     * Scale multiplier for the model.
+     * Reads from attack config key "modelengine-scale":
+     *   - A number (e.g. "2.0") = fixed scale multiplier
+     *   - "auto" = scale proportional to damage radius (radius / 5.0, min 0.5)
+     *   - Default "1.0" = normal size
+     *
+     * Set in each attack's YAML config section, e.g.:
+     *   tide_breaker:
+     *     modelengine-scale: auto
+     *   selenite_spear:
+     *     modelengine-scale: 1.5
      */
-    protected double getModelScale() { return 1.0; }
+    protected double getModelScale() {
+        String scaleStr = config.getModelengineScale();
+        if ("auto".equalsIgnoreCase(scaleStr.trim())) {
+            double radius = config.getDamageRadius();
+            return Math.max(0.5, radius / 5.0);
+        }
+        try {
+            return Double.parseDouble(scaleStr.trim());
+        } catch (NumberFormatException e) {
+            return 1.0;
+        }
+    }
 
     /**
      * Called after the model entity is cleaned up.

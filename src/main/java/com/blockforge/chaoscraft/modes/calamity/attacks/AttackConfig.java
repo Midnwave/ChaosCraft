@@ -50,6 +50,9 @@ public class AttackConfig {
     private double impactDamage = 16.0;
     private double impactRadius = 7.0;
 
+    // ModelEngine scale: "auto" = scale proportional to damage radius, or a fixed number
+    private String modelengineScale = "1.0";
+
     public AttackConfig(String attackId, AttackType type, int phase) {
         this(attackId, type, phase, "modes/calamity/attacks");
     }
@@ -78,6 +81,7 @@ public class AttackConfig {
         damageOnImpactOnly = section.getBoolean("damage-on-impact-only", damageOnImpactOnly);
         impactDamage = section.getDouble("impact-damage", impactDamage);
         impactRadius = section.getDouble("impact-radius", impactRadius);
+        modelengineScale = section.getString("modelengine-scale", modelengineScale);
     }
 
     /**
@@ -96,6 +100,7 @@ public class AttackConfig {
         section.set("damage-on-impact-only", damageOnImpactOnly);
         section.set("impact-damage", impactDamage);
         section.set("impact-radius", impactRadius);
+        section.set("modelengine-scale", modelengineScale);
     }
 
     /**
@@ -239,6 +244,10 @@ public class AttackConfig {
         config.setComments(p + "impact-radius", List.of(
                 "Radius in blocks of the impact explosion area when damage-on-impact-only is true.",
                 "All players within this radius of the impact point receive impact-damage instantly."));
+        config.setComments(p + "modelengine-scale", List.of(
+                "Scale of the ModelEngine model for this attack. Only applies to MODEL_ENGINE type attacks.",
+                "Set to a number (e.g. 1.5) for a fixed scale, or \"auto\" to scale proportionally",
+                "to the damage-radius (radius / 5.0, minimum 0.5). Default: 1.0"));
     }
 
     private String getTypePath() {
@@ -310,5 +319,8 @@ public class AttackConfig {
     public void setImpactDamage(double damage) { this.impactDamage = damage; }
 
     public double getImpactRadius() { return impactRadius; }
+
+    /** ModelEngine scale: "auto" = proportional to damage radius, or a fixed number string. */
+    public String getModelengineScale() { return modelengineScale; }
     public void setImpactRadius(double radius) { this.impactRadius = radius; }
 }
