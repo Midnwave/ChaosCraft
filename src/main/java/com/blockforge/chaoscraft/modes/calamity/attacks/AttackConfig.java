@@ -51,7 +51,7 @@ public class AttackConfig {
     private double impactRadius = 7.0;
 
     // ModelEngine scale: "auto" = scale proportional to damage radius, or a fixed number
-    private String modelengineScale = "1.0";
+    private String modelengineScale = "auto";
 
     public AttackConfig(String attackId, AttackType type, int phase) {
         this(attackId, type, phase, "modes/calamity/attacks");
