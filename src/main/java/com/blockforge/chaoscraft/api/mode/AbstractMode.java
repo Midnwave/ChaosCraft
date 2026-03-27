@@ -22,6 +22,8 @@ public abstract class AbstractMode {
     private final Set<UUID> diedPlayers = new HashSet<>();
     // Exempt players (no attack damage/spawning)
     private final Set<UUID> exemptPlayers = new HashSet<>();
+    // Whether the boss was killed during this mode session (for boss-killed rewards)
+    private boolean bossKilled = false;
 
     protected AbstractMode(ChaosCraftPlugin plugin, String name) {
         this.plugin = plugin;
@@ -89,7 +91,16 @@ public abstract class AbstractMode {
     public void resetTracking() {
         survivedPlayers.clear();
         diedPlayers.clear();
+        bossKilled = false;
     }
+
+    // ---- Boss killed tracking ----
+
+    /** Mark that the boss was killed during this session. Call from BossManager.onBossDeath(). */
+    public void setBossKilled(boolean killed) { this.bossKilled = killed; }
+
+    /** Whether the boss was killed during this mode session. */
+    public boolean isBossKilled() { return bossKilled; }
 
     // ---- Exempt players ----
 

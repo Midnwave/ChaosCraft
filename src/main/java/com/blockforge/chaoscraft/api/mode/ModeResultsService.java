@@ -96,10 +96,10 @@ public class ModeResultsService {
             } catch (Exception ignored) {}
 
             // Chat results
-            sendChatResults(player, survived, config, mode.getName());
+            sendChatResults(player, survived, mode.isBossKilled(), config, mode.getName());
 
             // Distribute rewards
-            distributeRewards(player, survived, config);
+            distributeRewards(player, survived, mode.isBossKilled(), config);
         }
 
         sessionPlayers.clear();
@@ -124,7 +124,7 @@ public class ModeResultsService {
     /**
      * Send chat message with reward summary.
      */
-    private void sendChatResults(Player player, boolean survived, org.bukkit.configuration.file.FileConfiguration config, String modeName) {
+    private void sendChatResults(Player player, boolean survived, boolean bossKilled, org.bukkit.configuration.file.FileConfiguration config, String modeName) {
         player.sendMessage(Component.empty());
         player.sendMessage(Component.text("═══════════════════════════════", NamedTextColor.DARK_GRAY));
         player.sendMessage(Component.text(" Mode Results ", NamedTextColor.AQUA, TextDecoration.BOLD)
@@ -181,6 +181,43 @@ public class ModeResultsService {
             }
         }
 
+        // Boss-killed bonus rewards (only if boss was killed AND player survived)
+        if (bossKilled && survived) {
+            ConfigurationSection bossSection = config.getConfigurationSection("rewards.boss-killed");
+            if (bossSection != null) {
+                double bossMoney = bossSection.getDouble("money", 0);
+                List<String> bossItems = bossSection.getStringList("items");
+                List<String> bossBadges = bossSection.getStringList("badges");
+
+                if (bossMoney > 0 || !bossItems.isEmpty() || !bossBadges.isEmpty()) {
+                    player.sendMessage(Component.empty());
+                    player.sendMessage(Component.text(" Boss Killed Bonus:", NamedTextColor.GOLD, TextDecoration.BOLD));
+
+                    String modeDisplayName2 = modeName.substring(0, 1).toUpperCase() + modeName.substring(1);
+                    String bossReason = "Beating " + modeDisplayName2;
+
+                    if (bossMoney > 0) {
+                        player.sendMessage(Component.text("  + ", NamedTextColor.GREEN)
+                                .append(Component.text("$" + String.format("%.0f", bossMoney), NamedTextColor.GOLD))
+                                .append(Component.text(" for " + bossReason, NamedTextColor.GRAY)));
+                    }
+                    for (String itemStr : bossItems) {
+                        String[] parts = itemStr.split(" ");
+                        String itemName = parts[0].replace("_", " ");
+                        String qty = parts.length > 1 ? parts[1] : "1";
+                        player.sendMessage(Component.text("  + ", NamedTextColor.GREEN)
+                                .append(Component.text(qty + "x " + itemName, NamedTextColor.WHITE))
+                                .append(Component.text(" for " + bossReason, NamedTextColor.GRAY)));
+                    }
+                    for (String badge : bossBadges) {
+                        player.sendMessage(Component.text("  + ", NamedTextColor.GREEN)
+                                .append(Component.text("Badge: " + badge, NamedTextColor.LIGHT_PURPLE))
+                                .append(Component.text(" for " + bossReason, NamedTextColor.GRAY)));
+                    }
+                }
+            }
+        }
+
         player.sendMessage(Component.empty());
         player.sendMessage(Component.text("═══════════════════════════════", NamedTextColor.DARK_GRAY));
     }
@@ -188,10 +225,26 @@ public class ModeResultsService {
     /**
      * Distribute actual rewards: money, items, badges, commands.
      */
-    private void distributeRewards(Player player, boolean survived, org.bukkit.configuration.file.FileConfiguration config) {
+    private void distributeRewards(Player player, boolean survived, boolean bossKilled, org.bukkit.configuration.file.FileConfiguration config) {
         String rewardPath = survived ? "rewards.survived" : "rewards.died";
         ConfigurationSection section = config.getConfigurationSection(rewardPath);
-        if (section == null) return;
+        if (section != null) {
+            grantRewardSection(player, section);
+        }
+
+        // Boss-killed bonus (only if boss was killed AND player survived)
+        if (bossKilled && survived) {
+            ConfigurationSection bossSection = config.getConfigurationSection("rewards.boss-killed");
+            if (bossSection != null) {
+                grantRewardSection(player, bossSection);
+            }
+        }
+    }
+
+    /**
+     * Grant rewards from a single config section (money, items, badges, commands).
+     */
+    private void grantRewardSection(Player player, ConfigurationSection section) {
 
         // Money (Vault)
         double money = section.getDouble("money", 0);
