@@ -124,8 +124,19 @@ public abstract class ModelEngineAttack extends AbstractAttack {
         World world = location.getWorld();
         if (world == null) return false;
 
-        // Spawn invisible marker entity as the host
-        modelHost = world.spawnEntity(location, EntityType.MARKER);
+        // Spawn invisible invincible armor stand as the model host
+        // ModelEngine R4 requires a LivingEntity (armor stand), not a Marker
+        org.bukkit.entity.ArmorStand armorStand = (org.bukkit.entity.ArmorStand) world.spawnEntity(location, EntityType.ARMOR_STAND);
+        armorStand.setVisible(false);
+        armorStand.setGravity(false);
+        armorStand.setInvulnerable(true);
+        armorStand.setMarker(true);  // No hitbox, no collision
+        armorStand.setSilent(true);
+        armorStand.setBasePlate(false);
+        armorStand.setSmall(false);
+        armorStand.setCustomNameVisible(false);
+        armorStand.setPersistent(false);
+        modelHost = armorStand;
         spawnedEntities.add(modelHost);
 
         if (!isModelEngineAvailable()) {
