@@ -1013,16 +1013,7 @@ public class BlueMoonBossManager {
         world.playSound(bossLoc, Sound.ENTITY_WITHER_AMBIENT, SoundCategory.HOSTILE, 2.0f, 0.3f);
         world.playSound(bossLoc, Sound.ENTITY_ENDER_DRAGON_GROWL, SoundCategory.HOSTILE, 1.5f, 0.5f);
 
-        // Broadcast
-        String phaseMsg = switch (newPhase) {
-            case 2 -> ChatColor.AQUA + "" + ChatColor.BOLD + "The Blue Moon intensifies... (Phase 2)";
-            case 3 -> ChatColor.GOLD + "" + ChatColor.BOLD + "The Blue Moon fractures! (Phase 3)";
-            case 4 -> ChatColor.DARK_RED + "" + ChatColor.BOLD + "THE BLUE MOON DESCENDS! (Phase 4)";
-            default -> "";
-        };
-        for (Player p : world.getPlayers()) {
-            p.sendMessage(phaseMsg);
-        }
+        // Phase transition logged but NOT broadcast to players (no cringy messages)
 
         plugin.getLogger().info("[BlueMoon] Phase transition: " + oldPhase + " -> " + newPhase
                 + " (HP: " + String.format("%.1f%%", getHealthRatio() * 100) + ")");

@@ -358,10 +358,14 @@ public class LunarGimmickManager {
     // ========================
 
     /**
-     * Called every tick from BlueMoonMode. Runs all enabled gimmick logic.
+     * Called every tick from BlueMoonMode. Runs gimmick logic THROTTLED
+     * to reduce GC pressure — only runs every 4 ticks (5 TPS effective).
+     * Timer-based gimmicks still use totalTicks for accurate timing.
      */
     public void tick(World world) {
         totalTicks++;
+        // Throttle: only run gimmick logic every 4 ticks to reduce GC pressure
+        if (totalTicks % 4 != 0) return;
 
         if (isGimmickEnabled("orbital_decay"))       tickOrbitalDecay();
         if (isGimmickEnabled("blue_hour"))            tickBlueHour(world);
@@ -916,7 +920,7 @@ public class LunarGimmickManager {
                     if (p.getGameMode() != GameMode.SURVIVAL && p.getGameMode() != GameMode.ADVENTURE) continue;
                     if (reflectionPoolLoc.getWorld() != null && reflectionPoolLoc.getWorld().equals(world)
                             && p.getLocation().distance(reflectionPoolLoc) <= 3.0) {
-                        p.damage(4.0); // 2 hearts
+                        // Removed: gimmick damage disabled
                     }
                 }
             }
@@ -1008,9 +1012,9 @@ public class LunarGimmickManager {
             // Damage at thresholds
             if (damageCheck) {
                 if (score >= 80) {
-                    p.damage(4.0); // 2 hearts
+                    // Removed: gimmick damage disabled
                 } else if (score >= 50) {
-                    p.damage(2.0); // 1 heart
+                    // Removed: gimmick damage disabled
                 }
             }
 
@@ -1175,7 +1179,7 @@ public class LunarGimmickManager {
                 if (p.getGameMode() != GameMode.SURVIVAL && p.getGameMode() != GameMode.ADVENTURE) continue;
                 double dist = p.getLocation().distance(arenaCenter);
                 if (dist > safeRadius) {
-                    p.damage(6.0); // 3 hearts
+                    // Removed: gimmick damage disabled
                 }
             }
         }
@@ -1268,7 +1272,7 @@ public class LunarGimmickManager {
                     if (p.getGameMode() != GameMode.SURVIVAL && p.getGameMode() != GameMode.ADVENTURE) continue;
                     if (p.getLocation().distance(bloomLoc) <= 1.5) {
                         // Burst!
-                        p.damage(8.0); // 4 hearts
+                        // Removed: gimmick damage disabled
                         DisplayBuilder.dustParticles(bloomLoc.clone().add(0, 1.0, 0),
                                 20, 2.0, 200, 230, 255, 1.2f);
                         DisplayBuilder.playSound(bloomLoc, Sound.BLOCK_GLASS_BREAK, 0.8f, 1.5f);
@@ -1320,7 +1324,7 @@ public class LunarGimmickManager {
                     if (veinLoc.getWorld() == null || !veinLoc.getWorld().equals(world)) continue;
                     if (p.getLocation().distance(veinLoc) <= 3.0) {
                         double newHealth = Math.min(p.getMaxHealth(), p.getHealth() + 1.0); // 0.5 hearts
-                        p.setHealth(newHealth);
+                        // Removed: gimmick damage disabled
                         break; // Only regen from one vein per cycle
                     }
                 }
@@ -1445,7 +1449,7 @@ public class LunarGimmickManager {
         for (Player p : world.getPlayers()) {
             if (p.getGameMode() != GameMode.SURVIVAL && p.getGameMode() != GameMode.ADVENTURE) continue;
             if (p.getLocation().distance(bossLoc) <= 8.0) {
-                p.damage(6.0); // 3 hearts
+                // Removed: gimmick damage disabled
             }
         }
 
@@ -1578,7 +1582,7 @@ public class LunarGimmickManager {
                 Random rng = new Random();
                 for (Player p : world.getPlayers()) {
                     if (p.getGameMode() == GameMode.SURVIVAL || p.getGameMode() == GameMode.ADVENTURE) {
-                        p.damage(30.0); // 15 hearts
+                        // Removed: gimmick damage disabled
 
                         // Huge particle burst
                         Location loc = p.getLocation();
@@ -2201,7 +2205,7 @@ public class LunarGimmickManager {
                     double dmg = isConvergenceActive() ? 12.0 : 6.0; // 3 or 6 hearts
                     for (Player p : survivors) {
                         if (p.getLocation().distance(impactLoc) <= 2.0) {
-                            p.damage(dmg);
+                            // Removed: gimmick damage disabled
                         }
                     }
                 }
@@ -2609,7 +2613,7 @@ public class LunarGimmickManager {
                 for (Player p : world.getPlayers()) {
                     if (p.getGameMode() != GameMode.SURVIVAL && p.getGameMode() != GameMode.ADVENTURE) continue;
                     if (p.getLocation().distance(sanctuaryLocation) <= 4.0) {
-                        p.damage(dmg);
+                        // Removed: gimmick damage disabled
                     }
                 }
 
@@ -2939,7 +2943,7 @@ public class LunarGimmickManager {
             if (p.getGameMode() != GameMode.SURVIVAL && p.getGameMode() != GameMode.ADVENTURE) continue;
 
             double sharedDamage = p.getMaxHealth() * 0.2; // 20% of their max HP
-            p.damage(sharedDamage);
+            // Removed: gimmick damage disabled
 
             // Death particles shared
             DisplayBuilder.dustParticles(p.getLocation().add(0, 1.5, 0),

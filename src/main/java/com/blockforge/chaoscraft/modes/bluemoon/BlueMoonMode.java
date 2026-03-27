@@ -106,12 +106,19 @@ public class BlueMoonMode extends AbstractMode {
         }
         loadExemptPlayers();
 
-        // Force night
-        if (moonConfig.isForceNight()) {
+        // Force night — SKIP if sky effect commands are in on-start-commands
+        // (the sky effect handles smooth transition instead of instant snap)
+        boolean hasSkyEffect = moonConfig.getOnStartCommands().stream()
+                .anyMatch(cmd -> cmd.contains("startbluemoonskyeffect"));
+        if (moonConfig.isForceNight() && !hasSkyEffect) {
             savedTime = world.getTime();
             world.setTime(18000); // Midnight
             world.setGameRule(GameRule.DO_DAYLIGHT_CYCLE, false);
             plugin.getLogger().info("[BlueMoon] Forced nighttime (saved time: " + savedTime + ")");
+        } else if (hasSkyEffect) {
+            // Save time for sky effect restore, but don't snap to midnight
+            savedTime = world.getTime();
+            plugin.getLogger().info("[BlueMoon] Sky effect detected in commands — skipping instant force-night.");
         }
 
         // Load attack configs
@@ -160,6 +167,9 @@ public class BlueMoonMode extends AbstractMode {
 
     @Override
     public void onTick() {
+        // Only tick systems after mode is fully started (ACTIVE state, after "done")
+        if (state != com.blockforge.chaoscraft.api.mode.ModeState.ACTIVE) return;
+
         tickCounter++;
         attackScheduler.tick();
 
