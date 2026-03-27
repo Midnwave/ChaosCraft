@@ -447,7 +447,6 @@ public class LunarGimmickManager {
                 blueHourCooldown = BLUE_HOUR_INTERVAL;
                 // End message
                 for (Player p : world.getPlayers()) {
-                    p.sendMessage(ChatColor.GRAY + "The blue hour fades...");
                 }
             } else {
                 // Active blue hour particles on all players
@@ -467,7 +466,6 @@ public class LunarGimmickManager {
                 blueHourTimer = BLUE_HOUR_DURATION;
                 // Start message
                 for (Player p : world.getPlayers()) {
-                    p.sendMessage(ChatColor.AQUA + "" + ChatColor.BOLD + "The Blue Hour begins...");
                     DisplayBuilder.playSound(p.getLocation(), Sound.ENTITY_ELDER_GUARDIAN_AMBIENT, 0.8f, 1.5f);
                 }
             }
@@ -606,7 +604,7 @@ public class LunarGimmickManager {
 
                 Vector vel = p.getVelocity();
                 if (vel.getY() > maxYVelocity) {
-                    p.setVelocity(new Vector(vel.getX(), maxYVelocity, vel.getZ()));
+                    // Removed: velocity cap disabled (only tornados push players)
                 }
             }
         }
@@ -661,8 +659,7 @@ public class LunarGimmickManager {
             // Announce only in debug mode
             if (plugin.getConfig().getBoolean("debug", false)) {
                 for (Player p : world.getPlayers()) {
-                    p.sendMessage(ChatColor.RED + "" + ChatColor.BOLD + "The Hunt targets " +
-                            ChatColor.WHITE + newPrey.getName() + ChatColor.RED + ChatColor.BOLD + "!");
+                            // (removed chat message)
                 }
             }
             // Howl sound always plays (atmospheric)
@@ -731,8 +728,7 @@ public class LunarGimmickManager {
             String[] phaseNames = {"New Moon", "Waxing Crescent", "First Quarter", "Waxing Gibbous",
                     "Full Moon", "Waning Gibbous", "Last Quarter", "Waning Crescent"};
             for (Player p : world.getPlayers()) {
-                p.sendMessage(ChatColor.GRAY + "Moon phase shifts to " +
-                        ChatColor.AQUA + phaseNames[moonPhaseIndex] + ChatColor.GRAY + "...");
+                        // (removed chat message)
                 DisplayBuilder.playSound(p.getLocation(), Sound.BLOCK_AMETHYST_BLOCK_CHIME, 0.6f, 0.8f + (moonPhaseIndex * 0.1f));
             }
         }
@@ -773,7 +769,6 @@ public class LunarGimmickManager {
         // Zenith indicator
         if (moonriseTick == 4500) {
             for (Player p : world.getPlayers()) {
-                p.sendMessage(ChatColor.AQUA + "The moon reaches its zenith...");
             }
         }
     }
@@ -798,7 +793,6 @@ public class LunarGimmickManager {
                 supermoonActive = false;
                 supermoonCooldown = SUPERMOON_INTERVAL;
                 for (Player p : world.getPlayers()) {
-                    p.sendMessage(ChatColor.GRAY + "The supermoon fades away...");
                 }
             } else {
                 // Giant white particle sphere in sky every 5 ticks
@@ -823,7 +817,6 @@ public class LunarGimmickManager {
                 supermoonActive = true;
                 supermoonTimer = SUPERMOON_DURATION;
                 for (Player p : world.getPlayers()) {
-                    p.sendMessage(ChatColor.WHITE + "" + ChatColor.BOLD + "A SUPERMOON rises!");
                     DisplayBuilder.playSound(p.getLocation(), Sound.ENTITY_ELDER_GUARDIAN_CURSE, 1.0f, 0.6f);
                 }
             }
@@ -1128,7 +1121,6 @@ public class LunarGimmickManager {
                 celestialAlignmentActive = false;
                 celestialAlignmentCooldown = CELESTIAL_ALIGNMENT_INTERVAL;
                 for (Player p : world.getPlayers()) {
-                    p.sendMessage(ChatColor.GRAY + "The celestial alignment dissipates...");
                 }
             } else {
                 // Vertical particle beam every 5 ticks
@@ -1149,7 +1141,6 @@ public class LunarGimmickManager {
                 celestialAlignmentActive = true;
                 celestialAlignmentTimer = CELESTIAL_ALIGNMENT_DURATION;
                 for (Player p : world.getPlayers()) {
-                    p.sendMessage(ChatColor.GOLD + "" + ChatColor.BOLD + "The stars align!");
                     DisplayBuilder.playSound(p.getLocation(), Sound.BLOCK_END_PORTAL_SPAWN, 0.7f, 1.5f);
                 }
             }
@@ -1221,7 +1212,6 @@ public class LunarGimmickManager {
                 lunarEclipseActive = false;
                 lunarEclipseCooldown = LUNAR_ECLIPSE_INTERVAL;
                 for (Player p : world.getPlayers()) {
-                    p.sendMessage(ChatColor.GRAY + "The eclipse ends...");
                 }
             }
         } else {
@@ -1230,7 +1220,6 @@ public class LunarGimmickManager {
                 lunarEclipseActive = true;
                 lunarEclipseTimer = LUNAR_ECLIPSE_DURATION;
                 for (Player p : world.getPlayers()) {
-                    p.sendMessage(ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "A lunar eclipse descends!");
                     DisplayBuilder.playSound(p.getLocation(), Sound.AMBIENT_CAVE, 1.0f, 0.5f);
                 }
             }
@@ -1399,7 +1388,7 @@ public class LunarGimmickManager {
                     double dist = p.getLocation().distance(wellLoc);
                     if (dist <= 5.0 && dist > 0.5) {
                         Vector pull = wellLoc.toVector().subtract(p.getLocation().toVector()).normalize().multiply(0.08);
-                        p.setVelocity(p.getVelocity().add(pull));
+                        // Removed: gravity well pull disabled (only tornados push players)
                     }
                 }
             }
@@ -1427,7 +1416,7 @@ public class LunarGimmickManager {
             if (p.getGameMode() != GameMode.SURVIVAL && p.getGameMode() != GameMode.ADVENTURE) continue;
             if (p.getLocation().distance(bossLoc) <= 10.0) {
                 Vector vel = p.getVelocity();
-                p.setVelocity(new Vector(vel.getX(), vel.getY() + 0.15, vel.getZ()));
+                // Removed: heartbeat pulse disabled (only tornados push players)
             }
         }
 
@@ -1521,7 +1510,6 @@ public class LunarGimmickManager {
                     for (Player p : world.getPlayers()) {
                         DisplayBuilder.playSound(p.getLocation(), Sound.BLOCK_CHAIN_PLACE, 0.8f, 0.6f);
                     }
-                    nearest.sendMessage(ChatColor.AQUA + "You are tethered by moonlight!");
                 } else {
                     tetherCooldown = 100;
                 }
@@ -1552,7 +1540,6 @@ public class LunarGimmickManager {
                 if (announce) {
                     ChatColor color = secondsLeft <= 5 ? ChatColor.RED : ChatColor.GOLD;
                     for (Player p : world.getPlayers()) {
-                        p.sendMessage(color + "" + ChatColor.BOLD + "MOONFALL IN " + secondsLeft + "...");
                     }
                 }
             }
@@ -1582,7 +1569,6 @@ public class LunarGimmickManager {
                 moonfallCooldown = MOONFALL_INTERVAL;
 
                 for (Player p : world.getPlayers()) {
-                    p.sendMessage(ChatColor.DARK_RED + "" + ChatColor.BOLD + "THE MOON FALLS!");
                     DisplayBuilder.playSound(p.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 2.0f, 0.5f);
                     DisplayBuilder.playSound(p.getLocation(), Sound.ENTITY_ENDER_DRAGON_GROWL, 2.0f, 0.3f);
                     DisplayBuilder.playSound(p.getLocation(), Sound.ENTITY_WITHER_BREAK_BLOCK, 1.5f, 0.6f);
@@ -1620,7 +1606,6 @@ public class LunarGimmickManager {
             if (moonfallCooldown <= 0) {
                 moonfallCountdownTick = MOONFALL_COUNTDOWN_DURATION;
                 for (Player p : world.getPlayers()) {
-                    p.sendMessage(ChatColor.DARK_RED + "" + ChatColor.BOLD + "THE MOONFALL BEGINS...");
                     DisplayBuilder.playSound(p.getLocation(), Sound.ENTITY_WITHER_SPAWN, 1.0f, 0.5f);
                 }
             }
@@ -1869,7 +1854,6 @@ public class LunarGimmickManager {
                     for (Player p : world.getPlayers()) {
                         DisplayBuilder.playSound(p.getLocation(), Sound.BLOCK_BEACON_ACTIVATE, 0.7f, 1.5f);
                     }
-                    chosen.sendMessage(ChatColor.WHITE + "" + ChatColor.ITALIC + "A moonbeam finds you...");
                 }
             }
         }
@@ -1924,7 +1908,6 @@ public class LunarGimmickManager {
             // Announce at milestones
             if (damageEscalation >= 2.0 && damageEscalation < 2.1) {
                 for (Player p : world.getPlayers()) {
-                    p.sendMessage(ChatColor.RED + "The escalation intensifies... damage x2.0");
                     DisplayBuilder.playSound(p.getLocation(), Sound.ENTITY_WARDEN_HEARTBEAT, 0.8f, 0.8f);
                 }
             }
@@ -2055,8 +2038,7 @@ public class LunarGimmickManager {
                 // Level up sound
                 DisplayBuilder.playSound(p.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 0.8f, 1.2f);
                 long minutes = elapsedSeconds / 60;
-                p.sendMessage(ChatColor.AQUA + "Endurance: " + ChatColor.WHITE + minutes + " minute"
-                        + (minutes > 1 ? "s" : "") + " survived!");
+                        // (removed chat message continuation)
             }
         }
     }
@@ -2101,7 +2083,6 @@ public class LunarGimmickManager {
                 bloodMoonNextAttackDoubled = true; // Next attack does 2x
                 bloodMoonFlashCooldown = BLOOD_MOON_FLASH_INTERVAL;
                 for (Player p : world.getPlayers()) {
-                    p.sendMessage(ChatColor.DARK_RED + "" + ChatColor.ITALIC + "The blood moon's rage lingers...");
                 }
             }
         } else {
@@ -2110,7 +2091,6 @@ public class LunarGimmickManager {
                 bloodMoonFlashActive = true;
                 bloodMoonFlashTimer = BLOOD_MOON_FLASH_DURATION;
                 for (Player p : world.getPlayers()) {
-                    p.sendMessage(ChatColor.DARK_RED + "" + ChatColor.BOLD + "BLOOD MOON!");
                     DisplayBuilder.playSound(p.getLocation(), Sound.ENTITY_ELDER_GUARDIAN_CURSE, 1.5f, 0.4f);
                     DisplayBuilder.playSound(p.getLocation(), Sound.ENTITY_WITHER_AMBIENT, 1.0f, 0.5f);
                 }
@@ -2159,7 +2139,6 @@ public class LunarGimmickManager {
                 eclipseBlackoutActive = false;
                 eclipseBlackoutCooldown = ECLIPSE_BLACKOUT_INTERVAL;
                 for (Player p : world.getPlayers()) {
-                    p.sendMessage(ChatColor.GRAY + "Light returns...");
                     DisplayBuilder.playSound(p.getLocation(), Sound.BLOCK_BEACON_DEACTIVATE, 0.7f, 1.2f);
                 }
             }
@@ -2169,7 +2148,6 @@ public class LunarGimmickManager {
                 eclipseBlackoutActive = true;
                 eclipseBlackoutTimer = ECLIPSE_BLACKOUT_DURATION;
                 for (Player p : world.getPlayers()) {
-                    p.sendMessage(ChatColor.DARK_GRAY + "" + ChatColor.BOLD + "DARKNESS CONSUMES...");
                     DisplayBuilder.playSound(p.getLocation(), Sound.ENTITY_WARDEN_EMERGE, 1.0f, 0.4f);
                 }
             }
@@ -2234,7 +2212,6 @@ public class LunarGimmickManager {
                 meteorShowerCooldown = METEOR_SHOWER_INTERVAL;
                 meteorImpactPoints.clear();
                 for (Player p : world.getPlayers()) {
-                    p.sendMessage(ChatColor.GRAY + "The meteor shower subsides...");
                 }
             }
         } else {
@@ -2242,7 +2219,6 @@ public class LunarGimmickManager {
             if (meteorShowerCooldown <= 0) {
                 meteorShowerTimer = METEOR_SHOWER_DURATION;
                 for (Player p : world.getPlayers()) {
-                    p.sendMessage(ChatColor.GOLD + "" + ChatColor.BOLD + "METEOR SHOWER INCOMING!");
                     DisplayBuilder.playSound(p.getLocation(), Sound.ENTITY_ENDER_DRAGON_GROWL, 1.2f, 1.8f);
                     DisplayBuilder.playSound(p.getLocation(), Sound.ENTITY_LIGHTNING_BOLT_THUNDER, 1.0f, 0.5f);
                 }
@@ -2281,7 +2257,6 @@ public class LunarGimmickManager {
                 convergenceActive = false;
                 convergenceCooldown = CONVERGENCE_INTERVAL;
                 for (Player p : world.getPlayers()) {
-                    p.sendMessage(ChatColor.GRAY + "The lunar convergence fades...");
                     DisplayBuilder.playSound(p.getLocation(), Sound.BLOCK_BEACON_DEACTIVATE, 0.8f, 1.0f);
                 }
             }
@@ -2291,7 +2266,6 @@ public class LunarGimmickManager {
                 convergenceActive = true;
                 convergenceTimer = CONVERGENCE_DURATION;
                 for (Player p : world.getPlayers()) {
-                    p.sendMessage(ChatColor.WHITE + "" + ChatColor.BOLD + "LUNAR CONVERGENCE — ALL EFFECTS INTENSIFY!");
                     DisplayBuilder.playSound(p.getLocation(), Sound.ENTITY_ELDER_GUARDIAN_CURSE, 1.5f, 1.5f);
                     DisplayBuilder.playSound(p.getLocation(), Sound.BLOCK_END_PORTAL_SPAWN, 1.0f, 1.8f);
                     // Initial burst
@@ -2455,8 +2429,7 @@ public class LunarGimmickManager {
                                             80, 3, 5, 3, 0.1);
                                     DisplayBuilder.playSound(viewer.getLocation(), Sound.BLOCK_BEACON_ACTIVATE, 1.5f, 1.0f);
                                     DisplayBuilder.playSound(viewer.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1.0f, 1.5f);
-                                    viewer.sendMessage(ChatColor.AQUA + "" + ChatColor.BOLD
-                                            + dead.getName() + " has been revived by moonlight!");
+                                            // (removed chat message continuation)
                                 }
                             }, 2L);
                         }
@@ -2547,7 +2520,6 @@ public class LunarGimmickManager {
         if (finalHowlTimer == 90) {
             for (Player p : world.getPlayers()) {
                 DisplayBuilder.playSound(p.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1.5f, 1.0f);
-                p.sendMessage(ChatColor.WHITE + "" + ChatColor.BOLD + "The moon rests... victory is yours.");
             }
         }
 
@@ -2598,7 +2570,6 @@ public class LunarGimmickManager {
                 // Warning at 3 seconds before explosion
                 if (sanctuaryTimer == 60) {
                     for (Player p : world.getPlayers()) {
-                        p.sendMessage(ChatColor.YELLOW + "" + ChatColor.BOLD + "Sanctuary destabilizing!");
                         DisplayBuilder.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1.0f, 2.0f);
                     }
                 }
@@ -2666,7 +2637,6 @@ public class LunarGimmickManager {
                     sanctuaryExploding = false;
 
                     for (Player p : world.getPlayers()) {
-                        p.sendMessage(ChatColor.GREEN + "" + ChatColor.BOLD + "A Moonlit Sanctuary appears!");
                         DisplayBuilder.playSound(p.getLocation(), Sound.BLOCK_BEACON_ACTIVATE, 1.0f, 1.5f);
                         DisplayBuilder.playSound(p.getLocation(), Sound.BLOCK_AMETHYST_BLOCK_CHIME, 0.8f, 1.0f);
                     }
@@ -2898,7 +2868,6 @@ public class LunarGimmickManager {
         if (hits >= 5) {
             mercyHitCounts.put(uuid, 0);
             mercyWindowExpiry.put(uuid, totalTicks + 60); // 3-second mercy (60 ticks)
-            player.sendMessage(ChatColor.GREEN + "" + ChatColor.ITALIC + "Mercy granted...");
             DisplayBuilder.playSound(player.getLocation(), Sound.BLOCK_AMETHYST_BLOCK_CHIME, 0.8f, 1.5f);
         } else {
             mercyHitCounts.put(uuid, hits);
@@ -2976,7 +2945,6 @@ public class LunarGimmickManager {
             DisplayBuilder.dustParticles(p.getLocation().add(0, 1.5, 0),
                     15, 2.0, 180, 30, 30, 1.0f);
             DisplayBuilder.playSound(p.getLocation(), Sound.ENTITY_WITHER_SPAWN, 0.5f, 1.5f);
-            p.sendMessage(ChatColor.DARK_RED + "You share " + deadPlayer.getName() + "'s fate...");
         }
     }
 
@@ -3004,8 +2972,7 @@ public class LunarGimmickManager {
         reviveProgress.remove(player.getUniqueId());
 
         for (Player p : player.getWorld().getPlayers()) {
-            p.sendMessage(ChatColor.AQUA + "" + ChatColor.ITALIC
-                    + "A moonbeam marks " + player.getName() + "'s resting place...");
+                    // (removed chat message continuation)
             DisplayBuilder.playSound(p.getLocation(), Sound.BLOCK_RESPAWN_ANCHOR_DEPLETE, 0.8f, 1.2f);
         }
     }

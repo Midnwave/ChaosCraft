@@ -108,9 +108,37 @@ public abstract class AbstractAttack {
             applyRadiusDamage();
         }
 
-        // Debug: show damage radius outline every 3 ticks
+        // Debug: show damage radius outline every 3 ticks + floating name label
         if (plugin.getConfig().getBoolean("debug", false) && ticksAlive % 3 == 0) {
             renderDebugRadius();
+            renderDebugLabel();
+        }
+    }
+
+    /**
+     * Debug: render a floating text label above the attack center showing type and name.
+     * Uses TextDisplay entity that follows the attack. Created once, teleported each tick.
+     */
+    private org.bukkit.entity.TextDisplay debugLabel;
+    private void renderDebugLabel() {
+        if (center == null || center.getWorld() == null) return;
+        Location labelLoc = center.clone().add(0, 3, 0);
+
+        String labelText = config.getType().name() + "\n" + config.getAttackId();
+
+        if (debugLabel == null || !debugLabel.isValid()) {
+            debugLabel = center.getWorld().spawn(labelLoc, org.bukkit.entity.TextDisplay.class, td -> {
+                td.text(net.kyori.adventure.text.Component.text(labelText)
+                        .color(net.kyori.adventure.text.format.NamedTextColor.YELLOW));
+                td.setBillboard(org.bukkit.entity.Display.Billboard.CENTER);
+                td.setSeeThrough(true);
+                td.setBackgroundColor(org.bukkit.Color.fromARGB(128, 0, 0, 0));
+                td.addScoreboardTag("chaoscraft_display");
+                td.addScoreboardTag("chaoscraft_debug_label");
+            });
+            spawnedEntities.add(debugLabel);
+        } else {
+            debugLabel.teleport(labelLoc);
         }
     }
 

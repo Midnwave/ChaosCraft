@@ -139,6 +139,13 @@ public class PlaceholderExpansion extends me.clip.placeholderapi.expansion.Place
             }
 
             // DoG bossbar placeholders
+            case "bluemoon_isinvincible" -> {
+                var bmMode = manager.getMode("bluemoon");
+                if (bmMode instanceof com.blockforge.chaoscraft.modes.bluemoon.BlueMoonMode bm) {
+                    yield String.valueOf(bm.getBossManager().isLaserActive());
+                }
+                yield "false";
+            }
             case "dog_alive" -> {
                 var dogMode = manager.getMode("calamity");
                 if (dogMode instanceof CalamityMode cm) {

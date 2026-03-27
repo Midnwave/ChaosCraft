@@ -60,6 +60,7 @@ public class DisplayBuilder {
         BlockDisplay display = location.getWorld().spawn(straight, BlockDisplay.class, d -> {
             d.setBlock(blockData);
             d.setBrightness(new Display.Brightness(15, 15));
+            d.addScoreboardTag("chaoscraft_display"); // Tag for cleanup safety net
             d.setTransformation(new Transformation(
                     new Vector3f(-0.5f, -0.5f, -0.5f),
                     new AxisAngle4f(0, 0, 1, 0),
@@ -270,6 +271,24 @@ public class DisplayBuilder {
 
     public List<Entity> getEntities() {
         return entities;
+    }
+
+    /**
+     * Safety net: remove ALL block displays tagged "chaoscraft_display" in a world.
+     * Call this on mode end to catch any orphaned displays that weren't cleaned up normally.
+     */
+    public static void cleanupAllDisplaysInWorld(org.bukkit.World world) {
+        if (world == null) return;
+        int removed = 0;
+        for (Entity entity : world.getEntities()) {
+            if (entity instanceof org.bukkit.entity.BlockDisplay && entity.getScoreboardTags().contains("chaoscraft_display")) {
+                entity.remove();
+                removed++;
+            }
+        }
+        if (removed > 0) {
+            org.bukkit.Bukkit.getLogger().info("[DisplayBuilder] Safety cleanup removed " + removed + " orphaned block displays in " + world.getName());
+        }
     }
 
     // ========================

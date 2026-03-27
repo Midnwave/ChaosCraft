@@ -217,6 +217,15 @@ public class BlueMoonMode extends AbstractMode {
             }
         }
 
+        // Safety net: remove any orphaned block displays in the world
+        World cleanupWorld = getBlueMoonWorld();
+        if (cleanupWorld != null) {
+            com.blockforge.chaoscraft.modes.calamity.display.DisplayBuilder.cleanupAllDisplaysInWorld(cleanupWorld);
+        }
+
+        // Restore sky effect if active
+        skyEffect.forceRestore(cleanupWorld);
+
         tickCounter = 0;
         plugin.getLogger().info("[BlueMoon] Mode ended. All systems cleaned up.");
     }

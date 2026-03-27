@@ -128,7 +128,7 @@ public class ModeResultsService {
         player.sendMessage(Component.empty());
         player.sendMessage(Component.text("═══════════════════════════════", NamedTextColor.DARK_GRAY));
         player.sendMessage(Component.text(" Mode Results ", NamedTextColor.AQUA, TextDecoration.BOLD)
-                .append(Component.text("— " + modeName.toUpperCase(), NamedTextColor.GRAY)));
+                .append(Component.text("— " + formatModeName(modeName).toUpperCase(), NamedTextColor.GRAY)));
         player.sendMessage(Component.empty());
 
         if (survived) {
@@ -152,7 +152,7 @@ public class ModeResultsService {
             player.sendMessage(Component.text(" Rewards:", NamedTextColor.GOLD, TextDecoration.BOLD));
 
             // Build context string: "for Surviving Tutorial" or "for Not Surviving Tutorial"
-            String modeDisplayName = modeName.substring(0, 1).toUpperCase() + modeName.substring(1);
+            String modeDisplayName = formatModeName(modeName);
             String reason = survived ? "Surviving " + modeDisplayName : "Playing " + modeDisplayName;
 
             if (money > 0) {
@@ -320,5 +320,21 @@ public class ModeResultsService {
         bonusLabel = bonusLabel.substring(0, 1).toUpperCase() + bonusLabel.substring(1);
         player.sendMessage(Component.text(" ★ Bonus: ", NamedTextColor.GOLD, TextDecoration.BOLD)
                 .append(Component.text("for " + bonusLabel, NamedTextColor.YELLOW)));
+    }
+
+    /**
+     * Format internal mode name to display name.
+     * "bluemoon" → "Blue Moon", "devilsdream" → "Devils Dream", "chain" → "Chain"
+     */
+    private static String formatModeName(String name) {
+        // Known multi-word mode names
+        return switch (name.toLowerCase()) {
+            case "bluemoon" -> "Blue Moon";
+            case "devilsdream" -> "Devil's Dream";
+            case "freezingice" -> "Freezing Ice";
+            case "chaoticdetermination" -> "Chaotic Determination";
+            case "corruptedcorruption" -> "Corrupted Corruption";
+            default -> name.substring(0, 1).toUpperCase() + name.substring(1);
+        };
     }
 }

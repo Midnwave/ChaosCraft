@@ -354,6 +354,12 @@ public class BlueMoonConfig {
     public int getBossAttackCooldownPhase3() { return config.getInt("boss.attack-cooldown.phase-3", 80); }
     public int getBossAttackCooldownPhase4() { return config.getInt("boss.attack-cooldown.phase-4", 60); }
 
+    // Laser heals boss
+    /** Whether the laser heals the boss while firing. heal-per-tick applied every damage-interval-ticks. */
+    public boolean isLaserHealEnabled() { return config.getBoolean("boss.super-laser.heals-boss", false); }
+    /** Health restored to boss per damage interval while laser is firing. */
+    public double getLaserHealPerTick() { return config.getDouble("boss.super-laser.heal-per-tick", 50.0); }
+
     // Laser ModelEngine model (spawns inside the boss during laser)
     public String getLaserModelEngineId() { return config.getString("boss.super-laser.modelengine-id", "chaoscraft_laser"); }
 

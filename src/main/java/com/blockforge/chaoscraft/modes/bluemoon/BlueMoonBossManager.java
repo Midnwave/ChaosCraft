@@ -36,6 +36,7 @@ public class BlueMoonBossManager {
 
     // ── Boss entity state ──
     private Entity bossEntity;
+    private Object bossActiveModel; // ModelEngine ActiveModel reference for animation control
     private UUID bossUUID;
     private boolean bossAlive = false;
     private int currentPhase = 1;
@@ -216,6 +217,24 @@ public class BlueMoonBossManager {
 
         plugin.getLogger().info("[BlueMoon] Boss spawned at " + formatLoc(center)
                 + " (HP: " + config.getBossHealth() + ", phase: 1)");
+
+        // Confirm health is correct 3 seconds after spawn (MythicMobs can override attributes)
+        Bukkit.getScheduler().runTaskLater(plugin, () -> {
+            if (bossEntity != null && bossEntity.isValid() && bossEntity instanceof LivingEntity living) {
+                var maxHpAttr = living.getAttribute(org.bukkit.attribute.Attribute.MAX_HEALTH);
+                if (maxHpAttr != null && maxHpAttr.getBaseValue() != config.getBossHealth()) {
+                    plugin.getLogger().info("[BlueMoon] Correcting boss HP from " + maxHpAttr.getBaseValue()
+                            + " to " + config.getBossHealth());
+                    maxHpAttr.setBaseValue(config.getBossHealth());
+                    living.setHealth(config.getBossHealth());
+                }
+            }
+        }, 60L); // 3 seconds
+
+        // Force-load the chunk the boss is in
+        if (center.getWorld() != null) {
+            center.getWorld().getChunkAt(center).setForceLoaded(true);
+        }
     }
 
     /**
@@ -304,11 +323,37 @@ public class BlueMoonBossManager {
             Method addModel = modeledEntity.getClass().getMethod("addModel", activeModelClass, boolean.class);
             addModel.invoke(modeledEntity, activeModel, true);
 
+            // Store reference for animation control
+            this.bossActiveModel = activeModel;
+
+            // Play idle animation immediately (prevents zombie walk animation)
+            playBossAnimation("idle", true);
+
             plugin.getLogger().info("[BlueMoon] ModelEngine model '" + modelId + "' applied.");
         } catch (ClassNotFoundException e) {
             plugin.getLogger().info("[BlueMoon] ModelEngine not installed — boss will appear as invisible zombie.");
         } catch (Exception e) {
             plugin.getLogger().warning("[BlueMoon] Failed to apply ModelEngine model: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Play a named animation on the boss ModelEngine model.
+     * @param name animation name (e.g. "idle", "attack", "death")
+     * @param loop whether the animation should loop
+     */
+    private void playBossAnimation(String name, boolean loop) {
+        if (bossActiveModel == null) return;
+        try {
+            Object animHandler = bossActiveModel.getClass().getMethod("getAnimationHandler").invoke(bossActiveModel);
+            if (animHandler != null) {
+                Method playAnim = animHandler.getClass().getMethod("playAnimation",
+                        String.class, double.class, double.class, double.class, boolean.class);
+                playAnim.invoke(animHandler, name, 0.25, 0.25, 1.0, true);
+                plugin.debug("[BlueMoon] Playing boss animation: " + name + " (loop=" + loop + ")");
+            }
+        } catch (Exception e) {
+            plugin.debug("[BlueMoon] Could not play animation '" + name + "': " + e.getMessage());
         }
     }
 
@@ -410,6 +455,12 @@ public class BlueMoonBossManager {
 
         validateBossEntity();
         if (!bossAlive) return;
+
+        // Keep boss chunk force-loaded
+        if (bossEntity != null && bossEntity.isValid()) {
+            org.bukkit.Chunk chunk = bossEntity.getLocation().getChunk();
+            if (!chunk.isForceLoaded()) chunk.setForceLoaded(true);
+        }
 
         tickLaserBeams(world);
         tickTornados(world);
@@ -646,6 +697,14 @@ public class BlueMoonBossManager {
                         p.damage(damage);
                     }
                 }
+            }
+
+            // Laser heals boss if configured
+            if (config.isLaserHealEnabled() && bossEntity instanceof LivingEntity living) {
+                double healAmount = config.getLaserHealPerTick();
+                var maxHpAttr = living.getAttribute(org.bukkit.attribute.Attribute.MAX_HEALTH);
+                double maxHp = maxHpAttr != null ? maxHpAttr.getBaseValue() : config.getBossHealth();
+                living.setHealth(Math.min(maxHp, living.getHealth() + healAmount));
             }
         }
 
@@ -1091,13 +1150,17 @@ public class BlueMoonBossManager {
      * Full cleanup: remove boss entity, all tornado/laser displays, reset state.
      */
     public void cleanup() {
-        // Remove boss entity
+        // Mark as dead FIRST so onBossDied() won't fire the kill callback
+        // (cleanup = mode ended, NOT boss killed by players)
+        bossAlive = false;
+
+        // Unforce-load the boss chunk
         if (bossEntity != null && bossEntity.isValid()) {
+            try { bossEntity.getLocation().getChunk().setForceLoaded(false); } catch (Exception ignored) {}
             bossEntity.remove();
         }
         bossEntity = null;
         bossUUID = null;
-        bossAlive = false;
 
         cleanupVisuals();
 
