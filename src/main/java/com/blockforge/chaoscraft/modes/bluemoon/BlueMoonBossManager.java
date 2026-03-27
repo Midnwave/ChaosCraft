@@ -771,7 +771,8 @@ public class BlueMoonBossManager {
         double orbitRadius = config.getTornadoOrbitRadius();
         double tornadoX = bossLoc.getX() + orbitRadius * Math.cos(tornado.orbitAngle);
         double tornadoZ = bossLoc.getZ() + orbitRadius * Math.sin(tornado.orbitAngle);
-        double tornadoBaseY = bossLoc.getY() - config.getBossFloatHeight() * 0.5;
+        // Tornados at ground level below the boss, not at boss height
+        double tornadoBaseY = world.getHighestBlockYAt((int) tornadoX, (int) tornadoZ) + 1;
 
         int blockCount = 15 + random.nextInt(6); // 15-20 blocks
         for (int j = 0; j < blockCount; j++) {
@@ -780,7 +781,7 @@ public class BlueMoonBossManager {
             double spiralRadius = 1.5 * (1.0 - heightFrac * 0.6); // wider at bottom, narrower at top
 
             double x = tornadoX + Math.cos(spiralAngle) * spiralRadius;
-            double y = tornadoBaseY + heightFrac * 10.0; // 10 blocks tall
+            double y = tornadoBaseY + heightFrac * config.getTornadoHeight(); // 10 blocks tall
             double z = tornadoZ + Math.sin(spiralAngle) * spiralRadius;
 
             Material mat = TORNADO_MATERIALS[j % TORNADO_MATERIALS.length];
@@ -827,7 +828,8 @@ public class BlueMoonBossManager {
             // Calculate tornado center position
             double tornadoX = bossLoc.getX() + orbitRadius * Math.cos(tornado.orbitAngle);
             double tornadoZ = bossLoc.getZ() + orbitRadius * Math.sin(tornado.orbitAngle);
-            double tornadoBaseY = bossLoc.getY() - config.getBossFloatHeight() * 0.5;
+            // Tornados at ground level below the boss, not at boss height
+        double tornadoBaseY = world.getHighestBlockYAt((int) tornadoX, (int) tornadoZ) + 1;
 
             // Update each block display position
             int blockCount = tornado.displays.size();
@@ -840,7 +842,7 @@ public class BlueMoonBossManager {
                 double spiralRadius = 1.5 * (1.0 - heightFrac * 0.6);
 
                 double x = tornadoX + Math.cos(spiralAngle) * spiralRadius;
-                double y = tornadoBaseY + heightFrac * 10.0;
+                double y = tornadoBaseY + heightFrac * config.getTornadoHeight();
                 double z = tornadoZ + Math.sin(spiralAngle) * spiralRadius;
 
                 Location newLoc = new Location(world, x, y, z);
