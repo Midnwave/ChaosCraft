@@ -133,7 +133,8 @@ public class BlueMoonMode extends AbstractMode {
             bossSpawnScheduled = true;
             plugin.getLogger().info("[BlueMoon] Boss will spawn in " + bossSpawnDelay + " ticks.");
             bossManager.setEarlyKillCallback(() -> {
-                plugin.getLogger().info("[BlueMoon] Boss killed early! Bonus rewards triggered.");
+                setBossKilled(true);
+                plugin.getLogger().info("[BlueMoon] Boss killed! Boss-killed rewards will be granted.");
                 // Run early kill bonus commands
                 for (String cmd : moonConfig.getEarlyKillBonusCommands()) {
                     for (Player p : world.getPlayers()) {
