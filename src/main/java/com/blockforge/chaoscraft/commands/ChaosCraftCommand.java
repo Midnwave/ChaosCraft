@@ -104,7 +104,8 @@ public class ChaosCraftCommand implements CommandExecutor, TabCompleter {
             "verifyexittitlescreen",
             "setbadgeobtaineditem", "setbadgeunobtaineditem", "setbadgenotobtainable",
             "setdoommodepos1", "setdoommodepos2",
-            "setorbspawn"
+            "setorbspawn",
+            "startbluemoonskyeffect", "stopbluemoonskyeffect"
     );
 
     // Delegates for ported subcommands
@@ -923,8 +924,43 @@ public class ChaosCraftCommand implements CommandExecutor, TabCompleter {
                     sender.sendMessage(Component.text("Invalid number. Usage: /cc function setorbspawn <1-10>", NamedTextColor.RED));
                 }
             }
+            case "startbluemoonskyeffect" -> {
+                var bmMode = plugin.getModeManager().getMode("bluemoon");
+                if (bmMode instanceof com.blockforge.chaoscraft.modes.bluemoon.BlueMoonMode blueMoon) {
+                    var skyEffect = blueMoon.getSkyEffect();
+                    if (skyEffect.isNightActive()) {
+                        sender.sendMessage(Component.text("Sky effect already active.", NamedTextColor.YELLOW));
+                    } else {
+                        skyEffect.startTransitionToNight(blueMoon.getBlueMoonWorld());
+                        sender.sendMessage(Component.text("Blue Moon sky effect starting — transitioning to midnight.", NamedTextColor.LIGHT_PURPLE));
+                    }
+                } else {
+                    // No active mode — still allow for testing via any world
+                    if (sender instanceof Player player) {
+                        var skyEffect = new com.blockforge.chaoscraft.modes.bluemoon.BlueMoonSkyEffect(plugin);
+                        skyEffect.startTransitionToNight(player.getWorld());
+                        sender.sendMessage(Component.text("Sky transition started (standalone).", NamedTextColor.GREEN));
+                    } else {
+                        sender.sendMessage(Component.text("Must be a player or Blue Moon must be active.", NamedTextColor.RED));
+                    }
+                }
+            }
+            case "stopbluemoonskyeffect" -> {
+                var bmMode = plugin.getModeManager().getMode("bluemoon");
+                if (bmMode instanceof com.blockforge.chaoscraft.modes.bluemoon.BlueMoonMode blueMoon) {
+                    var skyEffect = blueMoon.getSkyEffect();
+                    if (!skyEffect.isNightActive() && !skyEffect.isTransitioning()) {
+                        sender.sendMessage(Component.text("Sky effect not active.", NamedTextColor.YELLOW));
+                    } else {
+                        skyEffect.startTransitionToSunrise(blueMoon.getBlueMoonWorld());
+                        sender.sendMessage(Component.text("Transitioning back to sunrise.", NamedTextColor.LIGHT_PURPLE));
+                    }
+                } else {
+                    sender.sendMessage(Component.text("Blue Moon mode not active.", NamedTextColor.RED));
+                }
+            }
             default -> sender.sendMessage(Component.text("Unknown function: " + args[1]
-                    + ". Available: startmodetimer, stopmodetimer, setbadgeobtaineditem, setbadgeunobtaineditem, setbadgenotobtainable, setdoommodepos1, setdoommodepos2, setorbspawn",
+                    + ". Use tab completion for available functions.",
                     NamedTextColor.RED));
         }
         return true;

@@ -32,6 +32,7 @@ public class BlueMoonMode extends AbstractMode {
     private final BlueMoonScheduler attackScheduler;
     private final BlueMoonBossManager bossManager;
     private final LunarGimmickManager gimmickManager;
+    private final BlueMoonSkyEffect skyEffect;
     private long tickCounter = 0;
     private long savedTime = -1; // Original world time to restore on end
     private int bossSpawnDelay = 0;
@@ -45,6 +46,7 @@ public class BlueMoonMode extends AbstractMode {
         this.bossManager = new BlueMoonBossManager(plugin, moonConfig);
         this.bossManager.setAttackRegistry(attackRegistry);
         this.gimmickManager = new LunarGimmickManager(plugin);
+        this.skyEffect = new BlueMoonSkyEffect(plugin);
         registerAllAttacks();
     }
 
@@ -244,6 +246,7 @@ public class BlueMoonMode extends AbstractMode {
     public BlueMoonScheduler getAttackScheduler() { return attackScheduler; }
     public BlueMoonBossManager getBossManager() { return bossManager; }
     public LunarGimmickManager getGimmickManager() { return gimmickManager; }
+    public BlueMoonSkyEffect getSkyEffect() { return skyEffect; }
     public long getTickCounter() { return tickCounter; }
 
     public World getBlueMoonWorld() {
