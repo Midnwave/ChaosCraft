@@ -1,54 +1,137 @@
 package com.blockforge.chaoscraft.modes.bluemoon;
 
 import com.blockforge.chaoscraft.ChaosCraftPlugin;
+import com.blockforge.chaoscraft.modes.calamity.attacks.AbstractAttack;
+import com.blockforge.chaoscraft.modes.calamity.attacks.AttackRegistry;
+import com.blockforge.chaoscraft.modes.calamity.attacks.AttackType;
 import com.blockforge.chaoscraft.modes.calamity.display.DisplayBuilder;
-import com.blockforge.chaoscraft.modes.calamity.display.DisplayBuilder.BlockDisplayHandle;
+import com.blockforge.chaoscraft.nms.ai.BlueMoonFlightGoal;
+import net.minecraft.world.entity.Mob;
 import org.bukkit.*;
+import org.bukkit.attribute.Attribute;
+import org.bukkit.craftbukkit.entity.CraftLivingEntity;
 import org.bukkit.entity.*;
 import org.bukkit.util.Vector;
 
 import java.lang.reflect.Method;
 import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.logging.Level;
 
 /**
- * Manages the Blue Moon boss — a massive floating ModelEngine moon entity
- * backed by MythicMobs. The boss always floats above players, orbits the
- * battlefield, has 4 HP-threshold phases, and fires a signature Lunar Super Laser.
+ * Manages the Blue Moon boss — a massive flying ModelEngine moon entity.
+ * The boss orbits above the largest player cluster using NMS flight AI,
+ * fires multi-beam lasers, maintains block-display tornados, and progresses
+ * through 4 HP-threshold phases.
  *
- * MythicMobs integration uses reflection to avoid a hard dependency.
- * If MythicMobs is unavailable, a resized glowing Phantom is used as fallback.
+ * Spawns a vanilla invisible Zombie with ModelEngine model applied via
+ * reflection (graceful fallback if ModelEngine is absent). MythicMobs is
+ * optionally tried first when {@code use-mythicmobs} is true in config.
  */
 public class BlueMoonBossManager {
 
     private final ChaosCraftPlugin plugin;
     private final BlueMoonConfig config;
-    private Entity bossEntity;
-    private UUID bossUUID;
-    private int currentPhase = 1;
-    private boolean bossAlive = false;
-    private boolean laserActive = false;
-    private int laserCooldown = 0;
-    private int laserTick = 0;
-    private int phase4EnrageTicks = 0;
-    private double orbitAngle = 0;
-    private long savedBossMaxHealth = 0;
-
-    // Super laser state
-    private Location laserTarget;
-    private double laserSweepAngle = 0;
-    private List<Entity> laserDisplays = new ArrayList<>();
-    private Entity laserModelEntity = null; // ModelEngine laser model inside the boss
-
-    // Display builder for laser beam visuals
     private final DisplayBuilder displayBuilder;
 
-    // Callback for early kill rewards
+    // ── Boss entity state ──
+    private Entity bossEntity;
+    private UUID bossUUID;
+    private boolean bossAlive = false;
+    private int currentPhase = 1;
+
+    // ── NMS AI ──
+    private BlueMoonFlightGoal flightGoal;
+
+    // ── Multi-beam laser state ──
+    private final List<LaserBeam> laserBeams = new ArrayList<>();
+    private int laserGlobalCooldown = 0;
+
+    // ── Tornado state ──
+    private final List<Tornado> tornados = new ArrayList<>();
+    private double tornadoOrbitAngle = 0;
+
+    // ── Boss attacks ──
+    private AttackRegistry attackRegistry;
+    private int attackCooldown = 0;
+
+    // ── Proximity sound ──
+    private int proximitySoundCooldown = 0;
+
+    // ── Early kill callback ──
     private Runnable earlyKillCallback;
 
-    // Boss attack cycle — fires BOSS-type attacks from the registry
-    private com.blockforge.chaoscraft.modes.calamity.attacks.AttackRegistry attackRegistry;
-    private int bossAttackCooldown = 0;
+    // ── Tornado block materials ──
+    private static final Material[] TORNADO_MATERIALS = {
+            Material.BLUE_ICE, Material.PACKED_ICE,
+            Material.BLUE_STAINED_GLASS, Material.PRISMARINE
+    };
+
+    // ── Random ──
+    private final Random random = ThreadLocalRandom.current();
+
+    // ========================================================================
+    // Inner classes
+    // ========================================================================
+
+    /**
+     * Tracks a single laser beam targeting one player.
+     * States: CHARGING -> FIRING -> COOLDOWN -> (removed)
+     */
+    private static class LaserBeam {
+        enum State { CHARGING, FIRING, COOLDOWN }
+
+        Player targetPlayer;
+        State state;
+        int chargeTick;
+        int fireTick;
+        int cooldownTick;
+        int damageIntervalCounter;
+        final List<Entity> displays = new ArrayList<>();
+
+        LaserBeam(Player target) {
+            this.targetPlayer = target;
+            this.state = State.CHARGING;
+            this.chargeTick = 0;
+            this.fireTick = 0;
+            this.cooldownTick = 0;
+            this.damageIntervalCounter = 0;
+        }
+
+        void removeDisplays() {
+            for (Entity e : displays) {
+                if (e != null && e.isValid()) e.remove();
+            }
+            displays.clear();
+        }
+    }
+
+    /**
+     * A persistent tornado formation orbiting the boss.
+     * Contains block displays arranged in a spiral.
+     */
+    private static class Tornado {
+        double orbitAngle;      // angle around the boss
+        double spinAngle;       // internal spin of the tornado
+        final List<BlockDisplay> displays = new ArrayList<>();
+        int damageIntervalCounter = 0;
+
+        Tornado(double startAngle) {
+            this.orbitAngle = startAngle;
+            this.spinAngle = 0;
+        }
+
+        void removeDisplays() {
+            for (BlockDisplay bd : displays) {
+                if (bd != null && bd.isValid()) bd.remove();
+            }
+            displays.clear();
+        }
+    }
+
+    // ========================================================================
+    // Constructor
+    // ========================================================================
 
     public BlueMoonBossManager(ChaosCraftPlugin plugin, BlueMoonConfig config) {
         this.plugin = plugin;
@@ -56,9 +139,16 @@ public class BlueMoonBossManager {
         this.displayBuilder = new DisplayBuilder(plugin);
     }
 
-    /** Set the attack registry so the boss can fire BOSS-type attacks. */
-    public void setAttackRegistry(com.blockforge.chaoscraft.modes.calamity.attacks.AttackRegistry registry) {
+    // ========================================================================
+    // External setters
+    // ========================================================================
+
+    public void setAttackRegistry(AttackRegistry registry) {
         this.attackRegistry = registry;
+    }
+
+    public void setEarlyKillCallback(Runnable callback) {
+        this.earlyKillCallback = callback;
     }
 
     // ========================================================================
@@ -67,127 +157,245 @@ public class BlueMoonBossManager {
 
     /**
      * Spawns the Blue Moon boss in the given world.
-     * Tries MythicMobs via reflection first, falls back to a Phantom.
+     * If use-mythicmobs is enabled, tries MythicMobs first with vanilla fallback.
      */
     public void spawnBoss(World world) {
         if (bossAlive) return;
 
-        // Pick spawn location near the densest cluster of players
-        Location center = findDensestPlayerCluster(world);
+        // Find center of the largest player cluster
+        Location center = findPlayerClusterCenter(world);
         if (center == null) {
             center = world.getSpawnLocation();
         }
         center = center.clone().add(0, config.getBossFloatHeight(), 0);
 
-        Entity spawned = trySpawnMythicMob(config.getBossMythicMobId(), center);
+        // Try MythicMobs first if configured
+        Entity spawned = null;
+        if (config.isUseMythicMobs()) {
+            spawned = trySpawnMythicMobs(center);
+        }
 
+        // Fallback: our own zombie entity
         if (spawned == null) {
-            // Fallback: spawn a Phantom
-            spawned = spawnFallbackPhantom(center);
+            spawned = spawnVanillaZombie(center);
         }
 
         bossEntity = spawned;
         bossUUID = spawned.getUniqueId();
         bossAlive = true;
         currentPhase = 1;
-        phase4EnrageTicks = 0;
-        orbitAngle = 0;
-        laserCooldown = 0;
-        laserActive = false;
+        laserGlobalCooldown = config.getSuperLaserCooldownTicks();
+        attackCooldown = config.getBossAttackCooldownPhase1();
+        proximitySoundCooldown = 0;
+        tornadoOrbitAngle = 0;
 
-        // Record max health for phase threshold calculations
-        if (bossEntity instanceof LivingEntity living) {
-            savedBossMaxHealth = (long) living.getMaxHealth();
-        } else {
-            savedBossMaxHealth = (long) config.getBossHealth();
-        }
+        // Set attributes via Bukkit API
+        applyAttributes();
 
-        // Keep the boss chunk loaded so it doesn't despawn
-        center.getChunk().setForceLoaded(true);
+        // Set up NMS AI — replace vanilla AI with BlueMoonFlightGoal
+        setupNmsAI();
+
+        // Spawn tornado formations
+        spawnTornados(world);
+
+        // Force-load chunks around boss
+        forceLoadChunksAround(center, 3);
 
         // Spawn effects
-        world.playSound(center, Sound.ENTITY_ENDER_DRAGON_GROWL, SoundCategory.HOSTILE, 2.0f, 0.5f);
-        world.spawnParticle(Particle.END_ROD, center, 200, 5, 5, 5, 0.1);
-        world.spawnParticle(Particle.SNOWFLAKE, center, 150, 8, 3, 8, 0.05);
+        String spawnSound = config.getBossSpawnSound();
+        float spawnVol = config.getBossSpawnSoundVolume();
+        world.playSound(center, spawnSound, SoundCategory.HOSTILE, spawnVol, 0.5f);
+        world.spawnParticle(Particle.END_ROD, center, 300, 8, 8, 8, 0.05);
+        world.spawnParticle(Particle.DUST, center, 200, 10, 5, 10, 0.05,
+                new Particle.DustOptions(Color.fromRGB(80, 140, 255), 2.5f));
 
-        plugin.getLogger().info("[BlueMoon] Boss spawned at " + formatLoc(center));
+        // Broadcast
+        for (Player p : world.getPlayers()) {
+            p.sendMessage(ChatColor.BLUE + "" + ChatColor.BOLD + "The Blue Moon rises...");
+        }
+
+        plugin.getLogger().info("[BlueMoon] Boss spawned at " + formatLoc(center)
+                + " (HP: " + config.getBossHealth() + ", phase: 1)");
     }
 
     /**
-     * Force-spawn the boss (admin command).
+     * Force-spawn (admin command alias).
      */
     public void forceSpawn(World world) {
-        if (bossAlive) {
-            cleanup();
-        }
         spawnBoss(world);
     }
 
     /**
-     * Attempt to spawn a MythicMobs mob via reflection.
-     * Returns the spawned Entity, or null if MythicMobs is not available.
+     * Spawn a vanilla invisible Zombie as the boss entity.
+     * ModelEngine model is applied via reflection if available.
      */
-    private Entity trySpawnMythicMob(String mythicId, Location location) {
+    private Entity spawnVanillaZombie(Location location) {
+        Zombie zombie = location.getWorld().spawn(location, Zombie.class, z -> {
+            z.setInvisible(true);
+            z.setSilent(true);
+            z.setPersistent(true);
+            z.setRemoveWhenFarAway(false);
+            z.setShouldBurnInDay(false);
+            z.setBaby(false);
+            z.customName(net.kyori.adventure.text.Component.text("Blue Moon")
+                    .color(net.kyori.adventure.text.format.TextColor.color(0x5599FF)));
+            z.setCustomNameVisible(false);
+
+            z.addScoreboardTag("chaoscraft_bluemoon_boss");
+            z.addScoreboardTag("boss_target");
+        });
+
+        // Try to apply ModelEngine model via reflection
+        applyModelEngineModel(zombie, config.getBossModelEngineId());
+
+        plugin.getLogger().info("[BlueMoon] Vanilla zombie boss entity spawned (+ ModelEngine attempt).");
+        return zombie;
+    }
+
+    /**
+     * Try to spawn via MythicMobs reflection. Returns null if unavailable or failed.
+     */
+    private Entity trySpawnMythicMobs(Location location) {
         try {
-            Class<?> mythicBukkitClass = Class.forName("io.lumine.mythic.bukkit.MythicBukkit");
-            Method instMethod = mythicBukkitClass.getMethod("inst");
-            Object mythicBukkit = instMethod.invoke(null);
-
-            Method getMobManager = mythicBukkit.getClass().getMethod("getMobManager");
-            Object mobManager = getMobManager.invoke(mythicBukkit);
-
-            // MythicMobs API: spawnMob(String mobType, Location location)
+            Class<?> mmApiClass = Class.forName("io.lumine.mythic.bukkit.MythicBukkit");
+            Object instance = mmApiClass.getMethod("inst").invoke(null);
+            Object mobManager = instance.getClass().getMethod("getMobManager").invoke(instance);
             Method spawnMob = mobManager.getClass().getMethod("spawnMob", String.class, Location.class);
-            Object activeMob = spawnMob.invoke(mobManager, mythicId, location);
+            Object activeMob = spawnMob.invoke(mobManager, config.getMythicMobId(), location);
 
-            if (activeMob == null) {
-                plugin.getLogger().warning("[BlueMoon] MythicMobs returned null for mob ID: " + mythicId);
-                return null;
-            }
-
-            // Get the Bukkit entity from the ActiveMob
-            Method getEntity = activeMob.getClass().getMethod("getEntity");
-            Object abstractEntity = getEntity.invoke(activeMob);
-
-            Method getBukkitEntity = abstractEntity.getClass().getMethod("getBukkitEntity");
-            Object bukkitEntity = getBukkitEntity.invoke(abstractEntity);
-
-            if (bukkitEntity instanceof Entity entity) {
-                plugin.getLogger().info("[BlueMoon] MythicMobs boss spawned: " + mythicId);
+            if (activeMob != null) {
+                Method getEntity = activeMob.getClass().getMethod("getEntity");
+                Object bukkitEntity = getEntity.invoke(activeMob);
+                Method getBukkitEntity = bukkitEntity.getClass().getMethod("getBukkitEntity");
+                Entity entity = (Entity) getBukkitEntity.invoke(bukkitEntity);
+                plugin.getLogger().info("[BlueMoon] MythicMobs boss '" + config.getMythicMobId() + "' spawned.");
                 return entity;
             }
         } catch (ClassNotFoundException e) {
-            plugin.getLogger().info("[BlueMoon] MythicMobs not found, using fallback Phantom.");
+            plugin.getLogger().info("[BlueMoon] MythicMobs not installed — falling back to vanilla zombie.");
         } catch (Exception e) {
-            plugin.getLogger().log(Level.WARNING, "[BlueMoon] Failed to spawn MythicMobs boss, using fallback.", e);
+            plugin.getLogger().warning("[BlueMoon] MythicMobs spawn failed: " + e.getMessage()
+                    + " — falling back to vanilla zombie.");
         }
         return null;
     }
 
     /**
-     * Fallback boss: a resized, glowing Phantom with custom name.
+     * Apply a ModelEngine model to an entity via reflection.
      */
-    private Entity spawnFallbackPhantom(Location location) {
-        Phantom phantom = location.getWorld().spawn(location, Phantom.class, p -> {
-            p.setSize(20); // Large phantom
-            p.setGlowing(true);
-            p.customName(net.kyori.adventure.text.Component.text("Blue Moon")
-                    .color(net.kyori.adventure.text.format.TextColor.color(0x88CCFF)));
-            p.setCustomNameVisible(true);
-            p.setAI(false); // We control movement manually
-            p.setSilent(true);
-            p.setPersistent(true);
-        });
+    private void applyModelEngineModel(Entity entity, String modelId) {
+        try {
+            Class<?> meApiClass = Class.forName("com.ticxo.modelengine.api.ModelEngineAPI");
 
-        // Set health via attribute
-        if (phantom.getAttribute(org.bukkit.attribute.Attribute.MAX_HEALTH) != null) {
-            phantom.getAttribute(org.bukkit.attribute.Attribute.MAX_HEALTH)
-                    .setBaseValue(config.getBossHealth());
-            phantom.setHealth(config.getBossHealth());
+            // Create ActiveModel
+            Method createModel = meApiClass.getMethod("createActiveModel", String.class);
+            Object activeModel = createModel.invoke(null, modelId);
+            if (activeModel == null) {
+                plugin.getLogger().warning("[BlueMoon] ModelEngine model '" + modelId + "' not found.");
+                return;
+            }
+
+            // Create ModeledEntity
+            Method createModeledEntity = meApiClass.getMethod("createModeledEntity", Entity.class);
+            Object modeledEntity = createModeledEntity.invoke(null, entity);
+
+            // Add model
+            Class<?> activeModelClass = Class.forName("com.ticxo.modelengine.api.model.ActiveModel");
+            Method addModel = modeledEntity.getClass().getMethod("addModel", activeModelClass, boolean.class);
+            addModel.invoke(modeledEntity, activeModel, true);
+
+            plugin.getLogger().info("[BlueMoon] ModelEngine model '" + modelId + "' applied.");
+        } catch (ClassNotFoundException e) {
+            plugin.getLogger().info("[BlueMoon] ModelEngine not installed — boss will appear as invisible zombie.");
+        } catch (Exception e) {
+            plugin.getLogger().warning("[BlueMoon] Failed to apply ModelEngine model: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Apply all Bukkit attributes to the boss entity.
+     */
+    private void applyAttributes() {
+        if (!(bossEntity instanceof LivingEntity living)) return;
+
+        var maxHp = living.getAttribute(Attribute.MAX_HEALTH);
+        if (maxHp != null) {
+            maxHp.setBaseValue(config.getBossHealth());
+            living.setHealth(config.getBossHealth());
         }
 
-        plugin.getLogger().info("[BlueMoon] Fallback Phantom boss spawned.");
-        return phantom;
+        var armor = living.getAttribute(Attribute.ARMOR);
+        if (armor != null) armor.setBaseValue(config.getBossArmor());
+
+        var armorTough = living.getAttribute(Attribute.ARMOR_TOUGHNESS);
+        if (armorTough != null) armorTough.setBaseValue(config.getBossArmorToughness());
+
+        var knockback = living.getAttribute(Attribute.KNOCKBACK_RESISTANCE);
+        if (knockback != null) knockback.setBaseValue(config.getBossKnockbackResistance());
+
+        var speed = living.getAttribute(Attribute.MOVEMENT_SPEED);
+        if (speed != null) speed.setBaseValue(config.getBossMoveSpeed());
+    }
+
+    // ========================================================================
+    // NMS AI Setup
+    // ========================================================================
+
+    /**
+     * Replace vanilla AI with NMS BlueMoonFlightGoal.
+     * Uses setDeltaMovement + getLookControl instead of Bukkit teleport
+     * so ModelEngine model renders properly with head tracking.
+     */
+    private void setupNmsAI() {
+        if (!(bossEntity instanceof LivingEntity living)) return;
+
+        try {
+            // Get NMS Mob handle
+            net.minecraft.world.entity.Entity nmsEntity = ((CraftLivingEntity) living).getHandle();
+            if (!(nmsEntity instanceof Mob nmsMob)) {
+                plugin.getLogger().warning("[BlueMoon] Boss entity is not a Mob — cannot set NMS AI");
+                return;
+            }
+
+            // Clear ALL default AI goals
+            nmsMob.goalSelector.removeAllGoals(g -> true);
+            nmsMob.targetSelector.removeAllGoals(g -> true);
+
+            // Set no gravity for floating
+            nmsMob.setNoGravity(true);
+
+            // Set follow range attribute for detection
+            var followAttr = nmsMob.getAttribute(net.minecraft.world.entity.ai.attributes.Attributes.FOLLOW_RANGE);
+            if (followAttr != null) followAttr.setBaseValue(config.getBossDetectionRange());
+
+            // Create and configure BlueMoonFlightGoal
+            flightGoal = new BlueMoonFlightGoal(nmsMob);
+            flightGoal.setFloatHeight(config.getBossFloatHeight());
+            flightGoal.setOrbitRadius(config.getBossOrbitRadius());
+            flightGoal.setOrbitSpeed(config.getBossOrbitSpeed());
+            flightGoal.setMoveSpeed(config.getBossMoveSpeed());
+            flightGoal.setDetectionRange(config.getBossDetectionRange());
+            flightGoal.setGroupDetectionRadius(config.getGroupDetectionRadius());
+            flightGoal.setClusterReevaluateInterval(config.getTargetReevaluateTicks());
+            flightGoal.setPhase(1);
+
+            // Add goal with priority 1
+            nmsMob.goalSelector.addGoal(1, flightGoal);
+
+            // Make zombie silent + disable burn in sun
+            if (living instanceof Zombie zombie) {
+                zombie.setShouldBurnInDay(false);
+            }
+            living.setSilent(true);
+
+            // Stop any navigation pathfinding that might conflict
+            nmsMob.getNavigation().stop();
+
+            plugin.getLogger().info("[BlueMoon] NMS AI set up: flight goal active, orbit radius "
+                    + config.getBossOrbitRadius() + ", detection range " + config.getBossDetectionRange());
+        } catch (Exception e) {
+            plugin.getLogger().log(Level.WARNING, "[BlueMoon] Failed to set up NMS AI", e);
+        }
     }
 
     // ========================================================================
@@ -195,781 +403,811 @@ public class BlueMoonBossManager {
     // ========================================================================
 
     /**
-     * Called every tick by the mode scheduler while the mode is active.
+     * Called every tick by the mode while active.
      */
     public void tick(World world) {
         if (!bossAlive) return;
 
-        // Validate boss entity still exists
-        if (bossEntity == null || bossEntity.isDead() || !bossEntity.isValid()) {
-            onBossDeath();
-            return;
-        }
+        validateBossEntity();
+        if (!bossAlive) return;
 
-        // Re-acquire entity by UUID if reference is stale
-        if (!bossEntity.getWorld().equals(world)) {
+        tickLaserBeams(world);
+        tickTornados(world);
+        tickBossAttacks(world);
+        tickProximitySound(world);
+        checkPhaseTransition(world);
+    }
+
+    /**
+     * Validate the boss entity still exists and is alive.
+     */
+    private void validateBossEntity() {
+        if (bossEntity == null || bossEntity.isDead() || !bossEntity.isValid()) {
+            // Try to re-acquire by UUID
             Entity found = Bukkit.getEntity(bossUUID);
             if (found == null || found.isDead()) {
-                onBossDeath();
+                onBossDied();
                 return;
             }
             bossEntity = found;
         }
-
-        // Update orbit position
-        updateOrbit(world);
-
-        // Check HP-based phase transitions
-        checkPhaseTransition();
-
-        // Tick laser cooldown
-        if (laserCooldown > 0) laserCooldown--;
-
-        // Tick super laser if active
-        tickSuperLaser(world);
-
-        // Phase-specific ambient effects
-        tickPhaseAmbient(world);
-
-        // Boss attack cycle — fire BOSS-type attacks at the boss's position
-        tickBossAttacks(world);
     }
 
     // ========================================================================
-    // Orbit movement
+    // Multi-Beam Laser
     // ========================================================================
 
     /**
-     * Move the boss in a circular orbit around the nearest player.
-     * Orbit speed and radius scale with phase.
+     * Tick all active laser beams and manage the global cooldown.
      */
-    private void updateOrbit(World world) {
-        Player nearest = findNearestPlayer(world);
+    private void tickLaserBeams(World world) {
+        if (!config.getSuperLaserEnabled()) return;
 
-        double speedMultiplier = getPhaseSpeedMultiplier();
-        orbitAngle += config.getBossOrbitSpeed() * speedMultiplier;
-        if (orbitAngle > Math.PI * 2) orbitAngle -= Math.PI * 2;
-
-        double radius = config.getBossOrbitRadius();
-        double floatHeight = config.getBossFloatHeight();
-
-        // Phase 4: boss descends
-        if (currentPhase == 4) {
-            floatHeight -= 10;
-        }
-
-        Location target;
-        if (nearest != null) {
-            double cx = nearest.getLocation().getX() + Math.cos(orbitAngle) * radius;
-            double cz = nearest.getLocation().getZ() + Math.sin(orbitAngle) * radius;
-            double cy = nearest.getLocation().getY() + floatHeight;
-
-            // Phase 2+: Y oscillation (wobble)
-            if (currentPhase >= 2) {
-                cy += Math.sin(orbitAngle * 3) * 1.5;
+        // If no beams active, count down global cooldown
+        if (laserBeams.isEmpty()) {
+            laserGlobalCooldown--;
+            if (laserGlobalCooldown <= 0) {
+                startLaserBarrage(world);
+                laserGlobalCooldown = config.getSuperLaserCooldownTicks();
             }
-
-            target = new Location(world, cx, cy, cz);
-        } else {
-            // No players — hover at current position
-            target = bossEntity.getLocation();
-        }
-
-        // Face the nearest player (or center)
-        if (nearest != null) {
-            Vector direction = nearest.getLocation().toVector().subtract(target.toVector());
-            if (direction.lengthSquared() > 0.01) {
-                target.setDirection(direction);
-            }
-        }
-
-        bossEntity.teleport(target);
-
-        // Keep boss chunk force-loaded as it orbits
-        target.getChunk().setForceLoaded(true);
-    }
-
-    /**
-     * Returns orbit speed multiplier for current phase.
-     */
-    private double getPhaseSpeedMultiplier() {
-        return switch (currentPhase) {
-            case 2 -> 1.5;
-            case 3 -> 2.0;
-            case 4 -> 2.5;
-            default -> 1.0;
-        };
-    }
-
-    // ========================================================================
-    // Phase transitions
-    // ========================================================================
-
-    /**
-     * Check current health ratio and trigger phase transitions at thresholds.
-     */
-    private void checkPhaseTransition() {
-        double ratio = getHealthRatio();
-        if (ratio <= config.getBossPhase4Threshold() && currentPhase < 4) {
-            enterPhase(4);
-        } else if (ratio <= config.getBossPhase3Threshold() && currentPhase < 3) {
-            enterPhase(3);
-        } else if (ratio <= config.getBossPhase2Threshold() && currentPhase < 2) {
-            enterPhase(2);
-        }
-    }
-
-    /**
-     * Transition to a new phase with effects and optional super laser.
-     */
-    private void enterPhase(int phase) {
-        int oldPhase = currentPhase;
-        currentPhase = phase;
-        plugin.getLogger().info("[BlueMoon] Boss phase transition: " + oldPhase + " -> " + phase);
-
-        Location loc = bossEntity.getLocation();
-        World world = loc.getWorld();
-
-        // Phase transition sound
-        world.playSound(loc, Sound.ENTITY_WITHER_SPAWN, SoundCategory.HOSTILE, 2.0f, 1.5f);
-
-        // Expanding particle ring
-        for (double angle = 0; angle < Math.PI * 2; angle += 0.1) {
-            double ringRadius = 8.0;
-            double rx = loc.getX() + Math.cos(angle) * ringRadius;
-            double rz = loc.getZ() + Math.sin(angle) * ringRadius;
-            world.spawnParticle(Particle.END_ROD, rx, loc.getY(), rz, 3, 0.2, 0.2, 0.2, 0.02);
-        }
-
-        // Fire super laser on phase transition
-        if (config.isSuperLaserEnabled()) {
-            fireSuperLaser();
-        }
-
-        // Phase 4: start enrage timer
-        if (phase == 4) {
-            phase4EnrageTicks = 0;
-        }
-    }
-
-    /**
-     * Force a phase transition (admin command).
-     */
-    public void forcePhase(int phase) {
-        if (!bossAlive || phase < 1 || phase > 4) return;
-        enterPhase(phase);
-    }
-
-    // ========================================================================
-    // Phase-specific ambient effects
-    // ========================================================================
-
-    private void tickPhaseAmbient(World world) {
-        Location loc = bossEntity.getLocation();
-
-        switch (currentPhase) {
-            case 1 -> {
-                // Slow orbit, gentle snowflake particles
-                if (world.getGameTime() % 5 == 0) {
-                    world.spawnParticle(Particle.SNOWFLAKE, loc, 5, 3, 2, 3, 0.01);
-                }
-            }
-            case 2 -> {
-                // Cyan dust particles
-                if (world.getGameTime() % 3 == 0) {
-                    world.spawnParticle(Particle.DUST,
-                            loc, 8, 4, 2, 4, 0.01,
-                            new Particle.DustOptions(Color.fromRGB(0, 200, 255), 1.5f));
-                }
-            }
-            case 3 -> {
-                // Particle cracks + frost storm
-                if (world.getGameTime() % 2 == 0) {
-                    world.spawnParticle(Particle.CRIT, loc, 10, 5, 3, 5, 0.1);
-                    world.spawnParticle(Particle.SNOWFLAKE, loc, 12, 8, 5, 8, 0.05);
-                }
-                // Frost storm particles around players
-                if (world.getGameTime() % 10 == 0) {
-                    for (Player p : world.getPlayers()) {
-                        world.spawnParticle(Particle.SNOWFLAKE, p.getLocation().add(0, 3, 0),
-                                8, 3, 2, 3, 0.02);
-                    }
-                }
-            }
-            case 4 -> {
-                // Red-tinted crimson dust, descending
-                world.spawnParticle(Particle.DUST,
-                        loc, 15, 5, 3, 5, 0.02,
-                        new Particle.DustOptions(Color.fromRGB(200, 50, 50), 2.0f));
-                // Intense particle storm
-                if (world.getGameTime() % 2 == 0) {
-                    world.spawnParticle(Particle.SOUL_FIRE_FLAME, loc, 8, 4, 2, 4, 0.03);
-                }
-            }
-        }
-    }
-
-    // ========================================================================
-    // Super Laser
-    // ========================================================================
-
-    /**
-     * Boss attack cycle — periodically picks a BOSS-type attack from the registry
-     * and spawns it at the boss's location, targeting a nearby player.
-     * Attack frequency scales with phase: P1=every 6s, P2=5s, P3=4s, P4=3s.
-     */
-    private void tickBossAttacks(World world) {
-        if (attackRegistry == null || !bossAlive || bossEntity == null) return;
-        if (laserActive) return; // Don't attack during laser
-
-        if (bossAttackCooldown > 0) {
-            bossAttackCooldown--;
             return;
         }
 
-        // Select a random BOSS-type attack
-        var attack = attackRegistry.selectRandom(1, com.blockforge.chaoscraft.modes.calamity.attacks.AttackType.BOSS);
-        if (attack == null) return;
+        // Boss is INVINCIBLE while any beam is active
+        if (bossEntity instanceof LivingEntity living) {
+            living.setInvulnerable(true);
+        }
 
-        // Spawn at boss location, aimed at ground level below boss
-        Location spawnLoc = bossEntity.getLocation().clone();
-        // Find nearest player to use as target location
-        Player nearest = null;
-        double nearestDist = Double.MAX_VALUE;
-        for (Player p : world.getPlayers()) {
-            double d = p.getLocation().distanceSquared(spawnLoc);
-            if (d < nearestDist) {
-                nearestDist = d;
-                nearest = p;
+        // Tick each beam
+        Iterator<LaserBeam> it = laserBeams.iterator();
+        while (it.hasNext()) {
+            LaserBeam beam = it.next();
+
+            // Validate target
+            if (beam.targetPlayer == null || !beam.targetPlayer.isOnline()
+                    || beam.targetPlayer.isDead()
+                    || beam.targetPlayer.getGameMode() != GameMode.SURVIVAL) {
+                beam.removeDisplays();
+                it.remove();
+                continue;
+            }
+
+            switch (beam.state) {
+                case CHARGING -> tickLaserCharge(beam, world);
+                case FIRING -> tickLaserFire(beam, world);
+                case COOLDOWN -> {
+                    beam.cooldownTick++;
+                    beam.removeDisplays();
+                    if (beam.cooldownTick >= 20) {
+                        it.remove();
+                    }
+                }
             }
         }
-        if (nearest != null) {
-            spawnLoc = nearest.getLocation().clone();
+
+        // Restore vulnerability when all beams done
+        if (laserBeams.isEmpty()) {
+            if (bossEntity instanceof LivingEntity living) {
+                living.setInvulnerable(false);
+            }
         }
-        spawnLoc.setYaw(0);
-        spawnLoc.setPitch(0);
+    }
 
-        attack.spawn(spawnLoc, nearest);
-        plugin.debug("[BlueMoon] Boss fired attack: " + attack.getId());
+    /**
+     * Start a multi-beam laser barrage targeting multiple cluster players.
+     */
+    private void startLaserBarrage(World world) {
+        if (flightGoal == null || bossEntity == null) return;
 
-        // Cooldown scales with phase (configurable per phase)
-        bossAttackCooldown = switch (currentPhase) {
-            case 1 -> config.getBossAttackCooldownPhase1();
+        int maxBeams = config.getSuperLaserMaxBeams();
+        List<net.minecraft.world.entity.player.Player> nmsTargets = flightGoal.getClusterPlayers(maxBeams);
+
+        if (nmsTargets.isEmpty()) return;
+
+        for (net.minecraft.world.entity.player.Player nmsPlayer : nmsTargets) {
+            // Convert NMS player to Bukkit player
+            Player bukkitPlayer = (Player) nmsPlayer.getBukkitEntity();
+            if (bukkitPlayer.getGameMode() != GameMode.SURVIVAL || bukkitPlayer.isInvulnerable()) continue;
+
+            LaserBeam beam = new LaserBeam(bukkitPlayer);
+            laserBeams.add(beam);
+        }
+
+        if (!laserBeams.isEmpty()) {
+            plugin.getLogger().info("[BlueMoon] Laser barrage started: " + laserBeams.size() + " beams");
+        }
+    }
+
+    /**
+     * Tick a laser beam in the CHARGING state.
+     * Particles gather toward boss from target direction with rising pitch sound.
+     */
+    private void tickLaserCharge(LaserBeam beam, World world) {
+        beam.chargeTick++;
+        Location bossLoc = bossEntity.getLocation();
+        Location targetLoc = beam.targetPlayer.getLocation().add(0, 1, 0);
+
+        // Gather particles from target toward boss
+        double progress = (double) beam.chargeTick / config.getSuperLaserChargeTicks();
+        Vector dir = bossLoc.toVector().subtract(targetLoc.toVector()).normalize();
+        int particleCount = (int) (5 + progress * 20);
+
+        for (int i = 0; i < particleCount; i++) {
+            double dist = random.nextDouble() * targetLoc.distance(bossLoc) * (1.0 - progress * 0.5);
+            Location particleLoc = targetLoc.clone().add(dir.clone().multiply(dist));
+            particleLoc.add(
+                    (random.nextDouble() - 0.5) * 2.0,
+                    (random.nextDouble() - 0.5) * 2.0,
+                    (random.nextDouble() - 0.5) * 2.0
+            );
+            world.spawnParticle(Particle.DUST, particleLoc, 1, 0, 0, 0, 0,
+                    new Particle.DustOptions(Color.fromRGB(100, 180, 255), 1.5f));
+        }
+
+        // Rising pitch sound every 10 ticks
+        if (beam.chargeTick % 10 == 0) {
+            float pitch = 0.5f + (float) progress * 1.5f;
+            world.playSound(bossLoc, config.getSuperLaserChargeSound(), SoundCategory.HOSTILE,
+                    config.getSuperLaserChargeSoundVolume(), pitch);
+        }
+
+        // Transition to FIRING
+        if (beam.chargeTick >= config.getSuperLaserChargeTicks()) {
+            beam.state = LaserBeam.State.FIRING;
+            beam.fireTick = 0;
+            world.playSound(bossLoc, config.getSuperLaserFireSound(), SoundCategory.HOSTILE,
+                    config.getSuperLaserFireSoundVolume(), config.getSuperLaserFireSoundPitch());
+        }
+    }
+
+    /**
+     * Tick a laser beam in the FIRING state.
+     * Particle line + block displays along beam, damage within hit radius.
+     */
+    private void tickLaserFire(LaserBeam beam, World world) {
+        beam.fireTick++;
+        Location bossLoc = bossEntity.getLocation();
+        Location targetLoc = beam.targetPlayer.getLocation().add(0, 1, 0);
+
+        // Remove old displays
+        beam.removeDisplays();
+
+        // Spawn block displays along beam line
+        Vector beamDir = targetLoc.toVector().subtract(bossLoc.toVector());
+        double beamLen = beamDir.length();
+        if (beamLen < 0.5) beamLen = 0.5;
+        Vector norm = beamDir.normalize();
+        int displayCount = Math.min(30, (int) (beamLen / 1.5));
+
+        for (int i = 0; i < displayCount; i++) {
+            double t = (double) i / displayCount;
+            Location blockLoc = bossLoc.clone().add(norm.clone().multiply(t * beamLen));
+            Material mat = (i % 2 == 0) ? Material.BLUE_ICE : Material.PACKED_ICE;
+            DisplayBuilder.BlockDisplayHandle handle = displayBuilder.spawnBlock(blockLoc, mat);
+            handle.scale(0.6f, 0.6f, 0.6f);
+            handle.glow(80, 160, 255);
+            beam.displays.add(handle.entity());
+        }
+
+        // Particle line (dual spiral like Seer pattern)
+        Vector perp1 = norm.clone().crossProduct(new Vector(0, 1, 0)).normalize();
+        Vector perp2 = norm.clone().crossProduct(perp1).normalize();
+        if (perp1.lengthSquared() < 0.01) {
+            perp1 = new Vector(1, 0, 0);
+            perp2 = new Vector(0, 0, 1);
+        }
+
+        Particle.DustOptions blue = new Particle.DustOptions(Color.fromRGB(80, 160, 255), 2.0f);
+        Particle.DustOptions cyan = new Particle.DustOptions(Color.fromRGB(0, 220, 255), 1.5f);
+        double timeOffset = world.getGameTime() * 0.2;
+
+        for (double d = 0; d < beamLen; d += 0.5) {
+            double t = d / beamLen;
+            double bx = bossLoc.getX() + (targetLoc.getX() - bossLoc.getX()) * t;
+            double by = bossLoc.getY() + (targetLoc.getY() - bossLoc.getY()) * t;
+            double bz = bossLoc.getZ() + (targetLoc.getZ() - bossLoc.getZ()) * t;
+
+            double angle1 = d * 0.8 + timeOffset;
+            double radius = 0.8;
+            double sx = bx + perp1.getX() * Math.cos(angle1) * radius + perp2.getX() * Math.sin(angle1) * radius;
+            double sy = by + perp1.getY() * Math.cos(angle1) * radius + perp2.getY() * Math.sin(angle1) * radius;
+            double sz = bz + perp1.getZ() * Math.cos(angle1) * radius + perp2.getZ() * Math.sin(angle1) * radius;
+            world.spawnParticle(Particle.DUST, sx, sy, sz, 1, 0, 0, 0, 0, blue);
+
+            double angle2 = d * 0.8 - timeOffset + Math.PI;
+            sx = bx + perp1.getX() * Math.cos(angle2) * radius + perp2.getX() * Math.sin(angle2) * radius;
+            sy = by + perp1.getY() * Math.cos(angle2) * radius + perp2.getY() * Math.sin(angle2) * radius;
+            sz = bz + perp1.getZ() * Math.cos(angle2) * radius + perp2.getZ() * Math.sin(angle2) * radius;
+            world.spawnParticle(Particle.DUST, sx, sy, sz, 1, 0, 0, 0, 0, cyan);
+        }
+
+        // Impact glow at target
+        world.spawnParticle(Particle.DUST, targetLoc, 8, 0.4, 0.4, 0.4, 0.01,
+                new Particle.DustOptions(Color.fromRGB(100, 200, 255), 2.5f));
+
+        // Damage players within beam-hit-radius along the beam
+        beam.damageIntervalCounter++;
+        if (beam.damageIntervalCounter >= config.getSuperLaserDamageInterval()) {
+            beam.damageIntervalCounter = 0;
+            double hitRadius = config.getSuperLaserBeamHitRadius();
+            double hitRadiusSq = hitRadius * hitRadius;
+            double damage = config.getSuperLaserDamage() * config.getSuperLaserBeamMultiplier();
+
+            for (Player p : world.getPlayers()) {
+                if (p.getGameMode() != GameMode.SURVIVAL || p.isInvulnerable()) continue;
+                Location pLoc = p.getLocation().add(0, 1, 0);
+
+                // Check distance from player to beam line
+                double distToBeam = distancePointToLine(pLoc.toVector(), bossLoc.toVector(), targetLoc.toVector());
+                if (distToBeam <= hitRadius) {
+                    // Also check player is between boss and target (not behind)
+                    double projLen = projectOntoLine(pLoc.toVector(), bossLoc.toVector(), targetLoc.toVector());
+                    if (projLen >= -1.0 && projLen <= beamLen + 1.0) {
+                        p.damage(damage);
+                    }
+                }
+            }
+        }
+
+        // Transition to COOLDOWN
+        if (beam.fireTick >= config.getSuperLaserDurationTicks()) {
+            beam.state = LaserBeam.State.COOLDOWN;
+            beam.cooldownTick = 0;
+            beam.removeDisplays();
+            world.playSound(bossLoc, config.getSuperLaserEndSound(), SoundCategory.HOSTILE,
+                    config.getSuperLaserEndSoundVolume(), config.getSuperLaserEndSoundPitch());
+        }
+    }
+
+    /**
+     * Distance from a point to an infinite line defined by two points.
+     */
+    private double distancePointToLine(Vector point, Vector lineStart, Vector lineEnd) {
+        Vector lineDir = lineEnd.clone().subtract(lineStart);
+        Vector toPoint = point.clone().subtract(lineStart);
+        double lineLenSq = lineDir.lengthSquared();
+        if (lineLenSq < 0.001) return toPoint.length();
+        Vector cross = lineDir.clone().crossProduct(toPoint);
+        return cross.length() / Math.sqrt(lineLenSq);
+    }
+
+    /**
+     * Project a point onto a line, returning how far along the line (in blocks) the projection is.
+     */
+    private double projectOntoLine(Vector point, Vector lineStart, Vector lineEnd) {
+        Vector lineDir = lineEnd.clone().subtract(lineStart);
+        Vector toPoint = point.clone().subtract(lineStart);
+        double lineLenSq = lineDir.lengthSquared();
+        if (lineLenSq < 0.001) return 0;
+        return lineDir.dot(toPoint) / Math.sqrt(lineLenSq);
+    }
+
+    // ========================================================================
+    // Block Display Tornados
+    // ========================================================================
+
+    /**
+     * Spawn initial tornado formations around the boss.
+     */
+    private void spawnTornados(World world) {
+        int count = config.getTornadoCount();
+        double angleStep = (2 * Math.PI) / count;
+
+        for (int i = 0; i < count; i++) {
+            Tornado tornado = new Tornado(angleStep * i);
+            buildTornadoDisplays(tornado, world);
+            tornados.add(tornado);
+        }
+
+        plugin.getLogger().info("[BlueMoon] Spawned " + count + " tornado formations.");
+    }
+
+    /**
+     * Build the block displays for a single tornado (15-20 blocks in a spiral).
+     */
+    private void buildTornadoDisplays(Tornado tornado, World world) {
+        if (bossEntity == null) return;
+        Location bossLoc = bossEntity.getLocation();
+
+        double orbitRadius = config.getTornadoOrbitRadius();
+        double tornadoX = bossLoc.getX() + orbitRadius * Math.cos(tornado.orbitAngle);
+        double tornadoZ = bossLoc.getZ() + orbitRadius * Math.sin(tornado.orbitAngle);
+        double tornadoBaseY = bossLoc.getY() - config.getBossFloatHeight() * 0.5;
+
+        int blockCount = 15 + random.nextInt(6); // 15-20 blocks
+        for (int j = 0; j < blockCount; j++) {
+            double heightFrac = (double) j / blockCount;
+            double spiralAngle = tornado.spinAngle + heightFrac * Math.PI * 4; // 2 full rotations
+            double spiralRadius = 1.5 * (1.0 - heightFrac * 0.6); // wider at bottom, narrower at top
+
+            double x = tornadoX + Math.cos(spiralAngle) * spiralRadius;
+            double y = tornadoBaseY + heightFrac * 10.0; // 10 blocks tall
+            double z = tornadoZ + Math.sin(spiralAngle) * spiralRadius;
+
+            Material mat = TORNADO_MATERIALS[j % TORNADO_MATERIALS.length];
+            Location blockLoc = new Location(world, x, y, z);
+            DisplayBuilder.BlockDisplayHandle handle = displayBuilder.spawnBlock(blockLoc, mat);
+            handle.scale(0.8f, 0.8f, 0.8f);
+            handle.glow(80, 160, 255);
+            handle.interpolation(3, 0);
+            tornado.displays.add(handle.entity());
+        }
+    }
+
+    /**
+     * Tick all tornado formations: update positions, check player catches, deal damage.
+     */
+    private void tickTornados(World world) {
+        if (bossEntity == null || tornados.isEmpty()) return;
+
+        Location bossLoc = bossEntity.getLocation();
+        double orbitRadius = config.getTornadoOrbitRadius();
+        double catchRadius = config.getTornadoCatchRadius();
+        double catchRadiusSq = catchRadius * catchRadius;
+
+        // Phase-based orbit speed multiplier
+        double speedMult = switch (currentPhase) {
+            case 2 -> 1.3;
+            case 3 -> 1.6;
+            case 4 -> 2.0;
+            default -> 1.0;
+        };
+
+        tornadoOrbitAngle += 0.015 * speedMult;
+        if (tornadoOrbitAngle > Math.PI * 2) tornadoOrbitAngle -= Math.PI * 2;
+
+        for (Tornado tornado : tornados) {
+            // Update orbit angle
+            tornado.orbitAngle += 0.015 * speedMult;
+            if (tornado.orbitAngle > Math.PI * 2) tornado.orbitAngle -= Math.PI * 2;
+
+            // Update spin
+            tornado.spinAngle += 0.1 * speedMult;
+            if (tornado.spinAngle > Math.PI * 2) tornado.spinAngle -= Math.PI * 2;
+
+            // Calculate tornado center position
+            double tornadoX = bossLoc.getX() + orbitRadius * Math.cos(tornado.orbitAngle);
+            double tornadoZ = bossLoc.getZ() + orbitRadius * Math.sin(tornado.orbitAngle);
+            double tornadoBaseY = bossLoc.getY() - config.getBossFloatHeight() * 0.5;
+
+            // Update each block display position
+            int blockCount = tornado.displays.size();
+            for (int j = 0; j < blockCount; j++) {
+                BlockDisplay bd = tornado.displays.get(j);
+                if (bd == null || !bd.isValid()) continue;
+
+                double heightFrac = (double) j / blockCount;
+                double spiralAngle = tornado.spinAngle + heightFrac * Math.PI * 4;
+                double spiralRadius = 1.5 * (1.0 - heightFrac * 0.6);
+
+                double x = tornadoX + Math.cos(spiralAngle) * spiralRadius;
+                double y = tornadoBaseY + heightFrac * 10.0;
+                double z = tornadoZ + Math.sin(spiralAngle) * spiralRadius;
+
+                Location newLoc = new Location(world, x, y, z);
+                newLoc.setYaw(0);
+                newLoc.setPitch(0);
+                bd.teleport(newLoc);
+            }
+
+            // Tornado dust particles
+            Location tornadoCenter = new Location(world, tornadoX, tornadoBaseY + 3, tornadoZ);
+            world.spawnParticle(Particle.DUST, tornadoCenter, 5, 1.5, 3.0, 1.5, 0.02,
+                    new Particle.DustOptions(Color.fromRGB(150, 200, 255), 1.5f));
+
+            // Check for player catches — launch upward
+            tornado.damageIntervalCounter++;
+            for (Player p : world.getPlayers()) {
+                if (p.getGameMode() != GameMode.SURVIVAL || p.isInvulnerable()) continue;
+                Location pLoc = p.getLocation();
+
+                // Check horizontal distance to tornado column
+                double dx = pLoc.getX() - tornadoX;
+                double dz = pLoc.getZ() - tornadoZ;
+                double hDistSq = dx * dx + dz * dz;
+
+                // Check if within tornado height range
+                double pY = pLoc.getY();
+                if (hDistSq <= catchRadiusSq && pY >= tornadoBaseY - 2 && pY <= tornadoBaseY + 12) {
+                    // Launch upward
+                    Vector vel = p.getVelocity();
+                    vel.setY(Math.max(vel.getY(), 0) + 0.8);
+                    p.setVelocity(vel);
+
+                    // Deal damage on interval
+                    if (tornado.damageIntervalCounter >= config.getTornadoDamageInterval()) {
+                        p.damage(config.getTornadoDamage());
+                    }
+                }
+            }
+
+            if (tornado.damageIntervalCounter >= config.getTornadoDamageInterval()) {
+                tornado.damageIntervalCounter = 0;
+            }
+        }
+    }
+
+    // ========================================================================
+    // Boss Attacks (from AttackRegistry)
+    // ========================================================================
+
+    /**
+     * Tick boss attack spawning on cooldown.
+     */
+    private void tickBossAttacks(World world) {
+        if (attackRegistry == null) return;
+
+        attackCooldown--;
+        if (attackCooldown > 0) return;
+
+        // Reset cooldown based on current phase
+        attackCooldown = switch (currentPhase) {
             case 2 -> config.getBossAttackCooldownPhase2();
             case 3 -> config.getBossAttackCooldownPhase3();
             case 4 -> config.getBossAttackCooldownPhase4();
             default -> config.getBossAttackCooldownPhase1();
         };
-    }
 
-    /**
-     * Fire the Lunar Super Laser. Picks a random player as the initial target
-     * and begins the charge-fire-end sequence.
-     */
-    public void fireSuperLaser() {
-        if (!config.isSuperLaserEnabled() || laserCooldown > 0 || laserActive) return;
-        if (!bossAlive || bossEntity == null) return;
-
-        World world = bossEntity.getWorld();
-        List<Player> players = world.getPlayers();
-        if (players.isEmpty()) return;
-
-        laserActive = true;
-        laserTick = 0;
-        laserCooldown = config.getSuperLaserCooldownTicks();
-        laserSweepAngle = 0;
-
-        // Boss is invincible during laser
-        if (bossEntity instanceof LivingEntity living) {
-            living.setInvulnerable(true);
+        // Find a random BOSS-type attack
+        List<AbstractAttack> bossAttacks = new ArrayList<>();
+        for (AbstractAttack attack : attackRegistry.getAll()) {
+            if (attack.getType() == AttackType.BOSS) {
+                bossAttacks.add(attack);
+            }
         }
+        if (bossAttacks.isEmpty()) return;
 
-        // Pick random player as initial target
-        laserTarget = players.get(new Random().nextInt(players.size())).getLocation();
+        AbstractAttack chosen = bossAttacks.get(random.nextInt(bossAttacks.size()));
 
-        // Broadcast charge warning
-        for (Player p : players) {
-            p.sendMessage(ChatColor.AQUA + "" + ChatColor.BOLD + "The Blue Moon is charging its laser...");
-        }
-
-        // Charge sound (configurable)
-        String chargeSound = config.getLaserChargeSound();
-        float chargeVol = config.getLaserChargeSoundVolume();
-        float chargePitch = config.getLaserChargeSoundPitch();
-        world.playSound(bossEntity.getLocation(), chargeSound, SoundCategory.HOSTILE, chargeVol, chargePitch);
-
-        // Spawn ModelEngine laser model at boss location (inside the moon)
-        spawnLaserModel(bossEntity.getLocation());
+        // Spawn at boss location targeting nearest cluster player
+        Location spawnLoc = bossEntity.getLocation();
+        Player target = findNearestSurvivalPlayer(world);
+        chosen.spawn(spawnLoc, target);
     }
 
-    /**
-     * Force-fire the super laser (admin command).
-     */
-    public void forceLaser() {
-        laserCooldown = 0;
-        fireSuperLaser();
-    }
+    // ========================================================================
+    // Proximity Ambient Sound
+    // ========================================================================
 
     /**
-     * Tick the super laser through charge, fire, and end phases.
+     * Play ambient sound to all players within proximity radius.
      */
-    private void tickSuperLaser(World world) {
-        if (!laserActive) return;
-        laserTick++;
+    private void tickProximitySound(World world) {
+        proximitySoundCooldown--;
+        if (proximitySoundCooldown > 0) return;
 
-        int chargeTicks = config.getSuperLaserChargeTicks();
-        int durationTicks = config.getSuperLaserDurationTicks();
+        proximitySoundCooldown = config.getProximitySoundInterval();
+
+        if (bossEntity == null) return;
         Location bossLoc = bossEntity.getLocation();
+        double radius = config.getProximitySoundRadius();
+        double radiusSq = radius * radius;
 
-        if (laserTick <= chargeTicks) {
-            // ── Charge phase ──────────────────────────────────────────────
-            int particleCount = laserTick * 3;
-            world.spawnParticle(Particle.END_ROD, bossLoc, particleCount,
-                    2.0, 2.0, 2.0, 0.05);
+        String soundId = config.getProximitySoundId();
+        float volume = config.getProximitySoundVolume();
+        float pitch = config.getProximitySoundPitch();
 
-            // Rising pitch sound every 10 ticks
-            if (laserTick % 10 == 0) {
-                float pitch = 0.5f + ((float) laserTick / chargeTicks) * 1.5f;
-                String chargeSound = config.getLaserChargeSound();
-                world.playSound(bossLoc, chargeSound, SoundCategory.HOSTILE,
-                        config.getLaserChargeSoundVolume(), pitch);
+        for (Player p : world.getPlayers()) {
+            if (p.getLocation().distanceSquared(bossLoc) <= radiusSq) {
+                // Play at PLAYER's location so it feels surrounding
+                p.playSound(p.getLocation(), soundId, SoundCategory.HOSTILE, volume, pitch);
             }
-
-            // Move laser model to stay at boss position
-            if (laserModelEntity != null && laserModelEntity.isValid()) {
-                laserModelEntity.teleport(bossLoc.clone().add(0, -2, 0));
-            }
-
-        } else if (laserTick <= chargeTicks + durationTicks) {
-            // ── Fire phase ────────────────────────────────────────────────
-            // Trigger fire animation on first fire tick
-            if (laserTick == chargeTicks + 1) {
-                playLaserFireAnimation();
-            }
-            laserSweepAngle += config.getSuperLaserSweepSpeed();
-
-            // Beam position: sweeping around the boss
-            double laserOrbitR = config.getSuperLaserOrbitRadius();
-            double beamX = bossLoc.getX() + Math.cos(laserSweepAngle) * laserOrbitR;
-            double beamZ = bossLoc.getZ() + Math.sin(laserSweepAngle) * laserOrbitR;
-            double beamTopY = bossLoc.getY();
-            double beamBottomY = world.getHighestBlockYAt((int) beamX, (int) beamZ);
-
-            // Remove old beam displays
-            clearLaserDisplays();
-
-            // Spawn beam column: SEA_LANTERN + DIAMOND_BLOCK display blocks
-            double columnHeight = beamTopY - beamBottomY;
-            int blockCount = Math.min(20, (int) (columnHeight / 2) + 1);
-            for (int i = 0; i < blockCount; i++) {
-                double y = beamBottomY + (columnHeight * i / blockCount);
-                Location blockLoc = new Location(world, beamX, y, beamZ);
-                Material mat = (i % 2 == 0) ? Material.SEA_LANTERN : Material.DIAMOND_BLOCK;
-                BlockDisplayHandle handle = displayBuilder.spawnBlock(blockLoc, mat);
-                if (handle != null && handle.entity() != null) {
-                    laserDisplays.add(handle.entity());
-                }
-            }
-
-            // Dense spiraling particles down the beam
-            for (double y = beamTopY; y > beamBottomY; y -= 0.5) {
-                double spiralAngle = (beamTopY - y) * 0.5 + laserSweepAngle * 2;
-                double px = beamX + Math.cos(spiralAngle) * 0.5;
-                double pz = beamZ + Math.sin(spiralAngle) * 0.5;
-                world.spawnParticle(Particle.DUST,
-                        px, y, pz, 1, 0, 0, 0, 0,
-                        new Particle.DustOptions(Color.fromRGB(200, 230, 255), 2.0f));
-                world.spawnParticle(Particle.END_ROD, px, y, pz, 1, 0.1, 0.1, 0.1, 0.01);
-            }
-
-            // Ground impact: frost trail where beam touches
-            Location groundImpact = new Location(world, beamX, beamBottomY + 1, beamZ);
-            world.spawnParticle(Particle.SNOWFLAKE, groundImpact, 20, 2, 0.5, 2, 0.02);
-            world.spawnParticle(Particle.DUST,
-                    groundImpact, 10, 1.5, 0.2, 1.5, 0.01,
-                    new Particle.DustOptions(Color.fromRGB(150, 220, 255), 1.5f));
-
-            // Damage all players every 20 ticks
-            int fireOffset = laserTick - chargeTicks;
-            if (fireOffset % config.getSuperLaserDamageInterval() == 0) {
-                double baseDamage = config.getSuperLaserDamage();
-                double beamMultiplier = config.getSuperLaserBeamMultiplier();
-                double beamHitRadius = config.getSuperLaserBeamHitRadius();
-
-                for (Player p : world.getPlayers()) {
-                    // Check proximity to beam
-                    double distToBeam = horizontalDistance(p.getLocation(), beamX, beamZ);
-                    if (distToBeam <= beamHitRadius) {
-                        // Direct beam hit — multiplied damage
-                        p.damage(baseDamage * beamMultiplier);
-                    } else {
-                        // Unavoidable ambient damage
-                        p.damage(baseDamage);
-                    }
-                }
-            }
-
-            // Continuous fire sound (configurable)
-            if (fireOffset % 15 == 0) {
-                String fireSound = config.getLaserFireSound();
-                world.playSound(bossLoc, fireSound, SoundCategory.HOSTILE,
-                        config.getLaserFireSoundVolume(), config.getLaserFireSoundPitch());
-            }
-
-            // Move laser model to stay at boss
-            if (laserModelEntity != null && laserModelEntity.isValid()) {
-                laserModelEntity.teleport(bossLoc.clone().add(0, -2, 0));
-            }
-
-        } else {
-            // ── End phase ─────────────────────────────────────────────────
-            laserActive = false;
-            laserTick = 0;
-
-            // Boss is no longer invincible
-            if (bossEntity instanceof LivingEntity living) {
-                living.setInvulnerable(false);
-            }
-
-            // Play end animation on model before cleanup
-            playLaserAnimation("end");
-            // Delay cleanup by 10 ticks so end animation plays
-            Bukkit.getScheduler().runTaskLater(plugin, this::clearLaserDisplays, 10L);
-            String endSound = config.getLaserEndSound();
-            world.playSound(bossLoc, endSound, SoundCategory.HOSTILE,
-                    config.getLaserEndSoundVolume(), config.getLaserEndSoundPitch());
-        }
-    }
-
-    /**
-     * Remove all laser beam display entities and the ModelEngine laser model.
-     */
-    private void clearLaserDisplays() {
-        for (Entity e : laserDisplays) {
-            if (e != null && e.isValid() && !e.isDead()) {
-                e.remove();
-            }
-        }
-        laserDisplays.clear();
-        despawnLaserModel();
-    }
-
-    /**
-     * Spawn the ModelEngine laser model at the boss location.
-     * This creates a separate entity inside/below the boss that plays the laser animation.
-     */
-    private void spawnLaserModel(Location loc) {
-        despawnLaserModel(); // Clean up any existing
-        String modelId = config.getLaserModelEngineId();
-        if (modelId == null || modelId.isEmpty()) return;
-
-        try {
-            // Try ModelEngine API via reflection
-            Class<?> meClass = Class.forName("com.ticxo.modelengine.api.ModelEngineAPI");
-            var createMethod = meClass.getMethod("createModeledEntity", org.bukkit.entity.Entity.class);
-
-            // Spawn a marker armor stand as the model host
-            laserModelEntity = loc.getWorld().spawn(loc, org.bukkit.entity.ArmorStand.class, stand -> {
-                stand.setVisible(false);
-                stand.setGravity(false);
-                stand.setMarker(true);
-                stand.setInvulnerable(true);
-                stand.setSilent(true);
-            });
-
-            var modeledEntity = createMethod.invoke(null, laserModelEntity);
-            var getModelMethod = meClass.getMethod("createActiveModel", String.class);
-            var activeModel = getModelMethod.invoke(null, modelId);
-
-            if (activeModel != null && modeledEntity != null) {
-                var addModelMethod = modeledEntity.getClass().getMethod("addModel", activeModel.getClass().getInterfaces()[0]);
-                addModelMethod.invoke(modeledEntity, activeModel);
-
-                // Play charge animation
-                try {
-                    var getAnimHandler = activeModel.getClass().getMethod("getAnimationHandler");
-                    var animHandler = getAnimHandler.invoke(activeModel);
-                    var playMethod = animHandler.getClass().getMethod("playAnimation", String.class, double.class, double.class, double.class, boolean.class);
-                    playMethod.invoke(animHandler, "charge", 0.0, 0.0, 1.0, false);
-                } catch (Exception ignored) {}
-            }
-
-            plugin.debug("[BlueMoon] Spawned laser ModelEngine model: " + modelId);
-        } catch (ClassNotFoundException e) {
-            // ModelEngine not installed — skip model, block displays will still show
-            plugin.debug("[BlueMoon] ModelEngine not found, laser uses block displays only.");
-        } catch (Exception e) {
-            plugin.getLogger().warning("[BlueMoon] Failed to spawn laser model: " + e.getMessage());
-        }
-    }
-
-    /**
-     * Play a named animation on the laser model (charge, fire, idle, end).
-     */
-    private void playLaserAnimation(String animationName) {
-        if (laserModelEntity == null || laserModelEntity.isDead()) return;
-        String modelId = config.getLaserModelEngineId();
-        if (modelId == null || modelId.isEmpty()) return;
-
-        try {
-            Class<?> meClass = Class.forName("com.ticxo.modelengine.api.ModelEngineAPI");
-            var getModeledEntity = meClass.getMethod("getModeledEntity", java.util.UUID.class);
-            var modeledEntity = getModeledEntity.invoke(null, laserModelEntity.getUniqueId());
-            if (modeledEntity == null) return;
-
-            var getModels = modeledEntity.getClass().getMethod("getModels");
-            @SuppressWarnings("unchecked")
-            var models = (java.util.Map<String, ?>) getModels.invoke(modeledEntity);
-            var activeModel = models.get(modelId);
-            if (activeModel == null) return;
-
-            var getAnimHandler = activeModel.getClass().getMethod("getAnimationHandler");
-            var animHandler = getAnimHandler.invoke(activeModel);
-            var playMethod = animHandler.getClass().getMethod("playAnimation", String.class, double.class, double.class, double.class, boolean.class);
-            playMethod.invoke(animHandler, animationName, 0.0, 0.0, 1.0, false);
-            plugin.debug("[BlueMoon] Laser animation: " + animationName);
-        } catch (ClassNotFoundException ignored) {
-        } catch (Exception e) {
-            plugin.debug("[BlueMoon] Failed to play laser animation '" + animationName + "': " + e.getMessage());
-        }
-    }
-
-    private void playLaserFireAnimation() {
-        playLaserAnimation("fire");
-    }
-
-    /**
-     * Remove the ModelEngine laser model entity.
-     */
-    private void despawnLaserModel() {
-        if (laserModelEntity != null) {
-            if (laserModelEntity.isValid() && !laserModelEntity.isDead()) {
-                laserModelEntity.remove();
-            }
-            laserModelEntity = null;
         }
     }
 
     // ========================================================================
-    // Boss death
+    // Phase System
+    // ========================================================================
+
+    /**
+     * Check HP thresholds and transition phases.
+     */
+    private void checkPhaseTransition(World world) {
+        if (!(bossEntity instanceof LivingEntity living)) return;
+
+        double ratio = getHealthRatio();
+        int newPhase = currentPhase;
+
+        if (ratio <= config.getPhase4Threshold()) {
+            newPhase = 4;
+        } else if (ratio <= config.getPhase3Threshold()) {
+            newPhase = 3;
+        } else if (ratio <= config.getPhase2Threshold()) {
+            newPhase = 2;
+        }
+
+        if (newPhase != currentPhase) {
+            transitionToPhase(newPhase, world);
+        }
+    }
+
+    /**
+     * Perform phase transition with visual effects and AI update.
+     */
+    private void transitionToPhase(int newPhase, World world) {
+        int oldPhase = currentPhase;
+        currentPhase = newPhase;
+
+        // Update flight AI phase
+        if (flightGoal != null) {
+            flightGoal.setPhase(newPhase);
+        }
+
+        // Visual effects at boss location
+        Location bossLoc = bossEntity.getLocation();
+
+        // Phase-specific particles
+        Particle.DustOptions phaseColor = switch (newPhase) {
+            case 2 -> new Particle.DustOptions(Color.fromRGB(0, 200, 255), 2.5f);  // cyan
+            case 3 -> new Particle.DustOptions(Color.fromRGB(255, 100, 0), 2.5f);   // orange
+            case 4 -> new Particle.DustOptions(Color.fromRGB(255, 0, 0), 3.0f);     // red
+            default -> new Particle.DustOptions(Color.fromRGB(80, 140, 255), 2.0f);
+        };
+
+        world.spawnParticle(Particle.DUST, bossLoc, 200, 8, 8, 8, 0.1, phaseColor);
+        world.spawnParticle(Particle.END_ROD, bossLoc, 100, 5, 5, 5, 0.05);
+        world.spawnParticle(Particle.FLASH, bossLoc, 3, 0, 0, 0, 0);
+
+        // Sound
+        world.playSound(bossLoc, Sound.ENTITY_WITHER_AMBIENT, SoundCategory.HOSTILE, 2.0f, 0.3f);
+        world.playSound(bossLoc, Sound.ENTITY_ENDER_DRAGON_GROWL, SoundCategory.HOSTILE, 1.5f, 0.5f);
+
+        // Broadcast
+        String phaseMsg = switch (newPhase) {
+            case 2 -> ChatColor.AQUA + "" + ChatColor.BOLD + "The Blue Moon intensifies... (Phase 2)";
+            case 3 -> ChatColor.GOLD + "" + ChatColor.BOLD + "The Blue Moon fractures! (Phase 3)";
+            case 4 -> ChatColor.DARK_RED + "" + ChatColor.BOLD + "THE BLUE MOON DESCENDS! (Phase 4)";
+            default -> "";
+        };
+        for (Player p : world.getPlayers()) {
+            p.sendMessage(phaseMsg);
+        }
+
+        plugin.getLogger().info("[BlueMoon] Phase transition: " + oldPhase + " -> " + newPhase
+                + " (HP: " + String.format("%.1f%%", getHealthRatio() * 100) + ")");
+    }
+
+    // ========================================================================
+    // Boss Death
     // ========================================================================
 
     /**
      * Called when the boss entity dies or is removed.
      */
-    private void onBossDeath() {
+    private void onBossDied() {
         if (!bossAlive) return;
         bossAlive = false;
 
-        plugin.getLogger().info("[BlueMoon] Boss defeated!");
+        plugin.getLogger().info("[BlueMoon] Boss died.");
 
-        Location deathLoc = (bossEntity != null && bossEntity.isValid())
-                ? bossEntity.getLocation()
-                : null;
-
-        if (deathLoc != null) {
+        // Death effects
+        if (bossEntity != null && bossEntity.isValid()) {
+            Location deathLoc = bossEntity.getLocation();
             World world = deathLoc.getWorld();
-
-            // Death sounds
-            world.playSound(deathLoc, Sound.ENTITY_ENDER_DRAGON_DEATH, SoundCategory.HOSTILE, 3.0f, 0.6f);
-            world.playSound(deathLoc, Sound.ENTITY_GENERIC_EXPLODE, SoundCategory.HOSTILE, 2.0f, 0.5f);
-
-            // Massive particle explosion
-            world.spawnParticle(Particle.END_ROD, deathLoc, 500, 10, 10, 10, 0.2);
-            world.spawnParticle(Particle.SNOWFLAKE, deathLoc, 300, 15, 8, 15, 0.1);
-            world.spawnParticle(Particle.FLASH, deathLoc, 5, 0, 0, 0, 0);
-            world.spawnParticle(Particle.DUST,
-                    deathLoc, 200, 12, 8, 12, 0.05,
-                    new Particle.DustOptions(Color.fromRGB(136, 204, 255), 3.0f));
-
-            // Broadcast
-            for (Player p : world.getPlayers()) {
-                p.sendMessage(ChatColor.AQUA + "" + ChatColor.BOLD + "The Blue Moon has been shattered!");
+            if (world != null) {
+                world.playSound(deathLoc, config.getBossDeathSound(), SoundCategory.HOSTILE,
+                        config.getBossDeathSoundVolume(), 0.5f);
+                world.spawnParticle(Particle.DUST, deathLoc, 300, 10, 10, 10, 0.1,
+                        new Particle.DustOptions(Color.fromRGB(80, 140, 255), 3.0f));
+                world.spawnParticle(Particle.END_ROD, deathLoc, 200, 8, 8, 8, 0.1);
+                world.spawnParticle(Particle.FLASH, deathLoc, 5, 0, 0, 0, 0);
             }
         }
 
-        // Clean up laser if active
-        if (laserActive) {
-            laserActive = false;
-            clearLaserDisplays();
-        }
-
-        // Trigger early kill rewards
+        // Trigger early kill callback
         if (earlyKillCallback != null) {
             earlyKillCallback.run();
         }
+
+        // Cleanup all visuals
+        cleanupVisuals();
     }
 
     // ========================================================================
-    // Enrage (Phase 4)
+    // Admin Methods
     // ========================================================================
 
     /**
-     * Phase 4 enrage: boss heals 10% of max HP and re-enters phase 3.
-     */
-    // Enrage mechanic removed — boss stays in Phase 4 until death.
-
-    // ========================================================================
-    // Cleanup
-    // ========================================================================
-
-    /**
-     * Full cleanup — remove boss entity, clear displays, reset all state.
-     */
-    public void cleanup() {
-        // Unforce-load all chunks we forced
-        if (bossEntity != null && bossEntity.isValid()) {
-            bossEntity.getLocation().getChunk().setForceLoaded(false);
-        }
-
-        if (bossEntity != null && bossEntity.isValid() && !bossEntity.isDead()) {
-            bossEntity.remove();
-        }
-        bossEntity = null;
-        bossUUID = null;
-        bossAlive = false;
-        currentPhase = 1;
-        phase4EnrageTicks = 0;
-        laserActive = false;
-        laserTick = 0;
-        laserCooldown = 0;
-        orbitAngle = 0;
-        savedBossMaxHealth = 0;
-        laserTarget = null;
-        laserSweepAngle = 0;
-        clearLaserDisplays();
-    }
-
-    /**
-     * Force-kill the boss (admin command).
+     * Force-kill the boss instantly with death effects.
      */
     public void forceKill() {
         if (!bossAlive) return;
+
         if (bossEntity instanceof LivingEntity living) {
             living.setHealth(0);
         } else if (bossEntity != null) {
             bossEntity.remove();
         }
-        onBossDeath();
+        onBossDied();
+    }
+
+    /**
+     * Force-trigger the laser barrage immediately.
+     */
+    public void forceLaser() {
+        if (!bossAlive || bossEntity == null) return;
+        World world = bossEntity.getWorld();
+        laserGlobalCooldown = 0;
+        // Clear any existing beams
+        for (LaserBeam beam : laserBeams) {
+            beam.removeDisplays();
+        }
+        laserBeams.clear();
+        if (bossEntity instanceof LivingEntity living) {
+            living.setInvulnerable(false);
+        }
+        startLaserBarrage(world);
+    }
+
+    /**
+     * Force a phase transition.
+     */
+    public void forcePhase(int phase) {
+        if (!bossAlive || bossEntity == null) return;
+        phase = Math.max(1, Math.min(4, phase));
+        if (phase != currentPhase) {
+            transitionToPhase(phase, bossEntity.getWorld());
+        }
     }
 
     // ========================================================================
-    // Getters
+    // State Queries
     // ========================================================================
 
-    /**
-     * Returns the boss health ratio as 0.0-1.0 (current / max).
-     */
-    public double getHealthRatio() {
-        if (!bossAlive || bossEntity == null) return 0.0;
-        if (bossEntity instanceof LivingEntity living) {
-            double max = living.getMaxHealth();
-            if (max <= 0) return 0.0;
-            return living.getHealth() / max;
-        }
-        // Non-living entity: if still valid, treat as full health
-        return bossEntity.isValid() ? 1.0 : 0.0;
+    public boolean isBossAlive() {
+        return bossAlive;
     }
 
     public int getCurrentPhase() {
         return currentPhase;
     }
 
-    public boolean isBossAlive() {
-        return bossAlive;
+    /**
+     * Get the boss HP as a ratio (0.0 = dead, 1.0 = full).
+     */
+    public double getHealthRatio() {
+        if (!(bossEntity instanceof LivingEntity living)) return 0;
+        var maxHp = living.getAttribute(Attribute.MAX_HEALTH);
+        if (maxHp == null || maxHp.getBaseValue() <= 0) return 0;
+        return living.getHealth() / maxHp.getBaseValue();
     }
 
+    /**
+     * Whether any laser beam is currently active (charging or firing).
+     */
     public boolean isLaserActive() {
-        return laserActive;
+        return !laserBeams.isEmpty();
     }
 
     public Entity getBossEntity() {
         return bossEntity;
     }
 
-    /**
-     * Set a callback that fires when the boss is killed (for early-kill rewards).
-     */
-    public void setEarlyKillCallback(Runnable callback) {
-        this.earlyKillCallback = callback;
-    }
-
     // ========================================================================
-    // Utility
+    // Cleanup
     // ========================================================================
 
     /**
-     * Find the average position of all players in the given world.
+     * Full cleanup: remove boss entity, all tornado/laser displays, reset state.
      */
-    private Location findPlayerCenter(World world) {
-        List<Player> players = world.getPlayers();
-        if (players.isEmpty()) return null;
-
-        double x = 0, y = 0, z = 0;
-        for (Player p : players) {
-            Location loc = p.getLocation();
-            x += loc.getX();
-            y += loc.getY();
-            z += loc.getZ();
+    public void cleanup() {
+        // Remove boss entity
+        if (bossEntity != null && bossEntity.isValid()) {
+            bossEntity.remove();
         }
-        int count = players.size();
-        return new Location(world, x / count, y / count, z / count);
+        bossEntity = null;
+        bossUUID = null;
+        bossAlive = false;
+
+        cleanupVisuals();
+
+        flightGoal = null;
+        attackRegistry = null;
+        currentPhase = 1;
     }
 
     /**
-     * Find the player in the densest cluster and spawn above them.
-     * For each player, count how many other players are within 30 blocks.
-     * Pick the player with the most neighbors — this ensures the boss
-     * spawns where the most action is happening.
-     * If tied, picks randomly among the top candidates.
+     * Remove all visual entities (tornados, lasers) without removing the boss itself.
      */
-    private Location findDensestPlayerCluster(World world) {
-        List<Player> players = world.getPlayers();
-        if (players.isEmpty()) return null;
-        if (players.size() == 1) return players.get(0).getLocation();
+    private void cleanupVisuals() {
+        // Remove all tornado block displays
+        for (Tornado tornado : tornados) {
+            tornado.removeDisplays();
+        }
+        tornados.clear();
 
-        double clusterRadius = 30.0;
-        double clusterRadiusSq = clusterRadius * clusterRadius;
+        // Remove all laser block displays
+        for (LaserBeam beam : laserBeams) {
+            beam.removeDisplays();
+        }
+        laserBeams.clear();
 
-        Player bestPlayer = null;
-        int bestNeighbors = -1;
-        List<Player> topCandidates = new ArrayList<>();
+        // Remove display builder tracked entities
+        displayBuilder.removeAll();
 
-        for (Player p : players) {
+        // Restore invulnerability state
+        if (bossEntity instanceof LivingEntity living) {
+            living.setInvulnerable(false);
+        }
+    }
+
+    // ========================================================================
+    // Utility Methods
+    // ========================================================================
+
+    /**
+     * Find the center of the largest player cluster in the world.
+     */
+    private Location findPlayerClusterCenter(World world) {
+        List<Player> survivalPlayers = new ArrayList<>();
+        for (Player p : world.getPlayers()) {
+            if (p.getGameMode() == GameMode.SURVIVAL && !p.isInvulnerable()) {
+                survivalPlayers.add(p);
+            }
+        }
+
+        if (survivalPlayers.isEmpty()) return null;
+        if (survivalPlayers.size() == 1) return survivalPlayers.get(0).getLocation();
+
+        // Find player with the most neighbors within group detection radius
+        double groupRadius = config.getGroupDetectionRadius();
+        double groupRadiusSq = groupRadius * groupRadius;
+
+        Player bestSeed = null;
+        int bestCount = -1;
+
+        for (Player p : survivalPlayers) {
             int neighbors = 0;
-            for (Player other : players) {
+            for (Player other : survivalPlayers) {
                 if (other == p) continue;
-                if (p.getLocation().distanceSquared(other.getLocation()) <= clusterRadiusSq) {
+                if (p.getLocation().distanceSquared(other.getLocation()) <= groupRadiusSq) {
                     neighbors++;
                 }
             }
-            if (neighbors > bestNeighbors) {
-                bestNeighbors = neighbors;
-                topCandidates.clear();
-                topCandidates.add(p);
-            } else if (neighbors == bestNeighbors) {
-                topCandidates.add(p);
+            if (neighbors > bestCount) {
+                bestCount = neighbors;
+                bestSeed = p;
             }
         }
 
-        // Pick randomly among top candidates
-        bestPlayer = topCandidates.get(new Random().nextInt(topCandidates.size()));
-        return bestPlayer.getLocation();
+        if (bestSeed == null) return survivalPlayers.get(0).getLocation();
+
+        // Calculate centroid of cluster members
+        List<Player> cluster = new ArrayList<>();
+        cluster.add(bestSeed);
+        for (Player p : survivalPlayers) {
+            if (p == bestSeed) continue;
+            if (bestSeed.getLocation().distanceSquared(p.getLocation()) <= groupRadiusSq) {
+                cluster.add(p);
+            }
+        }
+
+        double sumX = 0, sumY = 0, sumZ = 0;
+        for (Player p : cluster) {
+            sumX += p.getLocation().getX();
+            sumY += p.getLocation().getY();
+            sumZ += p.getLocation().getZ();
+        }
+        return new Location(world,
+                sumX / cluster.size(),
+                sumY / cluster.size(),
+                sumZ / cluster.size());
     }
 
     /**
-     * Find the nearest player to the boss entity in the given world.
+     * Find the nearest survival-mode player to the boss.
      */
-    private Player findNearestPlayer(World world) {
+    private Player findNearestSurvivalPlayer(World world) {
         if (bossEntity == null) return null;
         Location bossLoc = bossEntity.getLocation();
         Player nearest = null;
-        double nearestDist = Double.MAX_VALUE;
+        double nearestDistSq = Double.MAX_VALUE;
 
         for (Player p : world.getPlayers()) {
-            double dist = p.getLocation().distanceSquared(bossLoc);
-            if (dist < nearestDist) {
-                nearestDist = dist;
+            if (p.getGameMode() != GameMode.SURVIVAL || p.isInvulnerable()) continue;
+            double distSq = p.getLocation().distanceSquared(bossLoc);
+            if (distSq < nearestDistSq) {
+                nearestDistSq = distSq;
                 nearest = p;
             }
         }
@@ -977,19 +1215,24 @@ public class BlueMoonBossManager {
     }
 
     /**
-     * Horizontal distance from a location to a point (X/Z only).
+     * Force-load chunks in a radius around a location.
      */
-    private double horizontalDistance(Location loc, double x, double z) {
-        double dx = loc.getX() - x;
-        double dz = loc.getZ() - z;
-        return Math.sqrt(dx * dx + dz * dz);
+    private void forceLoadChunksAround(Location center, int chunkRadius) {
+        World world = center.getWorld();
+        if (world == null) return;
+        int cx = center.getBlockX() >> 4;
+        int cz = center.getBlockZ() >> 4;
+        for (int dx = -chunkRadius; dx <= chunkRadius; dx++) {
+            for (int dz = -chunkRadius; dz <= chunkRadius; dz++) {
+                world.getChunkAt(cx + dx, cz + dz).setForceLoaded(true);
+            }
+        }
     }
 
     /**
      * Format a location for logging.
      */
     private String formatLoc(Location loc) {
-        return String.format("(%s, %.1f, %.1f, %.1f)",
-                loc.getWorld().getName(), loc.getX(), loc.getY(), loc.getZ());
+        return String.format("(%.1f, %.1f, %.1f)", loc.getX(), loc.getY(), loc.getZ());
     }
 }

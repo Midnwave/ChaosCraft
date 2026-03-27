@@ -266,22 +266,61 @@ public class BlueMoonConfig {
     public int getSpawnMaxEventsPerPlayer() { return config.getInt("spawn.max-events-per-player", 5); }
     public double getSpawnOffsetRadius() { return config.getDouble("spawn.offset-radius", 10.0); }
 
-    // Boss
+    // Boss — entity
     public boolean isBossEnabled() { return config.getBoolean("boss.enabled", true); }
-    public String getBossMythicMobId() { return config.getString("boss.mythicmob-id", "blue_moon_boss"); }
+    public boolean isUseMythicMobs() { return config.getBoolean("boss.use-mythicmobs", false); }
+    public String getBossMythicMobId() { return config.getString("boss.mythicmob-id", "BlueMoonBoss"); }
     public String getBossModelEngineId() { return config.getString("boss.modelengine-id", "blue_moon_boss"); }
+    public double getBossScale() { return config.getDouble("boss.scale", 1.0); }
+
+    // Boss — health & combat attributes
     public double getBossHealth() { return config.getDouble("boss.health", 500.0); }
+    public double getBossArmor() { return config.getDouble("boss.armor", 10.0); }
+    public double getBossArmorToughness() { return config.getDouble("boss.armor-toughness", 5.0); }
+    public double getBossKnockbackResistance() { return config.getDouble("boss.knockback-resistance", 1.0); }
+
+    // Boss — movement
     public double getBossFloatHeight() { return config.getDouble("boss.float-height", 25.0); }
     public double getBossOrbitRadius() { return config.getDouble("boss.orbit-radius", 15.0); }
     public double getBossOrbitSpeed() { return config.getDouble("boss.orbit-speed", 0.02); }
+    public double getBossMoveSpeed() { return config.getDouble("boss.move-speed", 0.3); }
+    public double getBossDetectionRange() { return config.getDouble("boss.detection-range", 100.0); }
+
+    // Boss — group targeting
+    public double getGroupDetectionRadius() { return config.getDouble("boss.group-detection-radius", 20.0); }
+    public int getTargetReevaluateTicks() { return config.getInt("boss.target-reevaluate-ticks", 60); }
+
+    // Boss — phase thresholds
     public double getBossPhase2Threshold() { return config.getDouble("boss.phase2-threshold", 0.75); }
     public double getBossPhase3Threshold() { return config.getDouble("boss.phase3-threshold", 0.50); }
     public double getBossPhase4Threshold() { return config.getDouble("boss.phase4-threshold", 0.25); }
-    public int getBossPhase4EnrageSeconds() { return config.getInt("boss.phase4-enrage-seconds", 60); }
     public int getBossSpawnDelayTicks() { return config.getInt("boss.spawn-delay-ticks", 100); }
+
+    // Boss — spawn/death sounds
+    public String getBossSpawnSound() { return config.getString("boss.spawn-sound", "minecraft:entity.wither.spawn"); }
+    public float getBossSpawnSoundVolume() { return (float) config.getDouble("boss.spawn-sound-volume", 2.0); }
+    public String getBossDeathSound() { return config.getString("boss.death-sound", "minecraft:entity.ender_dragon.death"); }
+    public float getBossDeathSoundVolume() { return (float) config.getDouble("boss.death-sound-volume", 3.0); }
+
+    // Boss — tornados
+    public int getTornadoCount() { return config.getInt("boss.tornados.count", 3); }
+    public double getTornadoOrbitRadius() { return config.getDouble("boss.tornados.orbit-radius", 8.0); }
+    public double getTornadoCatchRadius() { return config.getDouble("boss.tornados.catch-radius", 3.0); }
+    public double getTornadoDamage() { return config.getDouble("boss.tornados.damage", 4.0); }
+    public int getTornadoDamageInterval() { return config.getInt("boss.tornados.damage-interval-ticks", 20); }
+    public double getTornadoHeight() { return config.getDouble("boss.tornados.height", 8.0); }
+    public double getTornadoLaunchPower() { return config.getDouble("boss.tornados.launch-power", 0.8); }
+
+    // Boss — proximity ambient sound
+    public String getProximitySoundId() { return config.getString("boss.proximity-sound.sound-id", "minecraft:entity.warden.heartbeat"); }
+    public double getProximitySoundRadius() { return config.getDouble("boss.proximity-sound.radius", 30.0); }
+    public float getProximitySoundVolume() { return (float) config.getDouble("boss.proximity-sound.volume", 0.8); }
+    public float getProximitySoundPitch() { return (float) config.getDouble("boss.proximity-sound.pitch", 0.5); }
+    public int getProximitySoundInterval() { return config.getInt("boss.proximity-sound.interval-ticks", 40); }
 
     // Super laser
     public boolean isSuperLaserEnabled() { return config.getBoolean("boss.super-laser.enabled", true); }
+    public int getSuperLaserMaxBeams() { return config.getInt("boss.super-laser.max-beams", 3); }
     public double getSuperLaserDamage() { return config.getDouble("boss.super-laser.damage", 12.0); }
     public double getSuperLaserBeamMultiplier() { return config.getDouble("boss.super-laser.beam-damage-multiplier", 3.0); }
     public int getSuperLaserChargeTicks() { return config.getInt("boss.super-laser.charge-ticks", 40); }
@@ -317,6 +356,21 @@ public class BlueMoonConfig {
 
     // Laser ModelEngine model (spawns inside the boss during laser)
     public String getLaserModelEngineId() { return config.getString("boss.super-laser.modelengine-id", "chaoscraft_laser"); }
+
+    // Aliases used by BlueMoonBossManager (different naming convention)
+    public String getMythicMobId() { return getBossMythicMobId(); }
+    public boolean getSuperLaserEnabled() { return isSuperLaserEnabled(); }
+    public String getSuperLaserChargeSound() { return getLaserChargeSound(); }
+    public float getSuperLaserChargeSoundVolume() { return getLaserChargeSoundVolume(); }
+    public String getSuperLaserFireSound() { return getLaserFireSound(); }
+    public float getSuperLaserFireSoundVolume() { return getLaserFireSoundVolume(); }
+    public float getSuperLaserFireSoundPitch() { return getLaserFireSoundPitch(); }
+    public String getSuperLaserEndSound() { return getLaserEndSound(); }
+    public float getSuperLaserEndSoundVolume() { return getLaserEndSoundVolume(); }
+    public float getSuperLaserEndSoundPitch() { return getLaserEndSoundPitch(); }
+    public double getPhase2Threshold() { return getBossPhase2Threshold(); }
+    public double getPhase3Threshold() { return getBossPhase3Threshold(); }
+    public double getPhase4Threshold() { return getBossPhase4Threshold(); }
 
     // Timer HUD
     public String getTimerHudDisplayName() { return config.getString("timer-hud.display-name", "BLUE MOON"); }
