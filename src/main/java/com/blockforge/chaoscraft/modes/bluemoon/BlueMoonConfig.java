@@ -77,7 +77,7 @@ public class BlueMoonConfig {
         // ── Boss config ─────────────────────────────────────────────────
         if (!config.contains("boss.enabled")) { config.set("boss.enabled", true); needsSave = true; }
         if (!config.contains("boss.mythicmob-id")) { config.set("boss.mythicmob-id", "blue_moon_boss"); needsSave = true; }
-        if (!config.contains("boss.modelengine-id")) { config.set("boss.modelengine-id", "blue_moon_boss"); needsSave = true; }
+        if (!config.contains("boss.modelengine-id")) { config.set("boss.modelengine-id", "blue_midnight"); needsSave = true; }
         if (!config.contains("boss.health")) { config.set("boss.health", 500.0); needsSave = true; }
         if (!config.contains("boss.float-height")) { config.set("boss.float-height", 25.0); needsSave = true; }
         if (!config.contains("boss.orbit-radius")) { config.set("boss.orbit-radius", 15.0); needsSave = true; }
@@ -176,7 +176,7 @@ public class BlueMoonConfig {
         defaults.setComments("boss.enabled", List.of(
                 "Whether the Blue Moon boss spawns. Requires MythicMobs + ModelEngine."));
         defaults.set("boss.mythicmob-id", "blue_moon_boss");
-        defaults.set("boss.modelengine-id", "blue_moon_boss");
+        defaults.set("boss.modelengine-id", "blue_midnight");
         defaults.set("boss.health", 500.0);
         defaults.set("boss.float-height", 25.0);
         defaults.setComments("boss.float-height", List.of("Y offset above the nearest player the boss hovers at."));
@@ -270,7 +270,7 @@ public class BlueMoonConfig {
     public boolean isBossEnabled() { return config.getBoolean("boss.enabled", true); }
     public boolean isUseMythicMobs() { return config.getBoolean("boss.use-mythicmobs", false); }
     public String getBossMythicMobId() { return config.getString("boss.mythicmob-id", "BlueMoonBoss"); }
-    public String getBossModelEngineId() { return config.getString("boss.modelengine-id", "blue_moon_boss"); }
+    public String getBossModelEngineId() { return config.getString("boss.modelengine-id", "blue_midnight"); }
     public double getBossScale() { return config.getDouble("boss.scale", 1.0); }
 
     // Boss — health & combat attributes

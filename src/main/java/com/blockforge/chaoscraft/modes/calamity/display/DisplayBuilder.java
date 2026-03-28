@@ -155,6 +155,7 @@ public class DisplayBuilder {
         ItemDisplay display = location.getWorld().spawn(straight, ItemDisplay.class, d -> {
             d.setItemStack(item);
             d.setBrightness(new Display.Brightness(15, 15));
+            d.addScoreboardTag("chaoscraft_display"); // Tag for cleanup safety net
             d.setTransformation(new Transformation(
                     new Vector3f(-0.5f, -0.5f, -0.5f),
                     new AxisAngle4f(0, 0, 1, 0),
@@ -281,7 +282,7 @@ public class DisplayBuilder {
         if (world == null) return;
         int removed = 0;
         for (Entity entity : world.getEntities()) {
-            if (entity instanceof org.bukkit.entity.BlockDisplay && entity.getScoreboardTags().contains("chaoscraft_display")) {
+            if (entity.getScoreboardTags().contains("chaoscraft_display")) {
                 entity.remove();
                 removed++;
             }

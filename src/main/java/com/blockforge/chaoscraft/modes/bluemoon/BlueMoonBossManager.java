@@ -6,6 +6,7 @@ import com.blockforge.chaoscraft.modes.calamity.attacks.AttackRegistry;
 import com.blockforge.chaoscraft.modes.calamity.attacks.AttackType;
 import com.blockforge.chaoscraft.modes.calamity.display.DisplayBuilder;
 import com.blockforge.chaoscraft.nms.ai.BlueMoonFlightGoal;
+import com.blockforge.chaoscraft.nms.ai.LaserHeadTrackGoal;
 import net.minecraft.world.entity.Mob;
 import org.bukkit.*;
 import org.bukkit.attribute.Attribute;
@@ -98,6 +99,11 @@ public class BlueMoonBossManager {
         int damageIntervalCounter;
         final List<Entity> displays = new ArrayList<>();
 
+        /** ModelEngine laser entity — invisible zombie with laser model + headtracking AI */
+        Entity laserModelEntity;
+        Object laserActiveModel;
+        LaserHeadTrackGoal headTrackGoal;
+
         LaserBeam(Player target) {
             this.targetPlayer = target;
             this.state = State.CHARGING;
@@ -112,6 +118,20 @@ public class BlueMoonBossManager {
                 if (e != null && e.isValid()) e.remove();
             }
             displays.clear();
+        }
+
+        void removeLaserModel() {
+            if (laserModelEntity != null && laserModelEntity.isValid()) {
+                laserModelEntity.remove();
+            }
+            laserModelEntity = null;
+            laserActiveModel = null;
+            headTrackGoal = null;
+        }
+
+        void removeAll() {
+            removeDisplays();
+            removeLaserModel();
         }
     }
 
@@ -399,6 +419,31 @@ public class BlueMoonBossManager {
     }
 
     /**
+     * Force-stop the walk/walking animation on the boss model.
+     * ME4 auto-detects entity velocity and plays walk — this kills it.
+     */
+    private void forceStopWalkAnimation() {
+        if (bossActiveModel == null) return;
+        try {
+            Object animHandler = bossActiveModel.getClass().getMethod("getAnimationHandler").invoke(bossActiveModel);
+            if (animHandler == null) return;
+
+            // Try multiple possible walk animation names
+            for (String walkName : new String[]{"walk", "walking", "move", "movement"}) {
+                try {
+                    Method stop = animHandler.getClass().getMethod("forceStopAnimation", String.class);
+                    stop.invoke(animHandler, walkName);
+                } catch (NoSuchMethodException e1) {
+                    try {
+                        Method stop = animHandler.getClass().getMethod("stopAnimation", String.class);
+                        stop.invoke(animHandler, walkName);
+                    } catch (NoSuchMethodException ignored) {}
+                }
+            }
+        } catch (Exception ignored) {}
+    }
+
+    /**
      * Apply all Bukkit attributes to the boss entity.
      */
     private void applyAttributes() {
@@ -503,6 +548,13 @@ public class BlueMoonBossManager {
             if (!chunk.isForceLoaded()) chunk.setForceLoaded(true);
         }
 
+        // Force idle animation every 20 ticks to suppress ME4 auto-walk detection
+        // ME4 detects velocity from setDeltaMovement() and auto-plays walk — this overrides it
+        if (bossActiveModel != null && world.getGameTime() % 20 == 0) {
+            forceStopWalkAnimation();
+            playBossAnimation("idle", true);
+        }
+
         tickLaserBeams(world);
         tickTornados(world);
         tickBossAttacks(world);
@@ -535,8 +587,15 @@ public class BlueMoonBossManager {
     private void tickLaserBeams(World world) {
         if (!config.getSuperLaserEnabled()) return;
 
-        // If no beams active, count down global cooldown
+        // If no beams active, restore vulnerability and count down cooldown
         if (laserBeams.isEmpty()) {
+            // Ensure invincibility is OFF when no beams exist
+            if (bossEntity instanceof LivingEntity living && living.isInvulnerable()) {
+                living.setInvulnerable(false);
+                setBossGlowing(false);
+                plugin.debug("[BlueMoon] Laser ended — boss vulnerable again");
+            }
+
             laserGlobalCooldown--;
             if (laserGlobalCooldown <= 0) {
                 startLaserBarrage(world);
@@ -562,7 +621,7 @@ public class BlueMoonBossManager {
             if (beam.targetPlayer == null || !beam.targetPlayer.isOnline()
                     || beam.targetPlayer.isDead()
                     || beam.targetPlayer.getGameMode() != GameMode.SURVIVAL) {
-                beam.removeDisplays();
+                beam.removeAll();
                 it.remove();
                 continue;
             }
@@ -574,17 +633,10 @@ public class BlueMoonBossManager {
                     beam.cooldownTick++;
                     beam.removeDisplays();
                     if (beam.cooldownTick >= 20) {
+                        beam.removeLaserModel();
                         it.remove();
                     }
                 }
-            }
-        }
-
-        // Restore vulnerability when all beams done — remove glow
-        if (laserBeams.isEmpty()) {
-            if (bossEntity instanceof LivingEntity living) {
-                living.setInvulnerable(false);
-                setBossGlowing(false);
             }
         }
     }
@@ -611,6 +663,93 @@ public class BlueMoonBossManager {
 
         if (!laserBeams.isEmpty()) {
             plugin.getLogger().info("[BlueMoon] Laser barrage started: " + laserBeams.size() + " beams");
+        }
+    }
+
+    /**
+     * Spawn an invisible zombie with the laser ModelEngine model at the boss location.
+     * The zombie has custom NMS AI that only rotates its head to track the target player
+     * at extreme angles. One entity per beam target.
+     */
+    private void spawnLaserModelEntity(LaserBeam beam, Location bossLoc, World world) {
+        try {
+            Zombie laserZombie = world.spawn(bossLoc, Zombie.class, z -> {
+                z.setInvisible(true);
+                z.setSilent(true);
+                z.setInvulnerable(true);
+                z.setPersistent(false);
+                z.setRemoveWhenFarAway(false);
+                z.setShouldBurnInDay(false);
+                z.setBaby(false);
+                z.setCollidable(false);
+                z.setGravity(false);
+                z.setAI(false); // Disable vanilla AI — we use NMS goal
+                z.customName(net.kyori.adventure.text.Component.text("Laser"));
+                z.setCustomNameVisible(false);
+                z.addScoreboardTag("chaoscraft_laser_entity");
+                z.addScoreboardTag("chaoscraft_display");
+
+                // Remove entity cramming
+                var moveSpeed = z.getAttribute(Attribute.MOVEMENT_SPEED);
+                if (moveSpeed != null) moveSpeed.setBaseValue(0);
+            });
+
+            beam.laserModelEntity = laserZombie;
+
+            // Set up NMS headtracking AI
+            try {
+                net.minecraft.world.entity.Mob nmsMob = ((CraftLivingEntity) laserZombie).getHandle() instanceof net.minecraft.world.entity.Mob mob ? mob : null;
+                if (nmsMob != null) {
+                    // Clear all vanilla AI goals
+                    nmsMob.goalSelector.removeAllGoals(g -> true);
+                    nmsMob.targetSelector.removeAllGoals(g -> true);
+
+                    // Add headtracking goal
+                    LaserHeadTrackGoal trackGoal = new LaserHeadTrackGoal(nmsMob);
+                    trackGoal.setTarget(beam.targetPlayer.getUniqueId());
+                    nmsMob.goalSelector.addGoal(0, trackGoal);
+                    beam.headTrackGoal = trackGoal;
+
+                    // Re-enable AI so the goal ticks
+                    laserZombie.setAI(true);
+                    nmsMob.getNavigation().stop();
+                }
+            } catch (Exception e) {
+                plugin.debug("[BlueMoon] Failed to set up laser headtracking AI: " + e.getMessage());
+            }
+
+            // Apply ModelEngine laser model via reflection
+            try {
+                Class<?> meApiClass = Class.forName("com.ticxo.modelengine.api.ModelEngineAPI");
+                Method createModel = meApiClass.getMethod("createActiveModel", String.class);
+                Object activeModel = createModel.invoke(null, config.getLaserModelEngineId());
+
+                if (activeModel != null) {
+                    // Set scale before adding
+                    try {
+                        Method setScale = activeModel.getClass().getMethod("setScale", double.class);
+                        setScale.invoke(activeModel, 2.0); // Laser beam scale
+                    } catch (NoSuchMethodException ignored) {}
+
+                    Method createModeledEntity = meApiClass.getMethod("createModeledEntity", Entity.class);
+                    Object modeledEntity = createModeledEntity.invoke(null, laserZombie);
+                    if (modeledEntity != null) {
+                        Class<?> activeModelClass = Class.forName("com.ticxo.modelengine.api.model.ActiveModel");
+                        Method addModel = modeledEntity.getClass().getMethod("addModel", activeModelClass, boolean.class);
+                        addModel.invoke(modeledEntity, activeModel, true);
+                        beam.laserActiveModel = activeModel;
+                        plugin.debug("[BlueMoon] Laser ModelEngine model spawned for target " + beam.targetPlayer.getName());
+                    }
+                } else {
+                    plugin.debug("[BlueMoon] Laser model '" + config.getLaserModelEngineId() + "' not found in ModelEngine");
+                }
+            } catch (ClassNotFoundException e) {
+                plugin.debug("[BlueMoon] ModelEngine not available for laser model");
+            } catch (Exception e) {
+                plugin.debug("[BlueMoon] Failed to apply laser model: " + e.getMessage());
+            }
+        } catch (Exception e) {
+            plugin.getLogger().warning("[BlueMoon] Failed to spawn laser model entity: " + e.getMessage());
         }
     }
 
@@ -699,6 +838,10 @@ public class BlueMoonBossManager {
             beam.state = LaserBeam.State.FIRING;
             beam.fireTick = 0;
             beam.removeDisplays();
+
+            // Spawn the ModelEngine laser entity at boss location — headtracks the target
+            spawnLaserModelEntity(beam, bossLoc, world);
+
             // Burst effect on fire start
             world.spawnParticle(Particle.FLASH, bossLoc, 2, 0, 0, 0, 0);
             world.spawnParticle(Particle.END_ROD, bossLoc, 50, 2, 2, 2, 0.15);
@@ -716,6 +859,11 @@ public class BlueMoonBossManager {
         beam.fireTick++;
         Location bossLoc = bossEntity.getLocation();
         Location targetLoc = beam.targetPlayer.getLocation().add(0, 1, 0);
+
+        // Keep laser model entity at boss position (follows the boss as it orbits)
+        if (beam.laserModelEntity != null && beam.laserModelEntity.isValid()) {
+            beam.laserModelEntity.teleport(bossLoc);
+        }
 
         // Remove old displays
         beam.removeDisplays();
@@ -804,79 +952,38 @@ public class BlueMoonBossManager {
         }
 
         // ═══════════════════════════════════════════════════
-        // LAYER 4: Triple-helix particle spirals
+        // LAYER 4: Sparse single-helix particle accent (NOT blinding)
         // ═══════════════════════════════════════════════════
-        Particle.DustOptions coreBlue = new Particle.DustOptions(Color.fromRGB(100, 180, 255), 2.2f);
-        Particle.DustOptions glowCyan = new Particle.DustOptions(Color.fromRGB(0, 240, 255), 1.6f);
-        Particle.DustOptions outerWhite = new Particle.DustOptions(Color.fromRGB(200, 230, 255), 1.0f);
-
-        for (double d = 0; d < beamLen; d += 0.4) {
-            double t = d / beamLen;
-            double bx = bossLoc.getX() + (targetLoc.getX() - bossLoc.getX()) * t;
-            double by = bossLoc.getY() + (targetLoc.getY() - bossLoc.getY()) * t;
-            double bz = bossLoc.getZ() + (targetLoc.getZ() - bossLoc.getZ()) * t;
-
-            // Helix 1 — tight inner cyan spiral
-            double a1 = d * 1.2 + timeOffset * 2.5;
-            double r1 = 0.5 * pulseScale;
+        Particle.DustOptions accentCyan = new Particle.DustOptions(Color.fromRGB(0, 220, 255), 1.2f);
+        for (double d = 0; d < beamLen; d += 1.5) {
+            double a1 = d * 0.8 + timeOffset * 2.0;
+            double r1 = 0.6 * pulseScale;
+            double bx = bossLoc.getX() + norm.getX() * d;
+            double by = bossLoc.getY() + norm.getY() * d;
+            double bz = bossLoc.getZ() + norm.getZ() * d;
             world.spawnParticle(Particle.DUST,
                     bx + perp1.getX() * Math.cos(a1) * r1 + perp2.getX() * Math.sin(a1) * r1,
                     by + perp1.getY() * Math.cos(a1) * r1 + perp2.getY() * Math.sin(a1) * r1,
                     bz + perp1.getZ() * Math.cos(a1) * r1 + perp2.getZ() * Math.sin(a1) * r1,
-                    1, 0, 0, 0, 0, coreBlue);
-
-            // Helix 2 — wider counter-rotating cyan
-            double a2 = d * 1.2 - timeOffset * 2.5 + Math.PI;
-            world.spawnParticle(Particle.DUST,
-                    bx + perp1.getX() * Math.cos(a2) * r1 + perp2.getX() * Math.sin(a2) * r1,
-                    by + perp1.getY() * Math.cos(a2) * r1 + perp2.getY() * Math.sin(a2) * r1,
-                    bz + perp1.getZ() * Math.cos(a2) * r1 + perp2.getZ() * Math.sin(a2) * r1,
-                    1, 0, 0, 0, 0, glowCyan);
-
-            // Helix 3 — outer wispy white (slower, wider)
-            double a3 = d * 0.5 + timeOffset * 1.5 + Math.PI / 3;
-            double r3 = 1.1 * pulseScale;
-            world.spawnParticle(Particle.DUST,
-                    bx + perp1.getX() * Math.cos(a3) * r3 + perp2.getX() * Math.sin(a3) * r3,
-                    by + perp1.getY() * Math.cos(a3) * r3 + perp2.getY() * Math.sin(a3) * r3,
-                    bz + perp1.getZ() * Math.cos(a3) * r3 + perp2.getZ() * Math.sin(a3) * r3,
-                    1, 0, 0, 0, 0, outerWhite);
-        }
-
-        // Central core line — solid blue dust
-        for (double d = 0; d < beamLen; d += 0.3) {
-            double t = d / beamLen;
-            Location corePt = bossLoc.clone().add(norm.clone().multiply(d));
-            world.spawnParticle(Particle.DUST, corePt, 1, 0.05, 0.05, 0.05, 0,
-                    new Particle.DustOptions(Color.fromRGB(80, 160, 255), 2.5f * pulseScale));
+                    1, 0, 0, 0, 0, accentCyan);
         }
 
         // ═══════════════════════════════════════════════════
-        // LAYER 5: Impact zone at target
+        // LAYER 5: Impact zone at target — block display ring + small sparks
         // ═══════════════════════════════════════════════════
-        // Expanding impact rings at target location
-        double impactRadius = 1.5 + Math.sin(beam.fireTick * 0.4) * 0.5;
-        DisplayBuilder.particleRing(targetLoc, impactRadius, Particle.DUST, 20,
-                new Particle.DustOptions(Color.fromRGB(100, 200, 255), 2.0f));
-        DisplayBuilder.particleRing(targetLoc.clone().add(0, 0.3, 0), impactRadius * 0.6, Particle.DUST, 12,
-                new Particle.DustOptions(Color.fromRGB(200, 240, 255), 2.5f));
-
-        // Impact ground block displays — scorched cyan glass ring
-        if (beam.fireTick % 4 == 0) {
-            for (int r = 0; r < 4; r++) {
-                double ringAngle = r * (Math.PI / 2) + beam.fireTick * 0.1;
-                Location ringLoc = targetLoc.clone().add(
-                        Math.cos(ringAngle) * 1.5, -0.5, Math.sin(ringAngle) * 1.5);
-                DisplayBuilder.BlockDisplayHandle scorch = displayBuilder.spawnBlock(ringLoc, Material.LIGHT_BLUE_STAINED_GLASS);
-                scorch.scale(0.4f, 0.1f, 0.4f);
-                scorch.glow(100, 220, 255);
-                beam.displays.add(scorch.entity());
-            }
+        for (int r = 0; r < 6; r++) {
+            double ringAngle = r * (Math.PI / 3) + beam.fireTick * 0.15;
+            double impactRadius = 1.5 + Math.sin(beam.fireTick * 0.4) * 0.3;
+            Location ringLoc = targetLoc.clone().add(
+                    Math.cos(ringAngle) * impactRadius, -0.3, Math.sin(ringAngle) * impactRadius);
+            Material impactMat = (r % 2 == 0) ? Material.LIGHT_BLUE_STAINED_GLASS : Material.SEA_LANTERN;
+            DisplayBuilder.BlockDisplayHandle scorch = displayBuilder.spawnBlock(ringLoc, impactMat);
+            scorch.scale(0.35f, 0.15f, 0.35f);
+            scorch.glow(100, 220, 255);
+            beam.displays.add(scorch.entity());
         }
-
-        // Upward sparks at impact
-        world.spawnParticle(Particle.END_ROD, targetLoc, 5, 0.5, 0.8, 0.5, 0.08);
-        world.spawnParticle(Particle.ELECTRIC_SPARK, targetLoc, 3, 0.3, 0.3, 0.3, 0.05);
+        // Small spark at impact (not blinding)
+        world.spawnParticle(Particle.ELECTRIC_SPARK, targetLoc, 2, 0.3, 0.3, 0.3, 0.03);
 
         // ═══════════════════════════════════════════════════
         // LAYER 6: Boss muzzle glow — block displays at source
@@ -891,8 +998,6 @@ public class BlueMoonBossManager {
             muzzle.glow(200, 240, 255);
             beam.displays.add(muzzle.entity());
         }
-        world.spawnParticle(Particle.DUST, bossLoc, 8, 0.5, 0.5, 0.5, 0,
-                new Particle.DustOptions(Color.fromRGB(150, 220, 255), 3.0f));
 
         // ═══════════════════════════════════════════════════
         // DAMAGE + HEALING
@@ -929,7 +1034,7 @@ public class BlueMoonBossManager {
         if (beam.fireTick >= config.getSuperLaserDurationTicks()) {
             beam.state = LaserBeam.State.COOLDOWN;
             beam.cooldownTick = 0;
-            beam.removeDisplays();
+            beam.removeAll();
             // Dissipation burst
             world.spawnParticle(Particle.END_ROD, bossLoc, 30, 3, 3, 3, 0.1);
             world.spawnParticle(Particle.FLASH, targetLoc, 1, 0, 0, 0, 0);
@@ -1304,7 +1409,7 @@ public class BlueMoonBossManager {
         laserGlobalCooldown = 0;
         // Clear any existing beams
         for (LaserBeam beam : laserBeams) {
-            beam.removeDisplays();
+            beam.removeAll();
         }
         laserBeams.clear();
         if (bossEntity instanceof LivingEntity living) {
@@ -1395,9 +1500,9 @@ public class BlueMoonBossManager {
         }
         tornados.clear();
 
-        // Remove all laser block displays
+        // Remove all laser block displays + model entities
         for (LaserBeam beam : laserBeams) {
-            beam.removeDisplays();
+            beam.removeAll();
         }
         laserBeams.clear();
 
