@@ -9,6 +9,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import com.destroystokyo.paper.event.entity.EntityKnockbackByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityToggleGlideEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
@@ -156,6 +158,48 @@ public class ModeRestrictionListener implements Listener {
                 }
             }, 1L);
         }
+    }
+
+    // ========================
+    // Damage Knockback Removal
+    // ========================
+
+    /**
+     * Cancel all knockback during active modes — players still take damage and get
+     * the camera tilt, but their movement/velocity is NOT reduced on hit.
+     */
+    @EventHandler(priority = EventPriority.HIGH)
+    public void onKnockback(EntityKnockbackByEntityEvent event) {
+        if (!(event.getEntity() instanceof Player player)) return;
+
+        var manager = plugin.getModeManager();
+        if (!manager.isAnyModeActive()) return;
+        if (manager.getActiveMode().isExempt(player)) return;
+
+        event.setCancelled(true);
+    }
+
+    /**
+     * Also cancel vanilla damage-velocity (non-entity knockback like fall damage stutter).
+     * Restore velocity on next tick after any damage event.
+     */
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    public void onDamageVelocity(EntityDamageEvent event) {
+        if (!(event.getEntity() instanceof Player player)) return;
+
+        var manager = plugin.getModeManager();
+        if (!manager.isAnyModeActive()) return;
+        if (manager.getActiveMode().isExempt(player)) return;
+
+        // Capture velocity before damage is applied
+        org.bukkit.util.Vector velocity = player.getVelocity().clone();
+
+        // Restore velocity on next tick (after MC applies its damage velocity reduction)
+        plugin.getServer().getScheduler().runTaskLater(plugin, () -> {
+            if (player.isOnline() && !player.isDead()) {
+                player.setVelocity(velocity);
+            }
+        }, 1L);
     }
 
     // ========================

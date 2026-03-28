@@ -11,6 +11,7 @@ import org.bukkit.*;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.craftbukkit.entity.CraftLivingEntity;
 import org.bukkit.entity.*;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -269,6 +270,11 @@ public class BlueMoonBossManager {
 
             z.addScoreboardTag("chaoscraft_bluemoon_boss");
             z.addScoreboardTag("boss_target");
+
+            // Zero out movement speed so ME4 never triggers walk animation
+            // Boss moves exclusively via NMS setDeltaMovement() in BlueMoonFlightGoal
+            var moveSpeed = z.getAttribute(Attribute.MOVEMENT_SPEED);
+            if (moveSpeed != null) moveSpeed.setBaseValue(0);
         });
 
         // Try to apply ModelEngine model via reflection
@@ -333,7 +339,35 @@ public class BlueMoonBossManager {
             // Store reference for animation control
             this.bossActiveModel = activeModel;
 
-            // Play idle animation immediately (prevents zombie walk animation)
+            // Disable default walk animation — boss flies via NMS, never walks
+            try {
+                Object animHandler = activeModel.getClass().getMethod("getAnimationHandler").invoke(activeModel);
+                if (animHandler != null) {
+                    // Remove the "walk" default animation property so ME4 never plays it
+                    Method setDefaultProperty = null;
+                    for (Method m : animHandler.getClass().getMethods()) {
+                        if (m.getName().equals("setDefaultProperty") || m.getName().equals("removeProperty")) {
+                            setDefaultProperty = m;
+                            break;
+                        }
+                    }
+                    // Force-stop walk animation if currently playing
+                    try {
+                        Method forceStop = animHandler.getClass().getMethod("forceStopAnimation", String.class);
+                        forceStop.invoke(animHandler, "walk");
+                    } catch (NoSuchMethodException ignored) {
+                        // Try alternative: stopAnimation
+                        try {
+                            Method stop = animHandler.getClass().getMethod("stopAnimation", String.class);
+                            stop.invoke(animHandler, "walk");
+                        } catch (NoSuchMethodException ignored2) {}
+                    }
+                }
+            } catch (Exception e) {
+                plugin.debug("[BlueMoon] Could not disable walk animation: " + e.getMessage());
+            }
+
+            // Play idle animation with force override (prevents zombie walk animation)
             playBossAnimation("idle", true);
 
             plugin.getLogger().info("[BlueMoon] ModelEngine model '" + modelId + "' applied.");
@@ -582,28 +616,75 @@ public class BlueMoonBossManager {
 
     /**
      * Tick a laser beam in the CHARGING state.
-     * Particles gather toward boss from target direction with rising pitch sound.
+     * Energy gathers from environment toward boss — particles spiral inward, block displays
+     * form a growing orb at the boss, rising pitch sound, screen-shake particles.
      */
     private void tickLaserCharge(LaserBeam beam, World world) {
         beam.chargeTick++;
         Location bossLoc = bossEntity.getLocation();
         Location targetLoc = beam.targetPlayer.getLocation().add(0, 1, 0);
-
-        // Gather particles from target toward boss
         double progress = (double) beam.chargeTick / config.getSuperLaserChargeTicks();
-        Vector dir = bossLoc.toVector().subtract(targetLoc.toVector()).normalize();
-        int particleCount = (int) (5 + progress * 20);
 
-        for (int i = 0; i < particleCount; i++) {
-            double dist = random.nextDouble() * targetLoc.distance(bossLoc) * (1.0 - progress * 0.5);
-            Location particleLoc = targetLoc.clone().add(dir.clone().multiply(dist));
-            particleLoc.add(
-                    (random.nextDouble() - 0.5) * 2.0,
-                    (random.nextDouble() - 0.5) * 2.0,
-                    (random.nextDouble() - 0.5) * 2.0
+        // ── Spiral inward particles: energy converges on boss ──
+        int spiralCount = (int) (8 + progress * 30);
+        double maxGatherDist = targetLoc.distance(bossLoc) * (1.0 - progress * 0.4);
+        for (int i = 0; i < spiralCount; i++) {
+            double angle = random.nextDouble() * Math.PI * 2;
+            double dist = random.nextDouble() * maxGatherDist;
+            double spiralRadius = (1.0 - progress) * 3.0 + 0.3;
+            Location particleLoc = bossLoc.clone().add(
+                    Math.cos(angle) * spiralRadius + (random.nextDouble() - 0.5) * dist * 0.3,
+                    (random.nextDouble() - 0.5) * spiralRadius,
+                    Math.sin(angle) * spiralRadius + (random.nextDouble() - 0.5) * dist * 0.3
             );
+            // Transition from white → cyan → blue as charge progresses
+            int r = (int) (200 - progress * 150);
+            int g = (int) (220 - progress * 40);
+            int b = 255;
+            float size = 0.8f + (float) (progress * 1.5);
             world.spawnParticle(Particle.DUST, particleLoc, 1, 0, 0, 0, 0,
-                    new Particle.DustOptions(Color.fromRGB(100, 180, 255), 1.5f));
+                    new Particle.DustOptions(Color.fromRGB(r, g, b), size));
+        }
+
+        // ── Charging orb at boss: block displays grow in size ──
+        beam.removeDisplays();
+        if (progress > 0.2) {
+            float orbScale = (float) ((progress - 0.2) * 2.5);
+            // Core orb — SEA_LANTERN (glowing)
+            DisplayBuilder.BlockDisplayHandle core = displayBuilder.spawnBlock(bossLoc, Material.SEA_LANTERN);
+            core.scale(orbScale * 0.5f, orbScale * 0.5f, orbScale * 0.5f);
+            core.glow(100, 200, 255);
+            beam.displays.add(core.entity());
+            // Outer shell — BLUE_ICE (translucent feel)
+            for (int s = 0; s < 4; s++) {
+                double a = (world.getGameTime() * 0.15) + s * (Math.PI / 2);
+                Location shellLoc = bossLoc.clone().add(
+                        Math.cos(a) * orbScale * 0.4, 0, Math.sin(a) * orbScale * 0.4);
+                DisplayBuilder.BlockDisplayHandle shell = displayBuilder.spawnBlock(shellLoc, Material.BLUE_ICE);
+                shell.scale(orbScale * 0.3f, orbScale * 0.3f, orbScale * 0.3f);
+                shell.glow(50, 150, 255);
+                beam.displays.add(shell.entity());
+            }
+        }
+
+        // ── END_ROD particles at boss (energy gathering sparkle) ──
+        if (beam.chargeTick % 3 == 0) {
+            world.spawnParticle(Particle.END_ROD, bossLoc, (int) (3 + progress * 12),
+                    1.5 - progress, 1.5 - progress, 1.5 - progress, 0.02);
+        }
+
+        // ── Warning line from boss to target (faint, growing) ──
+        if (progress > 0.4) {
+            Vector dir = targetLoc.toVector().subtract(bossLoc.toVector());
+            double len = dir.length();
+            Vector norm = dir.normalize();
+            float lineAlpha = (float) ((progress - 0.4) * 1.5);
+            Particle.DustOptions warningDust = new Particle.DustOptions(
+                    Color.fromRGB(255, 80, 80), Math.min(1.5f, lineAlpha * 2));
+            for (double d = 0; d < len; d += 2.0) {
+                Location linePt = bossLoc.clone().add(norm.clone().multiply(d));
+                world.spawnParticle(Particle.DUST, linePt, 1, 0.1, 0.1, 0.1, 0, warningDust);
+            }
         }
 
         // Rising pitch sound every 10 ticks
@@ -617,6 +698,10 @@ public class BlueMoonBossManager {
         if (beam.chargeTick >= config.getSuperLaserChargeTicks()) {
             beam.state = LaserBeam.State.FIRING;
             beam.fireTick = 0;
+            beam.removeDisplays();
+            // Burst effect on fire start
+            world.spawnParticle(Particle.FLASH, bossLoc, 2, 0, 0, 0, 0);
+            world.spawnParticle(Particle.END_ROD, bossLoc, 50, 2, 2, 2, 0.15);
             world.playSound(bossLoc, config.getSuperLaserFireSound(), SoundCategory.HOSTILE,
                     config.getSuperLaserFireSoundVolume(), config.getSuperLaserFireSoundPitch());
         }
@@ -624,7 +709,8 @@ public class BlueMoonBossManager {
 
     /**
      * Tick a laser beam in the FIRING state.
-     * Particle line + block displays along beam, damage within hit radius.
+     * Multi-layered beam: core block displays, outer shell block displays, dual-helix particles,
+     * item displays orbiting the beam, impact explosion at target, ground scorch marks.
      */
     private void tickLaserFire(LaserBeam beam, World world) {
         beam.fireTick++;
@@ -634,24 +720,12 @@ public class BlueMoonBossManager {
         // Remove old displays
         beam.removeDisplays();
 
-        // Spawn block displays along beam line
         Vector beamDir = targetLoc.toVector().subtract(bossLoc.toVector());
         double beamLen = beamDir.length();
         if (beamLen < 0.5) beamLen = 0.5;
         Vector norm = beamDir.normalize();
-        int displayCount = Math.min(30, (int) (beamLen / 1.5));
 
-        for (int i = 0; i < displayCount; i++) {
-            double t = (double) i / displayCount;
-            Location blockLoc = bossLoc.clone().add(norm.clone().multiply(t * beamLen));
-            Material mat = (i % 2 == 0) ? Material.BLUE_ICE : Material.PACKED_ICE;
-            DisplayBuilder.BlockDisplayHandle handle = displayBuilder.spawnBlock(blockLoc, mat);
-            handle.scale(0.6f, 0.6f, 0.6f);
-            handle.glow(80, 160, 255);
-            beam.displays.add(handle.entity());
-        }
-
-        // Particle line (dual spiral like Seer pattern)
+        // Perpendicular vectors for spiral/ring placement
         Vector perp1 = norm.clone().crossProduct(new Vector(0, 1, 0)).normalize();
         Vector perp2 = norm.clone().crossProduct(perp1).normalize();
         if (perp1.lengthSquared() < 0.01) {
@@ -659,50 +733,182 @@ public class BlueMoonBossManager {
             perp2 = new Vector(0, 0, 1);
         }
 
-        Particle.DustOptions blue = new Particle.DustOptions(Color.fromRGB(80, 160, 255), 2.0f);
-        Particle.DustOptions cyan = new Particle.DustOptions(Color.fromRGB(0, 220, 255), 1.5f);
-        double timeOffset = world.getGameTime() * 0.2;
+        double timeOffset = world.getGameTime() * 0.25;
+        float pulseScale = 1.0f + (float) Math.sin(beam.fireTick * 0.3) * 0.15f; // breathing effect
 
-        for (double d = 0; d < beamLen; d += 0.5) {
+        // ═══════════════════════════════════════════════════
+        // LAYER 1: Inner core — SEA_LANTERN block displays (bright white-blue)
+        // ═══════════════════════════════════════════════════
+        int coreCount = Math.min(40, (int) (beamLen / 1.0));
+        for (int i = 0; i < coreCount; i++) {
+            double t = (double) i / coreCount;
+            Location blockLoc = bossLoc.clone().add(norm.clone().multiply(t * beamLen));
+            DisplayBuilder.BlockDisplayHandle core = displayBuilder.spawnBlock(blockLoc, Material.SEA_LANTERN);
+            float coreScale = 0.35f * pulseScale;
+            core.scale(coreScale, coreScale, coreScale);
+            core.glow(150, 220, 255);
+            beam.displays.add(core.entity());
+        }
+
+        // ═══════════════════════════════════════════════════
+        // LAYER 2: Outer shell — BLUE_ICE + PRISMARINE rotating around the core
+        // ═══════════════════════════════════════════════════
+        int shellCount = Math.min(25, (int) (beamLen / 1.8));
+        Material[] shellMats = { Material.BLUE_ICE, Material.PRISMARINE, Material.PACKED_ICE, Material.BLUE_STAINED_GLASS };
+        for (int i = 0; i < shellCount; i++) {
+            double t = (double) i / shellCount;
+            double dist = t * beamLen;
+            Location center = bossLoc.clone().add(norm.clone().multiply(dist));
+
+            // 2 rotating shell pieces per segment
+            for (int j = 0; j < 2; j++) {
+                double angle = dist * 0.6 + timeOffset * 2.0 + j * Math.PI;
+                double shellRadius = 0.7 * pulseScale;
+                Location shellLoc = center.clone().add(
+                        perp1.clone().multiply(Math.cos(angle) * shellRadius)
+                                .add(perp2.clone().multiply(Math.sin(angle) * shellRadius)));
+                Material mat = shellMats[(i + j) % shellMats.length];
+                DisplayBuilder.BlockDisplayHandle shell = displayBuilder.spawnBlock(shellLoc, mat);
+                float shellScale = 0.25f * pulseScale;
+                shell.scale(shellScale, shellScale, shellScale);
+                shell.glow(60, 160, 255);
+                beam.displays.add(shell.entity());
+            }
+        }
+
+        // ═══════════════════════════════════════════════════
+        // LAYER 3: Item displays — PRISMARINE_CRYSTALS + HEART_OF_THE_SEA orbiting beam
+        // ═══════════════════════════════════════════════════
+        int itemCount = Math.min(12, (int) (beamLen / 3.0));
+        ItemStack[] orbitItems = {
+                new ItemStack(Material.PRISMARINE_CRYSTALS),
+                new ItemStack(Material.HEART_OF_THE_SEA),
+                new ItemStack(Material.PRISMARINE_SHARD),
+                new ItemStack(Material.DIAMOND)
+        };
+        for (int i = 0; i < itemCount; i++) {
+            double t = ((double) i / itemCount + beam.fireTick * 0.008) % 1.0;
+            double dist = t * beamLen;
+            Location center = bossLoc.clone().add(norm.clone().multiply(dist));
+
+            double angle = dist * 0.4 + timeOffset * 3.0 + i * (Math.PI * 2 / itemCount);
+            double orbitRadius = 1.2 + Math.sin(beam.fireTick * 0.15 + i) * 0.3;
+            Location itemLoc = center.clone().add(
+                    perp1.clone().multiply(Math.cos(angle) * orbitRadius)
+                            .add(perp2.clone().multiply(Math.sin(angle) * orbitRadius)));
+
+            DisplayBuilder.ItemDisplayHandle item = displayBuilder.spawnItem(itemLoc, orbitItems[i % orbitItems.length]);
+            item.scale(0.6f, 0.6f, 0.6f);
+            item.glow(80, 200, 255);
+            beam.displays.add(item.entity());
+        }
+
+        // ═══════════════════════════════════════════════════
+        // LAYER 4: Triple-helix particle spirals
+        // ═══════════════════════════════════════════════════
+        Particle.DustOptions coreBlue = new Particle.DustOptions(Color.fromRGB(100, 180, 255), 2.2f);
+        Particle.DustOptions glowCyan = new Particle.DustOptions(Color.fromRGB(0, 240, 255), 1.6f);
+        Particle.DustOptions outerWhite = new Particle.DustOptions(Color.fromRGB(200, 230, 255), 1.0f);
+
+        for (double d = 0; d < beamLen; d += 0.4) {
             double t = d / beamLen;
             double bx = bossLoc.getX() + (targetLoc.getX() - bossLoc.getX()) * t;
             double by = bossLoc.getY() + (targetLoc.getY() - bossLoc.getY()) * t;
             double bz = bossLoc.getZ() + (targetLoc.getZ() - bossLoc.getZ()) * t;
 
-            double angle1 = d * 0.8 + timeOffset;
-            double radius = 0.8;
-            double sx = bx + perp1.getX() * Math.cos(angle1) * radius + perp2.getX() * Math.sin(angle1) * radius;
-            double sy = by + perp1.getY() * Math.cos(angle1) * radius + perp2.getY() * Math.sin(angle1) * radius;
-            double sz = bz + perp1.getZ() * Math.cos(angle1) * radius + perp2.getZ() * Math.sin(angle1) * radius;
-            world.spawnParticle(Particle.DUST, sx, sy, sz, 1, 0, 0, 0, 0, blue);
+            // Helix 1 — tight inner cyan spiral
+            double a1 = d * 1.2 + timeOffset * 2.5;
+            double r1 = 0.5 * pulseScale;
+            world.spawnParticle(Particle.DUST,
+                    bx + perp1.getX() * Math.cos(a1) * r1 + perp2.getX() * Math.sin(a1) * r1,
+                    by + perp1.getY() * Math.cos(a1) * r1 + perp2.getY() * Math.sin(a1) * r1,
+                    bz + perp1.getZ() * Math.cos(a1) * r1 + perp2.getZ() * Math.sin(a1) * r1,
+                    1, 0, 0, 0, 0, coreBlue);
 
-            double angle2 = d * 0.8 - timeOffset + Math.PI;
-            sx = bx + perp1.getX() * Math.cos(angle2) * radius + perp2.getX() * Math.sin(angle2) * radius;
-            sy = by + perp1.getY() * Math.cos(angle2) * radius + perp2.getY() * Math.sin(angle2) * radius;
-            sz = bz + perp1.getZ() * Math.cos(angle2) * radius + perp2.getZ() * Math.sin(angle2) * radius;
-            world.spawnParticle(Particle.DUST, sx, sy, sz, 1, 0, 0, 0, 0, cyan);
+            // Helix 2 — wider counter-rotating cyan
+            double a2 = d * 1.2 - timeOffset * 2.5 + Math.PI;
+            world.spawnParticle(Particle.DUST,
+                    bx + perp1.getX() * Math.cos(a2) * r1 + perp2.getX() * Math.sin(a2) * r1,
+                    by + perp1.getY() * Math.cos(a2) * r1 + perp2.getY() * Math.sin(a2) * r1,
+                    bz + perp1.getZ() * Math.cos(a2) * r1 + perp2.getZ() * Math.sin(a2) * r1,
+                    1, 0, 0, 0, 0, glowCyan);
+
+            // Helix 3 — outer wispy white (slower, wider)
+            double a3 = d * 0.5 + timeOffset * 1.5 + Math.PI / 3;
+            double r3 = 1.1 * pulseScale;
+            world.spawnParticle(Particle.DUST,
+                    bx + perp1.getX() * Math.cos(a3) * r3 + perp2.getX() * Math.sin(a3) * r3,
+                    by + perp1.getY() * Math.cos(a3) * r3 + perp2.getY() * Math.sin(a3) * r3,
+                    bz + perp1.getZ() * Math.cos(a3) * r3 + perp2.getZ() * Math.sin(a3) * r3,
+                    1, 0, 0, 0, 0, outerWhite);
         }
 
-        // Impact glow at target
-        world.spawnParticle(Particle.DUST, targetLoc, 8, 0.4, 0.4, 0.4, 0.01,
-                new Particle.DustOptions(Color.fromRGB(100, 200, 255), 2.5f));
+        // Central core line — solid blue dust
+        for (double d = 0; d < beamLen; d += 0.3) {
+            double t = d / beamLen;
+            Location corePt = bossLoc.clone().add(norm.clone().multiply(d));
+            world.spawnParticle(Particle.DUST, corePt, 1, 0.05, 0.05, 0.05, 0,
+                    new Particle.DustOptions(Color.fromRGB(80, 160, 255), 2.5f * pulseScale));
+        }
 
-        // Damage players within beam-hit-radius along the beam
+        // ═══════════════════════════════════════════════════
+        // LAYER 5: Impact zone at target
+        // ═══════════════════════════════════════════════════
+        // Expanding impact rings at target location
+        double impactRadius = 1.5 + Math.sin(beam.fireTick * 0.4) * 0.5;
+        DisplayBuilder.particleRing(targetLoc, impactRadius, Particle.DUST, 20,
+                new Particle.DustOptions(Color.fromRGB(100, 200, 255), 2.0f));
+        DisplayBuilder.particleRing(targetLoc.clone().add(0, 0.3, 0), impactRadius * 0.6, Particle.DUST, 12,
+                new Particle.DustOptions(Color.fromRGB(200, 240, 255), 2.5f));
+
+        // Impact ground block displays — scorched cyan glass ring
+        if (beam.fireTick % 4 == 0) {
+            for (int r = 0; r < 4; r++) {
+                double ringAngle = r * (Math.PI / 2) + beam.fireTick * 0.1;
+                Location ringLoc = targetLoc.clone().add(
+                        Math.cos(ringAngle) * 1.5, -0.5, Math.sin(ringAngle) * 1.5);
+                DisplayBuilder.BlockDisplayHandle scorch = displayBuilder.spawnBlock(ringLoc, Material.LIGHT_BLUE_STAINED_GLASS);
+                scorch.scale(0.4f, 0.1f, 0.4f);
+                scorch.glow(100, 220, 255);
+                beam.displays.add(scorch.entity());
+            }
+        }
+
+        // Upward sparks at impact
+        world.spawnParticle(Particle.END_ROD, targetLoc, 5, 0.5, 0.8, 0.5, 0.08);
+        world.spawnParticle(Particle.ELECTRIC_SPARK, targetLoc, 3, 0.3, 0.3, 0.3, 0.05);
+
+        // ═══════════════════════════════════════════════════
+        // LAYER 6: Boss muzzle glow — block displays at source
+        // ═══════════════════════════════════════════════════
+        for (int m = 0; m < 3; m++) {
+            double mAngle = beam.fireTick * 0.3 + m * (Math.PI * 2 / 3);
+            Location muzzleLoc = bossLoc.clone().add(
+                    perp1.clone().multiply(Math.cos(mAngle) * 0.8)
+                            .add(perp2.clone().multiply(Math.sin(mAngle) * 0.8)));
+            DisplayBuilder.BlockDisplayHandle muzzle = displayBuilder.spawnBlock(muzzleLoc, Material.SEA_LANTERN);
+            muzzle.scale(0.3f * pulseScale, 0.3f * pulseScale, 0.3f * pulseScale);
+            muzzle.glow(200, 240, 255);
+            beam.displays.add(muzzle.entity());
+        }
+        world.spawnParticle(Particle.DUST, bossLoc, 8, 0.5, 0.5, 0.5, 0,
+                new Particle.DustOptions(Color.fromRGB(150, 220, 255), 3.0f));
+
+        // ═══════════════════════════════════════════════════
+        // DAMAGE + HEALING
+        // ═══════════════════════════════════════════════════
         beam.damageIntervalCounter++;
         if (beam.damageIntervalCounter >= config.getSuperLaserDamageInterval()) {
             beam.damageIntervalCounter = 0;
             double hitRadius = config.getSuperLaserBeamHitRadius();
-            double hitRadiusSq = hitRadius * hitRadius;
             double damage = config.getSuperLaserDamage() * config.getSuperLaserBeamMultiplier();
 
             for (Player p : world.getPlayers()) {
                 if (p.getGameMode() != GameMode.SURVIVAL || p.isInvulnerable()) continue;
                 Location pLoc = p.getLocation().add(0, 1, 0);
 
-                // Check distance from player to beam line
                 double distToBeam = distancePointToLine(pLoc.toVector(), bossLoc.toVector(), targetLoc.toVector());
                 if (distToBeam <= hitRadius) {
-                    // Also check player is between boss and target (not behind)
                     double projLen = projectOntoLine(pLoc.toVector(), bossLoc.toVector(), targetLoc.toVector());
                     if (projLen >= -1.0 && projLen <= beamLen + 1.0) {
                         p.damage(damage);
@@ -713,7 +919,7 @@ public class BlueMoonBossManager {
             // Laser heals boss if configured
             if (config.isLaserHealEnabled() && bossEntity instanceof LivingEntity living) {
                 double healAmount = config.getLaserHealPerTick();
-                var maxHpAttr = living.getAttribute(org.bukkit.attribute.Attribute.MAX_HEALTH);
+                var maxHpAttr = living.getAttribute(Attribute.MAX_HEALTH);
                 double maxHp = maxHpAttr != null ? maxHpAttr.getBaseValue() : config.getBossHealth();
                 living.setHealth(Math.min(maxHp, living.getHealth() + healAmount));
             }
@@ -724,6 +930,9 @@ public class BlueMoonBossManager {
             beam.state = LaserBeam.State.COOLDOWN;
             beam.cooldownTick = 0;
             beam.removeDisplays();
+            // Dissipation burst
+            world.spawnParticle(Particle.END_ROD, bossLoc, 30, 3, 3, 3, 0.1);
+            world.spawnParticle(Particle.FLASH, targetLoc, 1, 0, 0, 0, 0);
             world.playSound(bossLoc, config.getSuperLaserEndSound(), SoundCategory.HOSTILE,
                     config.getSuperLaserEndSoundVolume(), config.getSuperLaserEndSoundPitch());
         }
@@ -934,6 +1143,8 @@ public class BlueMoonBossManager {
         // Spawn at boss location targeting nearest cluster player
         Location spawnLoc = bossEntity.getLocation();
         Player target = findNearestSurvivalPlayer(world);
+        plugin.debug("[BlueMoon] Boss attack spawning: " + chosen.getId() + " at " + formatLoc(spawnLoc)
+                + (target != null ? " targeting " + target.getName() : " (no target)"));
         chosen.spawn(spawnLoc, target);
     }
 

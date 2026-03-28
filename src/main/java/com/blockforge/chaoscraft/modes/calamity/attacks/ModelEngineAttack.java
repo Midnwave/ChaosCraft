@@ -157,60 +157,41 @@ public abstract class ModelEngineAttack extends AbstractAttack {
                 return false;
             }
 
-            // ModelEngineAPI.getModeledEntity(entity) or create one
-            // ModeledEntity = the entity wrapper that holds ActiveModels
+            // Apply scale BEFORE adding model to entity (matches working Seer implementation)
+            double scale = getModelScale();
+            if (scale != 1.0) {
+                try {
+                    Method setScale = activeModel.getClass().getMethod("setScale", double.class);
+                    setScale.invoke(activeModel, scale);
+                    plugin.debug("[ModelEngine] Set scale " + scale + " on ActiveModel for " + getModelId());
+                } catch (NoSuchMethodException e1) {
+                    try {
+                        Method setScale = activeModel.getClass().getMethod("setScale", float.class);
+                        setScale.invoke(activeModel, (float) scale);
+                        plugin.debug("[ModelEngine] Set scale (float) " + scale + " on ActiveModel for " + getModelId());
+                    } catch (NoSuchMethodException e2) {
+                        // Fallback: Bukkit SCALE attribute after model is added
+                        plugin.debug("[ModelEngine] No setScale method on ActiveModel, will try Bukkit attribute");
+                    }
+                }
+            }
+
+            // Create ModeledEntity and add the ActiveModel
             Class<?> meApiClass = Class.forName("com.ticxo.modelengine.api.ModelEngineAPI");
             Method createModeledEntity = meApiClass.getMethod("createModeledEntity", Entity.class);
             Object modeledEntity = createModeledEntity.invoke(null, modelHost);
 
             if (modeledEntity != null) {
-                // modeledEntity.addModel(activeModel, true)
                 Method addModel = modeledEntity.getClass().getMethod("addModel",
                         Class.forName("com.ticxo.modelengine.api.model.ActiveModel"), boolean.class);
                 addModel.invoke(modeledEntity, activeModel, true);
 
-                // Apply scale AFTER model is added to entity
-                double scale = getModelScale();
-                if (scale != 1.0) {
-                    try {
-                        // Try ME4 R4 setScale on ModeledEntity (float)
-                        Method setScale = modeledEntity.getClass().getMethod("setScale", float.class);
-                        setScale.invoke(modeledEntity, (float) scale);
-                        plugin.debug("[ModelEngine] Set scale " + scale + " on " + getModelId());
-                    } catch (NoSuchMethodException e1) {
-                        try {
-                            // Try setScale(double) on ModeledEntity
-                            Method setScale = modeledEntity.getClass().getMethod("setScale", double.class);
-                            setScale.invoke(modeledEntity, scale);
-                            plugin.debug("[ModelEngine] Set scale (double) " + scale + " on " + getModelId());
-                        } catch (NoSuchMethodException e2) {
-                            try {
-                                // Try on ActiveModel instead
-                                Method setScale = activeModel.getClass().getMethod("setScale", double.class);
-                                setScale.invoke(activeModel, scale);
-                                plugin.debug("[ModelEngine] Set scale on ActiveModel " + scale + " for " + getModelId());
-                            } catch (NoSuchMethodException e3) {
-                                try {
-                                    // Try setScale(float) on ActiveModel
-                                    Method setScale = activeModel.getClass().getMethod("setScale", float.class);
-                                    setScale.invoke(activeModel, (float) scale);
-                                    plugin.debug("[ModelEngine] Set scale (float) on ActiveModel " + scale + " for " + getModelId());
-                                } catch (NoSuchMethodException e4) {
-                                    // Last resort: try getBase().setScale via Bukkit attribute
-                                    try {
-                                        if (modelHost instanceof org.bukkit.entity.LivingEntity living) {
-                                            var scaleAttr = living.getAttribute(org.bukkit.attribute.Attribute.SCALE);
-                                            if (scaleAttr != null) {
-                                                scaleAttr.setBaseValue(scale);
-                                                plugin.debug("[ModelEngine] Set SCALE attribute " + scale + " on " + getModelId());
-                                            }
-                                        }
-                                    } catch (Exception e5) {
-                                        plugin.debug("[ModelEngine] No scale method found for " + getModelId());
-                                    }
-                                }
-                            }
-                        }
+                // If ActiveModel setScale wasn't available, try Bukkit attribute as last resort
+                if (scale != 1.0 && modelHost instanceof org.bukkit.entity.LivingEntity living) {
+                    var scaleAttr = living.getAttribute(org.bukkit.attribute.Attribute.SCALE);
+                    if (scaleAttr != null && scaleAttr.getBaseValue() == 1.0) {
+                        scaleAttr.setBaseValue(scale);
+                        plugin.debug("[ModelEngine] Set SCALE attribute " + scale + " on " + getModelId());
                     }
                 }
             }
