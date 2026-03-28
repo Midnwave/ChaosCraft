@@ -13,6 +13,10 @@ import org.bukkit.craftbukkit.entity.CraftLivingEntity;
 import org.bukkit.entity.*;
 import org.bukkit.util.Vector;
 
+import net.kyori.adventure.text.format.NamedTextColor;
+import org.bukkit.scoreboard.Scoreboard;
+import org.bukkit.scoreboard.Team;
+
 import java.lang.reflect.Method;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
@@ -61,6 +65,9 @@ public class BlueMoonBossManager {
 
     // ── Early kill callback ──
     private Runnable earlyKillCallback;
+
+    // ── Glow team for aqua invincibility effect ──
+    private Team bossGlowTeam;
 
     // ── Tornado block materials ──
     private static final Material[] TORNADO_MATERIALS = {
@@ -504,9 +511,12 @@ public class BlueMoonBossManager {
             return;
         }
 
-        // Boss is INVINCIBLE while any beam is active
+        // Boss is INVINCIBLE while any beam is active — aqua glow effect
         if (bossEntity instanceof LivingEntity living) {
             living.setInvulnerable(true);
+            if (!bossEntity.isGlowing()) {
+                setBossGlowing(true);
+            }
         }
 
         // Tick each beam
@@ -536,10 +546,11 @@ public class BlueMoonBossManager {
             }
         }
 
-        // Restore vulnerability when all beams done
+        // Restore vulnerability when all beams done — remove glow
         if (laserBeams.isEmpty()) {
             if (bossEntity instanceof LivingEntity living) {
                 living.setInvulnerable(false);
+                setBossGlowing(false);
             }
         }
     }
@@ -1088,6 +1099,7 @@ public class BlueMoonBossManager {
         if (bossEntity instanceof LivingEntity living) {
             living.setInvulnerable(false);
         }
+        setBossGlowing(false);
         startLaserBarrage(world);
     }
 
@@ -1181,15 +1193,42 @@ public class BlueMoonBossManager {
         // Remove display builder tracked entities
         displayBuilder.removeAll();
 
-        // Restore invulnerability state
+        // Restore invulnerability state + remove glow
         if (bossEntity instanceof LivingEntity living) {
             living.setInvulnerable(false);
         }
+        setBossGlowing(false);
     }
 
     // ========================================================================
     // Utility Methods
     // ========================================================================
+
+    /**
+     * Toggle the aqua glow effect on the boss entity.
+     * Uses a scoreboard team with AQUA color to render the glow as aqua.
+     */
+    private void setBossGlowing(boolean glowing) {
+        if (bossEntity == null) return;
+
+        bossEntity.setGlowing(glowing);
+
+        if (glowing) {
+            // Create/get the glow team with AQUA color
+            Scoreboard scoreboard = Bukkit.getScoreboardManager().getMainScoreboard();
+            bossGlowTeam = scoreboard.getTeam("cc_boss_glow");
+            if (bossGlowTeam == null) {
+                bossGlowTeam = scoreboard.registerNewTeam("cc_boss_glow");
+            }
+            bossGlowTeam.color(NamedTextColor.AQUA);
+            bossGlowTeam.addEntity(bossEntity);
+        } else {
+            // Remove from team
+            if (bossGlowTeam != null) {
+                bossGlowTeam.removeEntity(bossEntity);
+            }
+        }
+    }
 
     /**
      * Find the center of the largest player cluster in the world.

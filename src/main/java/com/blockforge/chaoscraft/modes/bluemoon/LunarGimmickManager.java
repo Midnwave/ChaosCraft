@@ -1059,7 +1059,7 @@ public class LunarGimmickManager {
             for (Player other : survivors) {
                 if (other.equals(entry.getKey())) continue;
                 if (other.getLocation().distance(entry.getValue()) <= 1.5) {
-                    other.damage(2.0); // 1 heart
+                    // Removed: gimmick damage disabled
                 }
             }
         }
@@ -1477,10 +1477,7 @@ public class LunarGimmickManager {
                             new Particle.DustOptions(Color.fromRGB(180, 220, 255), 0.9f));
                 }
 
-                // 1 damage/sec (every 20 ticks)
-                if (totalTicks % 20 == 0) {
-                    tethered.damage(2.0); // 1 heart
-                }
+                // Removed: gimmick damage disabled
             }
 
             if (tetherTimer <= 0) {
