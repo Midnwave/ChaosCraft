@@ -120,7 +120,7 @@ public class BlueMoonScheduler {
         // Fallback chain if none available for selected type
         if (attack == null) {
             for (AttackType fallback : AttackType.values()) {
-                if (fallback != type && fallback != AttackType.BOSS) {
+                if (fallback != type) {
                     attack = registry.selectRandom(1, fallback);
                     if (attack != null) break;
                 }

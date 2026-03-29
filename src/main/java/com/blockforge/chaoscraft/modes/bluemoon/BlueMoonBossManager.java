@@ -287,8 +287,7 @@ public class BlueMoonBossManager {
             z.setRemoveWhenFarAway(false);
             z.setShouldBurnInDay(false);
             z.setBaby(false);
-            z.customName(net.kyori.adventure.text.Component.text("Blue Moon")
-                    .color(net.kyori.adventure.text.format.TextColor.color(0x5599FF)));
+            z.customName(null);
             z.setCustomNameVisible(false);
 
             z.addScoreboardTag("chaoscraft_bluemoon_boss");
@@ -474,9 +473,11 @@ public class BlueMoonBossManager {
         living.setMaximumNoDamageTicks(0);
         living.setNoDamageTicks(0);
 
-        // Scale hitbox to match ModelEngine model (bigger = easier to hit)
-        var scale = living.getAttribute(Attribute.SCALE);
-        if (scale != null) scale.setBaseValue(3.0); // 3x zombie size hitbox
+        // Log actual damage values for debugging
+        plugin.debug("[BlueMoon] Boss attributes — HP: " + config.getBossHealth()
+                + " Armor: " + config.getBossArmor()
+                + " Toughness: " + config.getBossArmorToughness()
+                + " NoDamageTicks: " + living.getMaximumNoDamageTicks());
     }
 
     // ========================================================================

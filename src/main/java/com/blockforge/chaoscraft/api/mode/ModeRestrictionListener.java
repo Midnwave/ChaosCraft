@@ -219,8 +219,13 @@ public class ModeRestrictionListener implements Listener {
         if (!(manager.getActiveMode() instanceof com.blockforge.chaoscraft.modes.bluemoon.BlueMoonMode blueMoon)) return;
 
         Entity entity = event.getEntity();
-        if (entity.getScoreboardTags().contains("chaoscraft_bluemoon_boss") && entity.isGlowing()) {
-            event.setCancelled(true);
+        if (entity.getScoreboardTags().contains("chaoscraft_bluemoon_boss")) {
+            if (entity.isGlowing()) {
+                event.setCancelled(true);
+                plugin.debug("[BlueMoon] Boss damage BLOCKED (glowing/invincible) — " + event.getDamage());
+            } else {
+                plugin.debug("[BlueMoon] Boss damage ALLOWED — " + event.getDamage() + " from " + event.getCause());
+            }
         }
     }
 
