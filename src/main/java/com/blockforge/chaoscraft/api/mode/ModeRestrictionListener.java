@@ -5,6 +5,7 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -180,8 +181,9 @@ public class ModeRestrictionListener implements Listener {
     }
 
     /**
-     * Also cancel vanilla damage-velocity (non-entity knockback like fall damage stutter).
-     * Restore velocity on next tick after any damage event.
+     * Remove damage cooldown + velocity reduction during active modes.
+     * - Sets noDamageTicks to 0 so players can take rapid damage
+     * - Restores velocity on next tick to prevent movement slowdown on hit
      */
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onDamageVelocity(EntityDamageEvent event) {
@@ -191,6 +193,10 @@ public class ModeRestrictionListener implements Listener {
         if (!manager.isAnyModeActive()) return;
         if (manager.getActiveMode().isExempt(player)) return;
 
+        // Remove damage immunity frames — allow rapid damage during modes
+        player.setMaximumNoDamageTicks(0);
+        player.setNoDamageTicks(0);
+
         // Capture velocity before damage is applied
         org.bukkit.util.Vector velocity = player.getVelocity().clone();
 
@@ -198,8 +204,24 @@ public class ModeRestrictionListener implements Listener {
         plugin.getServer().getScheduler().runTaskLater(plugin, () -> {
             if (player.isOnline() && !player.isDead()) {
                 player.setVelocity(velocity);
+                player.setNoDamageTicks(0);
             }
         }, 1L);
+    }
+
+    /**
+     * Cancel damage to the Blue Moon boss when it's glowing (invincible during laser).
+     */
+    @EventHandler(priority = EventPriority.HIGH)
+    public void onBossDamage(EntityDamageEvent event) {
+        var manager = plugin.getModeManager();
+        if (!manager.isAnyModeActive()) return;
+        if (!(manager.getActiveMode() instanceof com.blockforge.chaoscraft.modes.bluemoon.BlueMoonMode blueMoon)) return;
+
+        Entity entity = event.getEntity();
+        if (entity.getScoreboardTags().contains("chaoscraft_bluemoon_boss") && entity.isGlowing()) {
+            event.setCancelled(true);
+        }
     }
 
     // ========================
@@ -224,6 +246,11 @@ public class ModeRestrictionListener implements Listener {
         }
         spectatingPlayers.clear();
         savedLocations.clear();
+
+        // Restore default noDamageTicks for all online players
+        for (Player player : plugin.getServer().getOnlinePlayers()) {
+            player.setMaximumNoDamageTicks(20); // Vanilla default
+        }
     }
 
     public boolean isSpectating(UUID uuid) {

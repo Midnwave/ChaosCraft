@@ -587,11 +587,9 @@ public class BlueMoonBossManager {
     private void tickLaserBeams(World world) {
         if (!config.getSuperLaserEnabled()) return;
 
-        // If no beams active, restore vulnerability and count down cooldown
+        // If no beams active, remove glow and count down cooldown
         if (laserBeams.isEmpty()) {
-            // Ensure invincibility is OFF when no beams exist
-            if (bossEntity instanceof LivingEntity living && living.isInvulnerable()) {
-                living.setInvulnerable(false);
+            if (bossEntity != null && bossEntity.isGlowing()) {
                 setBossGlowing(false);
                 plugin.debug("[BlueMoon] Laser ended — boss vulnerable again");
             }
@@ -604,12 +602,10 @@ public class BlueMoonBossManager {
             return;
         }
 
-        // Boss is INVINCIBLE while any beam is active — aqua glow effect
-        if (bossEntity instanceof LivingEntity living) {
-            living.setInvulnerable(true);
-            if (!bossEntity.isGlowing()) {
-                setBossGlowing(true);
-            }
+        // Boss GLOWS aqua while any beam is active — invincibility is derived from glow state
+        // (checked via isBossInvincible() in damage handler)
+        if (bossEntity != null && !bossEntity.isGlowing()) {
+            setBossGlowing(true);
         }
 
         // Tick each beam
@@ -860,9 +856,13 @@ public class BlueMoonBossManager {
         Location bossLoc = bossEntity.getLocation();
         Location targetLoc = beam.targetPlayer.getLocation().add(0, 1, 0);
 
-        // Keep laser model entity at boss position (follows the boss as it orbits)
+        // Keep laser model entity at boss position — preserve headtracking rotation
         if (beam.laserModelEntity != null && beam.laserModelEntity.isValid()) {
-            beam.laserModelEntity.teleport(bossLoc);
+            Location laserLoc = bossLoc.clone();
+            Location currentRot = beam.laserModelEntity.getLocation();
+            laserLoc.setYaw(currentRot.getYaw());
+            laserLoc.setPitch(currentRot.getPitch());
+            beam.laserModelEntity.teleport(laserLoc);
         }
 
         // Remove old displays
@@ -1412,9 +1412,6 @@ public class BlueMoonBossManager {
             beam.removeAll();
         }
         laserBeams.clear();
-        if (bossEntity instanceof LivingEntity living) {
-            living.setInvulnerable(false);
-        }
         setBossGlowing(false);
         startLaserBarrage(world);
     }
@@ -1457,6 +1454,14 @@ public class BlueMoonBossManager {
      */
     public boolean isLaserActive() {
         return !laserBeams.isEmpty();
+    }
+
+    /**
+     * Whether the boss is currently invincible (glowing = invincible during laser).
+     * Used by damage handler to cancel damage when boss is glowing.
+     */
+    public boolean isBossInvincible() {
+        return bossEntity != null && bossEntity.isGlowing();
     }
 
     public Entity getBossEntity() {
@@ -1509,10 +1514,7 @@ public class BlueMoonBossManager {
         // Remove display builder tracked entities
         displayBuilder.removeAll();
 
-        // Restore invulnerability state + remove glow
-        if (bossEntity instanceof LivingEntity living) {
-            living.setInvulnerable(false);
-        }
+        // Remove glow (invincibility derived from glow state)
         setBossGlowing(false);
     }
 

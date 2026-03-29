@@ -124,19 +124,24 @@ public abstract class ModelEngineAttack extends AbstractAttack {
         World world = location.getWorld();
         if (world == null) return false;
 
-        // Spawn invisible invincible armor stand as the model host
-        // ModelEngine R4 requires a LivingEntity (armor stand), not a Marker
-        org.bukkit.entity.ArmorStand armorStand = (org.bukkit.entity.ArmorStand) world.spawnEntity(location, EntityType.ARMOR_STAND);
-        armorStand.setVisible(false);
-        armorStand.setGravity(false);
-        armorStand.setInvulnerable(true);
-        armorStand.setMarker(true);  // No hitbox, no collision
-        armorStand.setSilent(true);
-        armorStand.setBasePlate(false);
-        armorStand.setSmall(false);
-        armorStand.setCustomNameVisible(false);
-        armorStand.setPersistent(false);
-        modelHost = armorStand;
+        // Spawn invisible zombie as the model host — marker ArmorStands zero out
+        // dimensions which prevents ME4 from scaling models. Zombie matches the
+        // working Seer boss implementation.
+        org.bukkit.entity.Zombie zombie = world.spawn(location, org.bukkit.entity.Zombie.class, z -> {
+            z.setInvisible(true);
+            z.setSilent(true);
+            z.setGravity(false);
+            z.setInvulnerable(true);
+            z.setAI(false);
+            z.setPersistent(false);
+            z.setRemoveWhenFarAway(false);
+            z.setShouldBurnInDay(false);
+            z.setBaby(false);
+            z.setCollidable(false);
+            z.setCustomNameVisible(false);
+            z.addScoreboardTag("chaoscraft_display");
+        });
+        modelHost = zombie;
         spawnedEntities.add(modelHost);
 
         if (!isModelEngineAvailable()) {

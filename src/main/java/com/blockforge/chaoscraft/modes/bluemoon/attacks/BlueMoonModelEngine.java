@@ -1787,7 +1787,7 @@ public final class BlueMoonModelEngine {
                 moonDust(boltLoc, 2, 0.3);
                 endRods(boltLoc, 1, 0.1);
                 // Line from bolt to ground
-                DisplayBuilder.particleLine(boltLoc, ground, Particle.END_ROD, 2,
+                DisplayBuilder.particleLine(boltLoc, ground, Particle.DUST, 2,
                     new Particle.DustOptions(Color.fromRGB(96, 144, 232), 0.8f));
             }
 

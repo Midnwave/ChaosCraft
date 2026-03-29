@@ -17,7 +17,7 @@ import java.util.List;
  */
 public class BlueMoonConfig {
 
-    private static final int CURRENT_CONFIG_VERSION = 2;
+    private static final int CURRENT_CONFIG_VERSION = 3;
 
     private final ChaosCraftPlugin plugin;
     private final File configFile;
@@ -41,6 +41,19 @@ public class BlueMoonConfig {
 
         // ── Base mode keys ──────────────────────────────────────────────
         if (!config.contains("config-version")) { config.set("config-version", CURRENT_CONFIG_VERSION); needsSave = true; }
+
+        // ── Config version migrations ──────────────────────────────────
+        int version = config.getInt("config-version", 1);
+        if (version < 3) {
+            // v3: Fix model ID from non-existent "blue_moon_boss" to "blue_midnight"
+            String modelId = config.getString("boss.modelengine-id", "");
+            if ("blue_moon_boss".equals(modelId)) {
+                config.set("boss.modelengine-id", "blue_midnight");
+            }
+            config.set("config-version", 3);
+            needsSave = true;
+        }
+
         if (!config.contains("timer.default-seconds")) { config.set("timer.default-seconds", 900); needsSave = true; }
         if (!config.contains("timer.max-seconds")) { config.set("timer.max-seconds", 1800); needsSave = true; }
         if (!config.contains("music.sound-id")) { config.set("music.sound-id", ""); needsSave = true; }
