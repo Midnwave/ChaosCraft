@@ -62,6 +62,7 @@ public class BlueMoonBossManager {
     private AttackRegistry attackRegistry;
     private int attackCooldown = 0;
     private final List<AbstractAttack> activeBossAttacks = new ArrayList<>();
+    private List<AbstractAttack> cachedBlockDisplayAttacks; // cached at first use
 
     // ── Proximity sound ──
     private int proximitySoundCooldown = 0;
@@ -145,6 +146,7 @@ public class BlueMoonBossManager {
         double spinAngle;       // internal spin of the tornado
         final List<BlockDisplay> displays = new ArrayList<>();
         int damageIntervalCounter = 0;
+        double cachedBaseY = 0; // cached heightmap Y — updated every 20 ticks
 
         Tornado(double startAngle) {
             this.orbitAngle = startAngle;
@@ -866,13 +868,16 @@ public class BlueMoonBossManager {
             beam.laserModelEntity.teleport(laserLoc);
         }
 
-        // Remove old displays
-        beam.removeDisplays();
-
         Vector beamDir = targetLoc.toVector().subtract(bossLoc.toVector());
         double beamLen = beamDir.length();
         if (beamLen < 0.5) beamLen = 0.5;
         Vector norm = beamDir.normalize();
+
+        // Only rebuild displays every 4 ticks to avoid entity spam (was 345/tick → ~30 every 4 ticks)
+        boolean rebuildDisplays = (beam.fireTick % 4 == 0);
+        if (rebuildDisplays) {
+            beam.removeDisplays();
+        }
 
         // Perpendicular vectors for spiral/ring placement
         Vector perp1 = norm.clone().crossProduct(new Vector(0, 1, 0)).normalize();
@@ -883,121 +888,68 @@ public class BlueMoonBossManager {
         }
 
         double timeOffset = world.getGameTime() * 0.25;
-        float pulseScale = 1.0f + (float) Math.sin(beam.fireTick * 0.3) * 0.15f; // breathing effect
+        float pulseScale = 1.0f + (float) Math.sin(beam.fireTick * 0.3) * 0.15f;
 
         // ═══════════════════════════════════════════════════
-        // LAYER 1: Inner core — SEA_LANTERN block displays (bright white-blue)
+        // Block displays rebuilt every 4 ticks only (massive perf improvement)
+        // Was: 115 entities/beam/tick → now: ~25 entities/beam every 4 ticks
         // ═══════════════════════════════════════════════════
-        int coreCount = Math.min(40, (int) (beamLen / 1.0));
-        for (int i = 0; i < coreCount; i++) {
-            double t = (double) i / coreCount;
-            Location blockLoc = bossLoc.clone().add(norm.clone().multiply(t * beamLen));
-            DisplayBuilder.BlockDisplayHandle core = displayBuilder.spawnBlock(blockLoc, Material.SEA_LANTERN);
-            float coreScale = 0.35f * pulseScale;
-            core.scale(coreScale, coreScale, coreScale);
-            core.glow(150, 220, 255);
-            beam.displays.add(core.entity());
-        }
+        if (rebuildDisplays) {
+            // LAYER 1: Core beam — SEA_LANTERN (reduced: every 3 blocks)
+            int coreCount = Math.min(15, (int) (beamLen / 3.0));
+            for (int i = 0; i < coreCount; i++) {
+                double t = (double) i / coreCount;
+                Location blockLoc = bossLoc.clone().add(norm.clone().multiply(t * beamLen));
+                DisplayBuilder.BlockDisplayHandle core = displayBuilder.spawnBlock(blockLoc, Material.SEA_LANTERN);
+                float coreScale = 0.4f * pulseScale;
+                core.scale(coreScale, coreScale, coreScale);
+                core.glow(150, 220, 255);
+                beam.displays.add(core.entity());
+            }
 
-        // ═══════════════════════════════════════════════════
-        // LAYER 2: Outer shell — BLUE_ICE + PRISMARINE rotating around the core
-        // ═══════════════════════════════════════════════════
-        int shellCount = Math.min(25, (int) (beamLen / 1.8));
-        Material[] shellMats = { Material.BLUE_ICE, Material.PRISMARINE, Material.PACKED_ICE, Material.BLUE_STAINED_GLASS };
-        for (int i = 0; i < shellCount; i++) {
-            double t = (double) i / shellCount;
-            double dist = t * beamLen;
-            Location center = bossLoc.clone().add(norm.clone().multiply(dist));
-
-            // 2 rotating shell pieces per segment
-            for (int j = 0; j < 2; j++) {
-                double angle = dist * 0.6 + timeOffset * 2.0 + j * Math.PI;
+            // LAYER 2: Outer shell — 1 piece per segment (was 2)
+            int shellCount = Math.min(8, (int) (beamLen / 4.0));
+            Material[] shellMats = { Material.BLUE_ICE, Material.PRISMARINE, Material.PACKED_ICE };
+            for (int i = 0; i < shellCount; i++) {
+                double dist = ((double) i / shellCount) * beamLen;
+                double angle = dist * 0.6 + timeOffset * 2.0;
                 double shellRadius = 0.7 * pulseScale;
-                Location shellLoc = center.clone().add(
-                        perp1.clone().multiply(Math.cos(angle) * shellRadius)
+                Location shellLoc = bossLoc.clone().add(norm.clone().multiply(dist))
+                        .add(perp1.clone().multiply(Math.cos(angle) * shellRadius)
                                 .add(perp2.clone().multiply(Math.sin(angle) * shellRadius)));
-                Material mat = shellMats[(i + j) % shellMats.length];
-                DisplayBuilder.BlockDisplayHandle shell = displayBuilder.spawnBlock(shellLoc, mat);
-                float shellScale = 0.25f * pulseScale;
-                shell.scale(shellScale, shellScale, shellScale);
+                DisplayBuilder.BlockDisplayHandle shell = displayBuilder.spawnBlock(shellLoc, shellMats[i % shellMats.length]);
+                shell.scale(0.25f * pulseScale, 0.25f * pulseScale, 0.25f * pulseScale);
                 shell.glow(60, 160, 255);
                 beam.displays.add(shell.entity());
             }
+
+            // LAYER 3: Impact ring (reduced from 6 to 3)
+            for (int r = 0; r < 3; r++) {
+                double ringAngle = r * (Math.PI * 2 / 3) + beam.fireTick * 0.15;
+                Location ringLoc = targetLoc.clone().add(Math.cos(ringAngle) * 1.5, -0.3, Math.sin(ringAngle) * 1.5);
+                DisplayBuilder.BlockDisplayHandle scorch = displayBuilder.spawnBlock(ringLoc, Material.LIGHT_BLUE_STAINED_GLASS);
+                scorch.scale(0.35f, 0.15f, 0.35f);
+                scorch.glow(100, 220, 255);
+                beam.displays.add(scorch.entity());
+            }
         }
 
-        // ═══════════════════════════════════════════════════
-        // LAYER 3: Item displays — PRISMARINE_CRYSTALS + HEART_OF_THE_SEA orbiting beam
-        // ═══════════════════════════════════════════════════
-        int itemCount = Math.min(12, (int) (beamLen / 3.0));
-        ItemStack[] orbitItems = {
-                new ItemStack(Material.PRISMARINE_CRYSTALS),
-                new ItemStack(Material.HEART_OF_THE_SEA),
-                new ItemStack(Material.PRISMARINE_SHARD),
-                new ItemStack(Material.DIAMOND)
-        };
-        for (int i = 0; i < itemCount; i++) {
-            double t = ((double) i / itemCount + beam.fireTick * 0.008) % 1.0;
-            double dist = t * beamLen;
-            Location center = bossLoc.clone().add(norm.clone().multiply(dist));
-
-            double angle = dist * 0.4 + timeOffset * 3.0 + i * (Math.PI * 2 / itemCount);
-            double orbitRadius = 1.2 + Math.sin(beam.fireTick * 0.15 + i) * 0.3;
-            Location itemLoc = center.clone().add(
-                    perp1.clone().multiply(Math.cos(angle) * orbitRadius)
-                            .add(perp2.clone().multiply(Math.sin(angle) * orbitRadius)));
-
-            DisplayBuilder.ItemDisplayHandle item = displayBuilder.spawnItem(itemLoc, orbitItems[i % orbitItems.length]);
-            item.scale(0.6f, 0.6f, 0.6f);
-            item.glow(80, 200, 255);
-            beam.displays.add(item.entity());
-        }
-
-        // ═══════════════════════════════════════════════════
-        // LAYER 4: Sparse single-helix particle accent (NOT blinding)
-        // ═══════════════════════════════════════════════════
-        Particle.DustOptions accentCyan = new Particle.DustOptions(Color.fromRGB(0, 220, 255), 1.2f);
-        for (double d = 0; d < beamLen; d += 1.5) {
-            double a1 = d * 0.8 + timeOffset * 2.0;
-            double r1 = 0.6 * pulseScale;
-            double bx = bossLoc.getX() + norm.getX() * d;
-            double by = bossLoc.getY() + norm.getY() * d;
-            double bz = bossLoc.getZ() + norm.getZ() * d;
-            world.spawnParticle(Particle.DUST,
-                    bx + perp1.getX() * Math.cos(a1) * r1 + perp2.getX() * Math.sin(a1) * r1,
-                    by + perp1.getY() * Math.cos(a1) * r1 + perp2.getY() * Math.sin(a1) * r1,
-                    bz + perp1.getZ() * Math.cos(a1) * r1 + perp2.getZ() * Math.sin(a1) * r1,
-                    1, 0, 0, 0, 0, accentCyan);
-        }
-
-        // ═══════════════════════════════════════════════════
-        // LAYER 5: Impact zone at target — block display ring + small sparks
-        // ═══════════════════════════════════════════════════
-        for (int r = 0; r < 6; r++) {
-            double ringAngle = r * (Math.PI / 3) + beam.fireTick * 0.15;
-            double impactRadius = 1.5 + Math.sin(beam.fireTick * 0.4) * 0.3;
-            Location ringLoc = targetLoc.clone().add(
-                    Math.cos(ringAngle) * impactRadius, -0.3, Math.sin(ringAngle) * impactRadius);
-            Material impactMat = (r % 2 == 0) ? Material.LIGHT_BLUE_STAINED_GLASS : Material.SEA_LANTERN;
-            DisplayBuilder.BlockDisplayHandle scorch = displayBuilder.spawnBlock(ringLoc, impactMat);
-            scorch.scale(0.35f, 0.15f, 0.35f);
-            scorch.glow(100, 220, 255);
-            beam.displays.add(scorch.entity());
-        }
-        // Small spark at impact (not blinding)
-        world.spawnParticle(Particle.ELECTRIC_SPARK, targetLoc, 2, 0.3, 0.3, 0.3, 0.03);
-
-        // ═══════════════════════════════════════════════════
-        // LAYER 6: Boss muzzle glow — block displays at source
-        // ═══════════════════════════════════════════════════
-        for (int m = 0; m < 3; m++) {
-            double mAngle = beam.fireTick * 0.3 + m * (Math.PI * 2 / 3);
-            Location muzzleLoc = bossLoc.clone().add(
-                    perp1.clone().multiply(Math.cos(mAngle) * 0.8)
-                            .add(perp2.clone().multiply(Math.sin(mAngle) * 0.8)));
-            DisplayBuilder.BlockDisplayHandle muzzle = displayBuilder.spawnBlock(muzzleLoc, Material.SEA_LANTERN);
-            muzzle.scale(0.3f * pulseScale, 0.3f * pulseScale, 0.3f * pulseScale);
-            muzzle.glow(200, 240, 255);
-            beam.displays.add(muzzle.entity());
+        // Particles every tick (cheap — no entity creation)
+        if (beam.fireTick % 2 == 0) {
+            Particle.DustOptions accentCyan = new Particle.DustOptions(Color.fromRGB(0, 220, 255), 1.2f);
+            for (double d = 0; d < beamLen; d += 2.5) {
+                double a1 = d * 0.8 + timeOffset * 2.0;
+                double r1 = 0.6 * pulseScale;
+                double bx = bossLoc.getX() + norm.getX() * d;
+                double by = bossLoc.getY() + norm.getY() * d;
+                double bz = bossLoc.getZ() + norm.getZ() * d;
+                world.spawnParticle(Particle.DUST,
+                        bx + perp1.getX() * Math.cos(a1) * r1 + perp2.getX() * Math.sin(a1) * r1,
+                        by + perp1.getY() * Math.cos(a1) * r1 + perp2.getY() * Math.sin(a1) * r1,
+                        bz + perp1.getZ() * Math.cos(a1) * r1 + perp2.getZ() * Math.sin(a1) * r1,
+                        1, 0, 0, 0, 0, accentCyan);
+            }
+            world.spawnParticle(Particle.ELECTRIC_SPARK, targetLoc, 1, 0.2, 0.2, 0.2, 0.02);
         }
 
         // ═══════════════════════════════════════════════════
@@ -1154,8 +1106,11 @@ public class BlueMoonBossManager {
             // Calculate tornado center position
             double tornadoX = bossLoc.getX() + orbitRadius * Math.cos(tornado.orbitAngle);
             double tornadoZ = bossLoc.getZ() + orbitRadius * Math.sin(tornado.orbitAngle);
-            // Tornados at ground level below the boss, not at boss height
-        double tornadoBaseY = world.getHighestBlockYAt((int) tornadoX, (int) tornadoZ) + 1;
+            // Cache heightmap — only recalculate every 20 ticks (was every tick)
+            if (world.getGameTime() % 20 == 0 || tornado.cachedBaseY == 0) {
+                tornado.cachedBaseY = world.getHighestBlockYAt((int) tornadoX, (int) tornadoZ) + 1;
+            }
+            double tornadoBaseY = tornado.cachedBaseY;
 
             // Update each block display position
             int blockCount = tornado.displays.size();
@@ -1246,16 +1201,18 @@ public class BlueMoonBossManager {
             default -> config.getBossAttackCooldownPhase1();
         };
 
-        // Find a random BLOCK_DISPLAY attack to spawn from boss location
-        List<AbstractAttack> bossAttacks = new ArrayList<>();
-        for (AbstractAttack attack : attackRegistry.getAll()) {
-            if (attack.getType() == AttackType.BLOCK_DISPLAY) {
-                bossAttacks.add(attack);
+        // Use cached BLOCK_DISPLAY attack list (built once, not every spawn)
+        if (cachedBlockDisplayAttacks == null) {
+            cachedBlockDisplayAttacks = new ArrayList<>();
+            for (AbstractAttack attack : attackRegistry.getAll()) {
+                if (attack.getType() == AttackType.BLOCK_DISPLAY) {
+                    cachedBlockDisplayAttacks.add(attack);
+                }
             }
         }
-        if (bossAttacks.isEmpty()) return;
+        if (cachedBlockDisplayAttacks.isEmpty()) return;
 
-        AbstractAttack template = bossAttacks.get(random.nextInt(bossAttacks.size()));
+        AbstractAttack template = cachedBlockDisplayAttacks.get(random.nextInt(cachedBlockDisplayAttacks.size()));
 
         // Create a new instance so multiple can be active simultaneously
         AbstractAttack instance = template.newInstance();
@@ -1508,6 +1465,7 @@ public class BlueMoonBossManager {
 
         flightGoal = null;
         attackRegistry = null;
+        cachedBlockDisplayAttacks = null;
         currentPhase = 1;
     }
 
