@@ -9,16 +9,12 @@ import java.util.EnumSet;
 import java.util.UUID;
 
 /**
- * NMS AI goal that makes an entity's head (and body) track a specific player
- * at extreme angles — the entity never moves, only rotates to face the target.
+ * NMS AI goal that forces an entity to face a target player with UNLIMITED
+ * head rotation — bypasses Minecraft's default ±45° pitch clamp on mobs.
  * <p>
- * Used for the Blue Moon laser ModelEngine entities: an invisible armor stand
- * with a laser beam model that visually tracks the target player. The head
- * can tilt at ridiculous angles (looking straight up/down) since the laser
- * fires from the boss in the sky to the player on the ground.
- * <p>
- * The entity is completely stationary — all vanilla AI goals are cleared
- * before this goal is added.
+ * Sets body rotation, head rotation, AND pitch every tick via direct NMS
+ * field assignment. The entity never moves — it is purely a visual anchor
+ * for the ModelEngine laser beam model with h_head bone.
  */
 public class LaserHeadTrackGoal extends Goal {
 
@@ -30,9 +26,6 @@ public class LaserHeadTrackGoal extends Goal {
         this.setFlags(EnumSet.of(Flag.LOOK, Flag.MOVE));
     }
 
-    /**
-     * Set the target player UUID to track. Null to stop tracking.
-     */
     public void setTarget(UUID targetUUID) {
         this.targetUUID = targetUUID;
     }
@@ -51,7 +44,6 @@ public class LaserHeadTrackGoal extends Goal {
     public void tick() {
         if (targetUUID == null) return;
 
-        // Find the target player in the same world
         Player target = null;
         for (Player p : mob.level().players()) {
             if (p.getUUID().equals(targetUUID) && p.isAlive()) {
@@ -61,29 +53,35 @@ public class LaserHeadTrackGoal extends Goal {
         }
         if (target == null) return;
 
-        // Calculate direction from entity to target
         Vec3 entityPos = mob.position();
-        Vec3 targetPos = target.position().add(0, 1.0, 0); // Aim at chest height
+        Vec3 targetPos = target.position().add(0, 1.0, 0);
         Vec3 dir = targetPos.subtract(entityPos);
         double horizontalDist = Math.sqrt(dir.x * dir.x + dir.z * dir.z);
 
-        // Calculate yaw (horizontal rotation) — standard MC yaw
         float yaw = (float) (Math.atan2(-dir.x, dir.z) * (180.0 / Math.PI));
-
-        // Calculate pitch (vertical rotation) — allow extreme angles (-90 to +90)
         float pitch = (float) -(Math.atan2(dir.y, horizontalDist) * (180.0 / Math.PI));
 
-        // Force-set both body and head rotation for maximum visual tracking
+        // Force ALL rotation fields — bypasses Minecraft's head rotation clamp
+        // Body rotation (yaw)
         mob.setYRot(yaw);
         mob.yRotO = yaw;
         mob.setYBodyRot(yaw);
         mob.yBodyRotO = yaw;
         mob.setYHeadRot(yaw);
 
+        // Pitch — set BOTH current and previous to prevent interpolation fighting
         mob.setXRot(pitch);
         mob.xRotO = pitch;
 
-        // Kill all movement — entity is purely a visual anchor
+        // Also force via lookControl to prevent vanilla AI from resetting
+        mob.getLookControl().setLookAt(targetPos.x, targetPos.y, targetPos.z);
+
+        // Override the mob's max head rotation limits
+        // These fields control how far the head can turn per tick
+        // By calling lookAt directly AND setting fields, we bypass all clamping
+        mob.lookAt(target, 360.0F, 360.0F);
+
+        // Kill all movement
         mob.setDeltaMovement(Vec3.ZERO);
         mob.getNavigation().stop();
     }

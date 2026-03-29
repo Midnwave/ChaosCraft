@@ -469,6 +469,14 @@ public class BlueMoonBossManager {
 
         var speed = living.getAttribute(Attribute.MOVEMENT_SPEED);
         if (speed != null) speed.setBaseValue(config.getBossMoveSpeed());
+
+        // Remove damage immunity frames — boss can take rapid hits
+        living.setMaximumNoDamageTicks(0);
+        living.setNoDamageTicks(0);
+
+        // Scale hitbox to match ModelEngine model (bigger = easier to hit)
+        var scale = living.getAttribute(Attribute.SCALE);
+        if (scale != null) scale.setBaseValue(3.0); // 3x zombie size hitbox
     }
 
     // ========================================================================
@@ -873,11 +881,9 @@ public class BlueMoonBossManager {
         if (beamLen < 0.5) beamLen = 0.5;
         Vector norm = beamDir.normalize();
 
-        // Only rebuild displays every 4 ticks to avoid entity spam (was 345/tick → ~30 every 4 ticks)
-        boolean rebuildDisplays = (beam.fireTick % 4 == 0);
-        if (rebuildDisplays) {
-            beam.removeDisplays();
-        }
+        // Rebuild displays every tick for smooth tracking
+        beam.removeDisplays();
+        boolean rebuildDisplays = true;
 
         // Perpendicular vectors for spiral/ring placement
         Vector perp1 = norm.clone().crossProduct(new Vector(0, 1, 0)).normalize();
@@ -1518,7 +1524,7 @@ public class BlueMoonBossManager {
             if (bossGlowTeam == null) {
                 bossGlowTeam = scoreboard.registerNewTeam("cc_boss_glow");
             }
-            bossGlowTeam.color(NamedTextColor.AQUA);
+            bossGlowTeam.color(NamedTextColor.BLUE);
             bossGlowTeam.addEntity(bossEntity);
         } else {
             // Remove from team
