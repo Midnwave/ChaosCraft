@@ -12,7 +12,7 @@ import java.util.*;
 
 /**
  * Blue Moon Boss Attacks — 11 boss-specific block display attacks.
- * These extend BlockDisplayAttack for visual displays but classify as AttackType.BOSS.
+ * These extend BlockDisplayAttack for visual displays but classify as AttackType.BLOCK_DISPLAY.
  * Blue Moon palette: pale blue (180,210,255), silver (200,200,220), frost cyan (150,230,255).
  * NO status effects. Min 10 BlockDisplays per attack.
  */
@@ -46,7 +46,7 @@ public final class BlueMoonBossAttacks {
         private static final int WARNING_TICKS = 20;
 
         public MoonbeamSmite(ChaosCraftPlugin plugin) {
-            super(plugin, new AttackConfig("moonbeam_smite", AttackType.BOSS, 1, "modes/bluemoon/attacks"));
+            super(plugin, new AttackConfig("moonbeam_smite", AttackType.BLOCK_DISPLAY, 1, "modes/bluemoon/attacks"));
             config.setDamage(14.0);
             config.setDamageRadius(4.0);
             config.setDurationTicks(60);
@@ -56,7 +56,7 @@ public final class BlueMoonBossAttacks {
         }
 
         @Override
-        public AttackType getType() { return AttackType.BOSS; }
+        public AttackType getType() { return AttackType.BLOCK_DISPLAY; }
 
         @Override
         protected void onSpawn(Location center) {
@@ -148,7 +148,7 @@ public final class BlueMoonBossAttacks {
         private double sweepAngle = 0;
 
         public CrescentSlash(ChaosCraftPlugin plugin) {
-            super(plugin, new AttackConfig("crescent_slash", AttackType.BOSS, 1, "modes/bluemoon/attacks"));
+            super(plugin, new AttackConfig("crescent_slash", AttackType.BLOCK_DISPLAY, 1, "modes/bluemoon/attacks"));
             config.setDamage(10.0);
             config.setDamageRadius(5.0);
             config.setDurationTicks(80);
@@ -157,7 +157,7 @@ public final class BlueMoonBossAttacks {
         }
 
         @Override
-        public AttackType getType() { return AttackType.BOSS; }
+        public AttackType getType() { return AttackType.BLOCK_DISPLAY; }
 
         @Override
         protected void onSpawn(Location center) {
@@ -246,7 +246,7 @@ public final class BlueMoonBossAttacks {
         private final Location[] groupTargets = new Location[5];
 
         public CraterRain(ChaosCraftPlugin plugin) {
-            super(plugin, new AttackConfig("crater_rain", AttackType.BOSS, 1, "modes/bluemoon/attacks"));
+            super(plugin, new AttackConfig("crater_rain", AttackType.BLOCK_DISPLAY, 1, "modes/bluemoon/attacks"));
             config.setDamage(10.0);
             config.setDamageRadius(3.0);
             config.setDurationTicks(120);
@@ -257,7 +257,7 @@ public final class BlueMoonBossAttacks {
         }
 
         @Override
-        public AttackType getType() { return AttackType.BOSS; }
+        public AttackType getType() { return AttackType.BLOCK_DISPLAY; }
 
         @Override
         protected void onSpawn(Location center) {
@@ -368,7 +368,7 @@ public final class BlueMoonBossAttacks {
         private double vortexAngle = 0;
 
         public BossTidalPull(ChaosCraftPlugin plugin) {
-            super(plugin, new AttackConfig("boss_tidal_pull", AttackType.BOSS, 1, "modes/bluemoon/attacks"));
+            super(plugin, new AttackConfig("boss_tidal_pull", AttackType.BLOCK_DISPLAY, 1, "modes/bluemoon/attacks"));
             config.setDamage(6.0);
             config.setDamageRadius(8.0);
             config.setDurationTicks(60);
@@ -377,7 +377,7 @@ public final class BlueMoonBossAttacks {
         }
 
         @Override
-        public AttackType getType() { return AttackType.BOSS; }
+        public AttackType getType() { return AttackType.BLOCK_DISPLAY; }
 
         @Override
         protected void onSpawn(Location center) {
@@ -471,7 +471,7 @@ public final class BlueMoonBossAttacks {
         private double discHeight = 20.0;
 
         public BossLunarEclipse(ChaosCraftPlugin plugin) {
-            super(plugin, new AttackConfig("boss_lunar_eclipse", AttackType.BOSS, 1, "modes/bluemoon/attacks"));
+            super(plugin, new AttackConfig("boss_lunar_eclipse", AttackType.BLOCK_DISPLAY, 1, "modes/bluemoon/attacks"));
             config.setDamage(8.0);
             config.setDamageRadius(7.0);
             config.setDurationTicks(100);
@@ -480,7 +480,7 @@ public final class BlueMoonBossAttacks {
         }
 
         @Override
-        public AttackType getType() { return AttackType.BOSS; }
+        public AttackType getType() { return AttackType.BLOCK_DISPLAY; }
 
         @Override
         protected void onSpawn(Location center) {
@@ -575,7 +575,7 @@ public final class BlueMoonBossAttacks {
         private double ringRadius = 1.0;
 
         public FrostNova(ChaosCraftPlugin plugin) {
-            super(plugin, new AttackConfig("frost_nova", AttackType.BOSS, 1, "modes/bluemoon/attacks"));
+            super(plugin, new AttackConfig("frost_nova", AttackType.BLOCK_DISPLAY, 1, "modes/bluemoon/attacks"));
             config.setDamage(10.0);
             config.setDamageRadius(2.0);
             config.setDurationTicks(80);
@@ -584,7 +584,7 @@ public final class BlueMoonBossAttacks {
         }
 
         @Override
-        public AttackType getType() { return AttackType.BOSS; }
+        public AttackType getType() { return AttackType.BLOCK_DISPLAY; }
 
         @Override
         protected void onSpawn(Location center) {
@@ -679,7 +679,7 @@ public final class BlueMoonBossAttacks {
         private final boolean[] starLanded = new boolean[12];
 
         public StarfallVolley(ChaosCraftPlugin plugin) {
-            super(plugin, new AttackConfig("starfall_volley", AttackType.BOSS, 1, "modes/bluemoon/attacks"));
+            super(plugin, new AttackConfig("starfall_volley", AttackType.BLOCK_DISPLAY, 1, "modes/bluemoon/attacks"));
             config.setDamage(8.0);
             config.setDamageRadius(2.0);
             config.setDurationTicks(80);
@@ -690,7 +690,7 @@ public final class BlueMoonBossAttacks {
         }
 
         @Override
-        public AttackType getType() { return AttackType.BOSS; }
+        public AttackType getType() { return AttackType.BLOCK_DISPLAY; }
 
         @Override
         protected void onSpawn(Location center) {
@@ -781,7 +781,7 @@ public final class BlueMoonBossAttacks {
         private static final int CHARGE_TICKS = 25;
 
         public BossGravityInversion(ChaosCraftPlugin plugin) {
-            super(plugin, new AttackConfig("boss_gravity_inversion", AttackType.BOSS, 1, "modes/bluemoon/attacks"));
+            super(plugin, new AttackConfig("boss_gravity_inversion", AttackType.BLOCK_DISPLAY, 1, "modes/bluemoon/attacks"));
             config.setDamage(8.0);
             config.setDamageRadius(6.0);
             config.setDurationTicks(40);
@@ -791,7 +791,7 @@ public final class BlueMoonBossAttacks {
         }
 
         @Override
-        public AttackType getType() { return AttackType.BOSS; }
+        public AttackType getType() { return AttackType.BLOCK_DISPLAY; }
 
         @Override
         protected void onSpawn(Location center) {
@@ -897,7 +897,7 @@ public final class BlueMoonBossAttacks {
         private double cageRadius = 6.0;
 
         public MoonstoneCage(ChaosCraftPlugin plugin) {
-            super(plugin, new AttackConfig("moonstone_cage", AttackType.BOSS, 1, "modes/bluemoon/attacks"));
+            super(plugin, new AttackConfig("moonstone_cage", AttackType.BLOCK_DISPLAY, 1, "modes/bluemoon/attacks"));
             config.setDamage(8.0);
             config.setDamageRadius(3.0);
             config.setDurationTicks(100);
@@ -907,7 +907,7 @@ public final class BlueMoonBossAttacks {
         }
 
         @Override
-        public AttackType getType() { return AttackType.BOSS; }
+        public AttackType getType() { return AttackType.BLOCK_DISPLAY; }
 
         @Override
         protected void onSpawn(Location center) {
@@ -1000,7 +1000,7 @@ public final class BlueMoonBossAttacks {
         private double waveRadius = 1.0;
 
         public HowlingResonance(ChaosCraftPlugin plugin) {
-            super(plugin, new AttackConfig("howling_resonance", AttackType.BOSS, 1, "modes/bluemoon/attacks"));
+            super(plugin, new AttackConfig("howling_resonance", AttackType.BLOCK_DISPLAY, 1, "modes/bluemoon/attacks"));
             config.setDamage(6.0);
             config.setDamageRadius(10.0);
             config.setDurationTicks(40);
@@ -1009,7 +1009,7 @@ public final class BlueMoonBossAttacks {
         }
 
         @Override
-        public AttackType getType() { return AttackType.BOSS; }
+        public AttackType getType() { return AttackType.BLOCK_DISPLAY; }
 
         @Override
         protected void onSpawn(Location center) {
@@ -1098,7 +1098,7 @@ public final class BlueMoonBossAttacks {
         private double sweepDirection = 1;
 
         public LunarSuperLaserDisplay(ChaosCraftPlugin plugin) {
-            super(plugin, new AttackConfig("lunar_super_laser_display", AttackType.BOSS, 1, "modes/bluemoon/attacks"));
+            super(plugin, new AttackConfig("lunar_super_laser_display", AttackType.BLOCK_DISPLAY, 1, "modes/bluemoon/attacks"));
             // No damage — damage handled by BlueMoonBossManager
             config.setDamage(0.0);
             config.setDamageRadius(0.0);
@@ -1108,7 +1108,7 @@ public final class BlueMoonBossAttacks {
         }
 
         @Override
-        public AttackType getType() { return AttackType.BOSS; }
+        public AttackType getType() { return AttackType.BLOCK_DISPLAY; }
 
         @Override
         protected void onSpawn(Location center) {
@@ -1237,7 +1237,7 @@ public final class BlueMoonBossAttacks {
         private final List<FireworkRocket> rockets = new ArrayList<>();
 
         public LunarFireworkBarrage(ChaosCraftPlugin p) {
-            super(p, new AttackConfig("lunar_firework_barrage", AttackType.BOSS, 1, "modes/bluemoon/attacks"));
+            super(p, new AttackConfig("lunar_firework_barrage", AttackType.BLOCK_DISPLAY, 1, "modes/bluemoon/attacks"));
             config.setDamage(0); // Damage handled manually per rocket
             config.setDamageRadius(0);
             config.setDurationTicks(200);
@@ -1249,7 +1249,7 @@ public final class BlueMoonBossAttacks {
         }
 
         @Override
-        public AttackType getType() { return AttackType.BOSS; }
+        public AttackType getType() { return AttackType.BLOCK_DISPLAY; }
 
         private static class FireworkRocket {
             Location pos;

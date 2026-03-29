@@ -61,6 +61,7 @@ public class BlueMoonBossManager {
     // ── Boss attacks ──
     private AttackRegistry attackRegistry;
     private int attackCooldown = 0;
+    private final List<AbstractAttack> activeBossAttacks = new ArrayList<>();
 
     // ── Proximity sound ──
     private int proximitySoundCooldown = 0;
@@ -1223,10 +1224,21 @@ public class BlueMoonBossManager {
     private void tickBossAttacks(World world) {
         if (attackRegistry == null) return;
 
+        // Tick active boss attacks (so they animate + cleanup when duration expires)
+        Iterator<AbstractAttack> activeIter = activeBossAttacks.iterator();
+        while (activeIter.hasNext()) {
+            AbstractAttack attack = activeIter.next();
+            if (!attack.isActive()) {
+                activeIter.remove();
+                continue;
+            }
+            attack.tick();
+        }
+
+        // Spawn new attacks on cooldown
         attackCooldown--;
         if (attackCooldown > 0) return;
 
-        // Reset cooldown based on current phase
         attackCooldown = switch (currentPhase) {
             case 2 -> config.getBossAttackCooldownPhase2();
             case 3 -> config.getBossAttackCooldownPhase3();
@@ -1234,23 +1246,27 @@ public class BlueMoonBossManager {
             default -> config.getBossAttackCooldownPhase1();
         };
 
-        // Find a random BOSS-type attack
+        // Find a random BLOCK_DISPLAY attack to spawn from boss location
         List<AbstractAttack> bossAttacks = new ArrayList<>();
         for (AbstractAttack attack : attackRegistry.getAll()) {
-            if (attack.getType() == AttackType.BOSS) {
+            if (attack.getType() == AttackType.BLOCK_DISPLAY) {
                 bossAttacks.add(attack);
             }
         }
         if (bossAttacks.isEmpty()) return;
 
-        AbstractAttack chosen = bossAttacks.get(random.nextInt(bossAttacks.size()));
+        AbstractAttack template = bossAttacks.get(random.nextInt(bossAttacks.size()));
 
-        // Spawn at boss location targeting nearest cluster player
+        // Create a new instance so multiple can be active simultaneously
+        AbstractAttack instance = template.newInstance();
+        instance.getConfig().copyFrom(template.getConfig());
+
         Location spawnLoc = bossEntity.getLocation();
         Player target = findNearestSurvivalPlayer(world);
-        plugin.debug("[BlueMoon] Boss attack spawning: " + chosen.getId() + " at " + formatLoc(spawnLoc)
+        plugin.debug("[BlueMoon] Boss attack spawning: " + instance.getId() + " at " + formatLoc(spawnLoc)
                 + (target != null ? " targeting " + target.getName() : " (no target)"));
-        chosen.spawn(spawnLoc, target);
+        instance.spawn(spawnLoc, target);
+        activeBossAttacks.add(instance);
     }
 
     // ========================================================================
@@ -1510,6 +1526,12 @@ public class BlueMoonBossManager {
             beam.removeAll();
         }
         laserBeams.clear();
+
+        // Cleanup active boss attacks
+        for (AbstractAttack attack : activeBossAttacks) {
+            attack.cleanup();
+        }
+        activeBossAttacks.clear();
 
         // Remove display builder tracked entities
         displayBuilder.removeAll();
