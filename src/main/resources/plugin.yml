@@ -115,6 +115,12 @@ commands:
     usage: /itemtag <add|remove|list> [tag]
     permission: chaoscraft.itemtag.use
 
+  # ===== To-Do List =====
+  todo:
+    description: Interactive chat-based to-do list
+    usage: /todo [add|done|undone|edit|remove|clear] [args]
+    permission: chaoscraft.todo.use
+
 permissions:
   # ----- Core -----
   chaoscraft.use:
@@ -223,6 +229,9 @@ permissions:
     default: op
 
   # ----- Item Tags -----
+  chaoscraft.todo.use:
+    description: Use the /todo command for personal to-do lists
+    default: true
   chaoscraft.itemtag.use:
     description: View item tags
     default: true

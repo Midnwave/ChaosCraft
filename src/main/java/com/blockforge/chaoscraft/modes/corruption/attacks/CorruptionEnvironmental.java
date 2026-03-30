@@ -757,7 +757,7 @@ public final class CorruptionEnvironmental {
     // ----------------------------------------------------------------
     public static class CorruptionGeyser extends EnvironmentalAttack {
         public CorruptionGeyser(ChaosCraftPlugin plugin) {
-            super(plugin, new AttackConfig("corruption_geyser", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
+            super(plugin, new AttackConfig("corruption_geyser_env", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
             config.setDamage(8.0);
             config.setDamageRadius(3.0);
             config.setDurationTicks(30);

@@ -1618,7 +1618,7 @@ public final class CorruptionModelEngine {
         private static final double MAX_COLUMN_HEIGHT = 12.0;
 
         public CorruptionGeyser(ChaosCraftPlugin plugin) {
-            super(plugin, new AttackConfig("corruption_geyser", AttackType.MODEL_ENGINE, 1, "modes/corruption/attacks"));
+            super(plugin, new AttackConfig("corruption_geyser_me", AttackType.MODEL_ENGINE, 1, "modes/corruption/attacks"));
             config.setDamage(12.0);           // 6 hearts base eruption
             config.setDamageRadius(3.0);
             config.setDurationTicks(200);
@@ -3324,7 +3324,7 @@ public final class CorruptionModelEngine {
         private double ringAngle = 0;
 
         public CorruptionNova(ChaosCraftPlugin plugin) {
-            super(plugin, new AttackConfig("corruption_nova", AttackType.MODEL_ENGINE, 1, "modes/corruption/attacks"));
+            super(plugin, new AttackConfig("corruption_nova_me", AttackType.MODEL_ENGINE, 1, "modes/corruption/attacks"));
             config.setDamage(8.0);            // 4 hearts per shard
             config.setDamageRadius(10.0);
             config.setDurationTicks(180);

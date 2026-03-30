@@ -17,11 +17,12 @@ import java.util.stream.Collectors;
  * Corrupted Corruption mode configuration loader.
  * Reads from plugins/ChaosCraft/modes/corruption/corruption.yml
  *
- * Corruption Mode is an event-driven environmental horror mode with 48 corruption-themed events.
+ * Corruption Mode is an event-driven environmental horror mode with 190 attacks
+ * (120 block display, 40 environmental, 30 ModelEngine).
  * Features floating corrupted blocks, block replacement spreading, mob glitching,
  * and ambient horror effects that gradually corrupt the world around players.
  */
-public class CorruptionConfig {
+public class CorruptionConfig implements com.blockforge.chaoscraft.modes.corruption.engine.CorruptionEngine.CorruptionConfig {
 
     private final ChaosCraftPlugin plugin;
     private final File configFile;
@@ -370,6 +371,40 @@ public class CorruptionConfig {
 
     public int getFloatingBlocksDarknessAmplifier() {
         return config.getInt("floating-blocks.darkness-amplifier", 0);
+    }
+
+    // ========================
+    // CorruptionEngine.CorruptionConfig interface
+    // ========================
+
+    @Override
+    public int getSpreadRateTicks() {
+        return getFloatingBlocksSpreadRateTicks();
+    }
+
+    @Override
+    public int getSpreadRadiusChunks() {
+        return getBlockReplacementMaxRadiusChunks();
+    }
+
+    @Override
+    public int getMaxFloatingBlocksPerChunk() {
+        return getFloatingBlocksMaxPerChunk();
+    }
+
+    @Override
+    public double getFloatSpeed() {
+        return getFloatingBlocksMovementSpeed();
+    }
+
+    @Override
+    public double getProximityDamage() {
+        return getFloatingBlocksDamage();
+    }
+
+    @Override
+    public int getRestoreBlocksPerTick() {
+        return getRestorationBlocksPerTick();
     }
 
     // ========================

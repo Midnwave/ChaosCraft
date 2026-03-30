@@ -77,6 +77,7 @@ public class ChaosCraftPlugin extends JavaPlugin {
     private com.blockforge.chaoscraft.services.shop.ShopService shopService;
     private com.blockforge.chaoscraft.services.shop.gui.ShopGUIListener shopGUIListener;
     private com.blockforge.chaoscraft.services.mobspawn.MobSpawnService mobSpawnService;
+    private com.blockforge.chaoscraft.services.todo.TodoStorage todoStorage;
 
     // Per-player join tick tracker for BetterHud animation sync
     private final Map<UUID, Long> playerJoinTicks = new HashMap<>();
@@ -186,6 +187,9 @@ public class ChaosCraftPlugin extends JavaPlugin {
 
         // Initialize universal mob spawn service
         mobSpawnService = new com.blockforge.chaoscraft.services.mobspawn.MobSpawnService(this);
+
+        // Initialize to-do list system
+        todoStorage = new com.blockforge.chaoscraft.services.todo.TodoStorage(this);
 
         // Initialize Mode Timer HUD
         modeTimerHud = new ModeTimerHud(this);
@@ -371,6 +375,11 @@ public class ChaosCraftPlugin extends JavaPlugin {
             shopService.shutdown();
         }
 
+        // Close to-do storage
+        if (todoStorage != null) {
+            todoStorage.close();
+        }
+
         // Stop timer
         if (modeTimer != null) {
             modeTimer.stop();
@@ -463,6 +472,14 @@ public class ChaosCraftPlugin extends JavaPlugin {
             var handler = new com.blockforge.chaoscraft.services.shop.ShopCommand(this, shopService, shopGUIListener);
             shopCmd.setExecutor(handler);
             shopCmd.setTabCompleter(handler);
+        }
+
+        // /todo command (interactive chat to-do list)
+        var todoCmd = getCommand("todo");
+        if (todoCmd != null && todoStorage != null) {
+            var todoHandler = new com.blockforge.chaoscraft.services.todo.TodoCommand(this, todoStorage);
+            todoCmd.setExecutor(todoHandler);
+            todoCmd.setTabCompleter(todoHandler);
         }
 
         // /badges command (standalone, opens badge GUI)

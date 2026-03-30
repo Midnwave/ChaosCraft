@@ -5,6 +5,11 @@ import com.blockforge.chaoscraft.api.mode.AbstractMode;
 import com.blockforge.chaoscraft.modes.calamity.attacks.AttackRegistry;
 import com.blockforge.chaoscraft.modes.calamity.attacks.AttackType;
 import com.blockforge.chaoscraft.modes.corruption.attacks.*;
+import com.blockforge.chaoscraft.modes.corruption.engine.CorruptionEngine;
+import com.blockforge.chaoscraft.modes.corruption.environmental.AmbientEffects;
+import com.blockforge.chaoscraft.modes.corruption.environmental.MobGlitchHandler;
+import com.blockforge.chaoscraft.modes.corruption.environmental.WorldCorruptor;
+import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 
@@ -12,11 +17,11 @@ import org.bukkit.entity.Player;
  * Corrupted Corruption Mode — Event-driven environmental horror mode.
  *
  * Design:
- * - 48+ corruption-themed events across 8 categories
+ * - 190 corruption-themed attacks (120 block display, 40 environmental, 30 ModelEngine)
  * - Environmental corruption: floating blocks, block replacement spread, mob glitching
  * - Pure survival timer — survive X minutes (configurable, default 15 min) to win
  * - No bosses, no phases, no gem system
- * - All attacks are BLOCK_DISPLAY type (phase 1)
+ * - Attacks: BLOCK_DISPLAY (45%), ENVIRONMENTAL (35%), MODEL_ENGINE (20%)
  * - Runs in the Overworld (configurable world)
  * - Block replacement engine corrupts terrain around players, restored on mode end
  * - Ambient horror: dark particles, corruption fog, ambient sounds
@@ -37,6 +42,10 @@ public class CorruptionMode extends AbstractMode {
     private final CorruptionConfig corruptionConfig;
     private final AttackRegistry attackRegistry;
     private final CorruptionAttackScheduler attackScheduler;
+    private CorruptionEngine corruptionEngine;
+    private AmbientEffects ambientEffects;
+    private MobGlitchHandler mobGlitchHandler;
+    private WorldCorruptor worldCorruptor;
     private long tickCounter = 0;
 
     public CorruptionMode(ChaosCraftPlugin plugin) {
@@ -52,8 +61,8 @@ public class CorruptionMode extends AbstractMode {
     // ========================
 
     /**
-     * Register all 120 corruption-themed attacks across 8 categories.
-     * Each category class registers ~15 attacks as phase 1, BLOCK_DISPLAY type.
+     * Register all 190 corruption-themed attacks across 10 categories.
+     * 120 BLOCK_DISPLAY (8 categories × 15), 40 ENVIRONMENTAL, 30 MODEL_ENGINE.
      */
     private void registerAllAttacks() {
         CorruptionSpread.registerAll(plugin, attackRegistry);
@@ -117,7 +126,9 @@ public class CorruptionMode extends AbstractMode {
             plugin.getLogger().severe("[Corruption] WARNING: 0 attacks registered! Check attack registration.");
         } else {
             int bd = attackRegistry.getByPhaseAndType(1, AttackType.BLOCK_DISPLAY).size();
-            plugin.getLogger().info("[Corruption] " + bd + " BLOCK_DISPLAY attacks registered.");
+            int env = attackRegistry.getByPhaseAndType(1, AttackType.ENVIRONMENTAL).size();
+            int me = attackRegistry.getByPhaseAndType(1, AttackType.MODEL_ENGINE).size();
+            plugin.getLogger().info("[Corruption] " + bd + " BLOCK_DISPLAY, " + env + " ENVIRONMENTAL, " + me + " MODEL_ENGINE attacks registered.");
         }
 
         // NOTE: runStartCommands() is called by ModeManager — do NOT call here
@@ -136,6 +147,58 @@ public class CorruptionMode extends AbstractMode {
                     corruptionConfig.getMobSpawnConfig(), world);
         }
 
+        // Start corruption engine (floating blocks, proximity damage)
+        if (corruptionConfig.isFloatingBlocksEnabled()) {
+            this.corruptionEngine = new CorruptionEngine(plugin, corruptionConfig);
+            corruptionEngine.start(world);
+        }
+
+        // Start ambient effects (particles, fog, sounds)
+        if (corruptionConfig.isAmbientDarkParticlesEnabled()
+                || corruptionConfig.isAmbientCorruptionFogEnabled()
+                || corruptionConfig.isAmbientSoundsEnabled()) {
+            this.ambientEffects = new AmbientEffects(plugin);
+            int ambCx = world.getSpawnLocation().getBlockX();
+            int ambCz = world.getSpawnLocation().getBlockZ();
+            ambientEffects.start(world, ambCx, ambCz,
+                    corruptionConfig.getMobGlitchRadiusChunks(),
+                    corruptionConfig.isAmbientDarkParticlesEnabled(),
+                    corruptionConfig.isAmbientCorruptionFogEnabled(),
+                    corruptionConfig.isAmbientSoundsEnabled(),
+                    corruptionConfig.getAmbientSoundIntervalTicks());
+        }
+
+        // Start mob glitch handler
+        if (corruptionConfig.isMobGlitchEnabled()) {
+            this.mobGlitchHandler = new MobGlitchHandler(plugin);
+            int glitchCx = world.getSpawnLocation().getBlockX();
+            int glitchCz = world.getSpawnLocation().getBlockZ();
+            if (!world.getPlayers().isEmpty()) {
+                Location pLoc = world.getPlayers().get(0).getLocation();
+                glitchCx = pLoc.getBlockX();
+                glitchCz = pLoc.getBlockZ();
+            }
+            mobGlitchHandler.start(world, glitchCx, glitchCz,
+                    corruptionConfig.getMobGlitchRadiusChunks(),
+                    corruptionConfig.getMobGlitchIntensity(),
+                    corruptionConfig.isMobGlitchHostileOnly());
+        }
+
+        // Start world corruptor (block replacement spread)
+        if (corruptionConfig.isBlockReplacementEnabled()) {
+            this.worldCorruptor = new WorldCorruptor(plugin,
+                    corruptionEngine != null ? corruptionEngine.getRestorer()
+                            : new com.blockforge.chaoscraft.modes.corruption.engine.BlockRestorer(plugin));
+            int wcCx = world.getSpawnLocation().getBlockX();
+            int wcCz = world.getSpawnLocation().getBlockZ();
+            worldCorruptor.start(world, wcCx, wcCz,
+                    corruptionConfig.getBlockReplacementMaxRadiusChunks(),
+                    corruptionConfig.getBlockReplacementBlocksPerTick(),
+                    corruptionConfig.getBlockReplacementVanillaBlocks(),
+                    corruptionConfig.getBlockReplacementItemsAdderBlocks(),
+                    corruptionConfig.getBlockReplacementCraftEngineBlocks());
+        }
+
         plugin.getLogger().info("[Corruption] Mode fully started. "
                 + "(" + attackCount + " attacks registered)");
     }
@@ -144,8 +207,11 @@ public class CorruptionMode extends AbstractMode {
     public void onTick() {
         tickCounter++;
         attackScheduler.tick();
-        // TODO: corruptionEngine.tick() — engine handles floating blocks, block replacement,
-        //       mob glitch, and ambient effects. Created separately.
+
+        // Tick the corruption engine (floating blocks, proximity damage, ambient particles)
+        if (corruptionEngine != null) {
+            corruptionEngine.tick();
+        }
 
         // Universal mob spawning
         if (plugin.getMobSpawnService() != null) {
@@ -166,8 +232,29 @@ public class CorruptionMode extends AbstractMode {
             plugin.getMobSpawnService().destroySession("corruption");
         }
 
-        // TODO: corruptionEngine.stop() — stops floating blocks, mob glitch, ambient effects
-        // TODO: corruptionEngine.startRestoration() — begins block restoration process
+        // Stop corruption engine + begin block restoration
+        if (corruptionEngine != null) {
+            corruptionEngine.stop();
+            corruptionEngine = null;
+        }
+
+        // Stop ambient effects
+        if (ambientEffects != null) {
+            ambientEffects.stop();
+            ambientEffects = null;
+        }
+
+        // Stop mob glitch handler
+        if (mobGlitchHandler != null) {
+            mobGlitchHandler.stop();
+            mobGlitchHandler = null;
+        }
+
+        // Stop world corruptor
+        if (worldCorruptor != null) {
+            worldCorruptor.stop();
+            worldCorruptor = null;
+        }
 
         // NOTE: runEndCommands() and giveRewards() are called by ModeManager — do NOT call here
 

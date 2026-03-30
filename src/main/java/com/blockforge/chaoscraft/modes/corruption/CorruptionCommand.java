@@ -134,7 +134,10 @@ public class CorruptionCommand implements CommandExecutor, TabCompleter {
 
         if (args.length < 2) {
             // List available IDs
-            List<String> ids = mode.getAttackRegistry().getIds(1, AttackType.BLOCK_DISPLAY);
+            List<String> ids = new java.util.ArrayList<>();
+            ids.addAll(mode.getAttackRegistry().getIds(1, AttackType.BLOCK_DISPLAY));
+            ids.addAll(mode.getAttackRegistry().getIds(1, AttackType.ENVIRONMENTAL));
+            ids.addAll(mode.getAttackRegistry().getIds(1, AttackType.MODEL_ENGINE));
             sender.sendMessage(Component.text("Usage: /corruption test <id>", NamedTextColor.YELLOW));
             sender.sendMessage(Component.text("Available IDs (" + ids.size() + "):", NamedTextColor.AQUA));
             // Show in columns
@@ -155,6 +158,8 @@ public class CorruptionCommand implements CommandExecutor, TabCompleter {
 
         String id = args[1].toLowerCase();
         AbstractAttack attack = mode.getAttackRegistry().get(1, AttackType.BLOCK_DISPLAY, id);
+        if (attack == null) attack = mode.getAttackRegistry().get(1, AttackType.ENVIRONMENTAL, id);
+        if (attack == null) attack = mode.getAttackRegistry().get(1, AttackType.MODEL_ENGINE, id);
         if (attack == null) {
             sender.sendMessage(Component.text("Unknown attack: " + id, NamedTextColor.RED));
             sender.sendMessage(Component.text("Use /corruption test for a list of available IDs.", NamedTextColor.GRAY));
@@ -243,18 +248,22 @@ public class CorruptionCommand implements CommandExecutor, TabCompleter {
             return true;
         }
 
-        List<String> ids = mode.getAttackRegistry().getIds(1, AttackType.BLOCK_DISPLAY);
-        sender.sendMessage(Component.text("=== Corruption Attacks (" + ids.size() + ") ===", NamedTextColor.DARK_PURPLE));
-        for (int i = 0; i < ids.size(); i++) {
-            String id = ids.get(i);
-            AbstractAttack atk = mode.getAttackRegistry().get(1, AttackType.BLOCK_DISPLAY, id);
-            String info = atk != null
-                    ? String.format(" (dmg=%.0f, r=%.1f, dur=%d, %s)",
-                    atk.getConfig().getDamage(), atk.getConfig().getDamageRadius(),
-                    atk.getConfig().getDurationTicks(),
-                    atk.getConfig().isEnabled() ? "ON" : "OFF")
-                    : "";
-            sender.sendMessage(Component.text((i + 1) + ". " + id + info, NamedTextColor.LIGHT_PURPLE));
+        // Collect all attack types
+        for (AttackType attackType : new AttackType[]{AttackType.BLOCK_DISPLAY, AttackType.ENVIRONMENTAL, AttackType.MODEL_ENGINE}) {
+            List<String> ids = mode.getAttackRegistry().getIds(1, attackType);
+            if (ids.isEmpty()) continue;
+            sender.sendMessage(Component.text("=== " + attackType.name() + " (" + ids.size() + ") ===", NamedTextColor.DARK_PURPLE));
+            for (int i = 0; i < ids.size(); i++) {
+                String id = ids.get(i);
+                AbstractAttack atk = mode.getAttackRegistry().get(1, attackType, id);
+                String info = atk != null
+                        ? String.format(" (dmg=%.0f, r=%.1f, dur=%d, %s)",
+                        atk.getConfig().getDamage(), atk.getConfig().getDamageRadius(),
+                        atk.getConfig().getDurationTicks(),
+                        atk.getConfig().isEnabled() ? "ON" : "OFF")
+                        : "";
+                sender.sendMessage(Component.text((i + 1) + ". " + id + info, NamedTextColor.LIGHT_PURPLE));
+            }
         }
         return true;
     }
@@ -331,7 +340,10 @@ public class CorruptionCommand implements CommandExecutor, TabCompleter {
             CorruptionMode mode = getCorruptionMode();
 
             if ("test".equals(sub) && mode != null) {
-                List<String> ids = mode.getAttackRegistry().getIds(1, AttackType.BLOCK_DISPLAY);
+                List<String> ids = new java.util.ArrayList<>();
+                ids.addAll(mode.getAttackRegistry().getIds(1, AttackType.BLOCK_DISPLAY));
+                ids.addAll(mode.getAttackRegistry().getIds(1, AttackType.ENVIRONMENTAL));
+                ids.addAll(mode.getAttackRegistry().getIds(1, AttackType.MODEL_ENGINE));
                 return filterStartsWith(args[1], ids);
             }
 

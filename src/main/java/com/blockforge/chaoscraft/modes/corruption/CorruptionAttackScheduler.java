@@ -151,13 +151,24 @@ public class CorruptionAttackScheduler {
             return;
         }
 
-        // Alternate between BLOCK_DISPLAY and ENVIRONMENTAL attacks
-        AttackType type = Math.random() < 0.5 ? AttackType.BLOCK_DISPLAY : AttackType.ENVIRONMENTAL;
+        // Weighted random selection across all 3 attack types: 45% BD, 35% ENV, 20% ME
+        double roll = Math.random();
+        AttackType type;
+        if (roll < 0.45) {
+            type = AttackType.BLOCK_DISPLAY;
+        } else if (roll < 0.80) {
+            type = AttackType.ENVIRONMENTAL;
+        } else {
+            type = AttackType.MODEL_ENGINE;
+        }
         AbstractAttack attack = registry.selectRandom(1, type);
         if (attack == null) {
-            // Fallback to other type
-            type = (type == AttackType.BLOCK_DISPLAY) ? AttackType.ENVIRONMENTAL : AttackType.BLOCK_DISPLAY;
-            attack = registry.selectRandom(1, type);
+            // Fallback: try each type
+            for (AttackType fallback : new AttackType[]{AttackType.BLOCK_DISPLAY, AttackType.ENVIRONMENTAL, AttackType.MODEL_ENGINE}) {
+                if (fallback == type) continue;
+                attack = registry.selectRandom(1, fallback);
+                if (attack != null) break;
+            }
         }
         if (attack == null) {
             plugin.debug("[CorruptionScheduler] No enabled attack found. Check attack configs.");
@@ -302,18 +313,12 @@ public class CorruptionAttackScheduler {
     }
 
     /**
-     * Placeholder claim protection check.
-     * Will be wired up with the claim plugin API (e.g., GriefPrevention, Lands, etc.) later.
-     *
-     * @param player the player to check
-     * @return true if the player is in a protected claim area where corruption should not spawn
+     * Check if a player is in a protected claim area where corruption should not spawn.
+     * Uses the ClaimsService to check if the location allows mode events.
      */
     private boolean isInProtectedClaim(Player player) {
-        // TODO: Wire up with claim plugin API
-        // Example integration points:
-        //   - GriefPrevention: GriefPrevention.instance.dataStore.getClaimAt(player.getLocation(), ...)
-        //   - Lands: LandsIntegration.of(plugin).getArea(player.getLocation())
-        //   - WorldGuard: RegionQuery.testState(player.getLocation(), ...)
-        return false;
+        var claimsService = plugin.getClaimsService();
+        if (claimsService == null || !claimsService.isEnabled()) return false;
+        return !claimsService.shouldModeEventSpawnAt(player.getLocation());
     }
 }
