@@ -154,16 +154,16 @@ public class CorruptionMode extends AbstractMode {
         }
 
         // Start ambient effects (particles, fog, sounds)
-        if (corruptionConfig.isAmbientDarkParticlesEnabled()
-                || corruptionConfig.isAmbientCorruptionFogEnabled()
+        if (corruptionConfig.isDarkParticlesEnabled()
+                || corruptionConfig.isCorruptionFogEnabled()
                 || corruptionConfig.isAmbientSoundsEnabled()) {
             this.ambientEffects = new AmbientEffects(plugin);
             int ambCx = world.getSpawnLocation().getBlockX();
             int ambCz = world.getSpawnLocation().getBlockZ();
             ambientEffects.start(world, ambCx, ambCz,
                     corruptionConfig.getMobGlitchRadiusChunks(),
-                    corruptionConfig.isAmbientDarkParticlesEnabled(),
-                    corruptionConfig.isAmbientCorruptionFogEnabled(),
+                    corruptionConfig.isDarkParticlesEnabled(),
+                    corruptionConfig.isCorruptionFogEnabled(),
                     corruptionConfig.isAmbientSoundsEnabled(),
                     corruptionConfig.getAmbientSoundIntervalTicks());
         }
