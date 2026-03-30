@@ -105,7 +105,8 @@ public class ChaosCraftCommand implements CommandExecutor, TabCompleter {
             "setbadgeobtaineditem", "setbadgeunobtaineditem", "setbadgenotobtainable",
             "setdoommodepos1", "setdoommodepos2",
             "setorbspawn",
-            "startbluemoonskyeffect", "stopbluemoonskyeffect"
+            "startbluemoonskyeffect", "stopbluemoonskyeffect",
+            "togglebossinvincibility"
     );
 
     // Delegates for ported subcommands
@@ -957,6 +958,19 @@ public class ChaosCraftCommand implements CommandExecutor, TabCompleter {
                     }
                 } else {
                     sender.sendMessage(Component.text("Blue Moon mode not active.", NamedTextColor.RED));
+                }
+            }
+            case "togglebossinvincibility" -> {
+                var bmMode2 = plugin.getModeManager().getMode("bluemoon");
+                if (bmMode2 instanceof com.blockforge.chaoscraft.modes.bluemoon.BlueMoonMode blueMoon2) {
+                    var bm = blueMoon2.getBossManager();
+                    boolean current = bm.isBossInvincible();
+                    bm.setDebugDisableInvincibility(!bm.isDebugDisableInvincibility());
+                    boolean nowDisabled = bm.isDebugDisableInvincibility();
+                    sender.sendMessage(Component.text("Boss invincibility " + (nowDisabled ? "DISABLED" : "ENABLED"),
+                            nowDisabled ? NamedTextColor.RED : NamedTextColor.GREEN));
+                } else {
+                    sender.sendMessage(Component.text("Blue Moon mode not loaded.", NamedTextColor.RED));
                 }
             }
             default -> sender.sendMessage(Component.text("Unknown function: " + args[1]

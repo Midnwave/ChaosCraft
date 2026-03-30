@@ -41,6 +41,11 @@ public class LaserHeadTrackGoal extends Goal {
     }
 
     @Override
+    public boolean requiresUpdateEveryTick() {
+        return true; // No delay — runs EVERY tick for instant tracking
+    }
+
+    @Override
     public void tick() {
         if (targetUUID == null) return;
 

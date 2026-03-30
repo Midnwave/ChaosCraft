@@ -10,7 +10,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import com.destroystokyo.paper.event.entity.EntityKnockbackByEntityEvent;
+import io.papermc.paper.event.entity.EntityKnockbackEvent;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityToggleGlideEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
@@ -162,15 +163,16 @@ public class ModeRestrictionListener implements Listener {
     }
 
     // ========================
-    // Damage Knockback Removal
+    // Damage Knockback + Velocity Removal
     // ========================
 
     /**
-     * Cancel all knockback during active modes — players still take damage and get
-     * the camera tilt, but their movement/velocity is NOT reduced on hit.
+     * Cancel ALL knockback during active modes — covers every source including
+     * the internal NMS hurt velocity that EntityKnockbackByEntityEvent misses.
+     * This fires at the NMS level BEFORE velocity is applied — zero delay.
      */
-    @EventHandler(priority = EventPriority.HIGH)
-    public void onKnockback(EntityKnockbackByEntityEvent event) {
+    @EventHandler(priority = EventPriority.HIGHEST)
+    public void onKnockback(EntityKnockbackEvent event) {
         if (!(event.getEntity() instanceof Player player)) return;
 
         var manager = plugin.getModeManager();
@@ -181,9 +183,10 @@ public class ModeRestrictionListener implements Listener {
     }
 
     /**
-     * Remove damage cooldown + velocity reduction during active modes.
-     * - Sets noDamageTicks to 0 so players can take rapid damage
-     * - Restores velocity on next tick to prevent movement slowdown on hit
+     * Remove damage cooldown during active modes.
+     * Also sets KNOCKBACK_RESISTANCE to 1.0 as a belt-and-suspenders backup —
+     * this zeroes out the NMS velocity math inside hurt() so even if the event
+     * doesn't catch it, the player experiences zero velocity change.
      */
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onDamageVelocity(EntityDamageEvent event) {
@@ -197,16 +200,11 @@ public class ModeRestrictionListener implements Listener {
         player.setMaximumNoDamageTicks(0);
         player.setNoDamageTicks(0);
 
-        // Capture velocity before damage is applied
-        org.bukkit.util.Vector velocity = player.getVelocity().clone();
-
-        // Restore velocity on next tick (after MC applies its damage velocity reduction)
-        plugin.getServer().getScheduler().runTaskLater(plugin, () -> {
-            if (player.isOnline() && !player.isDead()) {
-                player.setVelocity(velocity);
-                player.setNoDamageTicks(0);
-            }
-        }, 1L);
+        // Set knockback resistance to 100% — velocity * 0.0 = no velocity change
+        var kbAttr = player.getAttribute(Attribute.KNOCKBACK_RESISTANCE);
+        if (kbAttr != null && kbAttr.getBaseValue() < 1.0) {
+            kbAttr.setBaseValue(1.0);
+        }
     }
 
     /**
@@ -252,9 +250,11 @@ public class ModeRestrictionListener implements Listener {
         spectatingPlayers.clear();
         savedLocations.clear();
 
-        // Restore default noDamageTicks for all online players
+        // Restore vanilla defaults for all online players
         for (Player player : plugin.getServer().getOnlinePlayers()) {
-            player.setMaximumNoDamageTicks(20); // Vanilla default
+            player.setMaximumNoDamageTicks(20);
+            var kbAttr = player.getAttribute(Attribute.KNOCKBACK_RESISTANCE);
+            if (kbAttr != null) kbAttr.setBaseValue(0.0);
         }
     }
 

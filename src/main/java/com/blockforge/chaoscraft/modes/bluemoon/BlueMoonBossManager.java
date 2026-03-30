@@ -704,6 +704,18 @@ public class BlueMoonBossManager {
 
             beam.laserModelEntity = laserZombie;
 
+            // Apply glowing effect (light blue) to laser entity
+            laserZombie.setGlowing(true);
+            try {
+                Scoreboard scoreboard = Bukkit.getScoreboardManager().getMainScoreboard();
+                Team laserTeam = scoreboard.getTeam("cc_laser_glow");
+                if (laserTeam == null) {
+                    laserTeam = scoreboard.registerNewTeam("cc_laser_glow");
+                }
+                laserTeam.color(NamedTextColor.AQUA);
+                laserTeam.addEntity(laserZombie);
+            } catch (Exception ignored) {}
+
             // Set up NMS headtracking AI
             try {
                 net.minecraft.world.entity.Mob nmsMob = ((CraftLivingEntity) laserZombie).getHandle() instanceof net.minecraft.world.entity.Mob mob ? mob : null;
@@ -712,7 +724,7 @@ public class BlueMoonBossManager {
                     nmsMob.goalSelector.removeAllGoals(g -> true);
                     nmsMob.targetSelector.removeAllGoals(g -> true);
 
-                    // Add headtracking goal
+                    // Add headtracking goal — ticks every tick for instant response
                     LaserHeadTrackGoal trackGoal = new LaserHeadTrackGoal(nmsMob);
                     trackGoal.setTarget(beam.targetPlayer.getUniqueId());
                     nmsMob.goalSelector.addGoal(0, trackGoal);
@@ -882,82 +894,18 @@ public class BlueMoonBossManager {
         if (beamLen < 0.5) beamLen = 0.5;
         Vector norm = beamDir.normalize();
 
-        // Rebuild displays every tick for smooth tracking
-        beam.removeDisplays();
-        boolean rebuildDisplays = true;
-
-        // Perpendicular vectors for spiral/ring placement
-        Vector perp1 = norm.clone().crossProduct(new Vector(0, 1, 0)).normalize();
-        Vector perp2 = norm.clone().crossProduct(perp1).normalize();
-        if (perp1.lengthSquared() < 0.01) {
-            perp1 = new Vector(1, 0, 0);
-            perp2 = new Vector(0, 0, 1);
-        }
-
-        double timeOffset = world.getGameTime() * 0.25;
-        float pulseScale = 1.0f + (float) Math.sin(beam.fireTick * 0.3) * 0.15f;
-
         // ═══════════════════════════════════════════════════
-        // Block displays rebuilt every 4 ticks only (massive perf improvement)
-        // Was: 115 entities/beam/tick → now: ~25 entities/beam every 4 ticks
+        // Single particle line from boss to target — ModelEngine handles the beam visual
+        // No block displays (all removed for performance)
         // ═══════════════════════════════════════════════════
-        if (rebuildDisplays) {
-            // LAYER 1: Core beam — SEA_LANTERN (reduced: every 3 blocks)
-            int coreCount = Math.min(15, (int) (beamLen / 3.0));
-            for (int i = 0; i < coreCount; i++) {
-                double t = (double) i / coreCount;
-                Location blockLoc = bossLoc.clone().add(norm.clone().multiply(t * beamLen));
-                DisplayBuilder.BlockDisplayHandle core = displayBuilder.spawnBlock(blockLoc, Material.SEA_LANTERN);
-                float coreScale = 0.4f * pulseScale;
-                core.scale(coreScale, coreScale, coreScale);
-                core.glow(150, 220, 255);
-                beam.displays.add(core.entity());
-            }
-
-            // LAYER 2: Outer shell — 1 piece per segment (was 2)
-            int shellCount = Math.min(8, (int) (beamLen / 4.0));
-            Material[] shellMats = { Material.BLUE_ICE, Material.PRISMARINE, Material.PACKED_ICE };
-            for (int i = 0; i < shellCount; i++) {
-                double dist = ((double) i / shellCount) * beamLen;
-                double angle = dist * 0.6 + timeOffset * 2.0;
-                double shellRadius = 0.7 * pulseScale;
-                Location shellLoc = bossLoc.clone().add(norm.clone().multiply(dist))
-                        .add(perp1.clone().multiply(Math.cos(angle) * shellRadius)
-                                .add(perp2.clone().multiply(Math.sin(angle) * shellRadius)));
-                DisplayBuilder.BlockDisplayHandle shell = displayBuilder.spawnBlock(shellLoc, shellMats[i % shellMats.length]);
-                shell.scale(0.25f * pulseScale, 0.25f * pulseScale, 0.25f * pulseScale);
-                shell.glow(60, 160, 255);
-                beam.displays.add(shell.entity());
-            }
-
-            // LAYER 3: Impact ring (reduced from 6 to 3)
-            for (int r = 0; r < 3; r++) {
-                double ringAngle = r * (Math.PI * 2 / 3) + beam.fireTick * 0.15;
-                Location ringLoc = targetLoc.clone().add(Math.cos(ringAngle) * 1.5, -0.3, Math.sin(ringAngle) * 1.5);
-                DisplayBuilder.BlockDisplayHandle scorch = displayBuilder.spawnBlock(ringLoc, Material.LIGHT_BLUE_STAINED_GLASS);
-                scorch.scale(0.35f, 0.15f, 0.35f);
-                scorch.glow(100, 220, 255);
-                beam.displays.add(scorch.entity());
-            }
+        Particle.DustOptions beamDust = new Particle.DustOptions(Color.fromRGB(80, 200, 255), 1.5f);
+        for (double d = 0; d < beamLen; d += 1.0) {
+            Location pt = bossLoc.clone().add(norm.clone().multiply(d));
+            world.spawnParticle(Particle.DUST, pt, 1, 0.05, 0.05, 0.05, 0, beamDust);
         }
 
-        // Particles every tick (cheap — no entity creation)
-        if (beam.fireTick % 2 == 0) {
-            Particle.DustOptions accentCyan = new Particle.DustOptions(Color.fromRGB(0, 220, 255), 1.2f);
-            for (double d = 0; d < beamLen; d += 2.5) {
-                double a1 = d * 0.8 + timeOffset * 2.0;
-                double r1 = 0.6 * pulseScale;
-                double bx = bossLoc.getX() + norm.getX() * d;
-                double by = bossLoc.getY() + norm.getY() * d;
-                double bz = bossLoc.getZ() + norm.getZ() * d;
-                world.spawnParticle(Particle.DUST,
-                        bx + perp1.getX() * Math.cos(a1) * r1 + perp2.getX() * Math.sin(a1) * r1,
-                        by + perp1.getY() * Math.cos(a1) * r1 + perp2.getY() * Math.sin(a1) * r1,
-                        bz + perp1.getZ() * Math.cos(a1) * r1 + perp2.getZ() * Math.sin(a1) * r1,
-                        1, 0, 0, 0, 0, accentCyan);
-            }
-            world.spawnParticle(Particle.ELECTRIC_SPARK, targetLoc, 1, 0.2, 0.2, 0.2, 0.02);
-        }
+        // Impact spark at target
+        world.spawnParticle(Particle.ELECTRIC_SPARK, targetLoc, 2, 0.3, 0.3, 0.3, 0.03);
 
         // ═══════════════════════════════════════════════════
         // DAMAGE + HEALING
@@ -1436,11 +1384,24 @@ public class BlueMoonBossManager {
         return !laserBeams.isEmpty();
     }
 
+    /** Debug toggle — when true, glow-based invincibility is disabled */
+    private boolean debugDisableInvincibility = false;
+
+    public void setDebugDisableInvincibility(boolean disable) {
+        this.debugDisableInvincibility = disable;
+        plugin.getLogger().info("[BlueMoon] Boss invincibility " + (disable ? "DISABLED (debug)" : "ENABLED"));
+    }
+
+    public boolean isDebugDisableInvincibility() {
+        return debugDisableInvincibility;
+    }
+
     /**
      * Whether the boss is currently invincible (glowing = invincible during laser).
      * Used by damage handler to cancel damage when boss is glowing.
      */
     public boolean isBossInvincible() {
+        if (debugDisableInvincibility) return false;
         return bossEntity != null && bossEntity.isGlowing();
     }
 
