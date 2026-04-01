@@ -205,6 +205,16 @@ public class ModeRestrictionListener implements Listener {
         if (kbAttr != null && kbAttr.getBaseValue() < 1.0) {
             kbAttr.setBaseValue(1.0);
         }
+
+        // Zero out NMS hurtTime — this is what causes the movement freeze/stutter
+        // on damage. The red tint + input lock lasts hurtDuration ticks (default 10).
+        // Setting hurtTime to 0 immediately after damage removes the stutter.
+        try {
+            var handle = ((org.bukkit.craftbukkit.entity.CraftPlayer) player).getHandle();
+            handle.hurtDuration = 0;
+            handle.hurtTime = 0;
+            handle.invulnerableTime = 0;
+        } catch (Exception ignored) {}
     }
 
     /**
