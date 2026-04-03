@@ -143,7 +143,7 @@ public class BlockCorruptor {
      */
     public Location selectRandomBlock(World world, int centerX, int centerZ, int radiusChunks) {
         ThreadLocalRandom random = ThreadLocalRandom.current();
-        int maxAttempts = 15;
+        int maxAttempts = 20;
 
         for (int attempt = 0; attempt < maxAttempts; attempt++) {
             // Pick a random chunk within radius
@@ -159,12 +159,18 @@ public class BlockCorruptor {
             int blockX = (chunkX << 4) + random.nextInt(16);
             int blockZ = (chunkZ << 4) + random.nextInt(16);
 
-            // Pick a random Y between bedrock layer and surface
-            int minY = world.getMinHeight() + 5; // Avoid bedrock
-            int maxY = world.getHighestBlockYAt(blockX, blockZ);
-            if (maxY <= minY) continue;
-
-            int blockY = random.nextInt(minY, maxY + 1);
+            // Prioritize surface blocks (80% chance surface, 20% underground)
+            int surfaceY = world.getHighestBlockYAt(blockX, blockZ);
+            int blockY;
+            if (random.nextDouble() < 0.8) {
+                // Surface: pick from top 3 blocks (grass, dirt, path, etc.)
+                blockY = surfaceY - random.nextInt(3);
+            } else {
+                // Underground: random Y for cave corruption
+                int minY = world.getMinHeight() + 5;
+                if (surfaceY <= minY) continue;
+                blockY = random.nextInt(minY, surfaceY);
+            }
 
             Block block = world.getBlockAt(blockX, blockY, blockZ);
             Material type = block.getType();

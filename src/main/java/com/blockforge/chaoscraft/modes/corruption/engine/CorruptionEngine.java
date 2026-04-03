@@ -181,9 +181,10 @@ public class CorruptionEngine {
         List<Player> players = activeWorld.getPlayers();
         Player target = players.get((int) (Math.random() * players.size()));
 
+        // Select blocks near the player (within 15 blocks, not chunk-scale)
         Location center = target.getLocation();
         Location blockLoc = corruptor.selectRandomBlock(
-                activeWorld, center.getBlockX(), center.getBlockZ(), config.getSpreadRadiusChunks());
+                activeWorld, center.getBlockX(), center.getBlockZ(), 1); // 1 chunk = 16 blocks around player
 
         if (blockLoc == null) return;
 
@@ -191,13 +192,10 @@ public class CorruptionEngine {
         BlockDisplay display = corruptor.corruptBlock(blockLoc, restorer);
         if (display == null) return;
 
-        // Find a target open space for this floating block to drift toward
-        Location targetSpace = spaceFinder.findNearestOpenSpace(blockLoc, config.getSpreadRadiusChunks() * 16);
-
-        // If no open space found, just float upward slightly
-        if (targetSpace == null) {
-            targetSpace = blockLoc.clone().add(0, 3, 0);
-        }
+        // Float upward 3-6 blocks above where the block was, then drift toward nearest player
+        double floatHeight = 3.0 + Math.random() * 3.0;
+        Location targetSpace = blockLoc.clone().add(
+                (Math.random() - 0.5) * 6, floatHeight, (Math.random() - 0.5) * 6);
 
         // Create floating block tracking entry
         FloatingBlock fb = new FloatingBlock();
@@ -241,17 +239,33 @@ public class CorruptionEngine {
             double dz = target.getZ() - current.getZ();
             double dist = Math.sqrt(dx * dx + dy * dy + dz * dz);
 
-            // If close enough to target, stop moving (slight hover)
+            // If close enough to target, retarget toward nearest player + bob
             if (dist < 0.5) {
-                // Add gentle bobbing effect
+                // Find nearest player and slowly drift toward them
+                Player nearest = null;
+                double nearestDist = Double.MAX_VALUE;
+                for (Player p : activeWorld.getPlayers()) {
+                    if (p.getGameMode() == GameMode.SURVIVAL || p.getGameMode() == GameMode.ADVENTURE) {
+                        double d = p.getLocation().distanceSquared(current);
+                        if (d < nearestDist) {
+                            nearestDist = d;
+                            nearest = p;
+                        }
+                    }
+                }
+                if (nearest != null && nearestDist > 4) { // Don't retarget if already on top of player
+                    Location playerLoc = nearest.getLocation().add(0, 2.5, 0);
+                    fb.targetLocation = playerLoc;
+                }
+                // Gentle bobbing while drifting
                 double bobY = Math.sin(tickCounter * 0.05) * 0.02;
                 fb.entity.teleport(current.clone().add(0, bobY, 0));
                 continue;
             }
 
-            // Move 1/20th of the remaining distance per tick (smooth deceleration)
+            // Move toward target — Y rises 3x faster than XZ drift
             double moveX = dx * MOVE_FRACTION * fb.currentSpeed;
-            double moveY = dy * MOVE_FRACTION * fb.currentSpeed;
+            double moveY = dy * MOVE_FRACTION * fb.currentSpeed * 3.0; // Rise fast
             double moveZ = dz * MOVE_FRACTION * fb.currentSpeed;
 
             Location newLoc = current.clone().add(moveX, moveY, moveZ);
