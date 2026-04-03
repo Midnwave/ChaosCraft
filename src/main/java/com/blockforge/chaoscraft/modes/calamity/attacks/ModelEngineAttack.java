@@ -226,16 +226,7 @@ public abstract class ModelEngineAttack extends AbstractAttack {
                         Class.forName("com.ticxo.modelengine.api.model.ActiveModel"), boolean.class);
                 addModel.invoke(modeledEntity, activeModel, true);
 
-                // AFTER addModel — try Bukkit SCALE attribute as backup (1.21.4+)
-                if (scale != 1.0 && modelHost instanceof org.bukkit.entity.LivingEntity living) {
-                    var scaleAttr = living.getAttribute(org.bukkit.attribute.Attribute.SCALE);
-                    if (scaleAttr != null) {
-                        scaleAttr.setBaseValue(scale);
-                        plugin.debug("[ModelEngine] Set Bukkit SCALE attribute " + scale + " on " + getModelId());
-                    }
-                }
-
-                // Also try setScale AFTER addModel in case ME4 needs the model attached first
+                // Try setScale AFTER addModel too — some ME4 versions need it post-attach
                 if (scale != 1.0) {
                     try {
                         Method setScale = activeModel.getClass().getMethod("setScale", double.class);
@@ -243,6 +234,8 @@ public abstract class ModelEngineAttack extends AbstractAttack {
                         plugin.debug("[ModelEngine] Post-addModel setScale(double " + scale + ") on " + getModelId());
                     } catch (Exception ignored) {}
                 }
+                // DO NOT set Bukkit SCALE attribute — it scales the invisible zombie
+                // hitbox, not the ME model, and can conflict with ME4's own scaling
             }
 
             // Play "spawn" animation if it exists
