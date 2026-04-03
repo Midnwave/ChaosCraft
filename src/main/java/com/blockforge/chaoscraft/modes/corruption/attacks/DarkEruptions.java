@@ -64,9 +64,9 @@ public final class DarkEruptions {
 
         public CorruptionShockwave(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("corruption_shockwave", AttackType.BLOCK_DISPLAY, 1, "modes/corruption/attacks"));
-            config.setDamage(42.0);
-            config.setDamageRadius(3.0);
-            config.setDurationTicks(200);
+            config.setDamage(210.0);
+            config.setDamageRadius(4.5);
+            config.setDurationTicks(400);
             config.setCooldownTicks(300);
         }
 
@@ -159,9 +159,9 @@ public final class DarkEruptions {
 
         public DarkPulse(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("dark_pulse", AttackType.BLOCK_DISPLAY, 1, "modes/corruption/attacks"));
-            config.setDamage(44.0);
-            config.setDamageRadius(3.5);
-            config.setDurationTicks(320);
+            config.setDamage(220.0);
+            config.setDamageRadius(5.2);
+            config.setDurationTicks(640);
             config.setCooldownTicks(280);
         }
 
@@ -255,9 +255,9 @@ public final class DarkEruptions {
 
         public VoidWave(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("void_wave", AttackType.BLOCK_DISPLAY, 1, "modes/corruption/attacks"));
-            config.setDamage(48.0);
-            config.setDamageRadius(4.0);
-            config.setDurationTicks(250);
+            config.setDamage(240.0);
+            config.setDamageRadius(6.0);
+            config.setDurationTicks(500);
             config.setCooldownTicks(350);
         }
 
@@ -353,9 +353,9 @@ public final class DarkEruptions {
 
         public CorruptionTsunami(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("corruption_tsunami", AttackType.BLOCK_DISPLAY, 1, "modes/corruption/attacks"));
-            config.setDamage(52.0);
-            config.setDamageRadius(4.5);
-            config.setDurationTicks(300);
+            config.setDamage(260.0);
+            config.setDamageRadius(6.8);
+            config.setDurationTicks(600);
             config.setCooldownTicks(400);
             config.setDamageOnImpactOnly(true);
             config.setImpactDamage(52.0);
@@ -493,9 +493,9 @@ public final class DarkEruptions {
 
         public ShadowRipple(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("shadow_ripple", AttackType.BLOCK_DISPLAY, 1, "modes/corruption/attacks"));
-            config.setDamage(40.0);
-            config.setDamageRadius(3.0);
-            config.setDurationTicks(280);
+            config.setDamage(200.0);
+            config.setDamageRadius(4.5);
+            config.setDurationTicks(560);
             config.setCooldownTicks(260);
         }
 
@@ -604,9 +604,9 @@ public final class DarkEruptions {
 
         public DarkEnergyBurst(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("dark_energy_burst", AttackType.BLOCK_DISPLAY, 1, "modes/corruption/attacks"));
-            config.setDamage(46.0);
-            config.setDamageRadius(3.5);
-            config.setDurationTicks(200);
+            config.setDamage(230.0);
+            config.setDamageRadius(5.2);
+            config.setDurationTicks(400);
             config.setCooldownTicks(320);
         }
 
@@ -702,9 +702,9 @@ public final class DarkEruptions {
 
         public CorruptionHeartbeat(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("corruption_heartbeat", AttackType.BLOCK_DISPLAY, 1, "modes/corruption/attacks"));
-            config.setDamage(40.0);
-            config.setDamageRadius(4.0);
-            config.setDurationTicks(360);
+            config.setDamage(200.0);
+            config.setDamageRadius(6.0);
+            config.setDurationTicks(720);
             config.setCooldownTicks(300);
         }
 
@@ -808,9 +808,9 @@ public final class DarkEruptions {
 
         public VoidTremor(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("void_tremor", AttackType.BLOCK_DISPLAY, 1, "modes/corruption/attacks"));
-            config.setDamage(44.0);
-            config.setDamageRadius(3.5);
-            config.setDurationTicks(240);
+            config.setDamage(220.0);
+            config.setDamageRadius(5.2);
+            config.setDurationTicks(480);
             config.setCooldownTicks(280);
         }
 
@@ -919,9 +919,9 @@ public final class DarkEruptions {
 
         public ShadowCascade(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("shadow_cascade", AttackType.BLOCK_DISPLAY, 1, "modes/corruption/attacks"));
-            config.setDamage(42.0);
-            config.setDamageRadius(3.0);
-            config.setDurationTicks(300);
+            config.setDamage(210.0);
+            config.setDamageRadius(4.5);
+            config.setDurationTicks(600);
             config.setCooldownTicks(320);
             config.setDamageOnImpactOnly(true);
             config.setImpactDamage(42.0);
@@ -1031,9 +1031,9 @@ public final class DarkEruptions {
 
         public DarkRadiation(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("dark_radiation", AttackType.BLOCK_DISPLAY, 1, "modes/corruption/attacks"));
-            config.setDamage(40.0);
-            config.setDamageRadius(2.5);
-            config.setDurationTicks(350);
+            config.setDamage(200.0);
+            config.setDamageRadius(3.8);
+            config.setDurationTicks(700);
             config.setCooldownTicks(280);
         }
 
@@ -1144,9 +1144,9 @@ public final class DarkEruptions {
 
         public CorruptionGeyser(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("corruption_geyser", AttackType.BLOCK_DISPLAY, 1, "modes/corruption/attacks"));
-            config.setDamage(46.0);
-            config.setDamageRadius(3.5);
-            config.setDurationTicks(280);
+            config.setDamage(230.0);
+            config.setDamageRadius(5.2);
+            config.setDurationTicks(560);
             config.setCooldownTicks(340);
             config.setDamageOnImpactOnly(true);
             config.setImpactDamage(46.0);
@@ -1264,9 +1264,9 @@ public final class DarkEruptions {
 
         public VoidDischarge(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("void_discharge", AttackType.BLOCK_DISPLAY, 1, "modes/corruption/attacks"));
-            config.setDamage(50.0);
-            config.setDamageRadius(3.5);
-            config.setDurationTicks(180);
+            config.setDamage(250.0);
+            config.setDamageRadius(5.2);
+            config.setDurationTicks(360);
             config.setCooldownTicks(300);
             config.setDamageOnImpactOnly(true);
             config.setImpactDamage(50.0);
@@ -1409,9 +1409,9 @@ public final class DarkEruptions {
 
         public ShadowStorm(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("shadow_storm", AttackType.BLOCK_DISPLAY, 1, "modes/corruption/attacks"));
-            config.setDamage(48.0);
-            config.setDamageRadius(4.0);
-            config.setDurationTicks(320);
+            config.setDamage(240.0);
+            config.setDamageRadius(6.0);
+            config.setDurationTicks(640);
             config.setCooldownTicks(360);
         }
 
@@ -1524,9 +1524,9 @@ public final class DarkEruptions {
 
         public CorruptionNova(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("corruption_nova", AttackType.BLOCK_DISPLAY, 1, "modes/corruption/attacks"));
-            config.setDamage(54.0);
-            config.setDamageRadius(5.0);
-            config.setDurationTicks(250);
+            config.setDamage(270.0);
+            config.setDamageRadius(7.5);
+            config.setDurationTicks(500);
             config.setCooldownTicks(380);
             config.setDamageOnImpactOnly(true);
             config.setImpactDamage(54.0);
@@ -1678,9 +1678,9 @@ public final class DarkEruptions {
 
         public DarkTide(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("dark_tide", AttackType.BLOCK_DISPLAY, 1, "modes/corruption/attacks"));
-            config.setDamage(42.0);
-            config.setDamageRadius(3.0);
-            config.setDurationTicks(260);
+            config.setDamage(210.0);
+            config.setDamageRadius(4.5);
+            config.setDurationTicks(520);
             config.setCooldownTicks(300);
         }
 

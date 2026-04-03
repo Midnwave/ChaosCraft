@@ -122,9 +122,9 @@ public final class CorruptionEnvironmental {
     public static class VoidPulse extends EnvironmentalAttack {
         public VoidPulse(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("void_pulse", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
-            config.setDamage(8.0);
-            config.setDamageRadius(10.0);
-            config.setDurationTicks(30);
+            config.setDamage(40.0);
+            config.setDamageRadius(15.0);
+            config.setDurationTicks(60);
             config.setCooldownTicks(200);
             config.setTicksBetweenDamage(5);
         }
@@ -149,9 +149,9 @@ public final class CorruptionEnvironmental {
     public static class RealityTear extends EnvironmentalAttack {
         public RealityTear(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("reality_tear", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
-            config.setDamage(7.0);
-            config.setDamageRadius(4.0);
-            config.setDurationTicks(60);
+            config.setDamage(35.0);
+            config.setDamageRadius(6.0);
+            config.setDurationTicks(120);
             config.setCooldownTicks(220);
             config.setTicksBetweenDamage(10);
         }
@@ -180,9 +180,9 @@ public final class CorruptionEnvironmental {
     public static class GlitchZone extends EnvironmentalAttack {
         public GlitchZone(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("glitch_zone", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
-            config.setDamage(4.0);
-            config.setDamageRadius(8.0);
-            config.setDurationTicks(120);
+            config.setDamage(20.0);
+            config.setDamageRadius(12.0);
+            config.setDurationTicks(240);
             config.setCooldownTicks(300);
             config.setTicksBetweenDamage(15);
         }
@@ -219,9 +219,9 @@ public final class CorruptionEnvironmental {
 
         public CorruptionWave(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("corruption_wave", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
-            config.setDamage(8.0);
-            config.setDamageRadius(12.0);
-            config.setDurationTicks(40);
+            config.setDamage(40.0);
+            config.setDamageRadius(18.0);
+            config.setDurationTicks(80);
             config.setCooldownTicks(250);
             config.setTicksBetweenDamage(8);
         }
@@ -253,9 +253,9 @@ public final class CorruptionEnvironmental {
     public static class DataStorm extends EnvironmentalAttack {
         public DataStorm(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("data_storm", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
-            config.setDamage(3.0);
-            config.setDamageRadius(15.0);
-            config.setDurationTicks(100);
+            config.setDamage(15.0);
+            config.setDamageRadius(22.5);
+            config.setDurationTicks(200);
             config.setCooldownTicks(280);
             config.setTicksBetweenDamage(10);
         }
@@ -290,9 +290,9 @@ public final class CorruptionEnvironmental {
     public static class NullVoid extends EnvironmentalAttack {
         public NullVoid(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("null_void", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
-            config.setDamage(5.0);
-            config.setDamageRadius(6.0);
-            config.setDurationTicks(80);
+            config.setDamage(25.0);
+            config.setDamageRadius(9.0);
+            config.setDurationTicks(160);
             config.setCooldownTicks(240);
             config.setTicksBetweenDamage(10);
         }
@@ -323,9 +323,9 @@ public final class CorruptionEnvironmental {
     public static class PixelScatter extends EnvironmentalAttack {
         public PixelScatter(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("pixel_scatter", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
-            config.setDamage(4.0);
-            config.setDamageRadius(10.0);
-            config.setDurationTicks(60);
+            config.setDamage(20.0);
+            config.setDamageRadius(15.0);
+            config.setDurationTicks(120);
             config.setCooldownTicks(220);
             config.setTicksBetweenDamage(12);
         }
@@ -359,9 +359,9 @@ public final class CorruptionEnvironmental {
     public static class ErrorSpike extends EnvironmentalAttack {
         public ErrorSpike(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("error_spike", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
-            config.setDamage(12.0);
-            config.setDamageRadius(2.0);
-            config.setDurationTicks(30);
+            config.setDamage(60.0);
+            config.setDamageRadius(3.0);
+            config.setDurationTicks(60);
             config.setCooldownTicks(200);
             config.setTicksBetweenDamage(6);
         }
@@ -390,9 +390,9 @@ public final class CorruptionEnvironmental {
     public static class BufferOverflow extends EnvironmentalAttack {
         public BufferOverflow(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("buffer_overflow", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
-            config.setDamage(4.0);
-            config.setDamageRadius(10.0);
-            config.setDurationTicks(120);
+            config.setDamage(20.0);
+            config.setDamageRadius(15.0);
+            config.setDurationTicks(240);
             config.setCooldownTicks(300);
             config.setTicksBetweenDamage(12);
         }
@@ -429,9 +429,9 @@ public final class CorruptionEnvironmental {
 
         public MemoryLeak(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("memory_leak", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
-            config.setDamage(3.0);
-            config.setDamageRadius(5.0);
-            config.setDurationTicks(160);
+            config.setDamage(15.0);
+            config.setDamageRadius(7.5);
+            config.setDurationTicks(320);
             config.setCooldownTicks(350);
             config.setTicksBetweenDamage(15);
         }
@@ -466,9 +466,9 @@ public final class CorruptionEnvironmental {
     public static class StackOverflow extends EnvironmentalAttack {
         public StackOverflow(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("stack_overflow", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
-            config.setDamage(6.0);
-            config.setDamageRadius(6.0);
-            config.setDurationTicks(60);
+            config.setDamage(30.0);
+            config.setDamageRadius(9.0);
+            config.setDurationTicks(120);
             config.setCooldownTicks(260);
             config.setTicksBetweenDamage(20);
         }
@@ -506,9 +506,9 @@ public final class CorruptionEnvironmental {
     public static class Fragmentation extends EnvironmentalAttack {
         public Fragmentation(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("fragmentation", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
-            config.setDamage(6.0);
-            config.setDamageRadius(8.0);
-            config.setDurationTicks(20);
+            config.setDamage(30.0);
+            config.setDamageRadius(12.0);
+            config.setDurationTicks(40);
             config.setCooldownTicks(180);
             config.setTicksBetweenDamage(5);
         }
@@ -547,9 +547,9 @@ public final class CorruptionEnvironmental {
     public static class DesyncPull extends EnvironmentalAttack {
         public DesyncPull(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("desync_pull", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
-            config.setDamage(6.0);
-            config.setDamageRadius(8.0);
-            config.setDurationTicks(40);
+            config.setDamage(30.0);
+            config.setDamageRadius(12.0);
+            config.setDurationTicks(80);
             config.setCooldownTicks(240);
             config.setTicksBetweenDamage(10);
         }
@@ -589,9 +589,9 @@ public final class CorruptionEnvironmental {
     public static class VoidCollapse extends EnvironmentalAttack {
         public VoidCollapse(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("void_collapse", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
-            config.setDamage(10.0);
-            config.setDamageRadius(6.0);
-            config.setDurationTicks(50);
+            config.setDamage(50.0);
+            config.setDamageRadius(9.0);
+            config.setDurationTicks(100);
             config.setCooldownTicks(280);
             config.setTicksBetweenDamage(50); // Damage only on burst
         }
@@ -642,9 +642,9 @@ public final class CorruptionEnvironmental {
     public static class CorruptedGround extends EnvironmentalAttack {
         public CorruptedGround(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("corrupted_ground", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
-            config.setDamage(3.0);
-            config.setDamageRadius(6.0);
-            config.setDurationTicks(200);
+            config.setDamage(15.0);
+            config.setDamageRadius(9.0);
+            config.setDurationTicks(400);
             config.setCooldownTicks(350);
             config.setTicksBetweenDamage(10);
         }
@@ -679,9 +679,9 @@ public final class CorruptionEnvironmental {
     public static class GlitchLightning extends EnvironmentalAttack {
         public GlitchLightning(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("glitch_lightning", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
-            config.setDamage(8.0);
-            config.setDamageRadius(10.0);
-            config.setDurationTicks(60);
+            config.setDamage(40.0);
+            config.setDamageRadius(15.0);
+            config.setDurationTicks(120);
             config.setCooldownTicks(220);
             config.setTicksBetweenDamage(15);
         }
@@ -717,9 +717,9 @@ public final class CorruptionEnvironmental {
     public static class StaticField extends EnvironmentalAttack {
         public StaticField(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("static_field", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
-            config.setDamage(4.0);
-            config.setDamageRadius(7.0);
-            config.setDurationTicks(100);
+            config.setDamage(20.0);
+            config.setDamageRadius(10.5);
+            config.setDurationTicks(200);
             config.setCooldownTicks(260);
             config.setTicksBetweenDamage(12);
         }
@@ -758,9 +758,9 @@ public final class CorruptionEnvironmental {
     public static class CorruptionGeyser extends EnvironmentalAttack {
         public CorruptionGeyser(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("corruption_geyser_env", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
-            config.setDamage(8.0);
-            config.setDamageRadius(3.0);
-            config.setDurationTicks(30);
+            config.setDamage(40.0);
+            config.setDamageRadius(4.5);
+            config.setDurationTicks(60);
             config.setCooldownTicks(200);
             config.setTicksBetweenDamage(8);
         }
@@ -796,9 +796,9 @@ public final class CorruptionEnvironmental {
     public static class VirusSpread extends EnvironmentalAttack {
         public VirusSpread(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("virus_spread", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
-            config.setDamage(4.0);
-            config.setDamageRadius(12.0);
-            config.setDurationTicks(100);
+            config.setDamage(20.0);
+            config.setDamageRadius(18.0);
+            config.setDurationTicks(200);
             config.setCooldownTicks(300);
             config.setTicksBetweenDamage(10);
         }
@@ -834,9 +834,9 @@ public final class CorruptionEnvironmental {
     public static class MalwarePulse extends EnvironmentalAttack {
         public MalwarePulse(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("malware_pulse", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
-            config.setDamage(3.0);
-            config.setDamageRadius(6.0);
-            config.setDurationTicks(60);
+            config.setDamage(15.0);
+            config.setDamageRadius(9.0);
+            config.setDurationTicks(120);
             config.setCooldownTicks(200);
             config.setTicksBetweenDamage(5);
         }
@@ -864,9 +864,9 @@ public final class CorruptionEnvironmental {
     public static class TrojanBurst extends EnvironmentalAttack {
         public TrojanBurst(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("trojan_burst", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
-            config.setDamage(14.0);
-            config.setDamageRadius(8.0);
-            config.setDurationTicks(50);
+            config.setDamage(70.0);
+            config.setDamageRadius(12.0);
+            config.setDurationTicks(100);
             config.setCooldownTicks(300);
             config.setTicksBetweenDamage(50); // Only damage on burst
             config.setDamageDelayTicks(40);
@@ -911,9 +911,9 @@ public final class CorruptionEnvironmental {
 
         public WormTrail(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("worm_trail", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
-            config.setDamage(6.0);
-            config.setDamageRadius(3.0);
-            config.setDurationTicks(120);
+            config.setDamage(30.0);
+            config.setDamageRadius(4.5);
+            config.setDurationTicks(240);
             config.setCooldownTicks(260);
             config.setTicksBetweenDamage(8);
         }
@@ -952,9 +952,9 @@ public final class CorruptionEnvironmental {
 
         public Rootkit(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("rootkit", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
-            config.setDamage(10.0);
-            config.setDamageRadius(5.0);
-            config.setDurationTicks(80);
+            config.setDamage(50.0);
+            config.setDamageRadius(7.5);
+            config.setDurationTicks(160);
             config.setCooldownTicks(300);
             config.setTicksBetweenDamage(10);
             config.setDamageDelayTicks(80); // No auto-damage until triggered
@@ -1004,9 +1004,9 @@ public final class CorruptionEnvironmental {
     public static class EntropyDrain extends EnvironmentalAttack {
         public EntropyDrain(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("entropy_drain", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
-            config.setDamage(2.0);
-            config.setDamageRadius(8.0);
-            config.setDurationTicks(120);
+            config.setDamage(10.0);
+            config.setDamageRadius(12.0);
+            config.setDurationTicks(240);
             config.setCooldownTicks(280);
             config.setTicksBetweenDamage(10);
         }
@@ -1048,9 +1048,9 @@ public final class CorruptionEnvironmental {
     public static class BitRot extends EnvironmentalAttack {
         public BitRot(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("bit_rot", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
-            config.setDamage(3.0);
-            config.setDamageRadius(10.0);
-            config.setDurationTicks(160);
+            config.setDamage(15.0);
+            config.setDamageRadius(15.0);
+            config.setDurationTicks(320);
             config.setCooldownTicks(340);
             config.setTicksBetweenDamage(12);
         }
@@ -1084,9 +1084,9 @@ public final class CorruptionEnvironmental {
     public static class CrashDump extends EnvironmentalAttack {
         public CrashDump(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("crash_dump", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
-            config.setDamage(12.0);
-            config.setDamageRadius(10.0);
-            config.setDurationTicks(10);
+            config.setDamage(60.0);
+            config.setDamageRadius(15.0);
+            config.setDurationTicks(20);
             config.setCooldownTicks(300);
             config.setTicksBetweenDamage(10);
         }
@@ -1118,9 +1118,9 @@ public final class CorruptionEnvironmental {
     public static class Deadlock extends EnvironmentalAttack {
         public Deadlock(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("deadlock", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
-            config.setDamage(4.0);
-            config.setDamageRadius(6.0);
-            config.setDurationTicks(80);
+            config.setDamage(20.0);
+            config.setDamageRadius(9.0);
+            config.setDurationTicks(160);
             config.setCooldownTicks(260);
             config.setTicksBetweenDamage(12);
         }
@@ -1160,9 +1160,9 @@ public final class CorruptionEnvironmental {
     public static class ScreenTear extends EnvironmentalAttack {
         public ScreenTear(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("screen_tear", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
-            config.setDamage(7.0);
-            config.setDamageRadius(10.0);
-            config.setDurationTicks(40);
+            config.setDamage(35.0);
+            config.setDamageRadius(15.0);
+            config.setDurationTicks(80);
             config.setCooldownTicks(220);
             config.setTicksBetweenDamage(8);
         }
@@ -1195,9 +1195,9 @@ public final class CorruptionEnvironmental {
     public static class BlueScreen extends EnvironmentalAttack {
         public BlueScreen(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("blue_screen", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
-            config.setDamage(8.0);
-            config.setDamageRadius(15.0);
-            config.setDurationTicks(5);
+            config.setDamage(40.0);
+            config.setDamageRadius(22.5);
+            config.setDurationTicks(10);
             config.setCooldownTicks(350);
             config.setTicksBetweenDamage(5);
         }
@@ -1229,9 +1229,9 @@ public final class CorruptionEnvironmental {
     public static class ArtifactRain extends EnvironmentalAttack {
         public ArtifactRain(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("artifact_rain", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
-            config.setDamage(4.0);
-            config.setDamageRadius(8.0);
-            config.setDurationTicks(80);
+            config.setDamage(20.0);
+            config.setDamageRadius(12.0);
+            config.setDurationTicks(160);
             config.setCooldownTicks(250);
             config.setTicksBetweenDamage(10);
         }
@@ -1270,9 +1270,9 @@ public final class CorruptionEnvironmental {
     public static class RenderFail extends EnvironmentalAttack {
         public RenderFail(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("render_fail", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
-            config.setDamage(5.0);
-            config.setDamageRadius(8.0);
-            config.setDurationTicks(60);
+            config.setDamage(25.0);
+            config.setDamageRadius(12.0);
+            config.setDurationTicks(120);
             config.setCooldownTicks(240);
             config.setTicksBetweenDamage(10);
         }
@@ -1308,9 +1308,9 @@ public final class CorruptionEnvironmental {
     public static class LagSpike extends EnvironmentalAttack {
         public LagSpike(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("lag_spike", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
-            config.setDamage(6.0);
-            config.setDamageRadius(10.0);
-            config.setDurationTicks(30);
+            config.setDamage(30.0);
+            config.setDamageRadius(15.0);
+            config.setDurationTicks(60);
             config.setCooldownTicks(240);
             config.setTicksBetweenDamage(30);
         }
@@ -1349,9 +1349,9 @@ public final class CorruptionEnvironmental {
     public static class TextureMissing extends EnvironmentalAttack {
         public TextureMissing(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("texture_missing", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
-            config.setDamage(5.0);
-            config.setDamageRadius(6.0);
-            config.setDurationTicks(80);
+            config.setDamage(25.0);
+            config.setDamageRadius(9.0);
+            config.setDurationTicks(160);
             config.setCooldownTicks(240);
             config.setTicksBetweenDamage(10);
         }
@@ -1391,9 +1391,9 @@ public final class CorruptionEnvironmental {
 
         public GhostImage(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("ghost_image", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
-            config.setDamage(8.0);
-            config.setDamageRadius(3.0);
-            config.setDurationTicks(80);
+            config.setDamage(40.0);
+            config.setDamageRadius(4.5);
+            config.setDurationTicks(160);
             config.setCooldownTicks(260);
             config.setTicksBetweenDamage(20);
         }
@@ -1438,9 +1438,9 @@ public final class CorruptionEnvironmental {
     public static class FrameDrop extends EnvironmentalAttack {
         public FrameDrop(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("frame_drop", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
-            config.setDamage(4.0);
-            config.setDamageRadius(8.0);
-            config.setDurationTicks(60);
+            config.setDamage(20.0);
+            config.setDamageRadius(12.0);
+            config.setDurationTicks(120);
             config.setCooldownTicks(220);
             config.setTicksBetweenDamage(12);
         }
@@ -1475,9 +1475,9 @@ public final class CorruptionEnvironmental {
     public static class SignalLoss extends EnvironmentalAttack {
         public SignalLoss(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("signal_loss", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
-            config.setDamage(6.0);
-            config.setDamageRadius(7.0);
-            config.setDurationTicks(100);
+            config.setDamage(30.0);
+            config.setDamageRadius(10.5);
+            config.setDurationTicks(200);
             config.setCooldownTicks(260);
             config.setTicksBetweenDamage(8);
         }
@@ -1517,9 +1517,9 @@ public final class CorruptionEnvironmental {
     public static class Overclock extends EnvironmentalAttack {
         public Overclock(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("overclock", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
-            config.setDamage(3.0);
-            config.setDamageRadius(10.0);
-            config.setDurationTicks(60);
+            config.setDamage(15.0);
+            config.setDamageRadius(15.0);
+            config.setDurationTicks(120);
             config.setCooldownTicks(240);
             config.setTicksBetweenDamage(6);
         }
@@ -1561,9 +1561,9 @@ public final class CorruptionEnvironmental {
     public static class KernelPanic extends EnvironmentalAttack {
         public KernelPanic(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("kernel_panic", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
-            config.setDamage(8.0);
-            config.setDamageRadius(12.0);
-            config.setDurationTicks(30);
+            config.setDamage(40.0);
+            config.setDamageRadius(18.0);
+            config.setDurationTicks(60);
             config.setCooldownTicks(240);
             config.setTicksBetweenDamage(5);
         }
@@ -1603,9 +1603,9 @@ public final class CorruptionEnvironmental {
     public static class SystemRestore extends EnvironmentalAttack {
         public SystemRestore(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("system_restore", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
-            config.setDamage(7.0);
-            config.setDamageRadius(8.0);
-            config.setDurationTicks(50);
+            config.setDamage(35.0);
+            config.setDamageRadius(12.0);
+            config.setDurationTicks(100);
             config.setCooldownTicks(260);
             config.setTicksBetweenDamage(12);
         }
@@ -1651,9 +1651,9 @@ public final class CorruptionEnvironmental {
     public static class TotalCorruption extends EnvironmentalAttack {
         public TotalCorruption(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("total_corruption", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
-            config.setDamage(6.0);
-            config.setDamageRadius(20.0);
-            config.setDurationTicks(10);
+            config.setDamage(30.0);
+            config.setDamageRadius(30.0);
+            config.setDurationTicks(20);
             config.setCooldownTicks(400);
             config.setTicksBetweenDamage(10);
         }

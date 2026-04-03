@@ -63,9 +63,9 @@ public final class GlitchAnomalies {
 
         public VoidRift(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("void_rift", AttackType.BLOCK_DISPLAY, 1, "modes/corruption/attacks"));
-            config.setDamage(42.0);
-            config.setDamageRadius(4.0);
-            config.setDurationTicks(300);
+            config.setDamage(210.0);
+            config.setDamageRadius(6.0);
+            config.setDurationTicks(600);
             config.setCooldownTicks(280);
         }
 
@@ -164,9 +164,9 @@ public final class GlitchAnomalies {
 
         public RealityCrack(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("reality_crack", AttackType.BLOCK_DISPLAY, 1, "modes/corruption/attacks"));
-            config.setDamage(44.0);
-            config.setDamageRadius(3.5);
-            config.setDurationTicks(280);
+            config.setDamage(220.0);
+            config.setDamageRadius(5.2);
+            config.setDurationTicks(560);
             config.setCooldownTicks(300);
         }
 
@@ -259,9 +259,9 @@ public final class GlitchAnomalies {
 
         public CorruptionPortal(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("corruption_portal", AttackType.BLOCK_DISPLAY, 1, "modes/corruption/attacks"));
-            config.setDamage(46.0);
-            config.setDamageRadius(3.5);
-            config.setDurationTicks(320);
+            config.setDamage(230.0);
+            config.setDamageRadius(5.2);
+            config.setDurationTicks(640);
             config.setCooldownTicks(340);
         }
 
@@ -352,9 +352,9 @@ public final class GlitchAnomalies {
 
         public DimensionalTear(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("dimensional_tear", AttackType.BLOCK_DISPLAY, 1, "modes/corruption/attacks"));
-            config.setDamage(48.0);
-            config.setDamageRadius(4.0);
-            config.setDurationTicks(350);
+            config.setDamage(240.0);
+            config.setDamageRadius(6.0);
+            config.setDurationTicks(700);
             config.setCooldownTicks(320);
         }
 
@@ -481,9 +481,9 @@ public final class GlitchAnomalies {
 
         public VoidEye(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("void_eye", AttackType.BLOCK_DISPLAY, 1, "modes/corruption/attacks"));
-            config.setDamage(44.0);
-            config.setDamageRadius(4.0);
-            config.setDurationTicks(360);
+            config.setDamage(220.0);
+            config.setDamageRadius(6.0);
+            config.setDurationTicks(720);
             config.setCooldownTicks(300);
         }
 
@@ -613,9 +613,9 @@ public final class GlitchAnomalies {
 
         public RealityFracture(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("reality_fracture", AttackType.BLOCK_DISPLAY, 1, "modes/corruption/attacks"));
-            config.setDamage(40.0);
-            config.setDamageRadius(5.0);
-            config.setDurationTicks(300);
+            config.setDamage(200.0);
+            config.setDamageRadius(7.5);
+            config.setDurationTicks(600);
             config.setCooldownTicks(260);
         }
 
@@ -720,9 +720,9 @@ public final class GlitchAnomalies {
 
         public DarkSingularity(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("dark_singularity", AttackType.BLOCK_DISPLAY, 1, "modes/corruption/attacks"));
-            config.setDamage(50.0);
-            config.setDamageRadius(3.5);
-            config.setDurationTicks(340);
+            config.setDamage(250.0);
+            config.setDamageRadius(5.2);
+            config.setDurationTicks(680);
             config.setCooldownTicks(320);
         }
 
@@ -821,9 +821,9 @@ public final class GlitchAnomalies {
 
         public CorruptionWormhole(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("corruption_wormhole", AttackType.BLOCK_DISPLAY, 1, "modes/corruption/attacks"));
-            config.setDamage(46.0);
-            config.setDamageRadius(3.5);
-            config.setDurationTicks(320);
+            config.setDamage(230.0);
+            config.setDamageRadius(5.2);
+            config.setDurationTicks(640);
             config.setCooldownTicks(340);
         }
 
@@ -938,9 +938,9 @@ public final class GlitchAnomalies {
 
         public ShadowGate(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("shadow_gate", AttackType.BLOCK_DISPLAY, 1, "modes/corruption/attacks"));
-            config.setDamage(44.0);
-            config.setDamageRadius(3.5);
-            config.setDurationTicks(340);
+            config.setDamage(220.0);
+            config.setDamageRadius(5.2);
+            config.setDurationTicks(680);
             config.setCooldownTicks(300);
         }
 
@@ -1070,9 +1070,9 @@ public final class GlitchAnomalies {
 
         public VoidMaw(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("void_maw", AttackType.BLOCK_DISPLAY, 1, "modes/corruption/attacks"));
-            config.setDamage(48.0);
-            config.setDamageRadius(3.5);
-            config.setDurationTicks(300);
+            config.setDamage(240.0);
+            config.setDamageRadius(5.2);
+            config.setDurationTicks(600);
             config.setCooldownTicks(280);
         }
 
@@ -1187,9 +1187,9 @@ public final class GlitchAnomalies {
 
         public RealityGlitch(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("reality_glitch", AttackType.BLOCK_DISPLAY, 1, "modes/corruption/attacks"));
-            config.setDamage(42.0);
-            config.setDamageRadius(4.5);
-            config.setDurationTicks(260);
+            config.setDamage(210.0);
+            config.setDamageRadius(6.8);
+            config.setDurationTicks(520);
             config.setCooldownTicks(260);
         }
 
@@ -1303,9 +1303,9 @@ public final class GlitchAnomalies {
 
         public CorruptionSinkhole(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("corruption_sinkhole", AttackType.BLOCK_DISPLAY, 1, "modes/corruption/attacks"));
-            config.setDamage(44.0);
-            config.setDamageRadius(4.0);
-            config.setDurationTicks(320);
+            config.setDamage(220.0);
+            config.setDamageRadius(6.0);
+            config.setDurationTicks(640);
             config.setCooldownTicks(300);
         }
 
@@ -1413,9 +1413,9 @@ public final class GlitchAnomalies {
 
         public DarkMirror(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("dark_mirror", AttackType.BLOCK_DISPLAY, 1, "modes/corruption/attacks"));
-            config.setDamage(42.0);
-            config.setDamageRadius(3.5);
-            config.setDurationTicks(300);
+            config.setDamage(210.0);
+            config.setDamageRadius(5.2);
+            config.setDurationTicks(600);
             config.setCooldownTicks(280);
         }
 
@@ -1512,9 +1512,9 @@ public final class GlitchAnomalies {
 
         public VoidBubble(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("void_bubble", AttackType.BLOCK_DISPLAY, 1, "modes/corruption/attacks"));
-            config.setDamage(46.0);
-            config.setDamageRadius(4.0);
-            config.setDurationTicks(240);
+            config.setDamage(230.0);
+            config.setDamageRadius(6.0);
+            config.setDurationTicks(480);
             config.setCooldownTicks(260);
             config.setDamageOnImpactOnly(true);
             config.setImpactDamage(46.0);
@@ -1637,9 +1637,9 @@ public final class GlitchAnomalies {
 
         public RealityScar(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("reality_scar", AttackType.BLOCK_DISPLAY, 1, "modes/corruption/attacks"));
-            config.setDamage(44.0);
-            config.setDamageRadius(3.5);
-            config.setDurationTicks(300);
+            config.setDamage(220.0);
+            config.setDamageRadius(5.2);
+            config.setDurationTicks(600);
             config.setCooldownTicks(280);
         }
 

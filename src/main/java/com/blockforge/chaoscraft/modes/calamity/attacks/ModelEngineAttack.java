@@ -124,11 +124,10 @@ public abstract class ModelEngineAttack extends AbstractAttack {
         World world = location.getWorld();
         if (world == null) return false;
 
-        // Spawn on the surface — get highest block at X/Z, then offset Y+1.5
-        // so models don't clip into ground or spawn underground
-        int surfaceY = world.getHighestBlockYAt(location.getBlockX(), location.getBlockZ());
+        // No Y offset — models are designed to emerge from the ground at the
+        // zombie's feet position. The spawn Y is already set to player level
+        // by AbstractAttack.spawn().
         Location spawnLoc = location.clone();
-        spawnLoc.setY(surfaceY + 1.5);
 
         // Spawn invisible zombie as the model host — marker ArmorStands zero out
         // dimensions which prevents ME4 from scaling models. Zombie matches the

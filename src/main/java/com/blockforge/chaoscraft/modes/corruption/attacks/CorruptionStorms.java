@@ -64,9 +64,9 @@ public final class CorruptionStorms {
 
         public DarkCloud(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("dark_cloud", AttackType.BLOCK_DISPLAY, 1, "modes/corruption/attacks"));
-            config.setDamage(40.0);
-            config.setDamageRadius(5.0);
-            config.setDurationTicks(400);
+            config.setDamage(200.0);
+            config.setDamageRadius(7.5);
+            config.setDurationTicks(800);
             config.setCooldownTicks(320);
         }
 
@@ -154,9 +154,9 @@ public final class CorruptionStorms {
 
         public CorruptionLightning(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("corruption_lightning", AttackType.BLOCK_DISPLAY, 1, "modes/corruption/attacks"));
-            config.setDamage(48.0);
-            config.setDamageRadius(3.5);
-            config.setDurationTicks(200);
+            config.setDamage(240.0);
+            config.setDamageRadius(5.2);
+            config.setDurationTicks(400);
             config.setCooldownTicks(280);
             config.setDamageOnImpactOnly(true);
             config.setImpactDamage(48.0);
@@ -275,9 +275,9 @@ public final class CorruptionStorms {
 
         public VoidMeteor(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("void_meteor", AttackType.BLOCK_DISPLAY, 1, "modes/corruption/attacks"));
-            config.setDamage(60.0);
-            config.setDamageRadius(5.0);
-            config.setDurationTicks(300);
+            config.setDamage(300.0);
+            config.setDamageRadius(7.5);
+            config.setDurationTicks(600);
             config.setCooldownTicks(400);
             config.setDamageOnImpactOnly(true);
             config.setImpactDamage(60.0);
@@ -407,9 +407,9 @@ public final class CorruptionStorms {
 
         public ShadowCanopy(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("shadow_canopy", AttackType.BLOCK_DISPLAY, 1, "modes/corruption/attacks"));
-            config.setDamage(44.0);
-            config.setDamageRadius(6.0);
-            config.setDurationTicks(500);
+            config.setDamage(220.0);
+            config.setDamageRadius(9.0);
+            config.setDurationTicks(1000);
             config.setCooldownTicks(360);
         }
 
@@ -505,9 +505,9 @@ public final class CorruptionStorms {
 
         public DarkHalo(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("dark_halo", AttackType.BLOCK_DISPLAY, 1, "modes/corruption/attacks"));
-            config.setDamage(42.0);
-            config.setDamageRadius(4.0);
-            config.setDurationTicks(400);
+            config.setDamage(210.0);
+            config.setDamageRadius(6.0);
+            config.setDurationTicks(800);
             config.setCooldownTicks(300);
         }
 
@@ -614,9 +614,9 @@ public final class CorruptionStorms {
 
         public CorruptionRain(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("corruption_rain", AttackType.BLOCK_DISPLAY, 1, "modes/corruption/attacks"));
-            config.setDamage(40.0);
-            config.setDamageRadius(2.5);
-            config.setDurationTicks(360);
+            config.setDamage(200.0);
+            config.setDamageRadius(3.8);
+            config.setDurationTicks(720);
             config.setCooldownTicks(280);
             config.setDamageOnImpactOnly(true);
             config.setImpactDamage(40.0);
@@ -727,9 +727,9 @@ public final class CorruptionStorms {
 
         public VoidEclipse(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("void_eclipse", AttackType.BLOCK_DISPLAY, 1, "modes/corruption/attacks"));
-            config.setDamage(44.0);
-            config.setDamageRadius(5.0);
-            config.setDurationTicks(400);
+            config.setDamage(220.0);
+            config.setDamageRadius(7.5);
+            config.setDurationTicks(800);
             config.setCooldownTicks(340);
         }
 
@@ -839,9 +839,9 @@ public final class CorruptionStorms {
 
         public ShadowCeiling(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("shadow_ceiling", AttackType.BLOCK_DISPLAY, 1, "modes/corruption/attacks"));
-            config.setDamage(42.0);
-            config.setDamageRadius(2.5);
-            config.setDurationTicks(500);
+            config.setDamage(210.0);
+            config.setDamageRadius(3.8);
+            config.setDurationTicks(1000);
             config.setCooldownTicks(350);
             config.setDamageOnImpactOnly(true);
             config.setImpactDamage(42.0);
@@ -970,9 +970,9 @@ public final class CorruptionStorms {
 
         public DarkComet(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("dark_comet", AttackType.BLOCK_DISPLAY, 1, "modes/corruption/attacks"));
-            config.setDamage(46.0);
-            config.setDamageRadius(3.5);
-            config.setDurationTicks(200);
+            config.setDamage(230.0);
+            config.setDamageRadius(5.2);
+            config.setDurationTicks(400);
             config.setCooldownTicks(300);
         }
 
@@ -1078,9 +1078,9 @@ public final class CorruptionStorms {
 
         public CorruptionAurora(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("corruption_aurora", AttackType.BLOCK_DISPLAY, 1, "modes/corruption/attacks"));
-            config.setDamage(40.0);
-            config.setDamageRadius(5.0);
-            config.setDurationTicks(450);
+            config.setDamage(200.0);
+            config.setDamageRadius(7.5);
+            config.setDurationTicks(900);
             config.setCooldownTicks(320);
         }
 
@@ -1192,9 +1192,9 @@ public final class CorruptionStorms {
 
         public VoidFunnel(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("void_funnel", AttackType.BLOCK_DISPLAY, 1, "modes/corruption/attacks"));
-            config.setDamage(46.0);
-            config.setDamageRadius(4.0);
-            config.setDurationTicks(400);
+            config.setDamage(230.0);
+            config.setDamageRadius(6.0);
+            config.setDurationTicks(800);
             config.setCooldownTicks(350);
         }
 
@@ -1314,9 +1314,9 @@ public final class CorruptionStorms {
 
         public ShadowBombardment(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("shadow_bombardment", AttackType.BLOCK_DISPLAY, 1, "modes/corruption/attacks"));
-            config.setDamage(44.0);
-            config.setDamageRadius(3.0);
-            config.setDurationTicks(400);
+            config.setDamage(220.0);
+            config.setDamageRadius(4.5);
+            config.setDurationTicks(800);
             config.setCooldownTicks(320);
             config.setDamageOnImpactOnly(true);
             config.setImpactDamage(44.0);
@@ -1440,9 +1440,9 @@ public final class CorruptionStorms {
 
         public DarkStarfall(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("dark_starfall", AttackType.BLOCK_DISPLAY, 1, "modes/corruption/attacks"));
-            config.setDamage(40.0);
-            config.setDamageRadius(2.5);
-            config.setDurationTicks(400);
+            config.setDamage(200.0);
+            config.setDamageRadius(3.8);
+            config.setDurationTicks(800);
             config.setCooldownTicks(280);
             config.setDamageOnImpactOnly(true);
             config.setImpactDamage(40.0);
@@ -1553,9 +1553,9 @@ public final class CorruptionStorms {
 
         public CorruptionVortex(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("corruption_vortex", AttackType.BLOCK_DISPLAY, 1, "modes/corruption/attacks"));
-            config.setDamage(44.0);
-            config.setDamageRadius(4.0);
-            config.setDurationTicks(400);
+            config.setDamage(220.0);
+            config.setDamageRadius(6.0);
+            config.setDurationTicks(800);
             config.setCooldownTicks(340);
         }
 
@@ -1670,9 +1670,9 @@ public final class CorruptionStorms {
 
         public VoidOmen(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("void_omen", AttackType.BLOCK_DISPLAY, 1, "modes/corruption/attacks"));
-            config.setDamage(42.0);
-            config.setDamageRadius(5.0);
-            config.setDurationTicks(450);
+            config.setDamage(210.0);
+            config.setDamageRadius(7.5);
+            config.setDurationTicks(900);
             config.setCooldownTicks(380);
         }
 

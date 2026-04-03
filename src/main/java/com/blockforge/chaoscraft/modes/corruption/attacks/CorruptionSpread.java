@@ -65,9 +65,9 @@ public final class CorruptionSpread {
 
         public CorruptionPillar(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("corruption_pillar", AttackType.BLOCK_DISPLAY, 1, "modes/corruption/attacks"));
-            config.setDamage(40.0);
-            config.setDamageRadius(3.5);
-            config.setDurationTicks(400);
+            config.setDamage(200.0);
+            config.setDamageRadius(5.2);
+            config.setDurationTicks(800);
             config.setCooldownTicks(280);
         }
 
@@ -174,9 +174,9 @@ public final class CorruptionSpread {
 
         public DarkObelisk(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("dark_obelisk", AttackType.BLOCK_DISPLAY, 1, "modes/corruption/attacks"));
-            config.setDamage(44.0);
-            config.setDamageRadius(4.0);
-            config.setDurationTicks(500);
+            config.setDamage(220.0);
+            config.setDamageRadius(6.0);
+            config.setDurationTicks(1000);
             config.setCooldownTicks(350);
         }
 
@@ -272,9 +272,9 @@ public final class CorruptionSpread {
 
         public TwistedSpire(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("twisted_spire", AttackType.BLOCK_DISPLAY, 1, "modes/corruption/attacks"));
-            config.setDamage(42.0);
-            config.setDamageRadius(3.5);
-            config.setDurationTicks(420);
+            config.setDamage(210.0);
+            config.setDamageRadius(5.2);
+            config.setDurationTicks(840);
             config.setCooldownTicks(300);
         }
 
@@ -370,9 +370,9 @@ public final class CorruptionSpread {
 
         public CorruptionNeedle(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("corruption_needle", AttackType.BLOCK_DISPLAY, 1, "modes/corruption/attacks"));
-            config.setDamage(46.0);
-            config.setDamageRadius(2.5);
-            config.setDurationTicks(360);
+            config.setDamage(230.0);
+            config.setDamageRadius(3.8);
+            config.setDurationTicks(720);
             config.setCooldownTicks(260);
         }
 
@@ -481,9 +481,9 @@ public final class CorruptionSpread {
 
         public VoidSpikeCluster(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("void_spike_cluster", AttackType.BLOCK_DISPLAY, 1, "modes/corruption/attacks"));
-            config.setDamage(48.0);
-            config.setDamageRadius(4.5);
-            config.setDurationTicks(350);
+            config.setDamage(240.0);
+            config.setDamageRadius(6.8);
+            config.setDurationTicks(700);
             config.setCooldownTicks(300);
         }
 
@@ -607,9 +607,9 @@ public final class CorruptionSpread {
 
         public PulsatingTower(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("pulsating_tower", AttackType.BLOCK_DISPLAY, 1, "modes/corruption/attacks"));
-            config.setDamage(40.0);
-            config.setDamageRadius(4.0);
-            config.setDurationTicks(450);
+            config.setDamage(200.0);
+            config.setDamageRadius(6.0);
+            config.setDurationTicks(900);
             config.setCooldownTicks(320);
         }
 
@@ -710,9 +710,9 @@ public final class CorruptionSpread {
 
         public DecayingColumn(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("decaying_column", AttackType.BLOCK_DISPLAY, 1, "modes/corruption/attacks"));
-            config.setDamage(42.0);
-            config.setDamageRadius(3.5);
-            config.setDurationTicks(400);
+            config.setDamage(210.0);
+            config.setDamageRadius(5.2);
+            config.setDurationTicks(800);
             config.setCooldownTicks(300);
         }
 
@@ -828,9 +828,9 @@ public final class CorruptionSpread {
 
         public ShadowMonolith(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("shadow_monolith", AttackType.BLOCK_DISPLAY, 1, "modes/corruption/attacks"));
-            config.setDamage(44.0);
-            config.setDamageRadius(4.0);
-            config.setDurationTicks(480);
+            config.setDamage(220.0);
+            config.setDamageRadius(6.0);
+            config.setDurationTicks(960);
             config.setCooldownTicks(360);
         }
 
@@ -951,9 +951,9 @@ public final class CorruptionSpread {
 
         public CorruptionStalagmite(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("corruption_stalagmite", AttackType.BLOCK_DISPLAY, 1, "modes/corruption/attacks"));
-            config.setDamage(40.0);
-            config.setDamageRadius(3.5);
-            config.setDurationTicks(380);
+            config.setDamage(200.0);
+            config.setDamageRadius(5.2);
+            config.setDurationTicks(760);
             config.setCooldownTicks(280);
         }
 
@@ -1112,9 +1112,9 @@ public final class CorruptionSpread {
 
         public WarpedGrowth(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("warped_growth", AttackType.BLOCK_DISPLAY, 1, "modes/corruption/attacks"));
-            config.setDamage(42.0);
-            config.setDamageRadius(5.0);
-            config.setDurationTicks(460);
+            config.setDamage(210.0);
+            config.setDamageRadius(7.5);
+            config.setDurationTicks(920);
             config.setCooldownTicks(340);
         }
 
@@ -1241,9 +1241,9 @@ public final class CorruptionSpread {
 
         public DarkCrystalFormation(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("dark_crystal_formation", AttackType.BLOCK_DISPLAY, 1, "modes/corruption/attacks"));
-            config.setDamage(40.0);
-            config.setDamageRadius(4.0);
-            config.setDurationTicks(400);
+            config.setDamage(200.0);
+            config.setDamageRadius(6.0);
+            config.setDurationTicks(800);
             config.setCooldownTicks(300);
         }
 
@@ -1354,9 +1354,9 @@ public final class CorruptionSpread {
 
         public CorruptionAntenna(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("corruption_antenna", AttackType.BLOCK_DISPLAY, 1, "modes/corruption/attacks"));
-            config.setDamage(44.0);
-            config.setDamageRadius(3.5);
-            config.setDurationTicks(420);
+            config.setDamage(220.0);
+            config.setDamageRadius(5.2);
+            config.setDurationTicks(840);
             config.setCooldownTicks(300);
         }
 
@@ -1481,9 +1481,9 @@ public final class CorruptionSpread {
 
         public RottingTreeStump(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("rotting_tree_stump", AttackType.BLOCK_DISPLAY, 1, "modes/corruption/attacks"));
-            config.setDamage(40.0);
-            config.setDamageRadius(4.0);
-            config.setDurationTicks(440);
+            config.setDamage(200.0);
+            config.setDamageRadius(6.0);
+            config.setDurationTicks(880);
             config.setCooldownTicks(320);
         }
 
@@ -1616,9 +1616,9 @@ public final class CorruptionSpread {
 
         public VoidBeacon(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("void_beacon", AttackType.BLOCK_DISPLAY, 1, "modes/corruption/attacks"));
-            config.setDamage(46.0);
-            config.setDamageRadius(4.5);
-            config.setDurationTicks(500);
+            config.setDamage(230.0);
+            config.setDamageRadius(6.8);
+            config.setDurationTicks(1000);
             config.setCooldownTicks(380);
         }
 
@@ -1755,9 +1755,9 @@ public final class CorruptionSpread {
 
         public CorruptionFountain(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("corruption_fountain", AttackType.BLOCK_DISPLAY, 1, "modes/corruption/attacks"));
-            config.setDamage(40.0);
-            config.setDamageRadius(4.5);
-            config.setDurationTicks(420);
+            config.setDamage(200.0);
+            config.setDamageRadius(6.8);
+            config.setDurationTicks(840);
             config.setCooldownTicks(300);
         }
 

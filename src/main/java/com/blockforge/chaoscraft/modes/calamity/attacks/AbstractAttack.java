@@ -68,6 +68,13 @@ public abstract class AbstractAttack {
         this.center = location.clone();
         this.center.setYaw(0);
         this.center.setPitch(0);
+
+        // Use target player's Y level so attacks spawn at the same height
+        // regardless of X/Z offset — prevents underground spawns
+        if (target != null) {
+            this.center.setY(target.getLocation().getY());
+        }
+
         this.targetPlayer = target;
         this.active = true;
         this.ticksAlive = 0;

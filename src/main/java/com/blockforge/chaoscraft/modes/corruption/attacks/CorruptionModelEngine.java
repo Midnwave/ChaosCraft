@@ -191,9 +191,9 @@ public final class CorruptionModelEngine {
 
         public VoidRiftSlash(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("void_rift_slash", AttackType.MODEL_ENGINE, 1, "modes/corruption/attacks"));
-            config.setDamage(10.0);           // 5 hearts/sec via rift line
-            config.setDamageRadius(6.0);
-            config.setDurationTicks(200);
+            config.setDamage(50.0);           // 5 hearts/sec via rift line
+            config.setDamageRadius(9.0);
+            config.setDurationTicks(400);
             config.setCooldownTicks(240);
             config.setTicksBetweenDamage(20);
         }
@@ -279,9 +279,9 @@ public final class CorruptionModelEngine {
 
         public RealityShatter(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("reality_shatter", AttackType.MODEL_ENGINE, 1, "modes/corruption/attacks"));
-            config.setDamage(8.0);            // 4 hearts/sec center drain
-            config.setDamageRadius(2.0);      // Center zone
-            config.setDurationTicks(240);
+            config.setDamage(40.0);            // 4 hearts/sec center drain
+            config.setDamageRadius(3.0);      // Center zone
+            config.setDurationTicks(480);
             config.setCooldownTicks(260);
             config.setTicksBetweenDamage(20);
         }
@@ -371,9 +371,9 @@ public final class CorruptionModelEngine {
 
         public DimensionCollapsePillar(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("dimension_collapse_pillar", AttackType.MODEL_ENGINE, 1, "modes/corruption/attacks"));
-            config.setDamage(12.0);           // 6 hearts per phase-out hit
-            config.setDamageRadius(3.5);
-            config.setDurationTicks(260);
+            config.setDamage(60.0);           // 6 hearts per phase-out hit
+            config.setDamageRadius(5.2);
+            config.setDurationTicks(520);
             config.setCooldownTicks(280);
             config.setTicksBetweenDamage(10);
         }
@@ -481,9 +481,9 @@ public final class CorruptionModelEngine {
 
         public FracturedSpaceCrown(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("fractured_space_crown", AttackType.MODEL_ENGINE, 1, "modes/corruption/attacks"));
-            config.setDamage(4.0);            // 2 hearts per shard
-            config.setDamageRadius(5.0);
-            config.setDurationTicks(220);
+            config.setDamage(20.0);            // 2 hearts per shard
+            config.setDamageRadius(7.5);
+            config.setDurationTicks(440);
             config.setCooldownTicks(250);
             config.setTicksBetweenDamage(15);
         }
@@ -587,9 +587,9 @@ public final class CorruptionModelEngine {
 
         public EntropySpiral(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("entropy_spiral", AttackType.MODEL_ENGINE, 1, "modes/corruption/attacks"));
-            config.setDamage(8.0);            // 4 hearts base blade sweep
-            config.setDamageRadius(6.0);
-            config.setDurationTicks(260);
+            config.setDamage(40.0);            // 4 hearts base blade sweep
+            config.setDamageRadius(9.0);
+            config.setDurationTicks(520);
             config.setCooldownTicks(270);
             config.setTicksBetweenDamage(10);
         }
@@ -700,9 +700,9 @@ public final class CorruptionModelEngine {
 
         public CreepingCorruptionHands(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("creeping_corruption_hands", AttackType.MODEL_ENGINE, 1, "modes/corruption/attacks"));
-            config.setDamage(6.0);            // 3 hearts/sec near palm
-            config.setDamageRadius(2.0);
-            config.setDurationTicks(240);
+            config.setDamage(30.0);            // 3 hearts/sec near palm
+            config.setDamageRadius(3.0);
+            config.setDurationTicks(480);
             config.setCooldownTicks(260);
             config.setTicksBetweenDamage(20);
         }
@@ -791,9 +791,9 @@ public final class CorruptionModelEngine {
 
         public CorruptionBloom(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("corruption_bloom", AttackType.MODEL_ENGINE, 1, "modes/corruption/attacks"));
-            config.setDamage(4.0);            // 2 hearts/sec pollen
-            config.setDamageRadius(6.0);
-            config.setDurationTicks(280);
+            config.setDamage(20.0);            // 2 hearts/sec pollen
+            config.setDamageRadius(9.0);
+            config.setDurationTicks(560);
             config.setCooldownTicks(300);
             config.setTicksBetweenDamage(20);
         }
@@ -876,9 +876,9 @@ public final class CorruptionModelEngine {
 
         public PlagueTendrilBurst(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("plague_tendril_burst", AttackType.MODEL_ENGINE, 1, "modes/corruption/attacks"));
-            config.setDamage(6.0);            // 3 hearts contact
-            config.setDamageRadius(7.0);
-            config.setDurationTicks(220);
+            config.setDamage(30.0);            // 3 hearts contact
+            config.setDamageRadius(10.5);
+            config.setDurationTicks(440);
             config.setCooldownTicks(240);
             config.setTicksBetweenDamage(15);
         }
@@ -980,9 +980,9 @@ public final class CorruptionModelEngine {
 
         public CorruptionWeb(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("corruption_web", AttackType.MODEL_ENGINE, 1, "modes/corruption/attacks"));
-            config.setDamage(4.0);            // 2 hearts ring contact
-            config.setDamageRadius(8.0);
-            config.setDurationTicks(260);
+            config.setDamage(20.0);            // 2 hearts ring contact
+            config.setDamageRadius(12.0);
+            config.setDurationTicks(520);
             config.setCooldownTicks(280);
             config.setTicksBetweenDamage(20);
         }
@@ -1095,9 +1095,9 @@ public final class CorruptionModelEngine {
 
         public SpreadingNecrosis(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("spreading_necrosis", AttackType.MODEL_ENGINE, 1, "modes/corruption/attacks"));
-            config.setDamage(4.0);            // 2 hearts/sec per patch
-            config.setDamageRadius(8.0);
-            config.setDurationTicks(300);
+            config.setDamage(20.0);            // 2 hearts/sec per patch
+            config.setDamageRadius(12.0);
+            config.setDurationTicks(600);
             config.setCooldownTicks(280);
             config.setTicksBetweenDamage(20);
         }
@@ -1191,9 +1191,9 @@ public final class CorruptionModelEngine {
 
         public SoulDrainBeam(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("soul_drain_beam", AttackType.MODEL_ENGINE, 1, "modes/corruption/attacks"));
-            config.setDamage(6.0);            // 3 hearts/sec drain
-            config.setDamageRadius(3.0);
-            config.setDurationTicks(240);
+            config.setDamage(30.0);            // 3 hearts/sec drain
+            config.setDamageRadius(4.5);
+            config.setDurationTicks(480);
             config.setCooldownTicks(260);
             config.setTicksBetweenDamage(20);
         }
@@ -1305,9 +1305,9 @@ public final class CorruptionModelEngine {
 
         public DarkPulseRing(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("dark_pulse_ring", AttackType.MODEL_ENGINE, 1, "modes/corruption/attacks"));
-            config.setDamage(10.0);           // 5 hearts ring edge
-            config.setDamageRadius(12.0);
-            config.setDurationTicks(300);
+            config.setDamage(50.0);           // 5 hearts ring edge
+            config.setDamageRadius(18.0);
+            config.setDurationTicks(600);
             config.setCooldownTicks(280);
             config.setTicksBetweenDamage(5);
         }
@@ -1402,9 +1402,9 @@ public final class CorruptionModelEngine {
 
         public VoidOrbCluster(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("void_orb_cluster", AttackType.MODEL_ENGINE, 1, "modes/corruption/attacks"));
-            config.setDamage(4.0);            // 2 hearts/sec pull
-            config.setDamageRadius(2.5);
-            config.setDurationTicks(260);
+            config.setDamage(20.0);            // 2 hearts/sec pull
+            config.setDamageRadius(3.8);
+            config.setDurationTicks(520);
             config.setCooldownTicks(280);
             config.setTicksBetweenDamage(20);
         }
@@ -1518,9 +1518,9 @@ public final class CorruptionModelEngine {
 
         public NecroticShockwave(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("necrotic_shockwave", AttackType.MODEL_ENGINE, 1, "modes/corruption/attacks"));
-            config.setDamage(8.0);            // 4 hearts per ring
-            config.setDamageRadius(15.0);
-            config.setDurationTicks(180);
+            config.setDamage(40.0);            // 4 hearts per ring
+            config.setDamageRadius(22.5);
+            config.setDurationTicks(360);
             config.setCooldownTicks(250);
             config.setTicksBetweenDamage(5);
         }
@@ -1619,9 +1619,9 @@ public final class CorruptionModelEngine {
 
         public CorruptionGeyser(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("corruption_geyser_me", AttackType.MODEL_ENGINE, 1, "modes/corruption/attacks"));
-            config.setDamage(12.0);           // 6 hearts base eruption
-            config.setDamageRadius(3.0);
-            config.setDurationTicks(200);
+            config.setDamage(60.0);           // 6 hearts base eruption
+            config.setDamageRadius(4.5);
+            config.setDurationTicks(400);
             config.setCooldownTicks(230);
             config.setTicksBetweenDamage(20);
         }
@@ -1732,9 +1732,9 @@ public final class CorruptionModelEngine {
 
         public TheStare(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("the_stare", AttackType.MODEL_ENGINE, 1, "modes/corruption/attacks"));
-            config.setDamage(12.0);           // 6 hearts blink
-            config.setDamageRadius(10.0);
-            config.setDurationTicks(300);
+            config.setDamage(60.0);           // 6 hearts blink
+            config.setDamageRadius(15.0);
+            config.setDurationTicks(600);
             config.setCooldownTicks(300);
             config.setTicksBetweenDamage(60);
         }
@@ -1846,9 +1846,9 @@ public final class CorruptionModelEngine {
 
         public MemoryFracture(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("memory_fracture", AttackType.MODEL_ENGINE, 1, "modes/corruption/attacks"));
-            config.setDamage(4.0);            // 2 hearts per copy zone
-            config.setDamageRadius(10.0);
-            config.setDurationTicks(280);
+            config.setDamage(20.0);            // 2 hearts per copy zone
+            config.setDamageRadius(15.0);
+            config.setDurationTicks(560);
             config.setCooldownTicks(270);
             config.setTicksBetweenDamage(20);
         }
@@ -1938,9 +1938,9 @@ public final class CorruptionModelEngine {
 
         public HollowScream(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("hollow_scream", AttackType.MODEL_ENGINE, 1, "modes/corruption/attacks"));
-            config.setDamage(8.0);            // 4 hearts scream
-            config.setDamageRadius(8.0);
-            config.setDurationTicks(250);
+            config.setDamage(40.0);            // 4 hearts scream
+            config.setDamageRadius(12.0);
+            config.setDurationTicks(500);
             config.setCooldownTicks(270);
             config.setTicksBetweenDamage(50);
         }
@@ -2064,9 +2064,9 @@ public final class CorruptionModelEngine {
 
         public ParanoiaSpiral(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("paranoia_spiral", AttackType.MODEL_ENGINE, 1, "modes/corruption/attacks"));
-            config.setDamage(6.0);            // 3 hearts slab contact
-            config.setDamageRadius(8.0);
-            config.setDurationTicks(260);
+            config.setDamage(30.0);            // 3 hearts slab contact
+            config.setDamageRadius(12.0);
+            config.setDurationTicks(520);
             config.setCooldownTicks(280);
             config.setTicksBetweenDamage(15);
         }
@@ -2180,9 +2180,9 @@ public final class CorruptionModelEngine {
 
         public FalseMirror(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("false_mirror", AttackType.MODEL_ENGINE, 1, "modes/corruption/attacks"));
-            config.setDamage(4.0);            // 2 hearts/sec idle ripple
-            config.setDamageRadius(3.0);
-            config.setDurationTicks(240);
+            config.setDamage(20.0);            // 2 hearts/sec idle ripple
+            config.setDamageRadius(4.5);
+            config.setDurationTicks(480);
             config.setCooldownTicks(260);
             config.setTicksBetweenDamage(20);
         }
@@ -2291,9 +2291,9 @@ public final class CorruptionModelEngine {
 
         public BoneSpikeEruption(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("bone_spike_eruption", AttackType.MODEL_ENGINE, 1, "modes/corruption/attacks"));
-            config.setDamage(10.0);           // 5 hearts eruption
-            config.setDamageRadius(6.0);
-            config.setDurationTicks(240);
+            config.setDamage(50.0);           // 5 hearts eruption
+            config.setDamageRadius(9.0);
+            config.setDurationTicks(480);
             config.setCooldownTicks(250);
             config.setTicksBetweenDamage(15);
         }
@@ -2383,9 +2383,9 @@ public final class CorruptionModelEngine {
 
         public CorruptionCrystalCage(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("corruption_crystal_cage", AttackType.MODEL_ENGINE, 1, "modes/corruption/attacks"));
-            config.setDamage(4.0);            // 2 hearts bar contact
-            config.setDamageRadius(2.5);
-            config.setDurationTicks(200);
+            config.setDamage(20.0);            // 2 hearts bar contact
+            config.setDamageRadius(3.8);
+            config.setDurationTicks(400);
             config.setCooldownTicks(300);
             config.setTicksBetweenDamage(15);
             config.setTracksPlayer(true);
@@ -2502,9 +2502,9 @@ public final class CorruptionModelEngine {
 
         public NecroticVines(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("necrotic_vines", AttackType.MODEL_ENGINE, 1, "modes/corruption/attacks"));
-            config.setDamage(4.0);            // 2 hearts vine contact
-            config.setDamageRadius(7.0);
-            config.setDurationTicks(260);
+            config.setDamage(20.0);            // 2 hearts vine contact
+            config.setDamageRadius(10.5);
+            config.setDurationTicks(520);
             config.setCooldownTicks(260);
             config.setTicksBetweenDamage(15);
         }
@@ -2602,9 +2602,9 @@ public final class CorruptionModelEngine {
 
         public FleshWarp(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("flesh_warp", AttackType.MODEL_ENGINE, 1, "modes/corruption/attacks"));
-            config.setDamage(6.0);            // 3 hearts part contact
-            config.setDamageRadius(5.0);
-            config.setDurationTicks(260);
+            config.setDamage(30.0);            // 3 hearts part contact
+            config.setDamageRadius(7.5);
+            config.setDurationTicks(520);
             config.setCooldownTicks(280);
             config.setTicksBetweenDamage(15);
         }
@@ -2710,9 +2710,9 @@ public final class CorruptionModelEngine {
 
         public CorruptedRoots(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("corrupted_roots", AttackType.MODEL_ENGINE, 1, "modes/corruption/attacks"));
-            config.setDamage(2.0);            // 1 heart/sec root contact
-            config.setDamageRadius(8.0);
-            config.setDurationTicks(300);
+            config.setDamage(10.0);            // 1 heart/sec root contact
+            config.setDamageRadius(12.0);
+            config.setDurationTicks(600);
             config.setCooldownTicks(280);
             config.setTicksBetweenDamage(20);
         }
@@ -2833,9 +2833,9 @@ public final class CorruptionModelEngine {
 
         public CorruptionPillarArray(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("corruption_pillar_array", AttackType.MODEL_ENGINE, 1, "modes/corruption/attacks"));
-            config.setDamage(8.0);            // 4 hearts beam crossing
-            config.setDamageRadius(8.0);
-            config.setDurationTicks(280);
+            config.setDamage(40.0);            // 4 hearts beam crossing
+            config.setDamageRadius(12.0);
+            config.setDurationTicks(560);
             config.setCooldownTicks(300);
             config.setTicksBetweenDamage(20);
         }
@@ -2973,9 +2973,9 @@ public final class CorruptionModelEngine {
 
         public BlackSun(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("black_sun", AttackType.MODEL_ENGINE, 1, "modes/corruption/attacks"));
-            config.setDamage(6.0);            // 3 hearts ray contact
-            config.setDamageRadius(8.0);
-            config.setDurationTicks(300);
+            config.setDamage(30.0);            // 3 hearts ray contact
+            config.setDamageRadius(12.0);
+            config.setDurationTicks(600);
             config.setCooldownTicks(300);
             config.setTicksBetweenDamage(15);
         }
@@ -3082,9 +3082,9 @@ public final class CorruptionModelEngine {
 
         public EntropyField(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("entropy_field", AttackType.MODEL_ENGINE, 1, "modes/corruption/attacks"));
-            config.setDamage(4.0);            // 2 hearts/sec base
-            config.setDamageRadius(6.0);
-            config.setDurationTicks(280);
+            config.setDamage(20.0);            // 2 hearts/sec base
+            config.setDamageRadius(9.0);
+            config.setDurationTicks(560);
             config.setCooldownTicks(270);
             config.setTicksBetweenDamage(20);
         }
@@ -3200,9 +3200,9 @@ public final class CorruptionModelEngine {
 
         public VoidGate(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("void_gate", AttackType.MODEL_ENGINE, 1, "modes/corruption/attacks"));
-            config.setDamage(16.0);           // 8 hearts portal contact
-            config.setDamageRadius(5.0);
-            config.setDurationTicks(260);
+            config.setDamage(80.0);           // 8 hearts portal contact
+            config.setDamageRadius(7.5);
+            config.setDurationTicks(520);
             config.setCooldownTicks(300);
             config.setTicksBetweenDamage(20);
         }
@@ -3325,9 +3325,9 @@ public final class CorruptionModelEngine {
 
         public CorruptionNova(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("corruption_nova_me", AttackType.MODEL_ENGINE, 1, "modes/corruption/attacks"));
-            config.setDamage(8.0);            // 4 hearts per shard
-            config.setDamageRadius(10.0);
-            config.setDurationTicks(180);
+            config.setDamage(40.0);            // 4 hearts per shard
+            config.setDamageRadius(15.0);
+            config.setDurationTicks(360);
             config.setCooldownTicks(320);
             config.setTicksBetweenDamage(10);
         }

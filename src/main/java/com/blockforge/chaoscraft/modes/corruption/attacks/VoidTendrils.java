@@ -95,9 +95,9 @@ public final class VoidTendrils {
 
         public CorruptionTentacle(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("corruption_tentacle", AttackType.BLOCK_DISPLAY, 1, "modes/corruption/attacks"));
-            config.setDamage(42.0);
-            config.setDamageRadius(3.5);
-            config.setDurationTicks(320);
+            config.setDamage(210.0);
+            config.setDamageRadius(5.2);
+            config.setDurationTicks(640);
             config.setCooldownTicks(280);
         }
 
@@ -174,9 +174,9 @@ public final class VoidTendrils {
 
         public ShadowVines(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("shadow_vines", AttackType.BLOCK_DISPLAY, 1, "modes/corruption/attacks"));
-            config.setDamage(40.0);
-            config.setDamageRadius(4.0);
-            config.setDurationTicks(360);
+            config.setDamage(200.0);
+            config.setDamageRadius(6.0);
+            config.setDurationTicks(720);
             config.setCooldownTicks(300);
         }
 
@@ -259,9 +259,9 @@ public final class VoidTendrils {
 
         public DarkRoots(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("dark_roots", AttackType.BLOCK_DISPLAY, 1, "modes/corruption/attacks"));
-            config.setDamage(44.0);
-            config.setDamageRadius(4.0);
-            config.setDurationTicks(340);
+            config.setDamage(220.0);
+            config.setDamageRadius(6.0);
+            config.setDurationTicks(680);
             config.setCooldownTicks(320);
         }
 
@@ -356,9 +356,9 @@ public final class VoidTendrils {
 
         public CorruptionWhip(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("corruption_whip", AttackType.BLOCK_DISPLAY, 1, "modes/corruption/attacks"));
-            config.setDamage(48.0);
-            config.setDamageRadius(3.0);
-            config.setDurationTicks(200);
+            config.setDamage(240.0);
+            config.setDamageRadius(4.5);
+            config.setDurationTicks(400);
             config.setCooldownTicks(260);
         }
 
@@ -471,9 +471,9 @@ public final class VoidTendrils {
 
         public GraspingHand(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("grasping_hand", AttackType.BLOCK_DISPLAY, 1, "modes/corruption/attacks"));
-            config.setDamage(46.0);
-            config.setDamageRadius(4.0);
-            config.setDurationTicks(350);
+            config.setDamage(230.0);
+            config.setDamageRadius(6.0);
+            config.setDurationTicks(700);
             config.setCooldownTicks(340);
         }
 
@@ -563,9 +563,9 @@ public final class VoidTendrils {
 
         public VoidTendrilsAttack(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("void_tendrils", AttackType.BLOCK_DISPLAY, 1, "modes/corruption/attacks"));
-            config.setDamage(42.0);
-            config.setDamageRadius(5.0);
-            config.setDurationTicks(300);
+            config.setDamage(210.0);
+            config.setDamageRadius(7.5);
+            config.setDurationTicks(600);
             config.setCooldownTicks(280);
         }
 
@@ -649,9 +649,9 @@ public final class VoidTendrils {
 
         public CorruptionLasso(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("corruption_lasso", AttackType.BLOCK_DISPLAY, 1, "modes/corruption/attacks"));
-            config.setDamage(44.0);
-            config.setDamageRadius(3.0);
-            config.setDurationTicks(280);
+            config.setDamage(220.0);
+            config.setDamageRadius(4.5);
+            config.setDurationTicks(560);
             config.setCooldownTicks(300);
         }
 
@@ -737,9 +737,9 @@ public final class VoidTendrils {
 
         public ShadowWeb(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("shadow_web", AttackType.BLOCK_DISPLAY, 1, "modes/corruption/attacks"));
-            config.setDamage(40.0);
-            config.setDamageRadius(5.0);
-            config.setDurationTicks(360);
+            config.setDamage(200.0);
+            config.setDamageRadius(7.5);
+            config.setDurationTicks(720);
             config.setCooldownTicks(320);
         }
 
@@ -838,9 +838,9 @@ public final class VoidTendrils {
 
         public CreepingCorruption(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("creeping_corruption", AttackType.BLOCK_DISPLAY, 1, "modes/corruption/attacks"));
-            config.setDamage(40.0);
-            config.setDamageRadius(4.5);
-            config.setDurationTicks(300);
+            config.setDamage(200.0);
+            config.setDamageRadius(6.8);
+            config.setDurationTicks(600);
             config.setCooldownTicks(260);
         }
 
@@ -928,9 +928,9 @@ public final class VoidTendrils {
 
         public DarkEmbrace(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("dark_embrace", AttackType.BLOCK_DISPLAY, 1, "modes/corruption/attacks"));
-            config.setDamage(50.0);
-            config.setDamageRadius(3.5);
-            config.setDurationTicks(300);
+            config.setDamage(250.0);
+            config.setDamageRadius(5.2);
+            config.setDurationTicks(600);
             config.setCooldownTicks(320);
         }
 
@@ -1028,9 +1028,9 @@ public final class VoidTendrils {
 
         public CorruptionSerpent(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("corruption_serpent", AttackType.BLOCK_DISPLAY, 1, "modes/corruption/attacks"));
-            config.setDamage(44.0);
-            config.setDamageRadius(3.0);
-            config.setDurationTicks(400);
+            config.setDamage(220.0);
+            config.setDamageRadius(4.5);
+            config.setDurationTicks(800);
             config.setCooldownTicks(300);
         }
 
@@ -1119,9 +1119,9 @@ public final class VoidTendrils {
 
         public VoidThreads(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("void_threads", AttackType.BLOCK_DISPLAY, 1, "modes/corruption/attacks"));
-            config.setDamage(40.0);
-            config.setDamageRadius(4.0);
-            config.setDurationTicks(340);
+            config.setDamage(200.0);
+            config.setDamageRadius(6.0);
+            config.setDurationTicks(680);
             config.setCooldownTicks(300);
         }
 
@@ -1214,9 +1214,9 @@ public final class VoidTendrils {
 
         public ThornVine(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("thorn_vine", AttackType.BLOCK_DISPLAY, 1, "modes/corruption/attacks"));
-            config.setDamage(46.0);
-            config.setDamageRadius(3.0);
-            config.setDurationTicks(320);
+            config.setDamage(230.0);
+            config.setDamageRadius(4.5);
+            config.setDurationTicks(640);
             config.setCooldownTicks(280);
         }
 
@@ -1316,9 +1316,9 @@ public final class VoidTendrils {
 
         public CorruptionCrawler(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("corruption_crawler", AttackType.BLOCK_DISPLAY, 1, "modes/corruption/attacks"));
-            config.setDamage(44.0);
-            config.setDamageRadius(3.0);
-            config.setDurationTicks(360);
+            config.setDamage(220.0);
+            config.setDamageRadius(4.5);
+            config.setDurationTicks(720);
             config.setCooldownTicks(300);
         }
 
@@ -1439,9 +1439,9 @@ public final class VoidTendrils {
 
         public DarkIvy(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("dark_ivy", AttackType.BLOCK_DISPLAY, 1, "modes/corruption/attacks"));
-            config.setDamage(40.0);
-            config.setDamageRadius(3.5);
-            config.setDurationTicks(380);
+            config.setDamage(200.0);
+            config.setDamageRadius(5.2);
+            config.setDurationTicks(760);
             config.setCooldownTicks(320);
         }
 

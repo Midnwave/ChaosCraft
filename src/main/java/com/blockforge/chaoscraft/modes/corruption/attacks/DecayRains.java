@@ -84,9 +84,9 @@ public final class DecayRains {
 
         public ShadowFigure(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("shadow_figure", AttackType.BLOCK_DISPLAY, 1, "modes/corruption/attacks"));
-            config.setDamage(42.0);
-            config.setDamageRadius(3.5);
-            config.setDurationTicks(300);
+            config.setDamage(210.0);
+            config.setDamageRadius(5.2);
+            config.setDurationTicks(600);
             config.setCooldownTicks(320);
         }
 
@@ -190,9 +190,9 @@ public final class DecayRains {
 
         public CorruptionSkull(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("corruption_skull", AttackType.BLOCK_DISPLAY, 1, "modes/corruption/attacks"));
-            config.setDamage(44.0);
-            config.setDamageRadius(3.0);
-            config.setDurationTicks(280);
+            config.setDamage(220.0);
+            config.setDamageRadius(4.5);
+            config.setDurationTicks(560);
             config.setCooldownTicks(300);
         }
 
@@ -311,9 +311,9 @@ public final class DecayRains {
 
         public DarkWings(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("dark_wings", AttackType.BLOCK_DISPLAY, 1, "modes/corruption/attacks"));
-            config.setDamage(40.0);
-            config.setDamageRadius(4.0);
-            config.setDurationTicks(320);
+            config.setDamage(200.0);
+            config.setDamageRadius(6.0);
+            config.setDurationTicks(640);
             config.setCooldownTicks(280);
         }
 
@@ -431,9 +431,9 @@ public final class DecayRains {
 
         public VoidWatcher(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("void_watcher", AttackType.BLOCK_DISPLAY, 1, "modes/corruption/attacks"));
-            config.setDamage(40.0);
-            config.setDamageRadius(3.0);
-            config.setDurationTicks(260);
+            config.setDamage(200.0);
+            config.setDamageRadius(4.5);
+            config.setDurationTicks(520);
             config.setCooldownTicks(300);
         }
 
@@ -565,9 +565,9 @@ public final class DecayRains {
 
         public CorruptionGiantHand(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("corruption_giant_hand", AttackType.BLOCK_DISPLAY, 1, "modes/corruption/attacks"));
-            config.setDamage(48.0);
-            config.setDamageRadius(4.0);
-            config.setDurationTicks(300);
+            config.setDamage(240.0);
+            config.setDamageRadius(6.0);
+            config.setDurationTicks(600);
             config.setCooldownTicks(350);
             config.setDamageOnImpactOnly(true);
             config.setImpactDamage(48.0);
@@ -705,9 +705,9 @@ public final class DecayRains {
 
         public ShadowBeast(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("shadow_beast", AttackType.BLOCK_DISPLAY, 1, "modes/corruption/attacks"));
-            config.setDamage(46.0);
-            config.setDamageRadius(3.5);
-            config.setDurationTicks(280);
+            config.setDamage(230.0);
+            config.setDamageRadius(5.2);
+            config.setDurationTicks(560);
             config.setCooldownTicks(300);
         }
 
@@ -833,9 +833,9 @@ public final class DecayRains {
 
         public DarkSerpentHead(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("dark_serpent_head", AttackType.BLOCK_DISPLAY, 1, "modes/corruption/attacks"));
-            config.setDamage(44.0);
-            config.setDamageRadius(3.0);
-            config.setDurationTicks(320);
+            config.setDamage(220.0);
+            config.setDamageRadius(4.5);
+            config.setDurationTicks(640);
             config.setCooldownTicks(280);
         }
 
@@ -969,9 +969,9 @@ public final class DecayRains {
 
         public CorruptionSpider(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("corruption_spider", AttackType.BLOCK_DISPLAY, 1, "modes/corruption/attacks"));
-            config.setDamage(42.0);
-            config.setDamageRadius(3.0);
-            config.setDurationTicks(300);
+            config.setDamage(210.0);
+            config.setDamageRadius(4.5);
+            config.setDurationTicks(600);
             config.setCooldownTicks(280);
         }
 
@@ -1107,9 +1107,9 @@ public final class DecayRains {
 
         public VoidPhantom(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("void_phantom", AttackType.BLOCK_DISPLAY, 1, "modes/corruption/attacks"));
-            config.setDamage(40.0);
-            config.setDamageRadius(3.0);
-            config.setDurationTicks(360);
+            config.setDamage(200.0);
+            config.setDamageRadius(4.5);
+            config.setDurationTicks(720);
             config.setCooldownTicks(300);
         }
 
@@ -1243,9 +1243,9 @@ public final class DecayRains {
 
         public ShadowSentinel(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("shadow_sentinel", AttackType.BLOCK_DISPLAY, 1, "modes/corruption/attacks"));
-            config.setDamage(46.0);
-            config.setDamageRadius(4.0);
-            config.setDurationTicks(300);
+            config.setDamage(230.0);
+            config.setDamageRadius(6.0);
+            config.setDurationTicks(600);
             config.setCooldownTicks(320);
         }
 
@@ -1371,9 +1371,9 @@ public final class DecayRains {
 
         public DarkSwarm(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("dark_swarm", AttackType.BLOCK_DISPLAY, 1, "modes/corruption/attacks"));
-            config.setDamage(40.0);
-            config.setDamageRadius(4.5);
-            config.setDurationTicks(350);
+            config.setDamage(200.0);
+            config.setDamageRadius(6.8);
+            config.setDurationTicks(700);
             config.setCooldownTicks(300);
         }
 
@@ -1492,9 +1492,9 @@ public final class DecayRains {
 
         public CorruptionLeviathan(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("corruption_leviathan", AttackType.BLOCK_DISPLAY, 1, "modes/corruption/attacks"));
-            config.setDamage(46.0);
-            config.setDamageRadius(4.0);
-            config.setDurationTicks(360);
+            config.setDamage(230.0);
+            config.setDamageRadius(6.0);
+            config.setDurationTicks(720);
             config.setCooldownTicks(340);
         }
 
@@ -1623,9 +1623,9 @@ public final class DecayRains {
 
         public VoidSpecter(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("void_specter", AttackType.BLOCK_DISPLAY, 1, "modes/corruption/attacks"));
-            config.setDamage(44.0);
-            config.setDamageRadius(3.5);
-            config.setDurationTicks(280);
+            config.setDamage(220.0);
+            config.setDamageRadius(5.2);
+            config.setDurationTicks(560);
             config.setCooldownTicks(300);
             config.setDamageOnImpactOnly(true);
             config.setImpactDamage(44.0);
@@ -1769,9 +1769,9 @@ public final class DecayRains {
 
         public ShadowHound(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("shadow_hound", AttackType.BLOCK_DISPLAY, 1, "modes/corruption/attacks"));
-            config.setDamage(42.0);
-            config.setDamageRadius(3.0);
-            config.setDurationTicks(320);
+            config.setDamage(210.0);
+            config.setDamageRadius(4.5);
+            config.setDurationTicks(640);
             config.setCooldownTicks(280);
         }
 
@@ -1914,9 +1914,9 @@ public final class DecayRains {
 
         public DarkColossus(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("dark_colossus", AttackType.BLOCK_DISPLAY, 1, "modes/corruption/attacks"));
-            config.setDamage(50.0);
-            config.setDamageRadius(5.0);
-            config.setDurationTicks(280);
+            config.setDamage(250.0);
+            config.setDamageRadius(7.5);
+            config.setDurationTicks(560);
             config.setCooldownTicks(360);
             config.setDamageOnImpactOnly(true);
             config.setImpactDamage(50.0);

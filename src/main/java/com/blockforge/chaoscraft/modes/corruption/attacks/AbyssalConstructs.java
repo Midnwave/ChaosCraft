@@ -66,9 +66,9 @@ public final class AbyssalConstructs {
 
         public CorruptionFissure(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("corruption_fissure", AttackType.BLOCK_DISPLAY, 1, "modes/corruption/attacks"));
-            config.setDamage(42.0);
-            config.setDamageRadius(3.0);
-            config.setDurationTicks(300);
+            config.setDamage(210.0);
+            config.setDamageRadius(4.5);
+            config.setDurationTicks(600);
             config.setCooldownTicks(280);
             config.setTicksBetweenDamage(20);
         }
@@ -181,9 +181,9 @@ public final class AbyssalConstructs {
 
         public DarkGeyserField(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("dark_geyser_field", AttackType.BLOCK_DISPLAY, 1, "modes/corruption/attacks"));
-            config.setDamage(44.0);
-            config.setDamageRadius(3.0);
-            config.setDurationTicks(350);
+            config.setDamage(220.0);
+            config.setDamageRadius(4.5);
+            config.setDurationTicks(700);
             config.setCooldownTicks(300);
             config.setDamageOnImpactOnly(true);
             config.setImpactDamage(44.0);
@@ -322,9 +322,9 @@ public final class AbyssalConstructs {
 
         public CorruptionMine(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("corruption_mine", AttackType.BLOCK_DISPLAY, 1, "modes/corruption/attacks"));
-            config.setDamage(48.0);
-            config.setDamageRadius(3.5);
-            config.setDurationTicks(400);
+            config.setDamage(240.0);
+            config.setDamageRadius(5.2);
+            config.setDurationTicks(800);
             config.setCooldownTicks(320);
             config.setDamageOnImpactOnly(true);
             config.setImpactDamage(48.0);
@@ -438,9 +438,9 @@ public final class AbyssalConstructs {
 
         public VoidSinkhole(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("void_sinkhole", AttackType.BLOCK_DISPLAY, 1, "modes/corruption/attacks"));
-            config.setDamage(46.0);
-            config.setDamageRadius(4.0);
-            config.setDurationTicks(320);
+            config.setDamage(230.0);
+            config.setDamageRadius(6.0);
+            config.setDurationTicks(640);
             config.setCooldownTicks(300);
             config.setTicksBetweenDamage(20);
         }
@@ -542,9 +542,9 @@ public final class AbyssalConstructs {
 
         public ShadowEruption(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("shadow_eruption", AttackType.BLOCK_DISPLAY, 1, "modes/corruption/attacks"));
-            config.setDamage(44.0);
-            config.setDamageRadius(3.0);
-            config.setDurationTicks(280);
+            config.setDamage(220.0);
+            config.setDamageRadius(4.5);
+            config.setDurationTicks(560);
             config.setCooldownTicks(260);
             config.setTicksBetweenDamage(15);
         }
@@ -652,9 +652,9 @@ public final class AbyssalConstructs {
 
         public DarkQuicksand(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("dark_quicksand", AttackType.BLOCK_DISPLAY, 1, "modes/corruption/attacks"));
-            config.setDamage(40.0);
-            config.setDamageRadius(3.0);
-            config.setDurationTicks(360);
+            config.setDamage(200.0);
+            config.setDamageRadius(4.5);
+            config.setDurationTicks(720);
             config.setCooldownTicks(300);
             config.setTicksBetweenDamage(25);
         }
@@ -754,9 +754,9 @@ public final class AbyssalConstructs {
 
         public CorruptionRootNetwork(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("corruption_root_network", AttackType.BLOCK_DISPLAY, 1, "modes/corruption/attacks"));
-            config.setDamage(42.0);
-            config.setDamageRadius(3.5);
-            config.setDurationTicks(350);
+            config.setDamage(210.0);
+            config.setDamageRadius(5.2);
+            config.setDurationTicks(700);
             config.setCooldownTicks(320);
             config.setTicksBetweenDamage(20);
         }
@@ -876,9 +876,9 @@ public final class AbyssalConstructs {
 
         public VoidCaldera(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("void_caldera", AttackType.BLOCK_DISPLAY, 1, "modes/corruption/attacks"));
-            config.setDamage(46.0);
-            config.setDamageRadius(4.5);
-            config.setDurationTicks(400);
+            config.setDamage(230.0);
+            config.setDamageRadius(6.8);
+            config.setDurationTicks(800);
             config.setCooldownTicks(340);
             config.setTicksBetweenDamage(20);
         }
@@ -1004,9 +1004,9 @@ public final class AbyssalConstructs {
 
         public ShadowMinefield(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("shadow_minefield", AttackType.BLOCK_DISPLAY, 1, "modes/corruption/attacks"));
-            config.setDamage(44.0);
-            config.setDamageRadius(3.0);
-            config.setDurationTicks(400);
+            config.setDamage(220.0);
+            config.setDamageRadius(4.5);
+            config.setDurationTicks(800);
             config.setCooldownTicks(300);
             config.setDamageOnImpactOnly(true);
             config.setImpactDamage(44.0);
@@ -1127,9 +1127,9 @@ public final class AbyssalConstructs {
 
         public DarkBloom(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("dark_bloom", AttackType.BLOCK_DISPLAY, 1, "modes/corruption/attacks"));
-            config.setDamage(42.0);
-            config.setDamageRadius(4.0);
-            config.setDurationTicks(300);
+            config.setDamage(210.0);
+            config.setDamageRadius(6.0);
+            config.setDurationTicks(600);
             config.setCooldownTicks(280);
             config.setTicksBetweenDamage(20);
         }
@@ -1262,9 +1262,9 @@ public final class AbyssalConstructs {
 
         public CorruptionCrater(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("corruption_crater", AttackType.BLOCK_DISPLAY, 1, "modes/corruption/attacks"));
-            config.setDamage(44.0);
-            config.setDamageRadius(4.0);
-            config.setDurationTicks(350);
+            config.setDamage(220.0);
+            config.setDamageRadius(6.0);
+            config.setDurationTicks(700);
             config.setCooldownTicks(300);
             config.setTicksBetweenDamage(20);
         }
@@ -1393,9 +1393,9 @@ public final class AbyssalConstructs {
 
         public VoidQuicksandPool(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("void_quicksand_pool", AttackType.BLOCK_DISPLAY, 1, "modes/corruption/attacks"));
-            config.setDamage(40.0);
-            config.setDamageRadius(3.5);
-            config.setDurationTicks(380);
+            config.setDamage(200.0);
+            config.setDamageRadius(5.2);
+            config.setDurationTicks(760);
             config.setCooldownTicks(300);
             config.setTicksBetweenDamage(20);
         }
@@ -1502,9 +1502,9 @@ public final class AbyssalConstructs {
 
         public ShadowLandslide(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("shadow_landslide", AttackType.BLOCK_DISPLAY, 1, "modes/corruption/attacks"));
-            config.setDamage(46.0);
-            config.setDamageRadius(3.0);
-            config.setDurationTicks(300);
+            config.setDamage(230.0);
+            config.setDamageRadius(4.5);
+            config.setDurationTicks(600);
             config.setCooldownTicks(280);
             config.setDamageOnImpactOnly(true);
             config.setImpactDamage(46.0);
@@ -1634,9 +1634,9 @@ public final class AbyssalConstructs {
 
         public CorruptionGeyserRing(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("corruption_geyser_ring", AttackType.BLOCK_DISPLAY, 1, "modes/corruption/attacks"));
-            config.setDamage(44.0);
-            config.setDamageRadius(2.5);
-            config.setDurationTicks(400);
+            config.setDamage(220.0);
+            config.setDamageRadius(3.8);
+            config.setDurationTicks(800);
             config.setCooldownTicks(320);
             config.setDamageOnImpactOnly(true);
             config.setImpactDamage(44.0);
@@ -1780,9 +1780,9 @@ public final class AbyssalConstructs {
 
         public DarkApocalypse(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("dark_apocalypse", AttackType.BLOCK_DISPLAY, 1, "modes/corruption/attacks"));
-            config.setDamage(64.0);
-            config.setDamageRadius(6.0);
-            config.setDurationTicks(500);
+            config.setDamage(320.0);
+            config.setDamageRadius(9.0);
+            config.setDurationTicks(1000);
             config.setCooldownTicks(450);
             config.setTicksBetweenDamage(15);
         }

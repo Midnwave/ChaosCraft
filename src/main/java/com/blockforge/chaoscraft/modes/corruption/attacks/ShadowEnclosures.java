@@ -74,9 +74,9 @@ public final class ShadowEnclosures {
 
         public CrumblingWall(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("crumbling_wall", AttackType.BLOCK_DISPLAY, 1, "modes/corruption/attacks"));
-            config.setDamage(40.0);
-            config.setDamageRadius(3.5);
-            config.setDurationTicks(400);
+            config.setDamage(200.0);
+            config.setDamageRadius(5.2);
+            config.setDurationTicks(800);
             config.setCooldownTicks(320);
         }
 
@@ -173,9 +173,9 @@ public final class ShadowEnclosures {
 
         public CorruptedArch(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("corrupted_arch", AttackType.BLOCK_DISPLAY, 1, "modes/corruption/attacks"));
-            config.setDamage(42.0);
-            config.setDamageRadius(3.0);
-            config.setDurationTicks(350);
+            config.setDamage(210.0);
+            config.setDamageRadius(4.5);
+            config.setDurationTicks(700);
             config.setCooldownTicks(300);
         }
 
@@ -297,9 +297,9 @@ public final class ShadowEnclosures {
 
         public RuinedTower(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("ruined_tower", AttackType.BLOCK_DISPLAY, 1, "modes/corruption/attacks"));
-            config.setDamage(48.0);
-            config.setDamageRadius(4.0);
-            config.setDurationTicks(400);
+            config.setDamage(240.0);
+            config.setDamageRadius(6.0);
+            config.setDurationTicks(800);
             config.setCooldownTicks(350);
             config.setDamageOnImpactOnly(true);
             config.setImpactDamage(48.0);
@@ -418,9 +418,9 @@ public final class ShadowEnclosures {
 
         public DecayBridge(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("decay_bridge", AttackType.BLOCK_DISPLAY, 1, "modes/corruption/attacks"));
-            config.setDamage(40.0);
-            config.setDamageRadius(2.5);
-            config.setDurationTicks(350);
+            config.setDamage(200.0);
+            config.setDamageRadius(3.8);
+            config.setDurationTicks(700);
             config.setCooldownTicks(300);
             config.setDamageOnImpactOnly(true);
             config.setImpactDamage(40.0);
@@ -523,9 +523,9 @@ public final class ShadowEnclosures {
 
         public CorruptedStaircase(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("corrupted_staircase", AttackType.BLOCK_DISPLAY, 1, "modes/corruption/attacks"));
-            config.setDamage(40.0);
-            config.setDamageRadius(3.0);
-            config.setDurationTicks(380);
+            config.setDamage(200.0);
+            config.setDamageRadius(4.5);
+            config.setDurationTicks(760);
             config.setCooldownTicks(310);
         }
 
@@ -632,9 +632,9 @@ public final class ShadowEnclosures {
 
         public DarkRuins(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("dark_ruins", AttackType.BLOCK_DISPLAY, 1, "modes/corruption/attacks"));
-            config.setDamage(44.0);
-            config.setDamageRadius(4.0);
-            config.setDurationTicks(450);
+            config.setDamage(220.0);
+            config.setDamageRadius(6.0);
+            config.setDurationTicks(900);
             config.setCooldownTicks(350);
         }
 
@@ -746,9 +746,9 @@ public final class ShadowEnclosures {
 
         public CorruptionCage(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("corruption_cage", AttackType.BLOCK_DISPLAY, 1, "modes/corruption/attacks"));
-            config.setDamage(46.0);
-            config.setDamageRadius(5.0);
-            config.setDurationTicks(400);
+            config.setDamage(230.0);
+            config.setDamageRadius(7.5);
+            config.setDurationTicks(800);
             config.setCooldownTicks(340);
         }
 
@@ -849,9 +849,9 @@ public final class ShadowEnclosures {
 
         public DecayingPlatform(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("decaying_platform", AttackType.BLOCK_DISPLAY, 1, "modes/corruption/attacks"));
-            config.setDamage(40.0);
-            config.setDamageRadius(2.5);
-            config.setDurationTicks(350);
+            config.setDamage(200.0);
+            config.setDamageRadius(3.8);
+            config.setDurationTicks(700);
             config.setCooldownTicks(280);
             config.setDamageOnImpactOnly(true);
             config.setImpactDamage(40.0);
@@ -968,9 +968,9 @@ public final class ShadowEnclosures {
 
         public ShadowScaffold(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("shadow_scaffold", AttackType.BLOCK_DISPLAY, 1, "modes/corruption/attacks"));
-            config.setDamage(42.0);
-            config.setDamageRadius(3.0);
-            config.setDurationTicks(380);
+            config.setDamage(210.0);
+            config.setDamageRadius(4.5);
+            config.setDurationTicks(760);
             config.setCooldownTicks(300);
         }
 
@@ -1088,9 +1088,9 @@ public final class ShadowEnclosures {
 
         public CorruptionThrone(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("corruption_throne", AttackType.BLOCK_DISPLAY, 1, "modes/corruption/attacks"));
-            config.setDamage(44.0);
-            config.setDamageRadius(4.0);
-            config.setDurationTicks(420);
+            config.setDamage(220.0);
+            config.setDamageRadius(6.0);
+            config.setDurationTicks(840);
             config.setCooldownTicks(360);
         }
 
@@ -1231,9 +1231,9 @@ public final class ShadowEnclosures {
 
         public DarkAltar(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("dark_altar", AttackType.BLOCK_DISPLAY, 1, "modes/corruption/attacks"));
-            config.setDamage(46.0);
-            config.setDamageRadius(4.5);
-            config.setDurationTicks(400);
+            config.setDamage(230.0);
+            config.setDamageRadius(6.8);
+            config.setDurationTicks(800);
             config.setCooldownTicks(340);
         }
 
@@ -1361,9 +1361,9 @@ public final class ShadowEnclosures {
 
         public CorruptedObeliskRing(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("corrupted_obelisk_ring", AttackType.BLOCK_DISPLAY, 1, "modes/corruption/attacks"));
-            config.setDamage(42.0);
-            config.setDamageRadius(4.5);
-            config.setDurationTicks(380);
+            config.setDamage(210.0);
+            config.setDamageRadius(6.8);
+            config.setDurationTicks(760);
             config.setCooldownTicks(320);
         }
 
@@ -1478,9 +1478,9 @@ public final class ShadowEnclosures {
 
         public DecayDome(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("decay_dome", AttackType.BLOCK_DISPLAY, 1, "modes/corruption/attacks"));
-            config.setDamage(44.0);
-            config.setDamageRadius(4.0);
-            config.setDurationTicks(420);
+            config.setDamage(220.0);
+            config.setDamageRadius(6.0);
+            config.setDurationTicks(840);
             config.setCooldownTicks(340);
             config.setDamageOnImpactOnly(true);
             config.setImpactDamage(44.0);
@@ -1624,9 +1624,9 @@ public final class ShadowEnclosures {
 
         public ShadowBarricade(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("shadow_barricade", AttackType.BLOCK_DISPLAY, 1, "modes/corruption/attacks"));
-            config.setDamage(42.0);
-            config.setDamageRadius(3.0);
-            config.setDurationTicks(380);
+            config.setDamage(210.0);
+            config.setDamageRadius(4.5);
+            config.setDurationTicks(760);
             config.setCooldownTicks(310);
             config.setDamageOnImpactOnly(true);
             config.setImpactDamage(42.0);
@@ -1764,9 +1764,9 @@ public final class ShadowEnclosures {
 
         public CorruptionPyramid(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("corruption_pyramid", AttackType.BLOCK_DISPLAY, 1, "modes/corruption/attacks"));
-            config.setDamage(46.0);
-            config.setDamageRadius(4.0);
-            config.setDurationTicks(440);
+            config.setDamage(230.0);
+            config.setDamageRadius(6.0);
+            config.setDurationTicks(880);
             config.setCooldownTicks(360);
         }
 
