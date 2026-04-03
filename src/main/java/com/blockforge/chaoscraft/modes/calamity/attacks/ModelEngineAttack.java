@@ -177,7 +177,8 @@ public abstract class ModelEngineAttack extends AbstractAttack {
             }
 
             double scale = getModelScale();
-            plugin.debug("[ModelEngine] " + getModelId() + " — requested scale: " + scale);
+            plugin.debug("[ModelEngine] " + getModelId() + " — raw config value: '" + config.getModelengineScale()
+                    + "', computed scale: " + scale + ", damage-radius: " + config.getDamageRadius());
 
             // Dump all available methods on ActiveModel for debugging
             plugin.debug("[ModelEngine] ActiveModel class: " + activeModel.getClass().getName());
@@ -231,11 +232,14 @@ public abstract class ModelEngineAttack extends AbstractAttack {
                     try {
                         Method setScale = activeModel.getClass().getMethod("setScale", double.class);
                         setScale.invoke(activeModel, scale);
-                        plugin.debug("[ModelEngine] Post-addModel setScale(double " + scale + ") on " + getModelId());
-                    } catch (Exception ignored) {}
+                        // Verify it actually stuck
+                        Method getScale = activeModel.getClass().getMethod("getScale");
+                        Object scaleVec = getScale.invoke(activeModel);
+                        plugin.debug("[ModelEngine] Post-addModel setScale(" + scale + ") — getScale() returns: " + scaleVec);
+                    } catch (Exception e) {
+                        plugin.debug("[ModelEngine] Post-addModel setScale failed: " + e.getMessage());
+                    }
                 }
-                // DO NOT set Bukkit SCALE attribute — it scales the invisible zombie
-                // hitbox, not the ME model, and can conflict with ME4's own scaling
             }
 
             // Play "spawn" animation if it exists
