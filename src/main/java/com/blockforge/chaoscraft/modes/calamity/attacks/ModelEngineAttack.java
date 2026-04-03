@@ -144,6 +144,16 @@ public abstract class ModelEngineAttack extends AbstractAttack {
             z.setCollidable(false);
             z.setCustomNameVisible(false);
             z.addScoreboardTag("chaoscraft_display");
+
+            // Prevent zombie from spawning with or picking up equipment
+            z.setCanPickupItems(false);
+            z.getEquipment().clear();
+            z.getEquipment().setHelmetDropChance(0);
+            z.getEquipment().setChestplateDropChance(0);
+            z.getEquipment().setLeggingsDropChance(0);
+            z.getEquipment().setBootsDropChance(0);
+            z.getEquipment().setItemInMainHandDropChance(0);
+            z.getEquipment().setItemInOffHandDropChance(0);
         });
         modelHost = zombie;
         spawnedEntities.add(modelHost);
@@ -166,22 +176,43 @@ public abstract class ModelEngineAttack extends AbstractAttack {
                 return false;
             }
 
-            // Apply scale BEFORE adding model to entity (matches working Seer implementation)
             double scale = getModelScale();
+            plugin.debug("[ModelEngine] " + getModelId() + " — requested scale: " + scale);
+
+            // Dump all available methods on ActiveModel for debugging
+            plugin.debug("[ModelEngine] ActiveModel class: " + activeModel.getClass().getName());
+            for (Method m : activeModel.getClass().getMethods()) {
+                if (m.getName().toLowerCase().contains("scale")) {
+                    plugin.debug("[ModelEngine]   scale method: " + m.getName() + "(" +
+                            java.util.Arrays.toString(m.getParameterTypes()) + ") -> " + m.getReturnType().getSimpleName());
+                }
+            }
+
+            // Try setScale BEFORE addModel
             if (scale != 1.0) {
+                boolean scaled = false;
+                // Try double
                 try {
                     Method setScale = activeModel.getClass().getMethod("setScale", double.class);
                     setScale.invoke(activeModel, scale);
-                    plugin.debug("[ModelEngine] Set scale " + scale + " on ActiveModel for " + getModelId());
-                } catch (NoSuchMethodException e1) {
+                    plugin.debug("[ModelEngine] SUCCESS: setScale(double " + scale + ") on " + getModelId());
+                    scaled = true;
+                } catch (Exception e1) {
+                    plugin.debug("[ModelEngine] setScale(double) failed: " + e1.getClass().getSimpleName() + ": " + e1.getMessage());
+                }
+                // Try float
+                if (!scaled) {
                     try {
                         Method setScale = activeModel.getClass().getMethod("setScale", float.class);
                         setScale.invoke(activeModel, (float) scale);
-                        plugin.debug("[ModelEngine] Set scale (float) " + scale + " on ActiveModel for " + getModelId());
-                    } catch (NoSuchMethodException e2) {
-                        // Fallback: Bukkit SCALE attribute after model is added
-                        plugin.debug("[ModelEngine] No setScale method on ActiveModel, will try Bukkit attribute");
+                        plugin.debug("[ModelEngine] SUCCESS: setScale(float " + scale + ") on " + getModelId());
+                        scaled = true;
+                    } catch (Exception e2) {
+                        plugin.debug("[ModelEngine] setScale(float) failed: " + e2.getClass().getSimpleName() + ": " + e2.getMessage());
                     }
+                }
+                if (!scaled) {
+                    plugin.debug("[ModelEngine] WARNING: No setScale worked before addModel for " + getModelId());
                 }
             }
 
@@ -195,13 +226,22 @@ public abstract class ModelEngineAttack extends AbstractAttack {
                         Class.forName("com.ticxo.modelengine.api.model.ActiveModel"), boolean.class);
                 addModel.invoke(modeledEntity, activeModel, true);
 
-                // If ActiveModel setScale wasn't available, try Bukkit attribute as last resort
+                // AFTER addModel — try Bukkit SCALE attribute as backup (1.21.4+)
                 if (scale != 1.0 && modelHost instanceof org.bukkit.entity.LivingEntity living) {
                     var scaleAttr = living.getAttribute(org.bukkit.attribute.Attribute.SCALE);
-                    if (scaleAttr != null && scaleAttr.getBaseValue() == 1.0) {
+                    if (scaleAttr != null) {
                         scaleAttr.setBaseValue(scale);
-                        plugin.debug("[ModelEngine] Set SCALE attribute " + scale + " on " + getModelId());
+                        plugin.debug("[ModelEngine] Set Bukkit SCALE attribute " + scale + " on " + getModelId());
                     }
+                }
+
+                // Also try setScale AFTER addModel in case ME4 needs the model attached first
+                if (scale != 1.0) {
+                    try {
+                        Method setScale = activeModel.getClass().getMethod("setScale", double.class);
+                        setScale.invoke(activeModel, scale);
+                        plugin.debug("[ModelEngine] Post-addModel setScale(double " + scale + ") on " + getModelId());
+                    } catch (Exception ignored) {}
                 }
             }
 
