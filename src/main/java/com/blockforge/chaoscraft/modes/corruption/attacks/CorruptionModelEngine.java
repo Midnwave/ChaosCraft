@@ -199,7 +199,7 @@ public final class CorruptionModelEngine {
         }
 
         @Override protected String getModelId() { return "void_rift_slash"; }
-        @Override protected double getModelScale() { return 2.5; }
+
 
         @Override
         protected void onSpawn(Location center) {
@@ -287,7 +287,7 @@ public final class CorruptionModelEngine {
         }
 
         @Override protected String getModelId() { return "reality_shatter"; }
-        @Override protected double getModelScale() { return 3.0; }
+
 
         @Override
         protected void onSpawn(Location center) {
@@ -379,7 +379,7 @@ public final class CorruptionModelEngine {
         }
 
         @Override protected String getModelId() { return "dimension_collapse_pillar"; }
-        @Override protected double getModelScale() { return 3.5; }
+
 
         @Override
         protected void onSpawn(Location center) {
@@ -489,7 +489,7 @@ public final class CorruptionModelEngine {
         }
 
         @Override protected String getModelId() { return "fractured_space_crown"; }
-        @Override protected double getModelScale() { return 2.0; }
+
 
         @Override
         protected void onSpawn(Location center) {
@@ -595,7 +595,7 @@ public final class CorruptionModelEngine {
         }
 
         @Override protected String getModelId() { return "entropy_spiral"; }
-        @Override protected double getModelScale() { return 2.8; }
+
 
         @Override
         protected void onSpawn(Location center) {
@@ -708,7 +708,7 @@ public final class CorruptionModelEngine {
         }
 
         @Override protected String getModelId() { return "creeping_corruption_hands"; }
-        @Override protected double getModelScale() { return 2.2; }
+
 
         @Override
         protected void onSpawn(Location center) {
@@ -799,7 +799,7 @@ public final class CorruptionModelEngine {
         }
 
         @Override protected String getModelId() { return "corruption_bloom"; }
-        @Override protected double getModelScale() { return 3.0; }
+
 
         @Override
         protected void onSpawn(Location center) {
@@ -884,7 +884,7 @@ public final class CorruptionModelEngine {
         }
 
         @Override protected String getModelId() { return "plague_tendril_burst"; }
-        @Override protected double getModelScale() { return 3.0; }
+
 
         @Override
         protected void onSpawn(Location center) {
@@ -988,7 +988,7 @@ public final class CorruptionModelEngine {
         }
 
         @Override protected String getModelId() { return "corruption_web"; }
-        @Override protected double getModelScale() { return 3.5; }
+
 
         @Override
         protected void onSpawn(Location center) {
@@ -1103,7 +1103,7 @@ public final class CorruptionModelEngine {
         }
 
         @Override protected String getModelId() { return "spreading_necrosis"; }
-        @Override protected double getModelScale() { return 2.5; }
+
 
         @Override
         protected void onSpawn(Location center) {
@@ -1199,7 +1199,7 @@ public final class CorruptionModelEngine {
         }
 
         @Override protected String getModelId() { return "soul_drain_beam"; }
-        @Override protected double getModelScale() { return 3.0; }
+
 
         @Override
         protected void onSpawn(Location center) {
@@ -1313,7 +1313,7 @@ public final class CorruptionModelEngine {
         }
 
         @Override protected String getModelId() { return "dark_pulse_ring"; }
-        @Override protected double getModelScale() { return 2.0; }
+
 
         @Override
         protected void onSpawn(Location center) {
@@ -1410,7 +1410,7 @@ public final class CorruptionModelEngine {
         }
 
         @Override protected String getModelId() { return "void_orb_cluster"; }
-        @Override protected double getModelScale() { return 2.5; }
+
 
         @Override
         protected void onSpawn(Location center) {
@@ -1526,7 +1526,7 @@ public final class CorruptionModelEngine {
         }
 
         @Override protected String getModelId() { return "necrotic_shockwave"; }
-        @Override protected double getModelScale() { return 2.0; }
+
 
         @Override
         protected void onSpawn(Location center) {
@@ -1627,7 +1627,7 @@ public final class CorruptionModelEngine {
         }
 
         @Override protected String getModelId() { return "corruption_geyser"; }
-        @Override protected double getModelScale() { return 3.0; }
+
 
         @Override
         protected void onSpawn(Location center) {
@@ -1740,7 +1740,7 @@ public final class CorruptionModelEngine {
         }
 
         @Override protected String getModelId() { return "the_stare"; }
-        @Override protected double getModelScale() { return 4.0; }
+
 
         @Override
         protected void onSpawn(Location center) {
@@ -1854,7 +1854,7 @@ public final class CorruptionModelEngine {
         }
 
         @Override protected String getModelId() { return "memory_fracture"; }
-        @Override protected double getModelScale() { return 1.5; }
+
 
         @Override
         protected void onSpawn(Location center) {
@@ -1946,7 +1946,7 @@ public final class CorruptionModelEngine {
         }
 
         @Override protected String getModelId() { return "hollow_scream"; }
-        @Override protected double getModelScale() { return 3.5; }
+
 
         @Override
         protected void onSpawn(Location center) {
@@ -2072,7 +2072,7 @@ public final class CorruptionModelEngine {
         }
 
         @Override protected String getModelId() { return "paranoia_spiral"; }
-        @Override protected double getModelScale() { return 3.0; }
+
 
         @Override
         protected void onSpawn(Location center) {
@@ -2188,7 +2188,7 @@ public final class CorruptionModelEngine {
         }
 
         @Override protected String getModelId() { return "false_mirror"; }
-        @Override protected double getModelScale() { return 2.5; }
+
 
         @Override
         protected void onSpawn(Location center) {
@@ -2299,7 +2299,7 @@ public final class CorruptionModelEngine {
         }
 
         @Override protected String getModelId() { return "bone_spike_eruption"; }
-        @Override protected double getModelScale() { return 2.5; }
+
 
         @Override
         protected void onSpawn(Location center) {
@@ -2392,7 +2392,7 @@ public final class CorruptionModelEngine {
         }
 
         @Override protected String getModelId() { return "corruption_crystal_cage"; }
-        @Override protected double getModelScale() { return 2.0; }
+
 
         @Override
         protected void onSpawn(Location center) {
@@ -2510,7 +2510,7 @@ public final class CorruptionModelEngine {
         }
 
         @Override protected String getModelId() { return "necrotic_vines"; }
-        @Override protected double getModelScale() { return 2.5; }
+
 
         @Override
         protected void onSpawn(Location center) {
@@ -2610,7 +2610,7 @@ public final class CorruptionModelEngine {
         }
 
         @Override protected String getModelId() { return "flesh_warp"; }
-        @Override protected double getModelScale() { return 2.0; }
+
 
         @Override
         protected void onSpawn(Location center) {
@@ -2718,7 +2718,7 @@ public final class CorruptionModelEngine {
         }
 
         @Override protected String getModelId() { return "corrupted_roots"; }
-        @Override protected double getModelScale() { return 2.5; }
+
 
         @Override
         protected void onSpawn(Location center) {
@@ -2841,7 +2841,7 @@ public final class CorruptionModelEngine {
         }
 
         @Override protected String getModelId() { return "corruption_pillar_array"; }
-        @Override protected double getModelScale() { return 3.0; }
+
 
         @Override
         protected void onSpawn(Location center) {
@@ -2981,7 +2981,7 @@ public final class CorruptionModelEngine {
         }
 
         @Override protected String getModelId() { return "black_sun"; }
-        @Override protected double getModelScale() { return 4.0; }
+
 
         @Override
         protected void onSpawn(Location center) {
@@ -3090,7 +3090,7 @@ public final class CorruptionModelEngine {
         }
 
         @Override protected String getModelId() { return "entropy_field"; }
-        @Override protected double getModelScale() { return 3.0; }
+
 
         @Override
         protected void onSpawn(Location center) {
@@ -3208,7 +3208,7 @@ public final class CorruptionModelEngine {
         }
 
         @Override protected String getModelId() { return "void_gate"; }
-        @Override protected double getModelScale() { return 3.5; }
+
 
         @Override
         protected void onSpawn(Location center) {
@@ -3333,7 +3333,7 @@ public final class CorruptionModelEngine {
         }
 
         @Override protected String getModelId() { return "corruption_nova"; }
-        @Override protected double getModelScale() { return 3.5; }
+
 
         @Override
         protected void onSpawn(Location center) {
