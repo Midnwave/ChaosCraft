@@ -95,18 +95,32 @@ public class WorldCorruptor {
     private void corruptRandomBlock() {
         ThreadLocalRandom rand = ThreadLocalRandom.current();
 
-        // Pick random position within current radius
-        int radiusBlocks = currentRadius * 16;
-        int x = centerX + rand.nextInt(-radiusBlocks, radiusBlocks + 1);
-        int z = centerZ + rand.nextInt(-radiusBlocks, radiusBlocks + 1);
+        // Center corruption on a random player, not world spawn
+        List<org.bukkit.entity.Player> players = activeWorld.getPlayers();
+        int cx = centerX, cz = centerZ;
+        if (!players.isEmpty()) {
+            org.bukkit.entity.Player target = players.get(rand.nextInt(players.size()));
+            cx = target.getLocation().getBlockX();
+            cz = target.getLocation().getBlockZ();
+        }
 
-        // Get highest block at this position
+        // Pick random position within current radius around the player
+        int radiusBlocks = currentRadius * 16;
+        int x = cx + rand.nextInt(-radiusBlocks, radiusBlocks + 1);
+        int z = cz + rand.nextInt(-radiusBlocks, radiusBlocks + 1);
+
+        // Get highest block at this position — prioritize surface
         int surfaceY = activeWorld.getHighestBlockYAt(x, z);
         if (surfaceY <= activeWorld.getMinHeight()) return;
 
-        // Pick a random Y near surface (surface to surface - 5)
-        int minY = Math.max(activeWorld.getMinHeight() + 1, surfaceY - 5);
-        int y = rand.nextInt(minY, surfaceY + 1);
+        // 90% surface (top 3 blocks), 10% underground (down to -5)
+        int y;
+        if (rand.nextDouble() < 0.9) {
+            y = surfaceY - rand.nextInt(3); // Surface: grass, dirt, paths, roofs
+        } else {
+            int minY = Math.max(activeWorld.getMinHeight() + 1, surfaceY - 5);
+            y = rand.nextInt(minY, surfaceY + 1);
+        }
 
         // Check if already corrupted
         long posKey = blockKey(x, y, z);
