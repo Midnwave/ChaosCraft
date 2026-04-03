@@ -188,6 +188,16 @@ public class CorruptionEngine {
 
         if (blockLoc == null) return;
 
+        // Check minimum distance (2.5 blocks) from all existing floating blocks
+        double minDistSq = 2.5 * 2.5; // 6.25
+        for (FloatingBlock existing : floatingBlocks) {
+            if (existing.entity != null && existing.entity.isValid()) {
+                if (existing.entity.getLocation().distanceSquared(blockLoc) < minDistSq) {
+                    return; // Too close to another floating block — skip
+                }
+            }
+        }
+
         // Corrupt the block
         BlockDisplay display = corruptor.corruptBlock(blockLoc, restorer);
         if (display == null) return;
