@@ -277,6 +277,7 @@ public class AttackConfig {
         this.damageOnImpactOnly = other.damageOnImpactOnly;
         this.impactDamage = other.impactDamage;
         this.impactRadius = other.impactRadius;
+        this.modelengineScale = other.modelengineScale;
     }
 
     // ---- Getters/Setters ----
