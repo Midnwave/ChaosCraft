@@ -170,7 +170,8 @@ public class CorruptionCommand implements CommandExecutor, TabCompleter {
         sender.sendMessage(Component.text("Spawned: " + id, NamedTextColor.GREEN));
         sender.sendMessage(Component.text("  Damage: " + attack.getConfig().getDamage()
                 + " HP, Radius: " + attack.getConfig().getDamageRadius()
-                + ", Duration: " + attack.getConfig().getDurationTicks() + " ticks", NamedTextColor.GRAY));
+                + ", Duration: " + attack.getConfig().getDurationTicks() + " ticks"
+                + ", ME Scale: " + attack.getConfig().getModelengineScale(), NamedTextColor.GRAY));
         return true;
     }
 
