@@ -101,8 +101,14 @@ public class CorruptionCommand implements CommandExecutor, TabCompleter {
             sender.sendMessage(Component.text("Floating blocks: " + (mode.getCorruptionConfig().isFloatingBlocksEnabled() ? "ON" : "OFF"), NamedTextColor.LIGHT_PURPLE));
             sender.sendMessage(Component.text("Block replacement: " + (mode.getCorruptionConfig().isBlockReplacementEnabled() ? "ON" : "OFF"), NamedTextColor.LIGHT_PURPLE));
             sender.sendMessage(Component.text("Mob glitch: " + (mode.getCorruptionConfig().isMobGlitchEnabled() ? "ON" : "OFF"), NamedTextColor.LIGHT_PURPLE));
-            sender.sendMessage(Component.text("Corrupted blocks: [engine not yet wired]", NamedTextColor.GRAY));
-            sender.sendMessage(Component.text("Blocks pending restore: [engine not yet wired]", NamedTextColor.GRAY));
+            var engine = mode.getCorruptionEngine();
+            if (engine != null && engine.isRunning()) {
+                sender.sendMessage(Component.text("Active floating blocks: " + engine.getActiveFloatingCount(), NamedTextColor.GRAY));
+                sender.sendMessage(Component.text("Corrupted blocks: " + engine.getRestorer().getStoredCount(), NamedTextColor.GRAY));
+                sender.sendMessage(Component.text(engine.getStats(), NamedTextColor.GRAY));
+            } else {
+                sender.sendMessage(Component.text("Engine: not active", NamedTextColor.GRAY));
+            }
         }
 
         int bdCount = mode.getAttackRegistry().getByPhaseAndType(1, AttackType.BLOCK_DISPLAY).size();
@@ -302,7 +308,15 @@ public class CorruptionCommand implements CommandExecutor, TabCompleter {
         sender.sendMessage(Component.text("  Intensity: " + mode.getCorruptionConfig().getMobGlitchIntensity(), NamedTextColor.GRAY));
         sender.sendMessage(Component.text("Respect claims: " + mode.getCorruptionConfig().isRespectClaims(), NamedTextColor.LIGHT_PURPLE));
         sender.sendMessage(Component.text("Restoration blocks/tick: " + mode.getCorruptionConfig().getRestorationBlocksPerTick(), NamedTextColor.LIGHT_PURPLE));
-        sender.sendMessage(Component.text("[Engine not yet wired — stats are config values only]", NamedTextColor.GRAY));
+        var engine = mode.getCorruptionEngine();
+        if (engine != null && engine.isRunning()) {
+            sender.sendMessage(Component.text("--- Live Engine Stats ---", NamedTextColor.DARK_PURPLE));
+            sender.sendMessage(Component.text("Active floating blocks: " + engine.getActiveFloatingCount(), NamedTextColor.GRAY));
+            sender.sendMessage(Component.text("Corrupted blocks stored: " + engine.getRestorer().getStoredCount(), NamedTextColor.GRAY));
+            sender.sendMessage(Component.text(engine.getStats(), NamedTextColor.GRAY));
+        } else {
+            sender.sendMessage(Component.text("[Engine not active — showing config defaults only]", NamedTextColor.GRAY));
+        }
         return true;
     }
 
@@ -313,9 +327,13 @@ public class CorruptionCommand implements CommandExecutor, TabCompleter {
             return true;
         }
 
-        // Placeholder — will trigger corruptionEngine.startRestoration() when engine is wired
-        sender.sendMessage(Component.text("Block restoration triggered.", NamedTextColor.GREEN));
-        sender.sendMessage(Component.text("[Placeholder — corruption engine not yet wired]", NamedTextColor.GRAY));
+        var engine = mode.getCorruptionEngine();
+        if (engine != null && engine.isRunning()) {
+            engine.forceRestore();
+            sender.sendMessage(Component.text("Block restoration triggered — restoring all corrupted blocks.", NamedTextColor.GREEN));
+        } else {
+            sender.sendMessage(Component.text("Corruption engine not active. Nothing to restore.", NamedTextColor.RED));
+        }
         return true;
     }
 

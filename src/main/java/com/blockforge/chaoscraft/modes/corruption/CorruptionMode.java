@@ -295,6 +295,10 @@ public class CorruptionMode extends AbstractMode {
         return attackScheduler;
     }
 
+    public CorruptionEngine getCorruptionEngine() {
+        return corruptionEngine;
+    }
+
     public long getTickCounter() {
         return tickCounter;
     }
