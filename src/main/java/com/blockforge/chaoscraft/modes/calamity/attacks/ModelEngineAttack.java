@@ -124,10 +124,14 @@ public abstract class ModelEngineAttack extends AbstractAttack {
         World world = location.getWorld();
         if (world == null) return false;
 
+        // Offset Y up by 1.5 blocks — zombie origin is at feet, model renders
+        // from there so it sinks into the ground without this offset
+        Location spawnLoc = location.clone().add(0, 1.5, 0);
+
         // Spawn invisible zombie as the model host — marker ArmorStands zero out
         // dimensions which prevents ME4 from scaling models. Zombie matches the
         // working Seer boss implementation.
-        org.bukkit.entity.Zombie zombie = world.spawn(location, org.bukkit.entity.Zombie.class, z -> {
+        org.bukkit.entity.Zombie zombie = world.spawn(spawnLoc, org.bukkit.entity.Zombie.class, z -> {
             z.setInvisible(true);
             z.setSilent(true);
             z.setGravity(false);
