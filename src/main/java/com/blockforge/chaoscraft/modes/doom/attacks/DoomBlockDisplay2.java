@@ -878,9 +878,9 @@ public final class DoomBlockDisplay2 {
                 Transformation t = tops.get(i).entity().getTransformation();
                 tops.get(i).entity().setTransformation(new Transformation(
                     t.getTranslation(),
-                    t.getLeftRotation(),
+                    new AxisAngle4f(0, 0, 1, 0),
                     new Vector3f(0.6f, (float) eruptHeight, 0.6f),
-                    t.getRightRotation()
+                    new AxisAngle4f(0, 0, 1, 0)
                 ));
 
                 // Particles during eruption
@@ -977,9 +977,9 @@ public final class DoomBlockDisplay2 {
                         mines.get(i).entity().setInterpolationDelay(0);
                         mines.get(i).entity().setTransformation(new Transformation(
                             new Vector3f(-1.5f, -0.5f, -1.5f),
-                            t.getLeftRotation(),
+                            new AxisAngle4f(0, 0, 1, 0),
                             new Vector3f(3.0f, 2.0f, 3.0f),
-                            t.getRightRotation()
+                            new AxisAngle4f(0, 0, 1, 0)
                         ));
 
                         // Explosion particles
@@ -1213,13 +1213,13 @@ public final class DoomBlockDisplay2 {
                 float petalScaleX = 0.4f + (float) openAmount * 0.5f;
                 Transformation tl = petalsLeft.get(i).entity().getTransformation();
                 petalsLeft.get(i).entity().setTransformation(new Transformation(
-                    tl.getTranslation(), tl.getLeftRotation(),
-                    new Vector3f(petalScaleX, 0.3f, 0.6f), tl.getRightRotation()
+                    tl.getTranslation(), new AxisAngle4f(0, 0, 1, 0),
+                    new Vector3f(petalScaleX, 0.3f, 0.6f), new AxisAngle4f(0, 0, 1, 0)
                 ));
                 Transformation tr = petalsRight.get(i).entity().getTransformation();
                 petalsRight.get(i).entity().setTransformation(new Transformation(
-                    tr.getTranslation(), tr.getLeftRotation(),
-                    new Vector3f(petalScaleX, 0.3f, 0.6f), tr.getRightRotation()
+                    tr.getTranslation(), new AxisAngle4f(0, 0, 1, 0),
+                    new Vector3f(petalScaleX, 0.3f, 0.6f), new AxisAngle4f(0, 0, 1, 0)
                 ));
 
                 // Glow brighter when open
@@ -1316,8 +1316,8 @@ public final class DoomBlockDisplay2 {
                     tiles.get(i).entity().setInterpolationDuration(5);
                     tiles.get(i).entity().setInterpolationDelay(0);
                     tiles.get(i).entity().setTransformation(new Transformation(
-                        t.getTranslation(), t.getLeftRotation(),
-                        new Vector3f(1.4f, 2.0f, 1.4f), t.getRightRotation()
+                        t.getTranslation(), new AxisAngle4f(0, 0, 1, 0),
+                        new Vector3f(1.4f, 2.0f, 1.4f), new AxisAngle4f(0, 0, 1, 0)
                     ));
                     tiles.get(i).glow(255, 150, 30);
 
@@ -1338,8 +1338,8 @@ public final class DoomBlockDisplay2 {
                         tiles.get(i).entity().setInterpolationDuration(5);
                         tiles.get(i).entity().setInterpolationDelay(0);
                         tiles.get(i).entity().setTransformation(new Transformation(
-                            t.getTranslation(), t.getLeftRotation(),
-                            new Vector3f(1.4f, 0.2f, 1.4f), t.getRightRotation()
+                            t.getTranslation(), new AxisAngle4f(0, 0, 1, 0),
+                            new Vector3f(1.4f, 0.2f, 1.4f), new AxisAngle4f(0, 0, 1, 0)
                         ));
 
                         boolean isMagma = ((i / 4) + (i % 4)) % 2 == 0;
@@ -1798,8 +1798,8 @@ public final class DoomBlockDisplay2 {
                 float currentHeight = (float) (spikeHeights[i] + heightPulse * 0.5);
                 Transformation t = spikes.get(i).entity().getTransformation();
                 spikes.get(i).entity().setTransformation(new Transformation(
-                    t.getTranslation(), t.getLeftRotation(),
-                    new Vector3f(0.6f, currentHeight, 0.6f), t.getRightRotation()
+                    t.getTranslation(), new AxisAngle4f(0, 0, 1, 0),
+                    new Vector3f(0.6f, currentHeight, 0.6f), new AxisAngle4f(0, 0, 1, 0)
                 ));
             }
 
@@ -1953,8 +1953,8 @@ public final class DoomBlockDisplay2 {
                     float fadeScale = Math.max(0.1f, 0.8f - ticksSinceExplosion * 0.01f);
                     Transformation t = fragments.get(i).entity().getTransformation();
                     fragments.get(i).entity().setTransformation(new Transformation(
-                        t.getTranslation(), t.getLeftRotation(),
-                        new Vector3f(fadeScale, fadeScale, fadeScale), t.getRightRotation()
+                        t.getTranslation(), new AxisAngle4f(0, 0, 1, 0),
+                        new Vector3f(fadeScale, fadeScale, fadeScale), new AxisAngle4f(0, 0, 1, 0)
                     ));
                 }
 
@@ -2203,9 +2203,9 @@ public final class DoomBlockDisplay2 {
                     projectiles.get(i).entity().setInterpolationDelay(0);
                     projectiles.get(i).entity().setTransformation(new Transformation(
                         new Vector3f(-0.75f, -0.1f, -0.75f),
-                        t.getLeftRotation(),
+                        new AxisAngle4f(0, 0, 1, 0),
                         new Vector3f(1.5f, 0.2f, 1.5f),
-                        t.getRightRotation()
+                        new AxisAngle4f(0, 0, 1, 0)
                     ));
                 }
 

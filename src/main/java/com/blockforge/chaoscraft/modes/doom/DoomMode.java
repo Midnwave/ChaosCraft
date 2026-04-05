@@ -53,10 +53,12 @@ public class DoomMode extends AbstractMode {
     }
 
     private void registerAllAttacks() {
-        // Block Display attacks (52)
+        // Block Display attacks (50) — 5 files × 10 attacks each
         DoomBlockDisplay.registerAll(plugin, attackRegistry);
         DoomBlockDisplay2.registerAll(plugin, attackRegistry);
         DoomBlockDisplay3.registerAll(plugin, attackRegistry);
+        DoomBlockDisplay4.registerAll(plugin, attackRegistry);
+        DoomBlockDisplay5.registerAll(plugin, attackRegistry);
 
         // Environmental attacks
         DoomEnvironmental.registerAll(plugin, attackRegistry);

@@ -286,9 +286,9 @@ public final class DoomBlockDisplay {
                 apexEntity.setInterpolationDelay(0);
                 apexEntity.setTransformation(new Transformation(
                         t.getTranslation(),
-                        t.getLeftRotation(),
+                        new AxisAngle4f(0, 0, 1, 0),
                         new Vector3f(pulse, 0.8f, pulse),
-                        t.getRightRotation()
+                        new AxisAngle4f(0, 0, 1, 0)
                 ));
             }
 
@@ -394,9 +394,9 @@ public final class DoomBlockDisplay {
                     entity.setInterpolationDelay(0);
                     entity.setTransformation(new Transformation(
                             t.getTranslation(),
-                            t.getLeftRotation(),
+                            new AxisAngle4f(0, 0, 1, 0),
                             new Vector3f(pulse, 0.5f, pulse),
-                            t.getRightRotation()
+                            new AxisAngle4f(0, 0, 1, 0)
                     ));
                 }
             }
@@ -522,9 +522,9 @@ public final class DoomBlockDisplay {
                     entity.setInterpolationDelay(0);
                     entity.setTransformation(new Transformation(
                             t.getTranslation(),
-                            t.getLeftRotation(),
+                            new AxisAngle4f(0, 0, 1, 0),
                             new Vector3f(1.0f, 1.0f, zPulse),
-                            t.getRightRotation()
+                            new AxisAngle4f(0, 0, 1, 0)
                     ));
                 }
             }
@@ -630,9 +630,9 @@ public final class DoomBlockDisplay {
                 entity.setInterpolationDelay(0);
                 entity.setTransformation(new Transformation(
                         t.getTranslation(),
-                        t.getLeftRotation(),
+                        new AxisAngle4f(0, 0, 1, 0),
                         new Vector3f(pulse, 0.8f, pulse),
-                        t.getRightRotation()
+                        new AxisAngle4f(0, 0, 1, 0)
                 ));
             }
 
@@ -1445,9 +1445,9 @@ public final class DoomBlockDisplay {
                     entity.setInterpolationDelay(0);
                     entity.setTransformation(new Transformation(
                             t.getTranslation(),
-                            t.getLeftRotation(),
+                            new AxisAngle4f(0, 0, 1, 0),
                             new Vector3f(newScale, 0.9f, newScale),
-                            t.getRightRotation()
+                            new AxisAngle4f(0, 0, 1, 0)
                     ));
                 }
             }
@@ -1801,9 +1801,9 @@ public final class DoomBlockDisplay {
                     entity.setInterpolationDelay(0);
                     entity.setTransformation(new Transformation(
                             t.getTranslation(),
-                            t.getLeftRotation(),
+                            new AxisAngle4f(0, 0, 1, 0),
                             new Vector3f(pulse, pulse, pulse),
-                            t.getRightRotation()
+                            new AxisAngle4f(0, 0, 1, 0)
                     ));
                 }
             }
