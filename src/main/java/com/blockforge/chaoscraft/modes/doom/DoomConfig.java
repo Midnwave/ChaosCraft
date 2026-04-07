@@ -90,10 +90,11 @@ public class DoomConfig {
         if (!config.contains("lava-rise.enabled")) { config.set("lava-rise.enabled", true); needsSave = true; }
         if (!config.contains("lava-rise.start-y")) { config.set("lava-rise.start-y", 0); needsSave = true; }
         if (!config.contains("lava-rise.max-y")) { config.set("lava-rise.max-y", 100); needsSave = true; }
-        if (!config.contains("lava-rise.blocks-per-level-tick")) { config.set("lava-rise.blocks-per-level-tick", 500); needsSave = true; }
+        if (!config.contains("lava-rise.blocks-per-level-tick")) { config.set("lava-rise.blocks-per-level-tick", 5000); needsSave = true; }
         if (!config.contains("lava-rise.rise-interval-ticks")) { config.set("lava-rise.rise-interval-ticks", 200); needsSave = true; }
         if (!config.contains("lava-rise.rise-amount")) { config.set("lava-rise.rise-amount", 1); needsSave = true; }
         if (!config.contains("lava-rise.cleanup-on-end")) { config.set("lava-rise.cleanup-on-end", true); needsSave = true; }
+        if (!config.contains("lava-rise.cleanup-blocks-per-tick")) { config.set("lava-rise.cleanup-blocks-per-tick", 5000); needsSave = true; }
 
         // ── Doom-specific: lava damage ──────────────────────────────────
         if (!config.contains("lava-damage.enabled")) { config.set("lava-damage.enabled", true); needsSave = true; }
@@ -215,6 +216,7 @@ public class DoomConfig {
     public int getRiseIntervalTicks() { return config.getInt("lava-rise.rise-interval-ticks", 200); }
     public int getRiseAmount() { return config.getInt("lava-rise.rise-amount", 1); }
     public boolean isCleanupOnEnd() { return config.getBoolean("lava-rise.cleanup-on-end", true); }
+    public int getCleanupBlocksPerTick() { return config.getInt("lava-rise.cleanup-blocks-per-tick", 5000); }
 
     // ========================
     // Lava Damage

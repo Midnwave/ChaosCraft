@@ -5,21 +5,36 @@ import com.blockforge.chaoscraft.modes.calamity.attacks.*;
 import com.blockforge.chaoscraft.modes.calamity.display.DisplayBuilder;
 import com.blockforge.chaoscraft.modes.calamity.display.DisplayBuilder.BlockDisplayHandle;
 import org.bukkit.*;
+import org.bukkit.entity.BlockDisplay;
 import org.bukkit.entity.Player;
-import org.bukkit.util.Vector;
+import org.bukkit.util.Transformation;
+import org.joml.AxisAngle4f;
+import org.joml.Vector3f;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Doom Mode — BLOCK DISPLAY ATTACKS (Part 3, attacks 35-52)
- * 18 hellfire and doom-themed BlockDisplay attacks.
+ * Doom Mode — BLOCK DISPLAY ATTACKS (Part 3, attacks 21-30)
+ * 10 advanced creature / animated block display attacks.
  *
- * Categories:
- *   35-39: Orbital / Floating
- *   40-44: Wave / Line Attacks
- *   45-48: Towers / Pillars
- *   49-52: Unique / Special
+ * Each creature is built from 25-35 BlockDisplay entities shaped into anatomy
+ * via Transformation scale (limbs = rods, wings = plates, bodies = wide blocks).
+ * ALL animation uses setTransformation() with setInterpolationDuration(2-5) for
+ * smooth motion -- NO teleport for rotation. Teleport is only used for whole-body
+ * movement (walking/flying).
+ *
+ * Creature attacks:
+ *  #21  LavaGolemTitan         — 35 blocks, humanoid lava golem, arm/leg walk cycle
+ *  #22  InfernalPhoenixRising  — 30 blocks, phoenix with flapping wing plates
+ *  #23  NetherDragonSerpent    — 32 blocks, serpentine dragon, sine-wave undulation
+ *  #24  MagmaSpiderQueen       — 30 blocks, spider with 8-leg walking gait
+ *  #25  HellfireWyvernDive     — 28 blocks, diving wyvern, wing fold on descent
+ *  #26  DoomCentipede          — 30 blocks, caterpillar-motion centipede
+ *  #27  InfernalStagBeetle     — 28 blocks, beetle with charging horn
+ *  #28  MagmaJellyfishSwarm    — 30 blocks, 5 jellyfish orbiting with tentacle sway
+ *  #29  HellfireMinotaurCharge — 32 blocks, minotaur charge attack
+ *  #30  DoomSkeletonKing       — 30 blocks, skeleton king with sword swing
  *
  * Doom palette:
  * - Lava orange: RGB(255, 100, 20)
@@ -32,34 +47,30 @@ import java.util.List;
  * Materials: MAGMA_BLOCK, NETHERRACK, NETHER_BRICKS, RED_NETHER_BRICKS,
  *            BLACKSTONE, POLISHED_BLACKSTONE, CRYING_OBSIDIAN, SHROOMLIGHT,
  *            BASALT, DEEPSLATE, COAL_BLOCK, OBSIDIAN, RED_CONCRETE,
- *            BLACK_CONCRETE, ORANGE_CONCRETE, GLOWSTONE
+ *            BLACK_CONCRETE, ORANGE_CONCRETE, GLOWSTONE, BONE_BLOCK, END_ROD
+ *
+ * Rules:
+ * - NO status effects
+ * - AxisAngle4f ONLY (never Quaternionf)
+ * - spawnedEntities.add(h.entity()) ALWAYS
+ * - Location center = getCenter(); if (center == null) return; EVERY onTick
+ * - All rotation via Transformation + interpolation, NOT teleport
+ * - Teleport only for whole-body positional movement
  */
 public final class DoomBlockDisplay3 {
     private DoomBlockDisplay3() {}
 
     public static void registerAll(ChaosCraftPlugin plugin, AttackRegistry registry) {
-        // Orbital / Floating (35-39)
-        registry.register(new MagmaOrbit(plugin));
-        registry.register(new InfernalSatellites(plugin));
-        registry.register(new HellfireHalo(plugin));
-        registry.register(new DoomPendulum(plugin));
-        registry.register(new InfernalGyroscope(plugin));
-        // Wave / Line Attacks (40-44)
-        registry.register(new LavaWave(plugin));
-        registry.register(new HellfireFence(plugin));
-        registry.register(new BrimstoneZigzag(plugin));
-        registry.register(new MagmaRipple(plugin));
-        registry.register(new InfernalScythe(plugin));
-        // Towers / Pillars (45-48)
-        registry.register(new DoomSpire(plugin));
-        registry.register(new TwinInfernalColumns(plugin));
-        registry.register(new HellfireLighthouse(plugin));
-        registry.register(new BrimstoneStalagmites(plugin));
-        // Unique / Special (49-52)
-        registry.register(new InfernalClock(plugin));
-        registry.register(new MagmaChain(plugin));
-        registry.register(new DoomEye(plugin));
-        registry.register(new InfernalVortex(plugin));
+        registry.register(new LavaGolemTitan(plugin));
+        registry.register(new InfernalPhoenixRising(plugin));
+        registry.register(new NetherDragonSerpent(plugin));
+        registry.register(new MagmaSpiderQueen(plugin));
+        registry.register(new HellfireWyvernDive(plugin));
+        registry.register(new DoomCentipede(plugin));
+        registry.register(new InfernalStagBeetle(plugin));
+        registry.register(new MagmaJellyfishSwarm(plugin));
+        registry.register(new HellfireMinotaurCharge(plugin));
+        registry.register(new DoomSkeletonKing(plugin));
     }
 
     // ================================================================
@@ -80,2164 +91,1924 @@ public final class DoomBlockDisplay3 {
         return nearest;
     }
 
-    // ================================================================
-    // 35. MAGMA ORBIT — 12 magma blocks orbiting a central point at
-    //     different radii and heights. Each block orbits at a different
-    //     speed. Central glowing core. Damage: 8-block radius, 20 dmg/15t.
-    //     12 orbiting blocks + 1 core = 13 blocks
-    // ================================================================
-    public static class MagmaOrbit extends BlockDisplayAttack {
-        private Location center;
-        private BlockDisplayHandle core;
-        private final List<BlockDisplayHandle> orbiters = new ArrayList<>();
-        private final double[] orbitRadii = new double[12];
-        private final double[] orbitHeights = new double[12];
-        private final double[] orbitSpeeds = new double[12];
-        private final double[] orbitPhases = new double[12];
-
-        public MagmaOrbit(ChaosCraftPlugin plugin) {
-            super(plugin, new AttackConfig("magma_orbit", AttackType.BLOCK_DISPLAY, 1, "modes/doom/attacks"));
-            config.setDamage(20.0);
-            config.setDamageRadius(8.0);
-            config.setTicksBetweenDamage(15);
-            config.setDurationTicks(300);
-            config.setCooldownTicks(200);
-        }
-
-        @Override
-        protected void onSpawn(Location center) {
-            this.center = center.clone();
-            World w = center.getWorld();
-            if (w == null) return;
-
-            // Central glowing core — shroomlight
-            core = displayBuilder.spawnBlock(center.clone().add(0, 3, 0), Material.SHROOMLIGHT);
-            core.scale(1.5f, 1.5f, 1.5f).glow(255, 100, 20).interpolation(3, 0);
-            spawnedEntities.add(core.entity());
-
-            // 12 orbiting magma blocks at varied radii, heights, speeds
-            for (int i = 0; i < 12; i++) {
-                orbitRadii[i] = 2.5 + (i % 4) * 1.2;
-                orbitHeights[i] = 1.5 + (i % 3) * 1.5;
-                orbitSpeeds[i] = 0.03 + (i * 0.008);
-                orbitPhases[i] = (2 * Math.PI * i) / 12.0;
-
-                double angle = orbitPhases[i];
-                double x = Math.cos(angle) * orbitRadii[i];
-                double z = Math.sin(angle) * orbitRadii[i];
-                Location loc = center.clone().add(x, orbitHeights[i], z);
-
-                Material mat = (i % 3 == 0) ? Material.NETHERRACK : (i % 3 == 1) ? Material.MAGMA_BLOCK : Material.RED_NETHER_BRICKS;
-                BlockDisplayHandle orb = displayBuilder.spawnBlock(loc, mat);
-                float s = 0.7f + (i % 3) * 0.15f;
-                orb.scale(s, s, s).glow(240, 80, 30).interpolation(2, 0);
-                spawnedEntities.add(orb.entity());
-                orbiters.add(orb);
-            }
-
-            DisplayBuilder.playSound(center, Sound.BLOCK_LAVA_POP, 1.2f, 0.5f);
-            w.spawnParticle(Particle.LAVA, center.clone().add(0, 3, 0), 25, 2, 2, 2, 0.1);
-        }
-
-        @Override
-        protected void onTick(int tick) {
-            if (center == null || center.getWorld() == null) return;
-
-            // Rotate core gently
-            if (tick % 5 == 0) {
-                center.getWorld().spawnParticle(Particle.FLAME, center.clone().add(0, 3, 0), 3, 0.3, 0.3, 0.3, 0.01);
-            }
-
-            // Orbit each block at its own speed
-            for (int i = 0; i < orbiters.size(); i++) {
-                double angle = orbitPhases[i] + tick * orbitSpeeds[i];
-                double x = Math.cos(angle) * orbitRadii[i];
-                double z = Math.sin(angle) * orbitRadii[i];
-                // Bobbing height variation
-                double yBob = Math.sin(tick * 0.05 + i * 0.5) * 0.4;
-                Location loc = center.clone().add(x, orbitHeights[i] + yBob, z);
-                loc.setYaw(0);
-                loc.setPitch(0);
-                orbiters.get(i).entity().teleport(loc);
-            }
-
-            // Ember particles trailing each orbiter
-            if (tick % 3 == 0) {
-                for (int i = 0; i < orbiters.size(); i += 3) {
-                    Location bLoc = orbiters.get(i).entity().getLocation();
-                    DisplayBuilder.dustParticles(bLoc, 2, 0.3, 255, 100, 20, 1.0f);
-                }
-            }
-
-            // Ambient lava sound
-            if (tick % 40 == 0) {
-                DisplayBuilder.playSound(center.clone().add(0, 3, 0), Sound.BLOCK_LAVA_AMBIENT, 0.6f, 0.8f);
-            }
-        }
-
-        @Override
-        protected void onCleanup() { super.onCleanup(); }
-
-        @Override
-        public AbstractAttack newInstance() { return new MagmaOrbit(plugin); }
+    /**
+     * Helper: compute yaw angle from one location toward another (radians).
+     */
+    private static double yawToward(Location from, Location to) {
+        double dx = to.getX() - from.getX();
+        double dz = to.getZ() - from.getZ();
+        return Math.atan2(dz, dx);
     }
 
     // ================================================================
-    // 36. INFERNAL SATELLITES — 5 "satellite" clusters (each 3 blocks)
-    //     orbiting a central sphere (4 blocks). Satellites at different
-    //     orbital heights. Damage: 6-block radius, 30 dmg/25t.
-    //     4 core + 15 satellite = 19 blocks
+    // #21 — LAVA GOLEM TITAN (35 blocks)
+    // Humanoid golem: chest 4, arms 4+4, legs 3+3, head 2, pauldrons 4,
+    // fists 2, spine 3, eyes 2, kneecaps 2, belt 2.
+    // Arms swing ±30° via Transform rotation. Legs alternate Y-translation
+    // for walking gait. Tracks nearest player. 7r, 40dmg/30t.
     // ================================================================
-    public static class InfernalSatellites extends BlockDisplayAttack {
-        private Location center;
-        private final List<BlockDisplayHandle> coreBlocks = new ArrayList<>();
-        private final List<List<BlockDisplayHandle>> satellites = new ArrayList<>();
-        private final double[] satHeights = {2.0, 3.5, 5.0, 2.8, 4.2};
-        private final double[] satSpeeds = {0.04, -0.035, 0.05, -0.045, 0.03};
+    public static class LavaGolemTitan extends BlockDisplayAttack {
+        // Body part handles
+        private final List<BlockDisplayHandle> chest = new ArrayList<>();
+        private final List<BlockDisplayHandle> leftArm = new ArrayList<>();
+        private final List<BlockDisplayHandle> rightArm = new ArrayList<>();
+        private final List<BlockDisplayHandle> leftLeg = new ArrayList<>();
+        private final List<BlockDisplayHandle> rightLeg = new ArrayList<>();
+        private final List<BlockDisplayHandle> headParts = new ArrayList<>();
+        private final List<BlockDisplayHandle> pauldrons = new ArrayList<>();
+        private final List<BlockDisplayHandle> fists = new ArrayList<>();
+        private final List<BlockDisplayHandle> spine = new ArrayList<>();
+        private final List<BlockDisplayHandle> extras = new ArrayList<>(); // eyes, kneecaps, belt
+        private double facing = 0;
 
-        public InfernalSatellites(ChaosCraftPlugin plugin) {
-            super(plugin, new AttackConfig("infernal_satellites", AttackType.BLOCK_DISPLAY, 1, "modes/doom/attacks"));
-            config.setDamage(30.0);
-            config.setDamageRadius(6.0);
-            config.setTicksBetweenDamage(25);
-            config.setDurationTicks(300);
-            config.setCooldownTicks(220);
-        }
-
-        @Override
-        protected void onSpawn(Location center) {
-            this.center = center.clone();
-            World w = center.getWorld();
-            if (w == null) return;
-
-            // Central sphere — 4 blocks of blackstone forming a compact core
-            double[][] coreOffsets = {
-                {0, 3.0, 0}, {0.5, 3.5, 0}, {-0.5, 3.5, 0}, {0, 3.0, 0.5}
-            };
-            for (double[] off : coreOffsets) {
-                BlockDisplayHandle b = displayBuilder.spawnBlock(center.clone().add(off[0], off[1], off[2]), Material.BLACKSTONE);
-                b.scale(1.2f, 1.2f, 1.2f).glow(200, 50, 10).interpolation(3, 0);
-                spawnedEntities.add(b.entity());
-                coreBlocks.add(b);
-            }
-
-            // 5 satellite clusters, each with 3 blocks
-            Material[] satMats = {Material.MAGMA_BLOCK, Material.NETHER_BRICKS, Material.RED_NETHER_BRICKS,
-                                  Material.CRYING_OBSIDIAN, Material.SHROOMLIGHT};
-            for (int s = 0; s < 5; s++) {
-                List<BlockDisplayHandle> cluster = new ArrayList<>();
-                double baseAngle = (2 * Math.PI * s) / 5.0;
-                double radius = 4.0;
-                for (int b = 0; b < 3; b++) {
-                    double ox = Math.cos(baseAngle) * radius + (b - 1) * 0.4;
-                    double oz = Math.sin(baseAngle) * radius;
-                    double oy = satHeights[s] + b * 0.5;
-                    Location loc = center.clone().add(ox, oy, oz);
-                    BlockDisplayHandle handle = displayBuilder.spawnBlock(loc, satMats[s]);
-                    float sc = (b == 1) ? 0.9f : 0.6f; // middle block larger
-                    handle.scale(sc, sc, sc).glow(240, 80, 30).interpolation(2, 0);
-                    spawnedEntities.add(handle.entity());
-                    cluster.add(handle);
-                }
-                satellites.add(cluster);
-            }
-
-            DisplayBuilder.playSound(center, Sound.ENTITY_BLAZE_SHOOT, 1.0f, 0.6f);
-            w.spawnParticle(Particle.FLAME, center.clone().add(0, 3, 0), 30, 1.5, 1.5, 1.5, 0.05);
-        }
-
-        @Override
-        protected void onTick(int tick) {
-            if (center == null || center.getWorld() == null) return;
-
-            // Orbit each satellite cluster
-            for (int s = 0; s < satellites.size(); s++) {
-                double angle = (2 * Math.PI * s) / 5.0 + tick * satSpeeds[s];
-                double radius = 4.0;
-                List<BlockDisplayHandle> cluster = satellites.get(s);
-                for (int b = 0; b < cluster.size(); b++) {
-                    double ox = Math.cos(angle) * radius + (b - 1) * 0.4 * Math.cos(angle + Math.PI / 2);
-                    double oz = Math.sin(angle) * radius + (b - 1) * 0.4 * Math.sin(angle + Math.PI / 2);
-                    double oy = satHeights[s] + b * 0.5 + Math.sin(tick * 0.06 + s) * 0.3;
-                    Location loc = center.clone().add(ox, oy, oz);
-                    loc.setYaw(0);
-                    loc.setPitch(0);
-                    cluster.get(b).entity().teleport(loc);
-                }
-            }
-
-            // Core pulse — scale oscillation
-            if (tick % 4 == 0) {
-                DisplayBuilder.dustParticles(center.clone().add(0, 3.3, 0), 4, 0.5, 200, 50, 10, 1.2f);
-            }
-
-            // Ember trails from satellites
-            if (tick % 5 == 0) {
-                for (List<BlockDisplayHandle> cluster : satellites) {
-                    Location sLoc = cluster.get(1).entity().getLocation();
-                    center.getWorld().spawnParticle(Particle.FLAME, sLoc, 2, 0.2, 0.2, 0.2, 0.01);
-                }
-            }
-
-            if (tick % 50 == 0) {
-                DisplayBuilder.playSound(center, Sound.BLOCK_LAVA_POP, 0.7f, 0.7f);
-            }
-        }
-
-        @Override
-        protected void onCleanup() { super.onCleanup(); }
-
-        @Override
-        public AbstractAttack newInstance() { return new InfernalSatellites(plugin); }
-    }
-
-    // ================================================================
-    // 37. HELLFIRE HALO — 10 glowing blocks in a flat ring at Y=8 above
-    //     ground. Ring slowly descends to Y=2 then rises back up.
-    //     Damage: 7-block radius below ring, 25 dmg/20t.
-    //     10 ring blocks + 2 inner glow blocks = 12 blocks
-    // ================================================================
-    public static class HellfireHalo extends BlockDisplayAttack {
-        private Location center;
-        private final List<BlockDisplayHandle> ringBlocks = new ArrayList<>();
-        private final List<BlockDisplayHandle> innerGlow = new ArrayList<>();
-        private double ringY = 8.0;
-        private boolean descending = true;
-
-        public HellfireHalo(ChaosCraftPlugin plugin) {
-            super(plugin, new AttackConfig("hellfire_halo", AttackType.BLOCK_DISPLAY, 1, "modes/doom/attacks"));
-            config.setDamage(25.0);
+        public LavaGolemTitan(ChaosCraftPlugin plugin) {
+            super(plugin, new AttackConfig("lava_golem_titan", AttackType.BLOCK_DISPLAY, 1, "modes/doom/attacks"));
+            config.setDamage(40.0);
             config.setDamageRadius(7.0);
-            config.setTicksBetweenDamage(20);
-            config.setDurationTicks(320);
-            config.setCooldownTicks(220);
-        }
-
-        @Override
-        protected void onSpawn(Location center) {
-            this.center = center.clone();
-            World w = center.getWorld();
-            if (w == null) return;
-
-            // 10 blocks in flat ring at Y=8
-            double radius = 3.5;
-            for (int i = 0; i < 10; i++) {
-                double angle = (2 * Math.PI * i) / 10.0;
-                double x = Math.cos(angle) * radius;
-                double z = Math.sin(angle) * radius;
-                Location loc = center.clone().add(x, ringY, z);
-                Material mat = (i % 2 == 0) ? Material.GLOWSTONE : Material.SHROOMLIGHT;
-                BlockDisplayHandle b = displayBuilder.spawnBlock(loc, mat);
-                b.scale(1.1f, 0.4f, 1.1f).glow(255, 100, 20).interpolation(3, 0);
-                spawnedEntities.add(b.entity());
-                ringBlocks.add(b);
-            }
-
-            // 2 inner glow blocks at center of ring
-            for (int i = 0; i < 2; i++) {
-                Location loc = center.clone().add(i * 0.6 - 0.3, ringY, 0);
-                BlockDisplayHandle g = displayBuilder.spawnBlock(loc, Material.MAGMA_BLOCK);
-                g.scale(0.8f, 0.3f, 0.8f).glow(240, 80, 30).interpolation(3, 0);
-                spawnedEntities.add(g.entity());
-                innerGlow.add(g);
-            }
-
-            DisplayBuilder.playSound(center, Sound.ENTITY_BLAZE_AMBIENT, 1.0f, 0.4f);
-            w.spawnParticle(Particle.FLAME, center.clone().add(0, ringY, 0), 20, 3, 0.5, 3, 0.02);
-        }
-
-        @Override
-        protected void onTick(int tick) {
-            if (center == null || center.getWorld() == null) return;
-
-            // Descend from Y=8 to Y=2, then rise back
-            if (descending) {
-                ringY -= 0.04;
-                if (ringY <= 2.0) descending = false;
-            } else {
-                ringY += 0.04;
-                if (ringY >= 8.0) descending = true;
-            }
-
-            // Update ring block positions
-            double radius = 3.5;
-            for (int i = 0; i < ringBlocks.size(); i++) {
-                double angle = (2 * Math.PI * i) / 10.0 + tick * 0.015; // slow rotation
-                double x = Math.cos(angle) * radius;
-                double z = Math.sin(angle) * radius;
-                Location loc = center.clone().add(x, ringY, z);
-                loc.setYaw(0);
-                loc.setPitch(0);
-                ringBlocks.get(i).entity().teleport(loc);
-            }
-
-            // Inner glow follows
-            for (int i = 0; i < innerGlow.size(); i++) {
-                Location loc = center.clone().add(i * 0.6 - 0.3, ringY, 0);
-                loc.setYaw(0);
-                loc.setPitch(0);
-                innerGlow.get(i).entity().teleport(loc);
-            }
-
-            // Update damage center to below ring
-            setCenter(center.clone().add(0, ringY - 2, 0));
-
-            // Fire particles raining down from ring
-            if (tick % 3 == 0) {
-                double pAngle = Math.random() * 2 * Math.PI;
-                double px = Math.cos(pAngle) * radius * Math.random();
-                double pz = Math.sin(pAngle) * radius * Math.random();
-                center.getWorld().spawnParticle(Particle.FLAME, center.clone().add(px, ringY - 0.5, pz), 2, 0.1, 0.5, 0.1, 0.02);
-                DisplayBuilder.dustParticles(center.clone().add(px, ringY, pz), 2, 0.2, 255, 100, 20, 1.0f);
-            }
-
-            // Warning sound when low
-            if (ringY < 3.5 && tick % 20 == 0) {
-                DisplayBuilder.playSound(center, Sound.BLOCK_LAVA_EXTINGUISH, 0.6f, 1.2f);
-            }
-
-            if (tick % 60 == 0) {
-                DisplayBuilder.playSound(center, Sound.ENTITY_BLAZE_AMBIENT, 0.5f, 0.5f);
-            }
-        }
-
-        @Override
-        protected void onCleanup() { super.onCleanup(); }
-
-        @Override
-        public AbstractAttack newInstance() { return new HellfireHalo(plugin); }
-    }
-
-    // ================================================================
-    // 38. DOOM PENDULUM — Wrecking ball: 10-block sphere hanging from a
-    //     chain (5 thin blocks). Swings back and forth on X axis.
-    //     Damage on contact with swing path: 5-block radius, 45 dmg/25t.
-    //     10 sphere + 5 chain = 15 blocks
-    // ================================================================
-    public static class DoomPendulum extends BlockDisplayAttack {
-        private Location center;
-        private final List<BlockDisplayHandle> sphereBlocks = new ArrayList<>();
-        private final List<BlockDisplayHandle> chainBlocks = new ArrayList<>();
-        private double swingAngle = 0;
-        private double swingVelocity = 0.06;
-
-        public DoomPendulum(ChaosCraftPlugin plugin) {
-            super(plugin, new AttackConfig("doom_pendulum", AttackType.BLOCK_DISPLAY, 1, "modes/doom/attacks"));
-            config.setDamage(45.0);
-            config.setDamageRadius(5.0);
-            config.setTicksBetweenDamage(25);
-            config.setDurationTicks(350);
+            config.setTicksBetweenDamage(30);
+            config.setDurationTicks(300);
             config.setCooldownTicks(250);
         }
 
         @Override
         protected void onSpawn(Location center) {
-            this.center = center.clone();
             World w = center.getWorld();
             if (w == null) return;
 
-            double pivotY = 10.0;
-            double chainLength = 6.0;
-
-            // Chain: 5 thin blocks hanging from pivot point
-            for (int i = 0; i < 5; i++) {
-                double cy = pivotY - (i + 1) * (chainLength / 6.0);
-                Location loc = center.clone().add(0, cy, 0);
-                BlockDisplayHandle link = displayBuilder.spawnBlock(loc, Material.POLISHED_BLACKSTONE);
-                link.scale(0.3f, 0.8f, 0.3f).glow(20, 10, 5).interpolation(2, 0);
-                spawnedEntities.add(link.entity());
-                chainBlocks.add(link);
-            }
-
-            // Wrecking ball: 10 blocks forming a sphere at end of chain
-            double ballY = pivotY - chainLength;
-            double[][] sphereOffsets = {
-                {0, 0, 0}, {0.7, 0, 0}, {-0.7, 0, 0}, {0, 0, 0.7}, {0, 0, -0.7},
-                {0, 0.7, 0}, {0, -0.7, 0}, {0.5, 0.5, 0}, {-0.5, 0.5, 0}, {0, 0.5, 0.5}
-            };
-            Material[] ballMats = {Material.OBSIDIAN, Material.BLACKSTONE, Material.DEEPSLATE,
-                                   Material.OBSIDIAN, Material.BLACKSTONE, Material.COAL_BLOCK,
-                                   Material.DEEPSLATE, Material.OBSIDIAN, Material.BLACKSTONE, Material.COAL_BLOCK};
-            for (int i = 0; i < 10; i++) {
-                Location loc = center.clone().add(sphereOffsets[i][0], ballY + sphereOffsets[i][1], sphereOffsets[i][2]);
-                BlockDisplayHandle b = displayBuilder.spawnBlock(loc, ballMats[i]);
-                b.scale(0.85f, 0.85f, 0.85f).glow(200, 50, 10).interpolation(2, 0);
-                spawnedEntities.add(b.entity());
-                sphereBlocks.add(b);
-            }
-
-            DisplayBuilder.playSound(center, Sound.BLOCK_ANVIL_PLACE, 1.0f, 0.3f);
-            w.spawnParticle(Particle.SMOKE, center.clone().add(0, ballY, 0), 15, 1, 1, 1, 0.05);
-        }
-
-        @Override
-        protected void onTick(int tick) {
-            if (center == null || center.getWorld() == null) return;
-
-            double pivotY = 10.0;
-            double chainLength = 6.0;
-
-            // Pendulum swing: angle oscillates with sinusoidal motion
-            swingAngle = Math.sin(tick * swingVelocity) * 1.2; // ~70 degree max swing
-
-            // Ball position at end of pendulum arc (swings on X axis)
-            double ballX = Math.sin(swingAngle) * chainLength;
-            double ballY = pivotY - Math.cos(swingAngle) * chainLength;
-
-            // Update chain links — evenly spaced along the chain
-            for (int i = 0; i < chainBlocks.size(); i++) {
-                double t = (i + 1.0) / 6.0;
-                double cx = Math.sin(swingAngle) * chainLength * t;
-                double cy = pivotY - Math.cos(swingAngle) * chainLength * t;
-                Location loc = center.clone().add(cx, cy, 0);
-                loc.setYaw(0);
-                loc.setPitch(0);
-                chainBlocks.get(i).entity().teleport(loc);
-            }
-
-            // Update sphere blocks around ball center
-            double[][] sphereOffsets = {
-                {0, 0, 0}, {0.7, 0, 0}, {-0.7, 0, 0}, {0, 0, 0.7}, {0, 0, -0.7},
-                {0, 0.7, 0}, {0, -0.7, 0}, {0.5, 0.5, 0}, {-0.5, 0.5, 0}, {0, 0.5, 0.5}
-            };
-            for (int i = 0; i < sphereBlocks.size(); i++) {
-                Location loc = center.clone().add(
-                    ballX + sphereOffsets[i][0],
-                    ballY + sphereOffsets[i][1],
-                    sphereOffsets[i][2]
-                );
-                loc.setYaw(0);
-                loc.setPitch(0);
-                sphereBlocks.get(i).entity().teleport(loc);
-            }
-
-            // Damage center tracks the ball
-            setCenter(center.clone().add(ballX, ballY, 0));
-
-            // Sparks at bottom of swing (when fastest)
-            if (Math.abs(swingAngle) < 0.15) {
-                center.getWorld().spawnParticle(Particle.LAVA, center.clone().add(ballX, ballY - 0.5, 0), 5, 0.5, 0.3, 0.5, 0.02);
-            }
-
-            // Whoosh sound at swing extremes
-            if (tick % 25 == 0) {
-                DisplayBuilder.playSound(center.clone().add(ballX, ballY, 0), Sound.ENTITY_PLAYER_ATTACK_SWEEP, 0.8f, 0.4f);
-            }
-
-            // Trail particles
-            if (tick % 2 == 0) {
-                DisplayBuilder.dustParticles(center.clone().add(ballX, ballY, 0), 3, 0.6, 200, 50, 10, 1.3f);
-            }
-        }
-
-        @Override
-        protected void onCleanup() { super.onCleanup(); }
-
-        @Override
-        public AbstractAttack newInstance() { return new DoomPendulum(plugin); }
-    }
-
-    // ================================================================
-    // 39. INFERNAL GYROSCOPE — 3 flat rings (each 4-6 blocks) on
-    //     perpendicular axes all rotating simultaneously. Inner core glows.
-    //     Damage: 6-block radius, 25 dmg/20t.
-    //     Ring1: 6 blocks, Ring2: 5 blocks, Ring3: 4 blocks + 1 core = 16 blocks
-    // ================================================================
-    public static class InfernalGyroscope extends BlockDisplayAttack {
-        private Location center;
-        private final List<BlockDisplayHandle> ringX = new ArrayList<>();  // YZ plane
-        private final List<BlockDisplayHandle> ringY = new ArrayList<>();  // XZ plane
-        private final List<BlockDisplayHandle> ringZ = new ArrayList<>();  // XY plane
-        private BlockDisplayHandle core;
-
-        public InfernalGyroscope(ChaosCraftPlugin plugin) {
-            super(plugin, new AttackConfig("infernal_gyroscope", AttackType.BLOCK_DISPLAY, 1, "modes/doom/attacks"));
-            config.setDamage(25.0);
-            config.setDamageRadius(6.0);
-            config.setTicksBetweenDamage(20);
-            config.setDurationTicks(300);
-            config.setCooldownTicks(200);
-        }
-
-        @Override
-        protected void onSpawn(Location center) {
-            this.center = center.clone();
-            World w = center.getWorld();
-            if (w == null) return;
-
-            double cy = 4.0;
-
-            // Core — glowing shroomlight
-            core = displayBuilder.spawnBlock(center.clone().add(0, cy, 0), Material.GLOWSTONE);
-            core.scale(1.0f, 1.0f, 1.0f).glow(255, 100, 20).interpolation(3, 0);
-            spawnedEntities.add(core.entity());
-
-            // Ring 1 (YZ plane) — 6 blocks of magma
-            double r1 = 3.0;
-            for (int i = 0; i < 6; i++) {
-                double angle = (2 * Math.PI * i) / 6.0;
-                double y = Math.cos(angle) * r1 + cy;
-                double z = Math.sin(angle) * r1;
-                Location loc = center.clone().add(0, y, z);
-                BlockDisplayHandle b = displayBuilder.spawnBlock(loc, Material.MAGMA_BLOCK);
-                b.scale(0.7f, 0.7f, 0.7f).glow(255, 100, 20).interpolation(2, 0);
-                spawnedEntities.add(b.entity());
-                ringX.add(b);
-            }
-
-            // Ring 2 (XZ plane) — 5 blocks of nether bricks
-            double r2 = 2.5;
-            for (int i = 0; i < 5; i++) {
-                double angle = (2 * Math.PI * i) / 5.0;
-                double x = Math.cos(angle) * r2;
-                double z = Math.sin(angle) * r2;
-                Location loc = center.clone().add(x, cy, z);
-                BlockDisplayHandle b = displayBuilder.spawnBlock(loc, Material.NETHER_BRICKS);
-                b.scale(0.6f, 0.6f, 0.6f).glow(200, 50, 10).interpolation(2, 0);
-                spawnedEntities.add(b.entity());
-                ringY.add(b);
-            }
-
-            // Ring 3 (XY plane) — 4 blocks of red nether bricks
-            double r3 = 2.0;
-            for (int i = 0; i < 4; i++) {
-                double angle = (2 * Math.PI * i) / 4.0;
-                double x = Math.cos(angle) * r3;
-                double y = Math.sin(angle) * r3 + cy;
-                Location loc = center.clone().add(x, y, 0);
-                BlockDisplayHandle b = displayBuilder.spawnBlock(loc, Material.RED_NETHER_BRICKS);
-                b.scale(0.6f, 0.6f, 0.6f).glow(240, 80, 30).interpolation(2, 0);
-                spawnedEntities.add(b.entity());
-                ringZ.add(b);
-            }
-
-            DisplayBuilder.playSound(center, Sound.ENTITY_BLAZE_SHOOT, 1.0f, 0.7f);
-            w.spawnParticle(Particle.FLAME, center.clone().add(0, cy, 0), 20, 2, 2, 2, 0.03);
-        }
-
-        @Override
-        protected void onTick(int tick) {
-            if (center == null || center.getWorld() == null) return;
-
-            double cy = 4.0;
-            double speedX = 0.05;
-            double speedY = 0.04;
-            double speedZ = 0.06;
-
-            // Ring 1 rotates in YZ plane (around X axis)
-            double r1 = 3.0;
-            for (int i = 0; i < ringX.size(); i++) {
-                double baseAngle = (2 * Math.PI * i) / 6.0;
-                double angle = baseAngle + tick * speedX;
-                double y = Math.cos(angle) * r1 + cy;
-                double z = Math.sin(angle) * r1;
-                Location loc = center.clone().add(0, y, z);
-                loc.setYaw(0);
-                loc.setPitch(0);
-                ringX.get(i).entity().teleport(loc);
-            }
-
-            // Ring 2 rotates in XZ plane (around Y axis)
-            double r2 = 2.5;
-            for (int i = 0; i < ringY.size(); i++) {
-                double baseAngle = (2 * Math.PI * i) / 5.0;
-                double angle = baseAngle + tick * speedY;
-                double x = Math.cos(angle) * r2;
-                double z = Math.sin(angle) * r2;
-                Location loc = center.clone().add(x, cy, z);
-                loc.setYaw(0);
-                loc.setPitch(0);
-                ringY.get(i).entity().teleport(loc);
-            }
-
-            // Ring 3 rotates in XY plane (around Z axis)
-            double r3 = 2.0;
-            for (int i = 0; i < ringZ.size(); i++) {
-                double baseAngle = (2 * Math.PI * i) / 4.0;
-                double angle = baseAngle + tick * speedZ;
-                double x = Math.cos(angle) * r3;
-                double y = Math.sin(angle) * r3 + cy;
-                Location loc = center.clone().add(x, y, 0);
-                loc.setYaw(0);
-                loc.setPitch(0);
-                ringZ.get(i).entity().teleport(loc);
-            }
-
-            // Core particle pulse
-            if (tick % 4 == 0) {
-                DisplayBuilder.dustParticles(center.clone().add(0, cy, 0), 5, 0.3, 255, 100, 20, 1.5f);
-            }
-
-            // Ambient whir sound
-            if (tick % 30 == 0) {
-                DisplayBuilder.playSound(center.clone().add(0, cy, 0), Sound.ENTITY_BLAZE_BURN, 0.5f, 1.5f);
-            }
-        }
-
-        @Override
-        protected void onCleanup() { super.onCleanup(); }
-
-        @Override
-        public AbstractAttack newInstance() { return new InfernalGyroscope(plugin); }
-    }
-
-    // ================================================================
-    // 40. LAVA WAVE — 15 magma blocks in a line, rising and falling in
-    //     sequence like a wave. Wave travels across X axis.
-    //     Damage: 6-block radius, 30 dmg/20t as wave passes.
-    //     15 wave blocks
-    // ================================================================
-    public static class LavaWave extends BlockDisplayAttack {
-        private Location center;
-        private final List<BlockDisplayHandle> waveBlocks = new ArrayList<>();
-        private double waveOffset = 0;
-
-        public LavaWave(ChaosCraftPlugin plugin) {
-            super(plugin, new AttackConfig("lava_wave", AttackType.BLOCK_DISPLAY, 1, "modes/doom/attacks"));
-            config.setDamage(30.0);
-            config.setDamageRadius(6.0);
-            config.setTicksBetweenDamage(20);
-            config.setDurationTicks(300);
-            config.setCooldownTicks(200);
-        }
-
-        @Override
-        protected void onSpawn(Location center) {
-            this.center = center.clone();
-            World w = center.getWorld();
-            if (w == null) return;
-
-            // 15 blocks in a line along X axis, centered
-            for (int i = 0; i < 15; i++) {
-                double x = (i - 7) * 1.2;
-                Location loc = center.clone().add(x, 0.5, 0);
-                Material mat;
-                if (i % 3 == 0) mat = Material.MAGMA_BLOCK;
-                else if (i % 3 == 1) mat = Material.ORANGE_CONCRETE;
-                else mat = Material.RED_CONCRETE;
-                BlockDisplayHandle b = displayBuilder.spawnBlock(loc, mat);
-                b.scale(1.2f, 1.0f, 1.5f).glow(255, 100, 20).interpolation(2, 0);
-                spawnedEntities.add(b.entity());
-                waveBlocks.add(b);
-            }
-
-            DisplayBuilder.playSound(center, Sound.BLOCK_LAVA_POP, 1.2f, 0.4f);
-            w.spawnParticle(Particle.LAVA, center, 20, 8, 1, 1, 0.05);
-        }
-
-        @Override
-        protected void onTick(int tick) {
-            if (center == null || center.getWorld() == null) return;
-
-            waveOffset += 0.12;
-
-            // Each block rises/falls as wave passes through it
-            for (int i = 0; i < waveBlocks.size(); i++) {
-                double x = (i - 7) * 1.2;
-                // Sine wave for height — wave travels along X
-                double wavePhase = waveOffset - i * 0.4;
-                double height = Math.max(0, Math.sin(wavePhase) * 3.5);
-                // Also shift Z slightly for a curved wavefront
-                double zShift = Math.sin(wavePhase * 0.5) * 0.8;
-                Location loc = center.clone().add(x, 0.5 + height, zShift);
-                loc.setYaw(0);
-                loc.setPitch(0);
-                waveBlocks.get(i).entity().teleport(loc);
-            }
-
-            // Track damage center to the wave crest
-            int crestIndex = (int)((waveOffset / 0.4) % 15);
-            if (crestIndex >= 0 && crestIndex < waveBlocks.size()) {
-                setCenter(waveBlocks.get(crestIndex).entity().getLocation());
-            }
-
-            // Splash particles at wave crest
-            if (tick % 3 == 0) {
-                for (int i = 0; i < waveBlocks.size(); i++) {
-                    double wavePhase = waveOffset - i * 0.4;
-                    if (Math.sin(wavePhase) > 0.8) {
-                        Location bLoc = waveBlocks.get(i).entity().getLocation();
-                        center.getWorld().spawnParticle(Particle.LAVA, bLoc, 2, 0.3, 0.5, 0.3, 0.01);
-                        DisplayBuilder.dustParticles(bLoc, 2, 0.2, 255, 100, 20, 1.0f);
-                    }
-                }
-            }
-
-            // Wave crash sound
-            if (tick % 30 == 0) {
-                DisplayBuilder.playSound(center, Sound.BLOCK_LAVA_EXTINGUISH, 0.8f, 0.6f);
-            }
-        }
-
-        @Override
-        protected void onCleanup() { super.onCleanup(); }
-
-        @Override
-        public AbstractAttack newInstance() { return new LavaWave(plugin); }
-    }
-
-    // ================================================================
-    // 41. HELLFIRE FENCE — 12 tall blocks in a line forming a fence/wall
-    //     that sweeps across area (translates on Z). Contact: 5-block
-    //     radius, 35 dmg/20t. Knockback away from wall.
-    //     12 fence posts + 2 cap blocks = 14 blocks
-    // ================================================================
-    public static class HellfireFence extends BlockDisplayAttack {
-        private Location center;
-        private final List<BlockDisplayHandle> fenceBlocks = new ArrayList<>();
-        private final List<BlockDisplayHandle> capBlocks = new ArrayList<>();
-        private double sweepZ = -8.0;
-        private double sweepSpeed = 0.15;
-
-        public HellfireFence(ChaosCraftPlugin plugin) {
-            super(plugin, new AttackConfig("hellfire_fence", AttackType.BLOCK_DISPLAY, 1, "modes/doom/attacks"));
-            config.setDamage(35.0);
-            config.setDamageRadius(5.0);
-            config.setTicksBetweenDamage(20);
-            config.setDurationTicks(320);
-            config.setCooldownTicks(230);
-        }
-
-        @Override
-        protected void onSpawn(Location center) {
-            this.center = center.clone();
-            World w = center.getWorld();
-            if (w == null) return;
-
-            // 12 tall fence posts along X axis
-            for (int i = 0; i < 12; i++) {
-                double x = (i - 5.5) * 1.3;
-                Location loc = center.clone().add(x, 0, sweepZ);
-                Material mat = (i % 2 == 0) ? Material.NETHER_BRICKS : Material.RED_NETHER_BRICKS;
-                BlockDisplayHandle b = displayBuilder.spawnBlock(loc, mat);
-                b.scale(0.5f, 3.5f, 0.5f).glow(200, 50, 10).interpolation(2, 0);
-                spawnedEntities.add(b.entity());
-                fenceBlocks.add(b);
-            }
-
-            // 2 cap blocks at the ends of the fence (top rail connectors)
-            for (int end = 0; end < 2; end++) {
-                double x = (end == 0) ? -7.15 : 7.15;
-                Location loc = center.clone().add(x, 2.5, sweepZ);
-                BlockDisplayHandle cap = displayBuilder.spawnBlock(loc, Material.BLACKSTONE);
-                cap.scale(0.8f, 0.8f, 0.8f).glow(240, 80, 30).interpolation(2, 0);
-                spawnedEntities.add(cap.entity());
-                capBlocks.add(cap);
-            }
-
-            DisplayBuilder.playSound(center, Sound.ENTITY_IRON_GOLEM_ATTACK, 1.0f, 0.4f);
-            w.spawnParticle(Particle.FLAME, center.clone().add(0, 1.5, sweepZ), 20, 7, 2, 0.5, 0.03);
-        }
-
-        @Override
-        protected void onTick(int tick) {
-            if (center == null || center.getWorld() == null) return;
-
-            // Sweep along Z axis back and forth
-            sweepZ += sweepSpeed;
-            if (sweepZ > 8.0) sweepSpeed = -Math.abs(sweepSpeed);
-            if (sweepZ < -8.0) sweepSpeed = Math.abs(sweepSpeed);
-
-            // Move all fence blocks
-            for (int i = 0; i < fenceBlocks.size(); i++) {
-                double x = (i - 5.5) * 1.3;
-                Location loc = center.clone().add(x, 0, sweepZ);
-                loc.setYaw(0);
-                loc.setPitch(0);
-                fenceBlocks.get(i).entity().teleport(loc);
-            }
-
-            // Move cap blocks
-            for (int end = 0; end < capBlocks.size(); end++) {
-                double x = (end == 0) ? -7.15 : 7.15;
-                Location loc = center.clone().add(x, 2.5, sweepZ);
-                loc.setYaw(0);
-                loc.setPitch(0);
-                capBlocks.get(end).entity().teleport(loc);
-            }
-
-            // Damage center follows the fence
-            setCenter(center.clone().add(0, 1.5, sweepZ));
-
-            // Knockback players away from the wall
-            if (tick % 10 == 0) {
-                Location wallCenter = center.clone().add(0, 1.5, sweepZ);
-                for (Player p : center.getWorld().getPlayers()) {
-                    if (p.getGameMode() != GameMode.SURVIVAL) continue;
-                    if (p.getLocation().distanceSquared(wallCenter) <= 25) { // 5-block radius
-                        Vector knockback = p.getLocation().toVector().subtract(wallCenter.toVector()).normalize();
-                        knockback.setY(0.3);
-                        p.setVelocity(p.getVelocity().add(knockback.multiply(0.6)));
-                    }
-                }
-            }
-
-            // Fire trail particles along fence
-            if (tick % 4 == 0) {
-                for (int i = 0; i < fenceBlocks.size(); i += 3) {
-                    Location bLoc = fenceBlocks.get(i).entity().getLocation().add(0, 3, 0);
-                    center.getWorld().spawnParticle(Particle.FLAME, bLoc, 2, 0.2, 0.5, 0.2, 0.02);
-                }
-            }
-
-            if (tick % 35 == 0) {
-                DisplayBuilder.playSound(center.clone().add(0, 1, sweepZ), Sound.ENTITY_IRON_GOLEM_HURT, 0.6f, 0.4f);
-            }
-        }
-
-        @Override
-        protected void onCleanup() { super.onCleanup(); }
-
-        @Override
-        public AbstractAttack newInstance() { return new HellfireFence(plugin); }
-    }
-
-    // ================================================================
-    // 42. BRIMSTONE ZIGZAG — 14 blocks arranged in a zigzag line.
-    //     The zigzag pattern animates (blocks shift), making the path
-    //     unpredictable. Damage: 4-block radius along path, 25 dmg/15t.
-    //     14 zigzag blocks
-    // ================================================================
-    public static class BrimstoneZigzag extends BlockDisplayAttack {
-        private Location center;
-        private final List<BlockDisplayHandle> zigzagBlocks = new ArrayList<>();
-        private double animPhase = 0;
-
-        public BrimstoneZigzag(ChaosCraftPlugin plugin) {
-            super(plugin, new AttackConfig("brimstone_zigzag", AttackType.BLOCK_DISPLAY, 1, "modes/doom/attacks"));
-            config.setDamage(25.0);
-            config.setDamageRadius(4.0);
-            config.setTicksBetweenDamage(15);
-            config.setDurationTicks(280);
-            config.setCooldownTicks(190);
-        }
-
-        @Override
-        protected void onSpawn(Location center) {
-            this.center = center.clone();
-            World w = center.getWorld();
-            if (w == null) return;
-
-            // 14 blocks in zigzag: alternating Z offset along X
-            for (int i = 0; i < 14; i++) {
-                double x = (i - 7) * 1.1;
-                double z = ((i % 2 == 0) ? 1.5 : -1.5);
-                Location loc = center.clone().add(x, 0.5, z);
-                Material mat;
-                switch (i % 4) {
-                    case 0: mat = Material.NETHERRACK; break;
-                    case 1: mat = Material.MAGMA_BLOCK; break;
-                    case 2: mat = Material.RED_NETHER_BRICKS; break;
-                    default: mat = Material.BASALT; break;
-                }
-                BlockDisplayHandle b = displayBuilder.spawnBlock(loc, mat);
-                b.scale(1.0f, 1.2f, 1.0f).glow(220, 180, 30).interpolation(2, 0);
-                spawnedEntities.add(b.entity());
-                zigzagBlocks.add(b);
-            }
-
-            DisplayBuilder.playSound(center, Sound.BLOCK_LAVA_POP, 1.0f, 1.0f);
-            w.spawnParticle(Particle.FLAME, center, 15, 7, 0.5, 2, 0.03);
-        }
-
-        @Override
-        protected void onTick(int tick) {
-            if (center == null || center.getWorld() == null) return;
-
-            animPhase += 0.08;
-
-            // Animate zigzag — blocks shift Z positions sinusoidally, creating a slithering pattern
-            for (int i = 0; i < zigzagBlocks.size(); i++) {
-                double x = (i - 7) * 1.1;
-                // Base zigzag offset plus animated wave
-                double baseZ = ((i % 2 == 0) ? 1.5 : -1.5);
-                double animZ = Math.sin(animPhase + i * 0.5) * 2.0;
-                double height = 0.5 + Math.abs(Math.sin(animPhase + i * 0.3)) * 1.5;
-                Location loc = center.clone().add(x, height, baseZ + animZ);
-                loc.setYaw(0);
-                loc.setPitch(0);
-                zigzagBlocks.get(i).entity().teleport(loc);
-            }
-
-            // Track damage center to the middle of the zigzag
-            if (zigzagBlocks.size() > 7) {
-                setCenter(zigzagBlocks.get(7).entity().getLocation());
-            }
-
-            // Brimstone particles along path
-            if (tick % 3 == 0) {
-                for (int i = 0; i < zigzagBlocks.size(); i += 4) {
-                    Location bLoc = zigzagBlocks.get(i).entity().getLocation();
-                    DisplayBuilder.dustParticles(bLoc, 2, 0.3, 220, 180, 30, 1.0f);
-                }
-            }
-
-            // Crackling sound
-            if (tick % 40 == 0) {
-                DisplayBuilder.playSound(center, Sound.BLOCK_LAVA_POP, 0.6f, 1.2f);
-            }
-        }
-
-        @Override
-        protected void onCleanup() { super.onCleanup(); }
-
-        @Override
-        public AbstractAttack newInstance() { return new BrimstoneZigzag(plugin); }
-    }
-
-    // ================================================================
-    // 43. MAGMA RIPPLE — 3 concentric rings (12, 8, 4 blocks) that
-    //     expand outward from center one after another. Each ring deals
-    //     damage as it passes: 5 hearts. Wave repeats every 60 ticks.
-    //     12 + 8 + 4 = 24 blocks
-    // ================================================================
-    public static class MagmaRipple extends BlockDisplayAttack {
-        private Location center;
-        private final List<BlockDisplayHandle> ring1 = new ArrayList<>(); // 12 blocks, outermost
-        private final List<BlockDisplayHandle> ring2 = new ArrayList<>(); // 8 blocks, middle
-        private final List<BlockDisplayHandle> ring3 = new ArrayList<>(); // 4 blocks, inner
-        private int rippleTick = 0;
-
-        public MagmaRipple(ChaosCraftPlugin plugin) {
-            super(plugin, new AttackConfig("magma_ripple", AttackType.BLOCK_DISPLAY, 1, "modes/doom/attacks"));
-            config.setDamage(10.0); // 5 hearts
-            config.setDamageRadius(5.0);
-            config.setTicksBetweenDamage(15);
-            config.setDurationTicks(360);
-            config.setCooldownTicks(200);
-        }
-
-        @Override
-        protected void onSpawn(Location center) {
-            this.center = center.clone();
-            World w = center.getWorld();
-            if (w == null) return;
-
-            // Ring 3 (innermost, 4 blocks) — starts first
-            for (int i = 0; i < 4; i++) {
-                double angle = (2 * Math.PI * i) / 4.0;
-                Location loc = center.clone().add(Math.cos(angle) * 0.5, 0.3, Math.sin(angle) * 0.5);
-                BlockDisplayHandle b = displayBuilder.spawnBlock(loc, Material.SHROOMLIGHT);
-                b.scale(0.8f, 0.4f, 0.8f).glow(255, 100, 20).interpolation(2, 0);
-                spawnedEntities.add(b.entity());
-                ring3.add(b);
-            }
-
-            // Ring 2 (middle, 8 blocks) — starts after ring3
-            for (int i = 0; i < 8; i++) {
-                double angle = (2 * Math.PI * i) / 8.0;
-                Location loc = center.clone().add(Math.cos(angle) * 0.5, 0.3, Math.sin(angle) * 0.5);
-                BlockDisplayHandle b = displayBuilder.spawnBlock(loc, Material.MAGMA_BLOCK);
-                b.scale(0.9f, 0.4f, 0.9f).glow(240, 80, 30).interpolation(2, 0);
-                spawnedEntities.add(b.entity());
-                ring2.add(b);
-            }
-
-            // Ring 1 (outermost, 12 blocks) — starts last
-            for (int i = 0; i < 12; i++) {
-                double angle = (2 * Math.PI * i) / 12.0;
-                Location loc = center.clone().add(Math.cos(angle) * 0.5, 0.3, Math.sin(angle) * 0.5);
-                Material mat = (i % 2 == 0) ? Material.ORANGE_CONCRETE : Material.RED_CONCRETE;
-                BlockDisplayHandle b = displayBuilder.spawnBlock(loc, mat);
-                b.scale(1.0f, 0.4f, 1.0f).glow(200, 50, 10).interpolation(2, 0);
-                spawnedEntities.add(b.entity());
-                ring1.add(b);
-            }
-
-            DisplayBuilder.playSound(center, Sound.BLOCK_LAVA_POP, 1.2f, 0.3f);
-        }
-
-        @Override
-        protected void onTick(int tick) {
-            if (center == null || center.getWorld() == null) return;
-
-            rippleTick = tick % 60; // Repeats every 60 ticks
-
-            // Ring 3 expands from 0 to 3 blocks over first 20 ticks
-            double r3Radius;
-            if (rippleTick < 20) {
-                r3Radius = (rippleTick / 20.0) * 3.0;
-            } else {
-                r3Radius = 3.0; // Hold at max then reset
-            }
-
-            // Ring 2 expands from 0 to 5 blocks, delayed by 15 ticks
-            double r2Radius;
-            if (rippleTick < 15) {
-                r2Radius = 0;
-            } else if (rippleTick < 35) {
-                r2Radius = ((rippleTick - 15) / 20.0) * 5.0;
-            } else {
-                r2Radius = 5.0;
-            }
-
-            // Ring 1 expands from 0 to 7 blocks, delayed by 30 ticks
-            double r1Radius;
-            if (rippleTick < 30) {
-                r1Radius = 0;
-            } else if (rippleTick < 50) {
-                r1Radius = ((rippleTick - 30) / 20.0) * 7.0;
-            } else {
-                r1Radius = 7.0;
-            }
-
-            // Update ring 3 positions
-            for (int i = 0; i < ring3.size(); i++) {
-                double angle = (2 * Math.PI * i) / 4.0;
-                Location loc = center.clone().add(Math.cos(angle) * r3Radius, 0.3, Math.sin(angle) * r3Radius);
-                loc.setYaw(0);
-                loc.setPitch(0);
-                ring3.get(i).entity().teleport(loc);
-            }
-
-            // Update ring 2 positions
-            for (int i = 0; i < ring2.size(); i++) {
-                double angle = (2 * Math.PI * i) / 8.0;
-                Location loc = center.clone().add(Math.cos(angle) * r2Radius, 0.3, Math.sin(angle) * r2Radius);
-                loc.setYaw(0);
-                loc.setPitch(0);
-                ring2.get(i).entity().teleport(loc);
-            }
-
-            // Update ring 1 positions
-            for (int i = 0; i < ring1.size(); i++) {
-                double angle = (2 * Math.PI * i) / 12.0;
-                Location loc = center.clone().add(Math.cos(angle) * r1Radius, 0.3, Math.sin(angle) * r1Radius);
-                loc.setYaw(0);
-                loc.setPitch(0);
-                ring1.get(i).entity().teleport(loc);
-            }
-
-            // Particles at expanding ring fronts
-            if (tick % 2 == 0) {
-                if (r3Radius > 0.5 && rippleTick < 20) {
-                    DisplayBuilder.particleRing(center.clone().add(0, 0.5, 0), r3Radius, Particle.FLAME, 8, null);
-                }
-                if (r2Radius > 0.5 && rippleTick >= 15 && rippleTick < 35) {
-                    DisplayBuilder.particleRing(center.clone().add(0, 0.5, 0), r2Radius, Particle.FLAME, 10, null);
-                }
-                if (r1Radius > 0.5 && rippleTick >= 30 && rippleTick < 50) {
-                    DisplayBuilder.particleRing(center.clone().add(0, 0.5, 0), r1Radius, Particle.FLAME, 12, null);
-                }
-            }
-
-            // Ripple pulse sound at start of each cycle
-            if (rippleTick == 0) {
-                DisplayBuilder.playSound(center, Sound.BLOCK_LAVA_POP, 0.8f, 0.5f);
-            }
-        }
-
-        @Override
-        protected void onCleanup() { super.onCleanup(); }
-
-        @Override
-        public AbstractAttack newInstance() { return new MagmaRipple(plugin); }
-    }
-
-    // ================================================================
-    // 44. INFERNAL SCYTHE — Arc of 10 blocks forming a scythe blade shape.
-    //     Entire arc sweeps 180 degrees on Y axis. Contact damage: 6-block
-    //     radius, 40 dmg/30t.
-    //     10 blade blocks + 2 handle blocks = 12 blocks
-    // ================================================================
-    public static class InfernalScythe extends BlockDisplayAttack {
-        private Location center;
-        private final List<BlockDisplayHandle> bladeBlocks = new ArrayList<>();
-        private final List<BlockDisplayHandle> handleBlocks = new ArrayList<>();
-        private double sweepAngle = 0;
-
-        public InfernalScythe(ChaosCraftPlugin plugin) {
-            super(plugin, new AttackConfig("infernal_scythe", AttackType.BLOCK_DISPLAY, 1, "modes/doom/attacks"));
-            config.setDamage(40.0);
-            config.setDamageRadius(6.0);
-            config.setTicksBetweenDamage(30);
-            config.setDurationTicks(300);
-            config.setCooldownTicks(230);
-        }
-
-        @Override
-        protected void onSpawn(Location center) {
-            this.center = center.clone();
-            World w = center.getWorld();
-            if (w == null) return;
-
-            // Handle: 2 blocks vertically at center
-            for (int i = 0; i < 2; i++) {
-                Location loc = center.clone().add(0, i * 1.5, 0);
-                BlockDisplayHandle h = displayBuilder.spawnBlock(loc, Material.POLISHED_BLACKSTONE);
-                h.scale(0.4f, 1.5f, 0.4f).glow(20, 10, 5).interpolation(2, 0);
+            // CHEST — 4 magma blocks, wide torso scale(1.2, 1.0, 0.8)
+            double[][] chestOffsets = {{0, 2.5, 0}, {0, 3.5, 0}, {0.3, 3.0, 0}, {-0.3, 3.0, 0}};
+            for (double[] off : chestOffsets) {
+                BlockDisplayHandle h = displayBuilder.spawnBlock(center.clone().add(off[0], off[1], off[2]), Material.MAGMA_BLOCK);
+                h.scale(1.2f, 1.0f, 0.8f).glow(255, 100, 20).interpolation(3, 0);
                 spawnedEntities.add(h.entity());
-                handleBlocks.add(h);
+                chest.add(h);
             }
 
-            // Blade: 10 blocks in a curved arc extending from top of handle
-            double bladeRadius = 4.5;
-            for (int i = 0; i < 10; i++) {
-                // Arc from 0 to ~160 degrees (scythe curve)
-                double arcAngle = (Math.PI * 0.9 * i) / 9.0 - Math.PI * 0.45;
-                double bx = Math.cos(arcAngle) * bladeRadius;
-                double by = 3.0 + Math.sin(arcAngle) * bladeRadius * 0.3; // flatter curve
-                Location loc = center.clone().add(bx, by, 0);
-                Material mat = (i < 3 || i > 7) ? Material.NETHERRACK : Material.RED_NETHER_BRICKS;
-                BlockDisplayHandle b = displayBuilder.spawnBlock(loc, mat);
-                // Taper: thinner at edges
-                float scX = 1.0f;
-                float scY = 0.3f + (1.0f - Math.abs(i - 4.5f) / 5.0f) * 0.5f;
-                b.scale(scX, scY, 0.5f).glow(200, 50, 10).interpolation(2, 0);
-                spawnedEntities.add(b.entity());
-                bladeBlocks.add(b);
+            // LEFT ARM — 4 segments, rod shape scale(0.4, 1.2, 0.4)
+            for (int i = 0; i < 4; i++) {
+                BlockDisplayHandle h = displayBuilder.spawnBlock(center.clone().add(-1.3, 3.5 - i * 0.8, 0), Material.NETHERRACK);
+                h.scale(0.4f, 1.2f, 0.4f).glow(200, 50, 10).interpolation(3, 0);
+                spawnedEntities.add(h.entity());
+                leftArm.add(h);
             }
 
-            DisplayBuilder.playSound(center, Sound.ENTITY_PLAYER_ATTACK_SWEEP, 1.0f, 0.3f);
-            w.spawnParticle(Particle.FLAME, center.clone().add(0, 3, 0), 15, 3, 1, 1, 0.03);
+            // RIGHT ARM — 4 segments, rod shape
+            for (int i = 0; i < 4; i++) {
+                BlockDisplayHandle h = displayBuilder.spawnBlock(center.clone().add(1.3, 3.5 - i * 0.8, 0), Material.NETHERRACK);
+                h.scale(0.4f, 1.2f, 0.4f).glow(200, 50, 10).interpolation(3, 0);
+                spawnedEntities.add(h.entity());
+                rightArm.add(h);
+            }
+
+            // LEFT LEG — 3 segments, scale(0.5, 1.0, 0.5)
+            for (int i = 0; i < 3; i++) {
+                BlockDisplayHandle h = displayBuilder.spawnBlock(center.clone().add(-0.4, 1.5 - i * 0.8, 0), Material.BLACKSTONE);
+                h.scale(0.5f, 1.0f, 0.5f).glow(20, 10, 5).interpolation(3, 0);
+                spawnedEntities.add(h.entity());
+                leftLeg.add(h);
+            }
+
+            // RIGHT LEG — 3 segments
+            for (int i = 0; i < 3; i++) {
+                BlockDisplayHandle h = displayBuilder.spawnBlock(center.clone().add(0.4, 1.5 - i * 0.8, 0), Material.BLACKSTONE);
+                h.scale(0.5f, 1.0f, 0.5f).glow(20, 10, 5).interpolation(3, 0);
+                spawnedEntities.add(h.entity());
+                rightLeg.add(h);
+            }
+
+            // HEAD — 2 blocks
+            BlockDisplayHandle head1 = displayBuilder.spawnBlock(center.clone().add(0, 4.5, 0), Material.POLISHED_BLACKSTONE);
+            head1.scale(0.8f, 0.8f, 0.8f).glow(240, 80, 30).interpolation(3, 0);
+            spawnedEntities.add(head1.entity());
+            headParts.add(head1);
+            BlockDisplayHandle head2 = displayBuilder.spawnBlock(center.clone().add(0, 5.0, 0), Material.RED_NETHER_BRICKS);
+            head2.scale(0.7f, 0.5f, 0.7f).glow(200, 50, 10).interpolation(3, 0);
+            spawnedEntities.add(head2.entity());
+            headParts.add(head2);
+
+            // PAULDRONS — 4 wide shoulder plates scale(0.8, 0.3, 0.8)
+            double[][] pauldronOffsets = {{-1.1, 4.0, -0.2}, {-1.1, 4.0, 0.2}, {1.1, 4.0, -0.2}, {1.1, 4.0, 0.2}};
+            for (double[] off : pauldronOffsets) {
+                BlockDisplayHandle h = displayBuilder.spawnBlock(center.clone().add(off[0], off[1], off[2]), Material.NETHER_BRICKS);
+                h.scale(0.8f, 0.3f, 0.8f).glow(120, 20, 80).interpolation(3, 0);
+                spawnedEntities.add(h.entity());
+                pauldrons.add(h);
+            }
+
+            // FISTS — 2 glowing blocks
+            BlockDisplayHandle fistL = displayBuilder.spawnBlock(center.clone().add(-1.3, 0.5, 0), Material.SHROOMLIGHT);
+            fistL.scale(0.6f, 0.6f, 0.6f).glow(255, 100, 20).interpolation(3, 0);
+            spawnedEntities.add(fistL.entity());
+            fists.add(fistL);
+            BlockDisplayHandle fistR = displayBuilder.spawnBlock(center.clone().add(1.3, 0.5, 0), Material.SHROOMLIGHT);
+            fistR.scale(0.6f, 0.6f, 0.6f).glow(255, 100, 20).interpolation(3, 0);
+            spawnedEntities.add(fistR.entity());
+            fists.add(fistR);
+
+            // SPINE — 3 segments behind torso
+            for (int i = 0; i < 3; i++) {
+                BlockDisplayHandle h = displayBuilder.spawnBlock(center.clone().add(0, 2.2 + i * 0.7, -0.5), Material.BASALT);
+                h.scale(0.3f, 0.6f, 0.3f).glow(20, 10, 5).interpolation(3, 0);
+                spawnedEntities.add(h.entity());
+                spine.add(h);
+            }
+
+            // EYES — 2 shroomlight
+            BlockDisplayHandle eyeL = displayBuilder.spawnBlock(center.clone().add(-0.2, 4.7, 0.4), Material.SHROOMLIGHT);
+            eyeL.scale(0.15f, 0.15f, 0.15f).glow(255, 200, 50).interpolation(2, 0);
+            spawnedEntities.add(eyeL.entity());
+            extras.add(eyeL);
+            BlockDisplayHandle eyeR = displayBuilder.spawnBlock(center.clone().add(0.2, 4.7, 0.4), Material.SHROOMLIGHT);
+            eyeR.scale(0.15f, 0.15f, 0.15f).glow(255, 200, 50).interpolation(2, 0);
+            spawnedEntities.add(eyeR.entity());
+            extras.add(eyeR);
+
+            DisplayBuilder.playSound(center, Sound.ENTITY_IRON_GOLEM_HURT, 1.5f, 0.4f);
+            w.spawnParticle(Particle.LAVA, center.clone().add(0, 3, 0), 30, 1.5, 2, 1.5, 0.05);
         }
 
         @Override
         protected void onTick(int tick) {
+            Location center = getCenter();
             if (center == null || center.getWorld() == null) return;
 
-            // Sweep the entire scythe around Y axis: pendulum-style 180 degrees
-            sweepAngle += 0.06;
-            double rotation = Math.sin(sweepAngle) * Math.PI; // -180 to +180 swing
-
-            double cosR = Math.cos(rotation);
-            double sinR = Math.sin(rotation);
-
-            // Rotate handle
-            for (int i = 0; i < handleBlocks.size(); i++) {
-                Location loc = center.clone().add(0, i * 1.5, 0);
-                loc.setYaw(0);
-                loc.setPitch(0);
-                handleBlocks.get(i).entity().teleport(loc);
+            // Track nearest player
+            Player target = findNearestPlayer(center, 30.0);
+            if (target != null) {
+                facing = yawToward(center, target.getLocation());
             }
 
-            // Rotate blade around Y axis relative to center
-            double bladeRadius = 4.5;
-            Location bladeTip = null;
-            for (int i = 0; i < bladeBlocks.size(); i++) {
-                double arcAngle = (Math.PI * 0.9 * i) / 9.0 - Math.PI * 0.45;
-                double localX = Math.cos(arcAngle) * bladeRadius;
-                double localZ = 0;
-                // Rotate localX, localZ by sweepAngle around Y
-                double worldX = localX * cosR - localZ * sinR;
-                double worldZ = localX * sinR + localZ * cosR;
-                double worldY = 3.0 + Math.sin(arcAngle) * bladeRadius * 0.3;
-                Location loc = center.clone().add(worldX, worldY, worldZ);
-                loc.setYaw(0);
-                loc.setPitch(0);
-                bladeBlocks.get(i).entity().teleport(loc);
-                if (i == 5) bladeTip = loc; // midpoint of blade for damage tracking
+            // Walk cycle: swing arms ±30° on X-axis, alternating legs via Y-translation
+            float armSwing = (float) (Math.toRadians(30) * Math.sin(tick * 0.15));
+            float legShift = (float) (0.3 * Math.sin(tick * 0.15));
+
+            // Left arm swing forward/backward
+            for (int i = 0; i < leftArm.size(); i++) {
+                Transformation t = leftArm.get(i).entity().getTransformation();
+                leftArm.get(i).entity().setInterpolationDuration(3);
+                leftArm.get(i).entity().setInterpolationDelay(0);
+                leftArm.get(i).entity().setTransformation(new Transformation(
+                        t.getTranslation(),
+                        new AxisAngle4f(armSwing, 1, 0, 0),
+                        t.getScale(),
+                        new AxisAngle4f(0, 0, 1, 0)
+                ));
             }
 
-            // Track damage center to blade midpoint
-            if (bladeTip != null) {
-                setCenter(bladeTip);
+            // Right arm opposite swing
+            for (int i = 0; i < rightArm.size(); i++) {
+                Transformation t = rightArm.get(i).entity().getTransformation();
+                rightArm.get(i).entity().setInterpolationDuration(3);
+                rightArm.get(i).entity().setInterpolationDelay(0);
+                rightArm.get(i).entity().setTransformation(new Transformation(
+                        t.getTranslation(),
+                        new AxisAngle4f(-armSwing, 1, 0, 0),
+                        t.getScale(),
+                        new AxisAngle4f(0, 0, 1, 0)
+                ));
             }
 
-            // Slash trail particles
-            if (tick % 2 == 0) {
-                for (int i = 0; i < bladeBlocks.size(); i += 3) {
-                    Location bLoc = bladeBlocks.get(i).entity().getLocation();
-                    DisplayBuilder.dustParticles(bLoc, 2, 0.3, 200, 50, 10, 1.2f);
+            // Left leg Y-translation shift (walk bob)
+            for (BlockDisplayHandle leg : leftLeg) {
+                Transformation t = leg.entity().getTransformation();
+                Vector3f trans = new Vector3f(t.getTranslation());
+                trans.y = -0.5f + legShift;
+                leg.entity().setInterpolationDuration(3);
+                leg.entity().setInterpolationDelay(0);
+                leg.entity().setTransformation(new Transformation(
+                        trans, new AxisAngle4f().set(t.getLeftRotation()), t.getScale(), new AxisAngle4f().set(t.getRightRotation())
+                ));
+            }
+
+            // Right leg opposite shift
+            for (BlockDisplayHandle leg : rightLeg) {
+                Transformation t = leg.entity().getTransformation();
+                Vector3f trans = new Vector3f(t.getTranslation());
+                trans.y = -0.5f - legShift;
+                leg.entity().setInterpolationDuration(3);
+                leg.entity().setInterpolationDelay(0);
+                leg.entity().setTransformation(new Transformation(
+                        trans, new AxisAngle4f().set(t.getLeftRotation()), t.getScale(), new AxisAngle4f().set(t.getRightRotation())
+                ));
+            }
+
+            // Slowly walk toward player using teleport for position only
+            if (target != null && tick % 5 == 0) {
+                double dx = Math.cos(facing) * 0.15;
+                double dz = Math.sin(facing) * 0.15;
+                Location newCenter = center.clone().add(dx, 0, dz);
+                setCenter(newCenter);
+
+                // Teleport all body parts to new position (maintaining relative offsets)
+                // We move entire golem by shifting center; individual blocks animate via Transform
+            }
+
+            // Ember particles from fists every 4 ticks
+            if (tick % 4 == 0) {
+                for (BlockDisplayHandle fist : fists) {
+                    DisplayBuilder.dustParticles(fist.entity().getLocation(), 3, 0.3, 255, 100, 20, 1.2f);
                 }
             }
 
-            // Slash sound at each sweep
-            if (tick % 30 == 0) {
-                DisplayBuilder.playSound(center, Sound.ENTITY_PLAYER_ATTACK_SWEEP, 0.9f, 0.5f);
+            // Footstep sound
+            if (tick % 20 == 0) {
+                DisplayBuilder.playSound(center, Sound.ENTITY_IRON_GOLEM_STEP, 0.8f, 0.5f);
             }
         }
 
-        @Override
-        protected void onCleanup() { super.onCleanup(); }
-
-        @Override
-        public AbstractAttack newInstance() { return new InfernalScythe(plugin); }
+        @Override protected void onCleanup() { super.onCleanup(); }
+        @Override public AbstractAttack newInstance() { return new LavaGolemTitan(plugin); }
     }
 
     // ================================================================
-    // 45. DOOM SPIRE — 18-block spiral tower: blocks spiral upward around
-    //     Y axis. Tower slowly rotates. Top 3 blocks are glowing.
-    //     Damage: 5-block radius, 20 dmg/20t.
-    //     18 blocks
+    // #22 — INFERNAL PHOENIX RISING (30 blocks)
+    // Wings 12 (6/side, scale(0.8,0.1,0.6) plates), body 5, tail 6
+    // scale(0.2,0.1,1.0), head 3, beak 1 scale(0.15,0.15,0.4), eyes 3.
+    // Wings flap Z-axis ±25° at 10-tick period via Transform.
+    // Circular flight Y=6. 8r, 25dmg/20t. FLAME wingtip trail.
     // ================================================================
-    public static class DoomSpire extends BlockDisplayAttack {
-        private Location center;
-        private final List<BlockDisplayHandle> spireBlocks = new ArrayList<>();
+    public static class InfernalPhoenixRising extends BlockDisplayAttack {
+        private final List<BlockDisplayHandle> leftWing = new ArrayList<>();
+        private final List<BlockDisplayHandle> rightWing = new ArrayList<>();
+        private final List<BlockDisplayHandle> body = new ArrayList<>();
+        private final List<BlockDisplayHandle> tail = new ArrayList<>();
+        private final List<BlockDisplayHandle> headParts = new ArrayList<>();
+        private BlockDisplayHandle beak;
+        private final List<BlockDisplayHandle> eyes = new ArrayList<>();
+        private static final double FLIGHT_RADIUS = 5.0;
+        private static final double FLIGHT_Y = 6.0;
 
-        public DoomSpire(ChaosCraftPlugin plugin) {
-            super(plugin, new AttackConfig("doom_spire", AttackType.BLOCK_DISPLAY, 1, "modes/doom/attacks"));
-            config.setDamage(20.0);
+        public InfernalPhoenixRising(ChaosCraftPlugin plugin) {
+            super(plugin, new AttackConfig("infernal_phoenix_rising", AttackType.BLOCK_DISPLAY, 1, "modes/doom/attacks"));
+            config.setDamage(25.0);
+            config.setDamageRadius(8.0);
+            config.setTicksBetweenDamage(20);
+            config.setDurationTicks(300);
+            config.setCooldownTicks(200);
+        }
+
+        @Override
+        protected void onSpawn(Location center) {
+            World w = center.getWorld();
+            if (w == null) return;
+            Location spawnBase = center.clone().add(FLIGHT_RADIUS, FLIGHT_Y, 0);
+
+            // BODY — 5 magma blocks forming elongated torso
+            for (int i = 0; i < 5; i++) {
+                BlockDisplayHandle h = displayBuilder.spawnBlock(spawnBase.clone().add(0, 0, -1.0 + i * 0.5), Material.MAGMA_BLOCK);
+                float bodyScale = (i == 2) ? 1.0f : 0.7f;
+                h.scale(0.6f * bodyScale, 0.5f * bodyScale, 0.8f).glow(255, 100, 20).interpolation(3, 0);
+                spawnedEntities.add(h.entity());
+                body.add(h);
+            }
+
+            // LEFT WING — 6 thin plates scale(0.8, 0.1, 0.6)
+            for (int i = 0; i < 6; i++) {
+                double xOff = -0.6 - i * 0.4;
+                double zOff = -0.3 + (i % 3) * 0.2;
+                BlockDisplayHandle h = displayBuilder.spawnBlock(spawnBase.clone().add(xOff, 0.2, zOff), Material.ORANGE_CONCRETE);
+                h.scale(0.8f, 0.1f, 0.6f).glow(240, 80, 30).interpolation(3, 0);
+                spawnedEntities.add(h.entity());
+                leftWing.add(h);
+            }
+
+            // RIGHT WING — 6 thin plates (mirrored)
+            for (int i = 0; i < 6; i++) {
+                double xOff = 0.6 + i * 0.4;
+                double zOff = -0.3 + (i % 3) * 0.2;
+                BlockDisplayHandle h = displayBuilder.spawnBlock(spawnBase.clone().add(xOff, 0.2, zOff), Material.ORANGE_CONCRETE);
+                h.scale(0.8f, 0.1f, 0.6f).glow(240, 80, 30).interpolation(3, 0);
+                spawnedEntities.add(h.entity());
+                rightWing.add(h);
+            }
+
+            // TAIL — 6 long thin segments scale(0.2, 0.1, 1.0)
+            for (int i = 0; i < 6; i++) {
+                BlockDisplayHandle h = displayBuilder.spawnBlock(spawnBase.clone().add(0, -0.1 - i * 0.1, 1.5 + i * 0.6), Material.RED_CONCRETE);
+                h.scale(0.2f, 0.1f, 1.0f).glow(200, 50, 10).interpolation(3, 0);
+                spawnedEntities.add(h.entity());
+                tail.add(h);
+            }
+
+            // HEAD — 3 blocks
+            for (int i = 0; i < 3; i++) {
+                BlockDisplayHandle h = displayBuilder.spawnBlock(spawnBase.clone().add(0, 0.3 + i * 0.2, -1.5), Material.SHROOMLIGHT);
+                float s = 0.5f - i * 0.1f;
+                h.scale(s, s, s).glow(255, 200, 50).interpolation(3, 0);
+                spawnedEntities.add(h.entity());
+                headParts.add(h);
+            }
+
+            // BEAK — scale(0.15, 0.15, 0.4)
+            beak = displayBuilder.spawnBlock(spawnBase.clone().add(0, 0.3, -2.0), Material.GLOWSTONE);
+            beak.scale(0.15f, 0.15f, 0.4f).glow(220, 180, 30).interpolation(3, 0);
+            spawnedEntities.add(beak.entity());
+
+            // EYES — 3 small glowing
+            for (int i = 0; i < 3; i++) {
+                double xOff = (i == 0) ? -0.15 : (i == 1) ? 0.15 : 0.0;
+                double yOff = (i == 2) ? 0.55 : 0.45;
+                BlockDisplayHandle h = displayBuilder.spawnBlock(spawnBase.clone().add(xOff, yOff, -1.6), Material.SHROOMLIGHT);
+                h.scale(0.12f, 0.12f, 0.12f).glow(255, 255, 200).interpolation(2, 0);
+                spawnedEntities.add(h.entity());
+                eyes.add(h);
+            }
+
+            DisplayBuilder.playSound(center, Sound.ENTITY_BLAZE_AMBIENT, 1.5f, 0.6f);
+            w.spawnParticle(Particle.FLAME, spawnBase, 40, 2, 1, 2, 0.1);
+        }
+
+        @Override
+        protected void onTick(int tick) {
+            Location center = getCenter();
+            if (center == null || center.getWorld() == null) return;
+
+            // Circular flight path
+            double flightAngle = tick * 0.04;
+            double fx = Math.cos(flightAngle) * FLIGHT_RADIUS;
+            double fz = Math.sin(flightAngle) * FLIGHT_RADIUS;
+            double yBob = Math.sin(tick * 0.08) * 0.5;
+            Location flightPos = center.clone().add(fx, FLIGHT_Y + yBob, fz);
+
+            // Teleport body to flight position
+            for (int i = 0; i < body.size(); i++) {
+                Location bLoc = flightPos.clone().add(0, 0, -1.0 + i * 0.5);
+                bLoc.setYaw(0); bLoc.setPitch(0);
+                body.get(i).entity().teleport(bLoc);
+            }
+
+            // Wing flap: Z-axis ±25° at 10-tick period via Transform
+            float flapAngle = (float) (Math.toRadians(25) * Math.sin(tick * (2 * Math.PI / 10.0)));
+
+            // Left wing flap (negative Z = left tilts up)
+            for (int i = 0; i < leftWing.size(); i++) {
+                float intensity = 1.0f + i * 0.15f; // outer feathers flap more
+                BlockDisplay bd = leftWing.get(i).entity();
+                Transformation t = bd.getTransformation();
+                bd.setInterpolationDuration(3);
+                bd.setInterpolationDelay(0);
+                bd.setTransformation(new Transformation(
+                        t.getTranslation(),
+                        new AxisAngle4f(flapAngle * intensity, 0, 0, 1),
+                        t.getScale(),
+                        new AxisAngle4f(0, 0, 1, 0)
+                ));
+                Location wLoc = flightPos.clone().add(-0.6 - i * 0.4, 0.2, -0.3 + (i % 3) * 0.2);
+                wLoc.setYaw(0); wLoc.setPitch(0);
+                bd.teleport(wLoc);
+            }
+
+            // Right wing flap (mirrored)
+            for (int i = 0; i < rightWing.size(); i++) {
+                float intensity = 1.0f + i * 0.15f;
+                BlockDisplay bd = rightWing.get(i).entity();
+                Transformation t = bd.getTransformation();
+                bd.setInterpolationDuration(3);
+                bd.setInterpolationDelay(0);
+                bd.setTransformation(new Transformation(
+                        t.getTranslation(),
+                        new AxisAngle4f(-flapAngle * intensity, 0, 0, 1),
+                        t.getScale(),
+                        new AxisAngle4f(0, 0, 1, 0)
+                ));
+                Location wLoc = flightPos.clone().add(0.6 + i * 0.4, 0.2, -0.3 + (i % 3) * 0.2);
+                wLoc.setYaw(0); wLoc.setPitch(0);
+                bd.teleport(wLoc);
+            }
+
+            // Tail follows
+            for (int i = 0; i < tail.size(); i++) {
+                float tailSway = (float) (Math.toRadians(10) * Math.sin(tick * 0.1 + i * 0.5));
+                BlockDisplay bd = tail.get(i).entity();
+                Transformation t = bd.getTransformation();
+                bd.setInterpolationDuration(4);
+                bd.setInterpolationDelay(0);
+                bd.setTransformation(new Transformation(
+                        t.getTranslation(),
+                        new AxisAngle4f(tailSway, 0, 1, 0),
+                        t.getScale(),
+                        new AxisAngle4f(0, 0, 1, 0)
+                ));
+                Location tLoc = flightPos.clone().add(0, -0.1 - i * 0.1, 1.5 + i * 0.6);
+                tLoc.setYaw(0); tLoc.setPitch(0);
+                bd.teleport(tLoc);
+            }
+
+            // Head, beak, eyes follow flight position
+            for (int i = 0; i < headParts.size(); i++) {
+                Location hLoc = flightPos.clone().add(0, 0.3 + i * 0.2, -1.5);
+                hLoc.setYaw(0); hLoc.setPitch(0);
+                headParts.get(i).entity().teleport(hLoc);
+            }
+            Location bkLoc = flightPos.clone().add(0, 0.3, -2.0);
+            bkLoc.setYaw(0); bkLoc.setPitch(0);
+            beak.entity().teleport(bkLoc);
+
+            for (int i = 0; i < eyes.size(); i++) {
+                double xOff = (i == 0) ? -0.15 : (i == 1) ? 0.15 : 0.0;
+                double yOff = (i == 2) ? 0.55 : 0.45;
+                Location eLoc = flightPos.clone().add(xOff, yOff, -1.6);
+                eLoc.setYaw(0); eLoc.setPitch(0);
+                eyes.get(i).entity().teleport(eLoc);
+            }
+
+            // FLAME wingtip trail
+            if (tick % 2 == 0) {
+                if (!leftWing.isEmpty()) {
+                    Location tipL = leftWing.get(leftWing.size() - 1).entity().getLocation();
+                    center.getWorld().spawnParticle(Particle.FLAME, tipL, 3, 0.1, 0.1, 0.1, 0.02);
+                }
+                if (!rightWing.isEmpty()) {
+                    Location tipR = rightWing.get(rightWing.size() - 1).entity().getLocation();
+                    center.getWorld().spawnParticle(Particle.FLAME, tipR, 3, 0.1, 0.1, 0.1, 0.02);
+                }
+            }
+
+            // Ambient fire sound
+            if (tick % 30 == 0) {
+                DisplayBuilder.playSound(flightPos, Sound.ENTITY_BLAZE_SHOOT, 0.6f, 1.2f);
+            }
+        }
+
+        @Override protected void onCleanup() { super.onCleanup(); }
+        @Override public AbstractAttack newInstance() { return new InfernalPhoenixRising(plugin); }
+    }
+
+    // ================================================================
+    // #23 — NETHER DRAGON SERPENT (32 blocks)
+    // 20 body segments S-curve (scale(0.8,0.6,0.8)→tail smaller),
+    // head 4 scale(1.0,0.8,1.2), jaw 2 (open/close), horns 2
+    // scale(0.2,0.6,0.2), wings 4. Body undulates sine-wave Y+lateral
+    // via Transform. Head tracks player. 5r along body, 35dmg/20t.
+    // ================================================================
+    public static class NetherDragonSerpent extends BlockDisplayAttack {
+        private final List<BlockDisplayHandle> bodySegments = new ArrayList<>();
+        private final List<BlockDisplayHandle> headBlocks = new ArrayList<>();
+        private final List<BlockDisplayHandle> jaws = new ArrayList<>();
+        private final List<BlockDisplayHandle> horns = new ArrayList<>();
+        private final List<BlockDisplayHandle> wings = new ArrayList<>();
+        private static final int SEGMENT_COUNT = 20;
+
+        public NetherDragonSerpent(ChaosCraftPlugin plugin) {
+            super(plugin, new AttackConfig("nether_dragon_serpent", AttackType.BLOCK_DISPLAY, 1, "modes/doom/attacks"));
+            config.setDamage(35.0);
             config.setDamageRadius(5.0);
             config.setTicksBetweenDamage(20);
             config.setDurationTicks(300);
-            config.setCooldownTicks(200);
+            config.setCooldownTicks(250);
         }
 
         @Override
         protected void onSpawn(Location center) {
-            this.center = center.clone();
             World w = center.getWorld();
             if (w == null) return;
 
-            // 18 blocks spiraling upward
-            double spiralRadius = 1.8;
-            for (int i = 0; i < 18; i++) {
-                double angle = (2 * Math.PI * i) / 6.0; // ~3 full rotations over 18 blocks
-                double x = Math.cos(angle) * spiralRadius * (1.0 - i * 0.02); // taper inward
-                double z = Math.sin(angle) * spiralRadius * (1.0 - i * 0.02);
-                double y = i * 0.6;
-                Location loc = center.clone().add(x, y, z);
-                Material mat;
-                if (i >= 15) {
-                    mat = Material.SHROOMLIGHT; // top 3 glow
-                } else if (i % 3 == 0) {
-                    mat = Material.NETHER_BRICKS;
-                } else if (i % 3 == 1) {
-                    mat = Material.DEEPSLATE;
-                } else {
-                    mat = Material.BLACKSTONE;
-                }
-                BlockDisplayHandle b = displayBuilder.spawnBlock(loc, mat);
-                float scale = 0.9f - (i * 0.015f);
-                int glowR = (i >= 15) ? 255 : 200;
-                int glowG = (i >= 15) ? 100 : 50;
-                int glowB = (i >= 15) ? 20 : 10;
-                b.scale(scale, 0.6f, scale).glow(glowR, glowG, glowB).interpolation(2, 0);
-                spawnedEntities.add(b.entity());
-                spireBlocks.add(b);
+            // 20 BODY SEGMENTS — S-curve, gradually smaller toward tail
+            for (int i = 0; i < SEGMENT_COUNT; i++) {
+                double progress = (double) i / SEGMENT_COUNT;
+                double sineX = Math.sin(i * 0.6) * 2.0;
+                double zPos = -5.0 + i * 0.6;
+                Location segLoc = center.clone().add(sineX, 2.0, zPos);
+
+                Material mat = (i % 3 == 0) ? Material.RED_NETHER_BRICKS : (i % 3 == 1) ? Material.NETHER_BRICKS : Material.NETHERRACK;
+                BlockDisplayHandle h = displayBuilder.spawnBlock(segLoc, mat);
+                float scale = (float) (0.8 - progress * 0.4);
+                h.scale(scale, scale * 0.75f, scale).glow(200, 50, 10).interpolation(4, 0);
+                spawnedEntities.add(h.entity());
+                bodySegments.add(h);
             }
 
-            DisplayBuilder.playSound(center, Sound.BLOCK_ANVIL_PLACE, 0.8f, 0.5f);
-            w.spawnParticle(Particle.FLAME, center.clone().add(0, 10, 0), 15, 1, 1, 1, 0.04);
+            // HEAD — 4 blocks scale(1.0, 0.8, 1.2)
+            Location headBase = center.clone().add(0, 2.5, -5.5);
+            Material[] headMats = {Material.POLISHED_BLACKSTONE, Material.RED_NETHER_BRICKS, Material.MAGMA_BLOCK, Material.NETHER_BRICKS};
+            double[][] headOff = {{0, 0, 0}, {0, 0.5, 0}, {0.3, 0.2, -0.3}, {-0.3, 0.2, -0.3}};
+            for (int i = 0; i < 4; i++) {
+                BlockDisplayHandle h = displayBuilder.spawnBlock(headBase.clone().add(headOff[i][0], headOff[i][1], headOff[i][2]), headMats[i]);
+                h.scale(1.0f, 0.8f, 1.2f).glow(240, 80, 30).interpolation(3, 0);
+                spawnedEntities.add(h.entity());
+                headBlocks.add(h);
+            }
+
+            // JAWS — 2 blocks (upper and lower, open/close)
+            BlockDisplayHandle jawUpper = displayBuilder.spawnBlock(headBase.clone().add(0, 0.3, -0.8), Material.BLACKSTONE);
+            jawUpper.scale(0.6f, 0.2f, 0.8f).glow(20, 10, 5).interpolation(3, 0);
+            spawnedEntities.add(jawUpper.entity());
+            jaws.add(jawUpper);
+            BlockDisplayHandle jawLower = displayBuilder.spawnBlock(headBase.clone().add(0, -0.2, -0.8), Material.BLACKSTONE);
+            jawLower.scale(0.6f, 0.2f, 0.8f).glow(20, 10, 5).interpolation(3, 0);
+            spawnedEntities.add(jawLower.entity());
+            jaws.add(jawLower);
+
+            // HORNS — 2 scale(0.2, 0.6, 0.2)
+            BlockDisplayHandle hornL = displayBuilder.spawnBlock(headBase.clone().add(-0.4, 0.8, -0.2), Material.BASALT);
+            hornL.scale(0.2f, 0.6f, 0.2f).glow(120, 20, 80).interpolation(3, 0);
+            spawnedEntities.add(hornL.entity());
+            horns.add(hornL);
+            BlockDisplayHandle hornR = displayBuilder.spawnBlock(headBase.clone().add(0.4, 0.8, -0.2), Material.BASALT);
+            hornR.scale(0.2f, 0.6f, 0.2f).glow(120, 20, 80).interpolation(3, 0);
+            spawnedEntities.add(hornR.entity());
+            horns.add(hornR);
+
+            // WINGS — 4 plates near segment 5-6
+            double[][] wingOff = {{-1.5, 0.5, -2.0}, {-2.0, 0.8, -1.5}, {1.5, 0.5, -2.0}, {2.0, 0.8, -1.5}};
+            for (double[] off : wingOff) {
+                BlockDisplayHandle h = displayBuilder.spawnBlock(center.clone().add(off[0], 2.0 + off[1], off[2]), Material.RED_CONCRETE);
+                h.scale(0.8f, 0.1f, 0.6f).glow(200, 50, 10).interpolation(3, 0);
+                spawnedEntities.add(h.entity());
+                wings.add(h);
+            }
+
+            DisplayBuilder.playSound(center, Sound.ENTITY_ENDER_DRAGON_GROWL, 1.2f, 0.5f);
         }
 
         @Override
         protected void onTick(int tick) {
+            Location center = getCenter();
             if (center == null || center.getWorld() == null) return;
 
-            double rotSpeed = 0.02;
-            double spiralRadius = 1.8;
+            // Sine-wave undulation: each segment has phase offset
+            for (int i = 0; i < bodySegments.size(); i++) {
+                double progress = (double) i / SEGMENT_COUNT;
+                double phase = tick * 0.12 + i * 0.4;
+                double lateralWave = Math.sin(phase) * 1.8;
+                double yWave = Math.cos(phase * 0.7) * 0.6;
+                double zPos = -5.0 + i * 0.6;
 
-            // Rotate entire spire around Y axis
-            for (int i = 0; i < spireBlocks.size(); i++) {
-                double baseAngle = (2 * Math.PI * i) / 6.0;
-                double angle = baseAngle + tick * rotSpeed;
-                double r = spiralRadius * (1.0 - i * 0.02);
-                double x = Math.cos(angle) * r;
-                double z = Math.sin(angle) * r;
-                double y = i * 0.6;
-                Location loc = center.clone().add(x, y, z);
-                loc.setYaw(0);
-                loc.setPitch(0);
-                spireBlocks.get(i).entity().teleport(loc);
+                // Animate via Transform translation (smooth)
+                BlockDisplay bd = bodySegments.get(i).entity();
+                float scale = (float) (0.8 - progress * 0.4);
+                bd.setInterpolationDuration(4);
+                bd.setInterpolationDelay(0);
+                bd.setTransformation(new Transformation(
+                        new Vector3f((float) lateralWave - 0.5f, (float) yWave - 0.5f, -0.5f),
+                        new AxisAngle4f((float) (Math.sin(phase) * Math.toRadians(10)), 0, 0, 1),
+                        new Vector3f(scale, scale * 0.75f, scale),
+                        new AxisAngle4f(0, 0, 1, 0)
+                ));
+
+                // Teleport for forward movement along path
+                Location segLoc = center.clone().add(0, 2.0, zPos);
+                segLoc.setYaw(0); segLoc.setPitch(0);
+                bd.teleport(segLoc);
             }
 
-            // Glowing embers from top
-            if (tick % 3 == 0) {
-                Location top = spireBlocks.get(17).entity().getLocation();
-                center.getWorld().spawnParticle(Particle.FLAME, top.clone().add(0, 0.5, 0), 3, 0.3, 0.3, 0.3, 0.02);
-                DisplayBuilder.dustParticles(top, 2, 0.4, 255, 100, 20, 1.2f);
+            // Head tracks nearest player
+            Player target = findNearestPlayer(center, 25.0);
+            Location headBase = center.clone().add(0, 2.5, -5.5);
+
+            if (target != null) {
+                double yaw = yawToward(headBase, target.getLocation());
+                float headRotY = (float) yaw;
+                for (int i = 0; i < headBlocks.size(); i++) {
+                    BlockDisplay bd = headBlocks.get(i).entity();
+                    Transformation t = bd.getTransformation();
+                    bd.setInterpolationDuration(3);
+                    bd.setInterpolationDelay(0);
+                    bd.setTransformation(new Transformation(
+                            t.getTranslation(),
+                            new AxisAngle4f(headRotY, 0, 1, 0),
+                            t.getScale(),
+                            new AxisAngle4f(0, 0, 1, 0)
+                    ));
+                }
             }
 
-            if (tick % 45 == 0) {
-                DisplayBuilder.playSound(center, Sound.BLOCK_LAVA_AMBIENT, 0.5f, 0.6f);
+            // Jaw open/close cycle
+            float jawAngle = (float) (Math.toRadians(15) * Math.abs(Math.sin(tick * 0.1)));
+            if (jaws.size() >= 2) {
+                BlockDisplay upper = jaws.get(0).entity();
+                upper.setInterpolationDuration(3);
+                upper.setInterpolationDelay(0);
+                Transformation ut = upper.getTransformation();
+                upper.setTransformation(new Transformation(
+                        ut.getTranslation(),
+                        new AxisAngle4f(jawAngle, 1, 0, 0),
+                        ut.getScale(),
+                        new AxisAngle4f(0, 0, 1, 0)
+                ));
+                BlockDisplay lower = jaws.get(1).entity();
+                lower.setInterpolationDuration(3);
+                lower.setInterpolationDelay(0);
+                Transformation lt = lower.getTransformation();
+                lower.setTransformation(new Transformation(
+                        lt.getTranslation(),
+                        new AxisAngle4f(-jawAngle, 1, 0, 0),
+                        lt.getScale(),
+                        new AxisAngle4f(0, 0, 1, 0)
+                ));
+            }
+
+            // Fire particles along body
+            if (tick % 4 == 0 && bodySegments.size() > 5) {
+                Location segLoc = bodySegments.get(5).entity().getLocation();
+                center.getWorld().spawnParticle(Particle.FLAME, segLoc, 4, 0.3, 0.2, 0.3, 0.02);
+            }
+
+            // Growl sound periodically
+            if (tick % 60 == 0) {
+                DisplayBuilder.playSound(center, Sound.ENTITY_ENDER_DRAGON_GROWL, 0.7f, 0.6f);
             }
         }
 
-        @Override
-        protected void onCleanup() { super.onCleanup(); }
-
-        @Override
-        public AbstractAttack newInstance() { return new DoomSpire(plugin); }
+        @Override protected void onCleanup() { super.onCleanup(); }
+        @Override public AbstractAttack newInstance() { return new NetherDragonSerpent(plugin); }
     }
 
     // ================================================================
-    // 46. TWIN INFERNAL COLUMNS — Two 10-block columns side by side, each
-    //     made of stacked blocks. Columns rotate in opposite directions.
-    //     Beam of particles between tops. Damage: 6-block radius between
-    //     columns, 30 dmg/20t.
-    //     10 + 10 = 20 blocks
+    // #24 — MAGMA SPIDER QUEEN (30 blocks)
+    // Abdomen 4 scale(1.2,0.8,1.4), thorax 3, head 2, 8 legs (2 segments
+    // each = 16 total, upper scale(0.2,0.8,0.2) + lower scale(0.15,0.7,0.15)),
+    // pedipalps 2, eyes 3 shroomlight scale(0.15,0.15,0.15).
+    // Legs animate walking gait via Transform rotation. 6r, 30dmg/25t.
     // ================================================================
-    public static class TwinInfernalColumns extends BlockDisplayAttack {
-        private Location center;
-        private final List<BlockDisplayHandle> columnA = new ArrayList<>();
-        private final List<BlockDisplayHandle> columnB = new ArrayList<>();
-        private double colAAngle = 0;
-        private double colBAngle = Math.PI;
+    public static class MagmaSpiderQueen extends BlockDisplayAttack {
+        private final List<BlockDisplayHandle> abdomen = new ArrayList<>();
+        private final List<BlockDisplayHandle> thorax = new ArrayList<>();
+        private final List<BlockDisplayHandle> head = new ArrayList<>();
+        private final List<BlockDisplayHandle> upperLegs = new ArrayList<>(); // 8 upper segments
+        private final List<BlockDisplayHandle> lowerLegs = new ArrayList<>(); // 8 lower segments
+        private final List<BlockDisplayHandle> pedipalps = new ArrayList<>();
+        private final List<BlockDisplayHandle> eyesList = new ArrayList<>();
+        private double moveFacing = 0;
 
-        public TwinInfernalColumns(ChaosCraftPlugin plugin) {
-            super(plugin, new AttackConfig("twin_infernal_columns", AttackType.BLOCK_DISPLAY, 1, "modes/doom/attacks"));
+        public MagmaSpiderQueen(ChaosCraftPlugin plugin) {
+            super(plugin, new AttackConfig("magma_spider_queen", AttackType.BLOCK_DISPLAY, 1, "modes/doom/attacks"));
             config.setDamage(30.0);
             config.setDamageRadius(6.0);
-            config.setTicksBetweenDamage(20);
-            config.setDurationTicks(320);
-            config.setCooldownTicks(220);
-        }
-
-        @Override
-        protected void onSpawn(Location center) {
-            this.center = center.clone();
-            World w = center.getWorld();
-            if (w == null) return;
-
-            double separation = 4.0;
-
-            // Column A: 10 stacked blocks on -X side
-            for (int i = 0; i < 10; i++) {
-                Location loc = center.clone().add(-separation / 2, i * 0.9, 0);
-                Material mat = (i % 2 == 0) ? Material.NETHER_BRICKS : Material.RED_NETHER_BRICKS;
-                BlockDisplayHandle b = displayBuilder.spawnBlock(loc, mat);
-                b.scale(1.0f, 0.9f, 1.0f).glow(200, 50, 10).interpolation(2, 0);
-                spawnedEntities.add(b.entity());
-                columnA.add(b);
-            }
-
-            // Column B: 10 stacked blocks on +X side
-            for (int i = 0; i < 10; i++) {
-                Location loc = center.clone().add(separation / 2, i * 0.9, 0);
-                Material mat = (i % 2 == 0) ? Material.BASALT : Material.POLISHED_BLACKSTONE;
-                BlockDisplayHandle b = displayBuilder.spawnBlock(loc, mat);
-                b.scale(1.0f, 0.9f, 1.0f).glow(240, 80, 30).interpolation(2, 0);
-                spawnedEntities.add(b.entity());
-                columnB.add(b);
-            }
-
-            DisplayBuilder.playSound(center, Sound.ENTITY_BLAZE_SHOOT, 1.0f, 0.5f);
-            w.spawnParticle(Particle.FLAME, center.clone().add(0, 4, 0), 20, 2, 4, 1, 0.03);
-        }
-
-        @Override
-        protected void onTick(int tick) {
-            if (center == null || center.getWorld() == null) return;
-
-            colAAngle += 0.04;
-            colBAngle -= 0.04; // opposite direction
-
-            double separation = 4.0;
-            double orbitRadius = separation / 2;
-
-            // Rotate column A blocks around center
-            for (int i = 0; i < columnA.size(); i++) {
-                double angle = colAAngle + i * 0.05; // slight twist per level
-                double x = Math.cos(angle) * orbitRadius;
-                double z = Math.sin(angle) * orbitRadius;
-                Location loc = center.clone().add(x, i * 0.9, z);
-                loc.setYaw(0);
-                loc.setPitch(0);
-                columnA.get(i).entity().teleport(loc);
-            }
-
-            // Rotate column B blocks around center (opposite)
-            for (int i = 0; i < columnB.size(); i++) {
-                double angle = colBAngle - i * 0.05;
-                double x = Math.cos(angle) * orbitRadius;
-                double z = Math.sin(angle) * orbitRadius;
-                Location loc = center.clone().add(x, i * 0.9, z);
-                loc.setYaw(0);
-                loc.setPitch(0);
-                columnB.get(i).entity().teleport(loc);
-            }
-
-            // Particle beam between tops of columns
-            if (tick % 3 == 0) {
-                Location topA = columnA.get(9).entity().getLocation();
-                Location topB = columnB.get(9).entity().getLocation();
-                DisplayBuilder.particleLine(topA, topB, Particle.FLAME, 3, null);
-                DisplayBuilder.dustParticles(topA, 2, 0.3, 255, 100, 20, 1.0f);
-                DisplayBuilder.dustParticles(topB, 2, 0.3, 240, 80, 30, 1.0f);
-            }
-
-            // Damage center between the columns
-            setCenter(center.clone().add(0, 4, 0));
-
-            if (tick % 40 == 0) {
-                DisplayBuilder.playSound(center, Sound.ENTITY_BLAZE_BURN, 0.6f, 0.7f);
-            }
-        }
-
-        @Override
-        protected void onCleanup() { super.onCleanup(); }
-
-        @Override
-        public AbstractAttack newInstance() { return new TwinInfernalColumns(plugin); }
-    }
-
-    // ================================================================
-    // 47. HELLFIRE LIGHTHOUSE — 12-block tower with rotating "light" at
-    //     top (1 elongated block spinning rapidly on Y). Light sweeps area.
-    //     Damage: beam direction, 35 dmg on sweep contact every full
-    //     rotation (~40 ticks).
-    //     12 tower + 1 light beam = 13 blocks
-    // ================================================================
-    public static class HellfireLighthouse extends BlockDisplayAttack {
-        private Location center;
-        private final List<BlockDisplayHandle> towerBlocks = new ArrayList<>();
-        private BlockDisplayHandle lightBeam;
-        private double beamAngle = 0;
-        private double lastSweepAngle = 0;
-
-        public HellfireLighthouse(ChaosCraftPlugin plugin) {
-            super(plugin, new AttackConfig("hellfire_lighthouse", AttackType.BLOCK_DISPLAY, 1, "modes/doom/attacks"));
-            config.setDamage(35.0);
-            config.setDamageRadius(6.0);
-            config.setTicksBetweenDamage(40);
-            config.setDurationTicks(320);
-            config.setCooldownTicks(230);
-        }
-
-        @Override
-        protected void onSpawn(Location center) {
-            this.center = center.clone();
-            World w = center.getWorld();
-            if (w == null) return;
-
-            // 12-block tower body
-            Material[] towerMats = {
-                Material.BLACKSTONE, Material.POLISHED_BLACKSTONE, Material.DEEPSLATE,
-                Material.BLACKSTONE, Material.POLISHED_BLACKSTONE, Material.DEEPSLATE,
-                Material.NETHER_BRICKS, Material.NETHER_BRICKS, Material.RED_NETHER_BRICKS,
-                Material.NETHER_BRICKS, Material.SHROOMLIGHT, Material.GLOWSTONE
-            };
-            for (int i = 0; i < 12; i++) {
-                Location loc = center.clone().add(0, i * 0.85, 0);
-                BlockDisplayHandle b = displayBuilder.spawnBlock(loc, towerMats[i]);
-                // Taper from wide base to narrow top
-                float scale = 1.6f - (i * 0.08f);
-                b.scale(scale, 0.85f, scale).glow(200, 50, 10).interpolation(2, 0);
-                spawnedEntities.add(b.entity());
-                towerBlocks.add(b);
-            }
-
-            // Light beam — elongated block at top that rotates
-            Location beamLoc = center.clone().add(3, 10.2, 0);
-            lightBeam = displayBuilder.spawnBlock(beamLoc, Material.GLOWSTONE);
-            lightBeam.scale(6.0f, 0.4f, 0.4f).glow(255, 100, 20).interpolation(1, 0);
-            spawnedEntities.add(lightBeam.entity());
-
-            DisplayBuilder.playSound(center, Sound.ENTITY_BLAZE_AMBIENT, 1.0f, 0.3f);
-            w.spawnParticle(Particle.FLAME, center.clone().add(0, 10, 0), 15, 1, 1, 1, 0.04);
-        }
-
-        @Override
-        protected void onTick(int tick) {
-            if (center == null || center.getWorld() == null) return;
-
-            // Rotate the light beam around Y axis
-            beamAngle += Math.PI * 2 / 40.0; // Full rotation every 40 ticks
-
-            double beamLength = 6.0;
-            double beamCenterDist = beamLength / 2.0;
-            double beamX = Math.cos(beamAngle) * beamCenterDist;
-            double beamZ = Math.sin(beamAngle) * beamCenterDist;
-            Location beamLoc = center.clone().add(beamX, 10.2, beamZ);
-            beamLoc.setYaw(0);
-            beamLoc.setPitch(0);
-            lightBeam.entity().teleport(beamLoc);
-
-            // Damage center tracks the beam tip
-            double tipX = Math.cos(beamAngle) * beamLength;
-            double tipZ = Math.sin(beamAngle) * beamLength;
-            setCenter(center.clone().add(tipX, 10.2, tipZ));
-
-            // Beam light particles along sweep direction
-            if (tick % 2 == 0) {
-                for (double d = 0; d <= beamLength; d += 0.8) {
-                    double px = Math.cos(beamAngle) * d;
-                    double pz = Math.sin(beamAngle) * d;
-                    Location pLoc = center.clone().add(px, 10.2, pz);
-                    center.getWorld().spawnParticle(Particle.FLAME, pLoc, 1, 0.1, 0.1, 0.1, 0.005);
-                }
-                DisplayBuilder.dustParticles(center.clone().add(tipX, 10.2, tipZ), 3, 0.5, 255, 100, 20, 1.5f);
-            }
-
-            // Tower ambient glow
-            if (tick % 5 == 0) {
-                Location topLoc = center.clone().add(0, 10, 0);
-                center.getWorld().spawnParticle(Particle.FLAME, topLoc, 2, 0.5, 0.3, 0.5, 0.01);
-            }
-
-            // Sweep sound
-            if (tick % 40 == 0) {
-                DisplayBuilder.playSound(center, Sound.ENTITY_BLAZE_SHOOT, 0.7f, 1.0f);
-            }
-        }
-
-        @Override
-        protected void onCleanup() { super.onCleanup(); }
-
-        @Override
-        public AbstractAttack newInstance() { return new HellfireLighthouse(plugin); }
-    }
-
-    // ================================================================
-    // 48. BRIMSTONE STALACTITES — 10 stalactite shapes hanging from Y=10
-    //     (each 3 blocks, tapered down). Occasionally one drops and re-forms.
-    //     Drop: 4-block impact, 30 damage. Constant aura: 6-block radius,
-    //     10 dmg/20t.
-    //     10 stalactites x 3 blocks = 30 blocks
-    // ================================================================
-    public static class BrimstoneStalagmites extends BlockDisplayAttack {
-        private Location center;
-        private final List<List<BlockDisplayHandle>> stalactites = new ArrayList<>();
-        private final double[] stalX = new double[10];
-        private final double[] stalZ = new double[10];
-        private final boolean[] dropping = new boolean[10];
-        private final double[] dropY = new double[10];
-        private final int[] reformTimer = new int[10];
-
-        public BrimstoneStalagmites(ChaosCraftPlugin plugin) {
-            super(plugin, new AttackConfig("brimstone_stalagmites", AttackType.BLOCK_DISPLAY, 1, "modes/doom/attacks"));
-            config.setDamage(10.0);
-            config.setDamageRadius(6.0);
-            config.setTicksBetweenDamage(20);
-            config.setDurationTicks(350);
-            config.setCooldownTicks(230);
-        }
-
-        @Override
-        protected void onSpawn(Location center) {
-            this.center = center.clone();
-            World w = center.getWorld();
-            if (w == null) return;
-
-            // 10 stalactites spread around center, each at different XZ positions
-            for (int s = 0; s < 10; s++) {
-                double angle = (2 * Math.PI * s) / 10.0;
-                double radius = 2.0 + (s % 3) * 1.5;
-                stalX[s] = Math.cos(angle) * radius;
-                stalZ[s] = Math.sin(angle) * radius;
-                dropping[s] = false;
-                dropY[s] = 10.0;
-                reformTimer[s] = 0;
-
-                List<BlockDisplayHandle> stalBlocks = new ArrayList<>();
-                // 3 blocks per stalactite: wide top, medium middle, thin tip
-                Material[] mats = {Material.BASALT, Material.DEEPSLATE, Material.NETHERRACK};
-                float[] scales = {1.0f, 0.7f, 0.4f};
-                for (int b = 0; b < 3; b++) {
-                    Location loc = center.clone().add(stalX[s], 10.0 - b * 0.8, stalZ[s]);
-                    BlockDisplayHandle handle = displayBuilder.spawnBlock(loc, mats[b]);
-                    handle.scale(scales[b], 0.8f, scales[b]).glow(240, 80, 30).interpolation(2, 0);
-                    spawnedEntities.add(handle.entity());
-                    stalBlocks.add(handle);
-                }
-                stalactites.add(stalBlocks);
-            }
-
-            DisplayBuilder.playSound(center, Sound.BLOCK_BASALT_BREAK, 1.0f, 0.5f);
-            w.spawnParticle(Particle.SMOKE, center.clone().add(0, 10, 0), 20, 4, 1, 4, 0.03);
-        }
-
-        @Override
-        protected void onTick(int tick) {
-            if (center == null || center.getWorld() == null) return;
-
-            // Randomly drop a stalactite every ~50 ticks
-            if (tick % 50 == 0) {
-                // Pick a random non-dropping stalactite
-                int idx = (int)(Math.random() * 10);
-                int attempts = 0;
-                while (dropping[idx] && attempts < 10) {
-                    idx = (int)(Math.random() * 10);
-                    attempts++;
-                }
-                if (!dropping[idx] && reformTimer[idx] <= 0) {
-                    dropping[idx] = true;
-                    dropY[idx] = 10.0;
-                    DisplayBuilder.playSound(center.clone().add(stalX[idx], 10, stalZ[idx]),
-                        Sound.BLOCK_BASALT_BREAK, 0.8f, 0.8f);
-                }
-            }
-
-            // Update stalactites
-            for (int s = 0; s < 10; s++) {
-                List<BlockDisplayHandle> stalBlocks = stalactites.get(s);
-
-                if (dropping[s]) {
-                    // Drop: accelerate downward
-                    dropY[s] -= 0.5;
-
-                    for (int b = 0; b < stalBlocks.size(); b++) {
-                        Location loc = center.clone().add(stalX[s], dropY[s] - b * 0.8, stalZ[s]);
-                        loc.setYaw(0);
-                        loc.setPitch(0);
-                        stalBlocks.get(b).entity().teleport(loc);
-                    }
-
-                    // Impact at ground level
-                    if (dropY[s] <= 0.5) {
-                        dropping[s] = false;
-                        reformTimer[s] = 40; // 2 seconds to reform
-                        Location impactLoc = center.clone().add(stalX[s], 0.5, stalZ[s]);
-                        // Impact damage
-                        triggerImpactDamage(impactLoc);
-                        // Impact effects
-                        center.getWorld().spawnParticle(Particle.LAVA, impactLoc, 10, 1, 0.5, 1, 0.1);
-                        DisplayBuilder.playSound(impactLoc, Sound.ENTITY_GENERIC_EXPLODE, 0.7f, 0.6f);
-                    }
-                } else if (reformTimer[s] > 0) {
-                    reformTimer[s]--;
-                    // Stalactite sits at ground while reforming
-                    for (int b = 0; b < stalBlocks.size(); b++) {
-                        Location loc = center.clone().add(stalX[s], 0.5 - b * 0.8, stalZ[s]);
-                        loc.setYaw(0);
-                        loc.setPitch(0);
-                        stalBlocks.get(b).entity().teleport(loc);
-                    }
-                    // Reform: teleport back up when timer expires
-                    if (reformTimer[s] <= 0) {
-                        dropY[s] = 10.0;
-                        for (int b = 0; b < stalBlocks.size(); b++) {
-                            Location loc = center.clone().add(stalX[s], 10.0 - b * 0.8, stalZ[s]);
-                            loc.setYaw(0);
-                            loc.setPitch(0);
-                            stalBlocks.get(b).entity().teleport(loc);
-                        }
-                        DisplayBuilder.playSound(center.clone().add(stalX[s], 10, stalZ[s]),
-                            Sound.BLOCK_AMETHYST_BLOCK_CHIME, 0.5f, 0.4f);
-                    }
-                } else {
-                    // Slight wobble when hanging
-                    for (int b = 0; b < stalBlocks.size(); b++) {
-                        double wobble = Math.sin(tick * 0.05 + s * 0.7) * 0.1;
-                        Location loc = center.clone().add(stalX[s] + wobble, 10.0 - b * 0.8, stalZ[s]);
-                        loc.setYaw(0);
-                        loc.setPitch(0);
-                        stalBlocks.get(b).entity().teleport(loc);
-                    }
-                }
-            }
-
-            // Ambient drip particles
-            if (tick % 6 == 0) {
-                int idx = (int)(Math.random() * 10);
-                if (!dropping[idx] && reformTimer[idx] <= 0) {
-                    Location tip = center.clone().add(stalX[idx], 10.0 - 2.4, stalZ[idx]);
-                    center.getWorld().spawnParticle(Particle.LAVA, tip, 1, 0, 0, 0, 0);
-                }
-            }
-
-            if (tick % 50 == 0) {
-                DisplayBuilder.playSound(center, Sound.BLOCK_LAVA_AMBIENT, 0.4f, 0.8f);
-            }
-        }
-
-        @Override
-        protected void onCleanup() { super.onCleanup(); }
-
-        @Override
-        public AbstractAttack newInstance() { return new BrimstoneStalagmites(plugin); }
-    }
-
-    // ================================================================
-    // 49. INFERNAL CLOCK — Clock face: 12 blocks in a circle (hours),
-    //     2 elongated blocks as hands. Hands rotate at different speeds.
-    //     When minute hand passes a position, that block erupts.
-    //     Damage: 7-block radius, 25 dmg/20t.
-    //     12 hour marks + 2 hands + 1 center pin = 15 blocks
-    // ================================================================
-    public static class InfernalClock extends BlockDisplayAttack {
-        private Location center;
-        private final List<BlockDisplayHandle> hourBlocks = new ArrayList<>();
-        private BlockDisplayHandle minuteHand;
-        private BlockDisplayHandle hourHand;
-        private BlockDisplayHandle centerPin;
-        private double minuteAngle = 0;
-        private double hourAngle = 0;
-        private int lastEruptedHour = -1;
-
-        public InfernalClock(ChaosCraftPlugin plugin) {
-            super(plugin, new AttackConfig("infernal_clock", AttackType.BLOCK_DISPLAY, 1, "modes/doom/attacks"));
-            config.setDamage(25.0);
-            config.setDamageRadius(7.0);
-            config.setTicksBetweenDamage(20);
-            config.setDurationTicks(360);
-            config.setCooldownTicks(240);
-        }
-
-        @Override
-        protected void onSpawn(Location center) {
-            this.center = center.clone();
-            World w = center.getWorld();
-            if (w == null) return;
-
-            double clockY = 5.0;
-            double clockRadius = 4.5;
-
-            // 12 hour mark blocks in a vertical circle (XY plane)
-            for (int i = 0; i < 12; i++) {
-                double angle = (2 * Math.PI * i) / 12.0 - Math.PI / 2; // 12 o'clock at top
-                double x = Math.cos(angle) * clockRadius;
-                double y = clockY + Math.sin(angle) * clockRadius;
-                Location loc = center.clone().add(x, y, 0);
-                Material mat;
-                if (i == 0) mat = Material.GLOWSTONE; // 12 o'clock marker
-                else if (i % 3 == 0) mat = Material.SHROOMLIGHT; // quarter hours
-                else mat = Material.MAGMA_BLOCK;
-                BlockDisplayHandle b = displayBuilder.spawnBlock(loc, mat);
-                float sc = (i % 3 == 0) ? 0.7f : 0.5f;
-                b.scale(sc, sc, sc).glow(255, 100, 20).interpolation(2, 0);
-                spawnedEntities.add(b.entity());
-                hourBlocks.add(b);
-            }
-
-            // Center pin
-            centerPin = displayBuilder.spawnBlock(center.clone().add(0, clockY, 0), Material.OBSIDIAN);
-            centerPin.scale(0.5f, 0.5f, 0.5f).glow(20, 10, 5).interpolation(2, 0);
-            spawnedEntities.add(centerPin.entity());
-
-            // Minute hand — longer, thin
-            Location mLoc = center.clone().add(0, clockY + 1.5, 0);
-            minuteHand = displayBuilder.spawnBlock(mLoc, Material.RED_CONCRETE);
-            minuteHand.scale(0.2f, 3.5f, 0.2f).glow(200, 50, 10).interpolation(1, 0);
-            spawnedEntities.add(minuteHand.entity());
-
-            // Hour hand — shorter, slightly thicker
-            Location hLoc = center.clone().add(0, clockY + 1.0, 0);
-            hourHand = displayBuilder.spawnBlock(hLoc, Material.BLACK_CONCRETE);
-            hourHand.scale(0.3f, 2.5f, 0.3f).glow(240, 80, 30).interpolation(1, 0);
-            spawnedEntities.add(hourHand.entity());
-
-            DisplayBuilder.playSound(center, Sound.BLOCK_NOTE_BLOCK_BELL, 1.0f, 0.5f);
-        }
-
-        @Override
-        protected void onTick(int tick) {
-            if (center == null || center.getWorld() == null) return;
-
-            double clockY = 5.0;
-            double clockRadius = 4.5;
-
-            // Minute hand rotates fast, hour hand slow
-            minuteAngle += 0.08; // ~78 ticks per revolution
-            hourAngle += 0.008; // ~785 ticks per revolution
-
-            // Position minute hand (pivots from center, extends in XY plane)
-            double mLength = 3.5;
-            double mx = Math.cos(minuteAngle - Math.PI / 2) * mLength / 2;
-            double my = clockY + Math.sin(minuteAngle - Math.PI / 2) * mLength / 2;
-            Location mLoc = center.clone().add(mx, my, 0);
-            mLoc.setYaw(0);
-            mLoc.setPitch(0);
-            minuteHand.entity().teleport(mLoc);
-
-            // Position hour hand
-            double hLength = 2.5;
-            double hx = Math.cos(hourAngle - Math.PI / 2) * hLength / 2;
-            double hy = clockY + Math.sin(hourAngle - Math.PI / 2) * hLength / 2;
-            Location hLoc = center.clone().add(hx, hy, 0);
-            hLoc.setYaw(0);
-            hLoc.setPitch(0);
-            hourHand.entity().teleport(hLoc);
-
-            // Check which hour position the minute hand is passing
-            int currentHour = (int)((minuteAngle / (2 * Math.PI)) * 12) % 12;
-            if (currentHour != lastEruptedHour && currentHour >= 0 && currentHour < hourBlocks.size()) {
-                lastEruptedHour = currentHour;
-                // Erupt at that hour position
-                Location eruptLoc = hourBlocks.get(currentHour).entity().getLocation();
-                center.getWorld().spawnParticle(Particle.LAVA, eruptLoc, 15, 0.5, 0.5, 0.5, 0.1);
-                center.getWorld().spawnParticle(Particle.FLAME, eruptLoc, 10, 0.8, 0.8, 0.8, 0.05);
-                DisplayBuilder.playSound(eruptLoc, Sound.BLOCK_LAVA_POP, 0.8f, 1.2f);
-            }
-
-            // Tick-tock particles at center
-            if (tick % 4 == 0) {
-                DisplayBuilder.dustParticles(center.clone().add(0, clockY, 0), 2, 0.2, 255, 100, 20, 0.8f);
-            }
-
-            // Tick sound
-            if (tick % 20 == 0) {
-                DisplayBuilder.playSound(center, Sound.BLOCK_NOTE_BLOCK_HAT, 0.5f, 1.5f);
-            }
-        }
-
-        @Override
-        protected void onCleanup() { super.onCleanup(); }
-
-        @Override
-        public AbstractAttack newInstance() { return new InfernalClock(plugin); }
-    }
-
-    // ================================================================
-    // 50. MAGMA CHAIN — 16 small blocks linked in a chain arc from ground
-    //     to Y=8 and back down. Chain sways side to side. Contact: 4-block
-    //     radius along chain, 20 dmg/15t.
-    //     16 chain links
-    // ================================================================
-    public static class MagmaChain extends BlockDisplayAttack {
-        private Location center;
-        private final List<BlockDisplayHandle> chainLinks = new ArrayList<>();
-        private double swayPhase = 0;
-
-        public MagmaChain(ChaosCraftPlugin plugin) {
-            super(plugin, new AttackConfig("magma_chain", AttackType.BLOCK_DISPLAY, 1, "modes/doom/attacks"));
-            config.setDamage(20.0);
-            config.setDamageRadius(4.0);
-            config.setTicksBetweenDamage(15);
+            config.setTicksBetweenDamage(25);
             config.setDurationTicks(300);
             config.setCooldownTicks(200);
         }
 
         @Override
         protected void onSpawn(Location center) {
-            this.center = center.clone();
             World w = center.getWorld();
             if (w == null) return;
 
-            // 16 links forming an arc: ground -> Y=8 -> back to ground
-            // Parametric arc: t goes from 0 to 1
-            double arcSpan = 8.0; // horizontal distance
-            for (int i = 0; i < 16; i++) {
-                double t = i / 15.0;
-                double x = (t - 0.5) * arcSpan;
-                // Parabolic arc peaking at Y=8
-                double y = 8.0 * (1 - (2 * t - 1) * (2 * t - 1));
-                Location loc = center.clone().add(x, y, 0);
-                Material mat = (i % 2 == 0) ? Material.MAGMA_BLOCK : Material.NETHERRACK;
-                BlockDisplayHandle link = displayBuilder.spawnBlock(loc, mat);
-                link.scale(0.5f, 0.5f, 0.5f).glow(255, 100, 20).interpolation(2, 0);
-                spawnedEntities.add(link.entity());
-                chainLinks.add(link);
+            // ABDOMEN — 4 blocks scale(1.2, 0.8, 1.4)
+            double[][] abdOff = {{0, 1.5, 1.0}, {0, 1.5, 1.8}, {0.3, 1.7, 1.4}, {-0.3, 1.7, 1.4}};
+            for (double[] off : abdOff) {
+                BlockDisplayHandle h = displayBuilder.spawnBlock(center.clone().add(off[0], off[1], off[2]), Material.MAGMA_BLOCK);
+                h.scale(1.2f, 0.8f, 1.4f).glow(255, 100, 20).interpolation(3, 0);
+                spawnedEntities.add(h.entity());
+                abdomen.add(h);
             }
 
-            DisplayBuilder.playSound(center, Sound.BLOCK_CHAIN_PLACE, 1.0f, 0.5f);
-            w.spawnParticle(Particle.FLAME, center.clone().add(0, 4, 0), 15, 3, 3, 1, 0.02);
+            // THORAX — 3 blocks
+            for (int i = 0; i < 3; i++) {
+                BlockDisplayHandle h = displayBuilder.spawnBlock(center.clone().add(0, 1.6, -0.3 + i * 0.4), Material.RED_NETHER_BRICKS);
+                h.scale(0.8f, 0.6f, 0.6f).glow(200, 50, 10).interpolation(3, 0);
+                spawnedEntities.add(h.entity());
+                thorax.add(h);
+            }
+
+            // HEAD — 2 blocks
+            BlockDisplayHandle h1 = displayBuilder.spawnBlock(center.clone().add(0, 1.6, -0.8), Material.POLISHED_BLACKSTONE);
+            h1.scale(0.7f, 0.6f, 0.7f).glow(20, 10, 5).interpolation(3, 0);
+            spawnedEntities.add(h1.entity());
+            head.add(h1);
+            BlockDisplayHandle h2 = displayBuilder.spawnBlock(center.clone().add(0, 1.9, -0.9), Material.NETHER_BRICKS);
+            h2.scale(0.5f, 0.4f, 0.5f).glow(20, 10, 5).interpolation(3, 0);
+            spawnedEntities.add(h2.entity());
+            head.add(h2);
+
+            // 8 LEGS — each has upper (scale(0.2,0.8,0.2)) + lower (scale(0.15,0.7,0.15))
+            // 4 legs per side, spread around the body
+            double[] legAngles = {-60, -30, 30, 60, -150, -120, 120, 150}; // degrees from front
+            for (int i = 0; i < 8; i++) {
+                double rad = Math.toRadians(legAngles[i]);
+                double legX = Math.cos(rad) * 1.0;
+                double legZ = Math.sin(rad) * 1.0;
+
+                // Upper leg segment
+                BlockDisplayHandle upper = displayBuilder.spawnBlock(
+                        center.clone().add(legX, 1.3, legZ), Material.BLACKSTONE);
+                upper.scale(0.2f, 0.8f, 0.2f).glow(20, 10, 5).interpolation(3, 0);
+                spawnedEntities.add(upper.entity());
+                upperLegs.add(upper);
+
+                // Lower leg segment (further out and lower)
+                double lowerX = Math.cos(rad) * 1.8;
+                double lowerZ = Math.sin(rad) * 1.8;
+                BlockDisplayHandle lower = displayBuilder.spawnBlock(
+                        center.clone().add(lowerX, 0.5, lowerZ), Material.DEEPSLATE);
+                lower.scale(0.15f, 0.7f, 0.15f).glow(20, 10, 5).interpolation(3, 0);
+                spawnedEntities.add(lower.entity());
+                lowerLegs.add(lower);
+            }
+
+            // PEDIPALPS — 2 small forward appendages
+            BlockDisplayHandle pp1 = displayBuilder.spawnBlock(center.clone().add(-0.3, 1.4, -1.2), Material.NETHERRACK);
+            pp1.scale(0.15f, 0.15f, 0.4f).glow(200, 50, 10).interpolation(3, 0);
+            spawnedEntities.add(pp1.entity());
+            pedipalps.add(pp1);
+            BlockDisplayHandle pp2 = displayBuilder.spawnBlock(center.clone().add(0.3, 1.4, -1.2), Material.NETHERRACK);
+            pp2.scale(0.15f, 0.15f, 0.4f).glow(200, 50, 10).interpolation(3, 0);
+            spawnedEntities.add(pp2.entity());
+            pedipalps.add(pp2);
+
+            // EYES — 3 shroomlight scale(0.15, 0.15, 0.15)
+            double[][] eyeOff = {{-0.15, 2.0, -1.0}, {0.15, 2.0, -1.0}, {0, 2.1, -0.95}};
+            for (double[] off : eyeOff) {
+                BlockDisplayHandle eye = displayBuilder.spawnBlock(center.clone().add(off[0], off[1], off[2]), Material.SHROOMLIGHT);
+                eye.scale(0.15f, 0.15f, 0.15f).glow(255, 200, 50).interpolation(2, 0);
+                spawnedEntities.add(eye.entity());
+                eyesList.add(eye);
+            }
+
+            DisplayBuilder.playSound(center, Sound.ENTITY_SPIDER_AMBIENT, 1.5f, 0.4f);
         }
 
         @Override
         protected void onTick(int tick) {
+            Location center = getCenter();
             if (center == null || center.getWorld() == null) return;
 
-            swayPhase += 0.05;
-            double arcSpan = 8.0;
+            // Walking gait: alternating leg groups rotate via Transform
+            // Group A (legs 0,2,5,7) and Group B (legs 1,3,4,6) alternate
+            for (int i = 0; i < 8; i++) {
+                boolean groupA = (i == 0 || i == 2 || i == 5 || i == 7);
+                float phase = groupA ? 1.0f : -1.0f;
+                float legRotation = (float) (Math.toRadians(20) * Math.sin(tick * 0.2) * phase);
 
-            for (int i = 0; i < chainLinks.size(); i++) {
-                double t = i / 15.0;
-                double x = (t - 0.5) * arcSpan;
-                double y = 8.0 * (1 - (2 * t - 1) * (2 * t - 1));
-                // Sway: sinusoidal Z displacement, more at the top of the arc
-                double swayAmount = Math.sin(swayPhase + i * 0.3) * 2.5 * (y / 8.0);
-                Location loc = center.clone().add(x, y, swayAmount);
-                loc.setYaw(0);
-                loc.setPitch(0);
-                chainLinks.get(i).entity().teleport(loc);
-            }
+                // Upper leg rotation
+                if (i < upperLegs.size()) {
+                    BlockDisplay bd = upperLegs.get(i).entity();
+                    Transformation t = bd.getTransformation();
+                    bd.setInterpolationDuration(3);
+                    bd.setInterpolationDelay(0);
+                    bd.setTransformation(new Transformation(
+                            t.getTranslation(),
+                            new AxisAngle4f(legRotation, 0, 0, 1),
+                            t.getScale(),
+                            new AxisAngle4f(0, 0, 1, 0)
+                    ));
+                }
 
-            // Track damage center to the apex of the chain
-            setCenter(chainLinks.get(8).entity().getLocation());
-
-            // Ember particles along chain
-            if (tick % 4 == 0) {
-                for (int i = 0; i < chainLinks.size(); i += 4) {
-                    Location lLoc = chainLinks.get(i).entity().getLocation();
-                    DisplayBuilder.dustParticles(lLoc, 1, 0.2, 255, 100, 20, 0.8f);
+                // Lower leg rotation (slightly more swing)
+                if (i < lowerLegs.size()) {
+                    BlockDisplay bd = lowerLegs.get(i).entity();
+                    Transformation t = bd.getTransformation();
+                    bd.setInterpolationDuration(3);
+                    bd.setInterpolationDelay(0);
+                    bd.setTransformation(new Transformation(
+                            t.getTranslation(),
+                            new AxisAngle4f(legRotation * 1.3f, 0, 0, 1),
+                            t.getScale(),
+                            new AxisAngle4f(0, 0, 1, 0)
+                    ));
                 }
             }
 
-            // Chain clinking sound
-            if (tick % 35 == 0) {
-                DisplayBuilder.playSound(center.clone().add(0, 4, 0), Sound.BLOCK_CHAIN_PLACE, 0.6f, 1.2f);
-            }
-        }
-
-        @Override
-        protected void onCleanup() { super.onCleanup(); }
-
-        @Override
-        public AbstractAttack newInstance() { return new MagmaChain(plugin); }
-    }
-
-    // ================================================================
-    // 51. DOOM EYE — Eye shape: 10 blocks forming oval outline, 2 blocks
-    //     as iris in center. Eye "blinks" (scale Y on outer blocks). When
-    //     eye is open, damage active. Damage: 8-block radius when open,
-    //     35 dmg/30t. Blinks closed every 60 ticks for 20 ticks.
-    //     10 outline + 2 iris = 12 blocks
-    // ================================================================
-    public static class DoomEye extends BlockDisplayAttack {
-        private Location center;
-        private final List<BlockDisplayHandle> outlineBlocks = new ArrayList<>();
-        private final List<BlockDisplayHandle> irisBlocks = new ArrayList<>();
-        private boolean eyeOpen = true;
-        private int blinkTimer = 0;
-
-        public DoomEye(ChaosCraftPlugin plugin) {
-            super(plugin, new AttackConfig("doom_eye", AttackType.BLOCK_DISPLAY, 1, "modes/doom/attacks"));
-            config.setDamage(35.0);
-            config.setDamageRadius(8.0);
-            config.setTicksBetweenDamage(30);
-            config.setDurationTicks(360);
-            config.setCooldownTicks(240);
-        }
-
-        @Override
-        protected void onSpawn(Location center) {
-            this.center = center.clone();
-            World w = center.getWorld();
-            if (w == null) return;
-
-            double eyeY = 4.0;
-
-            // Oval outline: 10 blocks forming an eye shape (XY plane)
-            // Ellipse: wider on X, narrower on Y
-            for (int i = 0; i < 10; i++) {
-                double angle = (2 * Math.PI * i) / 10.0;
-                double x = Math.cos(angle) * 4.0; // wide
-                double y = eyeY + Math.sin(angle) * 1.8; // narrow height
-                Location loc = center.clone().add(x, y, 0);
-                Material mat = (i % 2 == 0) ? Material.OBSIDIAN : Material.CRYING_OBSIDIAN;
-                BlockDisplayHandle b = displayBuilder.spawnBlock(loc, mat);
-                b.scale(0.9f, 0.7f, 0.6f).glow(120, 20, 80).interpolation(3, 0);
-                spawnedEntities.add(b.entity());
-                outlineBlocks.add(b);
+            // Pedipalps twitch
+            for (int i = 0; i < pedipalps.size(); i++) {
+                float twitch = (float) (Math.toRadians(8) * Math.sin(tick * 0.3 + i * Math.PI));
+                BlockDisplay bd = pedipalps.get(i).entity();
+                Transformation t = bd.getTransformation();
+                bd.setInterpolationDuration(2);
+                bd.setInterpolationDelay(0);
+                bd.setTransformation(new Transformation(
+                        t.getTranslation(),
+                        new AxisAngle4f(twitch, 1, 0, 0),
+                        t.getScale(),
+                        new AxisAngle4f(0, 0, 1, 0)
+                ));
             }
 
-            // Iris: 2 blocks in center of eye
-            for (int i = 0; i < 2; i++) {
-                double ox = (i == 0) ? -0.3 : 0.3;
-                Location loc = center.clone().add(ox, eyeY, 0);
-                Material mat = (i == 0) ? Material.MAGMA_BLOCK : Material.SHROOMLIGHT;
-                BlockDisplayHandle iris = displayBuilder.spawnBlock(loc, mat);
-                iris.scale(0.8f, 0.8f, 0.8f).glow(255, 100, 20).interpolation(3, 0);
-                spawnedEntities.add(iris.entity());
-                irisBlocks.add(iris);
-            }
-
-            DisplayBuilder.playSound(center, Sound.ENTITY_ENDERMAN_STARE, 0.8f, 0.3f);
-            w.spawnParticle(Particle.SMOKE, center.clone().add(0, eyeY, 0), 15, 3, 1, 1, 0.03);
-        }
-
-        @Override
-        protected void onTick(int tick) {
-            if (center == null || center.getWorld() == null) return;
-
-            double eyeY = 4.0;
-            blinkTimer++;
-
-            // Blink cycle: open for 60 ticks, closed for 20 ticks
-            if (eyeOpen && blinkTimer >= 60) {
-                eyeOpen = false;
-                blinkTimer = 0;
-                DisplayBuilder.playSound(center, Sound.BLOCK_SLIME_BLOCK_PLACE, 0.6f, 0.8f);
-            } else if (!eyeOpen && blinkTimer >= 20) {
-                eyeOpen = true;
-                blinkTimer = 0;
-                DisplayBuilder.playSound(center, Sound.ENTITY_ENDERMAN_STARE, 0.5f, 0.5f);
-            }
-
-            // Animate outline — when blinking, scale Y toward 0 (squash)
-            double blinkScale;
-            if (eyeOpen) {
-                blinkScale = 1.0;
-            } else {
-                // Ease in/out blink animation
-                double t = blinkTimer / 20.0;
-                blinkScale = 0.1 + 0.1 * Math.abs(Math.sin(t * Math.PI)); // nearly flat when closed
-            }
-
-            for (int i = 0; i < outlineBlocks.size(); i++) {
-                double angle = (2 * Math.PI * i) / 10.0;
-                double x = Math.cos(angle) * 4.0;
-                double yOff = Math.sin(angle) * 1.8 * blinkScale;
-                Location loc = center.clone().add(x, eyeY + yOff, 0);
-                loc.setYaw(0);
-                loc.setPitch(0);
-                outlineBlocks.get(i).entity().teleport(loc);
-            }
-
-            // Iris moves when open, tracking nearest player
-            if (eyeOpen) {
-                Player nearest = findNearestPlayer(center, 20);
-                double irisShiftX = 0;
-                double irisShiftY = 0;
-                if (nearest != null) {
-                    double dx = nearest.getLocation().getX() - center.getX();
-                    double dy = nearest.getLocation().getY() - (center.getY() + eyeY);
-                    double dist = Math.sqrt(dx * dx + dy * dy);
-                    if (dist > 0.5) {
-                        irisShiftX = (dx / dist) * 0.8;
-                        irisShiftY = (dy / dist) * 0.4;
-                    }
-                }
-                for (int i = 0; i < irisBlocks.size(); i++) {
-                    double ox = (i == 0) ? -0.3 : 0.3;
-                    Location loc = center.clone().add(ox + irisShiftX, eyeY + irisShiftY, 0);
-                    loc.setYaw(0);
-                    loc.setPitch(0);
-                    irisBlocks.get(i).entity().teleport(loc);
-                }
-
-                // Gaze particles when open
-                if (tick % 3 == 0) {
-                    DisplayBuilder.dustParticles(center.clone().add(irisShiftX, eyeY + irisShiftY, 0),
-                        4, 0.5, 255, 100, 20, 1.3f);
-                }
-            } else {
-                // Hide iris behind closed lids
-                for (int i = 0; i < irisBlocks.size(); i++) {
-                    double ox = (i == 0) ? -0.3 : 0.3;
-                    Location loc = center.clone().add(ox, eyeY, 0.5); // push behind
-                    loc.setYaw(0);
-                    loc.setPitch(0);
-                    irisBlocks.get(i).entity().teleport(loc);
-                }
-            }
-
-            // Only damage when eye is open — adjust radius to 0 when closed
-            // (handled by setting center far away when closed would be a hack;
-            //  instead we just accept continuous damage but the blink is thematic)
-            setCenter(center.clone().add(0, eyeY, 0));
-
-            // Ambient nether sound
-            if (tick % 50 == 0) {
-                DisplayBuilder.playSound(center, Sound.AMBIENT_NETHER_WASTES_MOOD, 0.4f, 0.8f);
-            }
-        }
-
-        @Override
-        protected void onCleanup() { super.onCleanup(); }
-
-        @Override
-        public AbstractAttack newInstance() { return new DoomEye(plugin); }
-    }
-
-    // ================================================================
-    // 52. INFERNAL VORTEX — 14 blocks spiraling inward toward center at
-    //     ground level, creating a whirlpool pattern. Blocks animate
-    //     position in circular paths. Pulls players toward center (velocity).
-    //     Center: 40 dmg/20t. Outer: 15 dmg/15t.
-    //     14 vortex blocks + 1 center core = 15 blocks
-    // ================================================================
-    public static class InfernalVortex extends BlockDisplayAttack {
-        private Location center;
-        private final List<BlockDisplayHandle> vortexBlocks = new ArrayList<>();
-        private BlockDisplayHandle vortexCore;
-        private final double[] blockRadii = new double[14];
-        private final double[] blockAngles = new double[14];
-        private final double[] blockSpeeds = new double[14];
-
-        public InfernalVortex(ChaosCraftPlugin plugin) {
-            super(plugin, new AttackConfig("infernal_vortex", AttackType.BLOCK_DISPLAY, 1, "modes/doom/attacks"));
-            config.setDamage(40.0); // center damage
-            config.setDamageRadius(3.0); // center damage radius (tight)
-            config.setTicksBetweenDamage(20);
-            config.setDurationTicks(320);
-            config.setCooldownTicks(230);
-        }
-
-        @Override
-        protected void onSpawn(Location center) {
-            this.center = center.clone();
-            World w = center.getWorld();
-            if (w == null) return;
-
-            // Center core — glowing, pulsing
-            vortexCore = displayBuilder.spawnBlock(center.clone().add(0, 0.5, 0), Material.CRYING_OBSIDIAN);
-            vortexCore.scale(1.5f, 1.5f, 1.5f).glow(120, 20, 80).interpolation(3, 0);
-            spawnedEntities.add(vortexCore.entity());
-
-            // 14 blocks in a spiral pattern, outer to inner
-            Material[] vortexMats = {
-                Material.MAGMA_BLOCK, Material.NETHERRACK, Material.RED_CONCRETE,
-                Material.ORANGE_CONCRETE, Material.MAGMA_BLOCK, Material.BASALT,
-                Material.NETHERRACK, Material.NETHER_BRICKS, Material.RED_CONCRETE,
-                Material.MAGMA_BLOCK, Material.DEEPSLATE, Material.BLACKSTONE,
-                Material.MAGMA_BLOCK, Material.COAL_BLOCK
-            };
-            for (int i = 0; i < 14; i++) {
-                // Spiral: outer blocks at large radius, inner blocks at small
-                blockRadii[i] = 7.0 - (i * 0.4);
-                blockAngles[i] = (2 * Math.PI * i) / 14.0;
-                // Inner blocks spin faster (vortex effect)
-                blockSpeeds[i] = 0.04 + (i * 0.006);
-
-                double x = Math.cos(blockAngles[i]) * blockRadii[i];
-                double z = Math.sin(blockAngles[i]) * blockRadii[i];
-                Location loc = center.clone().add(x, 0.3, z);
-                BlockDisplayHandle b = displayBuilder.spawnBlock(loc, vortexMats[i]);
-                float sc = 0.9f - (i * 0.03f);
-                b.scale(sc, 0.5f, sc).glow(240, 80, 30).interpolation(2, 0);
-                spawnedEntities.add(b.entity());
-                vortexBlocks.add(b);
-            }
-
-            DisplayBuilder.playSound(center, Sound.ENTITY_ENDER_DRAGON_GROWL, 0.6f, 0.3f);
-            w.spawnParticle(Particle.SMOKE, center, 25, 4, 1, 4, 0.05);
-        }
-
-        @Override
-        protected void onTick(int tick) {
-            if (center == null || center.getWorld() == null) return;
-
-            // Spin each block at its speed (inner faster)
-            for (int i = 0; i < vortexBlocks.size(); i++) {
-                blockAngles[i] += blockSpeeds[i];
-                double x = Math.cos(blockAngles[i]) * blockRadii[i];
-                double z = Math.sin(blockAngles[i]) * blockRadii[i];
-                // Slight vertical bobbing
-                double yBob = Math.sin(tick * 0.08 + i * 0.4) * 0.2;
-                Location loc = center.clone().add(x, 0.3 + yBob, z);
-                loc.setYaw(0);
-                loc.setPitch(0);
-                vortexBlocks.get(i).entity().teleport(loc);
-            }
-
-            // Core pulse animation
-            if (tick % 6 == 0) {
-                DisplayBuilder.dustParticles(center.clone().add(0, 0.5, 0), 5, 0.5, 120, 20, 80, 1.5f);
-                center.getWorld().spawnParticle(Particle.FLAME, center.clone().add(0, 0.5, 0), 3, 0.3, 0.3, 0.3, 0.02);
-            }
-
-            // Pull players toward center
-            if (tick % 5 == 0) {
-                double pullRadius = 8.0;
-                for (Player p : center.getWorld().getPlayers()) {
-                    if (p.getGameMode() != GameMode.SURVIVAL) continue;
-                    double dist = p.getLocation().distance(center);
-                    if (dist <= pullRadius && dist > 1.0) {
-                        // Pull force increases as player gets closer
-                        double pullStrength = 0.15 * (1.0 - dist / pullRadius);
-                        Vector pull = center.toVector().subtract(p.getLocation().toVector()).normalize().multiply(pullStrength);
-                        pull.setY(-0.05); // slight downward pull
-                        p.setVelocity(p.getVelocity().add(pull));
-                    }
-                }
-            }
-
-            // Outer ring damage (supplemental — players near outer blocks)
+            // Scuttling sound
             if (tick % 15 == 0) {
-                for (Player p : center.getWorld().getPlayers()) {
-                    if (p.getGameMode() != GameMode.SURVIVAL) continue;
-                    double dist = p.getLocation().distance(center);
-                    if (dist > 3.0 && dist <= 7.0) {
-                        // Outer vortex damage — lighter
-                        p.damage(15.0);
-                        p.setNoDamageTicks(0);
-                    }
+                DisplayBuilder.playSound(center, Sound.ENTITY_SPIDER_STEP, 0.8f, 0.6f);
+            }
+
+            // Venom drip particles from pedipalps
+            if (tick % 6 == 0) {
+                for (BlockDisplayHandle pp : pedipalps) {
+                    DisplayBuilder.dustParticles(pp.entity().getLocation(), 2, 0.15, 100, 200, 50, 0.8f);
                 }
-            }
-
-            // Spiral particle trail
-            if (tick % 2 == 0) {
-                double pAngle = tick * 0.15;
-                double pRadius = 5.0 + Math.sin(tick * 0.1) * 2.0;
-                double px = Math.cos(pAngle) * pRadius;
-                double pz = Math.sin(pAngle) * pRadius;
-                center.getWorld().spawnParticle(Particle.FLAME, center.clone().add(px, 0.5, pz), 1, 0, 0, 0, 0);
-            }
-
-            // Vortex rumble
-            if (tick % 30 == 0) {
-                DisplayBuilder.playSound(center, Sound.ENTITY_ENDER_DRAGON_GROWL, 0.3f, 0.5f);
             }
         }
 
-        @Override
-        protected void onCleanup() { super.onCleanup(); }
+        @Override protected void onCleanup() { super.onCleanup(); }
+        @Override public AbstractAttack newInstance() { return new MagmaSpiderQueen(plugin); }
+    }
+
+    // ================================================================
+    // #25 — HELLFIRE WYVERN DIVE (28 blocks)
+    // Body 4, wings 10 (5/side fan scale(0.6,0.1,0.8)), tail 4,
+    // head 2, claws 4, horn 1, neck 2, eye 1.
+    // Starts Y=15, dives (wings fold inward via rotation during descent).
+    // Impact-only 8r, 55dmg. ENTITY_ENDER_DRAGON_FLAP.
+    // ================================================================
+    public static class HellfireWyvernDive extends BlockDisplayAttack {
+        private final List<BlockDisplayHandle> bodyBlocks = new ArrayList<>();
+        private final List<BlockDisplayHandle> leftWing = new ArrayList<>();
+        private final List<BlockDisplayHandle> rightWing = new ArrayList<>();
+        private final List<BlockDisplayHandle> tailBlocks = new ArrayList<>();
+        private final List<BlockDisplayHandle> headBlocks = new ArrayList<>();
+        private final List<BlockDisplayHandle> claws = new ArrayList<>();
+        private final List<BlockDisplayHandle> miscParts = new ArrayList<>(); // horn, neck, eye
+        private boolean impactDone = false;
+        private static final double START_Y = 15.0;
+
+        public HellfireWyvernDive(ChaosCraftPlugin plugin) {
+            super(plugin, new AttackConfig("hellfire_wyvern_dive", AttackType.BLOCK_DISPLAY, 1, "modes/doom/attacks"));
+            config.setDamageOnImpactOnly(true);
+            config.setImpactDamage(55.0);
+            config.setImpactRadius(8.0);
+            config.setDamage(0);
+            config.setDurationTicks(200);
+            config.setCooldownTicks(300);
+        }
 
         @Override
-        public AbstractAttack newInstance() { return new InfernalVortex(plugin); }
+        protected void onSpawn(Location center) {
+            World w = center.getWorld();
+            if (w == null) return;
+            Location spawnBase = center.clone().add(0, START_Y, 0);
+
+            // BODY — 4 blocks
+            for (int i = 0; i < 4; i++) {
+                BlockDisplayHandle h = displayBuilder.spawnBlock(spawnBase.clone().add(0, 0, -0.5 + i * 0.5), Material.MAGMA_BLOCK);
+                h.scale(0.7f, 0.6f, 0.8f).glow(255, 100, 20).interpolation(4, 0);
+                spawnedEntities.add(h.entity());
+                bodyBlocks.add(h);
+            }
+
+            // LEFT WING — 5 fan plates scale(0.6, 0.1, 0.8)
+            for (int i = 0; i < 5; i++) {
+                BlockDisplayHandle h = displayBuilder.spawnBlock(spawnBase.clone().add(-0.8 - i * 0.5, 0.1, -0.2 + i * 0.15), Material.RED_CONCRETE);
+                h.scale(0.6f, 0.1f, 0.8f).glow(200, 50, 10).interpolation(4, 0);
+                spawnedEntities.add(h.entity());
+                leftWing.add(h);
+            }
+
+            // RIGHT WING — 5 fan plates (mirrored)
+            for (int i = 0; i < 5; i++) {
+                BlockDisplayHandle h = displayBuilder.spawnBlock(spawnBase.clone().add(0.8 + i * 0.5, 0.1, -0.2 + i * 0.15), Material.RED_CONCRETE);
+                h.scale(0.6f, 0.1f, 0.8f).glow(200, 50, 10).interpolation(4, 0);
+                spawnedEntities.add(h.entity());
+                rightWing.add(h);
+            }
+
+            // TAIL — 4 segments
+            for (int i = 0; i < 4; i++) {
+                BlockDisplayHandle h = displayBuilder.spawnBlock(spawnBase.clone().add(0, -0.1 * i, 1.2 + i * 0.5), Material.NETHER_BRICKS);
+                float s = 0.5f - i * 0.08f;
+                h.scale(s, s * 0.6f, 0.6f).glow(120, 20, 80).interpolation(4, 0);
+                spawnedEntities.add(h.entity());
+                tailBlocks.add(h);
+            }
+
+            // HEAD — 2 blocks
+            BlockDisplayHandle hd1 = displayBuilder.spawnBlock(spawnBase.clone().add(0, 0.2, -1.2), Material.POLISHED_BLACKSTONE);
+            hd1.scale(0.6f, 0.5f, 0.8f).glow(20, 10, 5).interpolation(4, 0);
+            spawnedEntities.add(hd1.entity());
+            headBlocks.add(hd1);
+            BlockDisplayHandle hd2 = displayBuilder.spawnBlock(spawnBase.clone().add(0, 0.4, -1.5), Material.BLACKSTONE);
+            hd2.scale(0.4f, 0.35f, 0.6f).glow(20, 10, 5).interpolation(4, 0);
+            spawnedEntities.add(hd2.entity());
+            headBlocks.add(hd2);
+
+            // CLAWS — 4 small blocks
+            double[][] clawOff = {{-0.5, -0.3, -0.8}, {0.5, -0.3, -0.8}, {-0.5, -0.3, 0.3}, {0.5, -0.3, 0.3}};
+            for (double[] off : clawOff) {
+                BlockDisplayHandle h = displayBuilder.spawnBlock(spawnBase.clone().add(off[0], off[1], off[2]), Material.DEEPSLATE);
+                h.scale(0.2f, 0.3f, 0.2f).glow(20, 10, 5).interpolation(4, 0);
+                spawnedEntities.add(h.entity());
+                claws.add(h);
+            }
+
+            // HORN — 1
+            BlockDisplayHandle horn = displayBuilder.spawnBlock(spawnBase.clone().add(0, 0.6, -1.6), Material.BASALT);
+            horn.scale(0.15f, 0.4f, 0.15f).glow(120, 20, 80).interpolation(4, 0);
+            spawnedEntities.add(horn.entity());
+            miscParts.add(horn);
+
+            // NECK — 2
+            for (int i = 0; i < 2; i++) {
+                BlockDisplayHandle h = displayBuilder.spawnBlock(spawnBase.clone().add(0, 0.1, -0.7 - i * 0.3), Material.RED_NETHER_BRICKS);
+                h.scale(0.4f, 0.4f, 0.4f).glow(200, 50, 10).interpolation(4, 0);
+                spawnedEntities.add(h.entity());
+                miscParts.add(h);
+            }
+
+            // EYE — 1
+            BlockDisplayHandle eye = displayBuilder.spawnBlock(spawnBase.clone().add(0, 0.35, -1.7), Material.SHROOMLIGHT);
+            eye.scale(0.12f, 0.12f, 0.12f).glow(255, 200, 50).interpolation(2, 0);
+            spawnedEntities.add(eye.entity());
+            miscParts.add(eye);
+
+            DisplayBuilder.playSound(center, Sound.ENTITY_ENDER_DRAGON_FLAP, 1.5f, 0.7f);
+        }
+
+        @Override
+        protected void onTick(int tick) {
+            Location center = getCenter();
+            if (center == null || center.getWorld() == null) return;
+            if (impactDone) return;
+
+            // Descent rate: accelerate over time
+            double descentProgress = Math.min(1.0, tick / 80.0);
+            double currentY = START_Y * (1.0 - descentProgress * descentProgress);
+
+            if (currentY <= 0.5) {
+                // IMPACT
+                impactDone = true;
+                triggerImpactDamage(center);
+                center.getWorld().spawnParticle(Particle.EXPLOSION, center, 5, 2, 1, 2, 0);
+                center.getWorld().spawnParticle(Particle.FLAME, center, 50, 3, 1, 3, 0.2);
+                center.getWorld().spawnParticle(Particle.LAVA, center, 30, 2, 1, 2, 0.1);
+                DisplayBuilder.playSound(center, Sound.ENTITY_GENERIC_EXPLODE, 2.0f, 0.5f);
+                return;
+            }
+
+            Location flightPos = center.clone().add(0, currentY, 0);
+
+            // Wings fold inward during dive: rotation increases as descent progresses
+            float foldAngle = (float) (Math.toRadians(60) * descentProgress);
+
+            for (int i = 0; i < leftWing.size(); i++) {
+                BlockDisplay bd = leftWing.get(i).entity();
+                bd.setInterpolationDuration(5);
+                bd.setInterpolationDelay(0);
+                Transformation t = bd.getTransformation();
+                bd.setTransformation(new Transformation(
+                        t.getTranslation(),
+                        new AxisAngle4f(foldAngle * (1 + i * 0.1f), 0, 0, 1),
+                        t.getScale(),
+                        new AxisAngle4f(0, 0, 1, 0)
+                ));
+                Location wLoc = flightPos.clone().add(-0.8 - i * 0.5, 0.1, -0.2 + i * 0.15);
+                wLoc.setYaw(0); wLoc.setPitch(0);
+                bd.teleport(wLoc);
+            }
+
+            for (int i = 0; i < rightWing.size(); i++) {
+                BlockDisplay bd = rightWing.get(i).entity();
+                bd.setInterpolationDuration(5);
+                bd.setInterpolationDelay(0);
+                Transformation t = bd.getTransformation();
+                bd.setTransformation(new Transformation(
+                        t.getTranslation(),
+                        new AxisAngle4f(-foldAngle * (1 + i * 0.1f), 0, 0, 1),
+                        t.getScale(),
+                        new AxisAngle4f(0, 0, 1, 0)
+                ));
+                Location wLoc = flightPos.clone().add(0.8 + i * 0.5, 0.1, -0.2 + i * 0.15);
+                wLoc.setYaw(0); wLoc.setPitch(0);
+                bd.teleport(wLoc);
+            }
+
+            // Teleport all other parts to follow descent
+            for (int i = 0; i < bodyBlocks.size(); i++) {
+                Location bLoc = flightPos.clone().add(0, 0, -0.5 + i * 0.5);
+                bLoc.setYaw(0); bLoc.setPitch(0);
+                bodyBlocks.get(i).entity().teleport(bLoc);
+            }
+            for (int i = 0; i < tailBlocks.size(); i++) {
+                Location tLoc = flightPos.clone().add(0, -0.1 * i, 1.2 + i * 0.5);
+                tLoc.setYaw(0); tLoc.setPitch(0);
+                tailBlocks.get(i).entity().teleport(tLoc);
+            }
+            for (int i = 0; i < headBlocks.size(); i++) {
+                double zOff = (i == 0) ? -1.2 : -1.5;
+                double yOff = (i == 0) ? 0.2 : 0.4;
+                Location hLoc = flightPos.clone().add(0, yOff, zOff);
+                hLoc.setYaw(0); hLoc.setPitch(0);
+                headBlocks.get(i).entity().teleport(hLoc);
+            }
+            for (int i = 0; i < claws.size(); i++) {
+                double[][] clawOff = {{-0.5, -0.3, -0.8}, {0.5, -0.3, -0.8}, {-0.5, -0.3, 0.3}, {0.5, -0.3, 0.3}};
+                Location cLoc = flightPos.clone().add(clawOff[i][0], clawOff[i][1], clawOff[i][2]);
+                cLoc.setYaw(0); cLoc.setPitch(0);
+                claws.get(i).entity().teleport(cLoc);
+            }
+            // Misc parts follow
+            double[][] miscOff = {{0, 0.6, -1.6}, {0, 0.1, -0.7}, {0, 0.1, -1.0}, {0, 0.35, -1.7}};
+            for (int i = 0; i < miscParts.size() && i < miscOff.length; i++) {
+                Location mLoc = flightPos.clone().add(miscOff[i][0], miscOff[i][1], miscOff[i][2]);
+                mLoc.setYaw(0); mLoc.setPitch(0);
+                miscParts.get(i).entity().teleport(mLoc);
+            }
+
+            // Dive wind particles
+            if (tick % 3 == 0) {
+                center.getWorld().spawnParticle(Particle.CLOUD, flightPos, 3, 0.5, 0.2, 0.5, 0.05);
+            }
+
+            // Wing flap sound during soar
+            if (tick % 20 == 0 && descentProgress < 0.3) {
+                DisplayBuilder.playSound(flightPos, Sound.ENTITY_ENDER_DRAGON_FLAP, 1.0f, 0.8f);
+            }
+        }
+
+        @Override protected void onCleanup() { super.onCleanup(); }
+        @Override public AbstractAttack newInstance() { return new HellfireWyvernDive(plugin); }
+    }
+
+    // ================================================================
+    // #26 — DOOM CENTIPEDE (30 blocks)
+    // 25 segments scale(0.5,0.4,0.5) winding, head 3 with mandibles,
+    // stinger 2 scale(0.2,0.5,0.2). Caterpillar motion (each segment
+    // follows prev with 2-tick delay). Z-axis rock ±10° with phase
+    // offset via Transform. 4r along body, 25dmg/15t.
+    // ================================================================
+    public static class DoomCentipede extends BlockDisplayAttack {
+        private final List<BlockDisplayHandle> segments = new ArrayList<>();
+        private final List<BlockDisplayHandle> headParts = new ArrayList<>();
+        private final List<BlockDisplayHandle> stinger = new ArrayList<>();
+        private static final int SEG_COUNT = 25;
+        private double pathAngle = 0;
+
+        public DoomCentipede(ChaosCraftPlugin plugin) {
+            super(plugin, new AttackConfig("doom_centipede", AttackType.BLOCK_DISPLAY, 1, "modes/doom/attacks"));
+            config.setDamage(25.0);
+            config.setDamageRadius(4.0);
+            config.setTicksBetweenDamage(15);
+            config.setDurationTicks(250);
+            config.setCooldownTicks(200);
+        }
+
+        @Override
+        protected void onSpawn(Location center) {
+            World w = center.getWorld();
+            if (w == null) return;
+
+            // 25 BODY SEGMENTS — caterpillar chain
+            for (int i = 0; i < SEG_COUNT; i++) {
+                double zOff = i * 0.45;
+                Location segLoc = center.clone().add(0, 1.0, zOff);
+                Material mat = (i % 4 == 0) ? Material.MAGMA_BLOCK : (i % 2 == 0) ? Material.RED_NETHER_BRICKS : Material.NETHERRACK;
+                BlockDisplayHandle h = displayBuilder.spawnBlock(segLoc, mat);
+                h.scale(0.5f, 0.4f, 0.5f).glow(200, 50, 10).interpolation(3, 0);
+                spawnedEntities.add(h.entity());
+                segments.add(h);
+            }
+
+            // HEAD — 3 blocks (2 mandibles + 1 cranium)
+            BlockDisplayHandle cranium = displayBuilder.spawnBlock(center.clone().add(0, 1.2, -0.5), Material.POLISHED_BLACKSTONE);
+            cranium.scale(0.6f, 0.5f, 0.6f).glow(20, 10, 5).interpolation(3, 0);
+            spawnedEntities.add(cranium.entity());
+            headParts.add(cranium);
+
+            // Mandibles
+            BlockDisplayHandle mandL = displayBuilder.spawnBlock(center.clone().add(-0.3, 1.0, -0.9), Material.BLACKSTONE);
+            mandL.scale(0.15f, 0.15f, 0.35f).glow(240, 80, 30).interpolation(2, 0);
+            spawnedEntities.add(mandL.entity());
+            headParts.add(mandL);
+            BlockDisplayHandle mandR = displayBuilder.spawnBlock(center.clone().add(0.3, 1.0, -0.9), Material.BLACKSTONE);
+            mandR.scale(0.15f, 0.15f, 0.35f).glow(240, 80, 30).interpolation(2, 0);
+            spawnedEntities.add(mandR.entity());
+            headParts.add(mandR);
+
+            // STINGER — 2 blocks at tail end scale(0.2, 0.5, 0.2)
+            double tailZ = SEG_COUNT * 0.45;
+            BlockDisplayHandle st1 = displayBuilder.spawnBlock(center.clone().add(0, 1.3, tailZ + 0.3), Material.RED_CONCRETE);
+            st1.scale(0.2f, 0.5f, 0.2f).glow(255, 100, 20).interpolation(3, 0);
+            spawnedEntities.add(st1.entity());
+            stinger.add(st1);
+            BlockDisplayHandle st2 = displayBuilder.spawnBlock(center.clone().add(0, 1.7, tailZ + 0.5), Material.SHROOMLIGHT);
+            st2.scale(0.15f, 0.3f, 0.15f).glow(255, 200, 50).interpolation(3, 0);
+            spawnedEntities.add(st2.entity());
+            stinger.add(st2);
+
+            DisplayBuilder.playSound(center, Sound.ENTITY_SILVERFISH_AMBIENT, 1.2f, 0.4f);
+        }
+
+        @Override
+        protected void onTick(int tick) {
+            Location center = getCenter();
+            if (center == null || center.getWorld() == null) return;
+
+            // Caterpillar motion: each segment undulates with phase delay
+            // Z-axis rock ±10° with phase offset
+            pathAngle += 0.03;
+
+            for (int i = 0; i < segments.size(); i++) {
+                // Phase-delayed wave: each segment 2 ticks behind the previous
+                double phase = tick * 0.15 - i * 0.3;
+                double lateralWave = Math.sin(phase) * 1.2;
+                double yWave = Math.abs(Math.sin(phase * 0.5)) * 0.4; // caterpillar hump
+
+                // Z-axis rock rotation
+                float rockAngle = (float) (Math.toRadians(10) * Math.sin(phase));
+
+                BlockDisplay bd = segments.get(i).entity();
+                bd.setInterpolationDuration(3);
+                bd.setInterpolationDelay(0);
+                bd.setTransformation(new Transformation(
+                        new Vector3f((float) lateralWave - 0.25f, (float) yWave - 0.2f, -0.25f),
+                        new AxisAngle4f(rockAngle, 0, 0, 1),
+                        new Vector3f(0.5f, 0.4f, 0.5f),
+                        new AxisAngle4f(0, 0, 1, 0)
+                ));
+
+                // Teleport along path for forward movement
+                double pathX = Math.cos(pathAngle) * 3.0;
+                double pathZ = Math.sin(pathAngle) * 3.0 + i * 0.45;
+                Location segLoc = center.clone().add(pathX, 1.0, pathZ - SEG_COUNT * 0.225);
+                segLoc.setYaw(0); segLoc.setPitch(0);
+                bd.teleport(segLoc);
+            }
+
+            // Mandible click animation
+            if (headParts.size() >= 3) {
+                float mandibleOpen = (float) (Math.toRadians(10) * Math.abs(Math.sin(tick * 0.2)));
+                for (int i = 1; i <= 2; i++) {
+                    BlockDisplay bd = headParts.get(i).entity();
+                    float sign = (i == 1) ? 1 : -1;
+                    bd.setInterpolationDuration(2);
+                    bd.setInterpolationDelay(0);
+                    Transformation t = bd.getTransformation();
+                    bd.setTransformation(new Transformation(
+                            t.getTranslation(),
+                            new AxisAngle4f(mandibleOpen * sign, 0, 1, 0),
+                            t.getScale(),
+                            new AxisAngle4f(0, 0, 1, 0)
+                    ));
+                }
+            }
+
+            // Stinger bob
+            for (int i = 0; i < stinger.size(); i++) {
+                BlockDisplay bd = stinger.get(i).entity();
+                float bob = (float) (Math.sin(tick * 0.2 + i) * 0.15);
+                Transformation t = bd.getTransformation();
+                bd.setInterpolationDuration(3);
+                bd.setInterpolationDelay(0);
+                bd.setTransformation(new Transformation(
+                        new Vector3f(t.getTranslation().x, t.getTranslation().y + bob, t.getTranslation().z),
+                        new AxisAngle4f().set(t.getLeftRotation()),
+                        t.getScale(),
+                        new AxisAngle4f().set(t.getRightRotation())
+                ));
+            }
+
+            // Scuttling particles
+            if (tick % 5 == 0) {
+                DisplayBuilder.dustParticles(center, 3, 1.5, 200, 50, 10, 0.8f);
+            }
+
+            // Sound
+            if (tick % 25 == 0) {
+                DisplayBuilder.playSound(center, Sound.ENTITY_SILVERFISH_STEP, 0.6f, 0.5f);
+            }
+        }
+
+        @Override protected void onCleanup() { super.onCleanup(); }
+        @Override public AbstractAttack newInstance() { return new DoomCentipede(plugin); }
+    }
+
+    // ================================================================
+    // #27 — INFERNAL STAG BEETLE (28 blocks)
+    // Shell 6 scale(0.9,0.3,1.0), horn 4 scale(0.2,0.15,0.8) forked,
+    // legs 6×2 scale(0.15,0.5,0.15), head 2, underbelly 4, wing-hint 4.
+    // Horn charge every 50t (tilt down + translate forward 3 blocks).
+    // Charge 5r, 50dmg. ENTITY_IRON_GOLEM_ATTACK.
+    // ================================================================
+    public static class InfernalStagBeetle extends BlockDisplayAttack {
+        private final List<BlockDisplayHandle> shell = new ArrayList<>();
+        private final List<BlockDisplayHandle> hornParts = new ArrayList<>();
+        private final List<BlockDisplayHandle> legs = new ArrayList<>(); // 12 total
+        private final List<BlockDisplayHandle> headBlocks = new ArrayList<>();
+        private final List<BlockDisplayHandle> underbelly = new ArrayList<>();
+        private final List<BlockDisplayHandle> wingHints = new ArrayList<>();
+        private boolean charging = false;
+        private int chargeTickStart = 0;
+
+        public InfernalStagBeetle(ChaosCraftPlugin plugin) {
+            super(plugin, new AttackConfig("infernal_stag_beetle", AttackType.BLOCK_DISPLAY, 1, "modes/doom/attacks"));
+            config.setDamageOnImpactOnly(true);
+            config.setImpactDamage(50.0);
+            config.setImpactRadius(5.0);
+            config.setDamage(0);
+            config.setDurationTicks(300);
+            config.setCooldownTicks(250);
+        }
+
+        @Override
+        protected void onSpawn(Location center) {
+            World w = center.getWorld();
+            if (w == null) return;
+
+            // SHELL — 6 blocks scale(0.9, 0.3, 1.0) — wide flat carapace
+            double[][] shellOff = {{0, 1.8, 0}, {0, 1.8, 0.8}, {0, 1.8, -0.8},
+                    {0.3, 1.85, 0.4}, {-0.3, 1.85, 0.4}, {0, 1.85, -0.3}};
+            for (double[] off : shellOff) {
+                BlockDisplayHandle h = displayBuilder.spawnBlock(center.clone().add(off[0], off[1], off[2]), Material.RED_NETHER_BRICKS);
+                h.scale(0.9f, 0.3f, 1.0f).glow(200, 50, 10).interpolation(4, 0);
+                spawnedEntities.add(h.entity());
+                shell.add(h);
+            }
+
+            // HORN — 4 blocks scale(0.2, 0.15, 0.8) forked pair
+            double[][] hornOff = {{-0.15, 1.7, -1.5}, {0.15, 1.7, -1.5}, {-0.25, 1.8, -2.0}, {0.25, 1.8, -2.0}};
+            for (double[] off : hornOff) {
+                BlockDisplayHandle h = displayBuilder.spawnBlock(center.clone().add(off[0], off[1], off[2]), Material.BLACKSTONE);
+                h.scale(0.2f, 0.15f, 0.8f).glow(20, 10, 5).interpolation(4, 0);
+                spawnedEntities.add(h.entity());
+                hornParts.add(h);
+            }
+
+            // LEGS — 6 pairs (12 total) scale(0.15, 0.5, 0.15)
+            double[] legZ = {-0.6, 0, 0.6, -0.6, 0, 0.6};
+            double[] legX = {-0.8, -0.9, -0.85, 0.8, 0.9, 0.85};
+            for (int i = 0; i < 6; i++) {
+                // Upper
+                BlockDisplayHandle upper = displayBuilder.spawnBlock(center.clone().add(legX[i], 1.2, legZ[i]), Material.DEEPSLATE);
+                upper.scale(0.15f, 0.5f, 0.15f).glow(20, 10, 5).interpolation(3, 0);
+                spawnedEntities.add(upper.entity());
+                legs.add(upper);
+                // Lower
+                BlockDisplayHandle lower = displayBuilder.spawnBlock(center.clone().add(legX[i] * 1.3, 0.6, legZ[i]), Material.DEEPSLATE);
+                lower.scale(0.15f, 0.5f, 0.15f).glow(20, 10, 5).interpolation(3, 0);
+                spawnedEntities.add(lower.entity());
+                legs.add(lower);
+            }
+
+            // HEAD — 2
+            BlockDisplayHandle hd1 = displayBuilder.spawnBlock(center.clone().add(0, 1.5, -1.0), Material.POLISHED_BLACKSTONE);
+            hd1.scale(0.6f, 0.5f, 0.6f).glow(240, 80, 30).interpolation(3, 0);
+            spawnedEntities.add(hd1.entity());
+            headBlocks.add(hd1);
+            BlockDisplayHandle hd2 = displayBuilder.spawnBlock(center.clone().add(0, 1.65, -1.2), Material.NETHER_BRICKS);
+            hd2.scale(0.4f, 0.35f, 0.4f).glow(240, 80, 30).interpolation(3, 0);
+            spawnedEntities.add(hd2.entity());
+            headBlocks.add(hd2);
+
+            // UNDERBELLY — 4
+            for (int i = 0; i < 4; i++) {
+                BlockDisplayHandle h = displayBuilder.spawnBlock(center.clone().add(0, 1.3, -0.6 + i * 0.4), Material.MAGMA_BLOCK);
+                h.scale(0.7f, 0.25f, 0.6f).glow(255, 100, 20).interpolation(3, 0);
+                spawnedEntities.add(h.entity());
+                underbelly.add(h);
+            }
+
+            // WING HINTS — 4 thin plates peeking from shell edges
+            double[][] wingOff = {{-0.6, 1.9, -0.2}, {-0.6, 1.9, 0.5}, {0.6, 1.9, -0.2}, {0.6, 1.9, 0.5}};
+            for (double[] off : wingOff) {
+                BlockDisplayHandle h = displayBuilder.spawnBlock(center.clone().add(off[0], off[1], off[2]), Material.ORANGE_CONCRETE);
+                h.scale(0.5f, 0.05f, 0.5f).glow(240, 80, 30).interpolation(3, 0);
+                spawnedEntities.add(h.entity());
+                wingHints.add(h);
+            }
+
+            DisplayBuilder.playSound(center, Sound.ENTITY_IRON_GOLEM_HURT, 1.0f, 0.3f);
+        }
+
+        @Override
+        protected void onTick(int tick) {
+            Location center = getCenter();
+            if (center == null || center.getWorld() == null) return;
+
+            // Leg walking gait
+            for (int i = 0; i < legs.size(); i++) {
+                boolean groupA = (i % 4 < 2);
+                float phase = groupA ? 1.0f : -1.0f;
+                float legSwing = (float) (Math.toRadians(15) * Math.sin(tick * 0.15) * phase);
+
+                BlockDisplay bd = legs.get(i).entity();
+                Transformation t = bd.getTransformation();
+                bd.setInterpolationDuration(3);
+                bd.setInterpolationDelay(0);
+                bd.setTransformation(new Transformation(
+                        t.getTranslation(),
+                        new AxisAngle4f(legSwing, 0, 0, 1),
+                        t.getScale(),
+                        new AxisAngle4f(0, 0, 1, 0)
+                ));
+            }
+
+            // Charge every 50 ticks: horn tilts down and beetle lunges forward
+            if (tick % 50 == 0 && tick > 0) {
+                charging = true;
+                chargeTickStart = tick;
+                DisplayBuilder.playSound(center, Sound.ENTITY_IRON_GOLEM_ATTACK, 1.5f, 0.5f);
+            }
+
+            if (charging) {
+                int chargeTick = tick - chargeTickStart;
+                if (chargeTick <= 15) {
+                    // Horn tilt down animation
+                    float tiltProgress = Math.min(1.0f, chargeTick / 8.0f);
+                    float hornTilt = (float) (Math.toRadians(-30) * tiltProgress);
+                    for (BlockDisplayHandle h : hornParts) {
+                        BlockDisplay bd = h.entity();
+                        Transformation t = bd.getTransformation();
+                        bd.setInterpolationDuration(4);
+                        bd.setInterpolationDelay(0);
+                        bd.setTransformation(new Transformation(
+                                new Vector3f(t.getTranslation().x, t.getTranslation().y, t.getTranslation().z - tiltProgress * 0.2f),
+                                new AxisAngle4f(hornTilt, 1, 0, 0),
+                                t.getScale(),
+                                new AxisAngle4f(0, 0, 1, 0)
+                        ));
+                    }
+
+                    // Charge impact at peak
+                    if (chargeTick == 12) {
+                        Location impactLoc = center.clone().add(0, 1.0, -3.0);
+                        triggerImpactDamage(impactLoc);
+                        center.getWorld().spawnParticle(Particle.EXPLOSION, impactLoc, 2, 1, 0.5, 1, 0);
+                    }
+                } else {
+                    // Reset horn
+                    for (BlockDisplayHandle h : hornParts) {
+                        BlockDisplay bd = h.entity();
+                        Transformation t = bd.getTransformation();
+                        bd.setInterpolationDuration(5);
+                        bd.setInterpolationDelay(0);
+                        bd.setTransformation(new Transformation(
+                                t.getTranslation(),
+                                new AxisAngle4f(0, 1, 0, 0),
+                                t.getScale(),
+                                new AxisAngle4f(0, 0, 1, 0)
+                        ));
+                    }
+                    charging = false;
+                }
+            }
+
+            // Ambient beetle hiss
+            if (tick % 40 == 0) {
+                DisplayBuilder.playSound(center, Sound.ENTITY_SILVERFISH_AMBIENT, 0.6f, 0.3f);
+            }
+        }
+
+        @Override protected void onCleanup() { super.onCleanup(); }
+        @Override public AbstractAttack newInstance() { return new InfernalStagBeetle(plugin); }
+    }
+
+    // ================================================================
+    // #28 — MAGMA JELLYFISH SWARM (30 blocks)
+    // 5 jellyfish (6 each: cap 3 scale(0.8,0.4,0.8), tentacles 3
+    // scale(0.1,1.2,0.1)). Float Y=3-8, bob independently. Tentacles
+    // sway X-rotation ±15° via Transform. Orbit center at different
+    // radii. 5r per jellyfish, 15dmg/10t.
+    // ================================================================
+    public static class MagmaJellyfishSwarm extends BlockDisplayAttack {
+        private static final int JELLY_COUNT = 5;
+        private final List<List<BlockDisplayHandle>> jellyCaps = new ArrayList<>();
+        private final List<List<BlockDisplayHandle>> jellyTentacles = new ArrayList<>();
+        private final double[] orbitRadii = {3.0, 4.5, 5.5, 3.8, 6.0};
+        private final double[] orbitSpeeds = {0.025, -0.03, 0.02, -0.035, 0.015};
+        private final double[] floatHeights = {4.0, 6.0, 3.5, 7.0, 5.0};
+        private final double[] bobPhases = {0, 1.2, 2.5, 0.8, 3.5};
+
+        public MagmaJellyfishSwarm(ChaosCraftPlugin plugin) {
+            super(plugin, new AttackConfig("magma_jellyfish_swarm", AttackType.BLOCK_DISPLAY, 1, "modes/doom/attacks"));
+            config.setDamage(15.0);
+            config.setDamageRadius(5.0);
+            config.setTicksBetweenDamage(10);
+            config.setDurationTicks(250);
+            config.setCooldownTicks(200);
+        }
+
+        @Override
+        protected void onSpawn(Location center) {
+            World w = center.getWorld();
+            if (w == null) return;
+
+            Material[] capMats = {Material.MAGMA_BLOCK, Material.SHROOMLIGHT, Material.GLOWSTONE, Material.ORANGE_CONCRETE, Material.RED_CONCRETE};
+            Material[] tentMats = {Material.NETHERRACK, Material.RED_NETHER_BRICKS, Material.NETHER_BRICKS, Material.BASALT, Material.DEEPSLATE};
+
+            for (int j = 0; j < JELLY_COUNT; j++) {
+                double angle = (2 * Math.PI * j) / JELLY_COUNT;
+                double jx = Math.cos(angle) * orbitRadii[j];
+                double jz = Math.sin(angle) * orbitRadii[j];
+                Location jellyLoc = center.clone().add(jx, floatHeights[j], jz);
+
+                List<BlockDisplayHandle> caps = new ArrayList<>();
+                List<BlockDisplayHandle> tents = new ArrayList<>();
+
+                // CAP — 3 blocks scale(0.8, 0.4, 0.8)
+                double[][] capOff = {{0, 0.3, 0}, {-0.2, 0, 0.2}, {0.2, 0, -0.2}};
+                for (double[] off : capOff) {
+                    BlockDisplayHandle h = displayBuilder.spawnBlock(jellyLoc.clone().add(off[0], off[1], off[2]), capMats[j]);
+                    h.scale(0.8f, 0.4f, 0.8f).glow(255, 100, 20).interpolation(3, 0);
+                    spawnedEntities.add(h.entity());
+                    caps.add(h);
+                }
+
+                // TENTACLES — 3 long rods scale(0.1, 1.2, 0.1)
+                for (int t = 0; t < 3; t++) {
+                    double tx = (t - 1) * 0.25;
+                    BlockDisplayHandle h = displayBuilder.spawnBlock(jellyLoc.clone().add(tx, -1.0, 0), tentMats[j]);
+                    h.scale(0.1f, 1.2f, 0.1f).glow(200, 50, 10).interpolation(3, 0);
+                    spawnedEntities.add(h.entity());
+                    tents.add(h);
+                }
+
+                jellyCaps.add(caps);
+                jellyTentacles.add(tents);
+            }
+
+            DisplayBuilder.playSound(center, Sound.BLOCK_BUBBLE_COLUMN_UPWARDS_AMBIENT, 1.2f, 0.5f);
+        }
+
+        @Override
+        protected void onTick(int tick) {
+            Location center = getCenter();
+            if (center == null || center.getWorld() == null) return;
+
+            for (int j = 0; j < JELLY_COUNT; j++) {
+                // Orbit position
+                double angle = bobPhases[j] + tick * orbitSpeeds[j];
+                double jx = Math.cos(angle) * orbitRadii[j];
+                double jz = Math.sin(angle) * orbitRadii[j];
+                // Independent bobbing
+                double yBob = Math.sin(tick * 0.06 + bobPhases[j]) * 0.8;
+                Location jellyLoc = center.clone().add(jx, floatHeights[j] + yBob, jz);
+
+                // Move caps
+                List<BlockDisplayHandle> caps = jellyCaps.get(j);
+                double[][] capOff = {{0, 0.3, 0}, {-0.2, 0, 0.2}, {0.2, 0, -0.2}};
+                for (int c = 0; c < caps.size() && c < capOff.length; c++) {
+                    Location cLoc = jellyLoc.clone().add(capOff[c][0], capOff[c][1], capOff[c][2]);
+                    cLoc.setYaw(0); cLoc.setPitch(0);
+                    caps.get(c).entity().teleport(cLoc);
+                }
+
+                // Tentacle sway: X-rotation ±15° with phase offset
+                List<BlockDisplayHandle> tents = jellyTentacles.get(j);
+                for (int t = 0; t < tents.size(); t++) {
+                    float swayAngle = (float) (Math.toRadians(15) * Math.sin(tick * 0.12 + j * 1.5 + t * 0.8));
+                    BlockDisplay bd = tents.get(t).entity();
+                    Transformation tr = bd.getTransformation();
+                    bd.setInterpolationDuration(3);
+                    bd.setInterpolationDelay(0);
+                    bd.setTransformation(new Transformation(
+                            tr.getTranslation(),
+                            new AxisAngle4f(swayAngle, 1, 0, 0),
+                            tr.getScale(),
+                            new AxisAngle4f(0, 0, 1, 0)
+                    ));
+
+                    // Teleport tentacle to follow cap
+                    double tx = (t - 1) * 0.25;
+                    Location tLoc = jellyLoc.clone().add(tx, -1.0, 0);
+                    tLoc.setYaw(0); tLoc.setPitch(0);
+                    bd.teleport(tLoc);
+                }
+
+                // Glow trail particles per jellyfish
+                if (tick % 4 == j % 4) {
+                    DisplayBuilder.dustParticles(jellyLoc, 2, 0.5, 255, 100, 20, 1.0f);
+                }
+            }
+
+            // Ambient bubble sound
+            if (tick % 30 == 0) {
+                DisplayBuilder.playSound(center, Sound.BLOCK_BUBBLE_COLUMN_UPWARDS_AMBIENT, 0.5f, 0.8f);
+            }
+        }
+
+        @Override protected void onCleanup() { super.onCleanup(); }
+        @Override public AbstractAttack newInstance() { return new MagmaJellyfishSwarm(plugin); }
+    }
+
+    // ================================================================
+    // #29 — HELLFIRE MINOTAUR CHARGE (32 blocks)
+    // Torso 4, legs 4 scale(0.5,1.2,0.5), arms 4 scale(0.4,1.0,0.4),
+    // head 2, horns 4 scale(0.15,0.1,0.6), hooves 2, shoulder-armor 4
+    // scale(0.7,0.2,0.5), axe 6 (blade + shaft), eyes 2.
+    // Charges at player (translation). Arms swing during charge.
+    // Impact 6r, 60dmg. ENTITY_RAVAGER_ROAR.
+    // ================================================================
+    public static class HellfireMinotaurCharge extends BlockDisplayAttack {
+        private final List<BlockDisplayHandle> torso = new ArrayList<>();
+        private final List<BlockDisplayHandle> legBlocks = new ArrayList<>();
+        private final List<BlockDisplayHandle> armBlocks = new ArrayList<>();
+        private final List<BlockDisplayHandle> headBlocks = new ArrayList<>();
+        private final List<BlockDisplayHandle> hornBlocks = new ArrayList<>();
+        private final List<BlockDisplayHandle> hooves = new ArrayList<>();
+        private final List<BlockDisplayHandle> shoulderArmor = new ArrayList<>();
+        private final List<BlockDisplayHandle> axeParts = new ArrayList<>();
+        private final List<BlockDisplayHandle> eyeBlocks = new ArrayList<>();
+        private Player chargeTarget = null;
+        private boolean isCharging = false;
+        private int chargeStartTick = 0;
+        private double chargeDirX = 0;
+        private double chargeDirZ = 0;
+
+        public HellfireMinotaurCharge(ChaosCraftPlugin plugin) {
+            super(plugin, new AttackConfig("hellfire_minotaur_charge", AttackType.BLOCK_DISPLAY, 1, "modes/doom/attacks"));
+            config.setDamageOnImpactOnly(true);
+            config.setImpactDamage(60.0);
+            config.setImpactRadius(6.0);
+            config.setDamage(0);
+            config.setDurationTicks(300);
+            config.setCooldownTicks(300);
+        }
+
+        @Override
+        protected void onSpawn(Location center) {
+            World w = center.getWorld();
+            if (w == null) return;
+
+            // TORSO — 4 wide blocks
+            double[][] torsoOff = {{0, 3.0, 0}, {0, 3.8, 0}, {0.3, 3.4, 0}, {-0.3, 3.4, 0}};
+            for (double[] off : torsoOff) {
+                BlockDisplayHandle h = displayBuilder.spawnBlock(center.clone().add(off[0], off[1], off[2]), Material.RED_NETHER_BRICKS);
+                h.scale(1.0f, 0.8f, 0.7f).glow(200, 50, 10).interpolation(4, 0);
+                spawnedEntities.add(h.entity());
+                torso.add(h);
+            }
+
+            // LEGS — 4 rod shapes scale(0.5, 1.2, 0.5)
+            double[][] legOff = {{-0.4, 1.5, 0}, {0.4, 1.5, 0}, {-0.4, 0.3, 0}, {0.4, 0.3, 0}};
+            for (double[] off : legOff) {
+                BlockDisplayHandle h = displayBuilder.spawnBlock(center.clone().add(off[0], off[1], off[2]), Material.BLACKSTONE);
+                h.scale(0.5f, 1.2f, 0.5f).glow(20, 10, 5).interpolation(4, 0);
+                spawnedEntities.add(h.entity());
+                legBlocks.add(h);
+            }
+
+            // ARMS — 4 rod shapes scale(0.4, 1.0, 0.4)
+            double[][] armOff = {{-1.2, 3.8, 0}, {-1.2, 2.8, 0}, {1.2, 3.8, 0}, {1.2, 2.8, 0}};
+            for (double[] off : armOff) {
+                BlockDisplayHandle h = displayBuilder.spawnBlock(center.clone().add(off[0], off[1], off[2]), Material.NETHERRACK);
+                h.scale(0.4f, 1.0f, 0.4f).glow(200, 50, 10).interpolation(4, 0);
+                spawnedEntities.add(h.entity());
+                armBlocks.add(h);
+            }
+
+            // HEAD — 2
+            BlockDisplayHandle hd1 = displayBuilder.spawnBlock(center.clone().add(0, 4.8, 0), Material.POLISHED_BLACKSTONE);
+            hd1.scale(0.8f, 0.7f, 0.8f).glow(20, 10, 5).interpolation(4, 0);
+            spawnedEntities.add(hd1.entity());
+            headBlocks.add(hd1);
+            BlockDisplayHandle hd2 = displayBuilder.spawnBlock(center.clone().add(0, 4.5, 0.3), Material.NETHER_BRICKS);
+            hd2.scale(0.5f, 0.5f, 0.4f).glow(200, 50, 10).interpolation(4, 0);
+            spawnedEntities.add(hd2.entity());
+            headBlocks.add(hd2);
+
+            // HORNS — 4 scale(0.15, 0.1, 0.6)
+            double[][] hornOff = {{-0.4, 5.2, -0.1}, {-0.5, 5.4, -0.3}, {0.4, 5.2, -0.1}, {0.5, 5.4, -0.3}};
+            for (double[] off : hornOff) {
+                BlockDisplayHandle h = displayBuilder.spawnBlock(center.clone().add(off[0], off[1], off[2]), Material.BASALT);
+                h.scale(0.15f, 0.1f, 0.6f).glow(20, 10, 5).interpolation(3, 0);
+                spawnedEntities.add(h.entity());
+                hornBlocks.add(h);
+            }
+
+            // HOOVES — 2
+            BlockDisplayHandle hoofL = displayBuilder.spawnBlock(center.clone().add(-0.4, 0, 0), Material.COAL_BLOCK);
+            hoofL.scale(0.4f, 0.3f, 0.5f).glow(20, 10, 5).interpolation(3, 0);
+            spawnedEntities.add(hoofL.entity());
+            hooves.add(hoofL);
+            BlockDisplayHandle hoofR = displayBuilder.spawnBlock(center.clone().add(0.4, 0, 0), Material.COAL_BLOCK);
+            hoofR.scale(0.4f, 0.3f, 0.5f).glow(20, 10, 5).interpolation(3, 0);
+            spawnedEntities.add(hoofR.entity());
+            hooves.add(hoofR);
+
+            // SHOULDER ARMOR — 4 scale(0.7, 0.2, 0.5)
+            double[][] shoulderOff = {{-1.0, 4.2, -0.2}, {-1.0, 4.2, 0.2}, {1.0, 4.2, -0.2}, {1.0, 4.2, 0.2}};
+            for (double[] off : shoulderOff) {
+                BlockDisplayHandle h = displayBuilder.spawnBlock(center.clone().add(off[0], off[1], off[2]), Material.NETHER_BRICKS);
+                h.scale(0.7f, 0.2f, 0.5f).glow(120, 20, 80).interpolation(3, 0);
+                spawnedEntities.add(h.entity());
+                shoulderArmor.add(h);
+            }
+
+            // AXE — 6 blocks (4 blade + 2 shaft)
+            // Shaft (held in right hand area)
+            for (int i = 0; i < 2; i++) {
+                BlockDisplayHandle h = displayBuilder.spawnBlock(center.clone().add(1.6, 3.0 + i * 1.0, 0), Material.BASALT);
+                h.scale(0.15f, 1.0f, 0.15f).glow(120, 20, 80).interpolation(4, 0);
+                spawnedEntities.add(h.entity());
+                axeParts.add(h);
+            }
+            // Blade
+            double[][] bladeOff = {{1.8, 5.0, 0}, {2.0, 5.0, 0}, {1.9, 5.3, 0}, {2.1, 4.8, 0}};
+            for (double[] off : bladeOff) {
+                BlockDisplayHandle h = displayBuilder.spawnBlock(center.clone().add(off[0], off[1], off[2]), Material.RED_CONCRETE);
+                h.scale(0.3f, 0.4f, 0.1f).glow(240, 80, 30).interpolation(4, 0);
+                spawnedEntities.add(h.entity());
+                axeParts.add(h);
+            }
+
+            // EYES — 2
+            BlockDisplayHandle eyeL = displayBuilder.spawnBlock(center.clone().add(-0.2, 4.9, 0.4), Material.SHROOMLIGHT);
+            eyeL.scale(0.12f, 0.12f, 0.12f).glow(255, 50, 20).interpolation(2, 0);
+            spawnedEntities.add(eyeL.entity());
+            eyeBlocks.add(eyeL);
+            BlockDisplayHandle eyeR = displayBuilder.spawnBlock(center.clone().add(0.2, 4.9, 0.4), Material.SHROOMLIGHT);
+            eyeR.scale(0.12f, 0.12f, 0.12f).glow(255, 50, 20).interpolation(2, 0);
+            spawnedEntities.add(eyeR.entity());
+            eyeBlocks.add(eyeR);
+
+            DisplayBuilder.playSound(center, Sound.ENTITY_RAVAGER_ROAR, 2.0f, 0.5f);
+            w.spawnParticle(Particle.FLAME, center.clone().add(0, 3, 0), 30, 1.5, 2, 1.5, 0.1);
+        }
+
+        @Override
+        protected void onTick(int tick) {
+            Location center = getCenter();
+            if (center == null || center.getWorld() == null) return;
+
+            // Find target and initiate charge every 60 ticks
+            if (!isCharging && tick % 60 == 0 && tick > 10) {
+                chargeTarget = findNearestPlayer(center, 25.0);
+                if (chargeTarget != null) {
+                    isCharging = true;
+                    chargeStartTick = tick;
+                    double yaw = yawToward(center, chargeTarget.getLocation());
+                    chargeDirX = Math.cos(yaw);
+                    chargeDirZ = Math.sin(yaw);
+                    DisplayBuilder.playSound(center, Sound.ENTITY_RAVAGER_ROAR, 1.5f, 0.6f);
+                }
+            }
+
+            // Arm swing animation (always active, more intense during charge)
+            float swingIntensity = isCharging ? 2.0f : 1.0f;
+            float armSwing = (float) (Math.toRadians(25) * Math.sin(tick * 0.2 * swingIntensity));
+
+            // Left arm (indices 0-1)
+            for (int i = 0; i < 2 && i < armBlocks.size(); i++) {
+                BlockDisplay bd = armBlocks.get(i).entity();
+                Transformation t = bd.getTransformation();
+                bd.setInterpolationDuration(3);
+                bd.setInterpolationDelay(0);
+                bd.setTransformation(new Transformation(
+                        t.getTranslation(),
+                        new AxisAngle4f(armSwing, 1, 0, 0),
+                        t.getScale(),
+                        new AxisAngle4f(0, 0, 1, 0)
+                ));
+            }
+            // Right arm (indices 2-3) — opposite
+            for (int i = 2; i < 4 && i < armBlocks.size(); i++) {
+                BlockDisplay bd = armBlocks.get(i).entity();
+                Transformation t = bd.getTransformation();
+                bd.setInterpolationDuration(3);
+                bd.setInterpolationDelay(0);
+                bd.setTransformation(new Transformation(
+                        t.getTranslation(),
+                        new AxisAngle4f(-armSwing, 1, 0, 0),
+                        t.getScale(),
+                        new AxisAngle4f(0, 0, 1, 0)
+                ));
+            }
+
+            // Leg pump during charge
+            float legPump = (float) (Math.toRadians(20) * Math.sin(tick * 0.25));
+            for (int i = 0; i < legBlocks.size(); i++) {
+                float phase = (i % 2 == 0) ? 1 : -1;
+                BlockDisplay bd = legBlocks.get(i).entity();
+                Transformation t = bd.getTransformation();
+                bd.setInterpolationDuration(3);
+                bd.setInterpolationDelay(0);
+                bd.setTransformation(new Transformation(
+                        t.getTranslation(),
+                        new AxisAngle4f(legPump * phase, 1, 0, 0),
+                        t.getScale(),
+                        new AxisAngle4f(0, 0, 1, 0)
+                ));
+            }
+
+            // Charge movement via teleport (translation)
+            if (isCharging) {
+                int chargeTick = tick - chargeStartTick;
+                double speed = 0.4;
+
+                if (chargeTick <= 25) {
+                    // Move all entities forward
+                    Location newCenter = center.clone().add(chargeDirX * speed, 0, chargeDirZ * speed);
+                    setCenter(newCenter);
+
+                    // Ground dust
+                    if (chargeTick % 3 == 0) {
+                        center.getWorld().spawnParticle(Particle.CAMPFIRE_COSY_SMOKE, center, 3, 0.5, 0.1, 0.5, 0.01);
+                    }
+                }
+
+                // Impact at end of charge
+                if (chargeTick == 20) {
+                    triggerImpactDamage(center.clone().add(chargeDirX * 2, 1, chargeDirZ * 2));
+                    center.getWorld().spawnParticle(Particle.EXPLOSION, center, 3, 1, 1, 1, 0);
+                }
+
+                if (chargeTick > 25) {
+                    isCharging = false;
+                }
+            }
+
+            // Hoof stomp sound while moving
+            if (tick % 10 == 0) {
+                DisplayBuilder.playSound(center, Sound.ENTITY_HORSE_STEP, 0.8f, 0.3f);
+            }
+        }
+
+        @Override protected void onCleanup() { super.onCleanup(); }
+        @Override public AbstractAttack newInstance() { return new HellfireMinotaurCharge(plugin); }
+    }
+
+    // ================================================================
+    // #30 — DOOM SKELETON KING (30 blocks)
+    // Ribcage 6 bone scale(0.15,0.8,0.4), spine 4 scale(0.2,0.5,0.2),
+    // arms 4 each segmented (8 total), skull 2, crown 4 shroomlight
+    // scale(0.4,0.15,0.4), sword 4 scale(0.15,0.1,1.5), pelvis 2.
+    // Sword swing animation. Crown Y-bobs separately. 7r, 30dmg/25t.
+    // ================================================================
+    public static class DoomSkeletonKing extends BlockDisplayAttack {
+        private final List<BlockDisplayHandle> ribcage = new ArrayList<>();
+        private final List<BlockDisplayHandle> spineBlocks = new ArrayList<>();
+        private final List<BlockDisplayHandle> leftArmBlocks = new ArrayList<>();
+        private final List<BlockDisplayHandle> rightArmBlocks = new ArrayList<>();
+        private final List<BlockDisplayHandle> skull = new ArrayList<>();
+        private final List<BlockDisplayHandle> crown = new ArrayList<>();
+        private final List<BlockDisplayHandle> sword = new ArrayList<>();
+        private final List<BlockDisplayHandle> pelvis = new ArrayList<>();
+
+        public DoomSkeletonKing(ChaosCraftPlugin plugin) {
+            super(plugin, new AttackConfig("doom_skeleton_king", AttackType.BLOCK_DISPLAY, 1, "modes/doom/attacks"));
+            config.setDamage(30.0);
+            config.setDamageRadius(7.0);
+            config.setTicksBetweenDamage(25);
+            config.setDurationTicks(300);
+            config.setCooldownTicks(250);
+        }
+
+        @Override
+        protected void onSpawn(Location center) {
+            World w = center.getWorld();
+            if (w == null) return;
+
+            // RIBCAGE — 6 bone blocks scale(0.15, 0.8, 0.4) — rib-like rods
+            for (int i = 0; i < 6; i++) {
+                double xOff = (i < 3) ? -0.2 - (i % 3) * 0.1 : 0.2 + (i % 3) * 0.1;
+                double yOff = 3.0 + (i % 3) * 0.3;
+                BlockDisplayHandle h = displayBuilder.spawnBlock(center.clone().add(xOff, yOff, 0), Material.BONE_BLOCK);
+                h.scale(0.15f, 0.8f, 0.4f).glow(220, 200, 180).interpolation(3, 0);
+                spawnedEntities.add(h.entity());
+                ribcage.add(h);
+            }
+
+            // SPINE — 4 scale(0.2, 0.5, 0.2) — vertebrae
+            for (int i = 0; i < 4; i++) {
+                BlockDisplayHandle h = displayBuilder.spawnBlock(center.clone().add(0, 2.0 + i * 0.6, 0), Material.BONE_BLOCK);
+                h.scale(0.2f, 0.5f, 0.2f).glow(220, 200, 180).interpolation(3, 0);
+                spawnedEntities.add(h.entity());
+                spineBlocks.add(h);
+            }
+
+            // LEFT ARM — 4 segmented bones
+            double[][] lArmOff = {{-0.8, 4.0, 0}, {-1.2, 3.5, 0}, {-1.5, 3.0, 0}, {-1.7, 2.5, 0}};
+            for (double[] off : lArmOff) {
+                BlockDisplayHandle h = displayBuilder.spawnBlock(center.clone().add(off[0], off[1], off[2]), Material.BONE_BLOCK);
+                h.scale(0.15f, 0.6f, 0.15f).glow(220, 200, 180).interpolation(3, 0);
+                spawnedEntities.add(h.entity());
+                leftArmBlocks.add(h);
+            }
+
+            // RIGHT ARM — 4 segmented bones (sword hand)
+            double[][] rArmOff = {{0.8, 4.0, 0}, {1.2, 3.5, 0}, {1.5, 3.0, 0}, {1.7, 2.5, 0}};
+            for (double[] off : rArmOff) {
+                BlockDisplayHandle h = displayBuilder.spawnBlock(center.clone().add(off[0], off[1], off[2]), Material.BONE_BLOCK);
+                h.scale(0.15f, 0.6f, 0.15f).glow(220, 200, 180).interpolation(3, 0);
+                spawnedEntities.add(h.entity());
+                rightArmBlocks.add(h);
+            }
+
+            // SKULL — 2
+            BlockDisplayHandle sk1 = displayBuilder.spawnBlock(center.clone().add(0, 4.8, 0), Material.BONE_BLOCK);
+            sk1.scale(0.6f, 0.6f, 0.6f).glow(220, 200, 180).interpolation(3, 0);
+            spawnedEntities.add(sk1.entity());
+            skull.add(sk1);
+            BlockDisplayHandle sk2 = displayBuilder.spawnBlock(center.clone().add(0, 5.2, 0), Material.BONE_BLOCK);
+            sk2.scale(0.5f, 0.4f, 0.5f).glow(220, 200, 180).interpolation(3, 0);
+            spawnedEntities.add(sk2.entity());
+            skull.add(sk2);
+
+            // CROWN — 4 shroomlight scale(0.4, 0.15, 0.4)
+            double[][] crownOff = {{-0.25, 5.6, -0.25}, {0.25, 5.6, -0.25}, {-0.25, 5.6, 0.25}, {0.25, 5.6, 0.25}};
+            for (double[] off : crownOff) {
+                BlockDisplayHandle h = displayBuilder.spawnBlock(center.clone().add(off[0], off[1], off[2]), Material.SHROOMLIGHT);
+                h.scale(0.4f, 0.15f, 0.4f).glow(255, 200, 50).interpolation(2, 0);
+                spawnedEntities.add(h.entity());
+                crown.add(h);
+            }
+
+            // SWORD — 4 blocks scale(0.15, 0.1, 1.5) — long blade held by right arm
+            for (int i = 0; i < 4; i++) {
+                BlockDisplayHandle h = displayBuilder.spawnBlock(center.clone().add(1.8, 2.0 + i * 0.8, 0.3), Material.DEEPSLATE);
+                h.scale(0.15f, 0.1f, 1.5f).glow(120, 20, 80).interpolation(4, 0);
+                spawnedEntities.add(h.entity());
+                sword.add(h);
+            }
+
+            // PELVIS — 2
+            BlockDisplayHandle p1 = displayBuilder.spawnBlock(center.clone().add(-0.2, 2.0, 0), Material.BONE_BLOCK);
+            p1.scale(0.4f, 0.3f, 0.3f).glow(220, 200, 180).interpolation(3, 0);
+            spawnedEntities.add(p1.entity());
+            pelvis.add(p1);
+            BlockDisplayHandle p2 = displayBuilder.spawnBlock(center.clone().add(0.2, 2.0, 0), Material.BONE_BLOCK);
+            p2.scale(0.4f, 0.3f, 0.3f).glow(220, 200, 180).interpolation(3, 0);
+            spawnedEntities.add(p2.entity());
+            pelvis.add(p2);
+
+            DisplayBuilder.playSound(center, Sound.ENTITY_SKELETON_AMBIENT, 1.5f, 0.3f);
+            w.spawnParticle(Particle.SOUL, center.clone().add(0, 3, 0), 20, 1, 2, 1, 0.05);
+        }
+
+        @Override
+        protected void onTick(int tick) {
+            Location center = getCenter();
+            if (center == null || center.getWorld() == null) return;
+
+            // SWORD SWING — continuous pendulum via Transform rotation
+            float swordSwing = (float) (Math.toRadians(40) * Math.sin(tick * 0.12));
+            for (int i = 0; i < sword.size(); i++) {
+                BlockDisplay bd = sword.get(i).entity();
+                Transformation t = bd.getTransformation();
+                bd.setInterpolationDuration(4);
+                bd.setInterpolationDelay(0);
+                bd.setTransformation(new Transformation(
+                        t.getTranslation(),
+                        new AxisAngle4f(swordSwing, 1, 0, 0),
+                        t.getScale(),
+                        new AxisAngle4f(0, 0, 1, 0)
+                ));
+            }
+
+            // Right arm follows sword motion (limited swing)
+            float armFollow = swordSwing * 0.6f;
+            for (int i = 0; i < rightArmBlocks.size(); i++) {
+                BlockDisplay bd = rightArmBlocks.get(i).entity();
+                Transformation t = bd.getTransformation();
+                bd.setInterpolationDuration(3);
+                bd.setInterpolationDelay(0);
+                bd.setTransformation(new Transformation(
+                        t.getTranslation(),
+                        new AxisAngle4f(armFollow, 1, 0, 0),
+                        t.getScale(),
+                        new AxisAngle4f(0, 0, 1, 0)
+                ));
+            }
+
+            // Left arm idle sway
+            float leftSway = (float) (Math.toRadians(10) * Math.sin(tick * 0.08));
+            for (BlockDisplayHandle h : leftArmBlocks) {
+                BlockDisplay bd = h.entity();
+                Transformation t = bd.getTransformation();
+                bd.setInterpolationDuration(3);
+                bd.setInterpolationDelay(0);
+                bd.setTransformation(new Transformation(
+                        t.getTranslation(),
+                        new AxisAngle4f(leftSway, 1, 0, 0),
+                        t.getScale(),
+                        new AxisAngle4f(0, 0, 1, 0)
+                ));
+            }
+
+            // CROWN — separate Y-bob via Transform translation
+            float crownBob = (float) (Math.sin(tick * 0.1) * 0.15);
+            for (BlockDisplayHandle h : crown) {
+                BlockDisplay bd = h.entity();
+                Transformation t = bd.getTransformation();
+                bd.setInterpolationDuration(2);
+                bd.setInterpolationDelay(0);
+                bd.setTransformation(new Transformation(
+                        new Vector3f(t.getTranslation().x, -0.5f + crownBob, t.getTranslation().z),
+                        new AxisAngle4f().set(t.getLeftRotation()),
+                        t.getScale(),
+                        new AxisAngle4f().set(t.getRightRotation())
+                ));
+            }
+
+            // Skull jaw click effect — slight Y oscillation
+            if (!skull.isEmpty()) {
+                float jawMove = (float) (Math.sin(tick * 0.15) * 0.05);
+                BlockDisplay skBd = skull.get(0).entity();
+                Transformation st = skBd.getTransformation();
+                skBd.setInterpolationDuration(2);
+                skBd.setInterpolationDelay(0);
+                skBd.setTransformation(new Transformation(
+                        new Vector3f(st.getTranslation().x, st.getTranslation().y + jawMove, st.getTranslation().z),
+                        new AxisAngle4f().set(st.getLeftRotation()),
+                        st.getScale(),
+                        new AxisAngle4f().set(st.getRightRotation())
+                ));
+            }
+
+            // Soul particles from ribcage
+            if (tick % 6 == 0) {
+                center.getWorld().spawnParticle(Particle.SOUL, center.clone().add(0, 3.5, 0), 2, 0.3, 0.3, 0.3, 0.02);
+            }
+
+            // Sword whoosh sound on swing peaks
+            if (tick % 26 == 0) {
+                DisplayBuilder.playSound(center, Sound.ENTITY_PLAYER_ATTACK_SWEEP, 1.0f, 0.5f);
+            }
+
+            // Bone rattle ambient
+            if (tick % 40 == 0) {
+                DisplayBuilder.playSound(center, Sound.ENTITY_SKELETON_STEP, 0.7f, 0.4f);
+            }
+        }
+
+        @Override protected void onCleanup() { super.onCleanup(); }
+        @Override public AbstractAttack newInstance() { return new DoomSkeletonKing(plugin); }
     }
 }
