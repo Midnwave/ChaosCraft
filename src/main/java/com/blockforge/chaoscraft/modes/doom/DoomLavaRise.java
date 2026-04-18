@@ -88,10 +88,17 @@ public class DoomLavaRise {
     private Boolean savedDoFireTick = null;
     private Boolean savedMobGriefing = null;
 
-    // Cleanup padding — lava at surface flows outside arena bounds onto
-    // neighboring terrain; cleanup must sweep a padded box to catch overflow.
-    private static final int CLEANUP_PADDING_XZ = 32;
-    private static final int CLEANUP_PADDING_UP = 4;
+    // Cleanup padding — lava at the surface flows outward a handful of blocks
+    // before the source-distance check halts it, so ~12 is plenty. Larger
+    // values turn cleanup into a multi-minute sweep over tens of millions of
+    // empty blocks, which is what we're trying to avoid.
+    private static final int CLEANUP_PADDING_XZ = 12;
+    // Lava flows DOWN not up, so vertical padding is tiny.
+    private static final int CLEANUP_PADDING_UP = 2;
+    private static final int CLEANUP_PADDING_DOWN = 4;
+    // Cleanup runs AFTER mode end — no players fighting — so we can do a huge
+    // batch per tick to finish in a few seconds instead of minutes.
+    private static final int CLEANUP_BATCH_MIN = 50000;
 
     public DoomLavaRise(ChaosCraftPlugin plugin, DoomConfig config, DoomArenaManager arena) {
         this.plugin = plugin;
@@ -386,12 +393,17 @@ public class DoomLavaRise {
         int aMinZ = arena.getMinZ();
         int aMaxZ = arena.getMaxZ();
 
-        // Y range: from the lava start-y (minus a buffer) up to the highest Y
-        // any lava could have reached — include the arena ceiling as an upper
-        // bound in case currentFillY was reset.
-        int highestReached = Math.max(currentFillY, Math.min(config.getLavaRiseMaxY(), arena.getMaxY()));
-        int startY = Math.max(world.getMinHeight(), config.getLavaRiseStartY() - 1);
-        int endY = Math.min(world.getMaxHeight() - 1, highestReached + CLEANUP_PADDING_UP);
+        // Y range: tight to the actual fill range, not the entire arena column.
+        // currentFillY is the next-to-fill Y, so the top lava block is at
+        // currentFillY-1. Lava can flow a few blocks down past the start-y if
+        // terrain dips, hence CLEANUP_PADDING_DOWN. It cannot flow up, so the
+        // up padding is tiny.
+        int startY = Math.max(world.getMinHeight(),
+                config.getLavaRiseStartY() - CLEANUP_PADDING_DOWN);
+        int topFill = (currentFillY > 0)
+                ? currentFillY
+                : Math.min(config.getLavaRiseMaxY(), arena.getMaxY());
+        int endY = Math.min(world.getMaxHeight() - 1, topFill + CLEANUP_PADDING_UP);
 
         // Padded X/Z sweep — extend beyond arena bounds to catch overflow lava
         int sweepMinX = aMinX - CLEANUP_PADDING_XZ;
@@ -399,7 +411,10 @@ public class DoomLavaRise {
         int sweepMinZ = aMinZ - CLEANUP_PADDING_XZ;
         int sweepMaxZ = aMaxZ + CLEANUP_PADDING_XZ;
 
-        int cleanupBatch = Math.max(500, config.getCleanupBlocksPerTick());
+        // Mode has already ended here — no players fighting — so use a huge
+        // batch to finish in seconds, not minutes. Config value still honoured
+        // as a floor if it's higher than CLEANUP_BATCH_MIN.
+        int cleanupBatch = Math.max(CLEANUP_BATCH_MIN, config.getCleanupBlocksPerTick());
 
         if (startY >= endY) {
             plugin.getLogger().warning("[Doom] Cleanup aborted — invalid Y range ("
