@@ -61,17 +61,14 @@ public class DoomLavaRise {
 
     // Fill state
     private boolean active = false;
-    private int currentFillY;
-    private int riseTickCounter = 0;
+    private int currentFillY;      // Y layer currently being swept
     private boolean filling = false;
-
-    // Chunk-batched fill tracking
-    private int fillChunkIndex = 0;
-    private int fillBlocksInCurrentChunk = 0;
-    private int fillBlocksThisTick = 0;
-    private int fillY;
-    private int[][] chunkBounds; // [chunkIdx][minX, maxX, minZ, maxZ] — arena overlap per chunk
-    private int totalChunks;
+    private int riseGapCounter = 0;   // ticks waited since last rise ended
+    private int riseFillCounter = 0;  // ticks elapsed within current rise
+    private int blocksPlacedThisRise = 0; // running count for current rise
+    // Sweep cursor — position within the current Y layer, persists across rises
+    private int sweepX;
+    private int sweepZ;
 
     // Arena dimensions (cached)
     private int minX, maxX, minZ, maxZ;
@@ -96,9 +93,10 @@ public class DoomLavaRise {
     // Lava flows DOWN not up, so vertical padding is tiny.
     private static final int CLEANUP_PADDING_UP = 2;
     private static final int CLEANUP_PADDING_DOWN = 4;
-    // Cleanup runs AFTER mode end — no players fighting — so we can do a huge
-    // batch per tick to finish in a few seconds instead of minutes.
-    private static final int CLEANUP_BATCH_MIN = 50000;
+    // Cleanup runs AFTER mode end — no players fighting — so new configs
+    // default to a huge batch to finish in seconds. But users can still
+    // override below this in doom.yml if they want slower cleanup.
+    private static final int CLEANUP_BATCH_FLOOR = 100;
 
     public DoomLavaRise(ChaosCraftPlugin plugin, DoomConfig config, DoomArenaManager arena) {
         this.plugin = plugin;
@@ -120,9 +118,11 @@ public class DoomLavaRise {
         }
 
         currentFillY = config.getLavaRiseStartY();
-        riseTickCounter = 0;
         filling = false;
         active = true;
+        riseGapCounter = 0;
+        riseFillCounter = 0;
+        blocksPlacedThisRise = 0;
 
         // Cache arena dimensions
         minX = arena.getMinX();
@@ -133,10 +133,9 @@ public class DoomLavaRise {
         zWidth = maxZ - minZ + 1;
         totalBlocksPerLevel = xWidth * zWidth;
 
-        // Pre-compute chunk bounds — which chunks does the arena span, and what's the
-        // X/Z overlap within each chunk? This lets us iterate chunk-by-chunk instead of
-        // doing per-block chunk lookups.
-        buildChunkBounds();
+        // Reset sweep cursor to arena's NW corner
+        sweepX = minX;
+        sweepZ = minZ;
 
         // Pre-load all arena chunks to avoid stalls during fill
         preloadArenaChunks();
@@ -156,45 +155,10 @@ public class DoomLavaRise {
         plugin.getLogger().info("[Doom] Lava rise started at Y=" + currentFillY
                 + ", max Y=" + config.getLavaRiseMaxY()
                 + ", arena=" + xWidth + "x" + zWidth + " (" + totalBlocksPerLevel + " blocks/level)"
-                + ", fill batch=" + config.getBlocksPerLevelTick() + " blocks/tick"
-                + ", cleanup batch=" + config.getCleanupBlocksPerTick() + " blocks/tick"
-                + ", interval=" + config.getRiseIntervalTicks() + " ticks"
-                + ", chunks=" + totalChunks);
-    }
-
-    /**
-     * Build a lookup table of chunk boundaries that overlap the arena.
-     * For each chunk, store the X/Z range of arena blocks within that chunk.
-     * This eliminates per-block chunk lookups during fill/cleanup.
-     */
-    private void buildChunkBounds() {
-        int minChunkX = minX >> 4;
-        int maxChunkX = maxX >> 4;
-        int minChunkZ = minZ >> 4;
-        int maxChunkZ = maxZ >> 4;
-
-        int chunkCountX = maxChunkX - minChunkX + 1;
-        int chunkCountZ = maxChunkZ - minChunkZ + 1;
-        totalChunks = chunkCountX * chunkCountZ;
-
-        chunkBounds = new int[totalChunks][4]; // [localMinX, localMaxX, localMinZ, localMaxZ]
-
-        int idx = 0;
-        for (int cx = minChunkX; cx <= maxChunkX; cx++) {
-            for (int cz = minChunkZ; cz <= maxChunkZ; cz++) {
-                int chunkWorldMinX = cx << 4;
-                int chunkWorldMaxX = chunkWorldMinX + 15;
-                int chunkWorldMinZ = cz << 4;
-                int chunkWorldMaxZ = chunkWorldMinZ + 15;
-
-                // Clamp to arena bounds
-                chunkBounds[idx][0] = Math.max(minX, chunkWorldMinX);
-                chunkBounds[idx][1] = Math.min(maxX, chunkWorldMaxX);
-                chunkBounds[idx][2] = Math.max(minZ, chunkWorldMinZ);
-                chunkBounds[idx][3] = Math.min(maxZ, chunkWorldMaxZ);
-                idx++;
-            }
-        }
+                + ", blocks-per-rise=" + config.getBlocksPerRise()
+                + ", ticks-per-rise=" + config.getTicksPerRise()
+                + ", rise-interval=" + config.getRiseIntervalTicks()
+                + ", rise-amount=" + config.getRiseAmount());
     }
 
     /**
@@ -221,118 +185,94 @@ public class DoomLavaRise {
 
     /**
      * Called every tick from DoomMode.onTick().
-     * Handles both the fill batching and rise timing.
+     *
+     * <p>Cycle: IDLE (waiting rise-interval-ticks) → FILLING (placing
+     * blocks-per-rise blocks spread across ticks-per-rise ticks) → IDLE …
+     *
+     * <p>The sweep cursor (sweepX/sweepZ/currentFillY) persists between rises
+     * so each rise picks up where the last one left off. When the current Y
+     * layer is fully swept, Y advances by rise-amount.
      */
     public void tick() {
         if (!active) return;
 
-        if (filling) {
-            processFillBatch();
-        } else {
-            riseTickCounter++;
-            if (riseTickCounter >= config.getRiseIntervalTicks()) {
-                riseTickCounter = 0;
-                triggerRise();
+        int maxY = Math.min(config.getLavaRiseMaxY(), arena.getMaxY());
+        if (currentFillY > maxY) return; // reached ceiling
+
+        if (!filling) {
+            riseGapCounter++;
+            if (riseGapCounter >= config.getRiseIntervalTicks()) {
+                riseGapCounter = 0;
+                filling = true;
+                riseFillCounter = 0;
+                blocksPlacedThisRise = 0;
+            } else {
+                return;
             }
         }
+
+        processFillTick(maxY);
     }
 
     /**
-     * Trigger a new lava rise — advances the fill Y and begins filling.
-     */
-    private void triggerRise() {
-        int maxY = Math.min(config.getLavaRiseMaxY(), arena.getMaxY());
-
-        if (currentFillY >= maxY) {
-            plugin.debug("[Doom] Lava has reached max Y=" + maxY + ". Rise complete.");
-            return;
-        }
-
-        fillY = currentFillY;
-        int riseAmount = config.getRiseAmount();
-
-        // For multi-level rises, fill each level sequentially
-        // Start with the current level
-        filling = true;
-        fillChunkIndex = 0;
-        fillBlocksInCurrentChunk = 0;
-
-        currentFillY = Math.min(currentFillY + riseAmount, maxY);
-
-        plugin.debug("[Doom] Lava rising: filling Y=" + fillY + " to Y=" + (currentFillY - 1));
-    }
-
-    /**
-     * Process a batch of blocks for the current fill level(s).
-     * Iterates chunk-by-chunk for maximum cache locality.
+     * Place this tick's share of the current rise's block budget.
      *
-     * <p>Instead of world.getBlockAt() per block (which does a chunk lookup each time),
-     * we get the chunk once, then iterate all blocks within that chunk's arena overlap.
-     * This is 5-10x faster for large arenas.
+     * <p>blocks-per-rise is auto-divided across ticks-per-rise. We use a
+     * running target so non-even divisions still add up exactly:
+     * targetByTickN = ceil(blocksPerRise * (tickN+1) / ticksPerRise).
      */
-    private void processFillBatch() {
+    private void processFillTick(int maxY) {
         World world = arena.getArenaWorld();
         if (world == null) {
             filling = false;
             return;
         }
 
-        int batchSize = config.getBlocksPerLevelTick();
-        fillBlocksThisTick = 0;
+        int blocksPerRise = Math.max(1, config.getBlocksPerRise());
+        int ticksPerRise = Math.max(1, config.getTicksPerRise());
 
-        while (fillBlocksThisTick < batchSize && fillChunkIndex < totalChunks) {
-            int[] bounds = chunkBounds[fillChunkIndex];
-            int cMinX = bounds[0], cMaxX = bounds[1], cMinZ = bounds[2], cMaxZ = bounds[3];
-            int chunkWidth = cMaxX - cMinX + 1;
-            int chunkDepth = cMaxZ - cMinZ + 1;
-            int blocksInThisChunk = chunkWidth * chunkDepth;
+        // How many blocks should have been placed by the END of this tick
+        int targetByEndOfTick = (int) Math.ceil(
+                (double) blocksPerRise * (riseFillCounter + 1) / ticksPerRise);
+        if (targetByEndOfTick > blocksPerRise) targetByEndOfTick = blocksPerRise;
+        int blocksThisTick = targetByEndOfTick - blocksPlacedThisRise;
 
-            // How many Y levels are we filling this rise?
-            int startFillY = fillY;
-            int endFillY = currentFillY - 1;
+        ServerLevel nmsLevel = ((CraftWorld) world).getHandle();
+        for (int i = 0; i < blocksThisTick; i++) {
+            if (currentFillY > maxY) {
+                // Reached ceiling mid-tick — stop
+                filling = false;
+                return;
+            }
 
-            // Process blocks within this chunk
-            while (fillBlocksInCurrentChunk < blocksInThisChunk * (endFillY - startFillY + 1)
-                    && fillBlocksThisTick < batchSize) {
+            // Place lava at the current sweep cursor (if air)
+            BlockPos pos = new BlockPos(sweepX, currentFillY, sweepZ);
+            BlockState existing = nmsLevel.getBlockState(pos);
+            if (existing.isAir()) {
+                nmsLevel.setBlock(pos, NMS_LAVA, FAST_PLACE_FLAGS);
+            }
 
-                // Decompose linear index into x, z, y within this chunk's arena region
-                int levelBlocks = chunkWidth * chunkDepth;
-                int yOffset = fillBlocksInCurrentChunk / levelBlocks;
-                int posInLevel = fillBlocksInCurrentChunk % levelBlocks;
-                int x = cMinX + (posInLevel % chunkWidth);
-                int z = cMinZ + (posInLevel / chunkWidth);
-                int y = startFillY + yOffset;
-
-                if (y <= endFillY) {
-                    // Fast NMS path — skip neighbor/shape/drop updates but still
-                    // notify clients so they render the lava. This dramatically
-                    // reduces per-tick work vs Bukkit setType() when thousands
-                    // of blocks flip in one tick.
-                    ServerLevel nmsLevel = ((CraftWorld) world).getHandle();
-                    BlockPos pos = new BlockPos(x, y, z);
-                    BlockState existing = nmsLevel.getBlockState(pos);
-                    if (existing.isAir()) {
-                        nmsLevel.setBlock(pos, NMS_LAVA, FAST_PLACE_FLAGS);
-                    }
+            // Advance sweep cursor: X → Z → Y
+            sweepX++;
+            if (sweepX > maxX) {
+                sweepX = minX;
+                sweepZ++;
+                if (sweepZ > maxZ) {
+                    // Layer fully swept — advance Y by rise-amount, reset XZ
+                    sweepZ = minZ;
+                    currentFillY += config.getRiseAmount();
+                    plugin.debug("[Doom] Lava layer complete — advancing to Y=" + currentFillY);
                 }
-
-                fillBlocksInCurrentChunk++;
-                fillBlocksThisTick++;
             }
 
-            // Check if we've finished this chunk
-            int totalInChunk = blocksInThisChunk * (endFillY - startFillY + 1);
-            if (fillBlocksInCurrentChunk >= totalInChunk) {
-                fillChunkIndex++;
-                fillBlocksInCurrentChunk = 0;
-            }
+            blocksPlacedThisRise++;
         }
 
-        // Check if all chunks for this rise are done
-        if (fillChunkIndex >= totalChunks) {
+        riseFillCounter++;
+
+        // Rise done when we've placed the full budget OR ran out of ticks
+        if (blocksPlacedThisRise >= blocksPerRise || riseFillCounter >= ticksPerRise) {
             filling = false;
-            plugin.debug("[Doom] Fill complete: Y=" + fillY + " to Y=" + (currentFillY - 1)
-                    + " (" + totalBlocksPerLevel + " blocks/level)");
         }
     }
 
@@ -411,10 +351,9 @@ public class DoomLavaRise {
         int sweepMinZ = aMinZ - CLEANUP_PADDING_XZ;
         int sweepMaxZ = aMaxZ + CLEANUP_PADDING_XZ;
 
-        // Mode has already ended here — no players fighting — so use a huge
-        // batch to finish in seconds, not minutes. Config value still honoured
-        // as a floor if it's higher than CLEANUP_BATCH_MIN.
-        int cleanupBatch = Math.max(CLEANUP_BATCH_MIN, config.getCleanupBlocksPerTick());
+        // Config value is honoured directly — tiny floor just to prevent 0/
+        // negative values from freezing cleanup entirely.
+        int cleanupBatch = Math.max(CLEANUP_BATCH_FLOOR, config.getCleanupBlocksPerTick());
 
         if (startY >= endY) {
             plugin.getLogger().warning("[Doom] Cleanup aborted — invalid Y range ("

@@ -91,10 +91,12 @@ public class DoomConfig {
         if (!config.contains("lava-rise.start-y")) { config.set("lava-rise.start-y", 0); needsSave = true; }
         if (!config.contains("lava-rise.max-y")) { config.set("lava-rise.max-y", 100); needsSave = true; }
         if (!config.contains("lava-rise.blocks-per-level-tick")) { config.set("lava-rise.blocks-per-level-tick", 400); needsSave = true; }
-        if (!config.contains("lava-rise.rise-interval-ticks")) { config.set("lava-rise.rise-interval-ticks", 200); needsSave = true; }
+        if (!config.contains("lava-rise.blocks-per-rise")) { config.set("lava-rise.blocks-per-rise", 1000); needsSave = true; }
+        if (!config.contains("lava-rise.ticks-per-rise")) { config.set("lava-rise.ticks-per-rise", 20); needsSave = true; }
+        if (!config.contains("lava-rise.rise-interval-ticks")) { config.set("lava-rise.rise-interval-ticks", 20); needsSave = true; }
         if (!config.contains("lava-rise.rise-amount")) { config.set("lava-rise.rise-amount", 1); needsSave = true; }
         if (!config.contains("lava-rise.cleanup-on-end")) { config.set("lava-rise.cleanup-on-end", true); needsSave = true; }
-        if (!config.contains("lava-rise.cleanup-blocks-per-tick")) { config.set("lava-rise.cleanup-blocks-per-tick", 5000); needsSave = true; }
+        if (!config.contains("lava-rise.cleanup-blocks-per-tick")) { config.set("lava-rise.cleanup-blocks-per-tick", 50000); needsSave = true; }
 
         // ── Doom-specific: lava damage ──────────────────────────────────
         if (!config.contains("lava-damage.enabled")) { config.set("lava-damage.enabled", true); needsSave = true; }
@@ -213,7 +215,9 @@ public class DoomConfig {
     public int getLavaRiseStartY() { return config.getInt("lava-rise.start-y", 0); }
     public int getLavaRiseMaxY() { return config.getInt("lava-rise.max-y", 100); }
     public int getBlocksPerLevelTick() { return config.getInt("lava-rise.blocks-per-level-tick", 5000); }
-    public int getRiseIntervalTicks() { return config.getInt("lava-rise.rise-interval-ticks", 200); }
+    public int getBlocksPerRise() { return config.getInt("lava-rise.blocks-per-rise", 1000); }
+    public int getTicksPerRise() { return config.getInt("lava-rise.ticks-per-rise", 20); }
+    public int getRiseIntervalTicks() { return config.getInt("lava-rise.rise-interval-ticks", 20); }
     public int getRiseAmount() { return config.getInt("lava-rise.rise-amount", 1); }
     public boolean isCleanupOnEnd() { return config.getBoolean("lava-rise.cleanup-on-end", true); }
     public int getCleanupBlocksPerTick() { return config.getInt("lava-rise.cleanup-blocks-per-tick", 5000); }
@@ -316,30 +320,42 @@ public class DoomConfig {
                 "Set this to the ceiling of your arena or slightly below."));
         defaults.set("lava-rise.blocks-per-level-tick", 500);
         defaults.setComments("lava-rise.blocks-per-level-tick", List.of(
-                "How many blocks are processed per server tick when filling a lava layer.",
-                "Higher = faster fill but more work per tick. 500 = a 100x100 arena fills",
-                "one Y level in 20 ticks (1 second). Increase for larger arenas.",
-                "This is the key performance setting — keep it at 500-1000 for smooth performance."));
-        defaults.set("lava-rise.rise-interval-ticks", 200);
+                "DEPRECATED — no longer used. See blocks-per-rise / ticks-per-rise below.",
+                "Kept in config for backwards compatibility only."));
+        defaults.set("lava-rise.blocks-per-rise", 1000);
+        defaults.setComments("lava-rise.blocks-per-rise", List.of(
+                "How many blocks to place per rise event.",
+                "The arena's current Y layer is swept sequentially — each rise places the",
+                "next N blocks and stops. When the whole layer is filled, Y advances by",
+                "rise-amount and the sweep continues on the next layer.",
+                "Example: layer has 62,000 blocks, blocks-per-rise = 1000 → 62 rises per layer."));
+        defaults.set("lava-rise.ticks-per-rise", 20);
+        defaults.setComments("lava-rise.ticks-per-rise", List.of(
+                "Spread blocks-per-rise across this many ticks. 20 ticks = 1 second.",
+                "Example: blocks-per-rise = 1000, ticks-per-rise = 20 → 50 blocks/tick",
+                "for 20 ticks, then the rise is complete. Server load is auto-divided.",
+                "Lower values = faster placement but bigger per-tick work."));
+        defaults.set("lava-rise.rise-interval-ticks", 20);
         defaults.setComments("lava-rise.rise-interval-ticks", List.of(
-                "Ticks between each lava rise. 20 ticks = 1 second.",
-                "200 = lava rises every 10 seconds. Lower = more intense.",
-                "Recommended: 100 (5 sec, aggressive) to 400 (20 sec, relaxed)."));
+                "Ticks to wait BETWEEN rise events (after one completes, before next starts).",
+                "20 ticks = 1 second gap. 0 = rises back-to-back with no pause.",
+                "Total cycle time = ticks-per-rise + rise-interval-ticks."));
         defaults.set("lava-rise.rise-amount", 1);
         defaults.setComments("lava-rise.rise-amount", List.of(
-                "How many Y levels the lava rises each interval.",
+                "How many Y levels to advance when the current layer is FULLY filled.",
                 "1 = one block layer per interval. 2 = two layers (faster rise)."));
         defaults.set("lava-rise.cleanup-on-end", true);
         defaults.setComments("lava-rise.cleanup-on-end", List.of(
                 "Whether to remove all lava blocks when the mode ends.",
                 "Uses the same batched approach for lag-free cleanup.",
                 "Set to false if you want to manually reset the arena (e.g. with WorldEdit)."));
-        defaults.set("lava-rise.cleanup-blocks-per-tick", 5000);
+        defaults.set("lava-rise.cleanup-blocks-per-tick", 50000);
         defaults.setComments("lava-rise.cleanup-blocks-per-tick", List.of(
                 "How many blocks to process per tick during lava cleanup.",
-                "Separate from the fill batch size so you can clean up faster/slower than fill.",
-                "5000 = a 100x100 arena cleans one Y level in 2 ticks.",
-                "10000 = instant cleanup per level (may cause brief TPS dip on very large arenas)."));
+                "Cleanup runs AFTER the mode ends, so no players are fighting —",
+                "a large batch finishes quickly without affecting gameplay.",
+                "50000 = a large arena cleans in a few seconds.",
+                "5000-10000 = slower, gentler on server during cleanup."));
 
         // ── Lava Damage ──────────────────────────────────────────────────
         defaults.set("lava-damage.enabled", true);

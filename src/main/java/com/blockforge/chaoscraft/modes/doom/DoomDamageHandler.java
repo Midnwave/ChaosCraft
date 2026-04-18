@@ -1,10 +1,13 @@
 package com.blockforge.chaoscraft.modes.doom;
 
 import com.blockforge.chaoscraft.ChaosCraftPlugin;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockFormEvent;
+import org.bukkit.event.block.BlockFromToEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 
 import java.util.HashMap;
@@ -92,5 +95,38 @@ public class DoomDamageHandler implements Listener {
 
         // Set cooldown
         lavaDamageCooldowns.put(uuid, config.getLavaDamageIntervalTicks());
+    }
+
+    /**
+     * Cancel lava→stone / lava→cobblestone / lava→obsidian formations that
+     * happen when rising lava meets water. During Doom Mode the arena should
+     * stay full of pure lava — solid floating stone/obsidian chunks break the
+     * visual and let players stand safely.
+     */
+    @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
+    public void onBlockForm(BlockFormEvent event) {
+        if (!active) return;
+        Material result = event.getNewState().getType();
+        if (result == Material.STONE
+                || result == Material.COBBLESTONE
+                || result == Material.OBSIDIAN
+                || result == Material.BASALT) {
+            event.setCancelled(true);
+        }
+    }
+
+    /**
+     * Cancel lava flowing (source-distance spread). The mode's own fill logic
+     * places lava blocks directly where we want them — we don't need vanilla's
+     * flow simulation propagating lava outside the arena bounds, which would
+     * also cause surface FPS spikes as the flow front expanded block by block.
+     */
+    @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
+    public void onBlockFromTo(BlockFromToEvent event) {
+        if (!active) return;
+        Material src = event.getBlock().getType();
+        if (src == Material.LAVA) {
+            event.setCancelled(true);
+        }
     }
 }
