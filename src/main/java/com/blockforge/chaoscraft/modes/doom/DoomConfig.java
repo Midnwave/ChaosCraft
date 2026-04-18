@@ -104,8 +104,8 @@ public class DoomConfig {
         if (!config.contains("lava-damage.damage-interval-ticks")) { config.set("lava-damage.damage-interval-ticks", 20); needsSave = true; }
 
         // ── Spawning ────────────────────────────────────────────────────
-        if (!config.contains("spawn.base-interval-ticks")) { config.set("spawn.base-interval-ticks", 50); needsSave = true; }
-        if (!config.contains("spawn.max-events-per-player")) { config.set("spawn.max-events-per-player", 5); needsSave = true; }
+        if (!config.contains("spawn.base-interval-ticks")) { config.set("spawn.base-interval-ticks", 80); needsSave = true; }
+        if (!config.contains("spawn.max-events-per-player")) { config.set("spawn.max-events-per-player", 3); needsSave = true; }
         if (!config.contains("spawn.offset-radius")) { config.set("spawn.offset-radius", 10.0); needsSave = true; }
         if (!config.contains("spawn.type-weights.block-display")) { config.set("spawn.type-weights.block-display", 0.45); needsSave = true; }
         if (!config.contains("spawn.type-weights.environmental")) { config.set("spawn.type-weights.environmental", 0.35); needsSave = true; }

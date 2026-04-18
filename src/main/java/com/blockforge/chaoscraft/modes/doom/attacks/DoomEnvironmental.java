@@ -1172,25 +1172,23 @@ public final class DoomEnvironmental {
                         new Vector3f(s, s, s), 4);
             }
 
-            // CONTINUOUS ring visualization — 12 dust markers at strike positions
-            if (tick % 2 == 0) {
+            // CONTINUOUS ring visualization — 12 dust markers at strike positions.
+            // Throttled to every 4 ticks (was 2) and only 1 vertical tracer
+            // per point instead of 3 — this cut the particle packet rate
+            // from ~48/tick down to ~6/tick for this attack alone.
+            if (tick % 4 == 0) {
                 for (int i = 0; i < RING_POINTS; i++) {
                     double angle = Math.PI * 2 * i / RING_POINTS;
                     double px = Math.cos(angle) * radius;
                     double pz = Math.sin(angle) * radius;
                     Location ringLoc = getCenter().clone().add(px, 0.2, pz);
-                    DisplayBuilder.dustParticles(ringLoc, 2, 0.15, 255, 200, 255, 1.4f);
-                    // Vertical tracer line low to the ground
-                    for (int y = 0; y < 3; y++) {
-                        DisplayBuilder.dustParticles(ringLoc.clone().add(0, y * 0.8, 0),
-                                1, 0.1, 180, 180, 255, 1.0f);
-                    }
+                    DisplayBuilder.dustParticles(ringLoc, 1, 0.15, 255, 200, 255, 1.4f);
                 }
             }
 
-            // NONSTOP strikes — every 4 ticks, pick 2 random ring positions and strike
-            if (tick % 4 == 0) {
-                int strikesThisPhase = 2 + (int) (Math.random() * 2); // 2-3 per phase
+            // Strikes every 6 ticks — still feels continuous, ~33% less packet spam
+            if (tick % 6 == 0) {
+                int strikesThisPhase = 1 + (int) (Math.random() * 2); // 1-2 per phase
                 for (int s = 0; s < strikesThisPhase; s++) {
                     int ringIdx = (int) (Math.random() * RING_POINTS);
                     double angle = Math.PI * 2 * ringIdx / RING_POINTS

@@ -8,6 +8,8 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockFormEvent;
 import org.bukkit.event.block.BlockFromToEvent;
+import org.bukkit.event.block.BlockPhysicsEvent;
+import org.bukkit.event.block.BlockSpreadEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 
 import java.util.HashMap;
@@ -126,6 +128,34 @@ public class DoomDamageHandler implements Listener {
         if (!active) return;
         Material src = event.getBlock().getType();
         if (src == Material.LAVA) {
+            event.setCancelled(true);
+        }
+    }
+
+    /**
+     * Cancel physics ticks on lava blocks so the fluid-flow rescheduling loop
+     * stops entirely — when a neighbor changes, LiquidBlock.neighborChanged
+     * normally re-schedules a fluid tick to try to spread again, so even with
+     * BlockFromToEvent cancelled we'd still be burning CPU / packets on the
+     * perpetual reschedule. Cancelling physics for lava stops that dead.
+     */
+    @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
+    public void onBlockPhysics(BlockPhysicsEvent event) {
+        if (!active) return;
+        if (event.getBlock().getType() == Material.LAVA) {
+            event.setCancelled(true);
+        }
+    }
+
+    /**
+     * Cancel lava "spread" events (BlockSpreadEvent covers some fluid edge
+     * cases that BlockFromTo doesn't on Paper).
+     */
+    @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
+    public void onBlockSpread(BlockSpreadEvent event) {
+        if (!active) return;
+        if (event.getSource().getType() == Material.LAVA
+                || event.getNewState().getType() == Material.LAVA) {
             event.setCancelled(true);
         }
     }
