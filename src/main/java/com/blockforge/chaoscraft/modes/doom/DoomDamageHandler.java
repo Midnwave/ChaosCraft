@@ -1,7 +1,9 @@
 package com.blockforge.chaoscraft.modes.doom;
 
 import com.blockforge.chaoscraft.ChaosCraftPlugin;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -32,6 +34,10 @@ public class DoomDamageHandler implements Listener {
     private final DoomConfig config;
 
     private boolean active = false;
+    // Listeners stay armed for 60 seconds AFTER mode stop, so any residual
+    // lava-cooling events fired during cleanup still get cancelled + reverted.
+    private long listenerUntilMillis = 0;
+    private static final long GRACE_PERIOD_MILLIS = 60_000L;
     private final Map<UUID, Integer> lavaDamageCooldowns = new HashMap<>();
 
     public DoomDamageHandler(ChaosCraftPlugin plugin, DoomConfig config) {
@@ -44,15 +50,39 @@ public class DoomDamageHandler implements Listener {
      */
     public void start() {
         active = true;
+        listenerUntilMillis = Long.MAX_VALUE;
         lavaDamageCooldowns.clear();
     }
 
     /**
-     * Deactivate the damage handler. Call on mode end.
+     * Deactivate the damage handler. Lava-cancel listeners stay armed for
+     * {@link #GRACE_PERIOD_MILLIS} after this call so they catch any late
+     * block-form events during/after cleanup.
      */
     public void stop() {
         active = false;
+        listenerUntilMillis = System.currentTimeMillis() + GRACE_PERIOD_MILLIS;
         lavaDamageCooldowns.clear();
+    }
+
+    /**
+     * True while the mode is active OR we're within the post-stop grace period.
+     * Lava-cancel listeners use this instead of {@code active} so they stay
+     * armed during and right after cleanup.
+     */
+    private boolean listenerArmed() {
+        return active || System.currentTimeMillis() < listenerUntilMillis;
+    }
+
+    /**
+     * Returns true if the material is a "lava cooling product" block that
+     * should never appear in a doom-arena where we want pure lava.
+     */
+    private static boolean isCoolingProduct(Material m) {
+        return m == Material.STONE
+                || m == Material.COBBLESTONE
+                || m == Material.OBSIDIAN
+                || m == Material.BASALT;
     }
 
     /**
@@ -107,14 +137,30 @@ public class DoomDamageHandler implements Listener {
      */
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     public void onBlockForm(BlockFormEvent event) {
-        if (!active) return;
-        Material result = event.getNewState().getType();
-        if (result == Material.STONE
-                || result == Material.COBBLESTONE
-                || result == Material.OBSIDIAN
-                || result == Material.BASALT) {
+        if (!listenerArmed()) return;
+        if (isCoolingProduct(event.getNewState().getType())) {
             event.setCancelled(true);
         }
+    }
+
+    /**
+     * Safety net — MONITOR runs after all cancels. If a cooling block somehow
+     * still made it into the world (plugin bypass, world-gen, pre-existing
+     * lava-water interaction at mode start), revert it to LAVA on the next tick.
+     * No-ops if our HIGH-priority cancel already fired, since the block
+     * wouldn't be the cooling material anymore.
+     */
+    @EventHandler(priority = EventPriority.MONITOR)
+    public void onBlockFormRevert(BlockFormEvent event) {
+        if (!listenerArmed()) return;
+        if (event.isCancelled()) return;
+        if (!isCoolingProduct(event.getNewState().getType())) return;
+        Block b = event.getBlock();
+        Bukkit.getScheduler().runTaskLater(plugin, () -> {
+            if (isCoolingProduct(b.getType())) {
+                b.setType(Material.LAVA, false);
+            }
+        }, 1L);
     }
 
     /**
@@ -125,7 +171,7 @@ public class DoomDamageHandler implements Listener {
      */
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     public void onBlockFromTo(BlockFromToEvent event) {
-        if (!active) return;
+        if (!listenerArmed()) return;
         Material src = event.getBlock().getType();
         if (src == Material.LAVA) {
             event.setCancelled(true);
@@ -141,7 +187,7 @@ public class DoomDamageHandler implements Listener {
      */
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     public void onBlockPhysics(BlockPhysicsEvent event) {
-        if (!active) return;
+        if (!listenerArmed()) return;
         if (event.getBlock().getType() == Material.LAVA) {
             event.setCancelled(true);
         }
@@ -153,7 +199,7 @@ public class DoomDamageHandler implements Listener {
      */
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     public void onBlockSpread(BlockSpreadEvent event) {
-        if (!active) return;
+        if (!listenerArmed()) return;
         if (event.getSource().getType() == Material.LAVA
                 || event.getNewState().getType() == Material.LAVA) {
             event.setCancelled(true);
