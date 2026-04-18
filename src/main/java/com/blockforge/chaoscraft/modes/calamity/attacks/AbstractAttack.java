@@ -190,12 +190,41 @@ public abstract class AbstractAttack {
         World world = center.getWorld();
         for (Player player : world.getPlayers()) {
             if (isExempt(player)) continue;
-            if (player.getLocation().distanceSquared(center) <= radius * radius) {
+            if (isInCylinderRange(player.getLocation(), center, radius)) {
                 // Use Minecraft damage pipeline — respects armor, resistance, enchantments
                 player.damage(damage);
                 player.setNoDamageTicks(0); // Allow rapid hits from overlapping attacks
             }
         }
+    }
+
+    // ========================
+    // Range checks
+    // ========================
+
+    /**
+     * Extra Y tolerance beyond the attack's radius. A player is "in range"
+     * if their horizontal (XZ) distance is within the radius AND their
+     * vertical distance is within max(radius, Y_TOLERANCE). This is a
+     * cylinder-with-soft-top check instead of a strict sphere — lets players
+     * take damage when they're a few blocks above/below the attack Y level
+     * (e.g. jumping, standing on a small platform) without having to be
+     * exactly at the attack's Y.
+     */
+    private static final double Y_TOLERANCE = 6.0;
+
+    /**
+     * Check if a location is within the attack's cylinder range.
+     * Horizontal (XZ) is strict — must be within radius.
+     * Vertical (Y) allows up to max(radius, Y_TOLERANCE) blocks difference.
+     */
+    protected boolean isInCylinderRange(Location loc, Location attackCenter, double radius) {
+        if (loc.getWorld() != attackCenter.getWorld()) return false;
+        double dx = loc.getX() - attackCenter.getX();
+        double dz = loc.getZ() - attackCenter.getZ();
+        if (dx * dx + dz * dz > radius * radius) return false;
+        double dy = Math.abs(loc.getY() - attackCenter.getY());
+        return dy <= Math.max(radius, Y_TOLERANCE);
     }
 
     // ========================

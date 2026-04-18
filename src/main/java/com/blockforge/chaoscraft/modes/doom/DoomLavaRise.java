@@ -1,6 +1,10 @@
 package com.blockforge.chaoscraft.modes.doom;
 
 import com.blockforge.chaoscraft.ChaosCraftPlugin;
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.GameRule;
@@ -8,6 +12,7 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.BlockData;
+import org.bukkit.craftbukkit.CraftWorld;
 
 /**
  * Lagless rising lava system for Doom Mode.
@@ -41,6 +46,18 @@ public class DoomLavaRise {
     // Pre-cached lava block data (avoid re-creating each call)
     private static final BlockData LAVA_DATA = Material.LAVA.createBlockData();
     private static final BlockData AIR_DATA = Material.AIR.createBlockData();
+
+    // NMS lava source state (shared immutable instance)
+    private static final BlockState NMS_LAVA = Blocks.LAVA.defaultBlockState();
+    private static final BlockState NMS_AIR = Blocks.AIR.defaultBlockState();
+
+    // Block-update flag bits for ServerLevel.setBlock():
+    //   1 = UPDATE_NEIGHBORS   2 = UPDATE_CLIENTS   16 = UPDATE_KNOWN_SHAPE
+    //  32 = UPDATE_SUPPRESS_DROPS
+    // We want clients to see the change but skip every neighbor/shape/drop
+    // update (those are what cause the split-second FPS spike when a full
+    // layer fills at once).
+    private static final int FAST_PLACE_FLAGS = 2 | 16 | 32;
 
     // Fill state
     private boolean active = false;
@@ -280,9 +297,15 @@ public class DoomLavaRise {
                 int y = startFillY + yOffset;
 
                 if (y <= endFillY) {
-                    Block block = world.getBlockAt(x, y, z);
-                    if (block.getType().isAir()) {
-                        block.setType(Material.LAVA, false);
+                    // Fast NMS path — skip neighbor/shape/drop updates but still
+                    // notify clients so they render the lava. This dramatically
+                    // reduces per-tick work vs Bukkit setType() when thousands
+                    // of blocks flip in one tick.
+                    ServerLevel nmsLevel = ((CraftWorld) world).getHandle();
+                    BlockPos pos = new BlockPos(x, y, z);
+                    BlockState existing = nmsLevel.getBlockState(pos);
+                    if (existing.isAir()) {
+                        nmsLevel.setBlock(pos, NMS_LAVA, FAST_PLACE_FLAGS);
                     }
                 }
 
@@ -346,21 +369,41 @@ public class DoomLavaRise {
         }
 
         World world = arena.getArenaWorld();
-        if (world == null) return;
+        if (world == null) {
+            plugin.getLogger().warning("[Doom] Cleanup aborted — arena world null.");
+            return;
+        }
 
+        // Always read arena bounds fresh from the arena manager — the cached
+        // fields are only set in start(), so if start() was short-circuited or
+        // cleanup runs in an unexpected order we'd otherwise sweep an empty box.
+        if (!arena.isConfigured()) {
+            plugin.getLogger().warning("[Doom] Cleanup aborted — arena not configured.");
+            return;
+        }
+        int aMinX = arena.getMinX();
+        int aMaxX = arena.getMaxX();
+        int aMinZ = arena.getMinZ();
+        int aMaxZ = arena.getMaxZ();
+
+        // Y range: from the lava start-y (minus a buffer) up to the highest Y
+        // any lava could have reached — include the arena ceiling as an upper
+        // bound in case currentFillY was reset.
+        int highestReached = Math.max(currentFillY, Math.min(config.getLavaRiseMaxY(), arena.getMaxY()));
         int startY = Math.max(world.getMinHeight(), config.getLavaRiseStartY() - 1);
-        int endY = Math.min(world.getMaxHeight() - 1, currentFillY + CLEANUP_PADDING_UP);
+        int endY = Math.min(world.getMaxHeight() - 1, highestReached + CLEANUP_PADDING_UP);
 
         // Padded X/Z sweep — extend beyond arena bounds to catch overflow lava
-        int sweepMinX = minX - CLEANUP_PADDING_XZ;
-        int sweepMaxX = maxX + CLEANUP_PADDING_XZ;
-        int sweepMinZ = minZ - CLEANUP_PADDING_XZ;
-        int sweepMaxZ = maxZ + CLEANUP_PADDING_XZ;
+        int sweepMinX = aMinX - CLEANUP_PADDING_XZ;
+        int sweepMaxX = aMaxX + CLEANUP_PADDING_XZ;
+        int sweepMinZ = aMinZ - CLEANUP_PADDING_XZ;
+        int sweepMaxZ = aMaxZ + CLEANUP_PADDING_XZ;
 
-        int cleanupBatch = config.getCleanupBlocksPerTick();
+        int cleanupBatch = Math.max(500, config.getCleanupBlocksPerTick());
 
         if (startY >= endY) {
-            plugin.debug("[Doom] Nothing to clean up (startY >= endY).");
+            plugin.getLogger().warning("[Doom] Cleanup aborted — invalid Y range ("
+                    + startY + " >= " + endY + ").");
             return;
         }
 
@@ -390,10 +433,11 @@ public class DoomLavaRise {
                     return;
                 }
 
-                Block block = w.getBlockAt(x, y, z);
-                Material type = block.getType();
-                if (type == Material.LAVA || type == Material.FIRE) {
-                    block.setType(Material.AIR, false);
+                ServerLevel nmsLevel = ((CraftWorld) w).getHandle();
+                BlockPos pos = new BlockPos(x, y, z);
+                BlockState existing = nmsLevel.getBlockState(pos);
+                if (existing.is(Blocks.LAVA) || existing.is(Blocks.FIRE)) {
+                    nmsLevel.setBlock(pos, NMS_AIR, FAST_PLACE_FLAGS);
                 }
 
                 // Advance cursor: x → z → y
