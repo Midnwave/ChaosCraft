@@ -3,6 +3,7 @@ package com.blockforge.chaoscraft.modes.doom;
 import com.blockforge.chaoscraft.ChaosCraftPlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
+import org.bukkit.GameRule;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -66,6 +67,15 @@ public class DoomLavaRise {
     private int cleanupChunkIndex = 0;
     private int cleanupBlocksInCurrentChunk = 0;
 
+    // Saved gamerule state (restored on stop to avoid permanent world changes)
+    private Boolean savedDoFireTick = null;
+    private Boolean savedMobGriefing = null;
+
+    // Cleanup padding — lava at surface flows outside arena bounds onto
+    // neighboring terrain; cleanup must sweep a padded box to catch overflow.
+    private static final int CLEANUP_PADDING_XZ = 32;
+    private static final int CLEANUP_PADDING_UP = 4;
+
     public DoomLavaRise(ChaosCraftPlugin plugin, DoomConfig config, DoomArenaManager arena) {
         this.plugin = plugin;
         this.config = config;
@@ -106,6 +116,18 @@ public class DoomLavaRise {
 
         // Pre-load all arena chunks to avoid stalls during fill
         preloadArenaChunks();
+
+        // Disable fire spread + mob griefing in the arena world. When lava hits
+        // the surface it ignites flammable blocks (grass/leaves/trees/wood) which
+        // cascades into huge fire-tick + block-update loads → client FPS drops.
+        // We save previous values and restore on stop().
+        World arenaWorld = arena.getArenaWorld();
+        if (arenaWorld != null) {
+            savedDoFireTick = arenaWorld.getGameRuleValue(GameRule.DO_FIRE_TICK);
+            savedMobGriefing = arenaWorld.getGameRuleValue(GameRule.MOB_GRIEFING);
+            arenaWorld.setGameRule(GameRule.DO_FIRE_TICK, false);
+            arenaWorld.setGameRule(GameRule.MOB_GRIEFING, false);
+        }
 
         plugin.getLogger().info("[Doom] Lava rise started at Y=" + currentFillY
                 + ", max Y=" + config.getLavaRiseMaxY()
@@ -290,11 +312,32 @@ public class DoomLavaRise {
     public void stop() {
         active = false;
         filling = false;
+
+        // Restore any gamerules we modified on start
+        World w = arena.getArenaWorld();
+        if (w != null) {
+            if (savedDoFireTick != null) {
+                w.setGameRule(GameRule.DO_FIRE_TICK, savedDoFireTick);
+                savedDoFireTick = null;
+            }
+            if (savedMobGriefing != null) {
+                w.setGameRule(GameRule.MOB_GRIEFING, savedMobGriefing);
+                savedMobGriefing = null;
+            }
+        }
     }
 
     /**
      * Clean up all lava blocks placed during the mode.
-     * Uses chunk-batched iteration with a configurable separate batch size.
+     *
+     * <p>Sweeps a PADDED bounding box around the arena, not just the original
+     * arena rectangle. Lava placed at the top layer flows outward onto
+     * surrounding terrain — if we only scanned the original bounds, those
+     * overflow blocks would stay behind forever. The padded box + LAVA-type
+     * check catches every lava block produced by the mode.
+     *
+     * <p>The Y sweep also extends slightly past currentFillY to catch any
+     * lava that flowed up over small walls or into tall air pockets.
      */
     public void cleanup() {
         if (!config.isCleanupOnEnd()) {
@@ -305,29 +348,30 @@ public class DoomLavaRise {
         World world = arena.getArenaWorld();
         if (world == null) return;
 
-        int startY = config.getLavaRiseStartY();
-        int endY = currentFillY;
+        int startY = Math.max(world.getMinHeight(), config.getLavaRiseStartY() - 1);
+        int endY = Math.min(world.getMaxHeight() - 1, currentFillY + CLEANUP_PADDING_UP);
+
+        // Padded X/Z sweep — extend beyond arena bounds to catch overflow lava
+        int sweepMinX = minX - CLEANUP_PADDING_XZ;
+        int sweepMaxX = maxX + CLEANUP_PADDING_XZ;
+        int sweepMinZ = minZ - CLEANUP_PADDING_XZ;
+        int sweepMaxZ = maxZ + CLEANUP_PADDING_XZ;
+
         int cleanupBatch = config.getCleanupBlocksPerTick();
 
         if (startY >= endY) {
-            plugin.debug("[Doom] Nothing to clean up (startY >= currentFillY).");
+            plugin.debug("[Doom] Nothing to clean up (startY >= endY).");
             return;
         }
 
-        plugin.getLogger().info("[Doom] Starting lava cleanup from Y=" + startY + " to Y=" + endY
+        plugin.getLogger().info("[Doom] Starting lava cleanup — sweep box ["
+                + sweepMinX + ".." + sweepMaxX + "] x ["
+                + sweepMinZ + ".." + sweepMaxZ + "] y=" + startY + ".." + endY
                 + " (" + cleanupBatch + " blocks/tick)");
 
-        // Chunk-batched cleanup across all Y levels
-        final int[] state = {0, 0}; // [chunkIndex, blockIndexInChunk]
-        final int totalYLevels = endY - startY;
+        final int[] cursor = { sweepMinX, sweepMinZ, startY };
 
         Bukkit.getScheduler().runTaskTimer(plugin, task -> {
-            if (state[0] >= totalChunks) {
-                task.cancel();
-                plugin.getLogger().info("[Doom] Lava cleanup complete.");
-                return;
-            }
-
             World w = arena.getArenaWorld();
             if (w == null) {
                 task.cancel();
@@ -335,36 +379,34 @@ public class DoomLavaRise {
             }
 
             int processed = 0;
-            while (processed < cleanupBatch && state[0] < totalChunks) {
-                int[] bounds = chunkBounds[state[0]];
-                int cMinX = bounds[0], cMaxX = bounds[1], cMinZ = bounds[2], cMaxZ = bounds[3];
-                int chunkWidth = cMaxX - cMinX + 1;
-                int chunkDepth = cMaxZ - cMinZ + 1;
-                int blocksPerChunk = chunkWidth * chunkDepth * totalYLevels;
+            while (processed < cleanupBatch) {
+                int x = cursor[0];
+                int z = cursor[1];
+                int y = cursor[2];
 
-                while (state[1] < blocksPerChunk && processed < cleanupBatch) {
-                    int levelBlocks = chunkWidth * chunkDepth;
-                    int yOffset = state[1] / levelBlocks;
-                    int posInLevel = state[1] % levelBlocks;
-                    int x = cMinX + (posInLevel % chunkWidth);
-                    int z = cMinZ + (posInLevel / chunkWidth);
-                    int y = startY + yOffset;
+                if (y > endY) {
+                    task.cancel();
+                    plugin.getLogger().info("[Doom] Lava cleanup complete.");
+                    return;
+                }
 
-                    if (y < endY) {
-                        Block block = w.getBlockAt(x, y, z);
-                        if (block.getType() == Material.LAVA) {
-                            block.setType(Material.AIR, false);
-                        }
+                Block block = w.getBlockAt(x, y, z);
+                Material type = block.getType();
+                if (type == Material.LAVA || type == Material.FIRE) {
+                    block.setType(Material.AIR, false);
+                }
+
+                // Advance cursor: x → z → y
+                cursor[0]++;
+                if (cursor[0] > sweepMaxX) {
+                    cursor[0] = sweepMinX;
+                    cursor[1]++;
+                    if (cursor[1] > sweepMaxZ) {
+                        cursor[1] = sweepMinZ;
+                        cursor[2]++;
                     }
-
-                    state[1]++;
-                    processed++;
                 }
-
-                if (state[1] >= blocksPerChunk) {
-                    state[0]++;
-                    state[1] = 0;
-                }
+                processed++;
             }
         }, 0L, 1L);
     }
