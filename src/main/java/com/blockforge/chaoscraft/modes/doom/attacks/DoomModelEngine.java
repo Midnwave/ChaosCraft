@@ -53,7 +53,7 @@ public final class DoomModelEngine {
             config.setDamage(50.0); config.setDamageRadius(6.0);
             config.setDurationTicks(400); config.setCooldownTicks(300);
         }
-        @Override protected String getModelId() { return "hellmouth_rupture"; }
+        @Override protected String getModelId() { return "hellgate_colossus_fist"; }
         @Override protected double getModelScale() { return 2.5; }
         @Override protected void onSpawn(Location c) {
             spawnModel(c);
@@ -85,7 +85,7 @@ public final class DoomModelEngine {
             config.setDamage(40.0); config.setDamageRadius(5.0);
             config.setDurationTicks(300); config.setCooldownTicks(250);
         }
-        @Override protected String getModelId() { return "brimstone_geyser"; }
+        @Override protected String getModelId() { return "infernal_sigil_brand"; }
         @Override protected double getModelScale() { return 2.0; }
         @Override protected void onSpawn(Location c) {
             spawnModel(c);
@@ -118,7 +118,7 @@ public final class DoomModelEngine {
             config.setDamage(30.0); config.setDamageRadius(8.0);
             config.setDurationTicks(350); config.setCooldownTicks(280);
         }
-        @Override protected String getModelId() { return "hellfire_crack_array"; }
+        @Override protected String getModelId() { return "chain_of_torment"; }
         @Override protected double getModelScale() { return 2.0; }
         @Override protected void onSpawn(Location c) {
             spawnModel(c);
@@ -150,7 +150,7 @@ public final class DoomModelEngine {
             config.setDamage(60.0); config.setDamageRadius(8.0);
             config.setDurationTicks(200); config.setCooldownTicks(350);
         }
-        @Override protected String getModelId() { return "infernal_nova"; }
+        @Override protected String getModelId() { return "brimstone_meteor_shower"; }
         @Override protected double getModelScale() { return 2.0; }
         @Override protected void onSpawn(Location c) {
             spawnModel(c);
@@ -186,7 +186,7 @@ public final class DoomModelEngine {
             config.setDamage(20.0); config.setDamageRadius(7.0);
             config.setDurationTicks(500); config.setCooldownTicks(400);
         }
-        @Override protected String getModelId() { return "damnation_ring"; }
+        @Override protected String getModelId() { return "hellfire_crown_slam"; }
         @Override protected double getModelScale() { return 2.5; }
         @Override protected void onSpawn(Location c) {
             spawnModel(c);
@@ -222,7 +222,7 @@ public final class DoomModelEngine {
             config.setDamage(50.0); config.setDamageRadius(10.0);
             config.setDurationTicks(150); config.setCooldownTicks(300);
         }
-        @Override protected String getModelId() { return "apocalypse_shockwave"; }
+        @Override protected String getModelId() { return "void_tear_beam"; }
         @Override protected double getModelScale() { return 2.5; }
         @Override protected void onSpawn(Location c) {
             spawnModel(c);
@@ -256,7 +256,7 @@ public final class DoomModelEngine {
             config.setDurationTicks(100); config.setCooldownTicks(200);
             config.setTracksPlayer(true);
         }
-        @Override protected String getModelId() { return "perdition_lance"; }
+        @Override protected String getModelId() { return "demon_wing_spread"; }
         @Override protected double getModelScale() { return 1.5; }
         @Override protected void onSpawn(Location c) {
             spawnModel(c);
@@ -284,7 +284,7 @@ public final class DoomModelEngine {
             config.setDamage(30.0); config.setDamageRadius(6.0);
             config.setDurationTicks(250); config.setCooldownTicks(350);
         }
-        @Override protected String getModelId() { return "the_condemnation"; }
+        @Override protected String getModelId() { return "abyssal_spike_array"; }
         @Override protected double getModelScale() { return 1.8; }
         @Override protected void onSpawn(Location c) {
             spawnModel(c);
@@ -318,7 +318,7 @@ public final class DoomModelEngine {
             config.setDamage(25.0); config.setDamageRadius(5.0);
             config.setDurationTicks(600); config.setCooldownTicks(500);
         }
-        @Override protected String getModelId() { return "the_threshold"; }
+        @Override protected String getModelId() { return "hellfire_orbital_siege"; }
         @Override protected double getModelScale() { return 2.5; }
         @Override protected void onSpawn(Location c) {
             spawnModel(c);
@@ -360,7 +360,7 @@ public final class DoomModelEngine {
             config.setDurationTicks(400); config.setCooldownTicks(350);
             config.setTracksPlayer(true);
         }
-        @Override protected String getModelId() { return "king_of_ruin"; }
+        @Override protected String getModelId() { return "devourer_maw"; }
         @Override protected double getModelScale() { return 2.0; }
         @Override protected void onSpawn(Location c) {
             spawnModel(c);
