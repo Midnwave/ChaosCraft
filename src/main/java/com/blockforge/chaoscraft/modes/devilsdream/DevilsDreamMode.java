@@ -54,25 +54,26 @@ public class DevilsDreamMode extends AbstractMode implements Listener {
     // ========================
 
     private void registerAllAttacks() {
-        // Block Display attacks (8 categories x 13 = 104)
-        NightmareConstructs.registerAll(plugin, attackRegistry);
-        HellfireFormations.registerAll(plugin, attackRegistry);
-        ShadowBeasts.registerAll(plugin, attackRegistry);
-        DreamDistortions.registerAll(plugin, attackRegistry);
-        DevilsArsenal.registerAll(plugin, attackRegistry);
-        FallingNightmares.registerAll(plugin, attackRegistry);
-        GroundTerrors.registerAll(plugin, attackRegistry);
-        EtherealHauntings.registerAll(plugin, attackRegistry);
+        // Block Display attacks — 50 total across 5 files
+        DDBlockDisplay1.registerAll(plugin, attackRegistry);
+        DDBlockDisplay2.registerAll(plugin, attackRegistry);
+        DDBlockDisplay3.registerAll(plugin, attackRegistry);
+        DDBlockDisplay4.registerAll(plugin, attackRegistry);
+        DDBlockDisplay5.registerAll(plugin, attackRegistry);
 
-        // Environmental attacks (8 categories x 13 = 104)
-        DreamShifts.registerAll(plugin, attackRegistry);
-        NightmareWeather.registerAll(plugin, attackRegistry);
-        FloorHazards.registerAll(plugin, attackRegistry);
-        AdaptationResponses.registerAll(plugin, attackRegistry);
-        AmbientDread.registerAll(plugin, attackRegistry);
-        SoulHarvesting.registerAll(plugin, attackRegistry);
-        HellscapeSurges.registerAll(plugin, attackRegistry);
-        VoidIntrusions.registerAll(plugin, attackRegistry);
+        // Environmental structure attacks — 20 total across 2 files
+        DDEnvironmental1.registerAll(plugin, attackRegistry);
+        DDEnvironmental2.registerAll(plugin, attackRegistry);
+
+        // Environmental FX (particle/atmosphere) — 50 total across 5 files
+        DDEnvFX1.registerAll(plugin, attackRegistry);
+        DDEnvFX2.registerAll(plugin, attackRegistry);
+        DDEnvFX3.registerAll(plugin, attackRegistry);
+        DDEnvFX4.registerAll(plugin, attackRegistry);
+        DDEnvFX5.registerAll(plugin, attackRegistry);
+
+        // ModelEngine VFX attacks — 25 total
+        DevilsDreamModelEngine.registerAll(plugin, attackRegistry);
 
         attackRegistry.reloadConfigs();
         plugin.getLogger().info("[DevilsDream] Registered " + attackRegistry.size() + " attacks, configs loaded.");
