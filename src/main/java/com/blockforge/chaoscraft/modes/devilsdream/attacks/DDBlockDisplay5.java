@@ -1490,9 +1490,23 @@ public final class DDBlockDisplay5 {
 
             double progress = Math.min(1.0, (double) tick / impactAt);
             double curY = startY * (1.0 - progress * progress);
+            // Force ground-touch in the final 4 ticks before impact so the angel actually
+            // reaches the ground regardless of % 3 modulo skip on animation tick.
+            if (phase < 2 && tick >= impactAt - 4) curY = 0.0;
             float wingFold = (phase >= 1) ? Math.min(1.0f, (tick - (impactAt - 30)) / 30f) : 0f;
 
-            if (tick % 3 == 0 && phase < 2) {
+            // Falling debris trail column — embers/dust streaming from angel's height down to ground
+            if (phase < 2 && tick % 2 == 0) {
+                Location c = getCenter();
+                for (int trail = 0; trail < 4; trail++) {
+                    double tx = (Math.random() - 0.5) * 6;
+                    double tz = (Math.random() - 0.5) * 6;
+                    double ty = Math.random() * Math.max(1.0, curY + 4);
+                    DisplayBuilder.dustParticles(c.clone().add(tx, ty, tz), 1, 0.2, 240, 230, 200, 1.2f);
+                }
+            }
+
+            if ((tick % 3 == 0 || tick == impactAt - 1) && phase < 2) {
                 for (int i = 0; i < body.size(); i++) {
                     body.get(i).animateTo(new Vector3f(-0.35f, (float)curY + i * 0.7f, -0.35f),
                             new AxisAngle4f(0, 0, 1, 0),
@@ -1542,29 +1556,75 @@ public final class DDBlockDisplay5 {
                         4, 5, 1, 5, 0);
             }
 
-            // impact
+            // impact — ground hit, angel detonates AT the ground
             if (tick == impactAt) {
-                DisplayBuilder.playSound(getCenter(), Sound.ENTITY_WARDEN_SONIC_BOOM, 2.0f, 0.4f);
-                w.spawnParticle(Particle.EXPLOSION_EMITTER, getCenter().clone().add(0, 1, 0), 3, 2, 1, 2, 0);
-                w.spawnParticle(Particle.SONIC_BOOM, getCenter().clone().add(0, 1, 0), 1, 0, 0, 0, 0);
-                for (int r = 1; r <= 8; r++) {
-                    DisplayBuilder.particleRing(getCenter().clone().add(0, 0.3, 0), r,
-                            Particle.LARGE_SMOKE, 24, null);
+                Location ground = getCenter();
+                DisplayBuilder.playSound(ground, Sound.ENTITY_WARDEN_SONIC_BOOM, 2.0f, 0.4f);
+                DisplayBuilder.playSound(ground, Sound.ENTITY_GENERIC_EXPLODE, 1.6f, 0.5f);
+                // ground-level explosion + sonic boom right at impact point
+                w.spawnParticle(Particle.EXPLOSION_EMITTER, ground.clone().add(0, 0.2, 0), 5, 2.5, 0.3, 2.5, 0);
+                w.spawnParticle(Particle.SONIC_BOOM, ground.clone().add(0, 0.5, 0), 2, 0.5, 0.2, 0.5, 0);
+                w.spawnParticle(Particle.FLASH, ground.clone().add(0, 0.5, 0), 1, 0, 0, 0, 0);
+                // expanding shockwave rings at GROUND level — multiple radii
+                for (int r = 1; r <= 10; r++) {
+                    DisplayBuilder.particleRing(ground.clone().add(0, 0.2, 0), r,
+                            Particle.LARGE_SMOKE, 28, null);
+                    DisplayBuilder.particleRing(ground.clone().add(0, 0.4, 0), r,
+                            Particle.CAMPFIRE_COSY_SMOKE, 18, null);
                 }
-                triggerImpactDamage(getCenter());
-                // shatter — scatter all displays outward briefly
+                // ground-level dust ring (bone-white)
+                for (int r = 1; r <= 8; r++) {
+                    Location ring = ground.clone().add(0, 0.15, 0);
+                    DisplayBuilder.dustParticles(ring, 36, r, 240, 230, 200, 1.6f);
+                }
+                // vertical pillar of upward smoke/sparks (visualises the impact reaching from ground UP)
+                for (int hI = 0; hI <= 12; hI++) {
+                    Location col = ground.clone().add(0, hI * 0.6, 0);
+                    w.spawnParticle(Particle.LARGE_SMOKE, col, 6, 0.8, 0.1, 0.8, 0.02);
+                    if (hI < 6) w.spawnParticle(Particle.LAVA, col, 2, 0.5, 0.1, 0.5, 0);
+                }
+                triggerImpactDamage(ground);
+                // shatter — scatter all body parts AT GROUND level (Y=0) outward
                 for (BlockDisplayHandle h : body) {
-                    double a = Math.random()*Math.PI*2;
-                    h.animateTo(new Vector3f((float)Math.cos(a)*3 - 0.35f, 1f, (float)Math.sin(a)*3 - 0.35f),
-                            new AxisAngle4f((float)(Math.random()*Math.PI*4), 1, 1, 0),
+                    double a = Math.random() * Math.PI * 2;
+                    h.animateTo(new Vector3f((float) Math.cos(a) * 3 - 0.35f, 0.1f, (float) Math.sin(a) * 3 - 0.35f),
+                            new AxisAngle4f((float) (Math.random() * Math.PI * 4), 1, 1, 0),
                             new Vector3f(0.7f, 0.7f, 0.7f), 20);
+                }
+                // wings shatter outward at ground
+                for (BlockDisplayHandle h : wingsL) {
+                    double a = Math.PI + Math.random() * Math.PI * 0.6 - 0.3;
+                    h.animateTo(new Vector3f((float) Math.cos(a) * 5 - 0.35f, 0.1f, (float) Math.sin(a) * 5 - 0.275f),
+                            new AxisAngle4f((float) (Math.random() * Math.PI), 0, 1, 0),
+                            new Vector3f(0.7f, 0.45f, 0.55f), 20);
+                }
+                for (BlockDisplayHandle h : wingsR) {
+                    double a = Math.random() * Math.PI * 0.6 - 0.3;
+                    h.animateTo(new Vector3f((float) Math.cos(a) * 5 - 0.35f, 0.1f, (float) Math.sin(a) * 5 - 0.275f),
+                            new AxisAngle4f((float) (Math.random() * Math.PI), 0, 1, 0),
+                            new Vector3f(0.7f, 0.45f, 0.55f), 20);
+                }
+                // head crashes to ground
+                for (BlockDisplayHandle h : head) {
+                    double a = Math.random() * Math.PI * 2;
+                    h.animateTo(new Vector3f((float) Math.cos(a) * 1.5f - 0.25f, 0.1f, (float) Math.sin(a) * 1.5f - 0.25f),
+                            new AxisAngle4f((float) (Math.random() * Math.PI * 2), 1, 1, 1),
+                            new Vector3f(0.5f, 0.5f, 0.5f), 16);
+                }
+                // veins scatter at ground
+                for (BlockDisplayHandle h : veins) {
+                    double a = Math.random() * Math.PI * 2;
+                    double r = 1 + Math.random() * 4;
+                    h.animateTo(new Vector3f((float) (Math.cos(a) * r) - 0.125f, 0.05f, (float) (Math.sin(a) * r) - 0.125f),
+                            new AxisAngle4f(0, 0, 1, 0),
+                            new Vector3f(0.25f, 0.25f, 0.25f), 18);
                 }
             }
 
-            // phase 2 reassemble in the air
+            // phase 2 — settle at ground level, NOT mid-air
             if (phase == 2 && tick == impactAt + 30) {
                 for (int i = 0; i < body.size(); i++) {
-                    body.get(i).animateTo(new Vector3f(-0.35f, 4f + i * 0.7f, -0.35f),
+                    body.get(i).animateTo(new Vector3f(-0.35f, 0.1f + i * 0.15f, -0.35f),
                             new AxisAngle4f(0, 0, 1, 0),
                             new Vector3f(0.7f, 0.7f, 0.7f), 30);
                 }
@@ -1574,17 +1634,18 @@ public final class DDBlockDisplay5 {
                 DisplayBuilder.playSound(getCenter(), Sound.ENTITY_PHANTOM_FLAP, 0.7f, 0.5f);
             }
 
+            // dissipate — sink into the ground (NOT rise up)
             if (phase == 3 && tick % 6 == 0) {
                 float s = Math.max(0.05f, 1.0f - (tick - dur * 0.85f) / (dur * 0.15f));
-                for (BlockDisplayHandle h : body) h.animateTo(new Vector3f(0, 4, 0),
+                for (BlockDisplayHandle h : body) h.animateTo(new Vector3f(0, -1, 0),
                         new AxisAngle4f(0,0,1,0), new Vector3f(0.7f*s,0.7f*s,0.7f*s), 6);
-                for (BlockDisplayHandle h : head) h.animateTo(new Vector3f(0, 6, 0),
+                for (BlockDisplayHandle h : head) h.animateTo(new Vector3f(0, -1, 0),
                         new AxisAngle4f(0,0,1,0), new Vector3f(0.5f*s,0.5f*s,0.5f*s), 6);
-                for (BlockDisplayHandle h : wingsL) h.animateTo(new Vector3f(0, 4, 0),
+                for (BlockDisplayHandle h : wingsL) h.animateTo(new Vector3f(0, -1, 0),
                         new AxisAngle4f(0,0,1,0), new Vector3f(0.7f*s,0.45f*s,0.55f*s), 6);
-                for (BlockDisplayHandle h : wingsR) h.animateTo(new Vector3f(0, 4, 0),
+                for (BlockDisplayHandle h : wingsR) h.animateTo(new Vector3f(0, -1, 0),
                         new AxisAngle4f(0,0,1,0), new Vector3f(0.7f*s,0.45f*s,0.55f*s), 6);
-                for (BlockDisplayHandle h : veins) h.animateTo(new Vector3f(0, 4, 0),
+                for (BlockDisplayHandle h : veins) h.animateTo(new Vector3f(0, -1, 0),
                         new AxisAngle4f(0,0,1,0), new Vector3f(0.25f*s,0.25f*s,0.25f*s), 6);
             }
         }

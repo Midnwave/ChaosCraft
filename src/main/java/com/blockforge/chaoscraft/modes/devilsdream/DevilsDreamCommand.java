@@ -132,22 +132,28 @@ public class DevilsDreamCommand implements CommandExecutor, TabCompleter {
         }
 
         if (args.length < 2) {
-            // List available IDs for both types
+            // List available IDs for all three types
             List<String> bdIds = mode.getAttackRegistry().getIds(1, AttackType.BLOCK_DISPLAY);
             List<String> envIds = mode.getAttackRegistry().getIds(1, AttackType.ENVIRONMENTAL);
+            List<String> meIds = mode.getAttackRegistry().getIds(1, AttackType.MODEL_ENGINE);
             sender.sendMessage(Component.text("Usage: /devilsdream test <id>", NamedTextColor.YELLOW));
             sender.sendMessage(Component.text("Block Display attacks (" + bdIds.size() + "):", NamedTextColor.RED));
             sendIdList(sender, bdIds);
             sender.sendMessage(Component.text("Environmental attacks (" + envIds.size() + "):", NamedTextColor.GOLD));
             sendIdList(sender, envIds);
+            sender.sendMessage(Component.text("ModelEngine attacks (" + meIds.size() + "):", NamedTextColor.LIGHT_PURPLE));
+            sendIdList(sender, meIds);
             return true;
         }
 
         String id = args[1].toLowerCase();
-        // Try both attack types
+        // Try all three attack types
         AbstractAttack attack = mode.getAttackRegistry().get(1, AttackType.BLOCK_DISPLAY, id);
         if (attack == null) {
             attack = mode.getAttackRegistry().get(1, AttackType.ENVIRONMENTAL, id);
+        }
+        if (attack == null) {
+            attack = mode.getAttackRegistry().get(1, AttackType.MODEL_ENGINE, id);
         }
         if (attack == null) {
             sender.sendMessage(Component.text("Unknown attack: " + id, NamedTextColor.RED));
