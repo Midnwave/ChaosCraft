@@ -63,7 +63,7 @@ public final class DDBlockDisplay3 {
             super(plugin, new AttackConfig("cursed_lantern", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
             config.setDamageOnImpactOnly(true);
             config.setImpactDamage(27.0);
-            config.setImpactRadius(6.5);
+            config.setImpactRadius(10.4);
             config.setDamage(0.0);
             config.setDamageRadius(0.0);
             config.setTicksBetweenDamage(5);
@@ -616,7 +616,7 @@ public final class DDBlockDisplay3 {
             super(plugin, new AttackConfig("devils_dreamcatcher", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
             config.setDamageOnImpactOnly(true);
             config.setImpactDamage(30.0);
-            config.setImpactRadius(7.0);
+            config.setImpactRadius(11.2);
             config.setDamage(0.0);
             config.setDamageRadius(0.0);
             config.setTicksBetweenDamage(5);
@@ -865,7 +865,7 @@ public final class DDBlockDisplay3 {
             super(plugin, new AttackConfig("burning_throne", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
             config.setDamageOnImpactOnly(true);
             config.setImpactDamage(24.0);
-            config.setImpactRadius(5.5);
+            config.setImpactRadius(8.8);
             config.setDamage(6.8);
             config.setDamageRadius(6.0);
             config.setTicksBetweenDamage(5);
@@ -1137,7 +1137,7 @@ public final class DDBlockDisplay3 {
             super(plugin, new AttackConfig("carrion_wheel", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
             config.setDamageOnImpactOnly(true);
             config.setImpactDamage(25.5);
-            config.setImpactRadius(6.0);
+            config.setImpactRadius(9.6);
             config.setDamage(7.5);
             config.setDamageRadius(5.5);
             config.setTicksBetweenDamage(4);
@@ -1289,7 +1289,7 @@ public final class DDBlockDisplay3 {
             super(plugin, new AttackConfig("undertakers_shovel", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
             config.setDamageOnImpactOnly(true);
             config.setImpactDamage(28.5);
-            config.setImpactRadius(6.0);
+            config.setImpactRadius(9.6);
             config.setDamage(0.0);
             config.setDamageRadius(0.0);
             config.setTicksBetweenDamage(5);

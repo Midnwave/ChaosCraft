@@ -1100,7 +1100,7 @@ public final class DDEnvFX4 {
             config.setTicksBetweenDamage(5);
             config.setDamageOnImpactOnly(true);
             config.setImpactDamage(7.5);
-            config.setImpactRadius(2.5);
+            config.setImpactRadius(4.0);
             config.setDamageDelayTicks(5);
             config.setDurationTicks(380);
             config.setCooldownTicks(360);

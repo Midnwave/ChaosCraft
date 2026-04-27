@@ -221,7 +221,7 @@ public final class DDBlockDisplay4 {
             config.setCooldownTicks(310);
             config.setDamageOnImpactOnly(true);
             config.setImpactDamage(27.0);
-            config.setImpactRadius(6.0);
+            config.setImpactRadius(9.6);
         }
 
         @Override
@@ -380,7 +380,7 @@ public final class DDBlockDisplay4 {
             config.setCooldownTicks(380);
             config.setDamageOnImpactOnly(true);
             config.setImpactDamage(30.0);
-            config.setImpactRadius(8.0);
+            config.setImpactRadius(12.8);
         }
 
         @Override
@@ -582,7 +582,7 @@ public final class DDBlockDisplay4 {
             config.setCooldownTicks(360);
             config.setDamageOnImpactOnly(true);
             config.setImpactDamage(25.5);
-            config.setImpactRadius(7.0);
+            config.setImpactRadius(11.2);
         }
 
         @Override
@@ -1143,7 +1143,7 @@ public final class DDBlockDisplay4 {
             config.setCooldownTicks(360);
             config.setDamageOnImpactOnly(true);
             config.setImpactDamage(22.5);
-            config.setImpactRadius(6.0);
+            config.setImpactRadius(9.6);
         }
 
         @Override
@@ -1271,7 +1271,7 @@ public final class DDBlockDisplay4 {
             config.setCooldownTicks(330);
             config.setDamageOnImpactOnly(true);
             config.setImpactDamage(31.5);
-            config.setImpactRadius(8.0);
+            config.setImpactRadius(12.8);
         }
 
         @Override
@@ -1478,7 +1478,7 @@ public final class DDBlockDisplay4 {
             config.setCooldownTicks(420);
             config.setDamageOnImpactOnly(true);
             config.setImpactDamage(33.0);
-            config.setImpactRadius(8.0);
+            config.setImpactRadius(12.8);
         }
 
         @Override

@@ -471,7 +471,7 @@ public final class DDBlockDisplay1 {
             config.setDamage(0);
             config.setDamageOnImpactOnly(true);
             config.setImpactDamage(22.5);
-            config.setImpactRadius(5.5);
+            config.setImpactRadius(8.8);
             config.setDurationTicks(360);
             config.setCooldownTicks(340);
         }
@@ -541,9 +541,9 @@ public final class DDBlockDisplay1 {
                     DisplayBuilder.playSound(getCenter(), Sound.ENTITY_HORSE_STEP, 1.6f, 0.4f);
                     DisplayBuilder.playSound(getCenter(), Sound.ENTITY_IRON_GOLEM_DEATH, 0.8f, 0.3f);
                     Location stomp = getCenter().clone().add(walkX, 0, walkZ);
-                    config.setImpactRadius(11.0);
+                    config.setImpactRadius(17.6);
                     triggerImpactDamage(stomp);
-                    config.setImpactRadius(5.5);
+                    config.setImpactRadius(8.8);
                     w.spawnParticle(Particle.BLOCK, stomp, 80, 3, 0.3, 3, 0.1,
                             Material.BLACKSTONE.createBlockData());
                     w.spawnParticle(Particle.LARGE_SMOKE, stomp, 20, 2, 0.3, 2, 0.05);
@@ -646,7 +646,7 @@ public final class DDBlockDisplay1 {
             config.setDamage(0);
             config.setDamageOnImpactOnly(true);
             config.setImpactDamage(30.0);
-            config.setImpactRadius(3.5);
+            config.setImpactRadius(5.6);
             config.setDurationTicks(280);
             config.setCooldownTicks(360);
         }
@@ -974,7 +974,7 @@ public final class DDBlockDisplay1 {
             config.setDamage(0);
             config.setDamageOnImpactOnly(true);
             config.setImpactDamage(27.0);
-            config.setImpactRadius(4.5);
+            config.setImpactRadius(7.2);
             config.setDurationTicks(360);
             config.setCooldownTicks(330);
         }
@@ -1130,7 +1130,7 @@ public final class DDBlockDisplay1 {
             config.setDamage(0);
             config.setDamageOnImpactOnly(true);
             config.setImpactDamage(24.0);
-            config.setImpactRadius(5.5);
+            config.setImpactRadius(8.8);
             config.setDurationTicks(400);
             config.setCooldownTicks(360);
         }
@@ -1475,7 +1475,7 @@ public final class DDBlockDisplay1 {
             config.setDamage(0);
             config.setDamageOnImpactOnly(true);
             config.setImpactDamage(30.0);
-            config.setImpactRadius(7.0);
+            config.setImpactRadius(11.2);
             config.setDurationTicks(380);
             config.setCooldownTicks(380);
         }
@@ -1595,9 +1595,9 @@ public final class DDBlockDisplay1 {
             if (tick == 315) {
                 Location landingZone = getCenter().clone().add(7, 0.5, 0);
                 DisplayBuilder.playSound(landingZone, Sound.ENTITY_GENERIC_EXPLODE, 1.6f, 0.3f);
-                config.setImpactRadius(9.0);
+                config.setImpactRadius(14.4);
                 triggerImpactDamage(landingZone);
-                config.setImpactRadius(7.0);
+                config.setImpactRadius(11.2);
                 w.spawnParticle(Particle.EXPLOSION_EMITTER, landingZone, 1, 0, 0, 0, 0);
                 w.spawnParticle(Particle.BLOCK, landingZone, 100, 5, 0.3, 2, 0.1,
                         Material.DEEPSLATE_BRICKS.createBlockData());

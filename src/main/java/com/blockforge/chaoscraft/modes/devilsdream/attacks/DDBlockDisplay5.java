@@ -220,7 +220,7 @@ public final class DDBlockDisplay5 {
             config.setCooldownTicks(330);
             config.setDamageOnImpactOnly(false);
             config.setImpactDamage(27.0);
-            config.setImpactRadius(6.0);
+            config.setImpactRadius(9.6);
         }
 
         @Override
@@ -582,7 +582,7 @@ public final class DDBlockDisplay5 {
             config.setDamageDelayTicks(5);
             config.setDamageOnImpactOnly(true);
             config.setImpactDamage(27.0);
-            config.setImpactRadius(7.0);
+            config.setImpactRadius(11.2);
             config.setDurationTicks(280);
             config.setCooldownTicks(330);
         }
@@ -763,7 +763,7 @@ public final class DDBlockDisplay5 {
             config.setDurationTicks(380);
             config.setCooldownTicks(360);
             config.setImpactDamage(30.0);
-            config.setImpactRadius(7.0);
+            config.setImpactRadius(11.2);
         }
 
         @Override
@@ -909,7 +909,7 @@ public final class DDBlockDisplay5 {
             config.setDamageDelayTicks(5);
             config.setDamageOnImpactOnly(false);
             config.setImpactDamage(33.0);
-            config.setImpactRadius(7.0);
+            config.setImpactRadius(11.2);
             config.setDurationTicks(360);
             config.setCooldownTicks(380);
         }
@@ -1086,7 +1086,7 @@ public final class DDBlockDisplay5 {
             config.setDamageDelayTicks(6);
             config.setDamageOnImpactOnly(false);
             config.setImpactDamage(27.0);
-            config.setImpactRadius(6.0);
+            config.setImpactRadius(9.6);
             config.setDurationTicks(360);
             config.setCooldownTicks(360);
         }
@@ -1246,7 +1246,7 @@ public final class DDBlockDisplay5 {
             config.setDamageDelayTicks(5);
             config.setDamageOnImpactOnly(true);
             config.setImpactDamage(30.0);
-            config.setImpactRadius(7.0);
+            config.setImpactRadius(11.2);
             config.setDurationTicks(360);
             config.setCooldownTicks(380);
         }
@@ -1426,7 +1426,7 @@ public final class DDBlockDisplay5 {
             config.setDamageDelayTicks(0);
             config.setDamageOnImpactOnly(true);
             config.setImpactDamage(33.0);
-            config.setImpactRadius(8.0);
+            config.setImpactRadius(12.8);
             config.setDurationTicks(260);
             config.setCooldownTicks(360);
         }
@@ -1678,7 +1678,7 @@ public final class DDBlockDisplay5 {
             config.setDamageDelayTicks(5);
             config.setDamageOnImpactOnly(false);
             config.setImpactDamage(27.0);
-            config.setImpactRadius(6.0);
+            config.setImpactRadius(9.6);
             config.setDurationTicks(420);
             config.setCooldownTicks(380);
         }
