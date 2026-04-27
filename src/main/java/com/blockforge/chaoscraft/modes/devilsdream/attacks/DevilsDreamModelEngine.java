@@ -144,6 +144,7 @@ public final class DevilsDreamModelEngine {
             config.setCooldownTicks(240);
         }
         @Override protected String getModelId() { return "fallen_angel_descent"; }
+        @Override protected double getModelScale() { return 4.0; }
         @Override protected void onSpawn(Location c) {
             spawnModel(c);
             anchorCharge(c, 1.4f, 0.4f);
@@ -173,6 +174,7 @@ public final class DevilsDreamModelEngine {
             config.setCooldownTicks(220);
         }
         @Override protected String getModelId() { return "nightmare_root_surge"; }
+        @Override protected double getModelScale() { return 4.0; }
         @Override protected void onSpawn(Location c) {
             spawnModel(c);
             wartPlace(c, 1.2f, 0.7f);
@@ -200,6 +202,7 @@ public final class DevilsDreamModelEngine {
             config.setCooldownTicks(260);
         }
         @Override protected String getModelId() { return "devils_spine_array"; }
+        @Override protected double getModelScale() { return 3.0; }
         @Override protected void onSpawn(Location c) {
             spawnModel(c);
             anchorCharge(c, 1.3f, 0.5f);
@@ -228,6 +231,7 @@ public final class DevilsDreamModelEngine {
             config.setCooldownTicks(220);
         }
         @Override protected String getModelId() { return "fallen_halo_burst"; }
+        @Override protected double getModelScale() { return 4.0; }
         @Override protected void onSpawn(Location c) {
             spawnModel(c);
             chime(c, 1.4f, 0.8f);
@@ -259,6 +263,7 @@ public final class DevilsDreamModelEngine {
             config.setCooldownTicks(220);
         }
         @Override protected String getModelId() { return "dream_collapse_ring"; }
+        @Override protected double getModelScale() { return 4.0; }
         @Override protected void onSpawn(Location c) {
             spawnModel(c);
             portalAmb(c, 1.3f, 0.5f);
@@ -289,6 +294,7 @@ public final class DevilsDreamModelEngine {
             config.setCooldownTicks(200);
         }
         @Override protected String getModelId() { return "devils_sermon_nova"; }
+        @Override protected double getModelScale() { return 4.0; }
         @Override protected void onSpawn(Location c) {
             spawnModel(c);
             thunderTrident(c, 1.5f, 0.4f);
@@ -317,6 +323,7 @@ public final class DevilsDreamModelEngine {
             config.setCooldownTicks(240);
         }
         @Override protected String getModelId() { return "nightmare_static_field"; }
+        @Override protected double getModelScale() { return 3.5; }
         @Override protected void onSpawn(Location c) {
             spawnModel(c);
             sculkSpread(c, 1.2f, 0.5f);
@@ -344,6 +351,7 @@ public final class DevilsDreamModelEngine {
             config.setCooldownTicks(200);
         }
         @Override protected String getModelId() { return "infernal_crown_burst"; }
+        @Override protected double getModelScale() { return 3.0; }
         @Override protected void onSpawn(Location c) {
             spawnModel(c);
             anchorCharge(c, 1.3f, 0.5f);
@@ -376,6 +384,7 @@ public final class DevilsDreamModelEngine {
             config.setCooldownTicks(100);
         }
         @Override protected String getModelId() { return "fallen_feather_lance"; }
+        @Override protected double getModelScale() { return 4.0; }
         @Override protected void onSpawn(Location c) {
             spawnModel(c);
             chime(c, 1.0f, 0.4f);
@@ -402,6 +411,7 @@ public final class DevilsDreamModelEngine {
             config.setCooldownTicks(90);
         }
         @Override protected String getModelId() { return "nightmare_shard_volley"; }
+        @Override protected double getModelScale() { return 4.0; }
         @Override protected void onSpawn(Location c) {
             spawnModel(c);
             chime(c, 0.9f, 1.2f);
@@ -427,6 +437,7 @@ public final class DevilsDreamModelEngine {
             config.setCooldownTicks(180);
         }
         @Override protected String getModelId() { return "devils_tongue_beam"; }
+        @Override protected double getModelScale() { return 3.5; }
         @Override protected void onSpawn(Location c) {
             spawnModel(c);
             hostileHurt(c, 1.2f, 0.6f);
@@ -454,6 +465,7 @@ public final class DevilsDreamModelEngine {
             config.setCooldownTicks(90);
         }
         @Override protected String getModelId() { return "silver_wing_blade"; }
+        @Override protected double getModelScale() { return 4.0; }
         @Override protected void onSpawn(Location c) {
             spawnModel(c);
             chime(c, 1.1f, 1.4f);
@@ -479,6 +491,7 @@ public final class DevilsDreamModelEngine {
             config.setCooldownTicks(110);
         }
         @Override protected String getModelId() { return "nightmare_eye_projectile"; }
+        @Override protected double getModelScale() { return 5.0; }
         @Override protected void onSpawn(Location c) {
             spawnModel(c);
             sculkSoul(c, 20, 1.5);
@@ -505,6 +518,7 @@ public final class DevilsDreamModelEngine {
             config.setCooldownTicks(120);
         }
         @Override protected String getModelId() { return "blood_comet"; }
+        @Override protected double getModelScale() { return 4.0; }
         @Override protected void onSpawn(Location c) {
             spawnModel(c);
             hostileHurt(c, 1.3f, 0.5f);
@@ -530,6 +544,7 @@ public final class DevilsDreamModelEngine {
             config.setCooldownTicks(280);
         }
         @Override protected String getModelId() { return "fallen_angel_wings_summon"; }
+        @Override protected double getModelScale() { return 3.0; }
         @Override protected void onSpawn(Location c) {
             spawnModel(c);
             chime(c, 1.2f, 0.6f);
@@ -558,6 +573,7 @@ public final class DevilsDreamModelEngine {
             config.setCooldownTicks(320);
         }
         @Override protected String getModelId() { return "nightmare_cathedral"; }
+        @Override protected double getModelScale() { return 3.0; }
         @Override protected void onSpawn(Location c) {
             spawnModel(c);
             anchorCharge(c, 1.4f, 0.3f);
@@ -585,6 +601,7 @@ public final class DevilsDreamModelEngine {
             config.setCooldownTicks(260);
         }
         @Override protected String getModelId() { return "devils_halo_array"; }
+        @Override protected double getModelScale() { return 4.0; }
         @Override protected void onSpawn(Location c) {
             spawnModel(c);
             chime(c, 1.3f, 0.7f);
@@ -612,6 +629,7 @@ public final class DevilsDreamModelEngine {
             config.setCooldownTicks(300);
         }
         @Override protected String getModelId() { return "bone_throne_summon"; }
+        @Override protected double getModelScale() { return 4.0; }
         @Override protected void onSpawn(Location c) {
             spawnModel(c);
             anchorCharge(c, 1.3f, 0.4f);
@@ -638,6 +656,7 @@ public final class DevilsDreamModelEngine {
             config.setCooldownTicks(260);
         }
         @Override protected String getModelId() { return "silver_mirror_portal"; }
+        @Override protected double getModelScale() { return 3.0; }
         @Override protected void onSpawn(Location c) {
             spawnModel(c);
             portalAmb(c, 1.3f, 0.6f);
@@ -665,6 +684,7 @@ public final class DevilsDreamModelEngine {
             config.setCooldownTicks(260);
         }
         @Override protected String getModelId() { return "devils_constellation"; }
+        @Override protected double getModelScale() { return 4.0; }
         @Override protected void onSpawn(Location c) {
             spawnModel(c);
             thunderTrident(c, 1.0f, 0.7f);
@@ -691,6 +711,7 @@ public final class DevilsDreamModelEngine {
             config.setCooldownTicks(300);
         }
         @Override protected String getModelId() { return "nightmare_clock"; }
+        @Override protected double getModelScale() { return 4.0; }
         @Override protected void onSpawn(Location c) {
             spawnModel(c);
             anchorCharge(c, 1.0f, 0.6f);
@@ -717,6 +738,7 @@ public final class DevilsDreamModelEngine {
             config.setCooldownTicks(280);
         }
         @Override protected String getModelId() { return "fallen_seraph_skeleton"; }
+        @Override protected double getModelScale() { return 3.0; }
         @Override protected void onSpawn(Location c) {
             spawnModel(c);
             anchorCharge(c, 1.3f, 0.4f);
@@ -745,6 +767,7 @@ public final class DevilsDreamModelEngine {
             config.setCooldownTicks(260);
         }
         @Override protected String getModelId() { return "nightmare_planetarium"; }
+        @Override protected double getModelScale() { return 3.0; }
         @Override protected void onSpawn(Location c) {
             spawnModel(c);
             portalAmb(c, 1.2f, 0.5f);
@@ -772,6 +795,7 @@ public final class DevilsDreamModelEngine {
             config.setCooldownTicks(240);
         }
         @Override protected String getModelId() { return "infernal_scripture_array"; }
+        @Override protected double getModelScale() { return 4.0; }
         @Override protected void onSpawn(Location c) {
             spawnModel(c);
             wartPlace(c, 1.0f, 0.7f);
@@ -799,6 +823,7 @@ public final class DevilsDreamModelEngine {
             config.setCooldownTicks(360);
         }
         @Override protected String getModelId() { return "the_dream_itself"; }
+        @Override protected double getModelScale() { return 2.5; }
         @Override protected void onSpawn(Location c) {
             spawnModel(c);
             thunderTrident(c, 2.0f, 0.3f);
