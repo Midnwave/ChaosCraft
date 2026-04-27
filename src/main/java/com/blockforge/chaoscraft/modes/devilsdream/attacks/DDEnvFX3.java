@@ -3,7 +3,6 @@ package com.blockforge.chaoscraft.modes.devilsdream.attacks;
 import com.blockforge.chaoscraft.ChaosCraftPlugin;
 import com.blockforge.chaoscraft.modes.calamity.attacks.*;
 import com.blockforge.chaoscraft.modes.calamity.display.DisplayBuilder;
-import com.blockforge.chaoscraft.modes.calamity.display.DisplayBuilder.BlockDisplayHandle;
 import com.blockforge.chaoscraft.modes.calamity.display.DisplayBuilder.ItemDisplayHandle;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
@@ -11,22 +10,23 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import org.joml.AxisAngle4f;
 import org.joml.Vector3f;
+
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Devil's Dream Mode — ENVIRONMENTAL EFFECT ATTACKS (set 3 — entries 21–30).
- * Particle/atmosphere/sound-design focused environmental set pieces.
+ * Pure particle + ItemDisplay attacks. NO BlockDisplays. Damage tuned +50%.
  *
- * 21. Gravity Inversion Field   — obsidian ring, particles & item drift upward.
- * 22. The Flayed Highway        — corridor of pillars + red glass banners.
- * 23. Comet Impact Site         — half-buried obsidian sphere & basalt rim.
- * 24. Swarm of Souls            — pure particle, drifting soul flames.
- * 25. The Devil's Signature     — burning cursive "MINE" on the floor.
+ * 21. Gravity Inversion Field   — obsidian-item ring, drifting debris items rise.
+ * 22. The Flayed Highway        — corridor of bone-pillars + redstone banner items.
+ * 23. Comet Impact Site         — half-buried obsidian-item core, basalt rim.
+ * 24. Swarm of Souls            — drifting soul-lantern items, soul flames.
+ * 25. The Devil's Signature     — burning cursive "MINE" lantern letters.
  * 26. Void Peel                 — peeling wall strips revealing void.
  * 27. The Infernal Compass Storm— rotating NSEW elemental beams.
  * 28. Cascading Staircase       — 15-step staircase to nowhere.
- * 29. The Heartbeat Floor       — pulsing soul-flame heart-grid.
+ * 29. The Heartbeat Floor       — pulsing red heart-grid.
  * 30. Collapsing Dimension Pillars — three 12-tall pillars sinking on timers.
  */
 public final class DDEnvFX3 {
@@ -49,17 +49,17 @@ public final class DDEnvFX3 {
 
     // ============================================================
     // 21. GRAVITY INVERSION FIELD — active hazard
-    //     Obsidian ring (12) + 8 floating debris item displays drift up.
-    //     Particles configured to RISE. Total: ~20 displays.
+    //     Obsidian-item ring + 8 floating debris items drift upward.
+    //     Inverted particles configured to RISE.
     // ============================================================
     public static class GravityInversionField extends EnvironmentalAttack {
-        private final List<BlockDisplayHandle> ring = new ArrayList<>();
+        private final List<ItemDisplayHandle> ring = new ArrayList<>();
         private final List<ItemDisplayHandle> debris = new ArrayList<>();
         private final List<Float> debrisY = new ArrayList<>();
 
         public GravityInversionField(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("gravity_inversion_field", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
-            config.setDamage(3.5);
+            config.setDamage(5.25);
             config.setDamageRadius(6.0);
             config.setTicksBetweenDamage(25);
             config.setDamageDelayTicks(20);
@@ -72,21 +72,21 @@ public final class DDEnvFX3 {
             DisplayBuilder.playSound(center, Sound.ENTITY_ENDERMAN_TELEPORT, 1.2f, 0.6f);
             DisplayBuilder.playSound(center, Sound.BLOCK_PORTAL_AMBIENT, 1.0f, 0.4f);
 
-            // 12 obsidian ring blocks marking the zone floor
+            // 12 obsidian-item ring markers on the floor
             int count = 12;
             for (int i = 0; i < count; i++) {
                 double a = (Math.PI * 2 * i) / count;
                 double x = Math.cos(a) * 5.5;
                 double z = Math.sin(a) * 5.5;
-                BlockDisplayHandle h = displayBuilder.spawnBlock(
-                        center.clone().add(x, 0.0, z), Material.OBSIDIAN);
+                ItemDisplayHandle h = displayBuilder.spawnItem(
+                        center.clone().add(x, 0.2, z), new ItemStack(Material.OBSIDIAN));
                 h.scale(0.95f, 0.25f, 0.95f).glow(80, 0, 180).interpolation(15, 0);
                 ring.add(h);
             }
 
-            // 8 floating debris items — gravel, tuff, calcite
-            Material[] mats = { Material.GRAVEL, Material.TUFF, Material.CALCITE,
-                    Material.BLACKSTONE, Material.GRAVEL, Material.TUFF,
+            // 8 floating debris items — flint, cobbled deepslate, basalt items
+            Material[] mats = { Material.FLINT, Material.COBBLED_DEEPSLATE, Material.CALCITE,
+                    Material.BLACKSTONE, Material.FLINT, Material.TUFF,
                     Material.DEEPSLATE_TILES, Material.BASALT };
             for (int i = 0; i < 8; i++) {
                 double a = (Math.PI * 2 * i) / 8;
@@ -108,15 +108,15 @@ public final class DDEnvFX3 {
             World w = c.getWorld();
             double R = 5.5;
 
-            // Ring floor pulse glow
+            // Ring item glow pulse
             if (tick % 30 == 0) {
-                for (BlockDisplayHandle h : ring) {
+                for (ItemDisplayHandle h : ring) {
                     h.glow(60 + (int) (Math.random() * 80), 0, 180 + (int) (Math.random() * 60));
                 }
                 DisplayBuilder.playSound(c, Sound.ENTITY_ENDER_DRAGON_GROWL, 0.4f, 1.6f);
             }
 
-            // Inverted particles — upward velocity (positive Y speed)
+            // Inverted particles — upward velocity
             if (tick % 2 == 0) {
                 for (int i = 0; i < 18; i++) {
                     double a = Math.random() * Math.PI * 2;
@@ -124,27 +124,25 @@ public final class DDEnvFX3 {
                     double x = c.getX() + Math.cos(a) * r;
                     double z = c.getZ() + Math.sin(a) * r;
                     double y = c.getY() + Math.random() * 6.0;
-                    // Inverted smoke / large_smoke / flame all push +Y
                     w.spawnParticle(Particle.LARGE_SMOKE, x, y, z, 1, 0.05, 0.4, 0.05, 0.0);
                     w.spawnParticle(Particle.SMOKE,      x, y, z, 1, 0.05, 0.5, 0.05, 0.0);
                     if (Math.random() < 0.4)
                         w.spawnParticle(Particle.FLAME,  x, y, z, 1, 0.02, 0.6, 0.02, 0.0);
-                    if (Math.random() < 0.25)
-                        w.spawnParticle(Particle.FALLING_DUST, x, y, z, 1, 0, 0, 0, 0,
-                                Material.GRAVEL.createBlockData());
+                    if (Math.random() < 0.3)
+                        w.spawnParticle(Particle.REVERSE_PORTAL, x, y, z, 1, 0.1, 0.5, 0.1, 0.0);
                 }
             }
 
-            // Perimeter electric_spark flicker
+            // Perimeter purple dust pillar
             if (tick % 4 == 0) {
                 for (int i = 0; i < 18; i++) {
                     double a = (Math.PI * 2 * i) / 18 + tick * 0.04;
                     double y = c.getY() + (tick * 0.05) % 6.0;
-                    w.spawnParticle(Particle.ELECTRIC_SPARK,
-                            c.getX() + Math.cos(a) * R,
-                            y,
-                            c.getZ() + Math.sin(a) * R,
-                            1, 0, 0, 0, 0);
+                    Location p = new Location(w,
+                            c.getX() + Math.cos(a) * R, y, c.getZ() + Math.sin(a) * R);
+                    DisplayBuilder.dustParticles(p, 1, 0.05, 128, 48, 192, 1.2f);
+                    if (Math.random() < 0.4)
+                        w.spawnParticle(Particle.ELECTRIC_SPARK, p, 1, 0, 0, 0, 0);
                 }
             }
 
@@ -155,12 +153,23 @@ public final class DDEnvFX3 {
                     if (y > 8.0f) y = 0.0f;
                     debrisY.set(i, y);
                     double a = (Math.PI * 2 * i) / debris.size() + tick * 0.02;
-                    float tx = (float) (Math.cos(a) * 3.0) - 0.5f;
-                    float tz = (float) (Math.sin(a) * 3.0) - 0.5f;
+                    float tx = (float) (Math.cos(a) * 3.0) - 0.3f;
+                    float tz = (float) (Math.sin(a) * 3.0) - 0.3f;
                     debris.get(i).animateTo(
-                            new Vector3f(tx, y - 0.5f, tz),
+                            new Vector3f(tx, y - 0.3f, tz),
                             new AxisAngle4f((float) (tick * 0.06), 0.3f, 1f, 0.2f),
                             new Vector3f(0.6f, 0.6f, 0.6f), 4);
+                }
+            }
+
+            // Damage
+            if (tick % config.getTicksBetweenDamage() == 0) {
+                double r2 = config.getDamageRadius() * config.getDamageRadius();
+                for (Player p : w.getPlayers()) {
+                    if (p.getGameMode() != GameMode.SURVIVAL || p.isInvulnerable()) continue;
+                    if (p.getLocation().distanceSquared(c) <= r2) {
+                        p.damage(config.getDamage()); p.setNoDamageTicks(0);
+                    }
                 }
             }
         }
@@ -171,16 +180,16 @@ public final class DDEnvFX3 {
 
     // ============================================================
     // 22. THE FLAYED HIGHWAY — active hazard
-    //     2 rows × 6 pillars (12) + 6 stretched red glass banners.
-    //     Total: 18 displays.
+    //     2 rows × 6 bone-pillar item stacks + 6 redstone banner items.
     // ============================================================
     public static class FlayedHighway extends EnvironmentalAttack {
-        private final List<BlockDisplayHandle> pillars = new ArrayList<>();
-        private final List<BlockDisplayHandle> banners = new ArrayList<>();
+        private final List<ItemDisplayHandle> pillars = new ArrayList<>();
+        private final List<ItemDisplayHandle> banners = new ArrayList<>();
+        private final List<ItemDisplayHandle> skulls = new ArrayList<>();
 
         public FlayedHighway(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("flayed_highway", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
-            config.setDamage(4.5);
+            config.setDamage(6.75);
             config.setDamageRadius(7.0);
             config.setTicksBetweenDamage(22);
             config.setDamageDelayTicks(20);
@@ -193,23 +202,28 @@ public final class DDEnvFX3 {
             DisplayBuilder.playSound(center, Sound.ENTITY_WITHER_AMBIENT, 0.8f, 0.5f);
             DisplayBuilder.playSound(center, Sound.ENTITY_GHAST_WARN, 0.7f, 0.8f);
 
-            // 2 rows of 6 tall blackstone pillars (4 high each), spaced 3 blocks
+            // 2 rows of 6 tall bone pillars (stacked bone items vertically)
             for (int row = 0; row < 2; row++) {
                 double zSide = row == 0 ? -2.0 : 2.0;
                 for (int i = 0; i < 6; i++) {
                     double x = -7.5 + i * 3.0;
-                    BlockDisplayHandle base = displayBuilder.spawnBlock(
-                            center.clone().add(x, 0, zSide), Material.BLACKSTONE);
-                    base.scale(1.0f, 4.0f, 1.0f).interpolation(15, 0);
+                    ItemDisplayHandle base = displayBuilder.spawnItem(
+                            center.clone().add(x, 0, zSide), new ItemStack(Material.BONE));
+                    base.scale(1.0f, 4.0f, 1.0f).glow(220, 220, 200).interpolation(15, 0);
                     pillars.add(base);
+                    // Skeleton skull on top of each pillar
+                    ItemDisplayHandle skull = displayBuilder.spawnItem(
+                            center.clone().add(x, 4.2, zSide), new ItemStack(Material.SKELETON_SKULL));
+                    skull.scale(0.8f, 0.8f, 0.8f).glow(255, 240, 200).interpolation(15, 0);
+                    skulls.add(skull);
                 }
             }
 
-            // 6 banners (red stained glass) stretched between pairs at top
+            // 6 banners (redstone block items) stretched between pairs at top
             for (int i = 0; i < 6; i++) {
                 double x = -7.5 + i * 3.0;
-                BlockDisplayHandle banner = displayBuilder.spawnBlock(
-                        center.clone().add(x, 3.5, 0), Material.RED_STAINED_GLASS);
+                ItemDisplayHandle banner = displayBuilder.spawnItem(
+                        center.clone().add(x, 3.5, 0), new ItemStack(Material.REDSTONE_BLOCK));
                 banner.scale(0.6f, 2.5f, 4.0f).glow(180, 0, 0).interpolation(20, 0);
                 banners.add(banner);
             }
@@ -231,9 +245,21 @@ public final class DDEnvFX3 {
                             new AxisAngle4f(swing, 0, 0, 1),
                             new Vector3f(0.6f, 2.5f, 4.0f), 20);
                 }
+                // Skull bobbing
+                for (int i = 0; i < skulls.size(); i++) {
+                    int row = i / 6;
+                    int col = i % 6;
+                    double zSide = row == 0 ? -2.0 : 2.0;
+                    double x = -7.5 + col * 3.0;
+                    float bob = (float) Math.sin(tick * 0.04 + i) * 0.08f;
+                    skulls.get(i).animateTo(
+                            new Vector3f((float) x - 0.4f, 4.2f + bob, (float) zSide - 0.4f),
+                            new AxisAngle4f((float) (tick * 0.02 + i), 0, 1, 0),
+                            new Vector3f(0.8f, 0.8f, 0.8f), 20);
+                }
             }
 
-            // Dripping curtains from each banner — dripping_obsidian_tear
+            // Dripping curtains from each banner — dripping_obsidian_tear + blood dust
             if (tick % 2 == 0) {
                 for (int i = 0; i < 6; i++) {
                     double x = c.getX() + (-7.5 + i * 3.0);
@@ -244,6 +270,10 @@ public final class DDEnvFX3 {
                                 w.spawnParticle(Particle.DRIPPING_OBSIDIAN_TEAR,
                                         x, c.getY() + 4.5 - dy, c.getZ() + dz,
                                         1, 0, 0, 0, 0);
+                            if (Math.random() < 0.18)
+                                DisplayBuilder.dustParticles(
+                                        new Location(w, x, c.getY() + 4.0 - dy, c.getZ() + dz),
+                                        1, 0.05, 140, 16, 16, 1.4f);
                         }
                     }
                 }
@@ -259,9 +289,21 @@ public final class DDEnvFX3 {
                 }
             }
 
-            // Drip-step sounds
+            // Skull rattle
             if (tick % 30 == 0) {
-                DisplayBuilder.playSound(c, Sound.BLOCK_WET_GRASS_STEP, 0.7f, 0.6f);
+                DisplayBuilder.playSound(c, Sound.ENTITY_SKELETON_AMBIENT, 0.7f, 0.6f);
+                DisplayBuilder.playSound(c, Sound.BLOCK_BONE_BLOCK_HIT, 0.6f, 0.5f);
+            }
+
+            // Damage
+            if (tick % config.getTicksBetweenDamage() == 0) {
+                double r2 = config.getDamageRadius() * config.getDamageRadius();
+                for (Player p : w.getPlayers()) {
+                    if (p.getGameMode() != GameMode.SURVIVAL || p.isInvulnerable()) continue;
+                    if (p.getLocation().distanceSquared(c) <= r2) {
+                        p.damage(config.getDamage()); p.setNoDamageTicks(0);
+                    }
+                }
             }
         }
 
@@ -271,17 +313,17 @@ public final class DDEnvFX3 {
 
     // ============================================================
     // 23. COMET IMPACT SITE — atmosphere
-    //     Half-buried sphere (12 sphere blocks) + 6 tilted basalt rim
-    //     + crack line of 4 blackstone slivers. Total: ~22 displays.
+    //     Half-buried obsidian-item sphere + 6 tilted basalt rim items
+    //     + crack line of 4 blackstone slivers + crying obsidian core.
     // ============================================================
     public static class CometImpactSite extends EnvironmentalAttack {
-        private final List<BlockDisplayHandle> comet = new ArrayList<>();
-        private final List<BlockDisplayHandle> rim = new ArrayList<>();
-        private final List<BlockDisplayHandle> crack = new ArrayList<>();
+        private final List<ItemDisplayHandle> comet = new ArrayList<>();
+        private final List<ItemDisplayHandle> rim = new ArrayList<>();
+        private final List<ItemDisplayHandle> crack = new ArrayList<>();
 
         public CometImpactSite(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("comet_impact_site", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
-            config.setDamage(1.5);
+            config.setDamage(2.25);
             config.setDamageRadius(4.0);
             config.setTicksBetweenDamage(35);
             config.setDamageDelayTicks(20);
@@ -294,32 +336,36 @@ public final class DDEnvFX3 {
             DisplayBuilder.playSound(center, Sound.ENTITY_GENERIC_EXPLODE, 1.5f, 0.4f);
             DisplayBuilder.playSound(center, Sound.BLOCK_LAVA_AMBIENT, 1.2f, 0.5f);
 
-            // Comet sphere — half buried at +0.4y
-            comet.addAll(displayBuilder.spawnSphere(
-                    center.clone().add(0, 0.4, 0), Material.OBSIDIAN, 1.8, 14));
-            // Add crackling crying obsidian veins at the top
-            comet.addAll(displayBuilder.spawnSphere(
-                    center.clone().add(0, 0.7, 0), Material.CRYING_OBSIDIAN, 1.5, 6));
-            for (BlockDisplayHandle h : comet) {
-                h.scale(1.4f, 1.4f, 1.4f).glow(255, 80, 0).interpolation(25, 0);
+            // Comet "sphere" — 1 large obsidian item core + 6 surrounding crying obsidian items
+            ItemDisplayHandle core = displayBuilder.spawnItem(
+                    center.clone().add(0, 0.6, 0), new ItemStack(Material.OBSIDIAN));
+            core.scale(2.4f, 2.4f, 2.4f).glow(255, 80, 0).interpolation(25, 0);
+            comet.add(core);
+            double[][] cluster = { {0.6, 0.5, 0}, {-0.6, 0.5, 0}, {0, 0.5, 0.6},
+                                   {0, 0.5, -0.6}, {0, 1.4, 0}, {0.4, 1.0, 0.4} };
+            for (double[] o : cluster) {
+                ItemDisplayHandle h = displayBuilder.spawnItem(
+                        center.clone().add(o[0], o[1], o[2]), new ItemStack(Material.CRYING_OBSIDIAN));
+                h.scale(1.1f, 1.1f, 1.1f).glow(255, 60, 60).interpolation(25, 0);
+                comet.add(h);
             }
 
-            // 6 tilted basalt rim chunks
+            // 6 tilted basalt rim items
             for (int i = 0; i < 6; i++) {
                 double a = (Math.PI * 2 * i) / 6;
                 double rx = Math.cos(a) * 3.0;
                 double rz = Math.sin(a) * 3.0;
-                BlockDisplayHandle h = displayBuilder.spawnBlock(
-                        center.clone().add(rx, 0.2, rz), Material.BASALT);
+                ItemDisplayHandle h = displayBuilder.spawnItem(
+                        center.clone().add(rx, 0.2, rz), new ItemStack(Material.BASALT));
                 h.scale(1.2f, 0.5f, 1.2f).rotate((float) (a + Math.PI / 6), 1, 0, 1)
-                        .interpolation(30, 0);
+                        .glow(60, 60, 80).interpolation(30, 0);
                 rim.add(h);
             }
 
             // Crack line — 4 blackstone slivers running away from impact
             for (int i = 0; i < 4; i++) {
-                BlockDisplayHandle h = displayBuilder.spawnBlock(
-                        center.clone().add(2.5 + i * 1.2, 0.05, 0.3 * i), Material.BLACKSTONE);
+                ItemDisplayHandle h = displayBuilder.spawnItem(
+                        center.clone().add(2.5 + i * 1.2, 0.05, 0.3 * i), new ItemStack(Material.BLACKSTONE));
                 h.scale(1.0f, 0.1f, 0.4f).glow(255, 60, 0).interpolation(25, 0);
                 crack.add(h);
             }
@@ -331,6 +377,14 @@ public final class DDEnvFX3 {
             if (c == null || c.getWorld() == null) return;
             World w = c.getWorld();
 
+            // Comet slow rotation
+            if (tick % 8 == 0) {
+                comet.get(0).animateTo(
+                        new Vector3f(-1.2f, 0.6f - 1.2f, -1.2f),
+                        new AxisAngle4f((float) (tick * 0.02), 0.3f, 1f, 0.2f),
+                        new Vector3f(2.4f, 2.4f, 2.4f), 8);
+            }
+
             // Lava seep from comet cracks
             if (tick % 2 == 0) {
                 for (int i = 0; i < 6; i++) {
@@ -341,6 +395,11 @@ public final class DDEnvFX3 {
                             c.getY() + 0.6 + Math.random() * 1.2,
                             c.getZ() + Math.sin(a) * r,
                             1, 0, 0, 0, 0);
+                    if (Math.random() < 0.35)
+                        w.spawnParticle(Particle.DRIPPING_DRIPSTONE_LAVA,
+                                c.getX() + Math.cos(a) * r,
+                                c.getY() + 1.4,
+                                c.getZ() + Math.sin(a) * r, 1, 0, 0, 0, 0);
                 }
             }
 
@@ -380,6 +439,17 @@ public final class DDEnvFX3 {
             if (tick % 25 == 0) {
                 DisplayBuilder.playSound(c, Sound.BLOCK_BASALT_STEP, 0.8f, 0.3f);
             }
+
+            // Damage
+            if (tick % config.getTicksBetweenDamage() == 0) {
+                double r2 = config.getDamageRadius() * config.getDamageRadius();
+                for (Player p : w.getPlayers()) {
+                    if (p.getGameMode() != GameMode.SURVIVAL || p.isInvulnerable()) continue;
+                    if (p.getLocation().distanceSquared(c) <= r2) {
+                        p.damage(config.getDamage()); p.setNoDamageTicks(0); p.setFireTicks(40);
+                    }
+                }
+            }
         }
 
         @Override
@@ -387,8 +457,9 @@ public final class DDEnvFX3 {
     }
 
     // ============================================================
-    // 24. SWARM OF SOULS — atmosphere (pure particle but uses 12
-    //     invisible soul lantern item displays as glowing source markers).
+    // 24. SWARM OF SOULS — atmosphere
+    //     12 drifting soul-lantern item displays as glowing source
+    //     markers; soul flame particles emit from each one.
     // ============================================================
     public static class SwarmOfSouls extends EnvironmentalAttack {
         private final List<ItemDisplayHandle> sources = new ArrayList<>();
@@ -396,7 +467,7 @@ public final class DDEnvFX3 {
 
         public SwarmOfSouls(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("swarm_of_souls", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
-            config.setDamage(1.5);
+            config.setDamage(2.25);
             config.setDamageRadius(5.0);
             config.setTicksBetweenDamage(35);
             config.setDamageDelayTicks(20);
@@ -441,9 +512,9 @@ public final class DDEnvFX3 {
                     Location l = e.getLocation();
                     Vector rel = l.toVector().subtract(c.toVector());
                     if (rel.length() > 7.0) v.multiply(-1);
-                    float tx = (float) (rel.getX() + v.getX() * 8) - 0.5f;
-                    float ty = (float) (rel.getY() + v.getY() * 8) - 0.5f;
-                    float tz = (float) (rel.getZ() + v.getZ() * 8) - 0.5f;
+                    float tx = (float) (rel.getX() + v.getX() * 8) - 0.225f;
+                    float ty = (float) (rel.getY() + v.getY() * 8) - 0.225f;
+                    float tz = (float) (rel.getZ() + v.getZ() * 8) - 0.225f;
                     sources.get(i).animateTo(
                             new Vector3f(tx, ty, tz),
                             new AxisAngle4f((float) (tick * 0.05), 0, 1, 0),
@@ -463,9 +534,9 @@ public final class DDEnvFX3 {
                             1, dx, dy, dz, 0.08);
                 }
                 if (tick % 5 == 0) {
-                    w.spawnParticle(Particle.SMOKE,
+                    w.spawnParticle(Particle.SOUL,
                             l.getX(), l.getY(), l.getZ(),
-                            1, 0.3, 0.3, 0.3, 0.02);
+                            1, 0.15, 0.15, 0.15, 0.02);
                 }
             }
 
@@ -489,6 +560,17 @@ public final class DDEnvFX3 {
             if (tick % 80 == 0) {
                 DisplayBuilder.playSound(c, Sound.ENTITY_GHAST_WARN, 0.6f, 0.6f);
             }
+
+            // Damage
+            if (tick % config.getTicksBetweenDamage() == 0) {
+                double r2 = config.getDamageRadius() * config.getDamageRadius();
+                for (Player p : w.getPlayers()) {
+                    if (p.getGameMode() != GameMode.SURVIVAL || p.isInvulnerable()) continue;
+                    if (p.getLocation().distanceSquared(c) <= r2) {
+                        p.damage(config.getDamage()); p.setNoDamageTicks(0);
+                    }
+                }
+            }
         }
 
         @Override
@@ -497,8 +579,8 @@ public final class DDEnvFX3 {
 
     // ============================================================
     // 25. THE DEVIL'S SIGNATURE — atmosphere
-    //     "MINE" word laid out: 4 letters, soul lanterns at turning
-    //     points (~14 lanterns) + soul fire particle stroke retracing.
+    //     "MINE" word laid out: 4 letters, soul-lanterns at turning
+    //     points (~17 lanterns) + soul fire particle stroke retracing.
     // ============================================================
     public static class DevilsSignature extends EnvironmentalAttack {
         private final List<ItemDisplayHandle> lanterns = new ArrayList<>();
@@ -508,7 +590,7 @@ public final class DDEnvFX3 {
 
         public DevilsSignature(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("devils_signature", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
-            config.setDamage(1.0);
+            config.setDamage(1.5);
             config.setDamageRadius(3.5);
             config.setTicksBetweenDamage(40);
             config.setDamageDelayTicks(20);
@@ -522,14 +604,9 @@ public final class DDEnvFX3 {
             DisplayBuilder.playSound(center, Sound.ENTITY_LIGHTNING_BOLT_IMPACT, 0.8f, 0.6f);
 
             // Build relative coords for the letters M, I, N, E along X axis
-            // Each letter occupies ~2x3 grid, total 4 letters spaced 2.5 apart
-            // Letter M: 4 nodes
             addLetter(-6.0, new double[][]{ {0,0}, {0,2.5}, {1.0,1.0}, {2.0,2.5}, {2.0,0} });
-            // Letter I: 2 nodes (top, bottom)
             addLetter(-2.5, new double[][]{ {0,0}, {0,2.5} });
-            // Letter N: 4 nodes
             addLetter(0.0,  new double[][]{ {0,0}, {0,2.5}, {2.0,0}, {2.0,2.5} });
-            // Letter E: 4 corners + middle
             addLetter(3.5,  new double[][]{ {0,0}, {0,2.5}, {2.0,2.5}, {0,1.25}, {1.5,1.25}, {2.0,0} });
 
             // Place lanterns at turning points
@@ -560,7 +637,6 @@ public final class DDEnvFX3 {
                 for (int i = 0; i < letterPath.size() - 1; i++) {
                     Vector a = letterPath.get(i);
                     Vector b = letterPath.get(i + 1);
-                    // Skip cross-letter jumps — only stroke when relatively close
                     if (a.distance(b) > 4.5) continue;
                     int steps = (int) (a.distance(b) * 4);
                     for (int s = 0; s <= steps; s++) {
@@ -606,10 +682,20 @@ public final class DDEnvFX3 {
                 }
                 DisplayBuilder.playSound(c, Sound.BLOCK_SOUL_SAND_STEP, 0.5f, 0.7f);
             }
+
+            // Damage
+            if (tick % config.getTicksBetweenDamage() == 0) {
+                double r2 = config.getDamageRadius() * config.getDamageRadius();
+                for (Player p : w.getPlayers()) {
+                    if (p.getGameMode() != GameMode.SURVIVAL || p.isInvulnerable()) continue;
+                    if (p.getLocation().distanceSquared(c) <= r2) {
+                        p.damage(config.getDamage()); p.setNoDamageTicks(0);
+                    }
+                }
+            }
         }
 
         private int letterStartIdx(int letter) {
-            // M=5 nodes, I=2 nodes, N=4 nodes, E=6 nodes
             int[] sizes = { 5, 2, 4, 6 };
             int idx = 0;
             for (int i = 0; i < letter && i < 4; i++) idx += sizes[i];
@@ -623,16 +709,16 @@ public final class DDEnvFX3 {
 
     // ============================================================
     // 26. VOID PEEL — active hazard
-    //     6 tilted blackstone wall strips peeling outward, scaling in
-    //     over time. ~14 displays (6 peel strips + 8 backing void rim).
+    //     6 tilted blackstone-item peels growing outward + 8 dark
+    //     stained-glass-item rim accents revealing void portal particles.
     // ============================================================
     public static class VoidPeel extends EnvironmentalAttack {
-        private final List<BlockDisplayHandle> peels = new ArrayList<>();
-        private final List<BlockDisplayHandle> rim = new ArrayList<>();
+        private final List<ItemDisplayHandle> peels = new ArrayList<>();
+        private final List<ItemDisplayHandle> rim = new ArrayList<>();
 
         public VoidPeel(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("void_peel", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
-            config.setDamage(4.0);
+            config.setDamage(6.0);
             config.setDamageRadius(6.0);
             config.setTicksBetweenDamage(28);
             config.setDamageDelayTicks(20);
@@ -650,20 +736,20 @@ public final class DDEnvFX3 {
                 double a = (Math.PI * 2 * i) / 6;
                 double rx = Math.cos(a) * 6.5;
                 double rz = Math.sin(a) * 6.5;
-                BlockDisplayHandle h = displayBuilder.spawnBlock(
-                        center.clone().add(rx, 1.8, rz), Material.BLACKSTONE);
+                ItemDisplayHandle h = displayBuilder.spawnItem(
+                        center.clone().add(rx, 1.8, rz), new ItemStack(Material.BLACKSTONE));
                 h.scale(0.1f, 0.1f, 0.1f).rotate((float) (a + Math.PI / 5), 0, 0, 1)
                         .glow(40, 0, 80).interpolation(40, 0);
                 peels.add(h);
             }
 
-            // Rim backing — 8 deep purple stained glass behind peels for "void" depth
+            // Rim backing — 8 deep purple stained glass items behind peels for "void" depth
             for (int i = 0; i < 8; i++) {
                 double a = (Math.PI * 2 * i) / 8;
                 double rx = Math.cos(a) * 7.3;
                 double rz = Math.sin(a) * 7.3;
-                BlockDisplayHandle h = displayBuilder.spawnBlock(
-                        center.clone().add(rx, 1.8, rz), Material.BLACK_STAINED_GLASS);
+                ItemDisplayHandle h = displayBuilder.spawnItem(
+                        center.clone().add(rx, 1.8, rz), new ItemStack(Material.BLACK_STAINED_GLASS));
                 h.scale(0.05f, 0.05f, 0.05f).glow(60, 0, 120).interpolation(40, 0);
                 rim.add(h);
             }
@@ -675,14 +761,13 @@ public final class DDEnvFX3 {
             if (c == null || c.getWorld() == null) return;
             World w = c.getWorld();
 
-            // Phase: peels grow over first ~140 ticks
+            // Phase: peels grow over first ~180 ticks
             if (tick % 30 == 0 && tick <= 180) {
                 float scale = Math.min(1.5f, 0.1f + (tick / 180f) * 1.5f);
                 for (int i = 0; i < peels.size(); i++) {
                     double a = (Math.PI * 2 * i) / 6;
-                    float tx = (float) (Math.cos(a) * 6.5) - 0.5f;
-                    float tz = (float) (Math.sin(a) * 6.5) - 0.5f;
-                    // Tilt outward more as it peels
+                    float tx = (float) (Math.cos(a) * 6.5) - 0.2f;
+                    float tz = (float) (Math.sin(a) * 6.5) - 0.6f;
                     peels.get(i).animateTo(
                             new Vector3f(tx, 1.3f, tz),
                             new AxisAngle4f((float) (a + Math.PI / 4 + tick * 0.005), 0, 1, 0),
@@ -690,8 +775,8 @@ public final class DDEnvFX3 {
                 }
                 for (int i = 0; i < rim.size(); i++) {
                     double a = (Math.PI * 2 * i) / 8;
-                    float tx = (float) (Math.cos(a) * 7.3) - 0.5f;
-                    float tz = (float) (Math.sin(a) * 7.3) - 0.5f;
+                    float tx = (float) (Math.cos(a) * 7.3) - 0.15f;
+                    float tz = (float) (Math.sin(a) * 7.3) - 0.75f;
                     rim.get(i).animateTo(
                             new Vector3f(tx, 1.3f, tz),
                             new AxisAngle4f(0, 0, 1, 0),
@@ -700,7 +785,7 @@ public final class DDEnvFX3 {
                 DisplayBuilder.playSound(c, Sound.BLOCK_DEEPSLATE_BREAK, 0.9f, 0.5f + tick * 0.001f);
             }
 
-            // Per-tick particles: portal + end_rod + squid_ink in the void gaps
+            // Per-tick particles: portal + end_rod + reverse_portal in the void gaps
             if (tick % 2 == 0) {
                 for (int i = 0; i < 6; i++) {
                     double a = (Math.PI * 2 * i) / 6;
@@ -714,10 +799,9 @@ public final class DDEnvFX3 {
                             w.spawnParticle(Particle.END_ROD, rx, c.getY() + 1.8 + oy, rz, 1,
                                     0.05, 0.05, 0.05, 0.02);
                         if (Math.random() < 0.3)
-                            w.spawnParticle(Particle.SQUID_INK, rx, c.getY() + 1.8 + oy, rz, 1,
+                            w.spawnParticle(Particle.REVERSE_PORTAL, rx, c.getY() + 1.8 + oy, rz, 1,
                                     0.05, 0.05, 0.05, 0.0);
                     }
-                    // Edge sparks
                     if (Math.random() < 0.5)
                         w.spawnParticle(Particle.ELECTRIC_SPARK,
                                 rx + (Math.random() - 0.5) * 0.5,
@@ -730,6 +814,17 @@ public final class DDEnvFX3 {
             if (tick % 50 == 0) {
                 DisplayBuilder.playSound(c, Sound.BLOCK_PORTAL_AMBIENT, 0.7f, 0.4f);
             }
+
+            // Damage
+            if (tick % config.getTicksBetweenDamage() == 0) {
+                double r2 = config.getDamageRadius() * config.getDamageRadius();
+                for (Player p : w.getPlayers()) {
+                    if (p.getGameMode() != GameMode.SURVIVAL || p.isInvulnerable()) continue;
+                    if (p.getLocation().distanceSquared(c) <= r2) {
+                        p.damage(config.getDamage()); p.setNoDamageTicks(0);
+                    }
+                }
+            }
         }
 
         @Override
@@ -738,17 +833,16 @@ public final class DDEnvFX3 {
 
     // ============================================================
     // 27. THE INFERNAL COMPASS STORM — atmosphere
-    //     Central magma block hub + 4 small directional marker blocks
-    //     at the cardinal arrow tips. 4 elemental beam streams rotate.
-    //     Total: ~9 displays + 4 hub/spokes block displays = 13.
+    //     Central magma-item hub + 4 NSEW marker items at radius 8.
+    //     4 elemental beam particle streams rotate.
     // ============================================================
     public static class InfernalCompassStorm extends EnvironmentalAttack {
-        private final List<BlockDisplayHandle> hub = new ArrayList<>();
-        private final List<BlockDisplayHandle> markers = new ArrayList<>();
+        private final List<ItemDisplayHandle> hub = new ArrayList<>();
+        private final List<ItemDisplayHandle> markers = new ArrayList<>();
 
         public InfernalCompassStorm(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("infernal_compass_storm", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
-            config.setDamage(2.0);
+            config.setDamage(3.0);
             config.setDamageRadius(5.0);
             config.setTicksBetweenDamage(35);
             config.setDamageDelayTicks(20);
@@ -760,29 +854,29 @@ public final class DDEnvFX3 {
         protected void onSpawn(Location center) {
             DisplayBuilder.playSound(center, Sound.ENTITY_BLAZE_AMBIENT, 1.0f, 0.5f);
 
-            // Central hub — 5 magma block cluster, slightly raised
+            // Central hub — magma-item core + 4 shroomlight item satellites, raised
             Location hubCenter = center.clone().add(0, 5.5, 0);
-            BlockDisplayHandle core = displayBuilder.spawnBlock(hubCenter, Material.MAGMA_BLOCK);
+            ItemDisplayHandle core = displayBuilder.spawnItem(hubCenter, new ItemStack(Material.MAGMA_BLOCK));
             core.scale(1.2f, 1.2f, 1.2f).glow(255, 100, 0).interpolation(20, 0);
             hub.add(core);
             double[][] off = { {0.6, 0, 0}, {-0.6, 0, 0}, {0, 0, 0.6}, {0, 0, -0.6} };
             for (double[] o : off) {
-                BlockDisplayHandle h = displayBuilder.spawnBlock(
-                        hubCenter.clone().add(o[0], 0, o[2]), Material.SHROOMLIGHT);
+                ItemDisplayHandle h = displayBuilder.spawnItem(
+                        hubCenter.clone().add(o[0], 0, o[2]), new ItemStack(Material.SHROOMLIGHT));
                 h.scale(0.5f, 0.5f, 0.5f).glow(255, 200, 80).interpolation(20, 0);
                 hub.add(h);
             }
 
             // 4 directional markers (NSEW) at radius 8 on floor
             Material[] mm = { Material.SOUL_LANTERN, Material.MAGMA_BLOCK,
-                    Material.AMETHYST_BLOCK, Material.OBSIDIAN };
+                    Material.AMETHYST_SHARD, Material.OBSIDIAN };
             int[][] mc = { {255, 255, 255}, {255, 100, 0}, {200, 220, 80}, {120, 120, 120} };
             for (int i = 0; i < 4; i++) {
                 double a = (Math.PI / 2) * i;
                 double x = Math.cos(a) * 8.0;
                 double z = Math.sin(a) * 8.0;
-                BlockDisplayHandle h = displayBuilder.spawnBlock(
-                        center.clone().add(x, 0.3, z), mm[i]);
+                ItemDisplayHandle h = displayBuilder.spawnItem(
+                        center.clone().add(x, 0.3, z), new ItemStack(mm[i]));
                 h.scale(0.6f, 0.4f, 0.6f).glow(mc[i][0], mc[i][1], mc[i][2]).interpolation(15, 0);
                 markers.add(h);
             }
@@ -795,17 +889,15 @@ public final class DDEnvFX3 {
             World w = c.getWorld();
 
             Location hubCenter = c.clone().add(0, 5.5, 0);
-            // Rotation accelerates — base 0.02 rad/tick, +tick*0.0001
+            // Rotation accelerates
             double omega = 0.02 + tick * 0.00012;
             double angle = tick * omega;
 
-            // 4 streams sweep outward from hub down to floor — each is a particle line
+            // 4 streams sweep outward from hub down to floor — particle line
             for (int s = 0; s < 4; s++) {
                 double a = angle + (Math.PI / 2) * s;
                 Vector dir = new Vector(Math.cos(a), 0, Math.sin(a));
-                // Particle line from hub down-and-out to the floor
                 Particle p;
-                Object data = null;
                 switch (s) {
                     case 0: p = Particle.SOUL_FIRE_FLAME; break;
                     case 1: p = Particle.LAVA;           break;
@@ -818,8 +910,7 @@ public final class DDEnvFX3 {
                     double bx = hubCenter.getX() + dir.getX() * t * 8.5;
                     double by = hubCenter.getY() - t * 5.4;
                     double bz = hubCenter.getZ() + dir.getZ() * t * 8.5;
-                    if (data != null) w.spawnParticle(p, bx, by, bz, 1, 0, 0, 0, 0, data);
-                    else              w.spawnParticle(p, bx, by, bz, 1, 0, 0, 0, 0);
+                    w.spawnParticle(p, bx, by, bz, 1, 0, 0, 0, 0);
                 }
             }
 
@@ -831,10 +922,10 @@ public final class DDEnvFX3 {
                     double fz = c.getZ() + Math.sin(a) * 8.5;
                     int cr, cg, cb;
                     switch (s) {
-                        case 0:  cr = 255; cg = 150; cb = 200; break; // soul flame pinkish
-                        case 1:  cr = 255; cg = 127; cb = 0;   break; // lava orange
-                        case 2:  cr = 144; cg = 208; cb = 128; break; // electric green
-                        default: cr = 120; cg = 120; cb = 140; break; // smoke grey
+                        case 0:  cr = 255; cg = 150; cb = 200; break;
+                        case 1:  cr = 255; cg = 127; cb = 0;   break;
+                        case 2:  cr = 144; cg = 208; cb = 128; break;
+                        default: cr = 120; cg = 120; cb = 140; break;
                     }
                     DisplayBuilder.dustParticles(new Location(w, fx, c.getY() + 0.1, fz),
                             5, 0.4, cr, cg, cb, 1.4f);
@@ -849,17 +940,34 @@ public final class DDEnvFX3 {
                         hubCenter.getZ(), 4, 0.3, 0.2, 0.3, 0.02);
             }
 
+            // Hub slow rotation
+            if (tick % 10 == 0) {
+                hub.get(0).animateTo(
+                        new Vector3f(-0.6f, 5.5f - 0.6f, -0.6f),
+                        new AxisAngle4f((float) angle, 0, 1, 0),
+                        new Vector3f(1.2f, 1.2f, 1.2f), 10);
+            }
+
             // Cardinal cross-overs — when beam passes a marker, thunder
             int quadrant = (int) ((angle / (Math.PI / 2)) % 4 + 4) % 4;
-            if (tick % 1 == 0) {
-                if (Math.abs((angle % (Math.PI / 2))) < omega * 1.5) {
-                    DisplayBuilder.playSound(c, Sound.ENTITY_LIGHTNING_BOLT_THUNDER, 0.7f, 1.2f);
-                }
+            if (Math.abs((angle % (Math.PI / 2))) < omega * 1.5) {
+                DisplayBuilder.playSound(c, Sound.ENTITY_LIGHTNING_BOLT_THUNDER, 0.7f, 1.2f);
             }
 
             // Pulse marker glow when beam crosses
             if (tick % 6 == 0 && quadrant >= 0 && quadrant < markers.size()) {
                 markers.get(quadrant).glow(255, 220, 80);
+            }
+
+            // Damage
+            if (tick % config.getTicksBetweenDamage() == 0) {
+                double r2 = config.getDamageRadius() * config.getDamageRadius();
+                for (Player p : w.getPlayers()) {
+                    if (p.getGameMode() != GameMode.SURVIVAL || p.isInvulnerable()) continue;
+                    if (p.getLocation().distanceSquared(c) <= r2) {
+                        p.damage(config.getDamage()); p.setNoDamageTicks(0);
+                    }
+                }
             }
         }
 
@@ -869,16 +977,16 @@ public final class DDEnvFX3 {
 
     // ============================================================
     // 28. CASCADING STAIRCASE TO NOWHERE — atmosphere
-    //     15 stair-step blackstone slab displays climbing at 45°.
+    //     15 stair-step cobbled-deepslate item displays climbing at 45°.
     //     Top step periodically scales to 0 (crumbles) and reforms.
     // ============================================================
     public static class StaircaseToNowhere extends EnvironmentalAttack {
-        private final List<BlockDisplayHandle> steps = new ArrayList<>();
+        private final List<ItemDisplayHandle> steps = new ArrayList<>();
         private int crumbleStep = 14;
 
         public StaircaseToNowhere(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("staircase_to_nowhere", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
-            config.setDamage(1.0);
+            config.setDamage(1.5);
             config.setDamageRadius(3.5);
             config.setTicksBetweenDamage(40);
             config.setDamageDelayTicks(20);
@@ -890,10 +998,10 @@ public final class DDEnvFX3 {
         protected void onSpawn(Location center) {
             DisplayBuilder.playSound(center, Sound.BLOCK_DEEPSLATE_BREAK, 0.7f, 0.5f);
 
-            // 15 steps at 45° heading +X/+Y, each step 0.7 wide × 0.4 tall
+            // 15 steps at 45° heading +X/+Y
             for (int i = 0; i < 15; i++) {
                 Location l = center.clone().add(i * 0.8, i * 0.45, 0);
-                BlockDisplayHandle h = displayBuilder.spawnBlock(l, Material.BLACKSTONE);
+                ItemDisplayHandle h = displayBuilder.spawnItem(l, new ItemStack(Material.COBBLED_DEEPSLATE));
                 h.scale(1.2f, 0.45f, 1.4f).glow(60, 60, 80).interpolation(20, 0);
                 steps.add(h);
             }
@@ -909,20 +1017,20 @@ public final class DDEnvFX3 {
             if (tick % 60 == 0) {
                 crumbleStep = 14;
                 steps.get(crumbleStep).animateTo(
-                        new Vector3f(14 * 0.8f - 0.5f, 14 * 0.45f - 0.5f, -0.5f),
+                        new Vector3f(14 * 0.8f - 0.6f, 14 * 0.45f - 0.225f, -0.7f),
                         new AxisAngle4f(0, 0, 1, 0),
                         new Vector3f(0.01f, 0.01f, 0.01f), 15);
                 Location top = c.clone().add(14 * 0.8, 14 * 0.45 + 0.4, 0);
                 w.spawnParticle(Particle.LARGE_SMOKE, top, 30, 0.6, 0.3, 0.6, 0.04);
                 w.spawnParticle(Particle.BLOCK,       top, 25, 0.6, 0.3, 0.6, 0,
-                        Material.BLACKSTONE.createBlockData());
+                        Material.COBBLED_DEEPSLATE.createBlockData());
                 DisplayBuilder.playSound(top, Sound.BLOCK_DEEPSLATE_BREAK, 1.1f, 0.7f);
                 DisplayBuilder.playSound(top, Sound.ENTITY_GHAST_WARN, 0.6f, 1.1f);
             }
             if (tick % 60 == 30) {
                 // Reform
                 steps.get(crumbleStep).animateTo(
-                        new Vector3f(14 * 0.8f - 0.5f, 14 * 0.45f - 0.5f, -0.5f),
+                        new Vector3f(14 * 0.8f - 0.6f, 14 * 0.45f - 0.225f, -0.7f),
                         new AxisAngle4f(0, 0, 1, 0),
                         new Vector3f(1.2f, 0.45f, 1.4f), 15);
             }
@@ -955,11 +1063,35 @@ public final class DDEnvFX3 {
                 }
             }
 
+            // Soul wisps escaping each step's seams
+            if (tick % 6 == 0) {
+                for (int i = 0; i < steps.size(); i++) {
+                    if (Math.random() < 0.4) {
+                        double sx = c.getX() + i * 0.8;
+                        double sy = c.getY() + i * 0.45 + 0.3;
+                        w.spawnParticle(Particle.SCULK_SOUL,
+                                sx, sy, c.getZ() + (Math.random() - 0.5) * 0.6,
+                                1, 0.05, 0.1, 0.05, 0.0);
+                    }
+                }
+            }
+
             // Invisible footstep echo every 35 ticks moving up the stairs
             if (tick % 35 == 0) {
                 int idx = (tick / 35) % 15;
                 Location f = c.clone().add(idx * 0.8, idx * 0.45 + 0.6, 0);
                 DisplayBuilder.playSound(f, Sound.BLOCK_DEEPSLATE_STEP, 1.0f, 0.8f);
+            }
+
+            // Damage
+            if (tick % config.getTicksBetweenDamage() == 0) {
+                double r2 = config.getDamageRadius() * config.getDamageRadius();
+                for (Player p : w.getPlayers()) {
+                    if (p.getGameMode() != GameMode.SURVIVAL || p.isInvulnerable()) continue;
+                    if (p.getLocation().distanceSquared(c) <= r2) {
+                        p.damage(config.getDamage()); p.setNoDamageTicks(0);
+                    }
+                }
             }
         }
 
@@ -969,9 +1101,9 @@ public final class DDEnvFX3 {
 
     // ============================================================
     // 29. THE HEARTBEAT FLOOR — active hazard
-    //     14 red concrete blocks in a heart-shape around center.
+    //     14 red-concrete item displays in a heart-shape around center.
     //     Pulses (ba-BUM) sweep soul flame outward; each beat triggers
-    //     impact damage on nearby player. Tempo accelerates over time.
+    //     impact damage. Tempo accelerates over time.
     // ============================================================
     public static class HeartbeatFloor extends EnvironmentalAttack {
         private final List<ItemDisplayHandle> heartShape = new ArrayList<>();
@@ -979,9 +1111,9 @@ public final class DDEnvFX3 {
 
         public HeartbeatFloor(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("heartbeat_floor", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
-            config.setDamage(4.0);
+            config.setDamage(6.0);
             config.setDamageRadius(7.0);
-            config.setTicksBetweenDamage(25); // unused — pulse-driven
+            config.setTicksBetweenDamage(25);
             config.setDamageDelayTicks(20);
             config.setDurationTicks(440);
             config.setCooldownTicks(520);
@@ -1018,7 +1150,7 @@ public final class DDEnvFX3 {
             // Tempo: starts ~40 ticks/beat, accelerates to ~18 ticks/beat by end
             int beatInterval = Math.max(18, 40 - tick / 24);
 
-            // Double-beat (ba-BUM) — primary at t, secondary at t+5
+            // Double-beat (ba-BUM)
             if (tick % beatInterval == 0) {
                 beatCounter++;
                 doPulse(c, w, false);
@@ -1027,13 +1159,17 @@ public final class DDEnvFX3 {
                 doPulse(c, w, true);
             }
 
-            // Constant heart edge dripping_obsidian_tear
+            // Constant heart edge dripping_obsidian_tear + blood dust
             if (tick % 3 == 0) {
                 for (ItemDisplayHandle h : heartShape) {
                     Location l = h.entity().getLocation();
                     w.spawnParticle(Particle.DRIPPING_OBSIDIAN_TEAR,
                             l.getX(), c.getY() + 0.5, l.getZ(),
                             1, 0.1, 0.1, 0.1, 0.0);
+                    if (Math.random() < 0.25)
+                        DisplayBuilder.dustParticles(
+                                new Location(w, l.getX(), c.getY() + 0.4, l.getZ()),
+                                1, 0.1, 140, 16, 16, 1.4f);
                 }
             }
 
@@ -1063,7 +1199,7 @@ public final class DDEnvFX3 {
                             1, 0, 0.05, 0, 0.0);
                 }
             }
-            // Click sound (sculk sensor double-tap)
+            // Click sound
             DisplayBuilder.playSound(c, Sound.BLOCK_SCULK_SENSOR_CLICKING,
                     secondary ? 0.6f : 1.0f, secondary ? 1.4f : 0.9f);
             if (!secondary) {
@@ -1080,13 +1216,11 @@ public final class DDEnvFX3 {
 
     // ============================================================
     // 30. COLLAPSING DIMENSION PILLARS — active hazard
-    //     3 pillars × 12 blocks tall × 3x3 = ~108 displays per pillar
-    //     would be too many. Build each as 12-tall central column with
-    //     +4 corner accents (16/pillar × 3 = 48 displays). Each sinks
-    //     on its own timer; on full vanish: impact damage + particle FX.
+    //     3 pillars × 12 obsidian-item tall + 4 corner accents (16/pillar).
+    //     Each sinks on its own timer; on full vanish: impact damage + particle FX.
     // ============================================================
     public static class CollapsingDimensionPillars extends EnvironmentalAttack {
-        private final List<List<BlockDisplayHandle>> pillars = new ArrayList<>();
+        private final List<List<ItemDisplayHandle>> pillars = new ArrayList<>();
         private final double[] pillarYBase = new double[3];
         private final double[] pillarSinkSpeed = new double[3];
         private final boolean[] pillarVanished = new boolean[3];
@@ -1098,9 +1232,9 @@ public final class DDEnvFX3 {
 
         public CollapsingDimensionPillars(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("collapsing_dimension_pillars", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
-            config.setDamage(5.0);
+            config.setDamage(7.5);
             config.setDamageRadius(6.0);
-            config.setTicksBetweenDamage(30); // unused — impact only
+            config.setTicksBetweenDamage(30);
             config.setDamageDelayTicks(20);
             config.setDurationTicks(560);
             config.setCooldownTicks(640);
@@ -1112,27 +1246,27 @@ public final class DDEnvFX3 {
             DisplayBuilder.playSound(center, Sound.ENTITY_ENDER_DRAGON_GROWL, 0.7f, 0.6f);
 
             for (int p = 0; p < 3; p++) {
-                List<BlockDisplayHandle> pl = new ArrayList<>();
+                List<ItemDisplayHandle> pl = new ArrayList<>();
                 Location base = center.clone().add(pillarOffsets[p].getX(), 8, pillarOffsets[p].getZ());
                 pillarYBase[p] = 8.0;
-                pillarSinkSpeed[p] = 0.012 + p * 0.004; // staggered sink rates
+                pillarSinkSpeed[p] = 0.012 + p * 0.004;
                 pillarVanished[p] = false;
 
-                // 12-block central column
+                // 12-block central column (alternate obsidian / crying obsidian items)
                 for (int y = 0; y < 12; y++) {
                     Material m = (y % 3 == 0) ? Material.CRYING_OBSIDIAN : Material.OBSIDIAN;
-                    BlockDisplayHandle h = displayBuilder.spawnBlock(
-                            base.clone().add(0, y, 0), m);
+                    ItemDisplayHandle h = displayBuilder.spawnItem(
+                            base.clone().add(0, y, 0), new ItemStack(m));
                     h.scale(1.3f, 1.0f, 1.3f).glow(80, 0, 200).interpolation(20, 0);
                     pl.add(h);
                 }
-                // 4 corner accents at heights 2, 5, 8, 11 — sized 0.5
+                // 4 corner accents at heights 2, 5, 8, 11
                 int[] accH = { 2, 5, 8, 11 };
                 double[][] corners = { {0.7,0.7}, {-0.7,0.7}, {0.7,-0.7}, {-0.7,-0.7} };
                 for (int i = 0; i < 4; i++) {
-                    BlockDisplayHandle h = displayBuilder.spawnBlock(
+                    ItemDisplayHandle h = displayBuilder.spawnItem(
                             base.clone().add(corners[i][0], accH[i], corners[i][1]),
-                            Material.CRYING_OBSIDIAN);
+                            new ItemStack(Material.CRYING_OBSIDIAN));
                     h.scale(0.6f, 0.6f, 0.6f).glow(150, 50, 230).interpolation(20, 0);
                     pl.add(h);
                 }
@@ -1154,15 +1288,14 @@ public final class DDEnvFX3 {
                     pillarYBase[p] -= pillarSinkSpeed[p] * 20;
                     Vector off = pillarOffsets[p];
 
-                    List<BlockDisplayHandle> pl = pillars.get(p);
+                    List<ItemDisplayHandle> pl = pillars.get(p);
                     for (int i = 0; i < pl.size(); i++) {
-                        // First 12 = column, last 4 = corners
                         if (i < 12) {
                             float ty = (float) pillarYBase[p] + i;
                             pl.get(i).animateTo(
-                                    new Vector3f((float) off.getX() - 0.5f,
+                                    new Vector3f((float) off.getX() - 0.65f,
                                                  ty - 0.5f,
-                                                 (float) off.getZ() - 0.5f),
+                                                 (float) off.getZ() - 0.65f),
                                     new AxisAngle4f(0, 0, 1, 0),
                                     new Vector3f(1.3f, 1.0f, 1.3f), 20);
                         } else {
@@ -1171,9 +1304,9 @@ public final class DDEnvFX3 {
                             double[][] corners = { {0.7,0.7}, {-0.7,0.7}, {0.7,-0.7}, {-0.7,-0.7} };
                             float ty = (float) pillarYBase[p] + accH[idx];
                             pl.get(i).animateTo(
-                                    new Vector3f((float) (off.getX() + corners[idx][0]) - 0.5f,
-                                                 ty - 0.5f,
-                                                 (float) (off.getZ() + corners[idx][1]) - 0.5f),
+                                    new Vector3f((float) (off.getX() + corners[idx][0]) - 0.3f,
+                                                 ty - 0.3f,
+                                                 (float) (off.getZ() + corners[idx][1]) - 0.3f),
                                     new AxisAngle4f(0, 0, 1, 0),
                                     new Vector3f(0.6f, 0.6f, 0.6f), 20);
                         }
@@ -1186,9 +1319,9 @@ public final class DDEnvFX3 {
                     Location vanishLoc = c.clone().add(pillarOffsets[p].getX(), 0,
                             pillarOffsets[p].getZ());
 
-                    // Massive smoke + squid_ink + electric_spark explosion
+                    // Massive smoke + reverse_portal + electric_spark explosion
                     w.spawnParticle(Particle.LARGE_SMOKE, vanishLoc, 80, 1.5, 1.0, 1.5, 0.1);
-                    w.spawnParticle(Particle.SQUID_INK,   vanishLoc, 50, 1.2, 0.8, 1.2, 0.05);
+                    w.spawnParticle(Particle.REVERSE_PORTAL, vanishLoc, 60, 1.2, 0.8, 1.2, 0.1);
                     w.spawnParticle(Particle.ELECTRIC_SPARK, vanishLoc, 60, 1.5, 1.0, 1.5, 0.4);
                     w.spawnParticle(Particle.PORTAL,      vanishLoc, 100, 2.0, 1.5, 2.0, 1.0);
                     DisplayBuilder.playSound(vanishLoc, Sound.ENTITY_WARDEN_SONIC_BOOM, 1.4f, 0.7f);
@@ -1197,8 +1330,8 @@ public final class DDEnvFX3 {
                     // Impact damage
                     triggerImpactDamage(vanishLoc);
 
-                    // Hide pillar's blocks
-                    for (BlockDisplayHandle h : pillars.get(p)) {
+                    // Hide pillar's items
+                    for (ItemDisplayHandle h : pillars.get(p)) {
                         h.scale(0.0f, 0.0f, 0.0f);
                     }
                 }

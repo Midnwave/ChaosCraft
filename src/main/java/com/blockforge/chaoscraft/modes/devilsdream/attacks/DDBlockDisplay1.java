@@ -60,7 +60,7 @@ public final class DDBlockDisplay1 {
 
         public SinnersCompass(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("sinners_compass", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
-            config.setDamage(5.5);
+            config.setDamage(8.3);
             config.setDamageRadius(7.0);
             config.setTicksBetweenDamage(20);
             config.setDamageDelayTicks(20);
@@ -252,7 +252,7 @@ public final class DDBlockDisplay1 {
 
         public CollapsedStar(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("collapsed_star", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
-            config.setDamage(6.0);
+            config.setDamage(9.0);
             config.setDamageRadius(8.0);
             config.setTicksBetweenDamage(18);
             config.setDamageDelayTicks(20);
@@ -470,7 +470,7 @@ public final class DDBlockDisplay1 {
             super(plugin, new AttackConfig("skinwalker_gait", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
             config.setDamage(0);
             config.setDamageOnImpactOnly(true);
-            config.setImpactDamage(15.0);
+            config.setImpactDamage(22.5);
             config.setImpactRadius(5.5);
             config.setDurationTicks(360);
             config.setCooldownTicks(340);
@@ -645,7 +645,7 @@ public final class DDBlockDisplay1 {
             super(plugin, new AttackConfig("glass_confessional", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
             config.setDamage(0);
             config.setDamageOnImpactOnly(true);
-            config.setImpactDamage(20.0);
+            config.setImpactDamage(30.0);
             config.setImpactRadius(3.5);
             config.setDurationTicks(280);
             config.setCooldownTicks(360);
@@ -808,7 +808,7 @@ public final class DDBlockDisplay1 {
 
         public BlackTide(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("black_tide", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
-            config.setDamage(5.0);
+            config.setDamage(7.5);
             config.setDamageRadius(6.0);
             config.setTicksBetweenDamage(20);
             config.setDamageDelayTicks(20);
@@ -973,7 +973,7 @@ public final class DDBlockDisplay1 {
             super(plugin, new AttackConfig("rib_cage_trap", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
             config.setDamage(0);
             config.setDamageOnImpactOnly(true);
-            config.setImpactDamage(18.0);
+            config.setImpactDamage(27.0);
             config.setImpactRadius(4.5);
             config.setDurationTicks(360);
             config.setCooldownTicks(330);
@@ -1129,7 +1129,7 @@ public final class DDBlockDisplay1 {
             super(plugin, new AttackConfig("pendulum", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
             config.setDamage(0);
             config.setDamageOnImpactOnly(true);
-            config.setImpactDamage(16.0);
+            config.setImpactDamage(24.0);
             config.setImpactRadius(5.5);
             config.setDurationTicks(400);
             config.setCooldownTicks(360);
@@ -1310,7 +1310,7 @@ public final class DDBlockDisplay1 {
 
         public SearingTetrad(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("searing_tetrad", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
-            config.setDamage(4.5);
+            config.setDamage(6.8);
             config.setDamageRadius(7.5);
             config.setTicksBetweenDamage(22);
             config.setDamageDelayTicks(20);
@@ -1474,7 +1474,7 @@ public final class DDBlockDisplay1 {
             super(plugin, new AttackConfig("lament_pillar", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
             config.setDamage(0);
             config.setDamageOnImpactOnly(true);
-            config.setImpactDamage(20.0);
+            config.setImpactDamage(30.0);
             config.setImpactRadius(7.0);
             config.setDurationTicks(380);
             config.setCooldownTicks(380);
@@ -1664,7 +1664,7 @@ public final class DDBlockDisplay1 {
 
         public DreamingClock(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("dreaming_clock", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
-            config.setDamage(4.5);
+            config.setDamage(6.8);
             config.setDamageRadius(7.0);
             config.setTicksBetweenDamage(22);
             config.setDamageDelayTicks(20);

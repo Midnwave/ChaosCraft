@@ -32,13 +32,13 @@ public final class DDBlockDisplay4 {
     public static void registerAll(ChaosCraftPlugin plugin, AttackRegistry registry) {
         registry.register(new BlackIrisBloom(plugin));
         registry.register(new SorrowCageDrop(plugin));
-        registry.register(new WrithingSigilHand(plugin));
+        registry.register(new SigilPentagramSlam(plugin));
         registry.register(new DecayingArch(plugin));
         registry.register(new NightmareOrbit(plugin));
         registry.register(new HollowSermon(plugin));
         registry.register(new PestilenceBloomBurst(plugin));
         registry.register(new InvertedLighthouse(plugin));
-        registry.register(new ColossusFinger(plugin));
+        registry.register(new DamnationBellDrop(plugin));
         registry.register(new ForgottenShrine(plugin));
     }
 
@@ -67,7 +67,7 @@ public final class DDBlockDisplay4 {
 
         public BlackIrisBloom(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("black_iris_bloom", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
-            config.setDamage(5.0);
+            config.setDamage(7.5);
             config.setDamageRadius(7.5);
             config.setTicksBetweenDamage(20);
             config.setDamageDelayTicks(20);
@@ -220,7 +220,7 @@ public final class DDBlockDisplay4 {
             config.setDurationTicks(280);
             config.setCooldownTicks(310);
             config.setDamageOnImpactOnly(true);
-            config.setImpactDamage(18.0);
+            config.setImpactDamage(27.0);
             config.setImpactRadius(6.0);
         }
 
@@ -354,16 +354,23 @@ public final class DDBlockDisplay4 {
     }
 
     // ================================================================
-    // 33. WRITHING SIGIL HAND (impact-only on punch slam)
+    // 33. SIGIL PENTAGRAM SLAM (impact-only on collapse)
+    //     5 sigil runes arranged in a pentagram, hovering high above.
+    //     Energy beams (deepslate-tile pillars) connect the runes
+    //     forming a 5-pointed star. Whole geometry rotates, then the
+    //     entire structure collapses straight downward as a slam.
     // ================================================================
-    public static class WrithingSigilHand extends BlockDisplayAttack {
-        private final List<BlockDisplayHandle> palm = new ArrayList<>();
-        private final List<List<BlockDisplayHandle>> fingers = new ArrayList<>();
-        private final List<BlockDisplayHandle> sigil = new ArrayList<>();
+    public static class SigilPentagramSlam extends BlockDisplayAttack {
+        private final List<BlockDisplayHandle> runes = new ArrayList<>();
+        private final List<BlockDisplayHandle> beams = new ArrayList<>();
+        private final List<BlockDisplayHandle> coreRing = new ArrayList<>();
+        private static final int RUNE_COUNT = 5;
+        private static final double PENT_RADIUS = 5.5;
+        private static final float HOVER_Y = 12f;
         private int phase = 0;
 
-        public WrithingSigilHand(ChaosCraftPlugin plugin) {
-            super(plugin, new AttackConfig("writhing_sigil_hand", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
+        public SigilPentagramSlam(ChaosCraftPlugin plugin) {
+            super(plugin, new AttackConfig("sigil_pentagram_slam", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
             config.setDamage(0);
             config.setDamageRadius(0);
             config.setTicksBetweenDamage(20);
@@ -371,45 +378,57 @@ public final class DDBlockDisplay4 {
             config.setDurationTicks(360);
             config.setCooldownTicks(380);
             config.setDamageOnImpactOnly(true);
-            config.setImpactDamage(20.0);
-            config.setImpactRadius(7.5);
+            config.setImpactDamage(30.0);
+            config.setImpactRadius(8.0);
         }
 
         @Override
         protected void onSpawn(Location center) {
-            DisplayBuilder.playSound(center, Sound.ENTITY_IRON_GOLEM_HURT, 1.0f, 0.6f);
-            // Palm 5x5 (center y=0.1)
-            for (int x = -2; x <= 2; x++) {
-                for (int z = -2; z <= 2; z++) {
-                    BlockDisplayHandle h = displayBuilder.spawnBlock(
-                            center.clone().add(x, 0.1, z), Material.BONE_BLOCK);
-                    h.scale(1.0f, 0.3f, 1.0f).glow(240, 230, 200).interpolation(15, 0);
-                    palm.add(h);
-                }
-            }
-            // 5 fingers, each 4 segments long, fanning outward
-            double[] fingerAngles = {-0.6, -0.3, 0.0, 0.3, 0.6};
-            for (double angle : fingerAngles) {
-                List<BlockDisplayHandle> fSegs = new ArrayList<>();
-                for (int s = 0; s < 4; s++) {
-                    double dist = 2.5 + s * 1.0;
-                    double fx = Math.sin(angle) * dist;
-                    double fz = Math.cos(angle) * dist;
-                    Material mat = (s == 3) ? Material.DEEPSLATE_TILES : Material.BLACKSTONE;
-                    BlockDisplayHandle h = displayBuilder.spawnBlock(
-                            center.clone().add(fx, 0.1, fz), mat);
-                    h.scale(0.7f, 0.3f, 0.9f).glow(60, 0, 0).interpolation(20, 0);
-                    fSegs.add(h);
-                }
-                fingers.add(fSegs);
-            }
-            // Sigil: 5 shroomlight pattern in palm
-            double[][] sigilOff = {{0,0.3,0},{1,0.3,0},{-1,0.3,0},{0,0.3,1},{0,0.3,-1}};
-            for (double[] o : sigilOff) {
+            DisplayBuilder.playSound(center, Sound.BLOCK_RESPAWN_ANCHOR_CHARGE, 1.2f, 0.5f);
+            Location top = center.clone().add(0, HOVER_Y, 0);
+
+            // 5 sigil runes (shroomlight) at pentagram vertices, pointing up
+            for (int i = 0; i < RUNE_COUNT; i++) {
+                double a = -Math.PI / 2 + i * (Math.PI * 2 / RUNE_COUNT);
+                double rx = Math.cos(a) * PENT_RADIUS;
+                double rz = Math.sin(a) * PENT_RADIUS;
                 BlockDisplayHandle h = displayBuilder.spawnBlock(
-                        center.clone().add(o[0], o[1], o[2]), Material.SHROOMLIGHT);
-                h.scale(0.5f, 0.2f, 0.5f).glow(255, 200, 80).interpolation(10, 0);
-                sigil.add(h);
+                        top.clone().add(rx, 0, rz), Material.SHROOMLIGHT);
+                h.scale(1.4f, 0.4f, 1.4f).glow(255, 80, 30).interpolation(20, 0);
+                runes.add(h);
+            }
+
+            // Connecting energy beams: pentagram star pattern (i -> i+2 mod 5)
+            // Each beam is a thin horizontal deepslate_tiles strip
+            for (int i = 0; i < RUNE_COUNT; i++) {
+                int j = (i + 2) % RUNE_COUNT;
+                double a1 = -Math.PI / 2 + i * (Math.PI * 2 / RUNE_COUNT);
+                double a2 = -Math.PI / 2 + j * (Math.PI * 2 / RUNE_COUNT);
+                double x1 = Math.cos(a1) * PENT_RADIUS;
+                double z1 = Math.sin(a1) * PENT_RADIUS;
+                double x2 = Math.cos(a2) * PENT_RADIUS;
+                double z2 = Math.sin(a2) * PENT_RADIUS;
+                double mx = (x1 + x2) / 2.0;
+                double mz = (z1 + z2) / 2.0;
+                double dx = x2 - x1;
+                double dz = z2 - z1;
+                double len = Math.sqrt(dx * dx + dz * dz);
+                double yaw = Math.atan2(dz, dx);
+                BlockDisplayHandle h = displayBuilder.spawnBlock(
+                        top.clone().add(mx, -0.05, mz), Material.CRYING_OBSIDIAN);
+                h.scale((float) len, 0.18f, 0.35f).glow(140, 0, 30).interpolation(20, 0)
+                        .rotate((float) yaw, 0, 1, 0);
+                beams.add(h);
+            }
+
+            // Core ring: 8 blackstone segments around centerpoint
+            for (int i = 0; i < 8; i++) {
+                double a = i * (Math.PI * 2 / 8);
+                BlockDisplayHandle h = displayBuilder.spawnBlock(
+                        top.clone().add(Math.cos(a) * 1.5, 0.0, Math.sin(a) * 1.5), Material.BLACKSTONE);
+                h.scale(0.6f, 0.25f, 0.6f).glow(60, 0, 0).interpolation(20, 0)
+                        .rotate((float) a, 0, 1, 0);
+                coreRing.add(h);
             }
         }
 
@@ -417,87 +436,128 @@ public final class DDBlockDisplay4 {
         protected void onTick(int t) {
             if (getCenter() == null || getCenter().getWorld() == null) return;
             World w = getCenter().getWorld();
+            int dur = config.getDurationTicks();
+            int slamTick = (int) (dur * 0.55); // collapse begins
+            int impactTick = slamTick + 14;     // ground contact
 
-            // Phase 0: curl fingers one-by-one, t=20-100
-            if (phase == 0) {
-                int fingerIdx = (t - 20) / 16;
-                if (fingerIdx >= 0 && fingerIdx < 5 && (t - 20) % 16 == 0) {
-                    DisplayBuilder.playSound(getCenter(), Sound.BLOCK_BONE_BLOCK_STEP, 1.0f, 0.7f);
-                    double angle = -0.6 + fingerIdx * 0.3;
-                    List<BlockDisplayHandle> fSegs = fingers.get(fingerIdx);
-                    for (int s = 0; s < fSegs.size(); s++) {
-                        double dist = 2.5 + s * 1.0;
-                        double curl = (s + 1) * 0.35;
-                        double fx = Math.sin(angle) * dist * Math.cos(curl);
-                        double fy = 0.1 + Math.sin(curl) * (s + 1) * 0.6;
-                        double fz = Math.cos(angle) * dist * Math.cos(curl);
-                        fSegs.get(s).animateTo(
-                                new Vector3f((float) fx - 0.5f, (float) fy - 0.5f, (float) fz - 0.5f),
-                                new AxisAngle4f((float) curl, (float) Math.cos(angle), 0, (float) -Math.sin(angle)),
-                                new Vector3f(0.7f, 0.3f, 0.9f), 14);
-                    }
+            // Phase 0: hover and rotate the entire sigil structure
+            if (phase == 0 && t < slamTick && t % 6 == 0) {
+                float rotAngle = (float) (t * 0.04);
+                float bob = (float) Math.sin(t * 0.08) * 0.4f;
+                float curY = HOVER_Y + bob;
+
+                // Spin runes around the center while orbiting
+                for (int i = 0; i < runes.size(); i++) {
+                    double a = -Math.PI / 2 + i * (Math.PI * 2 / RUNE_COUNT) + rotAngle;
+                    float rx = (float) (Math.cos(a) * PENT_RADIUS);
+                    float rz = (float) (Math.sin(a) * PENT_RADIUS);
+                    runes.get(i).animateTo(
+                            new Vector3f(rx - 0.5f, curY - 0.5f, rz - 0.5f),
+                            new AxisAngle4f(rotAngle * 2f, 0, 1, 0),
+                            new Vector3f(1.4f, 0.4f, 1.4f), 6);
                 }
-                if (t >= 110) phase = 1;
+
+                // Beams follow rotating runes
+                for (int i = 0; i < beams.size(); i++) {
+                    int j = (i + 2) % RUNE_COUNT;
+                    double a1 = -Math.PI / 2 + i * (Math.PI * 2 / RUNE_COUNT) + rotAngle;
+                    double a2 = -Math.PI / 2 + j * (Math.PI * 2 / RUNE_COUNT) + rotAngle;
+                    double x1 = Math.cos(a1) * PENT_RADIUS;
+                    double z1 = Math.sin(a1) * PENT_RADIUS;
+                    double x2 = Math.cos(a2) * PENT_RADIUS;
+                    double z2 = Math.sin(a2) * PENT_RADIUS;
+                    float mx = (float) ((x1 + x2) / 2.0);
+                    float mz = (float) ((z1 + z2) / 2.0);
+                    double dx = x2 - x1;
+                    double dz = z2 - z1;
+                    double len = Math.sqrt(dx * dx + dz * dz);
+                    float yaw = (float) Math.atan2(dz, dx);
+                    beams.get(i).animateTo(
+                            new Vector3f(mx - 0.5f, curY - 0.05f - 0.5f, mz - 0.5f),
+                            new AxisAngle4f(yaw, 0, 1, 0),
+                            new Vector3f((float) len, 0.18f, 0.35f), 6);
+                }
+
+                // Core ring counter-rotates
+                for (int i = 0; i < coreRing.size(); i++) {
+                    double a = i * (Math.PI * 2 / 8) - rotAngle * 1.5;
+                    float rx = (float) (Math.cos(a) * 1.5);
+                    float rz = (float) (Math.sin(a) * 1.5);
+                    coreRing.get(i).animateTo(
+                            new Vector3f(rx - 0.5f, curY - 0.5f, rz - 0.5f),
+                            new AxisAngle4f((float) a, 0, 1, 0),
+                            new Vector3f(0.6f, 0.25f, 0.6f), 6);
+                }
             }
 
-            // Phase 1: rotate fist 180° on X (knuckles down) over 20 ticks
-            if (phase == 1 && t == 110) {
-                for (BlockDisplayHandle h : palm) {
-                    h.animateTo(new Vector3f(-0.5f, 5.0f - 0.5f, -0.5f),
-                            new AxisAngle4f((float) Math.PI, 1, 0, 0), new Vector3f(1.0f, 0.3f, 1.0f), 20);
-                }
-                phase = 2;
+            // Charge particles during hover phase
+            if (phase == 0 && t % 5 == 0) {
+                Location pivot = getCenter().clone().add(0, HOVER_Y, 0);
+                w.spawnParticle(Particle.SOUL_FIRE_FLAME, pivot, 8, 3.0, 0.2, 3.0, 0.01);
+                DisplayBuilder.dustParticles(pivot, 12, 5.0, 200, 30, 30, 1.6f);
             }
 
-            // Phase 2: punch slam at t=160
-            if (phase == 2 && t == 160) {
-                DisplayBuilder.playSound(getCenter(), Sound.ENTITY_RAVAGER_ATTACK, 1.6f, 0.7f);
-                for (BlockDisplayHandle h : palm) {
-                    h.animateTo(new Vector3f(-0.5f, -0.5f, -0.5f),
-                            new AxisAngle4f((float) Math.PI, 1, 0, 0), new Vector3f(1.0f, 0.3f, 1.0f), 6);
-                }
-                triggerImpactDamage(getCenter());
-                w.spawnParticle(Particle.EXPLOSION, getCenter(), 5, 1.0, 0.1, 1.0, 0);
-                phase = 3;
-            }
+            // Phase 1: collapse straight down
+            if (phase == 0 && t == slamTick) {
+                phase = 1;
+                DisplayBuilder.playSound(getCenter(), Sound.ENTITY_WITHER_SHOOT, 1.4f, 0.6f);
 
-            // Phase 3: open back flat (reset fingers) at t=200
-            if (phase == 3 && t == 200) {
-                double[] fingerAngles = {-0.6, -0.3, 0.0, 0.3, 0.6};
-                for (int fi = 0; fi < 5; fi++) {
-                    double angle = fingerAngles[fi];
-                    List<BlockDisplayHandle> fSegs = fingers.get(fi);
-                    for (int s = 0; s < fSegs.size(); s++) {
-                        double dist = 2.5 + s * 1.0;
-                        double fx = Math.sin(angle) * dist;
-                        double fz = Math.cos(angle) * dist;
-                        fSegs.get(s).animateTo(
-                                new Vector3f((float) fx - 0.5f, 0.1f - 0.5f, (float) fz - 0.5f),
-                                new AxisAngle4f(0, 0, 1, 0), new Vector3f(0.7f, 0.3f, 0.9f), 16);
-                    }
-                }
-                phase = 4;
-            }
-
-            // Sigil pulse (rolling wave)
-            if (t % 3 == 0) {
-                for (int i = 0; i < sigil.size(); i++) {
-                    float s = 0.5f + (float) Math.sin(t * 0.15 + i * 0.7) * 0.25f;
-                    sigil.get(i).animateTo(new Vector3f(
-                                    sigil.get(i).entity().getTransformation().getTranslation().x,
-                                    sigil.get(i).entity().getTransformation().getTranslation().y,
-                                    sigil.get(i).entity().getTransformation().getTranslation().z),
+                List<BlockDisplayHandle> all = new ArrayList<>();
+                all.addAll(runes); all.addAll(beams); all.addAll(coreRing);
+                for (BlockDisplayHandle h : all) {
+                    Vector3f tr = h.entity().getTransformation().getTranslation();
+                    Vector3f sc = h.entity().getTransformation().getScale();
+                    h.animateTo(
+                            new Vector3f(tr.x, tr.y - HOVER_Y, tr.z),
                             new AxisAngle4f(0, 0, 1, 0),
-                            new Vector3f(s, 0.2f, s), 3);
+                            new Vector3f(sc.x, sc.y, sc.z),
+                            14);
                 }
             }
-            if (t % 8 == 0) {
-                w.spawnParticle(Particle.SOUL_FIRE_FLAME, getCenter().clone().add(0, 0.5, 0), 6, 1.2, 0.1, 1.2, 0.01);
+
+            // Trail particles during collapse
+            if (phase == 1 && t > slamTick && t < impactTick && t % 2 == 0) {
+                w.spawnParticle(Particle.SOUL_FIRE_FLAME,
+                        getCenter().clone().add(0, HOVER_Y * (1.0 - (t - slamTick) / 14.0), 0),
+                        14, 4.0, 0.3, 4.0, 0.02);
+            }
+
+            // Phase 2: impact slam
+            if (phase == 1 && t == impactTick) {
+                phase = 2;
+                DisplayBuilder.playSound(getCenter(), Sound.ENTITY_GENERIC_EXPLODE, 1.8f, 0.4f);
+                triggerImpactDamage(getCenter());
+                w.spawnParticle(Particle.EXPLOSION_EMITTER, getCenter(), 4, 2.0, 0.2, 2.0, 0);
+                Particle.DustOptions dust = new Particle.DustOptions(Color.fromRGB(255, 60, 30), 2.0f);
+                DisplayBuilder.particleRing(getCenter(), PENT_RADIUS, Particle.DUST, 60, dust);
+
+                // Splay outward
+                for (int i = 0; i < runes.size(); i++) {
+                    Vector3f tr = runes.get(i).entity().getTransformation().getTranslation();
+                    runes.get(i).animateTo(
+                            new Vector3f(tr.x * 1.4f, tr.y, tr.z * 1.4f),
+                            new AxisAngle4f((float) Math.PI / 2f, 1, 0, 0),
+                            new Vector3f(1.4f, 0.2f, 1.4f), 18);
+                }
+            }
+
+            // Phase 3: linger then fade
+            if (phase == 2 && t == impactTick + 70) {
+                phase = 3;
+                List<BlockDisplayHandle> all = new ArrayList<>();
+                all.addAll(runes); all.addAll(beams); all.addAll(coreRing);
+                for (BlockDisplayHandle h : all) {
+                    Vector3f tr = h.entity().getTransformation().getTranslation();
+                    h.animateTo(
+                            new Vector3f(tr.x, tr.y, tr.z),
+                            new AxisAngle4f(0, 0, 1, 0),
+                            new Vector3f(0.0f, 0.0f, 0.0f), 30);
+                }
             }
         }
 
         @Override
-        public AbstractAttack newInstance() { return new WrithingSigilHand(plugin); }
+        public AbstractAttack newInstance() { return new SigilPentagramSlam(plugin); }
     }
 
     // ================================================================
@@ -520,7 +580,7 @@ public final class DDBlockDisplay4 {
             config.setDurationTicks(420);
             config.setCooldownTicks(360);
             config.setDamageOnImpactOnly(true);
-            config.setImpactDamage(17.0);
+            config.setImpactDamage(25.5);
             config.setImpactRadius(7.0);
         }
 
@@ -652,7 +712,7 @@ public final class DDBlockDisplay4 {
 
         public NightmareOrbit(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("nightmare_orbit", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
-            config.setDamage(5.5);
+            config.setDamage(8.3);
             config.setDamageRadius(8.0);
             config.setTicksBetweenDamage(20);
             config.setDamageDelayTicks(20);
@@ -805,7 +865,7 @@ public final class DDBlockDisplay4 {
 
         public HollowSermon(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("hollow_sermon", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
-            config.setDamage(4.5);
+            config.setDamage(6.8);
             config.setDamageRadius(8.0);
             config.setTicksBetweenDamage(22);
             config.setDamageDelayTicks(40);
@@ -937,7 +997,7 @@ public final class DDBlockDisplay4 {
 
         public PestilenceBloomBurst(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("pestilence_bloom_burst", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
-            config.setDamage(5.0);
+            config.setDamage(7.5);
             config.setDamageRadius(7.0);
             config.setTicksBetweenDamage(20);
             config.setDamageDelayTicks(60);
@@ -1081,7 +1141,7 @@ public final class DDBlockDisplay4 {
             config.setDurationTicks(440);
             config.setCooldownTicks(360);
             config.setDamageOnImpactOnly(true);
-            config.setImpactDamage(15.0);
+            config.setImpactDamage(22.5);
             config.setImpactRadius(6.0);
         }
 
@@ -1185,17 +1245,23 @@ public final class DDBlockDisplay4 {
     }
 
     // ================================================================
-    // 39. COLOSSUS FINGER (impact-only — tap then stab)
+    // 39. DAMNATION BELL DROP (impact-only — toll then plummet)
+    //     A massive fallen-cathedral bell descends slowly from the sky,
+    //     suspended by chains. It rings (toll) twice, swinging side-to-
+    //     side with each toll causing a shockwave. On the third toll
+    //     the chains snap and the bell plummets, slamming the ground
+    //     for a heavy impact.
     // ================================================================
-    public static class ColossusFinger extends BlockDisplayAttack {
-        private final List<BlockDisplayHandle> segments = new ArrayList<>();
-        private final List<BlockDisplayHandle> capRings = new ArrayList<>();
-        private final List<BlockDisplayHandle> nail = new ArrayList<>();
+    public static class DamnationBellDrop extends BlockDisplayAttack {
+        private final List<BlockDisplayHandle> bellShell = new ArrayList<>();
+        private final List<BlockDisplayHandle> bellCrown = new ArrayList<>();
+        private final List<BlockDisplayHandle> chains = new ArrayList<>();
+        private final List<BlockDisplayHandle> clapper = new ArrayList<>();
         private int phase = 0;
-        private float startY = 22f;
+        private static final float HOVER_Y = 14f;
 
-        public ColossusFinger(ChaosCraftPlugin plugin) {
-            super(plugin, new AttackConfig("colossus_finger", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
+        public DamnationBellDrop(ChaosCraftPlugin plugin) {
+            super(plugin, new AttackConfig("damnation_bell_drop", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
             config.setDamage(0);
             config.setDamageRadius(0);
             config.setTicksBetweenDamage(20);
@@ -1203,50 +1269,58 @@ public final class DDBlockDisplay4 {
             config.setDurationTicks(360);
             config.setCooldownTicks(330);
             config.setDamageOnImpactOnly(true);
-            config.setImpactDamage(21.0);
-            config.setImpactRadius(7.0);
+            config.setImpactDamage(31.5);
+            config.setImpactRadius(8.0);
         }
 
         @Override
         protected void onSpawn(Location center) {
-            DisplayBuilder.playSound(center, Sound.BLOCK_BONE_BLOCK_STEP, 1.0f, 0.4f);
-            // 4 bone segments, progressively wider at base
-            // Segment lengths: each 2.5 tall, total 10
-            float[] segWidths = {1.4f, 1.6f, 1.9f, 2.2f}; // from tip to base
-            for (int s = 0; s < 4; s++) {
-                // Each segment composed of 4 bone block displays (stacked)
-                for (int sub = 0; sub < 4; sub++) {
-                    double y = startY + s * 2.5 + sub * 0.6;
+            DisplayBuilder.playSound(center, Sound.BLOCK_AMETHYST_BLOCK_CHIME, 1.2f, 0.35f);
+            Location top = center.clone().add(0, HOVER_Y, 0);
+
+            // Bell shell — bowl shape from rings of crying_obsidian
+            // 4 rings descending in y, narrowing toward bottom
+            int[] ringYOffsets = {3, 2, 1, 0};
+            double[] ringRadii = {3.0, 3.4, 3.0, 2.2};
+            for (int r = 0; r < ringYOffsets.length; r++) {
+                int segments = 12;
+                for (int i = 0; i < segments; i++) {
+                    double a = i * (Math.PI * 2 / segments);
+                    double bx = Math.cos(a) * ringRadii[r];
+                    double bz = Math.sin(a) * ringRadii[r];
                     BlockDisplayHandle h = displayBuilder.spawnBlock(
-                            center.clone().add(0, y, 0), Material.BONE_BLOCK);
-                    h.scale(segWidths[s], 0.6f, segWidths[s]).glow(240, 230, 200).interpolation(15, 0);
-                    segments.add(h);
+                            top.clone().add(bx, ringYOffsets[r], bz), Material.CRYING_OBSIDIAN);
+                    h.scale(1.0f, 1.0f, 0.6f).glow(140, 0, 30).interpolation(20, 0)
+                            .rotate((float) a, 0, 1, 0);
+                    bellShell.add(h);
                 }
             }
-            // Knuckle cap rings — 4 ring locations between segments
-            for (int s = 0; s < 4; s++) {
-                double y = startY + s * 2.5 + 2.0;
-                for (int i = 0; i < 4; i++) {
-                    double a = i * (Math.PI / 2);
-                    BlockDisplayHandle h = displayBuilder.spawnBlock(
-                            center.clone().add(Math.cos(a) * 1.0, y, Math.sin(a) * 1.0), Material.DEEPSLATE_TILES);
-                    h.scale(0.6f, 0.3f, 0.6f).glow(50, 50, 60).interpolation(15, 0);
-                    capRings.add(h);
-                }
-            }
-            // Nail at tip (pointing down — at the lowest position startY)
-            BlockDisplayHandle n = displayBuilder.spawnBlock(
-                    center.clone().add(0, startY - 0.5, 0), Material.BLACKSTONE);
-            n.scale(1.2f, 0.8f, 1.2f).glow(60, 0, 0).interpolation(15, 0);
-            nail.add(n);
-            // Extra nail accents
-            for (int i = 0; i < 4; i++) {
-                double a = i * (Math.PI / 2);
+
+            // Bell crown — top cap (4 deepslate_tiles arranged in cross)
+            double[][] crownOff = {{0.7, 4.2, 0}, {-0.7, 4.2, 0}, {0, 4.2, 0.7}, {0, 4.2, -0.7}};
+            for (double[] o : crownOff) {
                 BlockDisplayHandle h = displayBuilder.spawnBlock(
-                        center.clone().add(Math.cos(a) * 0.5, startY - 0.3, Math.sin(a) * 0.5), Material.BLACKSTONE);
-                h.scale(0.4f, 0.4f, 0.4f).glow(60, 0, 0).interpolation(15, 0);
-                nail.add(h);
+                        top.clone().add(o[0], o[1], o[2]), Material.DEEPSLATE_TILES);
+                h.scale(1.0f, 0.8f, 1.0f).glow(60, 0, 0).interpolation(20, 0);
+                bellCrown.add(h);
             }
+
+            // Suspension chains — 4 chain pillars going up from crown
+            double[][] chainOff = {{0.7, 0}, {-0.7, 0}, {0, 0.7}, {0, -0.7}};
+            for (double[] o : chainOff) {
+                for (int seg = 0; seg < 6; seg++) {
+                    BlockDisplayHandle h = displayBuilder.spawnBlock(
+                            top.clone().add(o[0], 5.5 + seg * 1.2, o[1]), Material.CHAIN);
+                    h.scale(0.4f, 1.2f, 0.4f).glow(80, 80, 80).interpolation(20, 0);
+                    chains.add(h);
+                }
+            }
+
+            // Clapper — soul lantern hanging at center inside the bell
+            BlockDisplayHandle c = displayBuilder.spawnBlock(
+                    top.clone().add(0, 0.8, 0), Material.SOUL_LANTERN);
+            c.scale(1.0f, 1.6f, 1.0f).glow(255, 80, 30).interpolation(15, 0);
+            clapper.add(c);
         }
 
         @Override
@@ -1254,63 +1328,132 @@ public final class DDBlockDisplay4 {
             if (getCenter() == null || getCenter().getWorld() == null) return;
             World w = getCenter().getWorld();
 
-            // Phase 0: slow descent to ground (60 ticks), knuckle flex during descent
+            // Phase 0: descent into position over 40 ticks (start above HOVER_Y, settle to HOVER_Y)
             if (phase == 0 && t == 1) {
-                animateTranslateAll(-22f, 60);
+                // already placed at HOVER_Y; let it slowly bob in place
                 phase = 1;
             }
-            // Knuckle flex: small wiggle
-            if (phase == 1 && t > 5 && t < 60 && t % 8 == 0) {
-                DisplayBuilder.playSound(getCenter(), Sound.BLOCK_BONE_BLOCK_STEP, 0.8f, 0.6f);
-                w.spawnParticle(Particle.BLOCK, getCenter().clone().add(0, 5, 0), 12, 1, 3, 1, 0,
-                        Material.BONE_BLOCK.createBlockData());
-            }
-            // Phase 2: tap impact at t=65
-            if (phase == 1 && t == 65) {
-                DisplayBuilder.playSound(getCenter(), Sound.ENTITY_IRON_GOLEM_STEP, 1.4f, 0.6f);
-                triggerImpactDamage(getCenter());
-                w.spawnParticle(Particle.EXPLOSION, getCenter(), 3, 0.3, 0.1, 0.3, 0);
+
+            // Phase 1: first toll at t=40 — swing left, ring shockwave
+            if (phase == 1 && t == 40) {
+                DisplayBuilder.playSound(getCenter(), Sound.BLOCK_BELL_RESONATE, 1.6f, 0.4f);
+                DisplayBuilder.playSound(getCenter(), Sound.BLOCK_BELL_USE, 1.4f, 0.6f);
+                swingBell(-0.35f, 22);
+                Particle.DustOptions dust = new Particle.DustOptions(Color.fromRGB(255, 80, 30), 1.8f);
+                DisplayBuilder.particleRing(getCenter().clone().add(0, HOVER_Y, 0), 5.5, Particle.DUST, 40, dust);
+                w.spawnParticle(Particle.SOUL_FIRE_FLAME, getCenter().clone().add(0, HOVER_Y, 0), 30, 4.0, 1.0, 4.0, 0.05);
                 phase = 2;
             }
-            // Phase 3: withdraw upward t=85
-            if (phase == 2 && t == 85) {
-                animateTranslateAll(15f, 30);
+
+            // Phase 2: swing right at t=80
+            if (phase == 2 && t == 80) {
+                DisplayBuilder.playSound(getCenter(), Sound.BLOCK_BELL_RESONATE, 1.6f, 0.5f);
+                DisplayBuilder.playSound(getCenter(), Sound.BLOCK_BELL_USE, 1.4f, 0.7f);
+                swingBell(0.35f, 22);
+                Particle.DustOptions dust = new Particle.DustOptions(Color.fromRGB(140, 0, 30), 1.8f);
+                DisplayBuilder.particleRing(getCenter().clone().add(0, HOVER_Y, 0), 5.5, Particle.DUST, 40, dust);
+                w.spawnParticle(Particle.SOUL_FIRE_FLAME, getCenter().clone().add(0, HOVER_Y, 0), 30, 4.0, 1.0, 4.0, 0.05);
                 phase = 3;
             }
-            // Phase 4: stab fast at t=140
+
+            // Phase 3: settle straight at t=120, then chains snap at t=140
+            if (phase == 3 && t == 120) {
+                swingBell(0f, 18);
+            }
             if (phase == 3 && t == 140) {
-                DisplayBuilder.playSound(getCenter(), Sound.ENTITY_RAVAGER_ATTACK, 1.6f, 0.7f);
-                animateTranslateAll(-15f, 8);
+                DisplayBuilder.playSound(getCenter(), Sound.ENTITY_IRON_GOLEM_DEATH, 1.6f, 0.4f);
+                DisplayBuilder.playSound(getCenter(), Sound.BLOCK_CHAIN_BREAK, 1.8f, 0.5f);
+                // Chains break and fall
+                for (BlockDisplayHandle ch : chains) {
+                    Vector3f tr = ch.entity().getTransformation().getTranslation();
+                    ch.animateTo(new Vector3f(tr.x + (float) (Math.random() - 0.5) * 3f,
+                                    tr.y - 4f,
+                                    tr.z + (float) (Math.random() - 0.5) * 3f),
+                            new AxisAngle4f((float) (Math.random() * Math.PI), 1, 0, 1),
+                            new Vector3f(0.4f, 1.2f, 0.4f), 30);
+                }
                 phase = 4;
             }
-            // Stab impact
-            if (phase == 4 && t == 150) {
-                triggerImpactDamage(getCenter());
-                w.spawnParticle(Particle.EXPLOSION, getCenter(), 5, 1, 0.1, 1, 0);
-                Particle.DustOptions dust = new Particle.DustOptions(Color.fromRGB(240, 230, 200), 1.6f);
-                DisplayBuilder.particleRing(getCenter(), 6, Particle.DUST, 40, dust);
+
+            // Phase 4: bell plummets at t=160
+            if (phase == 4 && t == 160) {
+                DisplayBuilder.playSound(getCenter(), Sound.ENTITY_GENERIC_EXPLODE, 1.0f, 0.4f);
+                List<BlockDisplayHandle> bellAll = new ArrayList<>();
+                bellAll.addAll(bellShell); bellAll.addAll(bellCrown); bellAll.addAll(clapper);
+                for (BlockDisplayHandle h : bellAll) {
+                    Vector3f tr = h.entity().getTransformation().getTranslation();
+                    Vector3f sc = h.entity().getTransformation().getScale();
+                    h.animateTo(new Vector3f(tr.x, tr.y - HOVER_Y, tr.z),
+                            new AxisAngle4f(0, 0, 1, 0),
+                            new Vector3f(sc.x, sc.y, sc.z), 14);
+                }
                 phase = 5;
             }
-            // Phase 5: slow withdraw
-            if (phase == 5 && t == 210) {
-                animateTranslateAll(15f, 60);
+
+            // Plummet trail
+            if (phase == 5 && t > 160 && t < 174 && t % 2 == 0) {
+                w.spawnParticle(Particle.SOUL_FIRE_FLAME,
+                        getCenter().clone().add(0, HOVER_Y * (1.0 - (t - 160) / 14.0), 0),
+                        16, 4.5, 0.4, 4.5, 0.02);
+            }
+
+            // Phase 5: ground impact at t=174
+            if (phase == 5 && t == 174) {
+                DisplayBuilder.playSound(getCenter(), Sound.ENTITY_GENERIC_EXPLODE, 2.0f, 0.4f);
+                DisplayBuilder.playSound(getCenter(), Sound.BLOCK_BELL_RESONATE, 1.8f, 0.3f);
+                triggerImpactDamage(getCenter());
+                w.spawnParticle(Particle.EXPLOSION_EMITTER, getCenter(), 5, 2.5, 0.3, 2.5, 0);
+                Particle.DustOptions dust = new Particle.DustOptions(Color.fromRGB(255, 60, 30), 2.4f);
+                DisplayBuilder.particleRing(getCenter(), 7.5, Particle.DUST, 70, dust);
+
+                // Bell flattens (squish)
+                for (BlockDisplayHandle h : bellShell) {
+                    Vector3f tr = h.entity().getTransformation().getTranslation();
+                    Vector3f sc = h.entity().getTransformation().getScale();
+                    h.animateTo(new Vector3f(tr.x * 1.15f, tr.y, tr.z * 1.15f),
+                            new AxisAngle4f(0, 0, 1, 0),
+                            new Vector3f(sc.x, sc.y * 0.6f, sc.z * 1.1f), 12);
+                }
                 phase = 6;
+            }
+
+            // Phase 6: linger then fade
+            if (phase == 6 && t == 250) {
+                List<BlockDisplayHandle> all = new ArrayList<>();
+                all.addAll(bellShell); all.addAll(bellCrown); all.addAll(chains); all.addAll(clapper);
+                for (BlockDisplayHandle h : all) {
+                    Vector3f tr = h.entity().getTransformation().getTranslation();
+                    h.animateTo(new Vector3f(tr.x, tr.y, tr.z),
+                            new AxisAngle4f(0, 0, 1, 0),
+                            new Vector3f(0.0f, 0.0f, 0.0f), 40);
+                }
+                phase = 7;
+            }
+
+            // Soul fire ambient while bell hangs (phases 1-3)
+            if (phase >= 1 && phase <= 3 && t % 6 == 0) {
+                w.spawnParticle(Particle.SOUL_FIRE_FLAME,
+                        getCenter().clone().add(0, HOVER_Y, 0), 6, 2.5, 1.0, 2.5, 0.01);
+                w.spawnParticle(Particle.DRIPPING_OBSIDIAN_TEAR,
+                        getCenter().clone().add(0, HOVER_Y - 1, 0), 4, 2.0, 0.5, 2.0, 0);
             }
         }
 
-        private void animateTranslateAll(float dy, int dur) {
-            List<BlockDisplayHandle> all = new ArrayList<>();
-            all.addAll(segments); all.addAll(capRings); all.addAll(nail);
-            for (BlockDisplayHandle h : all) {
+        // Apply a yaw/tilt swing rotation to the bell shell + crown + clapper
+        private void swingBell(float tiltAngle, int dur) {
+            List<BlockDisplayHandle> bellAll = new ArrayList<>();
+            bellAll.addAll(bellShell); bellAll.addAll(bellCrown); bellAll.addAll(clapper);
+            for (BlockDisplayHandle h : bellAll) {
                 Vector3f tr = h.entity().getTransformation().getTranslation();
-                h.animateTo(new Vector3f(tr.x, tr.y + dy, tr.z),
-                        new AxisAngle4f(0, 0, 1, 0),
-                        h.entity().getTransformation().getScale(), dur);
+                Vector3f sc = h.entity().getTransformation().getScale();
+                h.animateTo(new Vector3f(tr.x + tiltAngle * 1.5f, tr.y, tr.z),
+                        new AxisAngle4f(tiltAngle, 0, 0, 1),
+                        new Vector3f(sc.x, sc.y, sc.z), dur);
             }
         }
 
         @Override
-        public AbstractAttack newInstance() { return new ColossusFinger(plugin); }
+        public AbstractAttack newInstance() { return new DamnationBellDrop(plugin); }
     }
 
     // ================================================================
@@ -1333,7 +1476,7 @@ public final class DDBlockDisplay4 {
             config.setDurationTicks(420);
             config.setCooldownTicks(420);
             config.setDamageOnImpactOnly(true);
-            config.setImpactDamage(22.0);
+            config.setImpactDamage(33.0);
             config.setImpactRadius(8.0);
         }
 

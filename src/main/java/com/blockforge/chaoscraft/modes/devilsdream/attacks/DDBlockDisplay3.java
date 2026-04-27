@@ -62,7 +62,7 @@ public final class DDBlockDisplay3 {
         public CursedLantern(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("cursed_lantern", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
             config.setDamageOnImpactOnly(true);
-            config.setImpactDamage(18.0);
+            config.setImpactDamage(27.0);
             config.setImpactRadius(6.5);
             config.setDamage(0.0);
             config.setDamageRadius(0.0);
@@ -235,7 +235,7 @@ public final class DDBlockDisplay3 {
 
         public PlagueBlossoms(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("plague_blossoms", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
-            config.setDamage(5.5);
+            config.setDamage(8.3);
             config.setDamageRadius(7.0);
             config.setTicksBetweenDamage(22);
             config.setDamageDelayTicks(20);
@@ -341,7 +341,7 @@ public final class DDBlockDisplay3 {
 
         public VoidColosseumRing(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("void_colosseum_ring", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
-            config.setDamage(6.0);
+            config.setDamage(9.0);
             config.setDamageRadius(7.5);
             config.setTicksBetweenDamage(20);
             config.setDamageDelayTicks(30);
@@ -477,7 +477,7 @@ public final class DDBlockDisplay3 {
 
         public HellfireMarionette(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("hellfire_marionette", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
-            config.setDamage(5.0);
+            config.setDamage(7.5);
             config.setDamageRadius(6.0);
             config.setTicksBetweenDamage(20);
             config.setDamageDelayTicks(25);
@@ -615,7 +615,7 @@ public final class DDBlockDisplay3 {
         public DevilsDreamcatcher(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("devils_dreamcatcher", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
             config.setDamageOnImpactOnly(true);
-            config.setImpactDamage(20.0);
+            config.setImpactDamage(30.0);
             config.setImpactRadius(7.0);
             config.setDamage(0.0);
             config.setDamageRadius(0.0);
@@ -754,7 +754,7 @@ public final class DDBlockDisplay3 {
 
         public VoidSerpentShed(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("void_serpent_shed", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
-            config.setDamage(4.5);
+            config.setDamage(6.8);
             config.setDamageRadius(5.5);
             config.setTicksBetweenDamage(18);
             config.setDamageDelayTicks(20);
@@ -864,9 +864,9 @@ public final class DDBlockDisplay3 {
         public BurningThrone(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("burning_throne", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
             config.setDamageOnImpactOnly(true);
-            config.setImpactDamage(16.0);
+            config.setImpactDamage(24.0);
             config.setImpactRadius(5.5);
-            config.setDamage(4.5);
+            config.setDamage(6.8);
             config.setDamageRadius(6.0);
             config.setTicksBetweenDamage(22);
             config.setDamageDelayTicks(25);
@@ -1011,7 +1011,7 @@ public final class DDBlockDisplay3 {
 
         public ThornMeridian(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("thorn_meridian", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
-            config.setDamage(7.0);
+            config.setDamage(10.5);
             config.setDamageRadius(8.0);
             config.setTicksBetweenDamage(20);
             config.setDamageDelayTicks(20);
@@ -1136,9 +1136,9 @@ public final class DDBlockDisplay3 {
         public CarrionWheel(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("carrion_wheel", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
             config.setDamageOnImpactOnly(true);
-            config.setImpactDamage(17.0);
+            config.setImpactDamage(25.5);
             config.setImpactRadius(6.0);
-            config.setDamage(5.0);
+            config.setDamage(7.5);
             config.setDamageRadius(5.5);
             config.setTicksBetweenDamage(18);
             config.setDamageDelayTicks(20);
@@ -1288,7 +1288,7 @@ public final class DDBlockDisplay3 {
         public UndertakersShovel(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("undertakers_shovel", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
             config.setDamageOnImpactOnly(true);
-            config.setImpactDamage(19.0);
+            config.setImpactDamage(28.5);
             config.setImpactRadius(6.0);
             config.setDamage(0.0);
             config.setDamageRadius(0.0);

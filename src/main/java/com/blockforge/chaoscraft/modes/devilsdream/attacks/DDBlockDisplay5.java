@@ -65,7 +65,7 @@ public final class DDBlockDisplay5 {
 
         public CharnelSpiral(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("charnel_spiral", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
-            config.setDamage(6.0);
+            config.setDamage(9.0);
             config.setDamageRadius(7.0);
             config.setTicksBetweenDamage(20);
             config.setDamageDelayTicks(20);
@@ -212,14 +212,14 @@ public final class DDBlockDisplay5 {
 
         public WeepingLattice(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("weeping_lattice", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
-            config.setDamage(5.0);
+            config.setDamage(7.5);
             config.setDamageRadius(7.0);
             config.setTicksBetweenDamage(22);
             config.setDamageDelayTicks(20);
             config.setDurationTicks(340);
             config.setCooldownTicks(330);
             config.setDamageOnImpactOnly(false);
-            config.setImpactDamage(18.0);
+            config.setImpactDamage(27.0);
             config.setImpactRadius(6.0);
         }
 
@@ -389,7 +389,7 @@ public final class DDBlockDisplay5 {
 
         public HellhoundSilhouette(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("hellhound_silhouette", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
-            config.setDamage(7.0);
+            config.setDamage(10.5);
             config.setDamageRadius(6.5);
             config.setTicksBetweenDamage(20);
             config.setDamageDelayTicks(15);
@@ -581,7 +581,7 @@ public final class DDBlockDisplay5 {
             config.setTicksBetweenDamage(40);
             config.setDamageDelayTicks(20);
             config.setDamageOnImpactOnly(true);
-            config.setImpactDamage(18.0);
+            config.setImpactDamage(27.0);
             config.setImpactRadius(7.0);
             config.setDurationTicks(280);
             config.setCooldownTicks(330);
@@ -756,13 +756,13 @@ public final class DDBlockDisplay5 {
 
         public CursedClockHands(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("cursed_clock_hands", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
-            config.setDamage(5.0);
+            config.setDamage(7.5);
             config.setDamageRadius(8.0);
             config.setTicksBetweenDamage(20);
             config.setDamageDelayTicks(20);
             config.setDurationTicks(380);
             config.setCooldownTicks(360);
-            config.setImpactDamage(20.0);
+            config.setImpactDamage(30.0);
             config.setImpactRadius(7.0);
         }
 
@@ -903,12 +903,12 @@ public final class DDBlockDisplay5 {
 
         public DreamersRibcageHeart(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("dreamers_ribcage_heart", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
-            config.setDamage(5.0);
+            config.setDamage(7.5);
             config.setDamageRadius(7.0);
             config.setTicksBetweenDamage(18);
             config.setDamageDelayTicks(20);
             config.setDamageOnImpactOnly(false);
-            config.setImpactDamage(22.0);
+            config.setImpactDamage(33.0);
             config.setImpactRadius(7.0);
             config.setDurationTicks(360);
             config.setCooldownTicks(380);
@@ -1080,12 +1080,12 @@ public final class DDBlockDisplay5 {
 
         public PetrifiedForest(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("petrified_forest", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
-            config.setDamage(5.0);
+            config.setDamage(7.5);
             config.setDamageRadius(8.0);
             config.setTicksBetweenDamage(22);
             config.setDamageDelayTicks(25);
             config.setDamageOnImpactOnly(false);
-            config.setImpactDamage(18.0);
+            config.setImpactDamage(27.0);
             config.setImpactRadius(6.0);
             config.setDurationTicks(360);
             config.setCooldownTicks(360);
@@ -1245,7 +1245,7 @@ public final class DDBlockDisplay5 {
             config.setTicksBetweenDamage(24);
             config.setDamageDelayTicks(20);
             config.setDamageOnImpactOnly(true);
-            config.setImpactDamage(20.0);
+            config.setImpactDamage(30.0);
             config.setImpactRadius(7.0);
             config.setDurationTicks(360);
             config.setCooldownTicks(380);
@@ -1425,7 +1425,7 @@ public final class DDBlockDisplay5 {
             config.setTicksBetweenDamage(20);
             config.setDamageDelayTicks(0);
             config.setDamageOnImpactOnly(true);
-            config.setImpactDamage(22.0);
+            config.setImpactDamage(33.0);
             config.setImpactRadius(8.0);
             config.setDurationTicks(260);
             config.setCooldownTicks(360);
@@ -1611,12 +1611,12 @@ public final class DDBlockDisplay5 {
 
         public DamnationSundial(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("damnation_sundial", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
-            config.setDamage(6.0);
+            config.setDamage(9.0);
             config.setDamageRadius(8.0);
             config.setTicksBetweenDamage(18);
             config.setDamageDelayTicks(20);
             config.setDamageOnImpactOnly(false);
-            config.setImpactDamage(18.0);
+            config.setImpactDamage(27.0);
             config.setImpactRadius(6.0);
             config.setDurationTicks(420);
             config.setCooldownTicks(380);
