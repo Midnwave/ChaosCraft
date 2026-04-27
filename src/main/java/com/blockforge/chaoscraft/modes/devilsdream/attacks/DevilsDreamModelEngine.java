@@ -140,7 +140,7 @@ public final class DevilsDreamModelEngine {
             config.setModelengineScale("4.0");
             config.setDamage(12.0);
             config.setDamageRadius(6.0);
-            config.setTicksBetweenDamage(20);
+            config.setTicksBetweenDamage(5);
             config.setDurationTicks(280);
             config.setCooldownTicks(240);
         }
@@ -170,7 +170,7 @@ public final class DevilsDreamModelEngine {
             config.setModelengineScale("4.0");
             config.setDamage(8.0);
             config.setDamageRadius(7.0);
-            config.setTicksBetweenDamage(20);
+            config.setTicksBetweenDamage(5);
             config.setDurationTicks(240);
             config.setCooldownTicks(220);
         }
@@ -198,7 +198,7 @@ public final class DevilsDreamModelEngine {
             config.setModelengineScale("3.0");
             config.setDamage(10.0);
             config.setDamageRadius(12.0);
-            config.setTicksBetweenDamage(25);
+            config.setTicksBetweenDamage(6);
             config.setDurationTicks(280);
             config.setCooldownTicks(260);
         }
@@ -227,7 +227,7 @@ public final class DevilsDreamModelEngine {
             config.setModelengineScale("4.0");
             config.setDamage(14.0);
             config.setDamageRadius(6.5);
-            config.setTicksBetweenDamage(30);
+            config.setTicksBetweenDamage(7);
             config.setDurationTicks(200);
             config.setCooldownTicks(220);
         }
@@ -259,7 +259,7 @@ public final class DevilsDreamModelEngine {
             config.setModelengineScale("4.0");
             config.setDamage(10.0);
             config.setDamageRadius(15.0);
-            config.setTicksBetweenDamage(20);
+            config.setTicksBetweenDamage(5);
             config.setDurationTicks(240);
             config.setCooldownTicks(220);
         }
@@ -290,7 +290,7 @@ public final class DevilsDreamModelEngine {
             config.setModelengineScale("4.0");
             config.setDamage(12.0);
             config.setDamageRadius(8.0);
-            config.setTicksBetweenDamage(20);
+            config.setTicksBetweenDamage(5);
             config.setDurationTicks(220);
             config.setCooldownTicks(200);
         }
@@ -319,7 +319,7 @@ public final class DevilsDreamModelEngine {
             config.setModelengineScale("3.5");
             config.setDamage(6.0);
             config.setDamageRadius(14.0);
-            config.setTicksBetweenDamage(15);
+            config.setTicksBetweenDamage(3);
             config.setDurationTicks(260);
             config.setCooldownTicks(240);
         }
@@ -347,7 +347,7 @@ public final class DevilsDreamModelEngine {
             config.setModelengineScale("3.0");
             config.setDamage(11.0);
             config.setDamageRadius(5.5);
-            config.setTicksBetweenDamage(25);
+            config.setTicksBetweenDamage(6);
             config.setDurationTicks(220);
             config.setCooldownTicks(200);
         }
@@ -380,7 +380,7 @@ public final class DevilsDreamModelEngine {
             config.setModelengineScale("4.0");
             config.setDamage(16.0);
             config.setDamageRadius(2.5);
-            config.setTicksBetweenDamage(15);
+            config.setTicksBetweenDamage(3);
             config.setDurationTicks(100);
             config.setCooldownTicks(100);
         }
@@ -407,7 +407,7 @@ public final class DevilsDreamModelEngine {
             config.setModelengineScale("4.0");
             config.setDamage(7.0);
             config.setDamageRadius(2.0);
-            config.setTicksBetweenDamage(10);
+            config.setTicksBetweenDamage(2);
             config.setDurationTicks(80);
             config.setCooldownTicks(90);
         }
@@ -433,7 +433,7 @@ public final class DevilsDreamModelEngine {
             config.setModelengineScale("3.5");
             config.setDamage(9.0);
             config.setDamageRadius(3.0);
-            config.setTicksBetweenDamage(10);
+            config.setTicksBetweenDamage(2);
             config.setDurationTicks(180);
             config.setCooldownTicks(180);
         }
@@ -461,7 +461,7 @@ public final class DevilsDreamModelEngine {
             config.setModelengineScale("4.0");
             config.setDamage(14.0);
             config.setDamageRadius(2.0);
-            config.setTicksBetweenDamage(15);
+            config.setTicksBetweenDamage(3);
             config.setDurationTicks(100);
             config.setCooldownTicks(90);
         }
@@ -487,7 +487,7 @@ public final class DevilsDreamModelEngine {
             config.setModelengineScale("5.0");
             config.setDamage(10.0);
             config.setDamageRadius(3.0);
-            config.setTicksBetweenDamage(20);
+            config.setTicksBetweenDamage(5);
             config.setDurationTicks(120);
             config.setCooldownTicks(110);
         }
@@ -514,7 +514,7 @@ public final class DevilsDreamModelEngine {
             config.setModelengineScale("4.0");
             config.setDamage(12.0);
             config.setDamageRadius(3.5);
-            config.setTicksBetweenDamage(15);
+            config.setTicksBetweenDamage(3);
             config.setDurationTicks(130);
             config.setCooldownTicks(120);
         }
@@ -540,7 +540,7 @@ public final class DevilsDreamModelEngine {
             config.setModelengineScale("3.0");
             config.setDamage(8.0);
             config.setDamageRadius(12.0);
-            config.setTicksBetweenDamage(25);
+            config.setTicksBetweenDamage(6);
             config.setDurationTicks(300);
             config.setCooldownTicks(280);
         }
@@ -569,7 +569,7 @@ public final class DevilsDreamModelEngine {
             config.setModelengineScale("3.0");
             config.setDamage(6.0);
             config.setDamageRadius(10.0);
-            config.setTicksBetweenDamage(30);
+            config.setTicksBetweenDamage(7);
             config.setDurationTicks(360);
             config.setCooldownTicks(320);
         }
@@ -597,7 +597,7 @@ public final class DevilsDreamModelEngine {
             config.setModelengineScale("4.0");
             config.setDamage(10.0);
             config.setDamageRadius(8.0);
-            config.setTicksBetweenDamage(20);
+            config.setTicksBetweenDamage(5);
             config.setDurationTicks(300);
             config.setCooldownTicks(260);
         }
@@ -625,7 +625,7 @@ public final class DevilsDreamModelEngine {
             config.setModelengineScale("4.0");
             config.setDamage(8.0);
             config.setDamageRadius(6.0);
-            config.setTicksBetweenDamage(25);
+            config.setTicksBetweenDamage(6);
             config.setDurationTicks(320);
             config.setCooldownTicks(300);
         }
@@ -652,7 +652,7 @@ public final class DevilsDreamModelEngine {
             config.setModelengineScale("3.0");
             config.setDamage(9.0);
             config.setDamageRadius(5.5);
-            config.setTicksBetweenDamage(25);
+            config.setTicksBetweenDamage(6);
             config.setDurationTicks(280);
             config.setCooldownTicks(260);
         }
@@ -680,7 +680,7 @@ public final class DevilsDreamModelEngine {
             config.setModelengineScale("4.0");
             config.setDamage(11.0);
             config.setDamageRadius(12.0);
-            config.setTicksBetweenDamage(20);
+            config.setTicksBetweenDamage(5);
             config.setDurationTicks(280);
             config.setCooldownTicks(260);
         }
@@ -707,7 +707,7 @@ public final class DevilsDreamModelEngine {
             config.setModelengineScale("4.0");
             config.setDamage(7.0);
             config.setDamageRadius(6.0);
-            config.setTicksBetweenDamage(20);
+            config.setTicksBetweenDamage(5);
             config.setDurationTicks(320);
             config.setCooldownTicks(300);
         }
@@ -734,7 +734,7 @@ public final class DevilsDreamModelEngine {
             config.setModelengineScale("3.0");
             config.setDamage(10.0);
             config.setDamageRadius(8.0);
-            config.setTicksBetweenDamage(20);
+            config.setTicksBetweenDamage(5);
             config.setDurationTicks(300);
             config.setCooldownTicks(280);
         }
@@ -763,7 +763,7 @@ public final class DevilsDreamModelEngine {
             config.setModelengineScale("3.0");
             config.setDamage(10.0);
             config.setDamageRadius(14.0);
-            config.setTicksBetweenDamage(25);
+            config.setTicksBetweenDamage(6);
             config.setDurationTicks(280);
             config.setCooldownTicks(260);
         }
@@ -791,7 +791,7 @@ public final class DevilsDreamModelEngine {
             config.setModelengineScale("4.0");
             config.setDamage(9.0);
             config.setDamageRadius(9.0);
-            config.setTicksBetweenDamage(20);
+            config.setTicksBetweenDamage(5);
             config.setDurationTicks(260);
             config.setCooldownTicks(240);
         }
@@ -819,7 +819,7 @@ public final class DevilsDreamModelEngine {
             config.setModelengineScale("2.5");
             config.setDamage(20.0);
             config.setDamageRadius(16.0);
-            config.setTicksBetweenDamage(20);
+            config.setTicksBetweenDamage(5);
             config.setDurationTicks(400);
             config.setCooldownTicks(360);
         }

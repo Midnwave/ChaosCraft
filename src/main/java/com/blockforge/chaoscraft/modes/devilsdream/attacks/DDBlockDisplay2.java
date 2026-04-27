@@ -58,8 +58,8 @@ public final class DDBlockDisplay2 {
             super(plugin, new AttackConfig("obsidian_funeral_pyre", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
             config.setDamage(0.0);
             config.setDamageRadius(6.0);
-            config.setTicksBetweenDamage(20);
-            config.setDamageDelayTicks(20);
+            config.setTicksBetweenDamage(5);
+            config.setDamageDelayTicks(5);
             config.setDurationTicks(280);
             config.setCooldownTicks(360);
             config.setDamageOnImpactOnly(true);
@@ -251,8 +251,8 @@ public final class DDBlockDisplay2 {
             super(plugin, new AttackConfig("warped_spine_dragon", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
             config.setDamage(9.0);
             config.setDamageRadius(7.0);
-            config.setTicksBetweenDamage(22);
-            config.setDamageDelayTicks(20);
+            config.setTicksBetweenDamage(5);
+            config.setDamageDelayTicks(5);
             config.setDurationTicks(420);
             config.setCooldownTicks(380);
         }
@@ -422,8 +422,8 @@ public final class DDBlockDisplay2 {
             super(plugin, new AttackConfig("executioners_block", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
             config.setDamage(0.0);
             config.setDamageRadius(6.0);
-            config.setTicksBetweenDamage(20);
-            config.setDamageDelayTicks(20);
+            config.setTicksBetweenDamage(5);
+            config.setDamageDelayTicks(5);
             config.setDurationTicks(260);
             config.setCooldownTicks(320);
             config.setDamageOnImpactOnly(true);
@@ -558,8 +558,8 @@ public final class DDBlockDisplay2 {
             super(plugin, new AttackConfig("nether_gale", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
             config.setDamage(7.5);
             config.setDamageRadius(7.0);
-            config.setTicksBetweenDamage(20);
-            config.setDamageDelayTicks(15);
+            config.setTicksBetweenDamage(5);
+            config.setDamageDelayTicks(3);
             config.setDurationTicks(400);
             config.setCooldownTicks(380);
         }
@@ -698,8 +698,8 @@ public final class DDBlockDisplay2 {
             super(plugin, new AttackConfig("unholy_crucifix", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
             config.setDamage(0.0);
             config.setDamageRadius(7.0);
-            config.setTicksBetweenDamage(20);
-            config.setDamageDelayTicks(20);
+            config.setTicksBetweenDamage(5);
+            config.setDamageDelayTicks(5);
             config.setDurationTicks(280);
             config.setCooldownTicks(360);
             config.setDamageOnImpactOnly(true);
@@ -834,8 +834,8 @@ public final class DDBlockDisplay2 {
             super(plugin, new AttackConfig("fractured_halo", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
             config.setDamage(7.5);
             config.setDamageRadius(8.0);
-            config.setTicksBetweenDamage(20);
-            config.setDamageDelayTicks(20);
+            config.setTicksBetweenDamage(5);
+            config.setDamageDelayTicks(5);
             config.setDurationTicks(360);
             config.setCooldownTicks(360);
         }
@@ -973,8 +973,8 @@ public final class DDBlockDisplay2 {
             super(plugin, new AttackConfig("dreamers_guillotine", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
             config.setDamage(0.0);
             config.setDamageRadius(5.0);
-            config.setTicksBetweenDamage(20);
-            config.setDamageDelayTicks(20);
+            config.setTicksBetweenDamage(5);
+            config.setDamageDelayTicks(5);
             config.setDurationTicks(440);
             config.setCooldownTicks(380);
             config.setDamageOnImpactOnly(true);
@@ -1119,8 +1119,8 @@ public final class DDBlockDisplay2 {
             super(plugin, new AttackConfig("soul_furnace", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
             config.setDamage(9.8);
             config.setDamageRadius(7.5);
-            config.setTicksBetweenDamage(20);
-            config.setDamageDelayTicks(25);
+            config.setTicksBetweenDamage(5);
+            config.setDamageDelayTicks(6);
             config.setDurationTicks(360);
             config.setCooldownTicks(360);
         }
@@ -1271,8 +1271,8 @@ public final class DDBlockDisplay2 {
             super(plugin, new AttackConfig("the_guillotined", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
             config.setDamage(8.3);
             config.setDamageRadius(5.5);
-            config.setTicksBetweenDamage(22);
-            config.setDamageDelayTicks(40);
+            config.setTicksBetweenDamage(5);
+            config.setDamageDelayTicks(10);
             config.setDurationTicks(360);
             config.setCooldownTicks(360);
         }
@@ -1423,8 +1423,8 @@ public final class DDBlockDisplay2 {
             super(plugin, new AttackConfig("obsidian_moth", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
             config.setDamage(0.0);
             config.setDamageRadius(8.0);
-            config.setTicksBetweenDamage(20);
-            config.setDamageDelayTicks(20);
+            config.setTicksBetweenDamage(5);
+            config.setDamageDelayTicks(5);
             config.setDurationTicks(420);
             config.setCooldownTicks(380);
             config.setDamageOnImpactOnly(true);

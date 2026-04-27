@@ -62,8 +62,8 @@ public final class DDBlockDisplay1 {
             super(plugin, new AttackConfig("sinners_compass", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
             config.setDamage(8.3);
             config.setDamageRadius(7.0);
-            config.setTicksBetweenDamage(20);
-            config.setDamageDelayTicks(20);
+            config.setTicksBetweenDamage(5);
+            config.setDamageDelayTicks(5);
             config.setDurationTicks(360);
             config.setCooldownTicks(320);
         }
@@ -254,8 +254,8 @@ public final class DDBlockDisplay1 {
             super(plugin, new AttackConfig("collapsed_star", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
             config.setDamage(9.0);
             config.setDamageRadius(8.0);
-            config.setTicksBetweenDamage(18);
-            config.setDamageDelayTicks(20);
+            config.setTicksBetweenDamage(4);
+            config.setDamageDelayTicks(5);
             config.setDurationTicks(280);
             config.setCooldownTicks(330);
         }
@@ -810,8 +810,8 @@ public final class DDBlockDisplay1 {
             super(plugin, new AttackConfig("black_tide", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
             config.setDamage(7.5);
             config.setDamageRadius(6.0);
-            config.setTicksBetweenDamage(20);
-            config.setDamageDelayTicks(20);
+            config.setTicksBetweenDamage(5);
+            config.setDamageDelayTicks(5);
             config.setDurationTicks(220);
             config.setCooldownTicks(310);
         }
@@ -1312,8 +1312,8 @@ public final class DDBlockDisplay1 {
             super(plugin, new AttackConfig("searing_tetrad", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
             config.setDamage(6.8);
             config.setDamageRadius(7.5);
-            config.setTicksBetweenDamage(22);
-            config.setDamageDelayTicks(20);
+            config.setTicksBetweenDamage(5);
+            config.setDamageDelayTicks(5);
             config.setDurationTicks(340);
             config.setCooldownTicks(330);
         }
@@ -1666,8 +1666,8 @@ public final class DDBlockDisplay1 {
             super(plugin, new AttackConfig("dreaming_clock", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
             config.setDamage(6.8);
             config.setDamageRadius(7.0);
-            config.setTicksBetweenDamage(22);
-            config.setDamageDelayTicks(20);
+            config.setTicksBetweenDamage(5);
+            config.setDamageDelayTicks(5);
             config.setDurationTicks(360);
             config.setCooldownTicks(360);
         }

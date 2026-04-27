@@ -54,7 +54,7 @@ public final class DDEnvironmental2 {
             super(plugin, new AttackConfig("withered_gallows", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
             config.setDamage(1.5);
             config.setDamageRadius(3.5);
-            config.setTicksBetweenDamage(35);
+            config.setTicksBetweenDamage(8);
             config.setDurationTicks(360);
             config.setCooldownTicks(420);
         }
@@ -201,7 +201,7 @@ public final class DDEnvironmental2 {
             super(plugin, new AttackConfig("pit_of_hands", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
             config.setDamage(4.0);
             config.setDamageRadius(5.0);
-            config.setTicksBetweenDamage(25);
+            config.setTicksBetweenDamage(6);
             config.setDurationTicks(360);
             config.setCooldownTicks(420);
         }
@@ -324,7 +324,7 @@ public final class DDEnvironmental2 {
             super(plugin, new AttackConfig("shattered_hourglass", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
             config.setDamage(1.0);
             config.setDamageRadius(3.5);
-            config.setTicksBetweenDamage(40);
+            config.setTicksBetweenDamage(10);
             config.setDurationTicks(360);
             config.setCooldownTicks(420);
         }
@@ -453,7 +453,7 @@ public final class DDEnvironmental2 {
             super(plugin, new AttackConfig("graveyard_of_pillars", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
             config.setDamage(1.5);
             config.setDamageRadius(3.5);
-            config.setTicksBetweenDamage(40);
+            config.setTicksBetweenDamage(10);
             config.setDurationTicks(600);
             config.setCooldownTicks(700);
         }
@@ -565,7 +565,7 @@ public final class DDEnvironmental2 {
             super(plugin, new AttackConfig("ashen_throne_room", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
             config.setDamage(1.0);
             config.setDamageRadius(4.0);
-            config.setTicksBetweenDamage(40);
+            config.setTicksBetweenDamage(10);
             config.setDurationTicks(500);
             config.setCooldownTicks(560);
         }
@@ -710,7 +710,7 @@ public final class DDEnvironmental2 {
             super(plugin, new AttackConfig("void_mirror_lake", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
             config.setDamage(3.5);
             config.setDamageRadius(5.0);
-            config.setTicksBetweenDamage(25);
+            config.setTicksBetweenDamage(6);
             config.setDurationTicks(400);
             config.setCooldownTicks(480);
         }
@@ -822,7 +822,7 @@ public final class DDEnvironmental2 {
             super(plugin, new AttackConfig("nightmare_carousel", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
             config.setDamage(5.0);
             config.setDamageRadius(6.0);
-            config.setTicksBetweenDamage(20);
+            config.setTicksBetweenDamage(5);
             config.setDurationTicks(420);
             config.setCooldownTicks(500);
         }
@@ -968,7 +968,7 @@ public final class DDEnvironmental2 {
             super(plugin, new AttackConfig("boneyard_orchard", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
             config.setDamage(3.0);
             config.setDamageRadius(4.0);
-            config.setTicksBetweenDamage(30);
+            config.setTicksBetweenDamage(7);
             config.setDurationTicks(420);
             config.setCooldownTicks(500);
         }
@@ -1084,7 +1084,7 @@ public final class DDEnvironmental2 {
             super(plugin, new AttackConfig("cracked_cosmos", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
             config.setDamage(1.0);
             config.setDamageRadius(4.0);
-            config.setTicksBetweenDamage(40);
+            config.setTicksBetweenDamage(10);
             config.setDurationTicks(500);
             config.setCooldownTicks(560);
         }
@@ -1239,7 +1239,7 @@ public final class DDEnvironmental2 {
             super(plugin, new AttackConfig("well_of_screams", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
             config.setDamage(4.5);
             config.setDamageRadius(4.0);
-            config.setTicksBetweenDamage(25);
+            config.setTicksBetweenDamage(6);
             config.setDurationTicks(420);
             config.setCooldownTicks(500);
         }

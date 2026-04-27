@@ -67,8 +67,8 @@ public final class DDBlockDisplay5 {
             super(plugin, new AttackConfig("charnel_spiral", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
             config.setDamage(9.0);
             config.setDamageRadius(7.0);
-            config.setTicksBetweenDamage(20);
-            config.setDamageDelayTicks(20);
+            config.setTicksBetweenDamage(5);
+            config.setDamageDelayTicks(5);
             config.setDurationTicks(360);
             config.setCooldownTicks(340);
         }
@@ -214,8 +214,8 @@ public final class DDBlockDisplay5 {
             super(plugin, new AttackConfig("weeping_lattice", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
             config.setDamage(7.5);
             config.setDamageRadius(7.0);
-            config.setTicksBetweenDamage(22);
-            config.setDamageDelayTicks(20);
+            config.setTicksBetweenDamage(5);
+            config.setDamageDelayTicks(5);
             config.setDurationTicks(340);
             config.setCooldownTicks(330);
             config.setDamageOnImpactOnly(false);
@@ -391,8 +391,8 @@ public final class DDBlockDisplay5 {
             super(plugin, new AttackConfig("hellhound_silhouette", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
             config.setDamage(10.5);
             config.setDamageRadius(6.5);
-            config.setTicksBetweenDamage(20);
-            config.setDamageDelayTicks(15);
+            config.setTicksBetweenDamage(5);
+            config.setDamageDelayTicks(3);
             config.setDurationTicks(320);
             config.setCooldownTicks(310);
         }
@@ -578,8 +578,8 @@ public final class DDBlockDisplay5 {
             super(plugin, new AttackConfig("crumbling_obelisk", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
             config.setDamage(0);
             config.setDamageRadius(7.0);
-            config.setTicksBetweenDamage(40);
-            config.setDamageDelayTicks(20);
+            config.setTicksBetweenDamage(10);
+            config.setDamageDelayTicks(5);
             config.setDamageOnImpactOnly(true);
             config.setImpactDamage(27.0);
             config.setImpactRadius(7.0);
@@ -758,8 +758,8 @@ public final class DDBlockDisplay5 {
             super(plugin, new AttackConfig("cursed_clock_hands", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
             config.setDamage(7.5);
             config.setDamageRadius(8.0);
-            config.setTicksBetweenDamage(20);
-            config.setDamageDelayTicks(20);
+            config.setTicksBetweenDamage(5);
+            config.setDamageDelayTicks(5);
             config.setDurationTicks(380);
             config.setCooldownTicks(360);
             config.setImpactDamage(30.0);
@@ -905,8 +905,8 @@ public final class DDBlockDisplay5 {
             super(plugin, new AttackConfig("dreamers_ribcage_heart", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
             config.setDamage(7.5);
             config.setDamageRadius(7.0);
-            config.setTicksBetweenDamage(18);
-            config.setDamageDelayTicks(20);
+            config.setTicksBetweenDamage(4);
+            config.setDamageDelayTicks(5);
             config.setDamageOnImpactOnly(false);
             config.setImpactDamage(33.0);
             config.setImpactRadius(7.0);
@@ -1082,8 +1082,8 @@ public final class DDBlockDisplay5 {
             super(plugin, new AttackConfig("petrified_forest", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
             config.setDamage(7.5);
             config.setDamageRadius(8.0);
-            config.setTicksBetweenDamage(22);
-            config.setDamageDelayTicks(25);
+            config.setTicksBetweenDamage(5);
+            config.setDamageDelayTicks(6);
             config.setDamageOnImpactOnly(false);
             config.setImpactDamage(27.0);
             config.setImpactRadius(6.0);
@@ -1242,8 +1242,8 @@ public final class DDBlockDisplay5 {
             super(plugin, new AttackConfig("living_portrait", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
             config.setDamage(0);
             config.setDamageRadius(7.0);
-            config.setTicksBetweenDamage(24);
-            config.setDamageDelayTicks(20);
+            config.setTicksBetweenDamage(6);
+            config.setDamageDelayTicks(5);
             config.setDamageOnImpactOnly(true);
             config.setImpactDamage(30.0);
             config.setImpactRadius(7.0);
@@ -1422,7 +1422,7 @@ public final class DDBlockDisplay5 {
             super(plugin, new AttackConfig("falling_angel", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
             config.setDamage(0);
             config.setDamageRadius(8.0);
-            config.setTicksBetweenDamage(20);
+            config.setTicksBetweenDamage(5);
             config.setDamageDelayTicks(0);
             config.setDamageOnImpactOnly(true);
             config.setImpactDamage(33.0);
@@ -1674,8 +1674,8 @@ public final class DDBlockDisplay5 {
             super(plugin, new AttackConfig("damnation_sundial", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
             config.setDamage(9.0);
             config.setDamageRadius(8.0);
-            config.setTicksBetweenDamage(18);
-            config.setDamageDelayTicks(20);
+            config.setTicksBetweenDamage(4);
+            config.setDamageDelayTicks(5);
             config.setDamageOnImpactOnly(false);
             config.setImpactDamage(27.0);
             config.setImpactRadius(6.0);

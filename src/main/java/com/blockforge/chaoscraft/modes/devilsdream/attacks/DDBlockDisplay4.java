@@ -69,8 +69,8 @@ public final class DDBlockDisplay4 {
             super(plugin, new AttackConfig("black_iris_bloom", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
             config.setDamage(7.5);
             config.setDamageRadius(7.5);
-            config.setTicksBetweenDamage(20);
-            config.setDamageDelayTicks(20);
+            config.setTicksBetweenDamage(5);
+            config.setDamageDelayTicks(5);
             config.setDurationTicks(360);
             config.setCooldownTicks(330);
         }
@@ -215,7 +215,7 @@ public final class DDBlockDisplay4 {
             super(plugin, new AttackConfig("sorrow_cage_drop", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
             config.setDamage(0);
             config.setDamageRadius(0);
-            config.setTicksBetweenDamage(20);
+            config.setTicksBetweenDamage(5);
             config.setDamageDelayTicks(0);
             config.setDurationTicks(280);
             config.setCooldownTicks(310);
@@ -374,7 +374,7 @@ public final class DDBlockDisplay4 {
             super(plugin, new AttackConfig("sigil_pentagram_slam", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
             config.setDamage(0);
             config.setDamageRadius(0);
-            config.setTicksBetweenDamage(20);
+            config.setTicksBetweenDamage(5);
             config.setDamageDelayTicks(0);
             config.setDurationTicks(360);
             config.setCooldownTicks(380);
@@ -576,7 +576,7 @@ public final class DDBlockDisplay4 {
             super(plugin, new AttackConfig("decaying_arch", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
             config.setDamage(0);
             config.setDamageRadius(0);
-            config.setTicksBetweenDamage(22);
+            config.setTicksBetweenDamage(5);
             config.setDamageDelayTicks(0);
             config.setDurationTicks(420);
             config.setCooldownTicks(360);
@@ -715,8 +715,8 @@ public final class DDBlockDisplay4 {
             super(plugin, new AttackConfig("nightmare_orbit", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
             config.setDamage(8.3);
             config.setDamageRadius(8.0);
-            config.setTicksBetweenDamage(20);
-            config.setDamageDelayTicks(20);
+            config.setTicksBetweenDamage(5);
+            config.setDamageDelayTicks(5);
             config.setDurationTicks(420);
             config.setCooldownTicks(360);
         }
@@ -868,8 +868,8 @@ public final class DDBlockDisplay4 {
             super(plugin, new AttackConfig("hollow_sermon", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
             config.setDamage(6.8);
             config.setDamageRadius(8.0);
-            config.setTicksBetweenDamage(22);
-            config.setDamageDelayTicks(40);
+            config.setTicksBetweenDamage(5);
+            config.setDamageDelayTicks(10);
             config.setDurationTicks(400);
             config.setCooldownTicks(320);
         }
@@ -1000,8 +1000,8 @@ public final class DDBlockDisplay4 {
             super(plugin, new AttackConfig("pestilence_bloom_burst", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
             config.setDamage(7.5);
             config.setDamageRadius(7.0);
-            config.setTicksBetweenDamage(20);
-            config.setDamageDelayTicks(60);
+            config.setTicksBetweenDamage(5);
+            config.setDamageDelayTicks(15);
             config.setDurationTicks(400);
             config.setCooldownTicks(320);
         }
@@ -1137,7 +1137,7 @@ public final class DDBlockDisplay4 {
             super(plugin, new AttackConfig("inverted_lighthouse", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
             config.setDamage(0);
             config.setDamageRadius(0);
-            config.setTicksBetweenDamage(18);
+            config.setTicksBetweenDamage(4);
             config.setDamageDelayTicks(0);
             config.setDurationTicks(440);
             config.setCooldownTicks(360);
@@ -1265,7 +1265,7 @@ public final class DDBlockDisplay4 {
             super(plugin, new AttackConfig("damnation_bell_drop", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
             config.setDamage(0);
             config.setDamageRadius(0);
-            config.setTicksBetweenDamage(20);
+            config.setTicksBetweenDamage(5);
             config.setDamageDelayTicks(0);
             config.setDurationTicks(360);
             config.setCooldownTicks(330);
@@ -1472,7 +1472,7 @@ public final class DDBlockDisplay4 {
             super(plugin, new AttackConfig("forgotten_shrine", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
             config.setDamage(0);
             config.setDamageRadius(0);
-            config.setTicksBetweenDamage(22);
+            config.setTicksBetweenDamage(5);
             config.setDamageDelayTicks(0);
             config.setDurationTicks(420);
             config.setCooldownTicks(420);

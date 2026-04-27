@@ -72,9 +72,9 @@ public class DevilsDreamConfig {
 
         // ── Devil's Dream-specific keys ──────────────────────────────────────
         if (!config.contains("world")) { config.set("world", ""); needsSave = true; }
-        if (!config.contains("spawn.base-interval-ticks")) { config.set("spawn.base-interval-ticks", 45); needsSave = true; }
-        if (!config.contains("spawn.max-events-per-player")) { config.set("spawn.max-events-per-player", 6); needsSave = true; }
-        if (!config.contains("spawn.offset-radius")) { config.set("spawn.offset-radius", 8.0); needsSave = true; }
+        if (!config.contains("spawn.base-interval-ticks")) { config.set("spawn.base-interval-ticks", 18); needsSave = true; }
+        if (!config.contains("spawn.max-events-per-player")) { config.set("spawn.max-events-per-player", 12); needsSave = true; }
+        if (!config.contains("spawn.offset-radius")) { config.set("spawn.offset-radius", 3.0); needsSave = true; }
         if (!config.contains("adaptation.score-per-action")) { config.set("adaptation.score-per-action", 3); needsSave = true; }
         if (!config.contains("adaptation.decay-interval-ticks")) { config.set("adaptation.decay-interval-ticks", 100); needsSave = true; }
         if (!config.contains("adaptation.decay-amount")) { config.set("adaptation.decay-amount", 1); needsSave = true; }
@@ -126,9 +126,9 @@ public class DevilsDreamConfig {
     // Spawning
     // ========================
 
-    public int getBaseSpawnInterval() { return config.getInt("spawn.base-interval-ticks", 45); }
-    public int getMaxEventsPerPlayer() { return config.getInt("spawn.max-events-per-player", 6); }
-    public double getSpawnOffsetRadius() { return config.getDouble("spawn.offset-radius", 8.0); }
+    public int getBaseSpawnInterval() { return config.getInt("spawn.base-interval-ticks", 18); }
+    public int getMaxEventsPerPlayer() { return config.getInt("spawn.max-events-per-player", 12); }
+    public double getSpawnOffsetRadius() { return config.getDouble("spawn.offset-radius", 3.0); }
 
     // ========================
     // Dream Adaptation
@@ -193,15 +193,15 @@ public class DevilsDreamConfig {
                 "Maximum timer value allowed via command. 2400 = 40 min."));
 
         // Spawning
-        defaults.set("spawn.base-interval-ticks", 45);
+        defaults.set("spawn.base-interval-ticks", 18);
         defaults.setComments("spawn.base-interval-ticks", List.of(
                 "Ticks between attack spawn attempts. 45 = every 2.25 seconds.",
                 "Devil's Dream spawns slightly faster than Chain Mode due to dual block display + environmental events."));
-        defaults.set("spawn.max-events-per-player", 6);
+        defaults.set("spawn.max-events-per-player", 12);
         defaults.setComments("spawn.max-events-per-player", List.of(
                 "Max simultaneous active attacks per player. Higher than Chain Mode to support dual attack types.",
                 "Recommended: 4-8."));
-        defaults.set("spawn.offset-radius", 8.0);
+        defaults.set("spawn.offset-radius", 3.0);
         defaults.setComments("spawn.offset-radius", List.of(
                 "Max distance from the player that non-tracking attacks can spawn."));
 

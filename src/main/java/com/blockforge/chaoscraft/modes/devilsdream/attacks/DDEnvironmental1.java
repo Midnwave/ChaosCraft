@@ -68,8 +68,8 @@ public final class DDEnvironmental1 {
             super(plugin, new AttackConfig("brimstone_geyser", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
             config.setDamage(5.0);
             config.setDamageRadius(4.0);
-            config.setTicksBetweenDamage(20);
-            config.setDamageDelayTicks(40);
+            config.setTicksBetweenDamage(5);
+            config.setDamageDelayTicks(10);
             config.setDurationTicks(180);
             config.setCooldownTicks(260);
         }
@@ -242,7 +242,7 @@ public final class DDEnvironmental1 {
             super(plugin, new AttackConfig("dead_star_crater", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
             config.setDamage(1.5);
             config.setDamageRadius(4.0);
-            config.setTicksBetweenDamage(35);
+            config.setTicksBetweenDamage(8);
             config.setDurationTicks(360);
             config.setCooldownTicks(280);
         }
@@ -363,7 +363,7 @@ public final class DDEnvironmental1 {
             super(plugin, new AttackConfig("hanging_garden_of_rot", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
             config.setDamage(3.5);
             config.setDamageRadius(5.0);
-            config.setTicksBetweenDamage(25);
+            config.setTicksBetweenDamage(6);
             config.setDurationTicks(300);
             config.setCooldownTicks(280);
         }
@@ -513,7 +513,7 @@ public final class DDEnvironmental1 {
             super(plugin, new AttackConfig("penitents_path", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
             config.setDamage(2.0);
             config.setDamageRadius(4.0);
-            config.setTicksBetweenDamage(35);
+            config.setTicksBetweenDamage(8);
             config.setDurationTicks(320);
             config.setCooldownTicks(280);
         }
@@ -665,7 +665,7 @@ public final class DDEnvironmental1 {
             super(plugin, new AttackConfig("forsaken_bell_tower", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
             config.setDamage(4.0);
             config.setDamageRadius(6.0);
-            config.setTicksBetweenDamage(30);
+            config.setTicksBetweenDamage(7);
             config.setDurationTicks(280);
             config.setCooldownTicks(320);
         }
@@ -824,7 +824,7 @@ public final class DDEnvironmental1 {
             super(plugin, new AttackConfig("drowned_chandelier", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
             config.setDamage(4.5);
             config.setDamageRadius(5.0);
-            config.setTicksBetweenDamage(25);
+            config.setTicksBetweenDamage(6);
             config.setDurationTicks(320);
             config.setCooldownTicks(300);
         }
@@ -1026,7 +1026,7 @@ public final class DDEnvironmental1 {
             super(plugin, new AttackConfig("corrupted_altar", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
             config.setDamage(2.0);
             config.setDamageRadius(4.0);
-            config.setTicksBetweenDamage(35);
+            config.setTicksBetweenDamage(8);
             config.setDurationTicks(360);
             config.setCooldownTicks(320);
         }
@@ -1180,7 +1180,7 @@ public final class DDEnvironmental1 {
             super(plugin, new AttackConfig("blood_moon_rise", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
             config.setDamage(1.5);
             config.setDamageRadius(4.0);
-            config.setTicksBetweenDamage(40);
+            config.setTicksBetweenDamage(10);
             config.setDurationTicks(400);
             config.setCooldownTicks(360);
         }
@@ -1364,7 +1364,7 @@ public final class DDEnvironmental1 {
             super(plugin, new AttackConfig("chariot_wreckage", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
             config.setDamage(1.5);
             config.setDamageRadius(3.5);
-            config.setTicksBetweenDamage(40);
+            config.setTicksBetweenDamage(10);
             config.setDurationTicks(360);
             config.setCooldownTicks(320);
         }
@@ -1512,7 +1512,7 @@ public final class DDEnvironmental1 {
             super(plugin, new AttackConfig("hellfire_brazier", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
             config.setDamage(3.5);
             config.setDamageRadius(3.5);
-            config.setTicksBetweenDamage(25);
+            config.setTicksBetweenDamage(6);
             config.setDurationTicks(280);
             config.setCooldownTicks(260);
         }

@@ -66,8 +66,8 @@ public final class DDBlockDisplay3 {
             config.setImpactRadius(6.5);
             config.setDamage(0.0);
             config.setDamageRadius(0.0);
-            config.setTicksBetweenDamage(20);
-            config.setDamageDelayTicks(20);
+            config.setTicksBetweenDamage(5);
+            config.setDamageDelayTicks(5);
             config.setDurationTicks(280);
             config.setCooldownTicks(340);
         }
@@ -237,8 +237,8 @@ public final class DDBlockDisplay3 {
             super(plugin, new AttackConfig("plague_blossoms", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
             config.setDamage(8.3);
             config.setDamageRadius(7.0);
-            config.setTicksBetweenDamage(22);
-            config.setDamageDelayTicks(20);
+            config.setTicksBetweenDamage(5);
+            config.setDamageDelayTicks(5);
             config.setDurationTicks(360);
             config.setCooldownTicks(340);
         }
@@ -343,8 +343,8 @@ public final class DDBlockDisplay3 {
             super(plugin, new AttackConfig("void_colosseum_ring", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
             config.setDamage(9.0);
             config.setDamageRadius(7.5);
-            config.setTicksBetweenDamage(20);
-            config.setDamageDelayTicks(30);
+            config.setTicksBetweenDamage(5);
+            config.setDamageDelayTicks(7);
             config.setDurationTicks(380);
             config.setCooldownTicks(360);
         }
@@ -479,8 +479,8 @@ public final class DDBlockDisplay3 {
             super(plugin, new AttackConfig("hellfire_marionette", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
             config.setDamage(7.5);
             config.setDamageRadius(6.0);
-            config.setTicksBetweenDamage(20);
-            config.setDamageDelayTicks(25);
+            config.setTicksBetweenDamage(5);
+            config.setDamageDelayTicks(6);
             config.setDurationTicks(420);
             config.setCooldownTicks(380);
         }
@@ -619,8 +619,8 @@ public final class DDBlockDisplay3 {
             config.setImpactRadius(7.0);
             config.setDamage(0.0);
             config.setDamageRadius(0.0);
-            config.setTicksBetweenDamage(20);
-            config.setDamageDelayTicks(20);
+            config.setTicksBetweenDamage(5);
+            config.setDamageDelayTicks(5);
             config.setDurationTicks(360);
             config.setCooldownTicks(380);
         }
@@ -756,8 +756,8 @@ public final class DDBlockDisplay3 {
             super(plugin, new AttackConfig("void_serpent_shed", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
             config.setDamage(6.8);
             config.setDamageRadius(5.5);
-            config.setTicksBetweenDamage(18);
-            config.setDamageDelayTicks(20);
+            config.setTicksBetweenDamage(4);
+            config.setDamageDelayTicks(5);
             config.setDurationTicks(400);
             config.setCooldownTicks(360);
         }
@@ -868,8 +868,8 @@ public final class DDBlockDisplay3 {
             config.setImpactRadius(5.5);
             config.setDamage(6.8);
             config.setDamageRadius(6.0);
-            config.setTicksBetweenDamage(22);
-            config.setDamageDelayTicks(25);
+            config.setTicksBetweenDamage(5);
+            config.setDamageDelayTicks(6);
             config.setDurationTicks(440);
             config.setCooldownTicks(420);
         }
@@ -1013,8 +1013,8 @@ public final class DDBlockDisplay3 {
             super(plugin, new AttackConfig("thorn_meridian", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
             config.setDamage(10.5);
             config.setDamageRadius(8.0);
-            config.setTicksBetweenDamage(20);
-            config.setDamageDelayTicks(20);
+            config.setTicksBetweenDamage(5);
+            config.setDamageDelayTicks(5);
             config.setDurationTicks(420);
             config.setCooldownTicks(380);
         }
@@ -1140,8 +1140,8 @@ public final class DDBlockDisplay3 {
             config.setImpactRadius(6.0);
             config.setDamage(7.5);
             config.setDamageRadius(5.5);
-            config.setTicksBetweenDamage(18);
-            config.setDamageDelayTicks(20);
+            config.setTicksBetweenDamage(4);
+            config.setDamageDelayTicks(5);
             config.setDurationTicks(360);
             config.setCooldownTicks(380);
         }
@@ -1292,8 +1292,8 @@ public final class DDBlockDisplay3 {
             config.setImpactRadius(6.0);
             config.setDamage(0.0);
             config.setDamageRadius(0.0);
-            config.setTicksBetweenDamage(20);
-            config.setDamageDelayTicks(25);
+            config.setTicksBetweenDamage(5);
+            config.setDamageDelayTicks(6);
             config.setDurationTicks(420);
             config.setCooldownTicks(400);
         }

@@ -49,7 +49,7 @@ public final class DDEnvFX1 {
         public ScreamingAbyss(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("screaming_abyss", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
             config.setDamage(4.0); config.setDamageRadius(6.0);
-            config.setTicksBetweenDamage(25); config.setDurationTicks(420); config.setCooldownTicks(360);
+            config.setTicksBetweenDamage(6); config.setDurationTicks(420); config.setCooldownTicks(360);
         }
 
         @Override protected void onSpawn(Location c) {
@@ -159,7 +159,7 @@ public final class DDEnvFX1 {
         public BleedingWall(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("bleeding_wall", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
             config.setDamage(5.0); config.setDamageRadius(5.0);
-            config.setTicksBetweenDamage(20); config.setDurationTicks(360); config.setCooldownTicks(320);
+            config.setTicksBetweenDamage(5); config.setDurationTicks(360); config.setCooldownTicks(320);
         }
 
         @Override protected void onSpawn(Location c) {
@@ -237,7 +237,7 @@ public final class DDEnvFX1 {
         public PhantomBonfire(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("phantom_bonfire", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
             config.setDamage(6.0); config.setDamageRadius(4.5);
-            config.setTicksBetweenDamage(20); config.setDurationTicks(380); config.setCooldownTicks(320);
+            config.setTicksBetweenDamage(5); config.setDurationTicks(380); config.setCooldownTicks(320);
         }
 
         @Override protected void onSpawn(Location c) {
@@ -326,7 +326,7 @@ public final class DDEnvFX1 {
         public LocustStorm(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("locust_storm", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
             config.setDamage(3.0); config.setDamageRadius(7.0);
-            config.setTicksBetweenDamage(15); config.setDurationTicks(360); config.setCooldownTicks(300);
+            config.setTicksBetweenDamage(3); config.setDurationTicks(360); config.setCooldownTicks(300);
         }
 
         @Override protected void onSpawn(Location c) {
@@ -400,7 +400,7 @@ public final class DDEnvFX1 {
         public MirrorShardsRain(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("mirror_shards_rain", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
             config.setDamage(5.0); config.setDamageRadius(7.0);
-            config.setTicksBetweenDamage(15); config.setDurationTicks(320); config.setCooldownTicks(280);
+            config.setTicksBetweenDamage(3); config.setDurationTicks(320); config.setCooldownTicks(280);
         }
 
         @Override protected void onSpawn(Location c) {
@@ -469,7 +469,7 @@ public final class DDEnvFX1 {
         public SunkenCathedral(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("sunken_cathedral", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
             config.setDamage(3.5); config.setDamageRadius(8.0);
-            config.setTicksBetweenDamage(25); config.setDurationTicks(440); config.setCooldownTicks(380);
+            config.setTicksBetweenDamage(6); config.setDurationTicks(440); config.setCooldownTicks(380);
         }
 
         @Override protected void onSpawn(Location c) {
@@ -535,7 +535,7 @@ public final class DDEnvFX1 {
         public DevilsRain(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("devils_rain", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
             config.setDamage(4.0); config.setDamageRadius(8.0);
-            config.setTicksBetweenDamage(15); config.setDurationTicks(360); config.setCooldownTicks(320);
+            config.setTicksBetweenDamage(3); config.setDurationTicks(360); config.setCooldownTicks(320);
         }
 
         @Override protected void onSpawn(Location c) {
@@ -596,7 +596,7 @@ public final class DDEnvFX1 {
         public ShiveringDark(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("shivering_dark", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
             config.setDamage(3.0); config.setDamageRadius(6.0);
-            config.setTicksBetweenDamage(20); config.setDurationTicks(420); config.setCooldownTicks(360);
+            config.setTicksBetweenDamage(5); config.setDurationTicks(420); config.setCooldownTicks(360);
         }
 
         @Override protected void onSpawn(Location c) {
@@ -660,7 +660,7 @@ public final class DDEnvFX1 {
         public AshenCathedralVaults(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("ashen_cathedral_vaults", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
             config.setDamage(3.5); config.setDamageRadius(7.0);
-            config.setTicksBetweenDamage(20); config.setDurationTicks(420); config.setCooldownTicks(380);
+            config.setTicksBetweenDamage(5); config.setDurationTicks(420); config.setCooldownTicks(380);
         }
 
         @Override protected void onSpawn(Location c) {
@@ -731,7 +731,7 @@ public final class DDEnvFX1 {
         public BloodTide(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("blood_tide", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
             config.setDamage(5.0); config.setDamageRadius(8.0);
-            config.setTicksBetweenDamage(20); config.setDurationTicks(360); config.setCooldownTicks(320);
+            config.setTicksBetweenDamage(5); config.setDurationTicks(360); config.setCooldownTicks(320);
         }
 
         @Override protected void onSpawn(Location c) {

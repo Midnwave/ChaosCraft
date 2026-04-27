@@ -53,8 +53,8 @@ public final class DDEnvFX4 {
             super(plugin, new AttackConfig("ash_tornado", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
             config.setDamage(6.75);
             config.setDamageRadius(6.0);
-            config.setTicksBetweenDamage(25);
-            config.setDamageDelayTicks(20);
+            config.setTicksBetweenDamage(6);
+            config.setDamageDelayTicks(5);
             config.setDurationTicks(360);
             config.setCooldownTicks(360);
         }
@@ -192,8 +192,8 @@ public final class DDEnvFX4 {
             super(plugin, new AttackConfig("fractured_mirror_hall", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
             config.setDamage(5.25);
             config.setDamageRadius(7.0);
-            config.setTicksBetweenDamage(25);
-            config.setDamageDelayTicks(15);
+            config.setTicksBetweenDamage(6);
+            config.setDamageDelayTicks(3);
             config.setDurationTicks(320);
             config.setCooldownTicks(340);
         }
@@ -348,8 +348,8 @@ public final class DDEnvFX4 {
             super(plugin, new AttackConfig("profane_library_collapse", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
             config.setDamage(3.0);
             config.setDamageRadius(5.0);
-            config.setTicksBetweenDamage(35);
-            config.setDamageDelayTicks(30);
+            config.setTicksBetweenDamage(8);
+            config.setDamageDelayTicks(7);
             config.setDurationTicks(360);
             config.setCooldownTicks(360);
         }
@@ -489,8 +489,8 @@ public final class DDEnvFX4 {
             super(plugin, new AttackConfig("soul_river", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
             config.setDamage(2.25);
             config.setDamageRadius(4.0);
-            config.setTicksBetweenDamage(35);
-            config.setDamageDelayTicks(20);
+            config.setTicksBetweenDamage(8);
+            config.setDamageDelayTicks(5);
             config.setDurationTicks(360);
             config.setCooldownTicks(340);
         }
@@ -633,8 +633,8 @@ public final class DDEnvFX4 {
             super(plugin, new AttackConfig("infernal_fog_bank", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
             config.setDamage(5.25);
             config.setDamageRadius(7.0);
-            config.setTicksBetweenDamage(28);
-            config.setDamageDelayTicks(30);
+            config.setTicksBetweenDamage(7);
+            config.setDamageDelayTicks(7);
             config.setDurationTicks(380);
             config.setCooldownTicks(360);
         }
@@ -747,8 +747,8 @@ public final class DDEnvFX4 {
             super(plugin, new AttackConfig("weeping_idol_garden", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
             config.setDamage(2.25);
             config.setDamageRadius(4.0);
-            config.setTicksBetweenDamage(40);
-            config.setDamageDelayTicks(40);
+            config.setTicksBetweenDamage(10);
+            config.setDamageDelayTicks(10);
             config.setDurationTicks(400);
             config.setCooldownTicks(380);
         }
@@ -950,8 +950,8 @@ public final class DDEnvFX4 {
             super(plugin, new AttackConfig("hanging_forest", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
             config.setDamage(2.25);
             config.setDamageRadius(4.0);
-            config.setTicksBetweenDamage(35);
-            config.setDamageDelayTicks(30);
+            config.setTicksBetweenDamage(8);
+            config.setDamageDelayTicks(7);
             config.setDurationTicks(380);
             config.setCooldownTicks(360);
         }
@@ -1097,11 +1097,11 @@ public final class DDEnvFX4 {
             super(plugin, new AttackConfig("blood_geyser_field", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
             config.setDamage(7.5);
             config.setDamageRadius(2.5);
-            config.setTicksBetweenDamage(20);
+            config.setTicksBetweenDamage(5);
             config.setDamageOnImpactOnly(true);
             config.setImpactDamage(7.5);
             config.setImpactRadius(2.5);
-            config.setDamageDelayTicks(20);
+            config.setDamageDelayTicks(5);
             config.setDurationTicks(380);
             config.setCooldownTicks(360);
         }
@@ -1213,8 +1213,8 @@ public final class DDEnvFX4 {
             super(plugin, new AttackConfig("infinity_mirror", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
             config.setDamage(3.0);
             config.setDamageRadius(4.5);
-            config.setTicksBetweenDamage(35);
-            config.setDamageDelayTicks(30);
+            config.setTicksBetweenDamage(8);
+            config.setDamageDelayTicks(7);
             config.setDurationTicks(360);
             config.setCooldownTicks(360);
         }
@@ -1362,8 +1362,8 @@ public final class DDEnvFX4 {
             super(plugin, new AttackConfig("smoldering_reliquary", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
             config.setDamage(4.5);
             config.setDamageRadius(5.0);
-            config.setTicksBetweenDamage(35);
-            config.setDamageDelayTicks(30);
+            config.setTicksBetweenDamage(8);
+            config.setDamageDelayTicks(7);
             config.setDurationTicks(380);
             config.setCooldownTicks(380);
         }

@@ -52,7 +52,7 @@ public final class DDEnvFX2 {
         public WeepingIcon(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("weeping_icon", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
             config.setDamage(1.5); config.setDamageRadius(4.0);
-            config.setTicksBetweenDamage(40); config.setDamageDelayTicks(40);
+            config.setTicksBetweenDamage(10); config.setDamageDelayTicks(10);
             config.setDurationTicks(700); config.setCooldownTicks(420);
         }
 
@@ -185,7 +185,7 @@ public final class DDEnvFX2 {
         public MeteorGraveyard(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("meteor_graveyard", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
             config.setDamage(6.0); config.setDamageRadius(7.5);
-            config.setTicksBetweenDamage(20); config.setDurationTicks(400); config.setCooldownTicks(360);
+            config.setTicksBetweenDamage(5); config.setDurationTicks(400); config.setCooldownTicks(360);
         }
 
         @Override protected void onSpawn(Location c) {
@@ -291,7 +291,7 @@ public final class DDEnvFX2 {
         public StormEye(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("storm_eye", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
             config.setDamage(4.5); config.setDamageRadius(7.0);
-            config.setTicksBetweenDamage(20); config.setDurationTicks(420); config.setCooldownTicks(380);
+            config.setTicksBetweenDamage(5); config.setDurationTicks(420); config.setCooldownTicks(380);
         }
 
         @Override protected void onSpawn(Location c) {
@@ -391,7 +391,7 @@ public final class DDEnvFX2 {
         public InfernalMarchingBand(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("infernal_marching_band", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
             config.setDamage(4.5); config.setDamageRadius(7.0);
-            config.setTicksBetweenDamage(25); config.setDurationTicks(440); config.setCooldownTicks(380);
+            config.setTicksBetweenDamage(6); config.setDurationTicks(440); config.setCooldownTicks(380);
         }
 
         @Override protected void onSpawn(Location c) {
@@ -482,7 +482,7 @@ public final class DDEnvFX2 {
         public EclipseEvent(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("eclipse_event", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
             config.setDamage(3.75); config.setDamageRadius(9.0);
-            config.setTicksBetweenDamage(30); config.setDurationTicks(500); config.setCooldownTicks(420);
+            config.setTicksBetweenDamage(7); config.setDurationTicks(500); config.setCooldownTicks(420);
         }
 
         @Override protected void onSpawn(Location c) {
@@ -587,7 +587,7 @@ public final class DDEnvFX2 {
         public DissectionTable(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("dissection_table", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
             config.setDamage(7.5); config.setDamageRadius(5.0);
-            config.setTicksBetweenDamage(20); config.setDurationTicks(420); config.setCooldownTicks(380);
+            config.setTicksBetweenDamage(5); config.setDurationTicks(420); config.setCooldownTicks(380);
         }
 
         @Override protected void onSpawn(Location c) {
@@ -711,7 +711,7 @@ public final class DDEnvFX2 {
         public CosmicTear(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("cosmic_tear", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
             config.setDamage(6.0); config.setDamageRadius(5.5);
-            config.setTicksBetweenDamage(20); config.setDurationTicks(420); config.setCooldownTicks(380);
+            config.setTicksBetweenDamage(5); config.setDurationTicks(420); config.setCooldownTicks(380);
         }
 
         @Override protected void onSpawn(Location c) {
@@ -817,7 +817,7 @@ public final class DDEnvFX2 {
         public ProphetsThrone(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("prophets_throne", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
             config.setDamage(5.25); config.setDamageRadius(6.5);
-            config.setTicksBetweenDamage(25); config.setDurationTicks(480); config.setCooldownTicks(420);
+            config.setTicksBetweenDamage(6); config.setDurationTicks(480); config.setCooldownTicks(420);
         }
 
         @Override protected void onSpawn(Location c) {
@@ -932,7 +932,7 @@ public final class DDEnvFX2 {
         public RainOfEyes(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("rain_of_eyes", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
             config.setDamage(4.5); config.setDamageRadius(8.0);
-            config.setTicksBetweenDamage(15); config.setDurationTicks(380); config.setCooldownTicks(340);
+            config.setTicksBetweenDamage(3); config.setDurationTicks(380); config.setCooldownTicks(340);
         }
 
         @Override protected void onSpawn(Location c) {
@@ -1012,7 +1012,7 @@ public final class DDEnvFX2 {
         public Ossuary(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("ossuary", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
             config.setDamage(3.75); config.setDamageRadius(7.0);
-            config.setTicksBetweenDamage(25); config.setDurationTicks(500); config.setCooldownTicks(420);
+            config.setTicksBetweenDamage(6); config.setDurationTicks(500); config.setCooldownTicks(420);
         }
 
         @Override protected void onSpawn(Location c) {
