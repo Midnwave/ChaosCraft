@@ -321,23 +321,24 @@ public final class DDBlockDisplay4 {
                 phase = 4;
             }
 
-            // Phase 4: Lift cage upward
+            // Phase 4: Sink wreckage into the ground (dissipate) — NOT rise
             if (phase == 4 && t == 180) {
                 for (BlockDisplayHandle h : floor) {
-                    h.animateTo(new Vector3f(-0.5f, 8.0f - 0.5f, -0.5f),
-                            new AxisAngle4f(0, 0, 1, 0), new Vector3f(1.0f, 0.3f, 1.0f), 60);
+                    h.animateTo(new Vector3f(-0.5f, -19.0f - 0.5f, -0.5f),
+                            new AxisAngle4f(0, 0, 1, 0), new Vector3f(0.5f, 0.15f, 0.5f), 60);
                 }
                 for (int i = 0; i < bars.size(); i++) {
                     double[][] barOff = {{1.4,1.4},{1.4,-1.4},{-1.4,1.4},{-1.4,-1.4},
                             {1.4,0},{-1.4,0},{0,1.4},{0,-1.4}};
                     bars.get(i).animateTo(
-                            new Vector3f((float) (barOff[i][0] * 2.4) - 0.5f, 8.0f - 0.5f + 0.5f, (float) (barOff[i][1] * 2.4) - 0.5f),
+                            new Vector3f((float) (barOff[i][0] * 2.4) - 0.5f, -19.0f - 0.5f + 0.5f, (float) (barOff[i][1] * 2.4) - 0.5f),
                             new AxisAngle4f(0, 0, 1, 0),
-                            new Vector3f(0.2f, 6.0f, 0.2f), 60);
+                            new Vector3f(0.1f, 3.0f, 0.1f), 60);
                 }
                 for (BlockDisplayHandle h : cap) {
-                    h.animateTo(new Vector3f(-0.5f, 8.0f + 7.0f - 0.5f, -0.5f),
-                            new AxisAngle4f(0, 0, 1, 0), new Vector3f(1.0f, 0.4f, 1.0f), 60);
+                    // cap entity is spawned 7 higher than floor, so subtract additional 7 to also sink it
+                    h.animateTo(new Vector3f(-0.5f, -19.0f - 0.5f - 7.0f, -0.5f),
+                            new AxisAngle4f(0, 0, 1, 0), new Vector3f(0.5f, 0.2f, 0.5f), 60);
                 }
                 phase = 5;
             }
