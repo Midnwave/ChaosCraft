@@ -137,6 +137,7 @@ public final class DevilsDreamModelEngine {
     public static class FallenAngelDescent extends ModelEngineAttack {
         public FallenAngelDescent(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("fallen_angel_descent", AttackType.MODEL_ENGINE, 1, MODE_PATH));
+            config.setModelengineScale("4.0");
             config.setDamage(12.0);
             config.setDamageRadius(6.0);
             config.setTicksBetweenDamage(20);
@@ -144,7 +145,6 @@ public final class DevilsDreamModelEngine {
             config.setCooldownTicks(240);
         }
         @Override protected String getModelId() { return "fallen_angel_descent"; }
-        @Override protected double getModelScale() { return 4.0; }
         @Override protected void onSpawn(Location c) {
             spawnModel(c);
             anchorCharge(c, 1.4f, 0.4f);
@@ -167,6 +167,7 @@ public final class DevilsDreamModelEngine {
     public static class NightmareRootSurge extends ModelEngineAttack {
         public NightmareRootSurge(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("nightmare_root_surge", AttackType.MODEL_ENGINE, 1, MODE_PATH));
+            config.setModelengineScale("4.0");
             config.setDamage(8.0);
             config.setDamageRadius(7.0);
             config.setTicksBetweenDamage(20);
@@ -174,7 +175,6 @@ public final class DevilsDreamModelEngine {
             config.setCooldownTicks(220);
         }
         @Override protected String getModelId() { return "nightmare_root_surge"; }
-        @Override protected double getModelScale() { return 4.0; }
         @Override protected void onSpawn(Location c) {
             spawnModel(c);
             wartPlace(c, 1.2f, 0.7f);
@@ -195,6 +195,7 @@ public final class DevilsDreamModelEngine {
     public static class DevilsSpineArray extends ModelEngineAttack {
         public DevilsSpineArray(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("devils_spine_array", AttackType.MODEL_ENGINE, 1, MODE_PATH));
+            config.setModelengineScale("3.0");
             config.setDamage(10.0);
             config.setDamageRadius(12.0);
             config.setTicksBetweenDamage(25);
@@ -202,7 +203,6 @@ public final class DevilsDreamModelEngine {
             config.setCooldownTicks(260);
         }
         @Override protected String getModelId() { return "devils_spine_array"; }
-        @Override protected double getModelScale() { return 3.0; }
         @Override protected void onSpawn(Location c) {
             spawnModel(c);
             anchorCharge(c, 1.3f, 0.5f);
@@ -224,6 +224,7 @@ public final class DevilsDreamModelEngine {
         private boolean detonated = false;
         public FallenHaloBurst(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("fallen_halo_burst", AttackType.MODEL_ENGINE, 1, MODE_PATH));
+            config.setModelengineScale("4.0");
             config.setDamage(14.0);
             config.setDamageRadius(6.5);
             config.setTicksBetweenDamage(30);
@@ -231,7 +232,6 @@ public final class DevilsDreamModelEngine {
             config.setCooldownTicks(220);
         }
         @Override protected String getModelId() { return "fallen_halo_burst"; }
-        @Override protected double getModelScale() { return 4.0; }
         @Override protected void onSpawn(Location c) {
             spawnModel(c);
             chime(c, 1.4f, 0.8f);
@@ -256,6 +256,7 @@ public final class DevilsDreamModelEngine {
     public static class DreamCollapseRing extends ModelEngineAttack {
         public DreamCollapseRing(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("dream_collapse_ring", AttackType.MODEL_ENGINE, 1, MODE_PATH));
+            config.setModelengineScale("4.0");
             config.setDamage(10.0);
             config.setDamageRadius(15.0);
             config.setTicksBetweenDamage(20);
@@ -263,7 +264,6 @@ public final class DevilsDreamModelEngine {
             config.setCooldownTicks(220);
         }
         @Override protected String getModelId() { return "dream_collapse_ring"; }
-        @Override protected double getModelScale() { return 4.0; }
         @Override protected void onSpawn(Location c) {
             spawnModel(c);
             portalAmb(c, 1.3f, 0.5f);
@@ -287,6 +287,7 @@ public final class DevilsDreamModelEngine {
     public static class DevilsSermonNova extends ModelEngineAttack {
         public DevilsSermonNova(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("devils_sermon_nova", AttackType.MODEL_ENGINE, 1, MODE_PATH));
+            config.setModelengineScale("4.0");
             config.setDamage(12.0);
             config.setDamageRadius(8.0);
             config.setTicksBetweenDamage(20);
@@ -294,7 +295,6 @@ public final class DevilsDreamModelEngine {
             config.setCooldownTicks(200);
         }
         @Override protected String getModelId() { return "devils_sermon_nova"; }
-        @Override protected double getModelScale() { return 4.0; }
         @Override protected void onSpawn(Location c) {
             spawnModel(c);
             thunderTrident(c, 1.5f, 0.4f);
@@ -316,6 +316,7 @@ public final class DevilsDreamModelEngine {
     public static class NightmareStaticField extends ModelEngineAttack {
         public NightmareStaticField(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("nightmare_static_field", AttackType.MODEL_ENGINE, 1, MODE_PATH));
+            config.setModelengineScale("3.5");
             config.setDamage(6.0);
             config.setDamageRadius(14.0);
             config.setTicksBetweenDamage(15);
@@ -323,7 +324,6 @@ public final class DevilsDreamModelEngine {
             config.setCooldownTicks(240);
         }
         @Override protected String getModelId() { return "nightmare_static_field"; }
-        @Override protected double getModelScale() { return 3.5; }
         @Override protected void onSpawn(Location c) {
             spawnModel(c);
             sculkSpread(c, 1.2f, 0.5f);
@@ -344,6 +344,7 @@ public final class DevilsDreamModelEngine {
         private boolean detonated = false;
         public InfernalCrownBurst(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("infernal_crown_burst", AttackType.MODEL_ENGINE, 1, MODE_PATH));
+            config.setModelengineScale("3.0");
             config.setDamage(11.0);
             config.setDamageRadius(5.5);
             config.setTicksBetweenDamage(25);
@@ -351,7 +352,6 @@ public final class DevilsDreamModelEngine {
             config.setCooldownTicks(200);
         }
         @Override protected String getModelId() { return "infernal_crown_burst"; }
-        @Override protected double getModelScale() { return 3.0; }
         @Override protected void onSpawn(Location c) {
             spawnModel(c);
             anchorCharge(c, 1.3f, 0.5f);
@@ -377,6 +377,7 @@ public final class DevilsDreamModelEngine {
     public static class FallenFeatherLance extends ModelEngineAttack {
         public FallenFeatherLance(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("fallen_feather_lance", AttackType.MODEL_ENGINE, 1, MODE_PATH));
+            config.setModelengineScale("4.0");
             config.setDamage(16.0);
             config.setDamageRadius(2.5);
             config.setTicksBetweenDamage(15);
@@ -384,7 +385,6 @@ public final class DevilsDreamModelEngine {
             config.setCooldownTicks(100);
         }
         @Override protected String getModelId() { return "fallen_feather_lance"; }
-        @Override protected double getModelScale() { return 4.0; }
         @Override protected void onSpawn(Location c) {
             spawnModel(c);
             chime(c, 1.0f, 0.4f);
@@ -404,6 +404,7 @@ public final class DevilsDreamModelEngine {
     public static class NightmareShardVolley extends ModelEngineAttack {
         public NightmareShardVolley(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("nightmare_shard_volley", AttackType.MODEL_ENGINE, 1, MODE_PATH));
+            config.setModelengineScale("4.0");
             config.setDamage(7.0);
             config.setDamageRadius(2.0);
             config.setTicksBetweenDamage(10);
@@ -411,7 +412,6 @@ public final class DevilsDreamModelEngine {
             config.setCooldownTicks(90);
         }
         @Override protected String getModelId() { return "nightmare_shard_volley"; }
-        @Override protected double getModelScale() { return 4.0; }
         @Override protected void onSpawn(Location c) {
             spawnModel(c);
             chime(c, 0.9f, 1.2f);
@@ -430,6 +430,7 @@ public final class DevilsDreamModelEngine {
     public static class DevilsTongueBeam extends ModelEngineAttack {
         public DevilsTongueBeam(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("devils_tongue_beam", AttackType.MODEL_ENGINE, 1, MODE_PATH));
+            config.setModelengineScale("3.5");
             config.setDamage(9.0);
             config.setDamageRadius(3.0);
             config.setTicksBetweenDamage(10);
@@ -437,7 +438,6 @@ public final class DevilsDreamModelEngine {
             config.setCooldownTicks(180);
         }
         @Override protected String getModelId() { return "devils_tongue_beam"; }
-        @Override protected double getModelScale() { return 3.5; }
         @Override protected void onSpawn(Location c) {
             spawnModel(c);
             hostileHurt(c, 1.2f, 0.6f);
@@ -458,6 +458,7 @@ public final class DevilsDreamModelEngine {
     public static class SilverWingBlade extends ModelEngineAttack {
         public SilverWingBlade(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("silver_wing_blade", AttackType.MODEL_ENGINE, 1, MODE_PATH));
+            config.setModelengineScale("4.0");
             config.setDamage(14.0);
             config.setDamageRadius(2.0);
             config.setTicksBetweenDamage(15);
@@ -465,7 +466,6 @@ public final class DevilsDreamModelEngine {
             config.setCooldownTicks(90);
         }
         @Override protected String getModelId() { return "silver_wing_blade"; }
-        @Override protected double getModelScale() { return 4.0; }
         @Override protected void onSpawn(Location c) {
             spawnModel(c);
             chime(c, 1.1f, 1.4f);
@@ -484,6 +484,7 @@ public final class DevilsDreamModelEngine {
     public static class NightmareEyeProjectile extends ModelEngineAttack {
         public NightmareEyeProjectile(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("nightmare_eye_projectile", AttackType.MODEL_ENGINE, 1, MODE_PATH));
+            config.setModelengineScale("5.0");
             config.setDamage(10.0);
             config.setDamageRadius(3.0);
             config.setTicksBetweenDamage(20);
@@ -491,7 +492,6 @@ public final class DevilsDreamModelEngine {
             config.setCooldownTicks(110);
         }
         @Override protected String getModelId() { return "nightmare_eye_projectile"; }
-        @Override protected double getModelScale() { return 5.0; }
         @Override protected void onSpawn(Location c) {
             spawnModel(c);
             sculkSoul(c, 20, 1.5);
@@ -511,6 +511,7 @@ public final class DevilsDreamModelEngine {
     public static class BloodComet extends ModelEngineAttack {
         public BloodComet(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("blood_comet", AttackType.MODEL_ENGINE, 1, MODE_PATH));
+            config.setModelengineScale("4.0");
             config.setDamage(12.0);
             config.setDamageRadius(3.5);
             config.setTicksBetweenDamage(15);
@@ -518,7 +519,6 @@ public final class DevilsDreamModelEngine {
             config.setCooldownTicks(120);
         }
         @Override protected String getModelId() { return "blood_comet"; }
-        @Override protected double getModelScale() { return 4.0; }
         @Override protected void onSpawn(Location c) {
             spawnModel(c);
             hostileHurt(c, 1.3f, 0.5f);
@@ -537,6 +537,7 @@ public final class DevilsDreamModelEngine {
     public static class FallenAngelWingsSummon extends ModelEngineAttack {
         public FallenAngelWingsSummon(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("fallen_angel_wings_summon", AttackType.MODEL_ENGINE, 1, MODE_PATH));
+            config.setModelengineScale("3.0");
             config.setDamage(8.0);
             config.setDamageRadius(12.0);
             config.setTicksBetweenDamage(25);
@@ -544,7 +545,6 @@ public final class DevilsDreamModelEngine {
             config.setCooldownTicks(280);
         }
         @Override protected String getModelId() { return "fallen_angel_wings_summon"; }
-        @Override protected double getModelScale() { return 3.0; }
         @Override protected void onSpawn(Location c) {
             spawnModel(c);
             chime(c, 1.2f, 0.6f);
@@ -566,6 +566,7 @@ public final class DevilsDreamModelEngine {
     public static class NightmareCathedral extends ModelEngineAttack {
         public NightmareCathedral(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("nightmare_cathedral", AttackType.MODEL_ENGINE, 1, MODE_PATH));
+            config.setModelengineScale("3.0");
             config.setDamage(6.0);
             config.setDamageRadius(10.0);
             config.setTicksBetweenDamage(30);
@@ -573,7 +574,6 @@ public final class DevilsDreamModelEngine {
             config.setCooldownTicks(320);
         }
         @Override protected String getModelId() { return "nightmare_cathedral"; }
-        @Override protected double getModelScale() { return 3.0; }
         @Override protected void onSpawn(Location c) {
             spawnModel(c);
             anchorCharge(c, 1.4f, 0.3f);
@@ -594,6 +594,7 @@ public final class DevilsDreamModelEngine {
     public static class DevilsHaloArray extends ModelEngineAttack {
         public DevilsHaloArray(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("devils_halo_array", AttackType.MODEL_ENGINE, 1, MODE_PATH));
+            config.setModelengineScale("4.0");
             config.setDamage(10.0);
             config.setDamageRadius(8.0);
             config.setTicksBetweenDamage(20);
@@ -601,7 +602,6 @@ public final class DevilsDreamModelEngine {
             config.setCooldownTicks(260);
         }
         @Override protected String getModelId() { return "devils_halo_array"; }
-        @Override protected double getModelScale() { return 4.0; }
         @Override protected void onSpawn(Location c) {
             spawnModel(c);
             chime(c, 1.3f, 0.7f);
@@ -622,6 +622,7 @@ public final class DevilsDreamModelEngine {
     public static class BoneThroneSummon extends ModelEngineAttack {
         public BoneThroneSummon(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("bone_throne_summon", AttackType.MODEL_ENGINE, 1, MODE_PATH));
+            config.setModelengineScale("4.0");
             config.setDamage(8.0);
             config.setDamageRadius(6.0);
             config.setTicksBetweenDamage(25);
@@ -629,7 +630,6 @@ public final class DevilsDreamModelEngine {
             config.setCooldownTicks(300);
         }
         @Override protected String getModelId() { return "bone_throne_summon"; }
-        @Override protected double getModelScale() { return 4.0; }
         @Override protected void onSpawn(Location c) {
             spawnModel(c);
             anchorCharge(c, 1.3f, 0.4f);
@@ -649,6 +649,7 @@ public final class DevilsDreamModelEngine {
     public static class SilverMirrorPortal extends ModelEngineAttack {
         public SilverMirrorPortal(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("silver_mirror_portal", AttackType.MODEL_ENGINE, 1, MODE_PATH));
+            config.setModelengineScale("3.0");
             config.setDamage(9.0);
             config.setDamageRadius(5.5);
             config.setTicksBetweenDamage(25);
@@ -656,7 +657,6 @@ public final class DevilsDreamModelEngine {
             config.setCooldownTicks(260);
         }
         @Override protected String getModelId() { return "silver_mirror_portal"; }
-        @Override protected double getModelScale() { return 3.0; }
         @Override protected void onSpawn(Location c) {
             spawnModel(c);
             portalAmb(c, 1.3f, 0.6f);
@@ -677,6 +677,7 @@ public final class DevilsDreamModelEngine {
     public static class DevilsConstellation extends ModelEngineAttack {
         public DevilsConstellation(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("devils_constellation", AttackType.MODEL_ENGINE, 1, MODE_PATH));
+            config.setModelengineScale("4.0");
             config.setDamage(11.0);
             config.setDamageRadius(12.0);
             config.setTicksBetweenDamage(20);
@@ -684,7 +685,6 @@ public final class DevilsDreamModelEngine {
             config.setCooldownTicks(260);
         }
         @Override protected String getModelId() { return "devils_constellation"; }
-        @Override protected double getModelScale() { return 4.0; }
         @Override protected void onSpawn(Location c) {
             spawnModel(c);
             thunderTrident(c, 1.0f, 0.7f);
@@ -704,6 +704,7 @@ public final class DevilsDreamModelEngine {
     public static class NightmareClock extends ModelEngineAttack {
         public NightmareClock(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("nightmare_clock", AttackType.MODEL_ENGINE, 1, MODE_PATH));
+            config.setModelengineScale("4.0");
             config.setDamage(7.0);
             config.setDamageRadius(6.0);
             config.setTicksBetweenDamage(20);
@@ -711,7 +712,6 @@ public final class DevilsDreamModelEngine {
             config.setCooldownTicks(300);
         }
         @Override protected String getModelId() { return "nightmare_clock"; }
-        @Override protected double getModelScale() { return 4.0; }
         @Override protected void onSpawn(Location c) {
             spawnModel(c);
             anchorCharge(c, 1.0f, 0.6f);
@@ -731,6 +731,7 @@ public final class DevilsDreamModelEngine {
     public static class FallenSeraphSkeleton extends ModelEngineAttack {
         public FallenSeraphSkeleton(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("fallen_seraph_skeleton", AttackType.MODEL_ENGINE, 1, MODE_PATH));
+            config.setModelengineScale("3.0");
             config.setDamage(10.0);
             config.setDamageRadius(8.0);
             config.setTicksBetweenDamage(20);
@@ -738,7 +739,6 @@ public final class DevilsDreamModelEngine {
             config.setCooldownTicks(280);
         }
         @Override protected String getModelId() { return "fallen_seraph_skeleton"; }
-        @Override protected double getModelScale() { return 3.0; }
         @Override protected void onSpawn(Location c) {
             spawnModel(c);
             anchorCharge(c, 1.3f, 0.4f);
@@ -760,6 +760,7 @@ public final class DevilsDreamModelEngine {
     public static class NightmarePlanetarium extends ModelEngineAttack {
         public NightmarePlanetarium(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("nightmare_planetarium", AttackType.MODEL_ENGINE, 1, MODE_PATH));
+            config.setModelengineScale("3.0");
             config.setDamage(10.0);
             config.setDamageRadius(14.0);
             config.setTicksBetweenDamage(25);
@@ -767,7 +768,6 @@ public final class DevilsDreamModelEngine {
             config.setCooldownTicks(260);
         }
         @Override protected String getModelId() { return "nightmare_planetarium"; }
-        @Override protected double getModelScale() { return 3.0; }
         @Override protected void onSpawn(Location c) {
             spawnModel(c);
             portalAmb(c, 1.2f, 0.5f);
@@ -788,6 +788,7 @@ public final class DevilsDreamModelEngine {
     public static class InfernalScriptureArray extends ModelEngineAttack {
         public InfernalScriptureArray(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("infernal_scripture_array", AttackType.MODEL_ENGINE, 1, MODE_PATH));
+            config.setModelengineScale("4.0");
             config.setDamage(9.0);
             config.setDamageRadius(9.0);
             config.setTicksBetweenDamage(20);
@@ -795,7 +796,6 @@ public final class DevilsDreamModelEngine {
             config.setCooldownTicks(240);
         }
         @Override protected String getModelId() { return "infernal_scripture_array"; }
-        @Override protected double getModelScale() { return 4.0; }
         @Override protected void onSpawn(Location c) {
             spawnModel(c);
             wartPlace(c, 1.0f, 0.7f);
@@ -816,6 +816,7 @@ public final class DevilsDreamModelEngine {
     public static class TheDreamItself extends ModelEngineAttack {
         public TheDreamItself(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("the_dream_itself", AttackType.MODEL_ENGINE, 1, MODE_PATH));
+            config.setModelengineScale("2.5");
             config.setDamage(20.0);
             config.setDamageRadius(16.0);
             config.setTicksBetweenDamage(20);
@@ -823,7 +824,6 @@ public final class DevilsDreamModelEngine {
             config.setCooldownTicks(360);
         }
         @Override protected String getModelId() { return "the_dream_itself"; }
-        @Override protected double getModelScale() { return 2.5; }
         @Override protected void onSpawn(Location c) {
             spawnModel(c);
             thunderTrident(c, 2.0f, 0.3f);

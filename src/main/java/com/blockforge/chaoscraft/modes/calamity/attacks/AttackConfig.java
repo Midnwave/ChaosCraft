@@ -323,5 +323,6 @@ public class AttackConfig {
 
     /** ModelEngine scale: "auto" = proportional to damage radius, or a fixed number string. */
     public String getModelengineScale() { return modelengineScale; }
+    public void setModelengineScale(String s) { this.modelengineScale = s; }
     public void setImpactRadius(double radius) { this.impactRadius = radius; }
 }
