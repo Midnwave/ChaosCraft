@@ -20,7 +20,7 @@ public abstract class BossAttack extends AbstractAttack {
 
     protected BossAttack(ChaosCraftPlugin plugin, AttackConfig config, String bossName) {
         super(plugin, config);
-        this.displayBuilder = new DisplayBuilder(plugin);
+        this.displayBuilder = new DisplayBuilder(plugin, config.getModeName());
         this.bossName = bossName;
     }
 

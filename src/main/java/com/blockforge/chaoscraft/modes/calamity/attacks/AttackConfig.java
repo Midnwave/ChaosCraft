@@ -283,6 +283,16 @@ public class AttackConfig {
     // ---- Getters/Setters ----
 
     public String getAttackId() { return attackId; }
+
+    /**
+     * Mode name extracted from the modePath. E.g. "modes/devilsdream/attacks" → "devilsdream".
+     * Used to tag spawned entities with "cc:&lt;mode&gt;" for cross-mode entity tracking.
+     */
+    public String getModeName() {
+        if (modePath == null || modePath.isEmpty()) return "unknown";
+        String[] parts = modePath.split("/");
+        return parts.length >= 2 ? parts[1] : modePath;
+    }
     public AttackType getType() { return type; }
     public int getPhase() { return phase; }
 

@@ -35,9 +35,31 @@ public class DisplayBuilder {
 
     private final ChaosCraftPlugin plugin;
     private final List<Entity> entities = new ArrayList<>();
+    /** Mode name (e.g. "devilsdream", "doom") used for cc:&lt;mode&gt; tagging. Null = no mode tag. */
+    private String modeName;
 
     public DisplayBuilder(ChaosCraftPlugin plugin) {
         this.plugin = plugin;
+    }
+
+    public DisplayBuilder(ChaosCraftPlugin plugin, String modeName) {
+        this.plugin = plugin;
+        this.modeName = modeName;
+    }
+
+    /** Set the mode name used for cc:&lt;mode&gt; scoreboard tags on spawned entities. */
+    public DisplayBuilder setMode(String modeName) {
+        this.modeName = modeName;
+        return this;
+    }
+
+    /** Apply the mode tag (and the global chaoscraft_display tag) to a freshly-spawned entity. */
+    public void tagEntity(Entity e) {
+        if (e == null) return;
+        e.addScoreboardTag("chaoscraft_display");
+        if (modeName != null && !modeName.isEmpty()) {
+            e.addScoreboardTag("cc:" + modeName);
+        }
     }
 
     // ========================
@@ -61,6 +83,7 @@ public class DisplayBuilder {
             d.setBlock(blockData);
             d.setBrightness(new Display.Brightness(15, 15));
             d.addScoreboardTag("chaoscraft_display"); // Tag for cleanup safety net
+            if (modeName != null && !modeName.isEmpty()) d.addScoreboardTag("cc:" + modeName);
             d.setTransformation(new Transformation(
                     new Vector3f(-0.5f, -0.5f, -0.5f),
                     new AxisAngle4f(0, 0, 1, 0),
@@ -156,6 +179,7 @@ public class DisplayBuilder {
             d.setItemStack(item);
             d.setBrightness(new Display.Brightness(15, 15));
             d.addScoreboardTag("chaoscraft_display"); // Tag for cleanup safety net
+            if (modeName != null && !modeName.isEmpty()) d.addScoreboardTag("cc:" + modeName);
             d.setTransformation(new Transformation(
                     new Vector3f(-0.5f, -0.5f, -0.5f),
                     new AxisAngle4f(0, 0, 1, 0),

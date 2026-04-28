@@ -142,6 +142,7 @@ public abstract class AbstractAttack {
                 td.setBackgroundColor(org.bukkit.Color.fromARGB(128, 0, 0, 0));
                 td.addScoreboardTag("chaoscraft_display");
                 td.addScoreboardTag("chaoscraft_debug_label");
+                td.addScoreboardTag("cc:" + config.getModeName());
             });
             spawnedEntities.add(debugLabel);
         } else {

@@ -186,6 +186,7 @@ public class SeerBossManager {
             // Add custom scoreboard tags
             z.addScoreboardTag("chaoscraft_seer_boss");
             z.addScoreboardTag("boss_target");
+            z.addScoreboardTag("cc:seer");
         });
 
         // Try to apply ModelEngine model via reflection
@@ -241,6 +242,7 @@ public class SeerBossManager {
             z.setSilent(true);
             z.setPersistent(true);
             z.addScoreboardTag("chaoscraft_seer_boss");
+            z.addScoreboardTag("cc:seer");
         });
 
         plugin.getLogger().info("[Seer] Fallback Zombie boss spawned.");

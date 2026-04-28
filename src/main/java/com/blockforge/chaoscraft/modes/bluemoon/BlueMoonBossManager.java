@@ -292,6 +292,7 @@ public class BlueMoonBossManager {
 
             z.addScoreboardTag("chaoscraft_bluemoon_boss");
             z.addScoreboardTag("boss_target");
+            z.addScoreboardTag("cc:bluemoon");
 
             // Zero out movement speed so ME4 never triggers walk animation
             // Boss moves exclusively via NMS setDeltaMovement() in BlueMoonFlightGoal
@@ -696,6 +697,7 @@ public class BlueMoonBossManager {
                 z.setCustomNameVisible(false);
                 z.addScoreboardTag("chaoscraft_laser_entity");
                 z.addScoreboardTag("chaoscraft_display");
+                z.addScoreboardTag("cc:bluemoon");
 
                 // Remove entity cramming
                 var moveSpeed = z.getAttribute(Attribute.MOVEMENT_SPEED);

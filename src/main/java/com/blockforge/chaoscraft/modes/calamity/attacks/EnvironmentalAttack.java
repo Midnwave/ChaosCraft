@@ -19,7 +19,7 @@ public abstract class EnvironmentalAttack extends AbstractAttack {
 
     protected EnvironmentalAttack(ChaosCraftPlugin plugin, AttackConfig config) {
         super(plugin, config);
-        this.displayBuilder = new DisplayBuilder(plugin);
+        this.displayBuilder = new DisplayBuilder(plugin, config.getModeName());
     }
 
     @Override

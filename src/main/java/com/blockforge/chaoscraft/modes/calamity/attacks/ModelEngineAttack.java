@@ -54,7 +54,7 @@ public abstract class ModelEngineAttack extends AbstractAttack {
 
     protected ModelEngineAttack(ChaosCraftPlugin plugin, AttackConfig config) {
         super(plugin, config);
-        this.displayBuilder = new DisplayBuilder(plugin);
+        this.displayBuilder = new DisplayBuilder(plugin, config.getModeName());
     }
 
     // ========================
@@ -145,6 +145,7 @@ public abstract class ModelEngineAttack extends AbstractAttack {
             z.setCollidable(false);
             z.setCustomNameVisible(false);
             z.addScoreboardTag("chaoscraft_display");
+            z.addScoreboardTag("cc:" + config.getModeName());
 
             // Prevent zombie from spawning with or picking up equipment
             z.setCanPickupItems(false);
