@@ -125,6 +125,10 @@ public class ChaosCraftPlugin extends JavaPlugin {
                 new com.blockforge.chaoscraft.modes.doom.DoomMode(this);
         modeManager.registerMode(doomMode);
 
+        com.blockforge.chaoscraft.modes.fluffy.FluffyMode fluffyMode =
+                new com.blockforge.chaoscraft.modes.fluffy.FluffyMode(this);
+        modeManager.registerMode(fluffyMode);
+
         com.blockforge.chaoscraft.modes.seer.SeerMode seerMode =
                 new com.blockforge.chaoscraft.modes.seer.SeerMode(this);
         modeManager.registerMode(seerMode);
@@ -592,6 +596,15 @@ public class ChaosCraftPlugin extends JavaPlugin {
             doomMode.getAttackRegistry().reloadConfigs();
         }
         getLogger().info("[Reload] Doom in " + (System.currentTimeMillis() - t) + "ms");
+
+        // Reload Fluffy
+        t = System.currentTimeMillis();
+        var fluffy = modeManager.getMode("fluffy");
+        if (fluffy instanceof com.blockforge.chaoscraft.modes.fluffy.FluffyMode f) {
+            f.getFluffyConfig().load();
+            f.getAttackRegistry().reloadConfigs();
+        }
+        getLogger().info("[Reload] Fluffy in " + (System.currentTimeMillis() - t) + "ms");
 
         // Reload Seer
         t = System.currentTimeMillis();
