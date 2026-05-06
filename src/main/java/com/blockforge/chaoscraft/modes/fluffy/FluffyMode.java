@@ -83,6 +83,13 @@ public class FluffyMode extends AbstractMode {
      * difficulty-multiplier from FluffyConfig (default 15.0). Applied AFTER
      * attackRegistry.reloadConfigs() so user-supplied per-attack damage
      * values are still scaled. Fails open (multiplier = 1.0) on any error.
+     *
+     * Also extends each attack's lifecycle:
+     *  - durationTicks doubled (2x baseline) so attacks last longer in-game
+     *  - if the attack does constant tick damage (ticksBetweenDamage > 0
+     *    and not damage-on-impact-only), we floor durationTicks at
+     *    ticksBetweenDamage * 10 so each constant-damage attack delivers at
+     *    least 10 damage events over its lifecycle.
      */
     private void applyDifficultyToAttacks() {
         double diffMult;
@@ -91,17 +98,47 @@ public class FluffyMode extends AbstractMode {
         } catch (Throwable t) {
             diffMult = 1.0;
         }
-        if (diffMult == 1.0) return;
-        int scaled = 0;
+        int scaledDamage = 0;
+        int extendedDuration = 0;
+        int flooredByTickFloor = 0;
+        int impactOnlySkipped = 0;
         for (var atk : attackRegistry.getAll()) {
             try {
                 var cfg = atk.getConfig();
-                cfg.setDamage(cfg.getDamage() * diffMult);
-                scaled++;
+                if (diffMult != 1.0) {
+                    cfg.setDamage(cfg.getDamage() * diffMult);
+                    cfg.setImpactDamage(cfg.getImpactDamage() * diffMult);
+                    scaledDamage++;
+                }
+            } catch (Throwable ignored) {}
+
+            try {
+                var cfg = atk.getConfig();
+                int currentDuration = cfg.getDurationTicks();
+                int tickInterval = cfg.getTicksBetweenDamage();
+                boolean impactOnly = cfg.isDamageOnImpactOnly();
+
+                int newDuration = (int) Math.round(currentDuration * 2.0);
+                if (!impactOnly && tickInterval > 0) {
+                    int floor = tickInterval * 10;
+                    if (newDuration < floor) {
+                        newDuration = floor;
+                        flooredByTickFloor++;
+                    }
+                } else if (impactOnly) {
+                    impactOnlySkipped++;
+                }
+                if (newDuration != currentDuration) {
+                    cfg.setDurationTicks(newDuration);
+                    extendedDuration++;
+                }
             } catch (Throwable ignored) {}
         }
-        plugin.getLogger().info("[Fluffy] Applied difficulty x" + diffMult + " to "
-                + scaled + " attacks.");
+        plugin.getLogger().info("[Fluffy] Applied difficulty x" + diffMult
+                + " to " + scaledDamage + " attacks; extended duration on "
+                + extendedDuration + " attacks (" + flooredByTickFloor
+                + " bumped to 10-tick-damage floor, " + impactOnlySkipped
+                + " impact-only attacks not floored).");
     }
 
     // ========================
