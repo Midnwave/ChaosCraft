@@ -630,24 +630,7 @@ public final class FluffyBlockDisplay {
                 rotateRing(innerRing, innerRotation, 1f, 0.5f, 0f);
             }
 
-            // Drift toward nearest player at 0.08 blocks/tick
-            if (tick % 5 == 0) {
-                Player target = findNearestPlayer(c, 25.0);
-                if (target != null) {
-                    org.bukkit.util.Vector dir = target.getLocation().toVector().subtract(c.toVector());
-                    if (dir.lengthSquared() > 0.01) {
-                        dir = dir.normalize().multiply(0.08 * 5);
-                        Location next = c.clone().add(dir.getX(), 0, dir.getZ());
-                        // Move all blocks: we set their entity teleport (allowed for translation, not rotation).
-                        for (BlockDisplayHandle h : outerRingA) h.entity().teleport(h.entity().getLocation().add(dir.getX(), 0, dir.getZ()));
-                        for (BlockDisplayHandle h : outerRingB) h.entity().teleport(h.entity().getLocation().add(dir.getX(), 0, dir.getZ()));
-                        for (BlockDisplayHandle h : equatorBand) h.entity().teleport(h.entity().getLocation().add(dir.getX(), 0, dir.getZ()));
-                        for (BlockDisplayHandle h : innerRing) h.entity().teleport(h.entity().getLocation().add(dir.getX(), 0, dir.getZ()));
-                        // Also nudge the attack center so damage radius follows
-                        c.add(dir.getX(), 0, dir.getZ());
-                    }
-                }
-            }
+            // Setpiece: stays at spawn location (no per-tick player tracking).
 
             // SNOWFLAKE wisps every 2 ticks
             if (tick % 2 == 0) {

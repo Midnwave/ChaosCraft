@@ -1647,6 +1647,8 @@ public final class FluffyBlockDisplay5 {
         private int lungeIndex = 0;
         private int lungeStartTick = -1;
         private double[] lungeOffset = new double[3];
+        // Cached spawn-time lunge direction.
+        private double cachedDirX = 0, cachedDirZ = -1;
 
         public PlushHydra(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("plush_hydra", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
@@ -1755,6 +1757,18 @@ public final class FluffyBlockDisplay5 {
 
             DisplayBuilder.playSound(center, Sound.ENTITY_GHAST_AMBIENT, 1.2f, 1.8f);
             w.spawnParticle(Particle.ENCHANT, center.clone().add(0, 2.5, 0), 30, 1.5, 2, 1.5, 0.5);
+
+            // Cache spawn-time lunge direction (all heads lunge along this fixed dir).
+            Player initialTarget = findNearestPlayer(center, 16.0);
+            if (initialTarget != null) {
+                double dxs = initialTarget.getLocation().getX() - center.getX();
+                double dzs = initialTarget.getLocation().getZ() - center.getZ();
+                double mag = Math.sqrt(dxs * dxs + dzs * dzs);
+                if (mag > 0.001) {
+                    cachedDirX = dxs / mag;
+                    cachedDirZ = dzs / mag;
+                }
+            }
         }
 
         @Override
@@ -1809,18 +1823,11 @@ public final class FluffyBlockDisplay5 {
                 }
             }
 
-            // Lunge cycle every 30 ticks
+            // Lunge cycle every 30 ticks — uses cached spawn-time direction.
             if (tick > 0 && tick % 30 == 0) {
                 lungeIndex = (lungeIndex + 1) % 3;
                 lungeStartTick = tick;
-                Player target = findNearestPlayer(c, 16.0);
-                double dx = 0, dz = 0;
-                if (target != null) {
-                    dx = target.getLocation().getX() - c.getX();
-                    dz = target.getLocation().getZ() - c.getZ();
-                    double mag = Math.sqrt(dx * dx + dz * dz);
-                    if (mag > 0.001) { dx /= mag; dz /= mag; }
-                }
+                double dx = cachedDirX, dz = cachedDirZ;
                 lungeOffset[0] = dx;
                 lungeOffset[1] = 0;
                 lungeOffset[2] = dz;

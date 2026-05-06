@@ -550,6 +550,9 @@ public final class FluffyEnvironmental3 {
     //     toward the player's last position, then detonates.
     //     Impact at end of trail, radius 4.0, 20 hearts.
     // ================================================================
+    // Chase-by-design: scent_trail follows the player toward their last known position
+    // (targetEnd is captured at spawn — the trail intentionally points at the player's
+    // spawn-time location, then detonates there).
     public static class ScentTrail extends EnvironmentalAttack {
         private final List<ItemDisplayHandle> trail = new ArrayList<>();
         private Location targetEnd;
@@ -1194,7 +1197,8 @@ public final class FluffyEnvironmental3 {
             config.setDamageDelayTicks(10);
             config.setDurationTicks(280);
             config.setCooldownTicks(360);
-            config.setTracksPlayer(true);
+            // Setpiece swarm: stays at spawn (tracksPlayer disabled).
+            config.setTracksPlayer(false);
         }
 
         @Override protected void onSpawn(Location center) {

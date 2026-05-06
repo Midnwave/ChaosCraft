@@ -684,6 +684,9 @@ public final class FluffyEnvironmental4 {
         private double dirX, dirZ;
         private int phase = 0; // 0 = rising, 1 = firing
         private boolean impacted = false;
+        // Cached spawn-time fire direction (set in onSpawn, applied at phase 1).
+        private double cachedDirX = 0, cachedDirZ = 0;
+        private boolean hasCachedDir = false;
 
         public WhistlingFeather(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("whistling_feather", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
@@ -707,6 +710,17 @@ public final class FluffyEnvironmental4 {
             feather = displayBuilder.spawnItem(p, new ItemStack(Material.FEATHER));
             feather.scale(1.4f, 1.4f, 1.4f).glow(255, 240, 250).interpolation(2, 0);
             spawnedEntities.add(feather.entity());
+
+            // Cache spawn-time fire direction (used when feather reaches Y+8).
+            Player initialTarget = getTargetPlayer();
+            if (initialTarget != null && initialTarget.isOnline()) {
+                double tx = initialTarget.getLocation().getX() - c.getX();
+                double tz = initialTarget.getLocation().getZ() - c.getZ();
+                double mag = Math.max(0.001, Math.sqrt(tx * tx + tz * tz));
+                cachedDirX = tx / mag;
+                cachedDirZ = tz / mag;
+                hasCachedDir = true;
+            }
 
             // Musical accents around the launch site: 6 NOTE_BLOCK + 4 GOAT_HORN + 4 BELL + 4 FEATHER companions
             for (int i = 0; i < 6; i++) {
@@ -749,14 +763,10 @@ public final class FluffyEnvironmental4 {
                 if (posY >= 8.0) {
                     posY = 8.0;
                     phase = 1;
-                    // Aim at target player or random direction
-                    Player target = getTargetPlayer();
-                    if (target != null && target.isOnline()) {
-                        double tx = target.getLocation().getX() - c.getX();
-                        double tz = target.getLocation().getZ() - c.getZ();
-                        double mag = Math.max(0.001, Math.sqrt(tx * tx + tz * tz));
-                        dirX = tx / mag;
-                        dirZ = tz / mag;
+                    // Aim using the cached spawn-time direction (no live tracking).
+                    if (hasCachedDir) {
+                        dirX = cachedDirX;
+                        dirZ = cachedDirZ;
                     } else {
                         double a = Math.random() * Math.PI * 2;
                         dirX = Math.cos(a);

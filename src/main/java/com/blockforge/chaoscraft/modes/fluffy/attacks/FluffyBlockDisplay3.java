@@ -482,6 +482,8 @@ public final class FluffyBlockDisplay3 {
         private boolean toppled = false;
         private float toppleAngle = 0f;
         private double toppleAxisX = 1, toppleAxisZ = 0;
+        // Cached spawn-time direction toward player.
+        private double cachedDirX = 0, cachedDirZ = -1;
 
         public CatTowerStructure(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("cat_tower_structure", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
@@ -540,6 +542,18 @@ public final class FluffyBlockDisplay3 {
             DisplayBuilder.playSound(center, Sound.ENTITY_CAT_PURR, 1.0f, 1.0f);
             w.spawnParticle(Particle.FALLING_DUST, center.clone().add(0, 4, 0), 20,
                     Material.WHITE_WOOL.createBlockData());
+
+            // Cache spawn-time topple direction toward nearest player.
+            Player initialTarget = findNearestPlayer(center, 12.0);
+            if (initialTarget != null) {
+                double dxs = initialTarget.getLocation().getX() - center.getX();
+                double dzs = initialTarget.getLocation().getZ() - center.getZ();
+                double mag = Math.sqrt(dxs * dxs + dzs * dzs);
+                if (mag > 0.001) {
+                    cachedDirX = dxs / mag;
+                    cachedDirZ = dzs / mag;
+                }
+            }
         }
 
         @Override
@@ -547,20 +561,12 @@ public final class FluffyBlockDisplay3 {
             Location c = getCenter();
             if (c == null || c.getWorld() == null) return;
 
-            // Topple at tick 240
+            // Topple at tick 240 — uses cached spawn-time player direction.
             if (!toppled && tick >= 240) {
                 toppled = true;
-                Player target = findNearestPlayer(c, 12.0);
-                if (target != null) {
-                    double dx = target.getLocation().getX() - c.getX();
-                    double dz = target.getLocation().getZ() - c.getZ();
-                    double mag = Math.sqrt(dx * dx + dz * dz);
-                    if (mag > 0.001) {
-                        // Topple axis perpendicular to player direction
-                        toppleAxisX = -dz / mag;
-                        toppleAxisZ = dx / mag;
-                    }
-                }
+                // Topple axis perpendicular to cached player direction.
+                toppleAxisX = -cachedDirZ;
+                toppleAxisZ = cachedDirX;
                 triggerImpactDamage(c.clone().add(toppleAxisZ * 3.0, 0.5, -toppleAxisX * 3.0));
                 DisplayBuilder.playSound(c, Sound.ENTITY_GENERIC_BIG_FALL, 1.5f, 0.6f);
                 c.getWorld().spawnParticle(Particle.CRIT, c.clone().add(0, 1, 0), 60, 3, 2, 3, 0.2);

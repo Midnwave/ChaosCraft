@@ -103,6 +103,9 @@ public final class FluffyBlockDisplay4 {
         private final List<BlockDisplayHandle> leaves = new ArrayList<>();
         private final List<BlockDisplayHandle> stem = new ArrayList<>();
         private float leanAngle = 0f;
+        // Cached spawn-time lean direction (atan2 angle).
+        private double cachedLeanDir = 0;
+        private boolean hasCachedLean = false;
 
         public GiantDaisy(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("giant_daisy", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
@@ -189,6 +192,15 @@ public final class FluffyBlockDisplay4 {
 
             DisplayBuilder.playSound(center, Sound.BLOCK_GRASS_PLACE, 1.0f, 1.4f);
             w.spawnParticle(Particle.CHERRY_LEAVES, center.clone().add(0, 5.0, 0), 30, 2, 0.3, 2, 0.01);
+
+            // Cache spawn-time lean direction.
+            Player initialTarget = findNearestPlayer(center, 12);
+            if (initialTarget != null) {
+                double dxs = initialTarget.getLocation().getX() - center.getX();
+                double dzs = initialTarget.getLocation().getZ() - center.getZ();
+                cachedLeanDir = Math.atan2(dzs, dxs);
+                hasCachedLean = true;
+            }
         }
 
         private BlockDisplayHandle spawnDiscBlock(Location loc) {
@@ -203,20 +215,15 @@ public final class FluffyBlockDisplay4 {
             Location c = getCenter();
             if (c == null || c.getWorld() == null) return;
 
-            // Lean toward player (Z-axis tilt 0 → 20° over 60 ticks)
-            if (tick == 60) {
-                Player target = findNearestPlayer(c, 12);
-                if (target != null) {
-                    double dx = target.getLocation().getX() - c.getX();
-                    double dz = target.getLocation().getZ() - c.getZ();
-                    double leanDir = Math.atan2(dz, dx);
-                    leanAngle = (float) Math.toRadians(20);
-                    // Apply lean to disc + petals via Z rotation around stem top
-                    float axisX = (float) -Math.sin(leanDir);
-                    float axisZ = (float) Math.cos(leanDir);
-                    for (BlockDisplayHandle h : disc) applyLean(h, leanAngle, axisX, axisZ);
-                    for (BlockDisplayHandle h : petals) applyLean(h, leanAngle, axisX, axisZ);
-                }
+            // Lean using cached spawn-time direction (Z-axis tilt 0 → 20° at tick 60).
+            if (tick == 60 && hasCachedLean) {
+                double leanDir = cachedLeanDir;
+                leanAngle = (float) Math.toRadians(20);
+                // Apply lean to disc + petals via Z rotation around stem top
+                float axisX = (float) -Math.sin(leanDir);
+                float axisZ = (float) Math.cos(leanDir);
+                for (BlockDisplayHandle h : disc) applyLean(h, leanAngle, axisX, axisZ);
+                for (BlockDisplayHandle h : petals) applyLean(h, leanAngle, axisX, axisZ);
             }
 
             // Petal drift / sparkle particles
@@ -900,6 +907,8 @@ public final class FluffyBlockDisplay4 {
         private float headYaw = 0f;
         private boolean burst30 = false;
         private boolean burst60 = false;
+        // Cached spawn-time burst impact location.
+        private Location cachedBurstLoc = null;
 
         public GiantSunflower(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("giant_sunflower", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
@@ -987,6 +996,27 @@ public final class FluffyBlockDisplay4 {
 
             DisplayBuilder.playSound(center, Sound.BLOCK_GRASS_PLACE, 1.0f, 1.2f);
             w.spawnParticle(Particle.CHERRY_LEAVES, center.clone().add(0, 8, 0), 25, 2, 0.5, 2, 0.01);
+
+            // Cache spawn-time facing toward nearest player (head yaw applied once).
+            Player initialTarget = findNearestPlayer(center, 16);
+            if (initialTarget != null) {
+                double dxs = initialTarget.getLocation().getX() - center.getX();
+                double dzs = initialTarget.getLocation().getZ() - center.getZ();
+                headYaw = (float) Math.atan2(dzs, dxs);
+                cachedBurstLoc = initialTarget.getLocation();
+                for (BlockDisplayHandle h : head) {
+                    BlockDisplay e = h.entity();
+                    Transformation t = e.getTransformation();
+                    e.setInterpolationDuration(5);
+                    e.setInterpolationDelay(0);
+                    e.setTransformation(new Transformation(
+                            t.getTranslation(),
+                            new AxisAngle4f(headYaw, 0, 1, 0),
+                            t.getScale(),
+                            new AxisAngle4f().set(t.getRightRotation())
+                    ));
+                }
+            }
         }
 
         @Override
@@ -994,29 +1024,9 @@ public final class FluffyBlockDisplay4 {
             Location c = getCenter();
             if (c == null || c.getWorld() == null) return;
 
-            // Head tracks player Y-axis rotation (5-tick interp)
-            if (tick > 30 && tick % 5 == 0) {
-                Player target = findNearestPlayer(c, 16);
-                if (target != null) {
-                    double dx = target.getLocation().getX() - c.getX();
-                    double dz = target.getLocation().getZ() - c.getZ();
-                    headYaw = (float) Math.atan2(dz, dx);
-                    for (BlockDisplayHandle h : head) {
-                        BlockDisplay e = h.entity();
-                        Transformation t = e.getTransformation();
-                        e.setInterpolationDuration(5);
-                        e.setInterpolationDelay(0);
-                        e.setTransformation(new Transformation(
-                                t.getTranslation(),
-                                new AxisAngle4f(headYaw, 0, 1, 0),
-                                t.getScale(),
-                                new AxisAngle4f().set(t.getRightRotation())
-                        ));
-                    }
-                }
-            }
+            // Head facing is fixed at spawn — no per-tick player tracking.
 
-            // Seed burst at tick 30 and 60 → impact on nearest player
+            // Seed burst at tick 30 and 60 → impact at cached spawn-time location
             if (tick == 30 && !burst30) {
                 burst30 = true;
                 fireSeedBurst(c);
@@ -1036,9 +1046,8 @@ public final class FluffyBlockDisplay4 {
         }
 
         private void fireSeedBurst(Location c) {
-            Player target = findNearestPlayer(c, 20);
-            if (target == null) return;
-            Location impactLoc = target.getLocation();
+            // Use cached spawn-time location instead of live player position.
+            Location impactLoc = cachedBurstLoc != null ? cachedBurstLoc : c;
             triggerImpactDamage(impactLoc);
             DisplayBuilder.playSound(c, Sound.ENTITY_FIREWORK_ROCKET_BLAST, 1.2f, 1.6f);
             c.getWorld().spawnParticle(Particle.CRIT, impactLoc.clone().add(0, 1, 0), 30, 1, 1, 1, 0.4);

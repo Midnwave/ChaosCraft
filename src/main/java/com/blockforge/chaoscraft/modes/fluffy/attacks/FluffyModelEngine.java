@@ -462,7 +462,8 @@ public final class FluffyModelEngine {
             super(plugin, new AttackConfig("carousel_horse_merry_go", AttackType.MODEL_ENGINE, 1, MODE_PATH));
             config.setDamage(8.0); config.setDamageRadius(8.0);
             config.setTicksBetweenDamage(10); config.setDamageDelayTicks(20);
-            config.setTracksPlayer(true);
+            // Setpiece: stays at spawn (tracksPlayer disabled).
+            config.setTracksPlayer(false);
             config.setDurationTicks(240); config.setCooldownTicks(320);
         }
         @Override protected String getModelId() { return "carousel_horse_merry_go"; }
@@ -492,7 +493,8 @@ public final class FluffyModelEngine {
             super(plugin, new AttackConfig("cat_goddess_nine_lives", AttackType.MODEL_ENGINE, 1, MODE_PATH));
             config.setDamage(8.0); config.setDamageRadius(9.0);
             config.setTicksBetweenDamage(10); config.setDamageDelayTicks(15);
-            config.setTracksPlayer(true);
+            // Setpiece: stays at spawn (tracksPlayer disabled).
+            config.setTracksPlayer(false);
             config.setDurationTicks(240); config.setCooldownTicks(320);
         }
         @Override protected String getModelId() { return "cat_goddess_nine_lives"; }
@@ -523,7 +525,8 @@ public final class FluffyModelEngine {
             super(plugin, new AttackConfig("rabbit_army_multiplication", AttackType.MODEL_ENGINE, 1, MODE_PATH));
             config.setDamage(9.0); config.setDamageRadius(7.5);
             config.setTicksBetweenDamage(12); config.setDamageDelayTicks(20);
-            config.setTracksPlayer(true);
+            // Setpiece: stays at spawn (tracksPlayer disabled).
+            config.setTracksPlayer(false);
             config.setDurationTicks(240); config.setCooldownTicks(320);
         }
         @Override protected String getModelId() { return "rabbit_army_multiplication"; }
@@ -551,7 +554,8 @@ public final class FluffyModelEngine {
             super(plugin, new AttackConfig("duck_flock_armada", AttackType.MODEL_ENGINE, 1, MODE_PATH));
             config.setDamage(9.0); config.setDamageRadius(8.5);
             config.setTicksBetweenDamage(10); config.setDamageDelayTicks(20);
-            config.setTracksPlayer(true);
+            // Setpiece: stays at spawn (tracksPlayer disabled).
+            config.setTracksPlayer(false);
             config.setDurationTicks(220); config.setCooldownTicks(320);
         }
         @Override protected String getModelId() { return "duck_flock_armada"; }
@@ -641,7 +645,8 @@ public final class FluffyModelEngine {
             super(plugin, new AttackConfig("butterfly_swarm_flutter", AttackType.MODEL_ENGINE, 1, MODE_PATH));
             config.setDamage(7.0); config.setDamageRadius(9.0);
             config.setTicksBetweenDamage(12); config.setDamageDelayTicks(15);
-            config.setTracksPlayer(true);
+            // Setpiece: stays at spawn (tracksPlayer disabled).
+            config.setTracksPlayer(false);
             config.setDurationTicks(240); config.setCooldownTicks(300);
         }
         @Override protected String getModelId() { return "butterfly_swarm_flutter"; }
@@ -669,7 +674,8 @@ public final class FluffyModelEngine {
             super(plugin, new AttackConfig("candy_planet_sugar_rush", AttackType.MODEL_ENGINE, 1, MODE_PATH));
             config.setDamage(10.0); config.setDamageRadius(13.0);
             config.setTicksBetweenDamage(8); config.setDamageDelayTicks(40);
-            config.setTracksPlayer(true);
+            // Setpiece: stays at spawn (tracksPlayer disabled).
+            config.setTracksPlayer(false);
             config.setChance(0.4); // ultimate — rare
             config.setDurationTicks(360); config.setCooldownTicks(600);
         }

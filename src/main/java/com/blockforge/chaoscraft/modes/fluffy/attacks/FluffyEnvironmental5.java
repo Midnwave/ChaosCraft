@@ -1034,34 +1034,11 @@ public final class FluffyEnvironmental5 {
             if (c == null || c.getWorld() == null) return;
             World w = c.getWorld();
 
-            // Track nearest player
-            Player nearest = null;
-            double bestSq = Double.MAX_VALUE;
-            Location pos = c.clone().add(curX, 1.0, curZ);
-            for (Player pl : w.getPlayers()) {
-                if (isExempt(pl)) continue;
-                double dSq = pl.getLocation().distanceSquared(pos);
-                if (dSq < bestSq) { bestSq = dSq; nearest = pl; }
-            }
-            if (nearest != null) {
-                double tx = nearest.getLocation().getX() - c.getX();
-                double tz = nearest.getLocation().getZ() - c.getZ();
-                double dx = tx - curX;
-                double dz = tz - curZ;
-                double dist = Math.sqrt(dx * dx + dz * dz);
-                if (dist > 0.001) {
-                    double speed = 0.30;
-                    curX += (dx / dist) * speed;
-                    curZ += (dz / dist) * speed;
-                }
-            }
-
-            // Update damage center to follow the swarm
+            // Setpiece pinwheels: stay at spawn (no per-tick player tracking).
             Location bladeCenter = c.clone();
             bladeCenter.setX(c.getX() + curX);
             bladeCenter.setZ(c.getZ() + curZ);
             bladeCenter.setY(c.getY() + 1.0);
-            setCenter(bladeCenter);
 
             // Spin blades
             if (tick % 1 == 0) {

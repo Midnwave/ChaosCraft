@@ -585,6 +585,8 @@ public final class FluffyBlockDisplay2 {
         private final List<double[]> spineDirs = new ArrayList<>();
         private final List<BlockDisplayHandle> snout = new ArrayList<>();
         private double rollX = 0, rollZ = 0;
+        // Cached spawn-time roll direction (set in onSpawn, used by onTick).
+        private double cachedDirX = 0, cachedDirZ = 0;
 
         public GiantHedgehog(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("giant_hedgehog", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
@@ -652,6 +654,19 @@ public final class FluffyBlockDisplay2 {
 
             DisplayBuilder.playSound(center, Sound.ENTITY_ARMADILLO_ROLL, 1.0f, 0.6f);
             w.spawnParticle(Particle.CRIT, center.clone().add(0, 1, 0), 25, 1.5, 1.5, 1.5, 0.2);
+
+            // Cache spawn-time direction toward nearest player (used for the roll
+            // phase — direction is fixed at spawn so the hedgehog rolls in a
+            // straight line and does not chase the player).
+            Player initialTarget = findNearestPlayer(center, 25.0);
+            if (initialTarget != null) {
+                Vector dir = initialTarget.getLocation().toVector().subtract(center.toVector());
+                if (dir.lengthSquared() > 0.01) {
+                    dir = dir.normalize();
+                    cachedDirX = dir.getX();
+                    cachedDirZ = dir.getZ();
+                }
+            }
         }
 
         @Override
@@ -682,13 +697,12 @@ public final class FluffyBlockDisplay2 {
                 }
             }
 
-            // Phase 2 (40+): roll toward player at 0.1/tick
-            if (tick > 40 && tick % 2 == 0) {
-                Player target = findNearestPlayer(c, 25.0);
-                if (target != null) {
-                    Vector dir = target.getLocation().toVector().subtract(c.toVector()).normalize();
-                    rollX += dir.getX() * 0.1;
-                    rollZ += dir.getZ() * 0.1;
+            // Phase 2 (40+): roll along the cached spawn-time direction at 0.1/tick.
+            // (Direction is fixed at spawn — does not chase the player live.)
+            if (tick > 40 && tick % 2 == 0 && (cachedDirX != 0 || cachedDirZ != 0)) {
+                {
+                    rollX += cachedDirX * 0.1;
+                    rollZ += cachedDirZ * 0.1;
                     // Apply translation to all body and spines
                     for (BlockDisplayHandle h : bodyBlocks) {
                         BlockDisplay e = h.entity();
@@ -697,7 +711,7 @@ public final class FluffyBlockDisplay2 {
                         e.setInterpolationDuration(2);
                         e.setInterpolationDelay(0);
                         e.setTransformation(new Transformation(
-                                new Vector3f((float) (cur.x() + dir.getX() * 0.1), cur.y(), (float) (cur.z() + dir.getZ() * 0.1)),
+                                new Vector3f((float) (cur.x() + cachedDirX * 0.1), cur.y(), (float) (cur.z() + cachedDirZ * 0.1)),
                                 new AxisAngle4f().set(t.getLeftRotation()),
                                 t.getScale(),
                                 new AxisAngle4f().set(t.getRightRotation())
@@ -710,7 +724,7 @@ public final class FluffyBlockDisplay2 {
                         e.setInterpolationDuration(2);
                         e.setInterpolationDelay(0);
                         e.setTransformation(new Transformation(
-                                new Vector3f((float) (cur.x() + dir.getX() * 0.1), cur.y(), (float) (cur.z() + dir.getZ() * 0.1)),
+                                new Vector3f((float) (cur.x() + cachedDirX * 0.1), cur.y(), (float) (cur.z() + cachedDirZ * 0.1)),
                                 new AxisAngle4f().set(t.getLeftRotation()),
                                 t.getScale(),
                                 new AxisAngle4f().set(t.getRightRotation())
@@ -723,7 +737,7 @@ public final class FluffyBlockDisplay2 {
                         e.setInterpolationDuration(2);
                         e.setInterpolationDelay(0);
                         e.setTransformation(new Transformation(
-                                new Vector3f((float) (cur.x() + dir.getX() * 0.1), cur.y(), (float) (cur.z() + dir.getZ() * 0.1)),
+                                new Vector3f((float) (cur.x() + cachedDirX * 0.1), cur.y(), (float) (cur.z() + cachedDirZ * 0.1)),
                                 new AxisAngle4f().set(t.getLeftRotation()),
                                 t.getScale(),
                                 new AxisAngle4f().set(t.getRightRotation())
@@ -877,6 +891,8 @@ public final class FluffyBlockDisplay2 {
     public static class PandaSit extends BlockDisplayAttack {
         private final List<BlockDisplayHandle> allBlocks = new ArrayList<>();
         private boolean lunged = false;
+        // Cached spawn-time lunge direction.
+        private double cachedDirX = 0, cachedDirZ = -1;
 
         public PandaSit(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("panda_sit", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
@@ -972,6 +988,17 @@ public final class FluffyBlockDisplay2 {
 
             DisplayBuilder.playSound(center, Sound.ENTITY_PANDA_AMBIENT, 1.0f, 0.8f);
             w.spawnParticle(Particle.ENCHANT, center.clone().add(0, 1.5, 0), 25, 1.5, 1.5, 1.5, 0.5);
+
+            // Cache spawn-time lunge direction (does not chase live).
+            Player initialTarget = findNearestPlayer(center, 30.0);
+            if (initialTarget != null) {
+                Vector dir = initialTarget.getLocation().toVector().subtract(center.toVector());
+                if (dir.lengthSquared() > 0.01) {
+                    dir = dir.normalize();
+                    cachedDirX = dir.getX();
+                    cachedDirZ = dir.getZ();
+                }
+            }
         }
 
         @Override
@@ -989,16 +1016,10 @@ public final class FluffyBlockDisplay2 {
                 DisplayBuilder.playSound(c, Sound.ENTITY_PANDA_CANT_BREED, 1.2f, 0.7f);
             }
 
-            // LUNGE at tick 40 — translate forward 3 blocks toward player
+            // LUNGE at tick 40 — translate forward 3 blocks along cached direction.
             if (tick == 40 && !lunged) {
                 lunged = true;
-                Player target = findNearestPlayer(c, 30.0);
-                Vector dir;
-                if (target != null) {
-                    dir = target.getLocation().toVector().subtract(c.toVector()).normalize();
-                } else {
-                    dir = new Vector(0, 0, -1);
-                }
+                Vector dir = new Vector(cachedDirX, 0, cachedDirZ);
                 float dx = (float) (dir.getX() * 3.0);
                 float dz = (float) (dir.getZ() * 3.0);
                 for (BlockDisplayHandle h : allBlocks) {
@@ -1356,6 +1377,8 @@ public final class FluffyBlockDisplay2 {
         private boolean flopped = false;
         private float waddleAngle = 0f;
         private float walkX = 0, walkZ = 0;
+        // Cached spawn-time waddle/flop direction.
+        private double cachedDirX = 0, cachedDirZ = -1;
 
         public WaddlePenguin(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("waddle_penguin", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
@@ -1448,6 +1471,17 @@ public final class FluffyBlockDisplay2 {
 
             DisplayBuilder.playSound(center, Sound.ENTITY_PANDA_CANT_BREED, 1.0f, 1.5f);
             w.spawnParticle(Particle.SNOWFLAKE, center.clone().add(0, 1.5, 0), 20, 1.5, 1.5, 1.5, 0.05);
+
+            // Cache spawn-time direction (waddle and flop both use this fixed dir).
+            Player initialTarget = findNearestPlayer(center, 30.0);
+            if (initialTarget != null) {
+                Vector dir = initialTarget.getLocation().toVector().subtract(center.toVector());
+                if (dir.lengthSquared() > 0.01) {
+                    dir = dir.normalize();
+                    cachedDirX = dir.getX();
+                    cachedDirZ = dir.getZ();
+                }
+            }
         }
 
         @Override
@@ -1455,14 +1489,11 @@ public final class FluffyBlockDisplay2 {
             Location c = getCenter();
             if (c == null || c.getWorld() == null) return;
 
-            // Waddle 0-60: oscillate Z-axis ±8°, slowly approach player at 0.04/tick
+            // Waddle 0-60: oscillate Z-axis ±8°, slowly travel along cached direction.
             if (tick < 60) {
                 if (tick % 5 == 0) {
                     waddleAngle = (float) (Math.toRadians(8) * Math.sin(tick * 0.3));
-                    Player target = findNearestPlayer(c, 25.0);
-                    Vector dir = (target != null)
-                            ? target.getLocation().toVector().subtract(c.toVector()).normalize()
-                            : new Vector(0, 0, -1);
+                    Vector dir = new Vector(cachedDirX, 0, cachedDirZ);
                     walkX += dir.getX() * 0.2;
                     walkZ += dir.getZ() * 0.2;
                     for (BlockDisplayHandle h : allBlocks) {
@@ -1484,13 +1515,10 @@ public final class FluffyBlockDisplay2 {
                 }
             }
 
-            // BELLY-FLOP at tick 60
+            // BELLY-FLOP at tick 60 — uses cached spawn-time direction.
             if (tick == 60 && !flopped) {
                 flopped = true;
-                Player target = findNearestPlayer(c, 30.0);
-                Vector dir = (target != null)
-                        ? target.getLocation().toVector().subtract(c.toVector()).normalize()
-                        : new Vector(0, 0, -1);
+                Vector dir = new Vector(cachedDirX, 0, cachedDirZ);
                 float dx = (float) (dir.getX() * 4.0);
                 float dz = (float) (dir.getZ() * 4.0);
                 float flopAngle = (float) Math.toRadians(90);
@@ -1618,28 +1646,7 @@ public final class FluffyBlockDisplay2 {
                         ));
                     }
                 }
-                // Track player slowly
-                if (tick % 5 == 0) {
-                    Player target = findNearestPlayer(c, 30.0);
-                    if (target != null) {
-                        Vector dir = target.getLocation().toVector().subtract(c.toVector());
-                        trackX += dir.getX() * 0.05;
-                        trackZ += dir.getZ() * 0.05;
-                        for (BlockDisplayHandle h : body) {
-                            BlockDisplay e = h.entity();
-                            Transformation t = e.getTransformation();
-                            Vector3f cur = t.getTranslation();
-                            e.setInterpolationDuration(5);
-                            e.setInterpolationDelay(0);
-                            e.setTransformation(new Transformation(
-                                    new Vector3f(trackX - 0.5f, cur.y(), trackZ - 0.5f + (cur.z() + 0.5f)),
-                                    t.getLeftRotation(),
-                                    t.getScale(),
-                                    t.getRightRotation()
-                            ));
-                        }
-                    }
-                }
+                // Setpiece hover: stays at spawn location (no per-tick player tracking).
                 // Bubble trail during hover
                 if (tick % 4 == 0) {
                     c.getWorld().spawnParticle(Particle.BUBBLE, c.clone().add(trackX, 6, trackZ), 4, 0.5, 0.3, 0.5, 0.02);

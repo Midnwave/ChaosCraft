@@ -773,7 +773,8 @@ public final class FluffyEnvironmental {
             config.setDamageDelayTicks(20);
             config.setDurationTicks(360);
             config.setCooldownTicks(360);
-            config.setTracksPlayer(true);
+            // Setpiece tornado: stays at spawn (tracksPlayer disabled).
+            config.setTracksPlayer(false);
         }
 
         @Override protected void onSpawn(Location c) {
@@ -822,22 +823,7 @@ public final class FluffyEnvironmental {
             Location c = getCenter(); if (c == null || c.getWorld() == null) return;
             World w = c.getWorld();
 
-            // Track the closest player slowly
-            Player closest = null; double closestD2 = Double.MAX_VALUE;
-            for (Player p : w.getPlayers()) {
-                if (p.getGameMode() != GameMode.SURVIVAL || p.isInvulnerable()) continue;
-                double d2 = p.getLocation().distanceSquared(c);
-                if (d2 < closestD2) { closestD2 = d2; closest = p; }
-            }
-            if (closest != null) {
-                double dx = closest.getLocation().getX() - (c.getX() + offX);
-                double dz = closest.getLocation().getZ() - (c.getZ() + offZ);
-                double dist = Math.sqrt(dx * dx + dz * dz);
-                if (dist > 0.1) {
-                    offX += (dx / dist) * 0.06;
-                    offZ += (dz / dist) * 0.06;
-                }
-            }
+            // Setpiece tornado: stays at spawn (no per-tick player tracking).
 
             // Spin feathers in vortex
             for (int i = 0; i < feathers.size(); i++) {
