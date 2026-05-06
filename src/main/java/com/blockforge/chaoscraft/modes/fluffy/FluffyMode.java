@@ -160,7 +160,7 @@ public class FluffyMode extends AbstractMode {
             try {
                 var cfg = atk.getConfig();
                 if (cfg.getType() == AttackType.MODEL_ENGINE
-                        && !"butterfly_swarm_flutter".equals(cfg.getId())) {
+                        && !"butterfly_swarm_flutter".equals(cfg.getAttackId())) {
                     cfg.setTracksPlayer(false);
                     cfg.setDamage(0.0);
                     cfg.setImpactDamage(0.0);
