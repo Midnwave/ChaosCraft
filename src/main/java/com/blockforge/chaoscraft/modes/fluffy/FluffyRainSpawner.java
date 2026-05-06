@@ -127,11 +127,23 @@ public class FluffyRainSpawner {
         int dropY = world.getHighestBlockYAt(target.getBlockX(), target.getBlockZ()) + config.getRainDropHeight();
         Location spawn = new Location(world, target.getX() + 0.5, dropY, target.getZ() + 0.5);
 
-        EntityType type = entry.resolveEntityType();
-        if (type == null) return;
-
         try {
-            Entity ent = world.spawnEntity(spawn, type);
+            Entity ent;
+            // Use MobSpawnService for both vanilla AND mythicmobs entries — that
+            // service knows how to invoke MythicMobs' API via reflection so MM
+            // mobs spawn with their template (skills, ME model, AI overrides),
+            // not as a bare vanilla shell.
+            if (plugin.getMobSpawnService() != null) {
+                ent = plugin.getMobSpawnService().spawnFromEntry(entry, spawn);
+            } else {
+                EntityType type = entry.resolveEntityType();
+                if (type == null) return;
+                ent = world.spawnEntity(spawn, type);
+            }
+            if (ent == null) {
+                plugin.debug("[FluffyRain] Spawn returned null for " + entry.getId());
+                return;
+            }
             if (!(ent instanceof LivingEntity le)) {
                 ent.remove();
                 return;

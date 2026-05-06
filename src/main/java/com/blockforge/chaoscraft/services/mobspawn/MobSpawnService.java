@@ -228,6 +228,15 @@ public class MobSpawnService implements Listener {
     // Spawning logic
     // ========================
 
+    /**
+     * Public spawn entry point for callers outside the universal session system
+     * (e.g. FluffyRainSpawner). Branches on entry type and spawns accordingly.
+     * Returns the spawned Bukkit entity, or null on failure.
+     */
+    public Entity spawnFromEntry(MobSpawnEntry entry, Location location) {
+        return spawnMob(entry, location);
+    }
+
     private Entity spawnMob(MobSpawnEntry entry, Location location) {
         switch (entry.getType()) {
             case MYTHICMOBS -> {
