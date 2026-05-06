@@ -39,6 +39,7 @@ Fluffy_NogSquirrel-Brown:
     NoAI: false
     Collidable: true
     Persistent: false
+    Scale: 0.15
   Tags:
   - fluffy:managed
   - fluffy:type:fluffy_squirrel
@@ -67,6 +68,7 @@ Fluffy_NogSquirrel-Gray:
     NoAI: false
     Collidable: true
     Persistent: false
+    Scale: 0.15
   Tags:
   - fluffy:managed
   - fluffy:type:fluffy_squirrel
@@ -95,6 +97,7 @@ Fluffy_NogSquirrel-Red:
     NoAI: false
     Collidable: true
     Persistent: false
+    Scale: 0.15
   Tags:
   - fluffy:managed
   - fluffy:type:fluffy_squirrel

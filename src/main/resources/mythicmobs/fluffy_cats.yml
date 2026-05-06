@@ -38,6 +38,7 @@ Fluffy_NocsyCat-Munchkin:
     NoAI: false
     Collidable: true
     Persistent: false
+    Scale: 0.4
   Tags:
   - fluffy:managed
   - fluffy:type:fluffy_cat
@@ -66,6 +67,7 @@ Fluffy_NocsyCat-Bombay:
     NoAI: false
     Collidable: true
     Persistent: false
+    Scale: 0.4
   Tags:
   - fluffy:managed
   - fluffy:type:fluffy_cat
@@ -94,6 +96,7 @@ Fluffy_NocsyCat-Siamese:
     NoAI: false
     Collidable: true
     Persistent: false
+    Scale: 0.4
   Tags:
   - fluffy:managed
   - fluffy:type:fluffy_cat
@@ -122,6 +125,7 @@ Fluffy_NocsyCat-ScottishFold:
     NoAI: false
     Collidable: true
     Persistent: false
+    Scale: 0.4
   Tags:
   - fluffy:managed
   - fluffy:type:fluffy_cat
@@ -150,6 +154,7 @@ Fluffy_NocsyCat-MaineCoon:
     NoAI: false
     Collidable: true
     Persistent: false
+    Scale: 0.4
   Tags:
   - fluffy:managed
   - fluffy:type:fluffy_cat
@@ -178,6 +183,7 @@ Fluffy_NocsyCat-European:
     NoAI: false
     Collidable: true
     Persistent: false
+    Scale: 0.4
   Tags:
   - fluffy:managed
   - fluffy:type:fluffy_cat
@@ -206,6 +212,7 @@ Fluffy_NocsyCat-Fallen:
     NoAI: false
     Collidable: true
     Persistent: false
+    Scale: 0.4
   Tags:
   - fluffy:managed
   - fluffy:type:fluffy_cat

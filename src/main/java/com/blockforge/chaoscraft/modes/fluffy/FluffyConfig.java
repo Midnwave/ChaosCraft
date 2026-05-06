@@ -394,6 +394,69 @@ public class FluffyConfig {
         return m;
     }
 
+    /**
+     * Build the equal-tier-weighted default pool for the mob-spawning ground
+     * spawner. Each TIER (squirrels / cats / dogs / vanilla) gets ≈25% of
+     * spawns regardless of how many entries are in it. So when a ground
+     * spawn fires, players see variety across types — not dog-dominated just
+     * because there are 47 dog entries.
+     *
+     * Tier balance:
+     *   Squirrels  3 × weight 15 = 45  (≈ 25%)
+     *   Cats       7 × weight 7  = 49  (≈ 27%)
+     *   Dogs      47 × weight 1  = 47  (≈ 26%)
+     *   Vanilla    6 × weight 7  = 42  (≈ 23%)
+     */
+    private List<MobSpawnConfig.MobSpawnDefaultEntry> buildDefaultMobSpawnEntries() {
+        List<MobSpawnConfig.MobSpawnDefaultEntry> list = new ArrayList<>();
+
+        // Squirrels — weight 15 each
+        for (String id : new String[]{
+                "Fluffy_NogSquirrel-Brown", "Fluffy_NogSquirrel-Gray", "Fluffy_NogSquirrel-Red"}) {
+            list.add(new MobSpawnConfig.MobSpawnDefaultEntry(id, "mythicmobs", 15, 1, 1, 1.0, 1.0));
+        }
+
+        // Cats — weight 7 each (Fallen too — it's already tougher via the MM YAML)
+        for (String id : new String[]{
+                "Fluffy_NocsyCat-Munchkin", "Fluffy_NocsyCat-Bombay", "Fluffy_NocsyCat-Siamese",
+                "Fluffy_NocsyCat-ScottishFold", "Fluffy_NocsyCat-MaineCoon", "Fluffy_NocsyCat-European",
+                "Fluffy_NocsyCat-Fallen"}) {
+            list.add(new MobSpawnConfig.MobSpawnDefaultEntry(id, "mythicmobs", 7, 1, 1, 1.0, 1.0));
+        }
+
+        // Dogs (47 variants, one per breed) — weight 1 each
+        for (String id : new String[]{
+                // Small (14)
+                "DogBeagleTan", "DogBasenjiBlack", "DogBostonTerrierSeal", "DogBullTerrierBlack",
+                "DogCockerSpanielBlack", "DogDachshundBlackTan", "DogCkCharlesSpanielBlenheim",
+                "DogItalianGreyhoundBlue", "DogMiniPinscherRed", "DogPugFawn",
+                "DogRussellTerrierTriBrown", "DogScottishTerrierBlack", "DogShibaInuRed", "DogWhippetBlue",
+                // Medium (28)
+                "DogAiredaleTerrierMedium", "DogAustralianShepherdBlack", "DogAmericanFoxhoundMedium",
+                "DogBloodhoundRed", "DogBorderCollieBlack", "DogBoxerMedium", "DogBulldogFawn",
+                "DogCardiganCorgiSable", "DogCollieSable", "DogDalmatianWhite", "DogDobermanBlack",
+                "DogGermanShepherdStandard", "DogGermanSpitzRed", "DogGoldenRetrieverMedium",
+                "DogGreyhoundWhite", "DogHuskyGray", "DogIrishSetterMedium", "DogLabRetrieverYellow",
+                "DogMudiBrown", "DogNorwegianElkhoundMedium", "DogPembrokeCorgiRed", "DogPitBullBrown",
+                "DogPoodleBlack", "DogRedboneCoonhoundRed", "DogRottweilerMahogany",
+                "DogSchnauzerPepperSalt", "DogShetlandSheepdogSable", "DogTreeWalkHoundTricolor",
+                // Large (5)
+                "DogAlaskanMalamuteGray", "DogBerneseMountainDogTan", "DogGreatDaneFawn",
+                "DogMastiffFawn", "DogSaintBernardBrown"}) {
+            list.add(new MobSpawnConfig.MobSpawnDefaultEntry(id, "mythicmobs", 1, 1, 1, 1.0, 1.0));
+        }
+
+        // Vanilla — weight 7 each, 1.5×/1.5× HP/damage so they aren't trivially weak
+        list.add(new MobSpawnConfig.MobSpawnDefaultEntry("CAT", "vanilla", 7, 1, 1, 1.5, 1.5));
+        list.add(new MobSpawnConfig.MobSpawnDefaultEntry("WOLF", "vanilla", 7, 1, 1, 2.0, 1.8));
+        list.add(new MobSpawnConfig.MobSpawnDefaultEntry("RABBIT", "vanilla", 7, 1, 1, 1.5, 1.5));
+        list.add(new MobSpawnConfig.MobSpawnDefaultEntry("OCELOT", "vanilla", 7, 1, 1, 1.7, 1.6));
+        list.add(new MobSpawnConfig.MobSpawnDefaultEntry("FOX", "vanilla", 7, 1, 1, 1.7, 1.7));
+        list.add(new MobSpawnConfig.MobSpawnDefaultEntry("PARROT", "vanilla", 7, 1, 1, 1.5, 1.5));
+
+        return list;
+    }
+
     /** Returns a MobSpawnConfig backed by this mode's YAML. */
     public MobSpawnConfig getMobSpawnConfig() {
         return new MobSpawnConfig(config);
@@ -689,8 +752,12 @@ public class FluffyConfig {
                 "Spawn weight for ModelEngine VFX attacks (20 cute/fluffy bbmodel skills).",
                 "Set to 0.0 to disable ME attacks entirely."));
 
-        // Mob spawning section
-        MobSpawnConfig.writeDefaults(defaults, new ArrayList<>());
+        // Mob spawning section — populated with equal-chance-per-type weights.
+        // Squirrels (3) × 15 ≈ 25%, cats (7) × 7 ≈ 27%, dogs (47) × 1 ≈ 26%,
+        // vanilla (6) × 7 ≈ 23%. So when the user enables ground spawning,
+        // they get balanced variety instead of dogs dominating just because
+        // there are 47 of them.
+        MobSpawnConfig.writeDefaults(defaults, buildDefaultMobSpawnEntries());
 
         // Mob AI
         defaults.set("mob-ai.enabled", true);

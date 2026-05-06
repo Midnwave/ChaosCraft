@@ -149,12 +149,13 @@ public class FluffyRainSpawner {
                 return;
             }
             le.setInvulnerable(true);
-            le.setAI(false);
             le.setSilent(true);
-            // Paper bug: setAI(false) on Mob entities (Wolf/MM-spawned dogs+cats+squirrels)
-            // disables gravity along with pathfinding, so they freeze in mid-air. Force
-            // gravity back on so they actually fall.
             le.setGravity(true);
+            // Note: NOT calling setAI(false). Paper has a bug where setAI(false)
+            // on Mob entities also breaks gravity application — MM-spawned wolves
+            // get stuck mid-air. Leaving AI on means they may try to pathfind
+            // during the fall, but pollLandings() teleport-forces them downward
+            // each poll cycle so they always reach the ground.
             le.addScoreboardTag("fluffy:managed");
             le.addScoreboardTag("fluffy:falling");
 
@@ -248,12 +249,21 @@ public class FluffyRainSpawner {
                 iter.remove();
                 continue;
             }
-            // Active fall enforcement — reinforce downward velocity each poll
-            // cycle so MM mobs can't hover even if gravity flickers off.
+            // Active fall enforcement — teleport the mob downward each poll
+            // cycle (~1.2 blocks every 3 ticks) so MM mobs always reach ground
+            // even when their AI/gravity stalls in mid-air. Velocity nudge first,
+            // teleport as the brute-force fallback.
             try {
                 Vector v = le.getVelocity();
                 if (v.getY() > -0.5) {
                     le.setVelocity(new Vector(v.getX(), -0.8, v.getZ()));
+                }
+                Location now = le.getLocation();
+                double targetY = Math.max(now.getY() - 1.2, groundY + 0.5);
+                if (Math.abs(now.getY() - targetY) > 0.05) {
+                    Location next = new Location(now.getWorld(), now.getX(), targetY, now.getZ(),
+                            now.getYaw(), now.getPitch());
+                    le.teleport(next);
                 }
             } catch (Throwable ignored) {}
         }
