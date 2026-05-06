@@ -773,8 +773,8 @@ public final class FluffyEnvironmental {
             config.setDamageDelayTicks(20);
             config.setDurationTicks(360);
             config.setCooldownTicks(360);
-            // Setpiece tornado: stays at spawn (tracksPlayer disabled).
-            config.setTracksPlayer(false);
+            // Tornado intentionally tracks the player — chase mechanic.
+            config.setTracksPlayer(true);
         }
 
         @Override protected void onSpawn(Location c) {

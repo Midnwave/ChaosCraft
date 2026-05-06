@@ -97,7 +97,7 @@ public class FluffyConfig {
         // ── Scheduler ───────────────────────────────────────────────────
         if (!config.contains("scheduler.base-spawn-interval-ticks")) { config.set("scheduler.base-spawn-interval-ticks", 25); needsSave = true; }
         if (!config.contains("scheduler.spawn-offset-radius")) { config.set("scheduler.spawn-offset-radius", 8.0); needsSave = true; }
-        if (!config.contains("scheduler.max-events-per-player")) { config.set("scheduler.max-events-per-player", 3); needsSave = true; }
+        if (!config.contains("scheduler.max-events-per-player")) { config.set("scheduler.max-events-per-player", 5); needsSave = true; }
         if (!config.contains("scheduler.type-weight-block-display")) { config.set("scheduler.type-weight-block-display", 1.0); needsSave = true; }
         if (!config.contains("scheduler.type-weight-environmental")) { config.set("scheduler.type-weight-environmental", 1.0); needsSave = true; }
         if (!config.contains("scheduler.type-weight-model-engine")) { config.set("scheduler.type-weight-model-engine", 1.0); needsSave = true; }
@@ -674,7 +674,7 @@ public class FluffyConfig {
         defaults.set("scheduler.spawn-offset-radius", 8.0);
         defaults.setComments("scheduler.spawn-offset-radius", List.of(
                 "Max distance from the target player that attacks can spawn."));
-        defaults.set("scheduler.max-events-per-player", 3);
+        defaults.set("scheduler.max-events-per-player", 5);
         defaults.setComments("scheduler.max-events-per-player", List.of(
                 "Maximum simultaneous active attacks per player."));
         defaults.set("scheduler.type-weight-block-display", 1.0);
