@@ -237,6 +237,15 @@ public class FluffyMode extends AbstractMode {
         rainSpawner.tick();
         worldEffects.tick();
 
+        // Decorative animation sweep — animates every cc:fluffy ItemDisplay /
+        // BlockDisplay that was spawned with a long fade-in interpolation
+        // (>= 30 ticks, the "cosmetic" threshold) so nothing reads as static.
+        // Active attack entities use shorter interpolation and are skipped.
+        World fworld = getFluffyWorld();
+        if (fworld != null) {
+            FluffyDecor.SWEEPER.tickWorld(fworld, tickCounter);
+        }
+
         // Ambient sounds
         if (fluffyConfig.isAmbientSoundsEnabled() && tickCounter >= ambientSoundNextTick) {
             playRandomAmbient();
@@ -257,6 +266,7 @@ public class FluffyMode extends AbstractMode {
         mobAI.stop();
         rainSpawner.stop();
         worldEffects.stop();
+        FluffyDecor.SWEEPER.clear();
         plugin.getMusicManager().stopAll();
 
         if (endTaskId != -1) {

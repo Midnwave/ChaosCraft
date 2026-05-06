@@ -84,7 +84,7 @@ public final class FluffyEnvironmental4 {
                     double a = Math.PI * 2 * k / 4;
                     Location p = c.clone().add(spiralX[s] + Math.cos(a) * 0.8, 0.4 + k * 0.3, spiralZ[s] + Math.sin(a) * 0.8);
                     ItemDisplayHandle h = displayBuilder.spawnItem(p, new ItemStack(Material.SUGAR));
-                    h.scale(0.4f, 0.4f, 0.4f).glow(255, 250, 250).interpolation(40, 0);
+                    h.scale(0.6f, 0.6f, 0.6f).glow(255, 250, 250).interpolation(40, 0);
                     spawnedEntities.add(h.entity());
                 }
                 for (int k = 0; k < 4; k++) {
@@ -284,7 +284,7 @@ public final class FluffyEnvironmental4 {
                 double t = i / 5.0;
                 Location pp = c.clone().add(posX + dirX * t * 18, 0.3, posZ + dirZ * t * 18);
                 ItemDisplayHandle h = displayBuilder.spawnItem(pp, new ItemStack(Material.IRON_NUGGET));
-                h.scale(0.45f, 0.45f, 0.45f).glow(180, 180, 200).interpolation(40, 0);
+                h.scale(0.65f, 0.65f, 0.65f).glow(180, 180, 200).interpolation(40, 0);
                 spawnedEntities.add(h.entity());
             }
             for (int i = 0; i < 4; i++) {
@@ -384,7 +384,7 @@ public final class FluffyEnvironmental4 {
                 double t = i / 5.0;
                 Location pp = c.clone().add(startX + (endX - startX) * t, 0.3, startZ + (endZ - startZ) * t);
                 ItemDisplayHandle h = displayBuilder.spawnItem(pp, new ItemStack(Material.BONE_MEAL));
-                h.scale(0.45f, 0.45f, 0.45f).glow(255, 250, 240).interpolation(40, 0);
+                h.scale(0.65f, 0.65f, 0.65f).glow(255, 250, 240).interpolation(40, 0);
                 spawnedEntities.add(h.entity());
             }
             for (int i = 0; i < 4; i++) {
@@ -601,7 +601,7 @@ public final class FluffyEnvironmental4 {
                 double a = Math.PI * 2 * i / 8;
                 Location p = c.clone().add(Math.cos(a) * 5, 0.3, Math.sin(a) * 5);
                 ItemDisplayHandle h = displayBuilder.spawnItem(p, new ItemStack(Material.SUGAR));
-                h.scale(0.4f, 0.4f, 0.4f).glow(255, 250, 240).interpolation(40, 0);
+                h.scale(0.6f, 0.6f, 0.6f).glow(255, 250, 240).interpolation(40, 0);
                 spawnedEntities.add(h.entity());
             }
             for (int i = 0; i < 6; i++) {
@@ -1107,7 +1107,7 @@ public final class FluffyEnvironmental4 {
                 double a = Math.PI * 2 * i / 6 + Math.PI / 6;
                 Location p = c.clone().add(Math.cos(a) * 0.8, 1.2, Math.sin(a) * 0.8);
                 ItemDisplayHandle h = displayBuilder.spawnItem(p, new ItemStack(Material.STRING));
-                h.scale(0.4f, 0.4f, 0.4f).glow(180, 160, 140).interpolation(40, 0);
+                h.scale(0.6f, 0.6f, 0.6f).glow(180, 160, 140).interpolation(40, 0);
                 spawnedEntities.add(h.entity());
             }
             for (int i = 0; i < 4; i++) {
