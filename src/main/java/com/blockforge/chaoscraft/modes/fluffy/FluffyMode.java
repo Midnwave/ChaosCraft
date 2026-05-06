@@ -119,7 +119,10 @@ public class FluffyMode extends AbstractMode {
                 int tickInterval = cfg.getTicksBetweenDamage();
                 boolean impactOnly = cfg.isDamageOnImpactOnly();
 
-                int newDuration = (int) Math.round(currentDuration * 2.0);
+                // Keep base duration (no 2x extension) but still enforce the
+                // 10-damage-event floor for constant-damage attacks so they hit
+                // multiple times before despawning.
+                int newDuration = currentDuration;
                 if (!impactOnly && tickInterval > 0) {
                     int floor = tickInterval * 10;
                     if (newDuration < floor) {
