@@ -152,6 +152,20 @@ public class FluffyMode extends AbstractMode {
                     }
                 }
             } catch (Throwable ignored) {}
+
+            // ME attack pacification — only butterfly_swarm_flutter (the "bee")
+            // stays as a damaging chase attack. All other ME attacks become
+            // stationary cosmetic setpieces (no tracking, no damage). User
+            // feedback: nonstop following ME damage was unfair.
+            try {
+                var cfg = atk.getConfig();
+                if (cfg.getType() == AttackType.MODEL_ENGINE
+                        && !"butterfly_swarm_flutter".equals(cfg.getId())) {
+                    cfg.setTracksPlayer(false);
+                    cfg.setDamage(0.0);
+                    cfg.setImpactDamage(0.0);
+                }
+            } catch (Throwable ignored) {}
         }
         plugin.getLogger().info("[Fluffy] Applied difficulty x" + diffMult
                 + " to " + scaledDamage + " attacks; extended duration on "
