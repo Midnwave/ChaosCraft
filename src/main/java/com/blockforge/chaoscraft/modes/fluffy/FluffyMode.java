@@ -102,6 +102,7 @@ public class FluffyMode extends AbstractMode {
         int extendedDuration = 0;
         int flooredByTickFloor = 0;
         int impactOnlySkipped = 0;
+        int meScaleSet = 0;
         for (var atk : attackRegistry.getAll()) {
             try {
                 var cfg = atk.getConfig();
@@ -133,12 +134,27 @@ public class FluffyMode extends AbstractMode {
                     extendedDuration++;
                 }
             } catch (Throwable ignored) {}
+
+            // Force ModelEngine scale = damage radius for ME attacks (auto-scale
+            // mode is broken on this server's ME version, so we bake the numeric
+            // value in directly so model size matches the area-of-effect).
+            try {
+                var cfg = atk.getConfig();
+                if (cfg.getType() == AttackType.MODEL_ENGINE) {
+                    double radius = cfg.getDamageRadius();
+                    if (radius > 0) {
+                        cfg.setModelengineScale(String.valueOf(radius));
+                        meScaleSet++;
+                    }
+                }
+            } catch (Throwable ignored) {}
         }
         plugin.getLogger().info("[Fluffy] Applied difficulty x" + diffMult
                 + " to " + scaledDamage + " attacks; extended duration on "
                 + extendedDuration + " attacks (" + flooredByTickFloor
                 + " bumped to 10-tick-damage floor, " + impactOnlySkipped
-                + " impact-only attacks not floored).");
+                + " impact-only attacks not floored); ME scale forced = radius on "
+                + meScaleSet + " ModelEngine attacks.");
     }
 
     // ========================
