@@ -51,12 +51,12 @@ public final class FluffyEnvironmental5 {
 
         public CatnapMiasma(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("catnap_miasma", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
-            config.setDamage(6.0); // 6 hearts
-            config.setDamageRadius(7.0);
-            config.setTicksBetweenDamage(25);
-            config.setDamageDelayTicks(20);
+            config.setDamage(90.0); // 6 hearts
+            config.setDamageRadius(8.0);
+            config.setTicksBetweenDamage(12);
+            config.setDamageDelayTicks(10);
             config.setDurationTicks(420);
-            config.setCooldownTicks(360);
+            config.setCooldownTicks(180);
         }
 
         @Override
@@ -142,12 +142,12 @@ public final class FluffyEnvironmental5 {
 
         public MushroomGas(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("mushroom_gas", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
-            config.setDamage(9.0); // 9 hearts
-            config.setDamageRadius(1.5);
+            config.setDamage(135.0); // 9 hearts
+            config.setDamageRadius(6.0);
             config.setTicksBetweenDamage(10);
-            config.setDamageDelayTicks(15);
+            config.setDamageDelayTicks(7);
             config.setDurationTicks(360);
-            config.setCooldownTicks(320);
+            config.setCooldownTicks(160);
         }
 
         @Override
@@ -279,10 +279,10 @@ public final class FluffyEnvironmental5 {
             config.setDamage(0.0);
             config.setDamageRadius(0.0);
             config.setDamageOnImpactOnly(true);
-            config.setImpactDamage(24.0); // 24 hearts
+            config.setImpactDamage(360.0); // 24 hearts
             config.setImpactRadius(4.5);
             config.setDurationTicks(120);
-            config.setCooldownTicks(280);
+            config.setCooldownTicks(140);
         }
 
         @Override
@@ -434,10 +434,10 @@ public final class FluffyEnvironmental5 {
             config.setDamage(0.0);
             config.setDamageRadius(0.0);
             config.setDamageOnImpactOnly(true);
-            config.setImpactDamage(10.0); // 10 hearts each
+            config.setImpactDamage(150.0); // 10 hearts each
             config.setImpactRadius(0.8);
             config.setDurationTicks(180);
-            config.setCooldownTicks(260);
+            config.setCooldownTicks(130);
         }
 
         @Override
@@ -546,10 +546,10 @@ public final class FluffyEnvironmental5 {
             config.setDamage(0.0);
             config.setDamageRadius(0.0);
             config.setDamageOnImpactOnly(true);
-            config.setImpactDamage(26.0); // 26 hearts
+            config.setImpactDamage(390.0); // 26 hearts
             config.setImpactRadius(5.0);
             config.setDurationTicks(140);
-            config.setCooldownTicks(320);
+            config.setCooldownTicks(160);
         }
 
         @Override
@@ -685,12 +685,12 @@ public final class FluffyEnvironmental5 {
 
         public FurballRoll(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("furball_roll", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
-            config.setDamage(11.0); // 11 hearts
-            config.setDamageRadius(2.0);
+            config.setDamage(165.0); // 11 hearts
+            config.setDamageRadius(6.0);
             config.setTicksBetweenDamage(8);
-            config.setDamageDelayTicks(10);
+            config.setDamageDelayTicks(5);
             config.setDurationTicks(360);
-            config.setCooldownTicks(280);
+            config.setCooldownTicks(140);
             config.setTracksPlayer(false); // we track manually for visuals
         }
 
@@ -833,10 +833,10 @@ public final class FluffyEnvironmental5 {
             config.setDamage(0.0);
             config.setDamageRadius(0.0);
             config.setDamageOnImpactOnly(true);
-            config.setImpactDamage(20.0); // 20 hearts per pair
+            config.setImpactDamage(300.0); // 20 hearts per pair
             config.setImpactRadius(3.5);
             config.setDurationTicks(140);
-            config.setCooldownTicks(300);
+            config.setCooldownTicks(150);
         }
 
         @Override
@@ -976,12 +976,12 @@ public final class FluffyEnvironmental5 {
 
         public PinwheelStorm(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("pinwheel_storm", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
-            config.setDamage(10.0); // 10 hearts
-            config.setDamageRadius(3.0);
+            config.setDamage(150.0); // 10 hearts
+            config.setDamageRadius(6.0);
             config.setTicksBetweenDamage(8);
-            config.setDamageDelayTicks(15);
+            config.setDamageDelayTicks(7);
             config.setDurationTicks(320);
-            config.setCooldownTicks(280);
+            config.setCooldownTicks(140);
         }
 
         @Override
@@ -1095,10 +1095,10 @@ public final class FluffyEnvironmental5 {
             config.setDamage(0.0);
             config.setDamageRadius(0.0);
             config.setDamageOnImpactOnly(true);
-            config.setImpactDamage(10.0); // 10 hearts each
+            config.setImpactDamage(150.0); // 10 hearts each
             config.setImpactRadius(1.2);
             config.setDurationTicks(220);
-            config.setCooldownTicks(300);
+            config.setCooldownTicks(150);
         }
 
         @Override
@@ -1209,15 +1209,15 @@ public final class FluffyEnvironmental5 {
         public CozyChaos(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("cozy_chaos", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
             // Continuous zone damage
-            config.setDamage(7.0); // 7 hearts
-            config.setDamageRadius(7.0);
-            config.setTicksBetweenDamage(20);
-            config.setDamageDelayTicks(20);
+            config.setDamage(105.0); // 7 hearts
+            config.setDamageRadius(8.0);
+            config.setTicksBetweenDamage(12);
+            config.setDamageDelayTicks(10);
             // Cookies fire impact pings on top of constant zone
-            config.setImpactDamage(7.0); // 7 hearts
+            config.setImpactDamage(105.0); // 7 hearts
             config.setImpactRadius(2.5);
             config.setDurationTicks(420);
-            config.setCooldownTicks(380);
+            config.setCooldownTicks(190);
         }
 
         @Override

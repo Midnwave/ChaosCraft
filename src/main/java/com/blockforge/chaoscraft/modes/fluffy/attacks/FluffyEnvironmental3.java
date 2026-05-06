@@ -78,12 +78,12 @@ public final class FluffyEnvironmental3 {
         public RainbowArc(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("rainbow_arc", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
             config.setDamageOnImpactOnly(true);
-            config.setImpactDamage(14.0); // 14 hearts
+            config.setImpactDamage(210.0); // 14 hearts
             config.setImpactRadius(2.0);
             config.setDamage(0.0);
             config.setDamageRadius(0.0);
             config.setDurationTicks(180);
-            config.setCooldownTicks(360);
+            config.setCooldownTicks(180);
         }
 
         @Override protected void onSpawn(Location center) {
@@ -218,12 +218,12 @@ public final class FluffyEnvironmental3 {
         public CatEyeGlare(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("cat_eye_glare", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
             config.setDamageOnImpactOnly(true);
-            config.setImpactDamage(18.0); // 18 hearts
+            config.setImpactDamage(270.0); // 18 hearts
             config.setImpactRadius(1.5);
             config.setDamage(0.0);
             config.setDamageRadius(0.0);
             config.setDurationTicks(160);
-            config.setCooldownTicks(360);
+            config.setCooldownTicks(180);
         }
 
         @Override protected void onSpawn(Location center) {
@@ -351,12 +351,12 @@ public final class FluffyEnvironmental3 {
         public PlushMeteorShower(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("plush_meteor_shower", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
             config.setDamageOnImpactOnly(true);
-            config.setImpactDamage(16.0); // 16 hearts
+            config.setImpactDamage(240.0); // 16 hearts
             config.setImpactRadius(2.0);
             config.setDamage(0.0);
             config.setDamageRadius(0.0);
             config.setDurationTicks(280);
-            config.setCooldownTicks(380);
+            config.setCooldownTicks(190);
         }
 
         @Override protected void onSpawn(Location center) {
@@ -439,12 +439,12 @@ public final class FluffyEnvironmental3 {
 
         public BigPawPrints(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("big_paw_prints", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
-            config.setDamage(9.0); // 9 hearts
-            config.setDamageRadius(2.0);
+            config.setDamage(135.0); // 9 hearts
+            config.setDamageRadius(6.0);
             config.setTicksBetweenDamage(10);
-            config.setDamageDelayTicks(10);
+            config.setDamageDelayTicks(5);
             config.setDurationTicks(220);
-            config.setCooldownTicks(320);
+            config.setCooldownTicks(160);
         }
 
         @Override protected void onSpawn(Location center) {
@@ -561,12 +561,12 @@ public final class FluffyEnvironmental3 {
         public ScentTrail(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("scent_trail", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
             config.setDamageOnImpactOnly(true);
-            config.setImpactDamage(20.0); // 20 hearts
+            config.setImpactDamage(300.0); // 20 hearts
             config.setImpactRadius(4.0);
             config.setDamage(0.0);
             config.setDamageRadius(0.0);
             config.setDurationTicks(180);
-            config.setCooldownTicks(380);
+            config.setCooldownTicks(190);
         }
 
         @Override protected void onSpawn(Location center) {
@@ -695,12 +695,12 @@ public final class FluffyEnvironmental3 {
         public BabyMonsterReveal(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("baby_monster_reveal", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
             config.setDamageOnImpactOnly(true);
-            config.setImpactDamage(22.0); // 22 hearts
+            config.setImpactDamage(330.0); // 22 hearts
             config.setImpactRadius(5.0);
             config.setDamage(0.0);
             config.setDamageRadius(0.0);
             config.setDurationTicks(160);
-            config.setCooldownTicks(420);
+            config.setCooldownTicks(210);
         }
 
         @Override protected void onSpawn(Location center) {
@@ -845,12 +845,12 @@ public final class FluffyEnvironmental3 {
 
         public CuddlePuddle(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("cuddle_puddle", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
-            config.setDamage(9.0); // 9 hearts
-            config.setDamageRadius(3.5);
+            config.setDamage(135.0); // 9 hearts
+            config.setDamageRadius(6.0);
             config.setTicksBetweenDamage(12);
-            config.setDamageDelayTicks(15);
+            config.setDamageDelayTicks(7);
             config.setDurationTicks(260);
-            config.setCooldownTicks(320);
+            config.setCooldownTicks(160);
         }
 
         @Override protected void onSpawn(Location center) {
@@ -966,12 +966,12 @@ public final class FluffyEnvironmental3 {
         public ToyKnifeThrow(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("toy_knife_throw", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
             config.setDamageOnImpactOnly(true);
-            config.setImpactDamage(20.0); // 20 hearts
+            config.setImpactDamage(300.0); // 20 hearts
             config.setImpactRadius(2.0);
             config.setDamage(0.0);
             config.setDamageRadius(0.0);
             config.setDurationTicks(80);
-            config.setCooldownTicks(280);
+            config.setCooldownTicks(140);
         }
 
         @Override protected void onSpawn(Location center) {
@@ -1082,12 +1082,12 @@ public final class FluffyEnvironmental3 {
         public PlushFirework(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("plush_firework", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
             config.setDamageOnImpactOnly(true);
-            config.setImpactDamage(16.0); // 16 hearts
+            config.setImpactDamage(240.0); // 16 hearts
             config.setImpactRadius(2.5);
             config.setDamage(0.0);
             config.setDamageRadius(0.0);
             config.setDurationTicks(180);
-            config.setCooldownTicks(340);
+            config.setCooldownTicks(170);
         }
 
         @Override protected void onSpawn(Location center) {
@@ -1191,12 +1191,12 @@ public final class FluffyEnvironmental3 {
 
         public AngryBeeCloud(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("angry_bee_cloud", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
-            config.setDamage(9.0); // 9 hearts
-            config.setDamageRadius(4.0);
+            config.setDamage(135.0); // 9 hearts
+            config.setDamageRadius(6.0);
             config.setTicksBetweenDamage(8);
-            config.setDamageDelayTicks(10);
+            config.setDamageDelayTicks(5);
             config.setDurationTicks(280);
-            config.setCooldownTicks(360);
+            config.setCooldownTicks(180);
             // Setpiece swarm: stays at spawn (tracksPlayer disabled).
             config.setTracksPlayer(false);
         }

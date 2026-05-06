@@ -90,10 +90,10 @@ public final class FluffyModelEngine {
     public static class PawSlamBoop extends ModelEngineAttack {
         public PawSlamBoop(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("paw_slam_boop", AttackType.MODEL_ENGINE, 1, MODE_PATH));
-            config.setDamage(0); config.setDamageRadius(0);
+            config.setDamage(0.0); config.setDamageRadius(0);
             config.setDamageOnImpactOnly(true);
-            config.setImpactDamage(26.0); config.setImpactRadius(5.5);
-            config.setDurationTicks(80); config.setCooldownTicks(360);
+            config.setImpactDamage(390.0); config.setImpactRadius(5.5);
+            config.setDurationTicks(80); config.setCooldownTicks(180);
         }
         @Override protected String getModelId() { return "paw_slam_boop"; }
         @Override protected double getModelScale() { return 2.0; }
@@ -124,9 +124,10 @@ public final class FluffyModelEngine {
     public static class BunnyBurrowSurprise extends ModelEngineAttack {
         public BunnyBurrowSurprise(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("bunny_burrow_surprise", AttackType.MODEL_ENGINE, 1, MODE_PATH));
-            config.setDamage(8.0); config.setDamageRadius(8.0);
-            config.setTicksBetweenDamage(15); config.setDamageDelayTicks(8);
-            config.setDurationTicks(180); config.setCooldownTicks(280);
+            config.setDamage(120.0); config.setDamageRadius(12.0);
+            config.setModelengineScale("12.0");
+            config.setTicksBetweenDamage(12); config.setDamageDelayTicks(4);
+            config.setDurationTicks(180); config.setCooldownTicks(140);
         }
         @Override protected String getModelId() { return "bunny_burrow_surprise"; }
         @Override protected double getModelScale() { return 1.6; }
@@ -156,10 +157,11 @@ public final class FluffyModelEngine {
     public static class YarnBallTangled extends ModelEngineAttack {
         public YarnBallTangled(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("yarn_ball_tangled", AttackType.MODEL_ENGINE, 1, MODE_PATH));
-            config.setDamage(7.0); config.setDamageRadius(6.5);
-            config.setTicksBetweenDamage(20); config.setDamageDelayTicks(20);
-            config.setDurationTicks(120); config.setCooldownTicks(260);
-            config.setImpactDamage(20.0); config.setImpactRadius(4.0);
+            config.setDamage(105.0); config.setDamageRadius(8.0);
+            config.setModelengineScale("8.0");
+            config.setTicksBetweenDamage(12); config.setDamageDelayTicks(10);
+            config.setDurationTicks(120); config.setCooldownTicks(130);
+            config.setImpactDamage(300.0); config.setImpactRadius(4.0);
         }
         @Override protected String getModelId() { return "yarn_ball_tangled"; }
         @Override protected double getModelScale() { return 1.8; }
@@ -189,9 +191,10 @@ public final class FluffyModelEngine {
     public static class KittyHeadbuttLoveBump extends ModelEngineAttack {
         public KittyHeadbuttLoveBump(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("kitty_headbutt_love_bump", AttackType.MODEL_ENGINE, 1, MODE_PATH));
-            config.setDamage(9.0); config.setDamageRadius(13.0);
-            config.setTicksBetweenDamage(12); config.setDamageDelayTicks(4);
-            config.setDurationTicks(140); config.setCooldownTicks(260);
+            config.setDamage(135.0); config.setDamageRadius(15.0);
+            config.setModelengineScale("15.0");
+            config.setTicksBetweenDamage(12); config.setDamageDelayTicks(2);
+            config.setDurationTicks(140); config.setCooldownTicks(130);
         }
         @Override protected String getModelId() { return "kitty_headbutt_love_bump"; }
         @Override protected double getModelScale() { return 1.6; }
@@ -220,9 +223,10 @@ public final class FluffyModelEngine {
     public static class TeddyHugSqueeze extends ModelEngineAttack {
         public TeddyHugSqueeze(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("teddy_hug_squeeze", AttackType.MODEL_ENGINE, 1, MODE_PATH));
-            config.setDamage(10.0); config.setDamageRadius(7.0);
-            config.setTicksBetweenDamage(15); config.setDamageDelayTicks(10);
-            config.setDurationTicks(160); config.setCooldownTicks(280);
+            config.setDamage(150.0); config.setDamageRadius(8.0);
+            config.setModelengineScale("8.0");
+            config.setTicksBetweenDamage(12); config.setDamageDelayTicks(5);
+            config.setDurationTicks(160); config.setCooldownTicks(140);
         }
         @Override protected String getModelId() { return "teddy_hug_squeeze"; }
         @Override protected double getModelScale() { return 1.5; }
@@ -249,9 +253,10 @@ public final class FluffyModelEngine {
     public static class SakuraPetalBloom extends ModelEngineAttack {
         public SakuraPetalBloom(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("sakura_petal_bloom", AttackType.MODEL_ENGINE, 1, MODE_PATH));
-            config.setDamage(7.0); config.setDamageRadius(9.0);
-            config.setTicksBetweenDamage(10); config.setDamageDelayTicks(4);
-            config.setDurationTicks(120); config.setCooldownTicks(220);
+            config.setDamage(105.0); config.setDamageRadius(12.0);
+            config.setModelengineScale("12.0");
+            config.setTicksBetweenDamage(10); config.setDamageDelayTicks(2);
+            config.setDurationTicks(120); config.setCooldownTicks(110);
         }
         @Override protected String getModelId() { return "sakura_petal_bloom"; }
         @Override protected double getModelScale() { return 1.7; }
@@ -277,9 +282,10 @@ public final class FluffyModelEngine {
     public static class RainbowCrashFullSpectrum extends ModelEngineAttack {
         public RainbowCrashFullSpectrum(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("rainbow_crash_full_spectrum", AttackType.MODEL_ENGINE, 1, MODE_PATH));
-            config.setDamage(11.0); config.setDamageRadius(10.0);
-            config.setTicksBetweenDamage(10); config.setDamageDelayTicks(6);
-            config.setDurationTicks(120); config.setCooldownTicks(260);
+            config.setDamage(165.0); config.setDamageRadius(12.0);
+            config.setModelengineScale("12.0");
+            config.setTicksBetweenDamage(10); config.setDamageDelayTicks(3);
+            config.setDurationTicks(120); config.setCooldownTicks(130);
         }
         @Override protected String getModelId() { return "rainbow_crash_full_spectrum"; }
         @Override protected double getModelScale() { return 1.6; }
@@ -308,11 +314,11 @@ public final class FluffyModelEngine {
     public static class RubberDuckSqueak extends ModelEngineAttack {
         public RubberDuckSqueak(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("rubber_duck_squeak", AttackType.MODEL_ENGINE, 1, MODE_PATH));
-            config.setDamage(0); config.setDamageRadius(0);
+            config.setDamage(0.0); config.setDamageRadius(0);
             config.setDamageOnImpactOnly(true);
-            config.setImpactDamage(22.0); config.setImpactRadius(3.0);
+            config.setImpactDamage(330.0); config.setImpactRadius(3.0);
             config.setTracksPlayer(true);
-            config.setDurationTicks(60); config.setCooldownTicks(220);
+            config.setDurationTicks(60); config.setCooldownTicks(110);
         }
         @Override protected String getModelId() { return "rubber_duck_squeak"; }
         @Override protected double getModelScale() { return 1.5; }
@@ -339,11 +345,11 @@ public final class FluffyModelEngine {
     public static class CandyCannonHyperglycemic extends ModelEngineAttack {
         public CandyCannonHyperglycemic(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("candy_cannon_hyperglycemic", AttackType.MODEL_ENGINE, 1, MODE_PATH));
-            config.setDamage(0); config.setDamageRadius(0);
+            config.setDamage(0.0); config.setDamageRadius(0);
             config.setDamageOnImpactOnly(true);
-            config.setImpactDamage(18.0); config.setImpactRadius(3.5);
+            config.setImpactDamage(270.0); config.setImpactRadius(3.5);
             config.setTracksPlayer(true);
-            config.setDurationTicks(50); config.setCooldownTicks(180);
+            config.setDurationTicks(50); config.setCooldownTicks(90);
         }
         @Override protected String getModelId() { return "candy_cannon_hyperglycemic"; }
         @Override protected double getModelScale() { return 1.4; }
@@ -374,10 +380,11 @@ public final class FluffyModelEngine {
     public static class LaserPointerFixation extends ModelEngineAttack {
         public LaserPointerFixation(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("laser_pointer_fixation", AttackType.MODEL_ENGINE, 1, MODE_PATH));
-            config.setDamage(10.0); config.setDamageRadius(2.0);
-            config.setTicksBetweenDamage(8); config.setDamageDelayTicks(4);
+            config.setDamage(150.0); config.setDamageRadius(6.0);
+            config.setModelengineScale("6.0");
+            config.setTicksBetweenDamage(8); config.setDamageDelayTicks(2);
             config.setTracksPlayer(true);
-            config.setDurationTicks(160); config.setCooldownTicks(240);
+            config.setDurationTicks(160); config.setCooldownTicks(120);
         }
         @Override protected String getModelId() { return "laser_pointer_fixation"; }
         @Override protected double getModelScale() { return 1.0; }
@@ -403,9 +410,10 @@ public final class FluffyModelEngine {
     public static class PlushDragonSummon extends ModelEngineAttack {
         public PlushDragonSummon(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("plush_dragon_summon", AttackType.MODEL_ENGINE, 1, MODE_PATH));
-            config.setDamage(11.0); config.setDamageRadius(5.5);
-            config.setTicksBetweenDamage(14); config.setDamageDelayTicks(20);
-            config.setDurationTicks(220); config.setCooldownTicks(340);
+            config.setDamage(165.0); config.setDamageRadius(8.0);
+            config.setModelengineScale("8.0");
+            config.setTicksBetweenDamage(12); config.setDamageDelayTicks(10);
+            config.setDurationTicks(220); config.setCooldownTicks(170);
         }
         @Override protected String getModelId() { return "plush_dragon_summon"; }
         @Override protected double getModelScale() { return 1.8; }
@@ -432,9 +440,10 @@ public final class FluffyModelEngine {
     public static class TeddyGiantMrCuddles extends ModelEngineAttack {
         public TeddyGiantMrCuddles(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("teddy_giant_mr_cuddles", AttackType.MODEL_ENGINE, 1, MODE_PATH));
-            config.setDamage(13.0); config.setDamageRadius(6.5);
-            config.setTicksBetweenDamage(20); config.setDamageDelayTicks(30);
-            config.setDurationTicks(280); config.setCooldownTicks(380);
+            config.setDamage(195.0); config.setDamageRadius(8.0);
+            config.setModelengineScale("8.0");
+            config.setTicksBetweenDamage(12); config.setDamageDelayTicks(15);
+            config.setDurationTicks(280); config.setCooldownTicks(190);
         }
         @Override protected String getModelId() { return "teddy_giant_mr_cuddles"; }
         @Override protected double getModelScale() { return 2.2; }
@@ -460,11 +469,12 @@ public final class FluffyModelEngine {
     public static class CarouselHorseMerryGo extends ModelEngineAttack {
         public CarouselHorseMerryGo(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("carousel_horse_merry_go", AttackType.MODEL_ENGINE, 1, MODE_PATH));
-            config.setDamage(8.0); config.setDamageRadius(8.0);
-            config.setTicksBetweenDamage(10); config.setDamageDelayTicks(20);
+            config.setDamage(120.0); config.setDamageRadius(12.0);
+            config.setModelengineScale("12.0");
+            config.setTicksBetweenDamage(10); config.setDamageDelayTicks(10);
             // Setpiece: stays at spawn (tracksPlayer disabled).
             config.setTracksPlayer(false);
-            config.setDurationTicks(240); config.setCooldownTicks(320);
+            config.setDurationTicks(240); config.setCooldownTicks(160);
         }
         @Override protected String getModelId() { return "carousel_horse_merry_go"; }
         @Override protected double getModelScale() { return 1.6; }
@@ -491,11 +501,12 @@ public final class FluffyModelEngine {
     public static class CatGoddessNineLives extends ModelEngineAttack {
         public CatGoddessNineLives(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("cat_goddess_nine_lives", AttackType.MODEL_ENGINE, 1, MODE_PATH));
-            config.setDamage(8.0); config.setDamageRadius(9.0);
-            config.setTicksBetweenDamage(10); config.setDamageDelayTicks(15);
+            config.setDamage(120.0); config.setDamageRadius(12.0);
+            config.setModelengineScale("12.0");
+            config.setTicksBetweenDamage(10); config.setDamageDelayTicks(7);
             // Setpiece: stays at spawn (tracksPlayer disabled).
             config.setTracksPlayer(false);
-            config.setDurationTicks(240); config.setCooldownTicks(320);
+            config.setDurationTicks(240); config.setCooldownTicks(160);
         }
         @Override protected String getModelId() { return "cat_goddess_nine_lives"; }
         @Override protected double getModelScale() { return 1.4; }
@@ -523,11 +534,12 @@ public final class FluffyModelEngine {
     public static class RabbitArmyMultiplication extends ModelEngineAttack {
         public RabbitArmyMultiplication(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("rabbit_army_multiplication", AttackType.MODEL_ENGINE, 1, MODE_PATH));
-            config.setDamage(9.0); config.setDamageRadius(7.5);
-            config.setTicksBetweenDamage(12); config.setDamageDelayTicks(20);
+            config.setDamage(135.0); config.setDamageRadius(12.0);
+            config.setModelengineScale("12.0");
+            config.setTicksBetweenDamage(12); config.setDamageDelayTicks(10);
             // Setpiece: stays at spawn (tracksPlayer disabled).
             config.setTracksPlayer(false);
-            config.setDurationTicks(240); config.setCooldownTicks(320);
+            config.setDurationTicks(240); config.setCooldownTicks(160);
         }
         @Override protected String getModelId() { return "rabbit_army_multiplication"; }
         @Override protected double getModelScale() { return 1.5; }
@@ -552,11 +564,12 @@ public final class FluffyModelEngine {
     public static class DuckFlockArmada extends ModelEngineAttack {
         public DuckFlockArmada(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("duck_flock_armada", AttackType.MODEL_ENGINE, 1, MODE_PATH));
-            config.setDamage(9.0); config.setDamageRadius(8.5);
-            config.setTicksBetweenDamage(10); config.setDamageDelayTicks(20);
+            config.setDamage(135.0); config.setDamageRadius(12.0);
+            config.setModelengineScale("12.0");
+            config.setTicksBetweenDamage(10); config.setDamageDelayTicks(10);
             // Setpiece: stays at spawn (tracksPlayer disabled).
             config.setTracksPlayer(false);
-            config.setDurationTicks(220); config.setCooldownTicks(320);
+            config.setDurationTicks(220); config.setCooldownTicks(160);
         }
         @Override protected String getModelId() { return "duck_flock_armada"; }
         @Override protected double getModelScale() { return 1.6; }
@@ -582,9 +595,10 @@ public final class FluffyModelEngine {
     public static class PlushieHydraGoodBoy extends ModelEngineAttack {
         public PlushieHydraGoodBoy(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("plushie_hydra_good_boy", AttackType.MODEL_ENGINE, 1, MODE_PATH));
-            config.setDamage(11.0); config.setDamageRadius(6.5);
-            config.setTicksBetweenDamage(12); config.setDamageDelayTicks(28);
-            config.setDurationTicks(240); config.setCooldownTicks(360);
+            config.setDamage(165.0); config.setDamageRadius(8.0);
+            config.setModelengineScale("8.0");
+            config.setTicksBetweenDamage(12); config.setDamageDelayTicks(14);
+            config.setDurationTicks(240); config.setCooldownTicks(180);
         }
         @Override protected String getModelId() { return "plushie_hydra_good_boy"; }
         @Override protected double getModelScale() { return 1.7; }
@@ -611,10 +625,11 @@ public final class FluffyModelEngine {
     public static class JackInBoxSurprise extends ModelEngineAttack {
         public JackInBoxSurprise(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("jack_in_box_surprise", AttackType.MODEL_ENGINE, 1, MODE_PATH));
-            config.setDamage(8.0); config.setDamageRadius(5.0);
-            config.setTicksBetweenDamage(15); config.setDamageDelayTicks(24);
-            config.setDurationTicks(180); config.setCooldownTicks(280);
-            config.setImpactDamage(22.0); config.setImpactRadius(5.5);
+            config.setDamage(120.0); config.setDamageRadius(8.0);
+            config.setModelengineScale("8.0");
+            config.setTicksBetweenDamage(12); config.setDamageDelayTicks(12);
+            config.setDurationTicks(180); config.setCooldownTicks(140);
+            config.setImpactDamage(330.0); config.setImpactRadius(5.5);
         }
         @Override protected String getModelId() { return "jack_in_box_surprise"; }
         @Override protected double getModelScale() { return 1.5; }
@@ -643,11 +658,12 @@ public final class FluffyModelEngine {
     public static class ButterflySwarmFlutter extends ModelEngineAttack {
         public ButterflySwarmFlutter(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("butterfly_swarm_flutter", AttackType.MODEL_ENGINE, 1, MODE_PATH));
-            config.setDamage(7.0); config.setDamageRadius(9.0);
-            config.setTicksBetweenDamage(12); config.setDamageDelayTicks(15);
+            config.setDamage(105.0); config.setDamageRadius(12.0);
+            config.setModelengineScale("12.0");
+            config.setTicksBetweenDamage(12); config.setDamageDelayTicks(7);
             // Setpiece: stays at spawn (tracksPlayer disabled).
             config.setTracksPlayer(false);
-            config.setDurationTicks(240); config.setCooldownTicks(300);
+            config.setDurationTicks(240); config.setCooldownTicks(150);
         }
         @Override protected String getModelId() { return "butterfly_swarm_flutter"; }
         @Override protected double getModelScale() { return 1.4; }
@@ -672,12 +688,13 @@ public final class FluffyModelEngine {
     public static class CandyPlanetSugarRush extends ModelEngineAttack {
         public CandyPlanetSugarRush(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("candy_planet_sugar_rush", AttackType.MODEL_ENGINE, 1, MODE_PATH));
-            config.setDamage(10.0); config.setDamageRadius(13.0);
-            config.setTicksBetweenDamage(8); config.setDamageDelayTicks(40);
+            config.setDamage(150.0); config.setDamageRadius(15.0);
+            config.setModelengineScale("15.0");
+            config.setTicksBetweenDamage(8); config.setDamageDelayTicks(20);
             // Setpiece: stays at spawn (tracksPlayer disabled).
             config.setTracksPlayer(false);
             config.setChance(0.4); // ultimate — rare
-            config.setDurationTicks(360); config.setCooldownTicks(600);
+            config.setDurationTicks(360); config.setCooldownTicks(300);
         }
         @Override protected String getModelId() { return "candy_planet_sugar_rush"; }
         @Override protected double getModelScale() { return 1.8; }

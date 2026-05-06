@@ -90,12 +90,12 @@ public final class FluffyBlockDisplay2 {
 
         public GiantOwlForm(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("giant_owl_form", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
-            config.setDamage(11.0);
-            config.setDamageRadius(3.5);
-            config.setTicksBetweenDamage(15);
-            config.setDamageDelayTicks(25);
+            config.setDamage(165.0);
+            config.setDamageRadius(6.0);
+            config.setTicksBetweenDamage(12);
+            config.setDamageDelayTicks(12);
             config.setDurationTicks(360);
-            config.setCooldownTicks(260);
+            config.setCooldownTicks(130);
         }
 
         @Override
@@ -294,11 +294,11 @@ public final class FluffyBlockDisplay2 {
 
         public FluffySerpent(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("fluffy_serpent", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
-            config.setDamage(9.0);
-            config.setDamageRadius(2.0);
+            config.setDamage(135.0);
+            config.setDamageRadius(6.0);
             config.setTicksBetweenDamage(10);
             config.setDurationTicks(320);
-            config.setCooldownTicks(240);
+            config.setCooldownTicks(120);
         }
 
         @Override
@@ -415,12 +415,12 @@ public final class FluffyBlockDisplay2 {
 
         public ButterflyWings(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("butterfly_wings", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
-            config.setDamage(10.0);
-            config.setDamageRadius(2.5);
+            config.setDamage(150.0);
+            config.setDamageRadius(6.0);
             config.setTicksBetweenDamage(12);
-            config.setDamageDelayTicks(30);
+            config.setDamageDelayTicks(15);
             config.setDurationTicks(360);
-            config.setCooldownTicks(260);
+            config.setCooldownTicks(130);
         }
 
         @Override
@@ -590,11 +590,11 @@ public final class FluffyBlockDisplay2 {
 
         public GiantHedgehog(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("giant_hedgehog", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
-            config.setDamage(12.5);
-            config.setDamageRadius(3.0);
+            config.setDamage(187.5);
+            config.setDamageRadius(6.0);
             config.setTicksBetweenDamage(8);
             config.setDurationTicks(320);
-            config.setCooldownTicks(240);
+            config.setCooldownTicks(120);
         }
 
         @Override
@@ -780,11 +780,11 @@ public final class FluffyBlockDisplay2 {
 
         public FoxSweepTail(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("fox_sweep_tail", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
-            config.setDamage(12.0);
-            config.setDamageRadius(1.5);
+            config.setDamage(180.0);
+            config.setDamageRadius(6.0);
             config.setTicksBetweenDamage(6);
             config.setDurationTicks(280);
-            config.setCooldownTicks(220);
+            config.setCooldownTicks(110);
         }
 
         @Override
@@ -896,12 +896,12 @@ public final class FluffyBlockDisplay2 {
 
         public PandaSit(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("panda_sit", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
-            config.setDamage(0);
+            config.setDamage(0.0);
             config.setDamageOnImpactOnly(true);
-            config.setImpactDamage(24.0);
+            config.setImpactDamage(360.0);
             config.setImpactRadius(3.5);
             config.setDurationTicks(180);
-            config.setCooldownTicks(240);
+            config.setCooldownTicks(120);
         }
 
         @Override
@@ -1078,11 +1078,11 @@ public final class FluffyBlockDisplay2 {
 
         public GoldfishSwarm(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("goldfish_swarm", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
-            config.setDamage(12.0);
-            config.setDamageRadius(4.5);
+            config.setDamage(180.0);
+            config.setDamageRadius(8.0);
             config.setTicksBetweenDamage(8);
             config.setDurationTicks(360);
-            config.setCooldownTicks(260);
+            config.setCooldownTicks(130);
         }
 
         @Override
@@ -1206,12 +1206,12 @@ public final class FluffyBlockDisplay2 {
 
         public DeerAntlerCrash(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("deer_antler_crash", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
-            config.setDamage(0);
+            config.setDamage(0.0);
             config.setDamageOnImpactOnly(true);
-            config.setImpactDamage(30.0);
+            config.setImpactDamage(450.0);
             config.setImpactRadius(5.0);
             config.setDurationTicks(180);
-            config.setCooldownTicks(280);
+            config.setCooldownTicks(140);
         }
 
         @Override
@@ -1382,12 +1382,12 @@ public final class FluffyBlockDisplay2 {
 
         public WaddlePenguin(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("waddle_penguin", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
-            config.setDamage(0);
+            config.setDamage(0.0);
             config.setDamageOnImpactOnly(true);
-            config.setImpactDamage(20.0);
+            config.setImpactDamage(300.0);
             config.setImpactRadius(4.0);
             config.setDurationTicks(220);
-            config.setCooldownTicks(240);
+            config.setCooldownTicks(120);
         }
 
         @Override
@@ -1570,12 +1570,12 @@ public final class FluffyBlockDisplay2 {
 
         public DragonflyDive(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("dragonfly_dive", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
-            config.setDamage(0);
+            config.setDamage(0.0);
             config.setDamageOnImpactOnly(true);
-            config.setImpactDamage(22.0);
+            config.setImpactDamage(330.0);
             config.setImpactRadius(2.5);
             config.setDurationTicks(180);
-            config.setCooldownTicks(220);
+            config.setCooldownTicks(110);
         }
 
         @Override

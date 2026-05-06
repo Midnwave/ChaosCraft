@@ -49,9 +49,9 @@ public final class FluffyEnvironmental4 {
 
         public CottonCandyStorm(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("cotton_candy_storm", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
-            config.setDamage(10.0); config.setDamageRadius(2.0);
-            config.setTicksBetweenDamage(10); config.setDamageDelayTicks(10);
-            config.setDurationTicks(360); config.setCooldownTicks(360);
+            config.setDamage(150.0); config.setDamageRadius(6.0);
+            config.setTicksBetweenDamage(10); config.setDamageDelayTicks(5);
+            config.setDurationTicks(360); config.setCooldownTicks(180);
         }
 
         @Override protected void onSpawn(Location c) {
@@ -167,8 +167,8 @@ public final class FluffyEnvironmental4 {
         public FluorescentJellybeans(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("fluorescent_jellybeans", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
             config.setDamageOnImpactOnly(true);
-            config.setImpactDamage(11.0); config.setImpactRadius(1.2);
-            config.setDurationTicks(280); config.setCooldownTicks(320);
+            config.setImpactDamage(165.0); config.setImpactRadius(1.2);
+            config.setDurationTicks(280); config.setCooldownTicks(160);
         }
 
         @Override protected void onSpawn(Location c) {
@@ -258,8 +258,8 @@ public final class FluffyEnvironmental4 {
         public ToyCarChase(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("toy_car_chase", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
             config.setDamageOnImpactOnly(true);
-            config.setImpactDamage(18.0); config.setImpactRadius(1.5);
-            config.setDurationTicks(120); config.setCooldownTicks(280);
+            config.setImpactDamage(270.0); config.setImpactRadius(1.5);
+            config.setDurationTicks(120); config.setCooldownTicks(140);
         }
 
         @Override protected void onSpawn(Location c) {
@@ -359,8 +359,8 @@ public final class FluffyEnvironmental4 {
         public PlayfulLeap(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("playful_leap", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
             config.setDamageOnImpactOnly(true);
-            config.setImpactDamage(22.0); config.setImpactRadius(4.0);
-            config.setDurationTicks(80); config.setCooldownTicks(360);
+            config.setImpactDamage(330.0); config.setImpactRadius(4.0);
+            config.setDurationTicks(80); config.setCooldownTicks(180);
         }
 
         @Override protected void onSpawn(Location c) {
@@ -460,9 +460,9 @@ public final class FluffyEnvironmental4 {
 
         public FluffQuake(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("fluff_quake", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
-            config.setDamage(12.0); config.setDamageRadius(6.0);
+            config.setDamage(180.0); config.setDamageRadius(8.0);
             config.setTicksBetweenDamage(8); config.setDamageDelayTicks(0);
-            config.setDurationTicks(80); config.setCooldownTicks(300);
+            config.setDurationTicks(80); config.setCooldownTicks(150);
         }
 
         @Override protected void onSpawn(Location c) {
@@ -568,8 +568,8 @@ public final class FluffyEnvironmental4 {
         public GummyBearSlam(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("gummy_bear_slam", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
             config.setDamageOnImpactOnly(true);
-            config.setImpactDamage(13.0); config.setImpactRadius(1.5);
-            config.setDurationTicks(140); config.setCooldownTicks(300);
+            config.setImpactDamage(195.0); config.setImpactRadius(1.5);
+            config.setDurationTicks(140); config.setCooldownTicks(150);
         }
 
         @Override protected void onSpawn(Location c) {
@@ -691,8 +691,8 @@ public final class FluffyEnvironmental4 {
         public WhistlingFeather(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("whistling_feather", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
             config.setDamageOnImpactOnly(true);
-            config.setImpactDamage(20.0); config.setImpactRadius(2.0);
-            config.setDurationTicks(140); config.setCooldownTicks(300);
+            config.setImpactDamage(300.0); config.setImpactRadius(2.0);
+            config.setDurationTicks(140); config.setCooldownTicks(150);
         }
 
         @Override protected void onSpawn(Location c) {
@@ -833,9 +833,9 @@ public final class FluffyEnvironmental4 {
 
         public FloralTsunami(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("floral_tsunami", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
-            config.setDamage(14.0); config.setDamageRadius(2.5);
+            config.setDamage(210.0); config.setDamageRadius(6.0);
             config.setTicksBetweenDamage(8); config.setDamageDelayTicks(0);
-            config.setDurationTicks(200); config.setCooldownTicks(340);
+            config.setDurationTicks(200); config.setCooldownTicks(170);
         }
 
         @Override protected void onSpawn(Location c) {
@@ -948,8 +948,8 @@ public final class FluffyEnvironmental4 {
         public BirdsongShockwave(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("birdsong_shockwave", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
             config.setDamageOnImpactOnly(true);
-            config.setImpactDamage(16.0); config.setImpactRadius(6.0);
-            config.setDurationTicks(140); config.setCooldownTicks(320);
+            config.setImpactDamage(240.0); config.setImpactRadius(6.0);
+            config.setDurationTicks(140); config.setCooldownTicks(160);
         }
 
         @Override protected void onSpawn(Location c) {
@@ -1077,8 +1077,8 @@ public final class FluffyEnvironmental4 {
         public HairballExplosion(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("hairball_explosion", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
             config.setDamageOnImpactOnly(true);
-            config.setImpactDamage(18.0); config.setImpactRadius(4.5);
-            config.setDurationTicks(120); config.setCooldownTicks(320);
+            config.setImpactDamage(270.0); config.setImpactRadius(4.5);
+            config.setDurationTicks(120); config.setCooldownTicks(160);
         }
 
         @Override protected void onSpawn(Location c) {

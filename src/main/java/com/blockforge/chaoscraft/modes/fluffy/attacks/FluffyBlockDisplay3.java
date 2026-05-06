@@ -93,12 +93,12 @@ public final class FluffyBlockDisplay3 {
 
         public CarouselSpin(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("carousel_spin", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
-            config.setDamage(10.0);
-            config.setDamageRadius(4.5);
+            config.setDamage(150.0);
+            config.setDamageRadius(8.0);
             config.setTicksBetweenDamage(12);
-            config.setDamageDelayTicks(15);
+            config.setDamageDelayTicks(7);
             config.setDurationTicks(360);
-            config.setCooldownTicks(260);
+            config.setCooldownTicks(130);
         }
 
         @Override
@@ -291,11 +291,11 @@ public final class FluffyBlockDisplay3 {
         public GiantMousetrap(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("giant_mousetrap", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
             config.setDamageOnImpactOnly(true);
-            config.setImpactDamage(28.0);
+            config.setImpactDamage(420.0);
             config.setImpactRadius(4.0);
-            config.setDamage(0);
+            config.setDamage(0.0);
             config.setDurationTicks(180);
-            config.setCooldownTicks(220);
+            config.setCooldownTicks(110);
         }
 
         @Override
@@ -487,11 +487,11 @@ public final class FluffyBlockDisplay3 {
 
         public CatTowerStructure(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("cat_tower_structure", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
-            config.setDamage(9.0);
-            config.setDamageRadius(2.0);
-            config.setTicksBetweenDamage(15);
+            config.setDamage(135.0);
+            config.setDamageRadius(6.0);
+            config.setTicksBetweenDamage(12);
             config.setDurationTicks(320);
-            config.setCooldownTicks(260);
+            config.setCooldownTicks(130);
         }
 
         @Override
@@ -646,12 +646,12 @@ public final class FluffyBlockDisplay3 {
 
         public HamsterWheelCage(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("hamster_wheel_cage", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
-            config.setDamage(10.0);
-            config.setDamageRadius(2.0);
+            config.setDamage(150.0);
+            config.setDamageRadius(6.0);
             config.setTicksBetweenDamage(10);
-            config.setDamageDelayTicks(20);
+            config.setDamageDelayTicks(10);
             config.setDurationTicks(320);
-            config.setCooldownTicks(240);
+            config.setCooldownTicks(120);
         }
 
         @Override
@@ -793,12 +793,12 @@ public final class FluffyBlockDisplay3 {
 
         public BabyMobile(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("baby_mobile", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
-            config.setDamage(9.0);
-            config.setDamageRadius(3.0);
-            config.setTicksBetweenDamage(15);
-            config.setDamageDelayTicks(20);
+            config.setDamage(135.0);
+            config.setDamageRadius(6.0);
+            config.setTicksBetweenDamage(12);
+            config.setDamageDelayTicks(10);
             config.setDurationTicks(340);
-            config.setCooldownTicks(260);
+            config.setCooldownTicks(130);
         }
 
         @Override
@@ -995,12 +995,12 @@ public final class FluffyBlockDisplay3 {
 
         public GiantCradle(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("giant_cradle", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
-            config.setDamage(8.0);
-            config.setDamageRadius(2.5);
-            config.setTicksBetweenDamage(15);
-            config.setDamageDelayTicks(10);
+            config.setDamage(120.0);
+            config.setDamageRadius(6.0);
+            config.setTicksBetweenDamage(12);
+            config.setDamageDelayTicks(5);
             config.setDurationTicks(300);
-            config.setCooldownTicks(240);
+            config.setCooldownTicks(120);
         }
 
         @Override
@@ -1130,11 +1130,11 @@ public final class FluffyBlockDisplay3 {
         public ToyChestLaunch(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("toy_chest_launch", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
             config.setDamageOnImpactOnly(true);
-            config.setImpactDamage(15.0);
+            config.setImpactDamage(225.0);
             config.setImpactRadius(1.5);
-            config.setDamage(0);
+            config.setDamage(0.0);
             config.setDurationTicks(220);
-            config.setCooldownTicks(220);
+            config.setCooldownTicks(110);
         }
 
         @Override
@@ -1288,12 +1288,12 @@ public final class FluffyBlockDisplay3 {
 
         public PinwheelGarden(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("pinwheel_garden", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
-            config.setDamage(9.0);
-            config.setDamageRadius(1.2);
+            config.setDamage(135.0);
+            config.setDamageRadius(6.0);
             config.setTicksBetweenDamage(8);
-            config.setDamageDelayTicks(5);
+            config.setDamageDelayTicks(2);
             config.setDurationTicks(300);
-            config.setCooldownTicks(220);
+            config.setCooldownTicks(110);
         }
 
         @Override
@@ -1417,11 +1417,11 @@ public final class FluffyBlockDisplay3 {
         public JackInBox(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("jack_in_box", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
             config.setDamageOnImpactOnly(true);
-            config.setImpactDamage(22.0);
+            config.setImpactDamage(330.0);
             config.setImpactRadius(3.5);
-            config.setDamage(0);
+            config.setDamage(0.0);
             config.setDurationTicks(220);
-            config.setCooldownTicks(240);
+            config.setCooldownTicks(120);
         }
 
         @Override
@@ -1623,12 +1623,12 @@ public final class FluffyBlockDisplay3 {
 
         public DollhouseStructure(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("dollhouse_structure", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
-            config.setDamage(9.0);
-            config.setDamageRadius(3.0);
-            config.setTicksBetweenDamage(15);
-            config.setDamageDelayTicks(20);
+            config.setDamage(135.0);
+            config.setDamageRadius(6.0);
+            config.setTicksBetweenDamage(12);
+            config.setDamageDelayTicks(10);
             config.setDurationTicks(340);
-            config.setCooldownTicks(260);
+            config.setCooldownTicks(130);
         }
 
         @Override

@@ -98,12 +98,12 @@ public final class FluffyBlockDisplay5 {
 
         public GiantPlushHeart(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("giant_plush_heart", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
-            config.setDamage(10.0); // 10 hearts
-            config.setDamageRadius(3.5);
+            config.setDamage(150.0); // 10 hearts
+            config.setDamageRadius(6.0);
             config.setTicksBetweenDamage(12);
-            config.setDamageDelayTicks(15);
+            config.setDamageDelayTicks(7);
             config.setDurationTicks(280);
-            config.setCooldownTicks(240);
+            config.setCooldownTicks(120);
         }
 
         @Override
@@ -252,12 +252,12 @@ public final class FluffyBlockDisplay5 {
 
         public FluffyTotem(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("fluffy_totem", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
-            config.setDamage(9.0); // 9 hearts
-            config.setDamageRadius(2.5);
-            config.setTicksBetweenDamage(15);
-            config.setDamageDelayTicks(20);
+            config.setDamage(135.0); // 9 hearts
+            config.setDamageRadius(6.0);
+            config.setTicksBetweenDamage(12);
+            config.setDamageDelayTicks(10);
             config.setDurationTicks(360);
-            config.setCooldownTicks(280);
+            config.setCooldownTicks(140);
         }
 
         @Override
@@ -432,12 +432,12 @@ public final class FluffyBlockDisplay5 {
 
         public GiantBowRibbon(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("giant_bow_ribbon", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
-            config.setDamage(10.0);
-            config.setDamageRadius(2.5);
+            config.setDamage(150.0);
+            config.setDamageRadius(6.0);
             config.setTicksBetweenDamage(12);
-            config.setDamageDelayTicks(10);
+            config.setDamageDelayTicks(5);
             config.setDurationTicks(300);
-            config.setCooldownTicks(240);
+            config.setCooldownTicks(120);
         }
 
         @Override
@@ -593,12 +593,12 @@ public final class FluffyBlockDisplay5 {
 
         public StarMobiles(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("star_mobiles", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
-            config.setDamage(10.0);
-            config.setDamageRadius(4.5); // covers all 5 star zones in cluster (each is 1.5)
+            config.setDamage(150.0);
+            config.setDamageRadius(8.0); // covers all 5 star zones in cluster (each is 1.5)
             config.setTicksBetweenDamage(10);
-            config.setDamageDelayTicks(15);
+            config.setDamageDelayTicks(7);
             config.setDurationTicks(320);
-            config.setCooldownTicks(260);
+            config.setCooldownTicks(130);
         }
 
         @Override
@@ -725,12 +725,12 @@ public final class FluffyBlockDisplay5 {
 
         public CandyCaneForest(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("candy_cane_forest", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
-            config.setDamage(10.0);
-            config.setDamageRadius(3.5);
+            config.setDamage(150.0);
+            config.setDamageRadius(6.0);
             config.setTicksBetweenDamage(12);
-            config.setDamageDelayTicks(15);
+            config.setDamageDelayTicks(7);
             config.setDurationTicks(300);
-            config.setCooldownTicks(240);
+            config.setCooldownTicks(120);
         }
 
         @Override
@@ -848,13 +848,13 @@ public final class FluffyBlockDisplay5 {
 
         public SpiralMilkshake(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("spiral_milkshake", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
-            config.setDamage(9.0); // 9 hearts constant
-            config.setDamageRadius(2.5);
-            config.setTicksBetweenDamage(15);
-            config.setDamageDelayTicks(15);
+            config.setDamage(135.0); // 9 hearts constant
+            config.setDamageRadius(6.0);
+            config.setTicksBetweenDamage(12);
+            config.setDamageDelayTicks(7);
             config.setDurationTicks(280);
-            config.setCooldownTicks(260);
-            config.setImpactDamage(18.0); // 18 hearts overflow impact
+            config.setCooldownTicks(130);
+            config.setImpactDamage(270.0); // 18 hearts overflow impact
             config.setImpactRadius(4.0);
             // NOTE: not impact-only — both constant + overflow impact
         }
@@ -1046,12 +1046,12 @@ public final class FluffyBlockDisplay5 {
 
         public GiantKaleidoscope(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("giant_kaleidoscope", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
-            config.setDamage(10.0);
-            config.setDamageRadius(2.5);
+            config.setDamage(150.0);
+            config.setDamageRadius(6.0);
             config.setTicksBetweenDamage(10);
-            config.setDamageDelayTicks(15);
+            config.setDamageDelayTicks(7);
             config.setDurationTicks(320);
-            config.setCooldownTicks(260);
+            config.setCooldownTicks(130);
         }
 
         // 16 dye color RGB values cycling palette
@@ -1231,13 +1231,13 @@ public final class FluffyBlockDisplay5 {
 
         public FluffyNova(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("fluffy_nova", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
-            config.setDamage(12.0); // 12 hearts orb
-            config.setDamageRadius(2.5);
+            config.setDamage(180.0); // 12 hearts orb
+            config.setDamageRadius(6.0);
             config.setTicksBetweenDamage(10);
-            config.setDamageDelayTicks(10);
+            config.setDamageDelayTicks(5);
             config.setDurationTicks(280);
-            config.setCooldownTicks(260);
-            config.setImpactDamage(10.0); // 10 hearts spike tip
+            config.setCooldownTicks(130);
+            config.setImpactDamage(150.0); // 10 hearts spike tip
             config.setImpactRadius(0.8);
         }
 
@@ -1418,12 +1418,12 @@ public final class FluffyBlockDisplay5 {
         public GiantSnowGlobe(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("giant_snow_globe", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
             config.setDamageOnImpactOnly(true);
-            config.setImpactDamage(32.0); // 32 hearts
+            config.setImpactDamage(480.0); // 32 hearts
             config.setImpactRadius(5.5);
             config.setDamage(0.0);
             config.setDamageRadius(0.0);
             config.setDurationTicks(140);
-            config.setCooldownTicks(280);
+            config.setCooldownTicks(140);
         }
 
         @Override
@@ -1652,13 +1652,13 @@ public final class FluffyBlockDisplay5 {
 
         public PlushHydra(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("plush_hydra", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
-            config.setDamage(11.0); // 11 hearts constant per head zone
-            config.setDamageRadius(3.5); // covers 3 head zones (each 1.5) + base
+            config.setDamage(165.0); // 11 hearts constant per head zone
+            config.setDamageRadius(6.0); // covers 3 head zones (each 1.5) + base
             config.setTicksBetweenDamage(10);
-            config.setDamageDelayTicks(20);
+            config.setDamageDelayTicks(10);
             config.setDurationTicks(360);
-            config.setCooldownTicks(300);
-            config.setImpactDamage(20.0); // 20 hearts lunge
+            config.setCooldownTicks(150);
+            config.setImpactDamage(300.0); // 20 hearts lunge
             config.setImpactRadius(2.0);
         }
 

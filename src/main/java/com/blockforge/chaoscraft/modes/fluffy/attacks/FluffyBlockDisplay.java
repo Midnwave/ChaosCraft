@@ -107,11 +107,11 @@ public final class FluffyBlockDisplay {
         public GiantPawSlam(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("giant_paw_slam", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
             config.setDamageOnImpactOnly(true);
-            config.setImpactDamage(26.0);
+            config.setImpactDamage(390.0);
             config.setImpactRadius(5.5);
-            config.setDamage(0);
+            config.setDamage(0.0);
             config.setDurationTicks(180);
-            config.setCooldownTicks(220);
+            config.setCooldownTicks(110);
         }
 
         @Override
@@ -288,11 +288,11 @@ public final class FluffyBlockDisplay {
         public TeddyBearCrush(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("teddy_bear_crush", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
             config.setDamageOnImpactOnly(true);
-            config.setImpactDamage(22.0);
+            config.setImpactDamage(330.0);
             config.setImpactRadius(3.5);
-            config.setDamage(0);
+            config.setDamage(0.0);
             config.setDurationTicks(220);
-            config.setCooldownTicks(240);
+            config.setCooldownTicks(120);
         }
 
         @Override
@@ -539,12 +539,12 @@ public final class FluffyBlockDisplay {
 
         public GiantYarnBall(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("giant_yarn_ball", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
-            config.setDamage(9.0);
-            config.setDamageRadius(4.5);
-            config.setTicksBetweenDamage(15);
-            config.setDamageDelayTicks(10);
+            config.setDamage(135.0);
+            config.setDamageRadius(8.0);
+            config.setTicksBetweenDamage(12);
+            config.setDamageDelayTicks(5);
             config.setDurationTicks(280);
-            config.setCooldownTicks(240);
+            config.setCooldownTicks(120);
         }
 
         @Override
@@ -683,11 +683,11 @@ public final class FluffyBlockDisplay {
         public BountyBomb(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("bounty_bomb", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
             config.setDamageOnImpactOnly(true);
-            config.setImpactDamage(28.0);
+            config.setImpactDamage(420.0);
             config.setImpactRadius(6.0);
-            config.setDamage(0);
+            config.setDamage(0.0);
             config.setDurationTicks(80);
-            config.setCooldownTicks(220);
+            config.setCooldownTicks(110);
         }
 
         @Override
@@ -857,12 +857,12 @@ public final class FluffyBlockDisplay {
 
         public CatCradleNet(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("cat_cradle_net", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
-            config.setDamage(10.0);
-            config.setDamageRadius(3.0);
+            config.setDamage(150.0);
+            config.setDamageRadius(6.0);
             config.setTicksBetweenDamage(10);
-            config.setDamageDelayTicks(20);
+            config.setDamageDelayTicks(10);
             config.setDurationTicks(280);
-            config.setCooldownTicks(240);
+            config.setCooldownTicks(120);
         }
 
         @Override
@@ -1033,12 +1033,12 @@ public final class FluffyBlockDisplay {
 
         public WindUpKey(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("wind_up_key", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
-            config.setDamage(8.0);
-            config.setDamageRadius(2.5);
-            config.setTicksBetweenDamage(20);
-            config.setDamageDelayTicks(15);
+            config.setDamage(120.0);
+            config.setDamageRadius(6.0);
+            config.setTicksBetweenDamage(12);
+            config.setDamageDelayTicks(7);
             config.setDurationTicks(280);
-            config.setCooldownTicks(220);
+            config.setCooldownTicks(110);
         }
 
         @Override
@@ -1179,11 +1179,11 @@ public final class FluffyBlockDisplay {
         public GinormousLollipop(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("ginormous_lollipop", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
             config.setDamageOnImpactOnly(true);
-            config.setImpactDamage(20.0);
+            config.setImpactDamage(300.0);
             config.setImpactRadius(4.5);
-            config.setDamage(0);
+            config.setDamage(0.0);
             config.setDurationTicks(180);
-            config.setCooldownTicks(220);
+            config.setCooldownTicks(110);
         }
 
         @Override
@@ -1333,13 +1333,13 @@ public final class FluffyBlockDisplay {
 
         public PawPrintField(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("paw_print_field", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
-            config.setDamage(10.0);
+            config.setDamage(150.0);
             // Combined radius covers all 6 prints (stride pattern fits within ~6 blocks)
-            config.setDamageRadius(6.0);
+            config.setDamageRadius(8.0);
             config.setTicksBetweenDamage(12);
-            config.setDamageDelayTicks(5);
+            config.setDamageDelayTicks(2);
             config.setDurationTicks(220);
-            config.setCooldownTicks(200);
+            config.setCooldownTicks(100);
         }
 
         @Override
@@ -1487,11 +1487,11 @@ public final class FluffyBlockDisplay {
         public PlushtrapSpider(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("plushtrap_spider", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
             config.setDamageOnImpactOnly(true);
-            config.setImpactDamage(18.0);
+            config.setImpactDamage(270.0);
             config.setImpactRadius(3.0);
-            config.setDamage(0);
+            config.setDamage(0.0);
             config.setDurationTicks(220);
-            config.setCooldownTicks(220);
+            config.setCooldownTicks(110);
         }
 
         @Override
@@ -1683,11 +1683,11 @@ public final class FluffyBlockDisplay {
         public BunnyEarBlades(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("bunny_ear_blades", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
             config.setDamageOnImpactOnly(true);
-            config.setImpactDamage(30.0);
+            config.setImpactDamage(450.0);
             config.setImpactRadius(4.0);
-            config.setDamage(0);
+            config.setDamage(0.0);
             config.setDurationTicks(180);
-            config.setCooldownTicks(240);
+            config.setCooldownTicks(120);
         }
 
         @Override

@@ -109,12 +109,12 @@ public final class FluffyBlockDisplay4 {
 
         public GiantDaisy(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("giant_daisy", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
-            config.setDamage(10.0);
-            config.setDamageRadius(2.5);
+            config.setDamage(150.0);
+            config.setDamageRadius(6.0);
             config.setTicksBetweenDamage(12);
-            config.setDamageDelayTicks(20);
+            config.setDamageDelayTicks(10);
             config.setDurationTicks(300);
-            config.setCooldownTicks(220);
+            config.setCooldownTicks(110);
         }
 
         @Override
@@ -277,12 +277,12 @@ public final class FluffyBlockDisplay4 {
 
         public FloralCrownDescend(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("floral_crown_descend", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
-            config.setDamage(12.0);
-            config.setDamageRadius(4.0);
+            config.setDamage(180.0);
+            config.setDamageRadius(6.0);
             config.setTicksBetweenDamage(10);
-            config.setDamageDelayTicks(10);
+            config.setDamageDelayTicks(5);
             config.setDurationTicks(360);
-            config.setCooldownTicks(260);
+            config.setCooldownTicks(130);
         }
 
         @Override
@@ -441,11 +441,11 @@ public final class FluffyBlockDisplay4 {
         public CrystalFlowerBurst(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("crystal_flower_burst", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
             config.setDamageOnImpactOnly(true);
-            config.setImpactDamage(22.0);
+            config.setImpactDamage(330.0);
             config.setImpactRadius(5.0);
-            config.setDamage(0);
+            config.setDamage(0.0);
             config.setDurationTicks(160);
-            config.setCooldownTicks(240);
+            config.setCooldownTicks(120);
         }
 
         @Override
@@ -607,12 +607,12 @@ public final class FluffyBlockDisplay4 {
 
         public MushroomRingEruption(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("mushroom_ring_eruption", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
-            config.setDamage(10.0);
-            config.setDamageRadius(3.5);
+            config.setDamage(150.0);
+            config.setDamageRadius(6.0);
             config.setTicksBetweenDamage(12);
-            config.setDamageDelayTicks(30);
+            config.setDamageDelayTicks(15);
             config.setDurationTicks(360);
-            config.setCooldownTicks(260);
+            config.setCooldownTicks(130);
         }
 
         @Override
@@ -748,12 +748,12 @@ public final class FluffyBlockDisplay4 {
 
         public BambooSpikePrison(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("bamboo_spike_prison", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
-            config.setDamage(11.0);
-            config.setDamageRadius(3.0);
+            config.setDamage(165.0);
+            config.setDamageRadius(6.0);
             config.setTicksBetweenDamage(10);
-            config.setDamageDelayTicks(15);
+            config.setDamageDelayTicks(7);
             config.setDurationTicks(340);
-            config.setCooldownTicks(240);
+            config.setCooldownTicks(120);
         }
 
         @Override
@@ -912,14 +912,14 @@ public final class FluffyBlockDisplay4 {
 
         public GiantSunflower(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("giant_sunflower", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
-            config.setDamage(11.0);
-            config.setDamageRadius(2.0);
+            config.setDamage(165.0);
+            config.setDamageRadius(6.0);
             config.setTicksBetweenDamage(12);
-            config.setDamageDelayTicks(20);
-            config.setImpactDamage(14.0);
+            config.setDamageDelayTicks(10);
+            config.setImpactDamage(210.0);
             config.setImpactRadius(2.0);
             config.setDurationTicks(300);
-            config.setCooldownTicks(240);
+            config.setCooldownTicks(120);
         }
 
         @Override
@@ -1075,14 +1075,14 @@ public final class FluffyBlockDisplay4 {
 
         public CherryBlossomShower(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("cherry_blossom_shower", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
-            config.setDamage(5.0);
-            config.setDamageRadius(1.5);
-            config.setTicksBetweenDamage(20);
-            config.setDamageDelayTicks(15);
-            config.setImpactDamage(12.0);
+            config.setDamage(75.0);
+            config.setDamageRadius(6.0);
+            config.setTicksBetweenDamage(12);
+            config.setDamageDelayTicks(7);
+            config.setImpactDamage(180.0);
             config.setImpactRadius(1.5);
             config.setDurationTicks(360);
-            config.setCooldownTicks(260);
+            config.setCooldownTicks(130);
         }
 
         @Override
@@ -1224,12 +1224,12 @@ public final class FluffyBlockDisplay4 {
 
         public LilyPadMaze(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("lily_pad_maze", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
-            config.setDamage(8.0);
-            config.setDamageRadius(5.0); // covers all pads from center; use multi-pad logic for vibe
-            config.setTicksBetweenDamage(15);
-            config.setDamageDelayTicks(20);
+            config.setDamage(120.0);
+            config.setDamageRadius(8.0); // covers all pads from center; use multi-pad logic for vibe
+            config.setTicksBetweenDamage(12);
+            config.setDamageDelayTicks(10);
             config.setDurationTicks(360);
-            config.setCooldownTicks(260);
+            config.setCooldownTicks(130);
         }
 
         @Override
@@ -1416,12 +1416,12 @@ public final class FluffyBlockDisplay4 {
 
         public TulipTidalWave(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("tulip_tidal_wave", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
-            config.setDamage(9.0);
-            config.setDamageRadius(6.0); // wide line coverage
+            config.setDamage(135.0);
+            config.setDamageRadius(8.0); // wide line coverage
             config.setTicksBetweenDamage(12);
-            config.setDamageDelayTicks(20);
+            config.setDamageDelayTicks(10);
             config.setDurationTicks(360);
-            config.setCooldownTicks(240);
+            config.setCooldownTicks(120);
         }
 
         @Override
@@ -1577,12 +1577,12 @@ public final class FluffyBlockDisplay4 {
 
         public IvyWallCrawl(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("ivy_wall_crawl", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
-            config.setDamage(10.0);
-            config.setDamageRadius(3.0);
+            config.setDamage(150.0);
+            config.setDamageRadius(6.0);
             config.setTicksBetweenDamage(10);
-            config.setDamageDelayTicks(15);
+            config.setDamageDelayTicks(7);
             config.setDurationTicks(360);
-            config.setCooldownTicks(260);
+            config.setCooldownTicks(130);
         }
 
         @Override

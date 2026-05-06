@@ -51,12 +51,12 @@ public final class FluffyEnvironmental {
 
         public PetalStorm(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("petal_storm", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
-            config.setDamage(9.0);
-            config.setDamageRadius(4.0);
+            config.setDamage(135.0);
+            config.setDamageRadius(6.0);
             config.setTicksBetweenDamage(10);
-            config.setDamageDelayTicks(15);
+            config.setDamageDelayTicks(7);
             config.setDurationTicks(360);
-            config.setCooldownTicks(320);
+            config.setCooldownTicks(160);
         }
 
         @Override protected void onSpawn(Location c) {
@@ -170,13 +170,13 @@ public final class FluffyEnvironmental {
 
         public KittenRain(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("kitten_rain", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
-            config.setDamage(12.0);
-            config.setDamageRadius(2.0);
+            config.setDamage(180.0);
+            config.setDamageRadius(6.0);
             config.setTicksBetweenDamage(10);
             config.setDurationTicks(260);
-            config.setCooldownTicks(300);
+            config.setCooldownTicks(150);
             config.setDamageOnImpactOnly(true);
-            config.setImpactDamage(12.0);
+            config.setImpactDamage(180.0);
             config.setImpactRadius(2.0);
         }
 
@@ -267,13 +267,13 @@ public final class FluffyEnvironmental {
 
         public MilkSplash(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("milk_splash", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
-            config.setDamage(22.0);
-            config.setDamageRadius(5.0);
-            config.setTicksBetweenDamage(20);
+            config.setDamage(330.0);
+            config.setDamageRadius(8.0);
+            config.setTicksBetweenDamage(12);
             config.setDurationTicks(160);
-            config.setCooldownTicks(360);
+            config.setCooldownTicks(180);
             config.setDamageOnImpactOnly(true);
-            config.setImpactDamage(22.0);
+            config.setImpactDamage(330.0);
             config.setImpactRadius(5.0);
         }
 
@@ -385,13 +385,13 @@ public final class FluffyEnvironmental {
 
         public SheepWoolBurst(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("sheep_wool_burst", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
-            config.setDamage(14.0);
-            config.setDamageRadius(1.5);
+            config.setDamage(210.0);
+            config.setDamageRadius(6.0);
             config.setTicksBetweenDamage(10);
             config.setDurationTicks(220);
-            config.setCooldownTicks(320);
+            config.setCooldownTicks(160);
             config.setDamageOnImpactOnly(true);
-            config.setImpactDamage(14.0);
+            config.setImpactDamage(210.0);
             config.setImpactRadius(1.5);
         }
 
@@ -514,13 +514,13 @@ public final class FluffyEnvironmental {
 
         public HoneyDripField(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("honey_drip_field", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
-            config.setDamage(16.0);
-            config.setDamageRadius(1.8);
+            config.setDamage(240.0);
+            config.setDamageRadius(6.0);
             config.setTicksBetweenDamage(10);
             config.setDurationTicks(240);
-            config.setCooldownTicks(340);
+            config.setCooldownTicks(170);
             config.setDamageOnImpactOnly(true);
-            config.setImpactDamage(16.0);
+            config.setImpactDamage(240.0);
             config.setImpactRadius(1.8);
         }
 
@@ -636,12 +636,12 @@ public final class FluffyEnvironmental {
 
         public PurrFrequency(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("purr_frequency", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
-            config.setDamage(9.0);
-            config.setDamageRadius(3.0);
+            config.setDamage(135.0);
+            config.setDamageRadius(6.0);
             config.setTicksBetweenDamage(12);
-            config.setDamageDelayTicks(15);
+            config.setDamageDelayTicks(7);
             config.setDurationTicks(380);
-            config.setCooldownTicks(340);
+            config.setCooldownTicks(170);
         }
 
         @Override protected void onSpawn(Location c) {
@@ -767,12 +767,12 @@ public final class FluffyEnvironmental {
 
         public FurTornado(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("fur_tornado", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
-            config.setDamage(10.0);
-            config.setDamageRadius(2.0);
+            config.setDamage(150.0);
+            config.setDamageRadius(6.0);
             config.setTicksBetweenDamage(8);
-            config.setDamageDelayTicks(20);
+            config.setDamageDelayTicks(10);
             config.setDurationTicks(360);
-            config.setCooldownTicks(360);
+            config.setCooldownTicks(180);
             // Tornado intentionally tracks the player — chase mechanic.
             config.setTracksPlayer(true);
         }
@@ -915,13 +915,13 @@ public final class FluffyEnvironmental {
 
         public GlitterBurst(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("glitter_burst", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
-            config.setDamage(12.0);
-            config.setDamageRadius(1.5);
+            config.setDamage(180.0);
+            config.setDamageRadius(6.0);
             config.setTicksBetweenDamage(10);
             config.setDurationTicks(180);
-            config.setCooldownTicks(280);
+            config.setCooldownTicks(140);
             config.setDamageOnImpactOnly(true);
-            config.setImpactDamage(12.0);
+            config.setImpactDamage(180.0);
             config.setImpactRadius(1.5);
         }
 
@@ -1014,12 +1014,12 @@ public final class FluffyEnvironmental {
 
         public WoolStrand(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("wool_strand", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
-            config.setDamage(14.0);
-            config.setDamageRadius(0.8);
+            config.setDamage(210.0);
+            config.setDamageRadius(6.0);
             config.setTicksBetweenDamage(6);
-            config.setDamageDelayTicks(15);
+            config.setDamageDelayTicks(7);
             config.setDurationTicks(280);
-            config.setCooldownTicks(340);
+            config.setCooldownTicks(170);
         }
 
         @Override protected void onSpawn(Location c) {
@@ -1138,12 +1138,12 @@ public final class FluffyEnvironmental {
 
         public FloralExplosion(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("floral_explosion", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
-            config.setDamage(10.0);
-            config.setDamageRadius(5.5);
+            config.setDamage(150.0);
+            config.setDamageRadius(8.0);
             config.setTicksBetweenDamage(12);
-            config.setDamageDelayTicks(15);
+            config.setDamageDelayTicks(7);
             config.setDurationTicks(360);
-            config.setCooldownTicks(340);
+            config.setCooldownTicks(170);
         }
 
         @Override protected void onSpawn(Location c) {
