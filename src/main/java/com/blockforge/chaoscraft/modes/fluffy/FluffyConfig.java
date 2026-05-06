@@ -15,7 +15,9 @@ import java.util.Map;
 
 /**
  * Fluffy Mode configuration loader.
- * Reads from plugins/ChaosCraft/modes/fluffy/config.yml
+ * Reads from plugins/ChaosCraft/modes/fluffy/fluffy.yml (shared with ModeConfig
+ * — keys for both classes coexist in the same file, matching the pattern used
+ * by every other mode in the codebase).
  *
  * Fluffy Mode is a no-boss horror survival mode where cute-looking
  * cuddly creatures stalk and overwhelm the players. Random weighted
@@ -34,7 +36,19 @@ public class FluffyConfig {
         this.plugin = plugin;
         File modeDir = new File(plugin.getDataFolder(), "modes/fluffy");
         if (!modeDir.exists()) modeDir.mkdirs();
-        this.configFile = new File(modeDir, "config.yml");
+        this.configFile = new File(modeDir, "fluffy.yml");
+        // Auto-migration: if a legacy config.yml exists from a previous install
+        // and no fluffy.yml exists yet, rename config.yml -> fluffy.yml so
+        // existing user customisations are preserved.
+        File legacyFile = new File(modeDir, "config.yml");
+        if (legacyFile.exists() && !this.configFile.exists()) {
+            try {
+                java.nio.file.Files.move(legacyFile.toPath(), this.configFile.toPath());
+                plugin.getLogger().info("[Fluffy] Migrated legacy config.yml -> fluffy.yml");
+            } catch (Exception e) {
+                plugin.getLogger().warning("[Fluffy] Failed to migrate config.yml: " + e.getMessage());
+            }
+        }
         load();
     }
 
