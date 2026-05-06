@@ -732,16 +732,19 @@ public class FluffyMobAI implements Listener {
         try {
             double base = 2.0;
             var attr = attacker.getAttribute(Attribute.ATTACK_DAMAGE);
-            // ATTACK_DAMAGE may be 0 for some MM-configured entity types.
-            // Fall back to the default 2.0 base so the mob still bites.
             if (attr != null && attr.getValue() > 0.0) base = attr.getValue();
             double diffMult = 1.0;
             try { diffMult = config.getDifficultyMultiplier(); } catch (Throwable ignored) {}
-            // Floor of 8.0 hp per bite ensures even degenerate attribute
-            // configurations produce a noticeable hit (~4 hearts unarmored).
-            double finalDamage = Math.max(8.0, base * multiplier * diffMult);
+            // Floor of 100.0 hp per bite so every Fluffy mob hit is significant
+            // and the player can clearly tell they were attacked, even with
+            // armor / protection enchants soaking ~50% of it.
+            double finalDamage = Math.max(100.0, base * multiplier * diffMult);
             target.damage(finalDamage, attacker);
-        } catch (Throwable ignored) {}
+            plugin.debug("[FluffyAI] " + attacker.getType() + " bit "
+                    + target.getName() + " for " + finalDamage + " hp");
+        } catch (Throwable t) {
+            plugin.debug("[FluffyAI] Damage call FAILED: " + t.getMessage());
+        }
     }
 
     private void damageInRadius(LivingEntity attacker, Location center, double radius, double multiplier) {

@@ -109,10 +109,10 @@ public class FluffyConfig {
         if (!config.contains("mob-ai.enabled")) { config.set("mob-ai.enabled", true); needsSave = true; }
         if (!config.contains("mob-ai.tick-interval")) { config.set("mob-ai.tick-interval", 4); needsSave = true; }
         if (!config.contains("mob-ai.detection-range")) { config.set("mob-ai.detection-range", 14.0); needsSave = true; }
-        if (!config.contains("mob-ai.attack-range")) { config.set("mob-ai.attack-range", 3.0); needsSave = true; }
-        if (!config.contains("mob-ai.attack-cooldown-ticks")) { config.set("mob-ai.attack-cooldown-ticks", 25); needsSave = true; }
+        if (!config.contains("mob-ai.attack-range")) { config.set("mob-ai.attack-range", 4.0); needsSave = true; }
+        if (!config.contains("mob-ai.attack-cooldown-ticks")) { config.set("mob-ai.attack-cooldown-ticks", 8); needsSave = true; }
         if (!config.contains("mob-ai.flee-hp-percent")) { config.set("mob-ai.flee-hp-percent", 25); needsSave = true; }
-        if (!config.contains("mob-ai.approach-speed-multiplier")) { config.set("mob-ai.approach-speed-multiplier", 1.1); needsSave = true; }
+        if (!config.contains("mob-ai.approach-speed-multiplier")) { config.set("mob-ai.approach-speed-multiplier", 1.5); needsSave = true; }
         if (!config.contains("mob-ai.animation-speed")) { config.set("mob-ai.animation-speed", 2.0); needsSave = true; }
         if (!config.contains("mob-ai.bunny.hop-y-offset")) { config.set("mob-ai.bunny.hop-y-offset", 0.35); needsSave = true; }
         if (!config.contains("mob-ai.bunny.hop-interval-ticks")) { config.set("mob-ai.bunny.hop-interval-ticks", 10); needsSave = true; }
@@ -773,10 +773,10 @@ public class FluffyConfig {
         defaults.set("mob-ai.detection-range", 14.0);
         defaults.setComments("mob-ai.detection-range", List.of(
                 "Range (blocks) at which a managed mob acquires a player target."));
-        defaults.set("mob-ai.attack-range", 3.0);
+        defaults.set("mob-ai.attack-range", 4.0);
         defaults.setComments("mob-ai.attack-range", List.of(
                 "Range (blocks) at which a managed mob enters its ATTACK state."));
-        defaults.set("mob-ai.attack-cooldown-ticks", 25);
+        defaults.set("mob-ai.attack-cooldown-ticks", 8);
         defaults.setComments("mob-ai.attack-cooldown-ticks", List.of(
                 "Ticks between consecutive attack swings. 25 = 1.25 seconds."));
         defaults.set("mob-ai.flee-hp-percent", 25);

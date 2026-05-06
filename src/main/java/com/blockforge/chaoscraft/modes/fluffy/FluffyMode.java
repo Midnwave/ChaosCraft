@@ -166,6 +166,24 @@ public class FluffyMode extends AbstractMode {
                     cfg.setImpactDamage(0.0);
                 }
             } catch (Throwable ignored) {}
+
+            // BD + ENV attack difficulty — make stationary attacks harder to
+            // dodge (bigger AoE) while keeping them strictly stationary.
+            //   Damage radius × 1.6 — wider lethal zones
+            //   Tick interval halved (min 4) — damage hits more often per
+            //     second when player is inside
+            // ME attacks excluded — they're either visual setpieces or the
+            // butterfly chase, both already balanced above.
+            try {
+                var cfg = atk.getConfig();
+                if (cfg.getType() == AttackType.BLOCK_DISPLAY
+                        || cfg.getType() == AttackType.ENVIRONMENTAL) {
+                    double oldR = cfg.getDamageRadius();
+                    if (oldR > 0) cfg.setDamageRadius(oldR * 1.6);
+                    int oldTick = cfg.getTicksBetweenDamage();
+                    if (oldTick > 0) cfg.setTicksBetweenDamage(Math.max(4, oldTick / 2));
+                }
+            } catch (Throwable ignored) {}
         }
         plugin.getLogger().info("[Fluffy] Applied difficulty x" + diffMult
                 + " to " + scaledDamage + " attacks; extended duration on "
