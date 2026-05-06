@@ -29,6 +29,12 @@ Fluffy_NocsyCat-Munchkin:
   Skills:
   - model{mid=nocsy_cat1;n=false} @self ~onSpawn
   - model{mid=nocsy_cat1;n=false} @self ~onLoad
+  - submodel{mid=nocsy_cat1;subpart=head_eyes_closed;remove=true} @self ~onSpawn
+  - submodel{mid=nocsy_cat1;subpart=head_eyes_closed;remove=true} @self ~onLoad
+  - sound{s=entity.cat.stray_ambient;v=1.0;p=1.2} @self ~onTimer:200
+  - sound{s=entity.cat.hurt;v=1.0;p=1.3} @self ~onDamaged
+  - sound{s=entity.cat.death;v=1.0;p=1.0} @self ~onDeath
+  - sound{s=entity.cat.hiss;v=1.0;p=0.9} @self ~onEnterCombat
   Options:
     MovementSpeed: 0.32
     PreventOtherDrops: true
@@ -58,6 +64,12 @@ Fluffy_NocsyCat-Bombay:
   Skills:
   - model{mid=nocsy_cat2;n=false} @self ~onSpawn
   - model{mid=nocsy_cat2;n=false} @self ~onLoad
+  - submodel{mid=nocsy_cat2;subpart=head_eyes_closed;remove=true} @self ~onSpawn
+  - submodel{mid=nocsy_cat2;subpart=head_eyes_closed;remove=true} @self ~onLoad
+  - sound{s=entity.cat.stray_ambient;v=1.0;p=1.2} @self ~onTimer:200
+  - sound{s=entity.cat.hurt;v=1.0;p=1.3} @self ~onDamaged
+  - sound{s=entity.cat.death;v=1.0;p=1.0} @self ~onDeath
+  - sound{s=entity.cat.hiss;v=1.0;p=0.9} @self ~onEnterCombat
   Options:
     MovementSpeed: 0.34
     PreventOtherDrops: true
@@ -87,6 +99,12 @@ Fluffy_NocsyCat-Siamese:
   Skills:
   - model{mid=nocsy_cat3;n=false} @self ~onSpawn
   - model{mid=nocsy_cat3;n=false} @self ~onLoad
+  - submodel{mid=nocsy_cat3;subpart=head_eyes_closed;remove=true} @self ~onSpawn
+  - submodel{mid=nocsy_cat3;subpart=head_eyes_closed;remove=true} @self ~onLoad
+  - sound{s=entity.cat.stray_ambient;v=1.0;p=1.2} @self ~onTimer:200
+  - sound{s=entity.cat.hurt;v=1.0;p=1.3} @self ~onDamaged
+  - sound{s=entity.cat.death;v=1.0;p=1.0} @self ~onDeath
+  - sound{s=entity.cat.hiss;v=1.0;p=0.9} @self ~onEnterCombat
   Options:
     MovementSpeed: 0.34
     PreventOtherDrops: true
@@ -116,6 +134,12 @@ Fluffy_NocsyCat-ScottishFold:
   Skills:
   - model{mid=nocsy_cat4;n=false} @self ~onSpawn
   - model{mid=nocsy_cat4;n=false} @self ~onLoad
+  - submodel{mid=nocsy_cat4;subpart=head_eyes_closed;remove=true} @self ~onSpawn
+  - submodel{mid=nocsy_cat4;subpart=head_eyes_closed;remove=true} @self ~onLoad
+  - sound{s=entity.cat.stray_ambient;v=1.0;p=1.2} @self ~onTimer:200
+  - sound{s=entity.cat.hurt;v=1.0;p=1.3} @self ~onDamaged
+  - sound{s=entity.cat.death;v=1.0;p=1.0} @self ~onDeath
+  - sound{s=entity.cat.hiss;v=1.0;p=0.9} @self ~onEnterCombat
   Options:
     MovementSpeed: 0.30
     PreventOtherDrops: true
@@ -145,6 +169,12 @@ Fluffy_NocsyCat-MaineCoon:
   Skills:
   - model{mid=nocsy_cat5;n=false} @self ~onSpawn
   - model{mid=nocsy_cat5;n=false} @self ~onLoad
+  - submodel{mid=nocsy_cat5;subpart=head_eyes_closed;remove=true} @self ~onSpawn
+  - submodel{mid=nocsy_cat5;subpart=head_eyes_closed;remove=true} @self ~onLoad
+  - sound{s=entity.cat.stray_ambient;v=1.0;p=1.2} @self ~onTimer:200
+  - sound{s=entity.cat.hurt;v=1.0;p=1.3} @self ~onDamaged
+  - sound{s=entity.cat.death;v=1.0;p=1.0} @self ~onDeath
+  - sound{s=entity.cat.hiss;v=1.0;p=0.9} @self ~onEnterCombat
   Options:
     MovementSpeed: 0.28
     PreventOtherDrops: true
@@ -174,6 +204,12 @@ Fluffy_NocsyCat-European:
   Skills:
   - model{mid=nocsy_cat6;n=false} @self ~onSpawn
   - model{mid=nocsy_cat6;n=false} @self ~onLoad
+  - submodel{mid=nocsy_cat6;subpart=head_eyes_closed;remove=true} @self ~onSpawn
+  - submodel{mid=nocsy_cat6;subpart=head_eyes_closed;remove=true} @self ~onLoad
+  - sound{s=entity.cat.stray_ambient;v=1.0;p=1.2} @self ~onTimer:200
+  - sound{s=entity.cat.hurt;v=1.0;p=1.3} @self ~onDamaged
+  - sound{s=entity.cat.death;v=1.0;p=1.0} @self ~onDeath
+  - sound{s=entity.cat.hiss;v=1.0;p=0.9} @self ~onEnterCombat
   Options:
     MovementSpeed: 0.32
     PreventOtherDrops: true
@@ -203,6 +239,12 @@ Fluffy_NocsyCat-Fallen:
   Skills:
   - model{mid=nocsy_cat_fallen;n=false} @self ~onSpawn
   - model{mid=nocsy_cat_fallen;n=false} @self ~onLoad
+  - submodel{mid=nocsy_cat_fallen;subpart=head_eyes_closed;remove=true} @self ~onSpawn
+  - submodel{mid=nocsy_cat_fallen;subpart=head_eyes_closed;remove=true} @self ~onLoad
+  - sound{s=entity.cat.stray_ambient;v=1.0;p=0.7} @self ~onTimer:200
+  - sound{s=entity.cat.hurt;v=1.0;p=0.7} @self ~onDamaged
+  - sound{s=entity.cat.death;v=1.0;p=0.7} @self ~onDeath
+  - sound{s=entity.cat.hiss;v=1.0;p=0.7} @self ~onEnterCombat
   Options:
     MovementSpeed: 0.30
     PreventOtherDrops: true

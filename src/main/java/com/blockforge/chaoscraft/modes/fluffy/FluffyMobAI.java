@@ -245,7 +245,10 @@ public class FluffyMobAI implements Listener {
 
         double distSq = entity.getLocation().distanceSquared(target.getLocation());
         double attackRange = config.getMobAiAttackRange();
-        if (distSq > (attackRange + 1.0) * (attackRange + 1.0)) {
+        // Use a wider leash (+2.0) than the entry threshold so the mob doesn't
+        // oscillate APPROACH <-> ATTACK if the player jitters slightly. The
+        // small buffer also ensures we always reach the windup tick.
+        if (distSq > (attackRange + 2.0) * (attackRange + 2.0)) {
             transition(state, State.APPROACH, entity);
             return;
         }
@@ -266,16 +269,11 @@ public class FluffyMobAI implements Listener {
         // Bear windup — wait windup-ticks before swinging
         int windup = "bear".equals(state.typeKey) ? config.getBearWindupTicks() : 8;
         if (state.stateTicks >= windup) {
-            // Apply damage via attribute
-            try {
-                double dmg = 2.0;
-                if (entity.getAttribute(Attribute.ATTACK_DAMAGE) != null) {
-                    dmg = entity.getAttribute(Attribute.ATTACK_DAMAGE).getValue();
-                }
-                double diffMult = 1.0;
-                try { diffMult = config.getDifficultyMultiplier(); } catch (Throwable ignored) {}
-                target.damage(Math.max(1.0, dmg * diffMult), entity);
-            } catch (Throwable ignored) {}
+            // Apply damage via shared helper so the difficulty multiplier
+            // (default 15x) is correctly applied. Previously this used the
+            // raw ATTACK_DAMAGE attribute value resulting in ~2hp bites that
+            // felt like the mob wasn't attacking at all.
+            damageWithMultiplier(entity, target, 1.0);
             transition(state, State.COOLDOWN, entity);
         } else {
             playAnim(entity, state, "attack");
@@ -734,10 +732,15 @@ public class FluffyMobAI implements Listener {
         try {
             double base = 2.0;
             var attr = attacker.getAttribute(Attribute.ATTACK_DAMAGE);
-            if (attr != null) base = attr.getValue();
+            // ATTACK_DAMAGE may be 0 for some MM-configured entity types.
+            // Fall back to the default 2.0 base so the mob still bites.
+            if (attr != null && attr.getValue() > 0.0) base = attr.getValue();
             double diffMult = 1.0;
             try { diffMult = config.getDifficultyMultiplier(); } catch (Throwable ignored) {}
-            target.damage(Math.max(1.0, base * multiplier * diffMult), attacker);
+            // Floor of 8.0 hp per bite ensures even degenerate attribute
+            // configurations produce a noticeable hit (~4 hearts unarmored).
+            double finalDamage = Math.max(8.0, base * multiplier * diffMult);
+            target.damage(finalDamage, attacker);
         } catch (Throwable ignored) {}
     }
 

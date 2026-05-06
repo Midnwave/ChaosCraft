@@ -9,6 +9,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.World;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
 import java.util.List;
@@ -274,6 +275,12 @@ public class FluffyMode extends AbstractMode {
             endTaskId = -1;
         }
 
+        // Sweep every fluffy:managed-tagged entity in the fluffy world so
+        // landed rain mobs / ground-spawned mobs from the universal spawner
+        // don't persist after the mode ends. Done BEFORE on-end commands so
+        // user-defined cleanup commands see a clean world.
+        cleanupAllManagedMobs();
+
         // On-end commands
         for (String cmd : fluffyConfig.getOnEndCommands()) {
             plugin.getServer().dispatchCommand(plugin.getServer().getConsoleSender(), cmd);
@@ -338,6 +345,24 @@ public class FluffyMode extends AbstractMode {
                         (float) fluffyConfig.getAmbientSoundVolume(), 1.0f);
             } catch (Throwable ignored) {}
         }
+    }
+
+    /**
+     * Removes every entity in the fluffy world that carries the
+     * {@code fluffy:managed} scoreboard tag. Called from {@link #onEnd()}
+     * after subsystem stops but before on-end commands so the world is
+     * fully clean before any user-defined cleanup commands fire.
+     */
+    private void cleanupAllManagedMobs() {
+        World world = getFluffyWorld();
+        if (world == null) return;
+        int removed = 0;
+        for (Entity e : world.getEntities()) {
+            if (e.getScoreboardTags().contains("fluffy:managed")) {
+                try { e.remove(); removed++; } catch (Throwable ignored) {}
+            }
+        }
+        plugin.getLogger().info("[Fluffy] Cleaned up " + removed + " managed mobs on mode end.");
     }
 
     public World getFluffyWorld() {
