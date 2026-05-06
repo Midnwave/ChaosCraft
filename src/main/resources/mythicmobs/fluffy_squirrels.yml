@@ -1,0 +1,98 @@
+# ============================================================
+# Fluffy Mode - Hostile Squirrel Variants
+# ============================================================
+# Built on top of "Nog's Squirrels" pack (mcmodels.net).
+# Original pack ships peaceful PIG-type squirrels. These variants
+# reuse the same ModelEngine models but configure them as hostile
+# darting mobs for FluffyMode. The original nm_squirrel_* mobs
+# are unaffected.
+#
+# All entries are tagged 'fluffy:managed' and
+# 'fluffy:type:fluffy_squirrel' so FluffyMobAI runs the
+# fluffy_squirrel state machine (jump-pounce + dart specials).
+# Animations: idle, walk, jump, sniff, tail_wiggle, hurt_1/2/3, death.
+# ============================================================
+
+Fluffy_NogSquirrel-Brown:
+  Type: WOLF
+  Display: '&6Bushy Brown Squirrel'
+  Health: 18
+  Damage: 4.0
+  Faction: fluffy
+  AIGoalSelectors:
+  - clear
+  - 0 float
+  AITargetSelectors:
+  - clear
+  Modules:
+    ModelEngine:
+      ModelID: nm_squirrel_brown
+  Options:
+    MovementSpeed: 0.36
+    PreventOtherDrops: true
+    PreventSunburn: true
+    Silent: true
+    Despawn: true
+    NoAI: false
+    Collidable: true
+    Persistent: false
+  Tags:
+  - fluffy:managed
+  - fluffy:type:fluffy_squirrel
+  - fluffy:variant:brown
+
+Fluffy_NogSquirrel-Gray:
+  Type: WOLF
+  Display: '&7Twitchy Gray Squirrel'
+  Health: 18
+  Damage: 4.0
+  Faction: fluffy
+  AIGoalSelectors:
+  - clear
+  - 0 float
+  AITargetSelectors:
+  - clear
+  Modules:
+    ModelEngine:
+      ModelID: nm_squirrel_gray
+  Options:
+    MovementSpeed: 0.36
+    PreventOtherDrops: true
+    PreventSunburn: true
+    Silent: true
+    Despawn: true
+    NoAI: false
+    Collidable: true
+    Persistent: false
+  Tags:
+  - fluffy:managed
+  - fluffy:type:fluffy_squirrel
+  - fluffy:variant:gray
+
+Fluffy_NogSquirrel-Red:
+  Type: WOLF
+  Display: '&cFiery Red Squirrel'
+  Health: 18
+  Damage: 4.5
+  Faction: fluffy
+  AIGoalSelectors:
+  - clear
+  - 0 float
+  AITargetSelectors:
+  - clear
+  Modules:
+    ModelEngine:
+      ModelID: nm_squirrel_red
+  Options:
+    MovementSpeed: 0.38
+    PreventOtherDrops: true
+    PreventSunburn: true
+    Silent: true
+    Despawn: true
+    NoAI: false
+    Collidable: true
+    Persistent: false
+  Tags:
+  - fluffy:managed
+  - fluffy:type:fluffy_squirrel
+  - fluffy:variant:red

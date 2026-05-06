@@ -10,6 +10,10 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
+import org.bukkit.Location;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 
 import java.util.*;
@@ -64,8 +68,258 @@ public class FluffyCommand implements CommandExecutor, TabCompleter {
             case "flora" -> handleFlora(sender, args);
             case "toggleexempt" -> handleToggleExempt(sender, args);
             case "reload" -> handleReload(sender);
+            case "aispawn" -> handleAiSpawn(sender, args);
+            case "aitrigger" -> handleAiTrigger(sender, args);
+            case "ailist" -> handleAiList(sender);
             default -> { sendHelp(sender); yield true; }
         };
+    }
+
+    // ========================
+    // AI roster admin commands
+    // ========================
+
+    private static final List<String> AI_TYPES = List.of(
+            "bunny", "bear", "fox", "dog", "bird", "default", "fluffy_cat", "fluffy_squirrel");
+
+    private static EntityType defaultEntityForType(String type) {
+        return switch (type) {
+            case "bunny" -> EntityType.RABBIT;
+            case "bear" -> EntityType.POLAR_BEAR;
+            case "fox" -> EntityType.FOX;
+            case "dog" -> EntityType.WOLF;
+            case "bird" -> EntityType.PARROT;
+            case "fluffy_cat" -> EntityType.CAT;
+            case "fluffy_squirrel" -> EntityType.RABBIT;
+            default -> EntityType.COW;
+        };
+    }
+
+    private boolean handleAiSpawn(CommandSender sender, String[] args) {
+        if (!(sender instanceof Player player)) {
+            sender.sendMessage(Component.text("Must be a player.", NamedTextColor.RED));
+            return true;
+        }
+        FluffyMode mode = getMode();
+        if (mode == null || mode.getMobAI() == null) {
+            sender.sendMessage(Component.text("Fluffy mob AI unavailable.", NamedTextColor.RED));
+            return true;
+        }
+        if (args.length < 2) {
+            sender.sendMessage(Component.text("Usage: aispawn <type> [variant-id]", NamedTextColor.YELLOW));
+            sender.sendMessage(Component.text("Types: " + String.join(", ", AI_TYPES), NamedTextColor.GRAY));
+            return true;
+        }
+        String type = args[1].toLowerCase();
+        if (!AI_TYPES.contains(type)) {
+            sender.sendMessage(Component.text("Unknown type: " + type, NamedTextColor.RED));
+            sender.sendMessage(Component.text("Types: " + String.join(", ", AI_TYPES), NamedTextColor.GRAY));
+            return true;
+        }
+
+        Location loc = player.getLocation();
+        LivingEntity spawned = null;
+
+        if (args.length >= 3) {
+            String variant = args[2];
+            // Try MythicMobs first
+            try {
+                Class<?> mmApiCls = Class.forName("io.lumine.mythic.bukkit.MythicBukkit");
+                Object inst = mmApiCls.getMethod("inst").invoke(null);
+                Object mobManager = mmApiCls.getMethod("getMobManager").invoke(inst);
+                Object optMob = mobManager.getClass().getMethod("getMythicMob", String.class).invoke(mobManager, variant);
+                if (optMob != null) {
+                    Object opt = optMob;
+                    Object mythicMob = opt.getClass().getMethod("orElse", Object.class).invoke(opt, new Object[]{null});
+                    if (mythicMob != null) {
+                        Class<?> bukkitAdapter = Class.forName("io.lumine.mythic.bukkit.BukkitAdapter");
+                        Object abstractLoc = bukkitAdapter.getMethod("adapt", Location.class).invoke(null, loc);
+                        Object active = mythicMob.getClass().getMethod("spawn",
+                                Class.forName("io.lumine.mythic.api.adapters.AbstractLocation"), double.class)
+                                .invoke(mythicMob, abstractLoc, 1.0);
+                        if (active != null) {
+                            Object bukkitEnt = active.getClass().getMethod("getEntity").invoke(active);
+                            Object actualBukkit = bukkitEnt.getClass().getMethod("getBukkitEntity").invoke(bukkitEnt);
+                            if (actualBukkit instanceof LivingEntity le) spawned = le;
+                        }
+                    }
+                }
+            } catch (Throwable ignored) {
+                // MythicMobs not present or variant not an MM mob — fall back to vanilla
+            }
+
+            if (spawned == null) {
+                // Try as vanilla EntityType
+                try {
+                    EntityType et = EntityType.valueOf(variant.toUpperCase());
+                    Entity e = loc.getWorld().spawnEntity(loc, et);
+                    if (e instanceof LivingEntity le) spawned = le;
+                    else { e.remove(); }
+                } catch (IllegalArgumentException ex) {
+                    sender.sendMessage(Component.text("Variant '" + variant + "' not a valid MM id or EntityType.",
+                            NamedTextColor.RED));
+                    return true;
+                }
+            }
+        } else {
+            EntityType et = defaultEntityForType(type);
+            try {
+                Entity e = loc.getWorld().spawnEntity(loc, et);
+                if (e instanceof LivingEntity le) spawned = le;
+                else { e.remove(); }
+            } catch (Throwable t) {
+                sender.sendMessage(Component.text("Failed to spawn: " + t.getMessage(), NamedTextColor.RED));
+                return true;
+            }
+        }
+
+        if (spawned == null) {
+            sender.sendMessage(Component.text("Spawn failed.", NamedTextColor.RED));
+            return true;
+        }
+        spawned.addScoreboardTag("fluffy:managed");
+        spawned.addScoreboardTag("fluffy:type:" + type);
+        mode.getMobAI().register(spawned);
+        sender.sendMessage(Component.text("Spawned " + spawned.getType().name() + " as type=" + type
+                + " at " + loc.getBlockX() + "," + loc.getBlockY() + "," + loc.getBlockZ(), NamedTextColor.GREEN));
+        return true;
+    }
+
+    private boolean handleAiTrigger(CommandSender sender, String[] args) {
+        if (!(sender instanceof Player player)) {
+            sender.sendMessage(Component.text("Must be a player.", NamedTextColor.RED));
+            return true;
+        }
+        FluffyMode mode = getMode();
+        if (mode == null || mode.getMobAI() == null) {
+            sender.sendMessage(Component.text("Fluffy mob AI unavailable.", NamedTextColor.RED));
+            return true;
+        }
+        if (args.length < 3) {
+            sender.sendMessage(Component.text("Usage: aitrigger <typekey> <special-name>", NamedTextColor.YELLOW));
+            sendSpecialList(sender);
+            return true;
+        }
+        String typeKey = args[1].toLowerCase();
+        String specialName = args[2].toLowerCase();
+        if (!AI_TYPES.contains(typeKey)) {
+            sender.sendMessage(Component.text("Unknown type: " + typeKey, NamedTextColor.RED));
+            sendSpecialList(sender);
+            return true;
+        }
+        if (!validSpecialsFor(typeKey).contains(specialName)) {
+            sender.sendMessage(Component.text("Unknown special '" + specialName + "' for type " + typeKey,
+                    NamedTextColor.RED));
+            sender.sendMessage(Component.text("Valid: " + String.join(", ", validSpecialsFor(typeKey)),
+                    NamedTextColor.GRAY));
+            return true;
+        }
+        LivingEntity nearest = mode.getMobAI().findNearestManaged(player.getLocation(), typeKey, 30.0);
+        if (nearest == null) {
+            sender.sendMessage(Component.text("No managed " + typeKey + " mob within 30 blocks.",
+                    NamedTextColor.RED));
+            return true;
+        }
+        boolean ok = mode.getMobAI().forceTriggerSpecial(nearest, specialName);
+        if (ok) {
+            sender.sendMessage(Component.text("Triggered '" + specialName + "' on "
+                    + nearest.getType().name() + " (" + nearest.getUniqueId() + ").", NamedTextColor.GREEN));
+        } else {
+            sender.sendMessage(Component.text("Failed to trigger (no target?).", NamedTextColor.YELLOW));
+        }
+        return true;
+    }
+
+    private boolean handleAiList(CommandSender sender) {
+        FluffyMode mode = getMode();
+        if (mode == null) {
+            sender.sendMessage(Component.text("Not registered.", NamedTextColor.RED));
+            return true;
+        }
+        FluffyConfig cfg = mode.getFluffyConfig();
+        sender.sendMessage(Component.text("=== Fluffy Per-Type Specials ===", NamedTextColor.LIGHT_PURPLE));
+        sender.sendMessage(Component.text("global special-roll-on-attack: " + cfg.getSpecialRollOnAttack(),
+                NamedTextColor.GRAY));
+
+        sender.sendMessage(Component.text("[bunny]", NamedTextColor.AQUA));
+        sender.sendMessage(Component.text("  tackle (cd " + cfg.getBunnyTackleCooldownTicks()
+                + "t, dmgx" + cfg.getBunnyTackleDamageMult() + ")", NamedTextColor.GRAY));
+        sender.sendMessage(Component.text("  multiply (cd " + cfg.getBunnyMultiplyCooldownTicks()
+                + "t, hp<=" + cfg.getBunnyMultiplyHpPercent() + "%, chance "
+                + cfg.getBunnyMultiplyChance() + ", spawns " + cfg.getBunnyMultiplySpawnCount() + ")",
+                NamedTextColor.GRAY));
+
+        sender.sendMessage(Component.text("[bear]", NamedTextColor.AQUA));
+        sender.sendMessage(Component.text("  paw_swipe (cd " + cfg.getBearPawCooldownTicks()
+                + "t, cone " + cfg.getBearPawConeRadius() + "/" + cfg.getBearPawConeAngleDeg()
+                + "deg, dmgx" + cfg.getBearPawDamageMult() + ")", NamedTextColor.GRAY));
+        sender.sendMessage(Component.text("  slam (cd " + cfg.getBearSlamCooldownTicks()
+                + "t, r" + cfg.getBearSlamRadius() + ", knockup " + cfg.getBearSlamKnockupY()
+                + ", dmgx" + cfg.getBearSlamDamageMult() + ")", NamedTextColor.GRAY));
+
+        sender.sendMessage(Component.text("[fox]", NamedTextColor.AQUA));
+        sender.sendMessage(Component.text("  pounce (cd " + cfg.getFoxPounceCooldownTicks()
+                + "t, dist " + cfg.getFoxPounceDistance() + ", dmgx" + cfg.getFoxPounceDamageMult() + ")",
+                NamedTextColor.GRAY));
+
+        sender.sendMessage(Component.text("[dog]", NamedTextColor.AQUA));
+        sender.sendMessage(Component.text("  pack_lunge (cd " + cfg.getDogPackLungeCooldownTicks()
+                + "t, alert " + cfg.getDogPackAlertRange() + ", spdx" + cfg.getDogPackLungeSpeedMult() + ")",
+                NamedTextColor.GRAY));
+
+        sender.sendMessage(Component.text("[bird]", NamedTextColor.AQUA));
+        sender.sendMessage(Component.text("  dive (cd " + cfg.getBirdDiveCooldownTicks()
+                + "t, rise " + cfg.getBirdDiveYRise() + ", drop " + cfg.getBirdDiveYDropVel()
+                + ", dmgx" + cfg.getBirdDiveDamageMult() + ")", NamedTextColor.GRAY));
+        sender.sendMessage(Component.text("  buffet (cd " + cfg.getBirdBuffetCooldownTicks()
+                + "t, range " + cfg.getBirdBuffetRange() + ", knock " + cfg.getBirdBuffetKnockback()
+                + ", dmgx" + cfg.getBirdBuffetDamageMult() + ")", NamedTextColor.GRAY));
+
+        sender.sendMessage(Component.text("[fluffy_cat]", NamedTextColor.AQUA));
+        sender.sendMessage(Component.text("  wiggle_pounce (chance " + cfg.getCatWigglePounceChance()
+                + ", stalk/wiggle/prep " + cfg.getCatStalkTicks() + "/" + cfg.getCatWiggleTicks() + "/"
+                + cfg.getCatPrepareAttackTicks() + "t, dmgx" + cfg.getCatPounceDamageMult() + ")",
+                NamedTextColor.GRAY));
+        sender.sendMessage(Component.text("  triple_swipe (chance " + cfg.getCatTripleSwipeChance()
+                + ", interval " + cfg.getCatTripleSwipeIntervalTicks() + "t, dmgx"
+                + cfg.getCatTripleSwipeDamageMult() + ")", NamedTextColor.GRAY));
+        sender.sendMessage(Component.text("  no_theatre (fallback melee)", NamedTextColor.GRAY));
+        sender.sendMessage(Component.text("  shared cooldown " + cfg.getCatSpecialCooldownTicks() + "t",
+                NamedTextColor.DARK_GRAY));
+
+        sender.sendMessage(Component.text("[fluffy_squirrel]", NamedTextColor.AQUA));
+        sender.sendMessage(Component.text("  jump_pounce (cd " + cfg.getSquirrelJumpPounceCooldownTicks()
+                + "t, dist " + cfg.getSquirrelJumpPounceDistance() + ", dmgx"
+                + cfg.getSquirrelJumpPounceDamageMult() + ")", NamedTextColor.GRAY));
+        sender.sendMessage(Component.text("  dart (cd " + cfg.getSquirrelDartCooldownTicks()
+                + "t, hp<=" + cfg.getSquirrelDartHpPercent() + "%, hops "
+                + cfg.getSquirrelDartHopCount() + "x@" + cfg.getSquirrelDartHopDistance() + "b)",
+                NamedTextColor.GRAY));
+
+        sender.sendMessage(Component.text("Managed mobs: "
+                + (mode.getMobAI() == null ? 0 : mode.getMobAI().getManagedMobCount()), NamedTextColor.GRAY));
+        return true;
+    }
+
+    private List<String> validSpecialsFor(String typeKey) {
+        return switch (typeKey) {
+            case "bunny" -> List.of("tackle", "multiply");
+            case "bear" -> List.of("paw_swipe", "slam");
+            case "fox" -> List.of("pounce");
+            case "dog" -> List.of("pack_lunge");
+            case "bird" -> List.of("dive", "buffet");
+            case "fluffy_cat" -> List.of("wiggle_pounce", "triple_swipe", "no_theatre");
+            case "fluffy_squirrel" -> List.of("jump_pounce", "dart");
+            default -> Collections.emptyList();
+        };
+    }
+
+    private void sendSpecialList(CommandSender sender) {
+        for (String t : AI_TYPES) {
+            List<String> specials = validSpecialsFor(t);
+            if (specials.isEmpty()) continue;
+            sender.sendMessage(Component.text(t + ": " + String.join(", ", specials), NamedTextColor.GRAY));
+        }
     }
 
     private boolean handleStatus(CommandSender sender) {
@@ -324,7 +578,8 @@ public class FluffyCommand implements CommandExecutor, TabCompleter {
         }
         if (args.length == 1) {
             return filterStartsWith(args[0], "status", "debug", "test", "list", "clearattacks",
-                    "spawninterval", "rainspawn", "rainstatus", "flora", "toggleexempt", "reload");
+                    "spawninterval", "rainspawn", "rainstatus", "flora", "toggleexempt", "reload",
+                    "aispawn", "aitrigger", "ailist");
         }
         if (args.length == 2) {
             String sub = args[0].toLowerCase();
@@ -339,6 +594,15 @@ public class FluffyCommand implements CommandExecutor, TabCompleter {
             if ("flora".equals(sub)) return filterStartsWith(args[1], "small", "medium", "large");
             if ("toggleexempt".equals(sub)) return null;
             if ("spawninterval".equals(sub)) return List.of("20", "40", "60", "100");
+            if ("aispawn".equals(sub) || "aitrigger".equals(sub)) {
+                return filterStartsWith(args[1], AI_TYPES);
+            }
+        }
+        if (args.length == 3) {
+            String sub = args[0].toLowerCase();
+            if ("aitrigger".equals(sub)) {
+                return filterStartsWith(args[2], validSpecialsFor(args[1].toLowerCase()));
+            }
         }
         return Collections.emptyList();
     }
@@ -370,6 +634,12 @@ public class FluffyCommand implements CommandExecutor, TabCompleter {
                 NamedTextColor.LIGHT_PURPLE));
         sender.sendMessage(Component.text("toggleexempt [player] — Toggle exempt", NamedTextColor.LIGHT_PURPLE));
         sender.sendMessage(Component.text("reload — Reload configs", NamedTextColor.LIGHT_PURPLE));
+        sender.sendMessage(Component.text("aispawn <type> [variant] — Spawn a managed AI mob",
+                NamedTextColor.LIGHT_PURPLE));
+        sender.sendMessage(Component.text("aitrigger <type> <special> — Force-fire a special on nearest mob",
+                NamedTextColor.LIGHT_PURPLE));
+        sender.sendMessage(Component.text("ailist — List per-type specials with cooldowns/chances",
+                NamedTextColor.LIGHT_PURPLE));
     }
 
     private void sendIdList(CommandSender sender, List<String> ids) {

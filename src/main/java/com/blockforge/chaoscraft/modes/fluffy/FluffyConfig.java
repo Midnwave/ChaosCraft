@@ -24,7 +24,7 @@ import java.util.Map;
  */
 public class FluffyConfig {
 
-    private static final int CURRENT_CONFIG_VERSION = 1;
+    private static final int CURRENT_CONFIG_VERSION = 3;
 
     private final ChaosCraftPlugin plugin;
     private final File configFile;
@@ -47,7 +47,29 @@ public class FluffyConfig {
         boolean needsSave = false;
 
         // ── Top-level ───────────────────────────────────────────────────
+        int existingVersion = config.contains("config-version") ? config.getInt("config-version") : 0;
         if (!config.contains("config-version")) { config.set("config-version", CURRENT_CONFIG_VERSION); needsSave = true; }
+
+        // Upgrade path: v2 → v3 — replace the pure-vanilla rain pool with the
+        // curated MythicMobs-aware default pool. Only replace if the existing
+        // pool has NO mythicmobs entries (i.e. user has not customised it).
+        if (existingVersion > 0 && existingVersion < 3 && config.contains("rain-from-sky.mobs")) {
+            List<Map<?, ?>> existingPool = config.getMapList("rain-from-sky.mobs");
+            boolean hasMythicEntry = false;
+            for (Map<?, ?> entry : existingPool) {
+                Object t = entry.get("type");
+                if (t != null && "mythicmobs".equalsIgnoreCase(t.toString())) {
+                    hasMythicEntry = true;
+                    break;
+                }
+            }
+            if (!hasMythicEntry) {
+                config.set("rain-from-sky.mobs", buildDefaultRainMobs());
+                plugin.getLogger().info("[FluffyConfig] Upgraded rain-from-sky.mobs to v3 default pool (47 dogs + 7 cats + 3 squirrels + 6 vanilla backups).");
+                needsSave = true;
+            }
+        }
+
         if (config.getInt("config-version") < CURRENT_CONFIG_VERSION) { config.set("config-version", CURRENT_CONFIG_VERSION); needsSave = true; }
         if (!config.contains("duration-seconds")) { config.set("duration-seconds", 180); needsSave = true; }
         if (!config.contains("arena-radius")) { config.set("arena-radius", 50); needsSave = true; }
@@ -85,6 +107,74 @@ public class FluffyConfig {
         if (!config.contains("mob-ai.fox.strafe-radius")) { config.set("mob-ai.fox.strafe-radius", 3.0); needsSave = true; }
         if (!config.contains("mob-ai.dog.pack-alert-range")) { config.set("mob-ai.dog.pack-alert-range", 10.0); needsSave = true; }
         if (!config.contains("mob-ai.bird.bob-amplitude")) { config.set("mob-ai.bird.bob-amplitude", 0.2); needsSave = true; }
+
+        // ── Per-type attack roster (config-version 2) ───────────────────
+        if (!config.contains("mob-ai.special-roll-on-attack")) { config.set("mob-ai.special-roll-on-attack", 0.35); needsSave = true; }
+
+        // bunny specials
+        if (!config.contains("mob-ai.bunny.tackle-damage-multiplier")) { config.set("mob-ai.bunny.tackle-damage-multiplier", 1.5); needsSave = true; }
+        if (!config.contains("mob-ai.bunny.tackle-leap-y")) { config.set("mob-ai.bunny.tackle-leap-y", 0.5); needsSave = true; }
+        if (!config.contains("mob-ai.bunny.tackle-leap-forward")) { config.set("mob-ai.bunny.tackle-leap-forward", 0.6); needsSave = true; }
+        if (!config.contains("mob-ai.bunny.tackle-cooldown-ticks")) { config.set("mob-ai.bunny.tackle-cooldown-ticks", 200); needsSave = true; }
+        if (!config.contains("mob-ai.bunny.multiply-chance")) { config.set("mob-ai.bunny.multiply-chance", 0.4); needsSave = true; }
+        if (!config.contains("mob-ai.bunny.multiply-hp-percent")) { config.set("mob-ai.bunny.multiply-hp-percent", 60); needsSave = true; }
+        if (!config.contains("mob-ai.bunny.multiply-spawn-count")) { config.set("mob-ai.bunny.multiply-spawn-count", 1); needsSave = true; }
+        if (!config.contains("mob-ai.bunny.multiply-cooldown-ticks")) { config.set("mob-ai.bunny.multiply-cooldown-ticks", 600); needsSave = true; }
+        if (!config.contains("mob-ai.bunny.multiply-child-hp-multiplier")) { config.set("mob-ai.bunny.multiply-child-hp-multiplier", 0.5); needsSave = true; }
+
+        // bear specials
+        if (!config.contains("mob-ai.bear.paw-cone-radius")) { config.set("mob-ai.bear.paw-cone-radius", 2.5); needsSave = true; }
+        if (!config.contains("mob-ai.bear.paw-cone-angle-degrees")) { config.set("mob-ai.bear.paw-cone-angle-degrees", 120); needsSave = true; }
+        if (!config.contains("mob-ai.bear.paw-damage-multiplier")) { config.set("mob-ai.bear.paw-damage-multiplier", 1.5); needsSave = true; }
+        if (!config.contains("mob-ai.bear.paw-cooldown-ticks")) { config.set("mob-ai.bear.paw-cooldown-ticks", 160); needsSave = true; }
+        if (!config.contains("mob-ai.bear.slam-radius")) { config.set("mob-ai.bear.slam-radius", 3.0); needsSave = true; }
+        if (!config.contains("mob-ai.bear.slam-knockup-y")) { config.set("mob-ai.bear.slam-knockup-y", 0.7); needsSave = true; }
+        if (!config.contains("mob-ai.bear.slam-damage-multiplier")) { config.set("mob-ai.bear.slam-damage-multiplier", 1.2); needsSave = true; }
+        if (!config.contains("mob-ai.bear.slam-cooldown-ticks")) { config.set("mob-ai.bear.slam-cooldown-ticks", 200); needsSave = true; }
+
+        // fox specials
+        if (!config.contains("mob-ai.fox.pounce-distance")) { config.set("mob-ai.fox.pounce-distance", 4.0); needsSave = true; }
+        if (!config.contains("mob-ai.fox.pounce-damage-multiplier")) { config.set("mob-ai.fox.pounce-damage-multiplier", 1.4); needsSave = true; }
+        if (!config.contains("mob-ai.fox.pounce-y-velocity")) { config.set("mob-ai.fox.pounce-y-velocity", 0.5); needsSave = true; }
+        if (!config.contains("mob-ai.fox.pounce-cooldown-ticks")) { config.set("mob-ai.fox.pounce-cooldown-ticks", 160); needsSave = true; }
+
+        // dog specials
+        if (!config.contains("mob-ai.dog.pack-lunge-speed-multiplier")) { config.set("mob-ai.dog.pack-lunge-speed-multiplier", 1.6); needsSave = true; }
+        if (!config.contains("mob-ai.dog.pack-lunge-cooldown-ticks")) { config.set("mob-ai.dog.pack-lunge-cooldown-ticks", 240); needsSave = true; }
+
+        // bird specials
+        if (!config.contains("mob-ai.bird.dive-y-rise")) { config.set("mob-ai.bird.dive-y-rise", 3.0); needsSave = true; }
+        if (!config.contains("mob-ai.bird.dive-y-drop-velocity")) { config.set("mob-ai.bird.dive-y-drop-velocity", -1.4); needsSave = true; }
+        if (!config.contains("mob-ai.bird.dive-damage-multiplier")) { config.set("mob-ai.bird.dive-damage-multiplier", 1.4); needsSave = true; }
+        if (!config.contains("mob-ai.bird.dive-cooldown-ticks")) { config.set("mob-ai.bird.dive-cooldown-ticks", 180); needsSave = true; }
+        if (!config.contains("mob-ai.bird.buffet-range")) { config.set("mob-ai.bird.buffet-range", 2.0); needsSave = true; }
+        if (!config.contains("mob-ai.bird.buffet-knockback-strength")) { config.set("mob-ai.bird.buffet-knockback-strength", 0.9); needsSave = true; }
+        if (!config.contains("mob-ai.bird.buffet-damage-multiplier")) { config.set("mob-ai.bird.buffet-damage-multiplier", 0.5); needsSave = true; }
+        if (!config.contains("mob-ai.bird.buffet-cooldown-ticks")) { config.set("mob-ai.bird.buffet-cooldown-ticks", 80); needsSave = true; }
+
+        // fluffy_cat (NEW)
+        if (!config.contains("mob-ai.fluffy_cat.wiggle-pounce-chance")) { config.set("mob-ai.fluffy_cat.wiggle-pounce-chance", 0.3); needsSave = true; }
+        if (!config.contains("mob-ai.fluffy_cat.stalk-ticks")) { config.set("mob-ai.fluffy_cat.stalk-ticks", 20); needsSave = true; }
+        if (!config.contains("mob-ai.fluffy_cat.wiggle-ticks")) { config.set("mob-ai.fluffy_cat.wiggle-ticks", 30); needsSave = true; }
+        if (!config.contains("mob-ai.fluffy_cat.prepare-attack-ticks")) { config.set("mob-ai.fluffy_cat.prepare-attack-ticks", 14); needsSave = true; }
+        if (!config.contains("mob-ai.fluffy_cat.pounce-distance")) { config.set("mob-ai.fluffy_cat.pounce-distance", 3.5); needsSave = true; }
+        if (!config.contains("mob-ai.fluffy_cat.pounce-y-velocity")) { config.set("mob-ai.fluffy_cat.pounce-y-velocity", 0.55); needsSave = true; }
+        if (!config.contains("mob-ai.fluffy_cat.pounce-damage-multiplier")) { config.set("mob-ai.fluffy_cat.pounce-damage-multiplier", 1.6); needsSave = true; }
+        if (!config.contains("mob-ai.fluffy_cat.triple-swipe-chance")) { config.set("mob-ai.fluffy_cat.triple-swipe-chance", 0.25); needsSave = true; }
+        if (!config.contains("mob-ai.fluffy_cat.triple-swipe-interval-ticks")) { config.set("mob-ai.fluffy_cat.triple-swipe-interval-ticks", 10); needsSave = true; }
+        if (!config.contains("mob-ai.fluffy_cat.triple-swipe-damage-multiplier")) { config.set("mob-ai.fluffy_cat.triple-swipe-damage-multiplier", 0.8); needsSave = true; }
+        if (!config.contains("mob-ai.fluffy_cat.special-cooldown-ticks")) { config.set("mob-ai.fluffy_cat.special-cooldown-ticks", 200); needsSave = true; }
+
+        // fluffy_squirrel (NEW)
+        if (!config.contains("mob-ai.fluffy_squirrel.jump-pounce-distance")) { config.set("mob-ai.fluffy_squirrel.jump-pounce-distance", 3.0); needsSave = true; }
+        if (!config.contains("mob-ai.fluffy_squirrel.jump-pounce-y-velocity")) { config.set("mob-ai.fluffy_squirrel.jump-pounce-y-velocity", 0.45); needsSave = true; }
+        if (!config.contains("mob-ai.fluffy_squirrel.jump-pounce-damage-multiplier")) { config.set("mob-ai.fluffy_squirrel.jump-pounce-damage-multiplier", 1.3); needsSave = true; }
+        if (!config.contains("mob-ai.fluffy_squirrel.jump-pounce-cooldown-ticks")) { config.set("mob-ai.fluffy_squirrel.jump-pounce-cooldown-ticks", 100); needsSave = true; }
+        if (!config.contains("mob-ai.fluffy_squirrel.dart-hp-percent")) { config.set("mob-ai.fluffy_squirrel.dart-hp-percent", 50); needsSave = true; }
+        if (!config.contains("mob-ai.fluffy_squirrel.dart-hop-count")) { config.set("mob-ai.fluffy_squirrel.dart-hop-count", 3); needsSave = true; }
+        if (!config.contains("mob-ai.fluffy_squirrel.dart-hop-distance")) { config.set("mob-ai.fluffy_squirrel.dart-hop-distance", 2.0); needsSave = true; }
+        if (!config.contains("mob-ai.fluffy_squirrel.dart-hop-interval-ticks")) { config.set("mob-ai.fluffy_squirrel.dart-hop-interval-ticks", 6); needsSave = true; }
+        if (!config.contains("mob-ai.fluffy_squirrel.dart-cooldown-ticks")) { config.set("mob-ai.fluffy_squirrel.dart-cooldown-ticks", 240); needsSave = true; }
 
         // ── Herd Pulse ──────────────────────────────────────────────────
         if (!config.contains("herd-pulse.enabled")) { config.set("herd-pulse.enabled", true); needsSave = true; }
@@ -166,26 +256,126 @@ public class FluffyConfig {
         }
     }
 
+    /**
+     * Curated default rain pool: 47 dogs (one per breed) + 7 fluffy cats +
+     * 3 fluffy squirrels + 6 vanilla backups = 63 weighted entries.
+     *
+     * Weight scheme:
+     *   Small dogs:           8 (most common — fast pressure)
+     *   Medium dogs:          6
+     *   Large dogs:           3 (rare heavy hitters)
+     *   Fluffy cats (6):      5
+     *   Fluffy cat Fallen:    2 (boss-tier)
+     *   Fluffy squirrels (3): 7 (frantic darters)
+     *   Vanilla backup (6):   2 (low — fallback only)
+     *
+     * MM mobs use HP/damage multipliers of 1.0 (their YAMLs already set
+     * proper baselines). Vanilla mobs get 1.5/1.5.
+     */
     private List<Map<String, Object>> buildDefaultRainMobs() {
         List<Map<String, Object>> list = new ArrayList<>();
-        list.add(rainMob("CAT", 12, 1.5, 1.5));
-        list.add(rainMob("WOLF", 8, 2.0, 1.8));
-        list.add(rainMob("RABBIT", 10, 1.5, 1.5));
-        list.add(rainMob("OCELOT", 6, 1.7, 1.6));
-        list.add(rainMob("FOX", 5, 1.8, 1.7));
-        list.add(rainMob("PARROT", 4, 1.5, 1.5));
+
+        // ── Small dogs (14, weight 8 each) ──────────────────────────────
+        list.add(mmMob("DogBeagleTan", 8));
+        list.add(mmMob("DogBasenjiBlack", 8));
+        list.add(mmMob("DogBostonTerrierSeal", 8));
+        list.add(mmMob("DogBullTerrierBlack", 8));
+        list.add(mmMob("DogCockerSpanielBlack", 8));
+        list.add(mmMob("DogDachshundBlackTan", 8));
+        list.add(mmMob("DogCkCharlesSpanielBlenheim", 8));
+        list.add(mmMob("DogItalianGreyhoundBlue", 8));
+        list.add(mmMob("DogMiniPinscherRed", 8));
+        list.add(mmMob("DogPugFawn", 8));
+        list.add(mmMob("DogRussellTerrierTriBrown", 8));
+        list.add(mmMob("DogScottishTerrierBlack", 8));
+        list.add(mmMob("DogShibaInuRed", 8));
+        list.add(mmMob("DogWhippetBlue", 8));
+
+        // ── Medium dogs (28, weight 6 each) ─────────────────────────────
+        list.add(mmMob("DogAiredaleTerrierMedium", 6));
+        list.add(mmMob("DogAustralianShepherdBlack", 6));
+        list.add(mmMob("DogAmericanFoxhoundMedium", 6));
+        list.add(mmMob("DogBloodhoundRed", 6));
+        list.add(mmMob("DogBorderCollieBlack", 6));
+        list.add(mmMob("DogBoxerMedium", 6));
+        list.add(mmMob("DogBulldogFawn", 6));
+        list.add(mmMob("DogCardiganCorgiSable", 6));
+        list.add(mmMob("DogCollieSable", 6));
+        list.add(mmMob("DogDalmatianWhite", 6));
+        list.add(mmMob("DogDobermanBlack", 6));
+        list.add(mmMob("DogGermanShepherdStandard", 6));
+        list.add(mmMob("DogGermanSpitzRed", 6));
+        list.add(mmMob("DogGoldenRetrieverMedium", 6));
+        list.add(mmMob("DogGreyhoundWhite", 6));
+        list.add(mmMob("DogHuskyGray", 6));
+        list.add(mmMob("DogIrishSetterMedium", 6));
+        list.add(mmMob("DogLabRetrieverYellow", 6));
+        list.add(mmMob("DogMudiBrown", 6));
+        list.add(mmMob("DogNorwegianElkhoundMedium", 6));
+        list.add(mmMob("DogPembrokeCorgiRed", 6));
+        list.add(mmMob("DogPitBullBrown", 6));
+        list.add(mmMob("DogPoodleBlack", 6));
+        list.add(mmMob("DogRedboneCoonhoundRed", 6));
+        list.add(mmMob("DogRottweilerMahogany", 6));
+        list.add(mmMob("DogSchnauzerPepperSalt", 6));
+        list.add(mmMob("DogShetlandSheepdogSable", 6));
+        list.add(mmMob("DogTreeWalkHoundTricolor", 6));
+
+        // ── Large dogs (5, weight 3 each) ───────────────────────────────
+        list.add(mmMob("DogAlaskanMalamuteGray", 3));
+        list.add(mmMob("DogBerneseMountainDogTan", 3));
+        list.add(mmMob("DogGreatDaneFawn", 3));
+        list.add(mmMob("DogMastiffFawn", 3));
+        list.add(mmMob("DogSaintBernardBrown", 3));
+
+        // ── Fluffy cats (7) — 6 regular @ weight 5, Fallen @ weight 2 ──
+        list.add(mmMob("Fluffy_NocsyCat-Munchkin", 5));
+        list.add(mmMob("Fluffy_NocsyCat-Bombay", 5));
+        list.add(mmMob("Fluffy_NocsyCat-Siamese", 5));
+        list.add(mmMob("Fluffy_NocsyCat-ScottishFold", 5));
+        list.add(mmMob("Fluffy_NocsyCat-MaineCoon", 5));
+        list.add(mmMob("Fluffy_NocsyCat-European", 5));
+        list.add(mmMob("Fluffy_NocsyCat-Fallen", 2));
+
+        // ── Fluffy squirrels (3, weight 7 each) ─────────────────────────
+        list.add(mmMob("Fluffy_NogSquirrel-Brown", 7));
+        list.add(mmMob("Fluffy_NogSquirrel-Gray", 7));
+        list.add(mmMob("Fluffy_NogSquirrel-Red", 7));
+
+        // ── Vanilla backups (6, weight 2 each, hp/dmg 1.5) ──────────────
+        list.add(vanillaMob("CAT", 2));
+        list.add(vanillaMob("WOLF", 2));
+        list.add(vanillaMob("RABBIT", 2));
+        list.add(vanillaMob("OCELOT", 2));
+        list.add(vanillaMob("FOX", 2));
+        list.add(vanillaMob("PARROT", 2));
+
         return list;
     }
 
-    private Map<String, Object> rainMob(String id, int weight, double hp, double dmg) {
+    /** MythicMobs entry helper. Multipliers default to 1.0 (MM YAML sets HP/damage). */
+    private Map<String, Object> mmMob(String id, int weight) {
+        Map<String, Object> m = new LinkedHashMap<>();
+        m.put("id", id);
+        m.put("type", "mythicmobs");
+        m.put("weight", weight);
+        m.put("min-count", 1);
+        m.put("max-count", 1);
+        m.put("health-multiplier", 1.0);
+        m.put("damage-multiplier", 1.0);
+        return m;
+    }
+
+    /** Vanilla entry helper. Multipliers default to 1.5/1.5 (vanilla baselines are weak). */
+    private Map<String, Object> vanillaMob(String id, int weight) {
         Map<String, Object> m = new LinkedHashMap<>();
         m.put("id", id);
         m.put("type", "vanilla");
         m.put("weight", weight);
         m.put("min-count", 1);
         m.put("max-count", 1);
-        m.put("health-multiplier", hp);
-        m.put("damage-multiplier", dmg);
+        m.put("health-multiplier", 1.5);
+        m.put("damage-multiplier", 1.5);
         return m;
     }
 
@@ -247,6 +437,74 @@ public class FluffyConfig {
     public double getFoxStrafeRadius() { return config.getDouble("mob-ai.fox.strafe-radius", 3.0); }
     public double getDogPackAlertRange() { return config.getDouble("mob-ai.dog.pack-alert-range", 10.0); }
     public double getBirdBobAmplitude() { return config.getDouble("mob-ai.bird.bob-amplitude", 0.2); }
+
+    // ── Per-type specials (config-version 2) ────────────────────────
+    public double getSpecialRollOnAttack() { return config.getDouble("mob-ai.special-roll-on-attack", 0.35); }
+
+    // bunny
+    public double getBunnyTackleDamageMult() { return config.getDouble("mob-ai.bunny.tackle-damage-multiplier", 1.5); }
+    public double getBunnyTackleLeapY() { return config.getDouble("mob-ai.bunny.tackle-leap-y", 0.5); }
+    public double getBunnyTackleLeapForward() { return config.getDouble("mob-ai.bunny.tackle-leap-forward", 0.6); }
+    public int getBunnyTackleCooldownTicks() { return config.getInt("mob-ai.bunny.tackle-cooldown-ticks", 200); }
+    public double getBunnyMultiplyChance() { return config.getDouble("mob-ai.bunny.multiply-chance", 0.4); }
+    public int getBunnyMultiplyHpPercent() { return config.getInt("mob-ai.bunny.multiply-hp-percent", 60); }
+    public int getBunnyMultiplySpawnCount() { return config.getInt("mob-ai.bunny.multiply-spawn-count", 1); }
+    public int getBunnyMultiplyCooldownTicks() { return config.getInt("mob-ai.bunny.multiply-cooldown-ticks", 600); }
+    public double getBunnyMultiplyChildHpMult() { return config.getDouble("mob-ai.bunny.multiply-child-hp-multiplier", 0.5); }
+
+    // bear
+    public double getBearPawConeRadius() { return config.getDouble("mob-ai.bear.paw-cone-radius", 2.5); }
+    public double getBearPawConeAngleDeg() { return config.getDouble("mob-ai.bear.paw-cone-angle-degrees", 120); }
+    public double getBearPawDamageMult() { return config.getDouble("mob-ai.bear.paw-damage-multiplier", 1.5); }
+    public int getBearPawCooldownTicks() { return config.getInt("mob-ai.bear.paw-cooldown-ticks", 160); }
+    public double getBearSlamRadius() { return config.getDouble("mob-ai.bear.slam-radius", 3.0); }
+    public double getBearSlamKnockupY() { return config.getDouble("mob-ai.bear.slam-knockup-y", 0.7); }
+    public double getBearSlamDamageMult() { return config.getDouble("mob-ai.bear.slam-damage-multiplier", 1.2); }
+    public int getBearSlamCooldownTicks() { return config.getInt("mob-ai.bear.slam-cooldown-ticks", 200); }
+
+    // fox
+    public double getFoxPounceDistance() { return config.getDouble("mob-ai.fox.pounce-distance", 4.0); }
+    public double getFoxPounceDamageMult() { return config.getDouble("mob-ai.fox.pounce-damage-multiplier", 1.4); }
+    public double getFoxPounceYVel() { return config.getDouble("mob-ai.fox.pounce-y-velocity", 0.5); }
+    public int getFoxPounceCooldownTicks() { return config.getInt("mob-ai.fox.pounce-cooldown-ticks", 160); }
+
+    // dog
+    public double getDogPackLungeSpeedMult() { return config.getDouble("mob-ai.dog.pack-lunge-speed-multiplier", 1.6); }
+    public int getDogPackLungeCooldownTicks() { return config.getInt("mob-ai.dog.pack-lunge-cooldown-ticks", 240); }
+
+    // bird
+    public double getBirdDiveYRise() { return config.getDouble("mob-ai.bird.dive-y-rise", 3.0); }
+    public double getBirdDiveYDropVel() { return config.getDouble("mob-ai.bird.dive-y-drop-velocity", -1.4); }
+    public double getBirdDiveDamageMult() { return config.getDouble("mob-ai.bird.dive-damage-multiplier", 1.4); }
+    public int getBirdDiveCooldownTicks() { return config.getInt("mob-ai.bird.dive-cooldown-ticks", 180); }
+    public double getBirdBuffetRange() { return config.getDouble("mob-ai.bird.buffet-range", 2.0); }
+    public double getBirdBuffetKnockback() { return config.getDouble("mob-ai.bird.buffet-knockback-strength", 0.9); }
+    public double getBirdBuffetDamageMult() { return config.getDouble("mob-ai.bird.buffet-damage-multiplier", 0.5); }
+    public int getBirdBuffetCooldownTicks() { return config.getInt("mob-ai.bird.buffet-cooldown-ticks", 80); }
+
+    // fluffy_cat
+    public double getCatWigglePounceChance() { return config.getDouble("mob-ai.fluffy_cat.wiggle-pounce-chance", 0.3); }
+    public int getCatStalkTicks() { return config.getInt("mob-ai.fluffy_cat.stalk-ticks", 20); }
+    public int getCatWiggleTicks() { return config.getInt("mob-ai.fluffy_cat.wiggle-ticks", 30); }
+    public int getCatPrepareAttackTicks() { return config.getInt("mob-ai.fluffy_cat.prepare-attack-ticks", 14); }
+    public double getCatPounceDistance() { return config.getDouble("mob-ai.fluffy_cat.pounce-distance", 3.5); }
+    public double getCatPounceYVel() { return config.getDouble("mob-ai.fluffy_cat.pounce-y-velocity", 0.55); }
+    public double getCatPounceDamageMult() { return config.getDouble("mob-ai.fluffy_cat.pounce-damage-multiplier", 1.6); }
+    public double getCatTripleSwipeChance() { return config.getDouble("mob-ai.fluffy_cat.triple-swipe-chance", 0.25); }
+    public int getCatTripleSwipeIntervalTicks() { return config.getInt("mob-ai.fluffy_cat.triple-swipe-interval-ticks", 10); }
+    public double getCatTripleSwipeDamageMult() { return config.getDouble("mob-ai.fluffy_cat.triple-swipe-damage-multiplier", 0.8); }
+    public int getCatSpecialCooldownTicks() { return config.getInt("mob-ai.fluffy_cat.special-cooldown-ticks", 200); }
+
+    // fluffy_squirrel
+    public double getSquirrelJumpPounceDistance() { return config.getDouble("mob-ai.fluffy_squirrel.jump-pounce-distance", 3.0); }
+    public double getSquirrelJumpPounceYVel() { return config.getDouble("mob-ai.fluffy_squirrel.jump-pounce-y-velocity", 0.45); }
+    public double getSquirrelJumpPounceDamageMult() { return config.getDouble("mob-ai.fluffy_squirrel.jump-pounce-damage-multiplier", 1.3); }
+    public int getSquirrelJumpPounceCooldownTicks() { return config.getInt("mob-ai.fluffy_squirrel.jump-pounce-cooldown-ticks", 100); }
+    public int getSquirrelDartHpPercent() { return config.getInt("mob-ai.fluffy_squirrel.dart-hp-percent", 50); }
+    public int getSquirrelDartHopCount() { return config.getInt("mob-ai.fluffy_squirrel.dart-hop-count", 3); }
+    public double getSquirrelDartHopDistance() { return config.getDouble("mob-ai.fluffy_squirrel.dart-hop-distance", 2.0); }
+    public int getSquirrelDartHopIntervalTicks() { return config.getInt("mob-ai.fluffy_squirrel.dart-hop-interval-ticks", 6); }
+    public int getSquirrelDartCooldownTicks() { return config.getInt("mob-ai.fluffy_squirrel.dart-cooldown-ticks", 240); }
 
     // ========================
     // Herd Pulse
@@ -462,6 +720,259 @@ public class FluffyConfig {
         defaults.setComments("mob-ai.bird.bob-amplitude", List.of(
                 "Bird-type mobs bob up/down by this amount per AI tick."));
 
+        // ── Per-type attack roster (config-version 2) ───────────────────
+        defaults.set("mob-ai.special-roll-on-attack", 0.35);
+        defaults.setComments("mob-ai.special-roll-on-attack", List.of(
+                "",
+                "=== PER-TYPE SPECIAL ATTACKS ===",
+                "Each managed mob has a primary melee bite plus one or more",
+                "specials gated by chance, cooldown, and (sometimes) HP threshold.",
+                "When a mob enters ATTACK state, it rolls this chance once",
+                "to decide whether to fire a special instead of plain melee."));
+
+        // bunny specials
+        defaults.set("mob-ai.bunny.tackle-damage-multiplier", 1.5);
+        defaults.set("mob-ai.bunny.tackle-leap-y", 0.5);
+        defaults.set("mob-ai.bunny.tackle-leap-forward", 0.6);
+        defaults.set("mob-ai.bunny.tackle-cooldown-ticks", 200);
+        defaults.set("mob-ai.bunny.multiply-chance", 0.4);
+        defaults.set("mob-ai.bunny.multiply-hp-percent", 60);
+        defaults.set("mob-ai.bunny.multiply-spawn-count", 1);
+        defaults.set("mob-ai.bunny.multiply-cooldown-ticks", 600);
+        defaults.set("mob-ai.bunny.multiply-child-hp-multiplier", 0.5);
+        defaults.setComments("mob-ai.bunny.tackle-damage-multiplier", List.of(
+                "Bunny specials: 'tackle' (leap with bonus damage on landing) and",
+                "'multiply' (HP-gated — spawns 1-2 baby bunnies with halved HP).",
+                "",
+                "Damage multiplier applied to the bunny's ATTACK_DAMAGE on tackle landing.",
+                "1.5 = 150% of normal bite damage."));
+        defaults.setComments("mob-ai.bunny.tackle-leap-y", List.of(
+                "Upward velocity added when the tackle launches.",
+                "Bukkit velocity units (~0.42 = vanilla jump height)."));
+        defaults.setComments("mob-ai.bunny.tackle-leap-forward", List.of(
+                "Forward velocity added toward the target on tackle launch.",
+                "Bukkit velocity units; combined with tackle-leap-y."));
+        defaults.setComments("mob-ai.bunny.tackle-cooldown-ticks", List.of(
+                "Ticks between consecutive tackles by the same bunny.",
+                "20 ticks = 1s; 200 = 10s."));
+        defaults.setComments("mob-ai.bunny.multiply-chance", List.of(
+                "Probability (0.0-1.0) the bunny commits to multiply once HP gate passes.",
+                "0.4 = 40% chance per eligible roll."));
+        defaults.setComments("mob-ai.bunny.multiply-hp-percent", List.of(
+                "HP threshold (0-100) below which the bunny becomes eligible to multiply.",
+                "60 = only triggers when bunny is at or below 60% max HP."));
+        defaults.setComments("mob-ai.bunny.multiply-spawn-count", List.of(
+                "Number of baby bunnies spawned per successful multiply trigger."));
+        defaults.setComments("mob-ai.bunny.multiply-cooldown-ticks", List.of(
+                "Ticks before the same bunny can multiply again.",
+                "20 ticks = 1s; 600 = 30s."));
+        defaults.setComments("mob-ai.bunny.multiply-child-hp-multiplier", List.of(
+                "Max HP of spawned children as a fraction of parent max HP.",
+                "0.5 = babies have half the parent's max HP."));
+
+        // bear specials
+        defaults.set("mob-ai.bear.paw-cone-radius", 2.5);
+        defaults.set("mob-ai.bear.paw-cone-angle-degrees", 120);
+        defaults.set("mob-ai.bear.paw-damage-multiplier", 1.5);
+        defaults.set("mob-ai.bear.paw-cooldown-ticks", 160);
+        defaults.set("mob-ai.bear.slam-radius", 3.0);
+        defaults.set("mob-ai.bear.slam-knockup-y", 0.7);
+        defaults.set("mob-ai.bear.slam-damage-multiplier", 1.2);
+        defaults.set("mob-ai.bear.slam-cooldown-ticks", 200);
+        defaults.setComments("mob-ai.bear.paw-cone-radius", List.of(
+                "Bear specials: 'paw_swipe' (frontal cone after windup) and",
+                "'slam' (radial AoE with knockup at melee range).",
+                "",
+                "Reach of the paw_swipe frontal cone, in blocks.",
+                "Players within this distance and inside the cone angle are hit."));
+        defaults.setComments("mob-ai.bear.paw-cone-angle-degrees", List.of(
+                "Total sweep arc of the paw_swipe cone, in degrees.",
+                "120 = ±60° from the bear's facing direction."));
+        defaults.setComments("mob-ai.bear.paw-damage-multiplier", List.of(
+                "Damage multiplier applied to ATTACK_DAMAGE for each player hit by paw_swipe.",
+                "1.5 = 150% of normal bite damage."));
+        defaults.setComments("mob-ai.bear.paw-cooldown-ticks", List.of(
+                "Ticks between paw_swipe specials by the same bear.",
+                "20 ticks = 1s; 160 = 8s."));
+        defaults.setComments("mob-ai.bear.slam-radius", List.of(
+                "Radial AoE radius of the slam, in blocks.",
+                "All players within this radius take damage and knockup."));
+        defaults.setComments("mob-ai.bear.slam-knockup-y", List.of(
+                "Upward velocity applied to players hit by slam.",
+                "Bukkit velocity units (~0.42 = vanilla jump height)."));
+        defaults.setComments("mob-ai.bear.slam-damage-multiplier", List.of(
+                "Damage multiplier applied to ATTACK_DAMAGE for slam hits.",
+                "1.2 = 120% of normal bite damage."));
+        defaults.setComments("mob-ai.bear.slam-cooldown-ticks", List.of(
+                "Ticks between slam specials by the same bear.",
+                "20 ticks = 1s; 200 = 10s."));
+
+        // fox specials
+        defaults.set("mob-ai.fox.pounce-distance", 4.0);
+        defaults.set("mob-ai.fox.pounce-damage-multiplier", 1.4);
+        defaults.set("mob-ai.fox.pounce-y-velocity", 0.5);
+        defaults.set("mob-ai.fox.pounce-cooldown-ticks", 160);
+        defaults.setComments("mob-ai.fox.pounce-distance", List.of(
+                "Fox special: 'pounce' — a forward lunge toward the target",
+                "that deals damage on landing.",
+                "",
+                "Maximum forward lunge distance, in blocks.",
+                "Used to scale forward velocity for the pounce."));
+        defaults.setComments("mob-ai.fox.pounce-damage-multiplier", List.of(
+                "Damage multiplier applied to ATTACK_DAMAGE on pounce landing.",
+                "1.4 = 140% of normal bite damage."));
+        defaults.setComments("mob-ai.fox.pounce-y-velocity", List.of(
+                "Upward velocity component of the pounce launch.",
+                "Bukkit velocity units (~0.42 = vanilla jump height)."));
+        defaults.setComments("mob-ai.fox.pounce-cooldown-ticks", List.of(
+                "Ticks between pounce specials by the same fox.",
+                "20 ticks = 1s; 160 = 8s."));
+
+        // dog specials
+        defaults.set("mob-ai.dog.pack-lunge-speed-multiplier", 1.6);
+        defaults.set("mob-ai.dog.pack-lunge-cooldown-ticks", 240);
+        defaults.setComments("mob-ai.dog.pack-lunge-speed-multiplier", List.of(
+                "Dog special: 'pack_lunge' — alerts every other dog within",
+                "pack-alert-range to converge on the same target.",
+                "",
+                "Velocity multiplier applied to each dog's converge nudge.",
+                "1.6 = 160% of normal approach speed during the lunge."));
+        defaults.setComments("mob-ai.dog.pack-lunge-cooldown-ticks", List.of(
+                "Ticks between pack_lunge calls by the same dog (the caller).",
+                "20 ticks = 1s; 240 = 12s."));
+
+        // bird specials
+        defaults.set("mob-ai.bird.dive-y-rise", 3.0);
+        defaults.set("mob-ai.bird.dive-y-drop-velocity", -1.4);
+        defaults.set("mob-ai.bird.dive-damage-multiplier", 1.4);
+        defaults.set("mob-ai.bird.dive-cooldown-ticks", 180);
+        defaults.set("mob-ai.bird.buffet-range", 2.0);
+        defaults.set("mob-ai.bird.buffet-knockback-strength", 0.9);
+        defaults.set("mob-ai.bird.buffet-damage-multiplier", 0.5);
+        defaults.set("mob-ai.bird.buffet-cooldown-ticks", 80);
+        defaults.setComments("mob-ai.bird.dive-y-rise", List.of(
+                "Bird specials: 'dive' (rise then plummet for AoE damage on impact)",
+                "and 'wing_buffet' (close-range push with light damage).",
+                "Bird picks dive 60% / buffet 40% when both are off cooldown.",
+                "",
+                "How many blocks the bird climbs above the target before plunging.",
+                "Larger values = longer telegraph, more dramatic dive."));
+        defaults.setComments("mob-ai.bird.dive-y-drop-velocity", List.of(
+                "Downward velocity at the start of the plunge phase.",
+                "Negative Bukkit velocity units; -1.4 = fast plummet."));
+        defaults.setComments("mob-ai.bird.dive-damage-multiplier", List.of(
+                "Damage multiplier applied to ATTACK_DAMAGE on dive impact.",
+                "1.4 = 140% of normal peck damage."));
+        defaults.setComments("mob-ai.bird.dive-cooldown-ticks", List.of(
+                "Ticks between dive specials by the same bird.",
+                "20 ticks = 1s; 180 = 9s."));
+        defaults.setComments("mob-ai.bird.buffet-range", List.of(
+                "Maximum range (blocks) at which wing_buffet can target a player.",
+                "Buffet is suppressed if the player is farther than this."));
+        defaults.setComments("mob-ai.bird.buffet-knockback-strength", List.of(
+                "Horizontal push velocity applied to players hit by wing_buffet.",
+                "Bukkit velocity units; 0.9 ≈ a strong shove."));
+        defaults.setComments("mob-ai.bird.buffet-damage-multiplier", List.of(
+                "Damage multiplier applied to ATTACK_DAMAGE on buffet hit.",
+                "0.5 = 50% of normal peck damage (buffet is mostly a push)."));
+        defaults.setComments("mob-ai.bird.buffet-cooldown-ticks", List.of(
+                "Ticks between buffet specials by the same bird.",
+                "20 ticks = 1s; 80 = 4s."));
+
+        // fluffy_cat (NEW)
+        defaults.set("mob-ai.fluffy_cat.wiggle-pounce-chance", 0.3);
+        defaults.set("mob-ai.fluffy_cat.stalk-ticks", 20);
+        defaults.set("mob-ai.fluffy_cat.wiggle-ticks", 30);
+        defaults.set("mob-ai.fluffy_cat.prepare-attack-ticks", 14);
+        defaults.set("mob-ai.fluffy_cat.pounce-distance", 3.5);
+        defaults.set("mob-ai.fluffy_cat.pounce-y-velocity", 0.55);
+        defaults.set("mob-ai.fluffy_cat.pounce-damage-multiplier", 1.6);
+        defaults.set("mob-ai.fluffy_cat.triple-swipe-chance", 0.25);
+        defaults.set("mob-ai.fluffy_cat.triple-swipe-interval-ticks", 10);
+        defaults.set("mob-ai.fluffy_cat.triple-swipe-damage-multiplier", 0.8);
+        defaults.set("mob-ai.fluffy_cat.special-cooldown-ticks", 200);
+        defaults.setComments("mob-ai.fluffy_cat.wiggle-pounce-chance", List.of(
+                "fluffy_cat specials: 'wiggle_pounce' (sit -> wiggling -> prepare ->",
+                "pounce theatre, big damage on land) and 'triple_swipe' (3 quick hits).",
+                "Vanilla CAT/OCELOT entities resolve to this type.",
+                "",
+                "Probability (0.0-1.0) the cat picks wiggle_pounce when a special fires.",
+                "Normalized against triple-swipe-chance and a plain-melee fallback."));
+        defaults.setComments("mob-ai.fluffy_cat.stalk-ticks", List.of(
+                "Length of the sit_loop stalking phase before wiggling begins.",
+                "20 ticks = 1s."));
+        defaults.setComments("mob-ai.fluffy_cat.wiggle-ticks", List.of(
+                "Length of the wiggling phase (anticipation).",
+                "20 ticks = 1s; 30 = 1.5s."));
+        defaults.setComments("mob-ai.fluffy_cat.prepare-attack-ticks", List.of(
+                "Length of the prepare_attack phase right before the pounce launches.",
+                "20 ticks = 1s; 14 = 0.7s."));
+        defaults.setComments("mob-ai.fluffy_cat.pounce-distance", List.of(
+                "Maximum forward lunge distance of the wiggle_pounce, in blocks.",
+                "Used to scale forward velocity for the pounce."));
+        defaults.setComments("mob-ai.fluffy_cat.pounce-y-velocity", List.of(
+                "Upward velocity component of the pounce launch.",
+                "Bukkit velocity units (~0.42 = vanilla jump height)."));
+        defaults.setComments("mob-ai.fluffy_cat.pounce-damage-multiplier", List.of(
+                "Damage multiplier applied to ATTACK_DAMAGE on pounce landing.",
+                "1.6 = 160% of normal claw damage."));
+        defaults.setComments("mob-ai.fluffy_cat.triple-swipe-chance", List.of(
+                "Probability (0.0-1.0) the cat picks triple_swipe when a special fires.",
+                "Normalized against wiggle-pounce-chance and a plain-melee fallback."));
+        defaults.setComments("mob-ai.fluffy_cat.triple-swipe-interval-ticks", List.of(
+                "Ticks between each of the three swipes in triple_swipe.",
+                "20 ticks = 1s; 10 = 0.5s spacing → ~1s total."));
+        defaults.setComments("mob-ai.fluffy_cat.triple-swipe-damage-multiplier", List.of(
+                "Damage multiplier applied to ATTACK_DAMAGE per swipe (3 hits).",
+                "0.8 = 80% per swipe → 240% total if all three connect."));
+        defaults.setComments("mob-ai.fluffy_cat.special-cooldown-ticks", List.of(
+                "Ticks between any special (wiggle_pounce or triple_swipe) by the same cat.",
+                "20 ticks = 1s; 200 = 10s."));
+
+        // fluffy_squirrel (NEW)
+        defaults.set("mob-ai.fluffy_squirrel.jump-pounce-distance", 3.0);
+        defaults.set("mob-ai.fluffy_squirrel.jump-pounce-y-velocity", 0.45);
+        defaults.set("mob-ai.fluffy_squirrel.jump-pounce-damage-multiplier", 1.3);
+        defaults.set("mob-ai.fluffy_squirrel.jump-pounce-cooldown-ticks", 100);
+        defaults.set("mob-ai.fluffy_squirrel.dart-hp-percent", 50);
+        defaults.set("mob-ai.fluffy_squirrel.dart-hop-count", 3);
+        defaults.set("mob-ai.fluffy_squirrel.dart-hop-distance", 2.0);
+        defaults.set("mob-ai.fluffy_squirrel.dart-hop-interval-ticks", 6);
+        defaults.set("mob-ai.fluffy_squirrel.dart-cooldown-ticks", 240);
+        defaults.setComments("mob-ai.fluffy_squirrel.jump-pounce-distance", List.of(
+                "fluffy_squirrel specials: 'jump_pounce' (small forward leap with",
+                "damage on landing) and 'dart' (HP-gated frantic teleport-hops",
+                "ending in a bite). Only triggered via scoreboard tag",
+                "'fluffy:type:fluffy_squirrel' — no vanilla equivalent.",
+                "Note: hurt animations are not auto-played (no listener wired).",
+                "",
+                "Maximum forward leap distance for jump_pounce, in blocks.",
+                "Used to scale forward velocity at launch."));
+        defaults.setComments("mob-ai.fluffy_squirrel.jump-pounce-y-velocity", List.of(
+                "Upward velocity component of the jump_pounce launch.",
+                "Bukkit velocity units (~0.42 = vanilla jump height)."));
+        defaults.setComments("mob-ai.fluffy_squirrel.jump-pounce-damage-multiplier", List.of(
+                "Damage multiplier applied to ATTACK_DAMAGE on jump_pounce landing.",
+                "1.3 = 130% of normal bite damage."));
+        defaults.setComments("mob-ai.fluffy_squirrel.jump-pounce-cooldown-ticks", List.of(
+                "Ticks between jump_pounce specials by the same squirrel.",
+                "20 ticks = 1s; 100 = 5s."));
+        defaults.setComments("mob-ai.fluffy_squirrel.dart-hp-percent", List.of(
+                "HP threshold (0-100) below which the dart special becomes eligible.",
+                "50 = only triggers when squirrel is at or below 50% max HP."));
+        defaults.setComments("mob-ai.fluffy_squirrel.dart-hop-count", List.of(
+                "Number of frantic teleport-hops in a single dart sequence",
+                "before the final bite resolves."));
+        defaults.setComments("mob-ai.fluffy_squirrel.dart-hop-distance", List.of(
+                "Distance of each dart hop, in blocks.",
+                "Hops are short, erratic teleport steps toward the target."));
+        defaults.setComments("mob-ai.fluffy_squirrel.dart-hop-interval-ticks", List.of(
+                "Ticks between each hop in the dart sequence.",
+                "20 ticks = 1s; 6 ≈ 0.3s spacing → frantic feel."));
+        defaults.setComments("mob-ai.fluffy_squirrel.dart-cooldown-ticks", List.of(
+                "Ticks between dart specials by the same squirrel.",
+                "20 ticks = 1s; 240 = 12s."));
+
         // Herd pulse
         defaults.set("herd-pulse.enabled", true);
         defaults.setComments("herd-pulse.enabled", List.of(
@@ -508,8 +1019,28 @@ public class FluffyConfig {
         defaults.set("rain-from-sky.mobs", buildDefaultRainMobs());
         defaults.setComments("rain-from-sky.mobs", List.of(
                 "Mobs that can spawn during rain-from-sky.",
-                "Same format as the universal mob-spawning.mobs entries.",
-                "id / type / weight / min-count / max-count / health-multiplier / damage-multiplier"));
+                "Fully editable — add/remove/reweight any entry.",
+                "Default pool (63 entries): 47 dogs (one per breed) + 7 fluffy cats",
+                "+ 3 fluffy squirrels + 6 vanilla backups.",
+                "",
+                "Entry format:",
+                "  id                  Mob type id (vanilla EntityType OR MythicMob id)",
+                "  type                'vanilla' or 'mythicmobs'",
+                "  weight              Relative pick weight (higher = more common)",
+                "  min-count           Min mobs per spawn event (usually 1)",
+                "  max-count           Max mobs per spawn event (usually 1)",
+                "  health-multiplier   Multiplier on base HP (MM mobs use 1.0)",
+                "  damage-multiplier   Multiplier on base damage (MM mobs use 1.0)",
+                "",
+                "Available MythicMob ids ship with FluffyMode:",
+                "  - 168 dog variants — see plugins/MythicMobs/Mobs/modogs.yml",
+                "    (Dog<Breed><Color> e.g. DogBeagleTan, DogPoodleSilver, ...)",
+                "  - 7 cats — Fluffy_NocsyCat-{Munchkin,Bombay,Siamese,",
+                "    ScottishFold,MaineCoon,European,Fallen}",
+                "  - 3 squirrels — Fluffy_NogSquirrel-{Brown,Gray,Red}",
+                "",
+                "Add additional dog variants by copying the helper line and",
+                "swapping the id; full list in modogs.yml."));
 
         // World effects
         defaults.set("world-effects.enabled", true);

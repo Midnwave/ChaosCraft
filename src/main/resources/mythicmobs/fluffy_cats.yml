@@ -1,0 +1,209 @@
+# ============================================================
+# Fluffy Mode - Hostile Cat Variants
+# ============================================================
+# Built on top of KC's "Kingdom Cats" pack by Nocsy (mcmodels.net).
+# Original pack ships peaceful MCPets cats. These variants reuse
+# the same ModelEngine models but configure them as hostile mobs
+# for FluffyMode. The original Nocsy_Cat-* pets are unaffected.
+#
+# All entries are tagged 'fluffy:managed' and 'fluffy:type:fluffy_cat'
+# so FluffyMobAI's spawn listener picks them up and runs the
+# fluffy_cat state machine (stalk -> wiggle -> pounce, triple-swipe).
+# Animations: idle, walk, sit_loop, wiggling, prepare_attack, attack.
+# ============================================================
+
+Fluffy_NocsyCat-Munchkin:
+  Type: WOLF
+  Display: '&fMunchkin Hunter'
+  Health: 40
+  Damage: 5.0
+  Faction: fluffy
+  AIGoalSelectors:
+  - clear
+  - 0 float
+  AITargetSelectors:
+  - clear
+  Modules:
+    ModelEngine:
+      ModelID: nocsy_cat1
+  Options:
+    MovementSpeed: 0.32
+    PreventOtherDrops: true
+    PreventSunburn: true
+    Silent: true
+    Despawn: true
+    NoAI: false
+    Collidable: true
+    Persistent: false
+  Tags:
+  - fluffy:managed
+  - fluffy:type:fluffy_cat
+  - fluffy:variant:munchkin
+
+Fluffy_NocsyCat-Bombay:
+  Type: WOLF
+  Display: '&8Bombay Hunter'
+  Health: 44
+  Damage: 5.5
+  Faction: fluffy
+  AIGoalSelectors:
+  - clear
+  - 0 float
+  AITargetSelectors:
+  - clear
+  Modules:
+    ModelEngine:
+      ModelID: nocsy_cat2
+  Options:
+    MovementSpeed: 0.34
+    PreventOtherDrops: true
+    PreventSunburn: true
+    Silent: true
+    Despawn: true
+    NoAI: false
+    Collidable: true
+    Persistent: false
+  Tags:
+  - fluffy:managed
+  - fluffy:type:fluffy_cat
+  - fluffy:variant:bombay
+
+Fluffy_NocsyCat-Siamese:
+  Type: WOLF
+  Display: '&fSiamese Hunter'
+  Health: 38
+  Damage: 5.0
+  Faction: fluffy
+  AIGoalSelectors:
+  - clear
+  - 0 float
+  AITargetSelectors:
+  - clear
+  Modules:
+    ModelEngine:
+      ModelID: nocsy_cat3
+  Options:
+    MovementSpeed: 0.34
+    PreventOtherDrops: true
+    PreventSunburn: true
+    Silent: true
+    Despawn: true
+    NoAI: false
+    Collidable: true
+    Persistent: false
+  Tags:
+  - fluffy:managed
+  - fluffy:type:fluffy_cat
+  - fluffy:variant:siamese
+
+Fluffy_NocsyCat-ScottishFold:
+  Type: WOLF
+  Display: '&7Scottish Fold Hunter'
+  Health: 42
+  Damage: 5.0
+  Faction: fluffy
+  AIGoalSelectors:
+  - clear
+  - 0 float
+  AITargetSelectors:
+  - clear
+  Modules:
+    ModelEngine:
+      ModelID: nocsy_cat4
+  Options:
+    MovementSpeed: 0.30
+    PreventOtherDrops: true
+    PreventSunburn: true
+    Silent: true
+    Despawn: true
+    NoAI: false
+    Collidable: true
+    Persistent: false
+  Tags:
+  - fluffy:managed
+  - fluffy:type:fluffy_cat
+  - fluffy:variant:scottish
+
+Fluffy_NocsyCat-MaineCoon:
+  Type: WOLF
+  Display: '&6Maine Coon Hunter'
+  Health: 56
+  Damage: 7.0
+  Faction: fluffy
+  AIGoalSelectors:
+  - clear
+  - 0 float
+  AITargetSelectors:
+  - clear
+  Modules:
+    ModelEngine:
+      ModelID: nocsy_cat5
+  Options:
+    MovementSpeed: 0.28
+    PreventOtherDrops: true
+    PreventSunburn: true
+    Silent: true
+    Despawn: true
+    NoAI: false
+    Collidable: true
+    Persistent: false
+  Tags:
+  - fluffy:managed
+  - fluffy:type:fluffy_cat
+  - fluffy:variant:mainecoon
+
+Fluffy_NocsyCat-European:
+  Type: WOLF
+  Display: '&9European Hunter'
+  Health: 42
+  Damage: 5.5
+  Faction: fluffy
+  AIGoalSelectors:
+  - clear
+  - 0 float
+  AITargetSelectors:
+  - clear
+  Modules:
+    ModelEngine:
+      ModelID: nocsy_cat6
+  Options:
+    MovementSpeed: 0.32
+    PreventOtherDrops: true
+    PreventSunburn: true
+    Silent: true
+    Despawn: true
+    NoAI: false
+    Collidable: true
+    Persistent: false
+  Tags:
+  - fluffy:managed
+  - fluffy:type:fluffy_cat
+  - fluffy:variant:european
+
+Fluffy_NocsyCat-Fallen:
+  Type: WOLF
+  Display: '&cFallen Stalker'
+  Health: 70
+  Damage: 9.0
+  Faction: fluffy
+  AIGoalSelectors:
+  - clear
+  - 0 float
+  AITargetSelectors:
+  - clear
+  Modules:
+    ModelEngine:
+      ModelID: nocsy_cat_fallen
+  Options:
+    MovementSpeed: 0.30
+    PreventOtherDrops: true
+    PreventSunburn: true
+    Silent: true
+    Despawn: true
+    NoAI: false
+    Collidable: true
+    Persistent: false
+  Tags:
+  - fluffy:managed
+  - fluffy:type:fluffy_cat
+  - fluffy:variant:fallen

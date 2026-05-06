@@ -48,6 +48,7 @@ public class FluffyMobAI implements Listener {
     private final Map<UUID, FluffyMobState> states = new HashMap<>();
     private BukkitRunnable runnable;
     private boolean running = false;
+    private long tickClock = 0L;
 
     public FluffyMobAI(ChaosCraftPlugin plugin, FluffyConfig config) {
         this.plugin = plugin;
@@ -130,6 +131,7 @@ public class FluffyMobAI implements Listener {
     // ========================
 
     private void tickAll() {
+        tickClock++;
         if (states.isEmpty()) return;
 
         var iter = states.entrySet().iterator();
@@ -163,6 +165,7 @@ public class FluffyMobAI implements Listener {
             case IDLE -> tickIdle(entity, state, target);
             case APPROACH -> tickApproach(entity, state, target);
             case ATTACK -> tickAttack(entity, state, target);
+            case SPECIAL -> tickSpecial(entity, state, target);
             case COOLDOWN -> tickCooldown(entity, state);
             case FLEE -> tickFlee(entity, state, target);
         }
@@ -247,6 +250,19 @@ public class FluffyMobAI implements Listener {
             return;
         }
 
+        // On attack entry, roll for a per-type special
+        if (state.stateTicks == 0) {
+            state.specialTarget = target;
+            String chosen = chooseSpecial(entity, state, target);
+            if (chosen != null) {
+                state.pendingSpecial = chosen;
+                state.specialPhase = "init";
+                state.specialPhaseTick = 0;
+                transition(state, State.SPECIAL, entity);
+                return;
+            }
+        }
+
         // Bear windup — wait windup-ticks before swinging
         int windup = "bear".equals(state.typeKey) ? config.getBearWindupTicks() : 8;
         if (state.stateTicks >= windup) {
@@ -262,6 +278,537 @@ public class FluffyMobAI implements Listener {
         } else {
             playAnim(entity, state, "attack");
         }
+    }
+
+    // ========================
+    // SPECIAL state dispatcher
+    // ========================
+
+    private void tickSpecial(LivingEntity entity, FluffyMobState state, Player liveTarget) {
+        Player target = state.specialTarget != null && state.specialTarget.isValid() && !state.specialTarget.isDead()
+                ? state.specialTarget : liveTarget;
+        if (target == null || state.pendingSpecial == null) {
+            finishSpecial(state, entity);
+            return;
+        }
+        switch (state.typeKey) {
+            case "bunny" -> tickSpecial_bunny(entity, state, target);
+            case "bear" -> tickSpecial_bear(entity, state, target);
+            case "fox" -> tickSpecial_fox(entity, state, target);
+            case "dog" -> tickSpecial_dog(entity, state, target);
+            case "bird" -> tickSpecial_bird(entity, state, target);
+            case "fluffy_cat" -> tickSpecial_cat(entity, state, target);
+            case "fluffy_squirrel" -> tickSpecial_squirrel(entity, state, target);
+            default -> finishSpecial(state, entity);
+        }
+    }
+
+    private void finishSpecial(FluffyMobState state, LivingEntity entity) {
+        state.lastSpecialTick = tickClock;
+        state.pendingSpecial = null;
+        state.specialPhase = null;
+        state.specialPhaseTick = 0;
+        state.specialTarget = null;
+        transition(state, State.COOLDOWN, entity);
+    }
+
+    // ── Special selection ───────────────────────────────────────────
+
+    private String chooseSpecial(LivingEntity entity, FluffyMobState state, Player target) {
+        if (!rollChance(config.getSpecialRollOnAttack())) return null;
+        double hpPct = (entity.getHealth() / safeMaxHealth(entity)) * 100.0;
+        switch (state.typeKey) {
+            case "bunny": {
+                boolean tackleReady = specialReady(state, config.getBunnyTackleCooldownTicks());
+                boolean multiplyReady = specialReady(state, config.getBunnyMultiplyCooldownTicks())
+                        && hpPct <= config.getBunnyMultiplyHpPercent()
+                        && rollChance(config.getBunnyMultiplyChance());
+                if (multiplyReady && tackleReady) return Math.random() < 0.5 ? "multiply" : "tackle";
+                if (multiplyReady) return "multiply";
+                if (tackleReady) return "tackle";
+                return null;
+            }
+            case "bear": {
+                boolean pawReady = specialReady(state, config.getBearPawCooldownTicks());
+                boolean slamReady = specialReady(state, config.getBearSlamCooldownTicks());
+                if (pawReady && slamReady) return Math.random() < 0.5 ? "paw_swipe" : "slam";
+                if (pawReady) return "paw_swipe";
+                if (slamReady) return "slam";
+                return null;
+            }
+            case "fox":
+                return specialReady(state, config.getFoxPounceCooldownTicks()) ? "pounce" : null;
+            case "dog":
+                return specialReady(state, config.getDogPackLungeCooldownTicks()) ? "pack_lunge" : null;
+            case "bird": {
+                boolean diveReady = specialReady(state, config.getBirdDiveCooldownTicks());
+                double dist = entity.getLocation().distance(target.getLocation());
+                boolean buffetReady = specialReady(state, config.getBirdBuffetCooldownTicks())
+                        && dist <= config.getBirdBuffetRange();
+                if (diveReady && buffetReady) return Math.random() < 0.6 ? "dive" : "buffet";
+                if (diveReady) return "dive";
+                if (buffetReady) return "buffet";
+                return null;
+            }
+            case "fluffy_cat": {
+                if (!specialReady(state, config.getCatSpecialCooldownTicks())) return null;
+                double wp = config.getCatWigglePounceChance();
+                double ts = config.getCatTripleSwipeChance();
+                double total = wp + ts;
+                double noTheatreShare = Math.max(0.0, 1.0 - total);
+                double roll = Math.random();
+                if (roll < wp) return "wiggle_pounce";
+                if (roll < wp + ts) return "triple_swipe";
+                if (noTheatreShare > 0.0) return "no_theatre";
+                return null;
+            }
+            case "fluffy_squirrel": {
+                boolean dartReady = specialReady(state, config.getSquirrelDartCooldownTicks())
+                        && hpPct <= config.getSquirrelDartHpPercent();
+                boolean jumpReady = specialReady(state, config.getSquirrelJumpPounceCooldownTicks());
+                if (dartReady) return "dart";
+                if (jumpReady) return "jump_pounce";
+                return null;
+            }
+            default:
+                return null;
+        }
+    }
+
+    // ── Per-type special routines ───────────────────────────────────
+
+    private void tickSpecial_bunny(LivingEntity entity, FluffyMobState state, Player target) {
+        if ("multiply".equals(state.pendingSpecial)) {
+            int count = Math.max(1, config.getBunnyMultiplySpawnCount());
+            double childHpMult = config.getBunnyMultiplyChildHpMult();
+            for (int i = 0; i < count; i++) {
+                try {
+                    Entity child = entity.getWorld().spawnEntity(entity.getLocation(), EntityType.RABBIT);
+                    if (child instanceof LivingEntity le) {
+                        var maxHp = le.getAttribute(Attribute.MAX_HEALTH);
+                        if (maxHp != null) {
+                            double newMax = Math.max(1.0, maxHp.getBaseValue() * childHpMult);
+                            maxHp.setBaseValue(newMax);
+                            le.setHealth(newMax);
+                        }
+                        le.addScoreboardTag("fluffy:managed");
+                        le.addScoreboardTag("fluffy:type:bunny");
+                        register(le);
+                    }
+                } catch (Throwable ignored) {}
+            }
+            finishSpecial(state, entity);
+            return;
+        }
+        // tackle
+        if ("init".equals(state.specialPhase)) {
+            launchToward(entity, target,
+                    config.getBunnyTackleLeapForward(),
+                    config.getBunnyTackleLeapY());
+            playAnim(entity, state, "attack");
+            state.specialPhase = "leap";
+            state.specialPhaseTick = 0;
+            return;
+        }
+        state.specialPhaseTick++;
+        if (state.specialPhaseTick >= 8) {
+            if (entity.getLocation().distance(target.getLocation()) <= config.getMobAiAttackRange() + 1.0) {
+                damageWithMultiplier(entity, target, config.getBunnyTackleDamageMult());
+            }
+            finishSpecial(state, entity);
+        }
+    }
+
+    private void tickSpecial_bear(LivingEntity entity, FluffyMobState state, Player target) {
+        if ("paw_swipe".equals(state.pendingSpecial)) {
+            if ("init".equals(state.specialPhase)) {
+                state.specialPhase = "windup";
+                state.specialPhaseTick = 0;
+                playAnim(entity, state, "attack");
+                return;
+            }
+            state.specialPhaseTick++;
+            int windup = Math.max(8, config.getBearWindupTicks());
+            if ("windup".equals(state.specialPhase) && state.specialPhaseTick >= windup) {
+                damageInCone(entity, config.getBearPawConeRadius(),
+                        config.getBearPawConeAngleDeg(), config.getBearPawDamageMult());
+                finishSpecial(state, entity);
+            }
+            return;
+        }
+        // slam
+        if ("init".equals(state.specialPhase)) {
+            entity.setVelocity(entity.getVelocity().setY(config.getBearSlamKnockupY()));
+            playAnim(entity, state, "attack");
+            state.specialPhase = "raise";
+            state.specialPhaseTick = 0;
+            return;
+        }
+        state.specialPhaseTick++;
+        if ("raise".equals(state.specialPhase) && state.specialPhaseTick >= 6) {
+            state.specialPhase = "land";
+            state.specialPhaseTick = 0;
+            return;
+        }
+        if ("land".equals(state.specialPhase) && state.specialPhaseTick >= 4) {
+            damageInRadius(entity, entity.getLocation(),
+                    config.getBearSlamRadius(), config.getBearSlamDamageMult());
+            // knockup affected players
+            for (Player p : entity.getWorld().getPlayers()) {
+                if (p.isDead()) continue;
+                if (plugin.getModeManager().isAnyModeActive() && plugin.getModeManager().getActiveMode().isExempt(p)) continue;
+                if (p.getLocation().distance(entity.getLocation()) <= config.getBearSlamRadius()) {
+                    p.setVelocity(p.getVelocity().setY(config.getBearSlamKnockupY()));
+                }
+            }
+            finishSpecial(state, entity);
+        }
+    }
+
+    private void tickSpecial_fox(LivingEntity entity, FluffyMobState state, Player target) {
+        if ("init".equals(state.specialPhase)) {
+            launchToward(entity, target,
+                    config.getFoxPounceDistance() / 8.0,
+                    config.getFoxPounceYVel());
+            playAnim(entity, state, "attack");
+            state.specialPhase = "leap";
+            state.specialPhaseTick = 0;
+            return;
+        }
+        state.specialPhaseTick++;
+        if (state.specialPhaseTick >= 10 || (state.specialPhaseTick > 4 && entity.isOnGround())) {
+            if (entity.getLocation().distance(target.getLocation()) <= config.getMobAiAttackRange() + 1.5) {
+                damageWithMultiplier(entity, target, config.getFoxPounceDamageMult());
+            }
+            finishSpecial(state, entity);
+        }
+    }
+
+    private void tickSpecial_dog(LivingEntity entity, FluffyMobState state, Player target) {
+        // immediate effect — alert nearby dogs, then fall through to a single bite
+        double range = config.getDogPackAlertRange();
+        double speedBoost = config.getMobAiApproachSpeedMult() * config.getDogPackLungeSpeedMult();
+        for (FluffyMobState other : states.values()) {
+            if (other == state) continue;
+            if (!"dog".equals(other.typeKey)) continue;
+            Entity oe = Bukkit.getEntity(getKeyFor(other));
+            if (!(oe instanceof LivingEntity ole) || !ole.isValid()) continue;
+            if (ole.getLocation().distance(entity.getLocation()) > range) continue;
+            other.targetId = target.getUniqueId();
+            other.state = State.APPROACH;
+            other.stateTicks = 0;
+            try {
+                Vector dir = target.getLocation().toVector()
+                        .subtract(ole.getLocation().toVector()).setY(0);
+                if (dir.lengthSquared() > 0.0001) {
+                    dir.normalize().multiply(speedBoost * 0.25);
+                    ole.setVelocity(ole.getVelocity().add(dir));
+                }
+            } catch (Throwable ignored) {}
+        }
+        // A single bite for the lead dog
+        if (entity.getLocation().distance(target.getLocation()) <= config.getMobAiAttackRange() + 0.5) {
+            damageWithMultiplier(entity, target, 1.0);
+        }
+        finishSpecial(state, entity);
+    }
+
+    private UUID getKeyFor(FluffyMobState state) {
+        for (var entry : states.entrySet()) {
+            if (entry.getValue() == state) return entry.getKey();
+        }
+        return null;
+    }
+
+    private void tickSpecial_bird(LivingEntity entity, FluffyMobState state, Player target) {
+        if ("buffet".equals(state.pendingSpecial)) {
+            damageWithMultiplier(entity, target, config.getBirdBuffetDamageMult());
+            try {
+                Vector push = target.getLocation().toVector()
+                        .subtract(entity.getLocation().toVector()).setY(0);
+                if (push.lengthSquared() > 0.0001) {
+                    push.normalize().multiply(config.getBirdBuffetKnockback());
+                    push.setY(0.3);
+                    target.setVelocity(push);
+                }
+            } catch (Throwable ignored) {}
+            finishSpecial(state, entity);
+            return;
+        }
+        // dive
+        if ("init".equals(state.specialPhase)) {
+            entity.setVelocity(entity.getVelocity().setY(config.getBirdDiveYRise() / 8.0));
+            playAnim(entity, state, "attack");
+            state.specialPhase = "rise";
+            state.specialPhaseTick = 0;
+            return;
+        }
+        state.specialPhaseTick++;
+        if ("rise".equals(state.specialPhase) && state.specialPhaseTick >= 8) {
+            entity.setVelocity(entity.getVelocity().setY(config.getBirdDiveYDropVel()));
+            state.specialPhase = "drop";
+            state.specialPhaseTick = 0;
+            return;
+        }
+        if ("drop".equals(state.specialPhase) && state.specialPhaseTick >= 8) {
+            damageInRadius(entity, entity.getLocation(),
+                    config.getMobAiAttackRange() + 1.0, config.getBirdDiveDamageMult());
+            finishSpecial(state, entity);
+        }
+    }
+
+    private void tickSpecial_cat(LivingEntity entity, FluffyMobState state, Player target) {
+        if ("no_theatre".equals(state.pendingSpecial)) {
+            playAnim(entity, state, "attack");
+            damageWithMultiplier(entity, target, 1.0);
+            finishSpecial(state, entity);
+            return;
+        }
+        if ("triple_swipe".equals(state.pendingSpecial)) {
+            int interval = Math.max(2, config.getCatTripleSwipeIntervalTicks());
+            if ("init".equals(state.specialPhase)) {
+                state.specialPhase = "swipe1";
+                state.specialPhaseTick = 0;
+                playAnim(entity, state, "attack");
+                damageWithMultiplier(entity, target, config.getCatTripleSwipeDamageMult());
+                return;
+            }
+            state.specialPhaseTick++;
+            if ("swipe1".equals(state.specialPhase) && state.specialPhaseTick >= interval) {
+                state.specialPhase = "swipe2";
+                state.specialPhaseTick = 0;
+                state.currentAnim = "";
+                playAnim(entity, state, "attack");
+                damageWithMultiplier(entity, target, config.getCatTripleSwipeDamageMult());
+                return;
+            }
+            if ("swipe2".equals(state.specialPhase) && state.specialPhaseTick >= interval) {
+                state.specialPhase = "swipe3";
+                state.specialPhaseTick = 0;
+                state.currentAnim = "";
+                playAnim(entity, state, "attack");
+                damageWithMultiplier(entity, target, config.getCatTripleSwipeDamageMult());
+                return;
+            }
+            if ("swipe3".equals(state.specialPhase) && state.specialPhaseTick >= interval) {
+                finishSpecial(state, entity);
+            }
+            return;
+        }
+        // wiggle_pounce
+        if ("init".equals(state.specialPhase)) {
+            state.specialPhase = "stalk";
+            state.specialPhaseTick = 0;
+            playAnim(entity, state, "sit_loop");
+            return;
+        }
+        state.specialPhaseTick++;
+        switch (state.specialPhase) {
+            case "stalk" -> {
+                playAnim(entity, state, "sit_loop");
+                if (state.specialPhaseTick >= config.getCatStalkTicks()) {
+                    state.specialPhase = "wiggle";
+                    state.specialPhaseTick = 0;
+                    state.currentAnim = "";
+                    playAnim(entity, state, "wiggling");
+                }
+            }
+            case "wiggle" -> {
+                if (state.specialPhaseTick >= config.getCatWiggleTicks()) {
+                    state.specialPhase = "prepare";
+                    state.specialPhaseTick = 0;
+                    state.currentAnim = "";
+                    playAnim(entity, state, "prepare_attack");
+                }
+            }
+            case "prepare" -> {
+                if (state.specialPhaseTick >= config.getCatPrepareAttackTicks()) {
+                    launchToward(entity, target,
+                            config.getCatPounceDistance() / 8.0,
+                            config.getCatPounceYVel());
+                    state.specialPhase = "pounce";
+                    state.specialPhaseTick = 0;
+                    state.currentAnim = "";
+                    playAnim(entity, state, "attack");
+                }
+            }
+            case "pounce" -> {
+                if (state.specialPhaseTick >= 8) {
+                    if (entity.getLocation().distance(target.getLocation()) <= config.getMobAiAttackRange() + 1.5) {
+                        damageWithMultiplier(entity, target, config.getCatPounceDamageMult());
+                    }
+                    finishSpecial(state, entity);
+                }
+            }
+            default -> finishSpecial(state, entity);
+        }
+    }
+
+    private void tickSpecial_squirrel(LivingEntity entity, FluffyMobState state, Player target) {
+        if ("jump_pounce".equals(state.pendingSpecial)) {
+            if ("init".equals(state.specialPhase)) {
+                playAnim(entity, state, "jump");
+                launchToward(entity, target,
+                        config.getSquirrelJumpPounceDistance() / 8.0,
+                        config.getSquirrelJumpPounceYVel());
+                state.specialPhase = "jump";
+                state.specialPhaseTick = 0;
+                return;
+            }
+            state.specialPhaseTick++;
+            if (state.specialPhaseTick >= 8) {
+                if (entity.getLocation().distance(target.getLocation()) <= config.getMobAiAttackRange() + 1.5) {
+                    damageWithMultiplier(entity, target, config.getSquirrelJumpPounceDamageMult());
+                }
+                finishSpecial(state, entity);
+            }
+            return;
+        }
+        // dart
+        int hopCount = Math.max(1, config.getSquirrelDartHopCount());
+        int interval = Math.max(2, config.getSquirrelDartHopIntervalTicks());
+        if ("init".equals(state.specialPhase)) {
+            state.specialPhase = "hop1";
+            state.specialPhaseTick = 0;
+            doSquirrelHop(entity, state);
+            return;
+        }
+        state.specialPhaseTick++;
+        if (state.specialPhase != null && state.specialPhase.startsWith("hop")) {
+            if (state.specialPhaseTick >= interval) {
+                int next;
+                try { next = Integer.parseInt(state.specialPhase.substring(3)) + 1; }
+                catch (NumberFormatException e) { finishSpecial(state, entity); return; }
+                if (next > hopCount) {
+                    if (entity.getLocation().distance(target.getLocation()) <= config.getMobAiAttackRange() + 1.5) {
+                        damageWithMultiplier(entity, target, 1.0);
+                    }
+                    finishSpecial(state, entity);
+                    return;
+                }
+                state.specialPhase = "hop" + next;
+                state.specialPhaseTick = 0;
+                doSquirrelHop(entity, state);
+            }
+        }
+    }
+
+    private void doSquirrelHop(LivingEntity entity, FluffyMobState state) {
+        double d = config.getSquirrelDartHopDistance();
+        double dx = (Math.random() * 2 - 1) * d;
+        double dz = (Math.random() * 2 - 1) * d;
+        Location dest = entity.getLocation().clone().add(dx, 0, dz);
+        try { entity.teleport(dest); } catch (Throwable ignored) {}
+        state.currentAnim = "";
+        playAnim(entity, state, "jump");
+    }
+
+    // ========================
+    // Special helpers
+    // ========================
+
+    private boolean specialReady(FluffyMobState state, int cooldownTicks) {
+        return tickClock - state.lastSpecialTick >= cooldownTicks;
+    }
+
+    private boolean rollChance(double chance) {
+        return Math.random() < chance;
+    }
+
+    private void launchToward(LivingEntity entity, Player target, double forward, double y) {
+        try {
+            Vector dir = target.getLocation().toVector()
+                    .subtract(entity.getLocation().toVector()).setY(0);
+            if (dir.lengthSquared() < 0.0001) {
+                entity.setVelocity(new Vector(0, y, 0));
+                return;
+            }
+            dir.normalize();
+            entity.setVelocity(new Vector(dir.getX() * forward, y, dir.getZ() * forward));
+        } catch (Throwable ignored) {}
+    }
+
+    private void damageWithMultiplier(LivingEntity attacker, Player target, double multiplier) {
+        try {
+            double base = 2.0;
+            var attr = attacker.getAttribute(Attribute.ATTACK_DAMAGE);
+            if (attr != null) base = attr.getValue();
+            target.damage(Math.max(1.0, base * multiplier), attacker);
+        } catch (Throwable ignored) {}
+    }
+
+    private void damageInRadius(LivingEntity attacker, Location center, double radius, double multiplier) {
+        for (Player p : center.getWorld().getPlayers()) {
+            if (p.isDead()) continue;
+            if (plugin.getModeManager().isAnyModeActive()
+                    && plugin.getModeManager().getActiveMode().isExempt(p)) continue;
+            if (p.getLocation().distance(center) <= radius) {
+                damageWithMultiplier(attacker, p, multiplier);
+            }
+        }
+    }
+
+    private void damageInCone(LivingEntity attacker, double radius, double angleDegrees, double multiplier) {
+        Vector facing;
+        try {
+            facing = attacker.getLocation().getDirection().setY(0);
+            if (facing.lengthSquared() < 0.0001) return;
+            facing.normalize();
+        } catch (Throwable t) { return; }
+        double cosThreshold = Math.cos(Math.toRadians(angleDegrees / 2.0));
+        for (Player p : attacker.getWorld().getPlayers()) {
+            if (p.isDead()) continue;
+            if (plugin.getModeManager().isAnyModeActive()
+                    && plugin.getModeManager().getActiveMode().isExempt(p)) continue;
+            Vector toPlayer = p.getLocation().toVector()
+                    .subtract(attacker.getLocation().toVector()).setY(0);
+            if (toPlayer.lengthSquared() > radius * radius) continue;
+            if (toPlayer.lengthSquared() < 0.0001) {
+                damageWithMultiplier(attacker, p, multiplier);
+                continue;
+            }
+            if (toPlayer.normalize().dot(facing) >= cosThreshold) {
+                damageWithMultiplier(attacker, p, multiplier);
+            }
+        }
+    }
+
+    /** Force a special on a managed mob (admin trigger). Returns true if applied. */
+    public boolean forceTriggerSpecial(LivingEntity entity, String specialName) {
+        FluffyMobState state = states.get(entity.getUniqueId());
+        if (state == null) return false;
+        Player target = resolveTarget(entity, state);
+        if (target == null) return false;
+        state.specialTarget = target;
+        state.pendingSpecial = specialName;
+        state.specialPhase = "init";
+        state.specialPhaseTick = 0;
+        state.stateTicks = 0;
+        state.state = State.SPECIAL;
+        return true;
+    }
+
+    /** Find the nearest managed mob of the given typeKey within radius of origin. */
+    public LivingEntity findNearestManaged(Location origin, String typeKey, double radius) {
+        LivingEntity best = null;
+        double bestSq = radius * radius;
+        for (var entry : states.entrySet()) {
+            if (!typeKey.equalsIgnoreCase(entry.getValue().typeKey)) continue;
+            Entity e = Bukkit.getEntity(entry.getKey());
+            if (!(e instanceof LivingEntity le) || !le.isValid()) continue;
+            if (!le.getWorld().equals(origin.getWorld())) continue;
+            double dSq = le.getLocation().distanceSquared(origin);
+            if (dSq <= bestSq) {
+                bestSq = dSq;
+                best = le;
+            }
+        }
+        return best;
+    }
+
+    /** Snapshot of currently registered managed mob count. */
+    public int getManagedMobCount() {
+        return states.size();
     }
 
     private void tickCooldown(LivingEntity entity, FluffyMobState state) {
@@ -296,6 +843,7 @@ public class FluffyMobAI implements Listener {
             case IDLE -> playAnim(entity, state, "idle");
             case APPROACH -> playAnim(entity, state, "walk");
             case ATTACK -> playAnim(entity, state, "attack");
+            case SPECIAL -> { /* special routine sets its own anim per phase */ }
             case COOLDOWN -> playAnim(entity, state, "idle");
             case FLEE -> playAnim(entity, state, "flee");
         }
@@ -335,6 +883,7 @@ public class FluffyMobAI implements Listener {
             case "WOLF" -> "dog";
             case "PANDA", "POLAR_BEAR" -> "bear";
             case "PARROT", "CHICKEN", "BAT" -> "bird";
+            case "CAT", "OCELOT" -> "fluffy_cat";
             default -> "default";
         };
     }
@@ -389,7 +938,7 @@ public class FluffyMobAI implements Listener {
     // State holder
     // ========================
 
-    public enum State { IDLE, APPROACH, ATTACK, COOLDOWN, FLEE }
+    public enum State { IDLE, APPROACH, ATTACK, SPECIAL, COOLDOWN, FLEE }
 
     private static class FluffyMobState {
         State state = State.IDLE;
@@ -397,5 +946,10 @@ public class FluffyMobAI implements Listener {
         UUID targetId = null;
         String typeKey = "default";
         String currentAnim = "";
+        long lastSpecialTick = -1000L;
+        String pendingSpecial = null;
+        String specialPhase = null;
+        int specialPhaseTick = 0;
+        Player specialTarget = null;
     }
 }

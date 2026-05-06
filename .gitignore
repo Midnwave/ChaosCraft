@@ -21,6 +21,10 @@ desktop.ini
 run/
 logs/
 
+# Local drag-and-drop convenience folder (re-arranged copy of files
+# already tracked under src/main/resources/)
+/dist/
+
 # Secrets
 .env
 *.key
