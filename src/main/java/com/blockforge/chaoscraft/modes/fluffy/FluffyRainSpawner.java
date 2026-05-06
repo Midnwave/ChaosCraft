@@ -142,19 +142,23 @@ public class FluffyRainSpawner {
             le.addScoreboardTag("fluffy:managed");
             le.addScoreboardTag("fluffy:falling");
 
-            // Apply multipliers
+            // Apply multipliers (entry × global difficulty-multiplier)
+            double diffMult = 1.0;
+            try { diffMult = config.getDifficultyMultiplier(); } catch (Throwable ignored) {}
             try {
                 var maxHpAttr = le.getAttribute(Attribute.MAX_HEALTH);
                 if (maxHpAttr != null) {
-                    double newMax = maxHpAttr.getBaseValue() * entry.getHealthMultiplier();
+                    double hpMult = entry.getHealthMultiplier() * diffMult;
+                    double newMax = maxHpAttr.getBaseValue() * hpMult;
                     maxHpAttr.setBaseValue(newMax);
-                    le.setHealth(Math.min(le.getHealth() * entry.getHealthMultiplier(), newMax));
+                    le.setHealth(Math.min(le.getHealth() * hpMult, newMax));
                 }
             } catch (Throwable ignored) {}
             try {
                 var dmgAttr = le.getAttribute(Attribute.ATTACK_DAMAGE);
                 if (dmgAttr != null) {
-                    dmgAttr.setBaseValue(dmgAttr.getBaseValue() * entry.getDamageMultiplier());
+                    double dmgMult = entry.getDamageMultiplier() * diffMult;
+                    dmgAttr.setBaseValue(dmgAttr.getBaseValue() * dmgMult);
                 }
             } catch (Throwable ignored) {}
 

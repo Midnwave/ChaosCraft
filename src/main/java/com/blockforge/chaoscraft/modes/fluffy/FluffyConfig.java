@@ -24,7 +24,7 @@ import java.util.Map;
  */
 public class FluffyConfig {
 
-    private static final int CURRENT_CONFIG_VERSION = 3;
+    private static final int CURRENT_CONFIG_VERSION = 4;
 
     private final ChaosCraftPlugin plugin;
     private final File configFile;
@@ -72,6 +72,7 @@ public class FluffyConfig {
 
         if (config.getInt("config-version") < CURRENT_CONFIG_VERSION) { config.set("config-version", CURRENT_CONFIG_VERSION); needsSave = true; }
         if (!config.contains("duration-seconds")) { config.set("duration-seconds", 180); needsSave = true; }
+        if (!config.contains("difficulty-multiplier")) { config.set("difficulty-multiplier", 15.0); needsSave = true; }
         if (!config.contains("arena-radius")) { config.set("arena-radius", 50); needsSave = true; }
         if (!config.contains("enforce-boundary")) { config.set("enforce-boundary", true); needsSave = true; }
         if (!config.contains("exempt-players")) { config.set("exempt-players", new ArrayList<>()); needsSave = true; }
@@ -80,9 +81,9 @@ public class FluffyConfig {
         if (!config.contains("world")) { config.set("world", ""); needsSave = true; }
 
         // ── Scheduler ───────────────────────────────────────────────────
-        if (!config.contains("scheduler.base-spawn-interval-ticks")) { config.set("scheduler.base-spawn-interval-ticks", 40); needsSave = true; }
+        if (!config.contains("scheduler.base-spawn-interval-ticks")) { config.set("scheduler.base-spawn-interval-ticks", 25); needsSave = true; }
         if (!config.contains("scheduler.spawn-offset-radius")) { config.set("scheduler.spawn-offset-radius", 8.0); needsSave = true; }
-        if (!config.contains("scheduler.max-events-per-player")) { config.set("scheduler.max-events-per-player", 3); needsSave = true; }
+        if (!config.contains("scheduler.max-events-per-player")) { config.set("scheduler.max-events-per-player", 5); needsSave = true; }
         if (!config.contains("scheduler.type-weight-block-display")) { config.set("scheduler.type-weight-block-display", 1.0); needsSave = true; }
         if (!config.contains("scheduler.type-weight-environmental")) { config.set("scheduler.type-weight-environmental", 1.0); needsSave = true; }
         if (!config.contains("scheduler.type-weight-model-engine")) { config.set("scheduler.type-weight-model-engine", 1.0); needsSave = true; }
@@ -94,8 +95,8 @@ public class FluffyConfig {
         if (!config.contains("mob-ai.enabled")) { config.set("mob-ai.enabled", true); needsSave = true; }
         if (!config.contains("mob-ai.tick-interval")) { config.set("mob-ai.tick-interval", 4); needsSave = true; }
         if (!config.contains("mob-ai.detection-range")) { config.set("mob-ai.detection-range", 14.0); needsSave = true; }
-        if (!config.contains("mob-ai.attack-range")) { config.set("mob-ai.attack-range", 2.5); needsSave = true; }
-        if (!config.contains("mob-ai.attack-cooldown-ticks")) { config.set("mob-ai.attack-cooldown-ticks", 40); needsSave = true; }
+        if (!config.contains("mob-ai.attack-range")) { config.set("mob-ai.attack-range", 3.0); needsSave = true; }
+        if (!config.contains("mob-ai.attack-cooldown-ticks")) { config.set("mob-ai.attack-cooldown-ticks", 25); needsSave = true; }
         if (!config.contains("mob-ai.flee-hp-percent")) { config.set("mob-ai.flee-hp-percent", 25); needsSave = true; }
         if (!config.contains("mob-ai.approach-speed-multiplier")) { config.set("mob-ai.approach-speed-multiplier", 1.1); needsSave = true; }
         if (!config.contains("mob-ai.animation-speed")) { config.set("mob-ai.animation-speed", 2.0); needsSave = true; }
@@ -109,48 +110,48 @@ public class FluffyConfig {
         if (!config.contains("mob-ai.bird.bob-amplitude")) { config.set("mob-ai.bird.bob-amplitude", 0.2); needsSave = true; }
 
         // ── Per-type attack roster (config-version 2) ───────────────────
-        if (!config.contains("mob-ai.special-roll-on-attack")) { config.set("mob-ai.special-roll-on-attack", 0.35); needsSave = true; }
+        if (!config.contains("mob-ai.special-roll-on-attack")) { config.set("mob-ai.special-roll-on-attack", 0.55); needsSave = true; }
 
         // bunny specials
         if (!config.contains("mob-ai.bunny.tackle-damage-multiplier")) { config.set("mob-ai.bunny.tackle-damage-multiplier", 1.5); needsSave = true; }
         if (!config.contains("mob-ai.bunny.tackle-leap-y")) { config.set("mob-ai.bunny.tackle-leap-y", 0.5); needsSave = true; }
         if (!config.contains("mob-ai.bunny.tackle-leap-forward")) { config.set("mob-ai.bunny.tackle-leap-forward", 0.6); needsSave = true; }
-        if (!config.contains("mob-ai.bunny.tackle-cooldown-ticks")) { config.set("mob-ai.bunny.tackle-cooldown-ticks", 200); needsSave = true; }
+        if (!config.contains("mob-ai.bunny.tackle-cooldown-ticks")) { config.set("mob-ai.bunny.tackle-cooldown-ticks", 100); needsSave = true; }
         if (!config.contains("mob-ai.bunny.multiply-chance")) { config.set("mob-ai.bunny.multiply-chance", 0.4); needsSave = true; }
         if (!config.contains("mob-ai.bunny.multiply-hp-percent")) { config.set("mob-ai.bunny.multiply-hp-percent", 60); needsSave = true; }
         if (!config.contains("mob-ai.bunny.multiply-spawn-count")) { config.set("mob-ai.bunny.multiply-spawn-count", 1); needsSave = true; }
-        if (!config.contains("mob-ai.bunny.multiply-cooldown-ticks")) { config.set("mob-ai.bunny.multiply-cooldown-ticks", 600); needsSave = true; }
+        if (!config.contains("mob-ai.bunny.multiply-cooldown-ticks")) { config.set("mob-ai.bunny.multiply-cooldown-ticks", 300); needsSave = true; }
         if (!config.contains("mob-ai.bunny.multiply-child-hp-multiplier")) { config.set("mob-ai.bunny.multiply-child-hp-multiplier", 0.5); needsSave = true; }
 
         // bear specials
         if (!config.contains("mob-ai.bear.paw-cone-radius")) { config.set("mob-ai.bear.paw-cone-radius", 2.5); needsSave = true; }
         if (!config.contains("mob-ai.bear.paw-cone-angle-degrees")) { config.set("mob-ai.bear.paw-cone-angle-degrees", 120); needsSave = true; }
         if (!config.contains("mob-ai.bear.paw-damage-multiplier")) { config.set("mob-ai.bear.paw-damage-multiplier", 1.5); needsSave = true; }
-        if (!config.contains("mob-ai.bear.paw-cooldown-ticks")) { config.set("mob-ai.bear.paw-cooldown-ticks", 160); needsSave = true; }
+        if (!config.contains("mob-ai.bear.paw-cooldown-ticks")) { config.set("mob-ai.bear.paw-cooldown-ticks", 80); needsSave = true; }
         if (!config.contains("mob-ai.bear.slam-radius")) { config.set("mob-ai.bear.slam-radius", 3.0); needsSave = true; }
         if (!config.contains("mob-ai.bear.slam-knockup-y")) { config.set("mob-ai.bear.slam-knockup-y", 0.7); needsSave = true; }
         if (!config.contains("mob-ai.bear.slam-damage-multiplier")) { config.set("mob-ai.bear.slam-damage-multiplier", 1.2); needsSave = true; }
-        if (!config.contains("mob-ai.bear.slam-cooldown-ticks")) { config.set("mob-ai.bear.slam-cooldown-ticks", 200); needsSave = true; }
+        if (!config.contains("mob-ai.bear.slam-cooldown-ticks")) { config.set("mob-ai.bear.slam-cooldown-ticks", 100); needsSave = true; }
 
         // fox specials
         if (!config.contains("mob-ai.fox.pounce-distance")) { config.set("mob-ai.fox.pounce-distance", 4.0); needsSave = true; }
         if (!config.contains("mob-ai.fox.pounce-damage-multiplier")) { config.set("mob-ai.fox.pounce-damage-multiplier", 1.4); needsSave = true; }
         if (!config.contains("mob-ai.fox.pounce-y-velocity")) { config.set("mob-ai.fox.pounce-y-velocity", 0.5); needsSave = true; }
-        if (!config.contains("mob-ai.fox.pounce-cooldown-ticks")) { config.set("mob-ai.fox.pounce-cooldown-ticks", 160); needsSave = true; }
+        if (!config.contains("mob-ai.fox.pounce-cooldown-ticks")) { config.set("mob-ai.fox.pounce-cooldown-ticks", 80); needsSave = true; }
 
         // dog specials
         if (!config.contains("mob-ai.dog.pack-lunge-speed-multiplier")) { config.set("mob-ai.dog.pack-lunge-speed-multiplier", 1.6); needsSave = true; }
-        if (!config.contains("mob-ai.dog.pack-lunge-cooldown-ticks")) { config.set("mob-ai.dog.pack-lunge-cooldown-ticks", 240); needsSave = true; }
+        if (!config.contains("mob-ai.dog.pack-lunge-cooldown-ticks")) { config.set("mob-ai.dog.pack-lunge-cooldown-ticks", 120); needsSave = true; }
 
         // bird specials
         if (!config.contains("mob-ai.bird.dive-y-rise")) { config.set("mob-ai.bird.dive-y-rise", 3.0); needsSave = true; }
         if (!config.contains("mob-ai.bird.dive-y-drop-velocity")) { config.set("mob-ai.bird.dive-y-drop-velocity", -1.4); needsSave = true; }
         if (!config.contains("mob-ai.bird.dive-damage-multiplier")) { config.set("mob-ai.bird.dive-damage-multiplier", 1.4); needsSave = true; }
-        if (!config.contains("mob-ai.bird.dive-cooldown-ticks")) { config.set("mob-ai.bird.dive-cooldown-ticks", 180); needsSave = true; }
+        if (!config.contains("mob-ai.bird.dive-cooldown-ticks")) { config.set("mob-ai.bird.dive-cooldown-ticks", 90); needsSave = true; }
         if (!config.contains("mob-ai.bird.buffet-range")) { config.set("mob-ai.bird.buffet-range", 2.0); needsSave = true; }
         if (!config.contains("mob-ai.bird.buffet-knockback-strength")) { config.set("mob-ai.bird.buffet-knockback-strength", 0.9); needsSave = true; }
         if (!config.contains("mob-ai.bird.buffet-damage-multiplier")) { config.set("mob-ai.bird.buffet-damage-multiplier", 0.5); needsSave = true; }
-        if (!config.contains("mob-ai.bird.buffet-cooldown-ticks")) { config.set("mob-ai.bird.buffet-cooldown-ticks", 80); needsSave = true; }
+        if (!config.contains("mob-ai.bird.buffet-cooldown-ticks")) { config.set("mob-ai.bird.buffet-cooldown-ticks", 40); needsSave = true; }
 
         // fluffy_cat (NEW)
         if (!config.contains("mob-ai.fluffy_cat.wiggle-pounce-chance")) { config.set("mob-ai.fluffy_cat.wiggle-pounce-chance", 0.3); needsSave = true; }
@@ -163,18 +164,18 @@ public class FluffyConfig {
         if (!config.contains("mob-ai.fluffy_cat.triple-swipe-chance")) { config.set("mob-ai.fluffy_cat.triple-swipe-chance", 0.25); needsSave = true; }
         if (!config.contains("mob-ai.fluffy_cat.triple-swipe-interval-ticks")) { config.set("mob-ai.fluffy_cat.triple-swipe-interval-ticks", 10); needsSave = true; }
         if (!config.contains("mob-ai.fluffy_cat.triple-swipe-damage-multiplier")) { config.set("mob-ai.fluffy_cat.triple-swipe-damage-multiplier", 0.8); needsSave = true; }
-        if (!config.contains("mob-ai.fluffy_cat.special-cooldown-ticks")) { config.set("mob-ai.fluffy_cat.special-cooldown-ticks", 200); needsSave = true; }
+        if (!config.contains("mob-ai.fluffy_cat.special-cooldown-ticks")) { config.set("mob-ai.fluffy_cat.special-cooldown-ticks", 100); needsSave = true; }
 
         // fluffy_squirrel (NEW)
         if (!config.contains("mob-ai.fluffy_squirrel.jump-pounce-distance")) { config.set("mob-ai.fluffy_squirrel.jump-pounce-distance", 3.0); needsSave = true; }
         if (!config.contains("mob-ai.fluffy_squirrel.jump-pounce-y-velocity")) { config.set("mob-ai.fluffy_squirrel.jump-pounce-y-velocity", 0.45); needsSave = true; }
         if (!config.contains("mob-ai.fluffy_squirrel.jump-pounce-damage-multiplier")) { config.set("mob-ai.fluffy_squirrel.jump-pounce-damage-multiplier", 1.3); needsSave = true; }
-        if (!config.contains("mob-ai.fluffy_squirrel.jump-pounce-cooldown-ticks")) { config.set("mob-ai.fluffy_squirrel.jump-pounce-cooldown-ticks", 100); needsSave = true; }
+        if (!config.contains("mob-ai.fluffy_squirrel.jump-pounce-cooldown-ticks")) { config.set("mob-ai.fluffy_squirrel.jump-pounce-cooldown-ticks", 50); needsSave = true; }
         if (!config.contains("mob-ai.fluffy_squirrel.dart-hp-percent")) { config.set("mob-ai.fluffy_squirrel.dart-hp-percent", 50); needsSave = true; }
         if (!config.contains("mob-ai.fluffy_squirrel.dart-hop-count")) { config.set("mob-ai.fluffy_squirrel.dart-hop-count", 3); needsSave = true; }
         if (!config.contains("mob-ai.fluffy_squirrel.dart-hop-distance")) { config.set("mob-ai.fluffy_squirrel.dart-hop-distance", 2.0); needsSave = true; }
         if (!config.contains("mob-ai.fluffy_squirrel.dart-hop-interval-ticks")) { config.set("mob-ai.fluffy_squirrel.dart-hop-interval-ticks", 6); needsSave = true; }
-        if (!config.contains("mob-ai.fluffy_squirrel.dart-cooldown-ticks")) { config.set("mob-ai.fluffy_squirrel.dart-cooldown-ticks", 240); needsSave = true; }
+        if (!config.contains("mob-ai.fluffy_squirrel.dart-cooldown-ticks")) { config.set("mob-ai.fluffy_squirrel.dart-cooldown-ticks", 120); needsSave = true; }
 
         // ── Herd Pulse ──────────────────────────────────────────────────
         if (!config.contains("herd-pulse.enabled")) { config.set("herd-pulse.enabled", true); needsSave = true; }
@@ -183,12 +184,12 @@ public class FluffyConfig {
 
         // ── Rain from sky ───────────────────────────────────────────────
         if (!config.contains("rain-from-sky.enabled")) { config.set("rain-from-sky.enabled", true); needsSave = true; }
-        if (!config.contains("rain-from-sky.spawns-per-window")) { config.set("rain-from-sky.spawns-per-window", 3); needsSave = true; }
-        if (!config.contains("rain-from-sky.window-seconds")) { config.set("rain-from-sky.window-seconds", 8); needsSave = true; }
+        if (!config.contains("rain-from-sky.spawns-per-window")) { config.set("rain-from-sky.spawns-per-window", 6); needsSave = true; }
+        if (!config.contains("rain-from-sky.window-seconds")) { config.set("rain-from-sky.window-seconds", 6); needsSave = true; }
         if (!config.contains("rain-from-sky.drop-height")) { config.set("rain-from-sky.drop-height", 20); needsSave = true; }
         if (!config.contains("rain-from-sky.target-mode")) { config.set("rain-from-sky.target-mode", "near_players"); needsSave = true; }
         if (!config.contains("rain-from-sky.scatter-radius")) { config.set("rain-from-sky.scatter-radius", 12.0); needsSave = true; }
-        if (!config.contains("rain-from-sky.max-falling-mobs")) { config.set("rain-from-sky.max-falling-mobs", 20); needsSave = true; }
+        if (!config.contains("rain-from-sky.max-falling-mobs")) { config.set("rain-from-sky.max-falling-mobs", 35); needsSave = true; }
         if (!config.contains("rain-from-sky.mobs")) {
             config.set("rain-from-sky.mobs", buildDefaultRainMobs());
             needsSave = true;
@@ -399,6 +400,7 @@ public class FluffyConfig {
     // ========================
 
     public int getDurationSeconds() { return config.getInt("duration-seconds", 180); }
+    public double getDifficultyMultiplier() { return config.getDouble("difficulty-multiplier", 15.0); }
     public int getArenaRadius() { return config.getInt("arena-radius", 50); }
     public boolean isEnforceBoundary() { return config.getBoolean("enforce-boundary", true); }
     public List<String> getExemptPlayers() { return config.getStringList("exempt-players"); }
@@ -614,6 +616,15 @@ public class FluffyConfig {
         defaults.setComments("duration-seconds", List.of(
                 "Total mode duration in seconds. Default: 180 (3 minutes)."));
 
+        defaults.set("difficulty-multiplier", 15.0);
+        defaults.setComments("difficulty-multiplier", List.of(
+                "Global damage and aggression multiplier applied to:",
+                "  - all attack damage (BlockDisplay/Environmental/ModelEngine attacks)",
+                "  - mob AI bite damage",
+                "  - rain mob HP and damage scaling",
+                "Default 15.0 means everything hits ~15x harder than baseline.",
+                "Set to 1.0 for vanilla baseline."));
+
         defaults.set("arena-radius", 50);
         defaults.setComments("arena-radius", List.of(
                 "Radius (in blocks) of the arena area used for spawn picking and",
@@ -640,16 +651,16 @@ public class FluffyConfig {
                 "World name where Fluffy Mode runs. Leave empty for the first loaded world."));
 
         // Scheduler
-        defaults.set("scheduler.base-spawn-interval-ticks", 40);
+        defaults.set("scheduler.base-spawn-interval-ticks", 25);
         defaults.setComments("scheduler.base-spawn-interval-ticks", List.of(
                 "",
                 "=== ATTACK SCHEDULER ===",
                 "Ticks between attack spawn attempts. 20 ticks = 1 second.",
-                "40 = attempt every 2 seconds."));
+                "25 = attempt every 1.25 seconds."));
         defaults.set("scheduler.spawn-offset-radius", 8.0);
         defaults.setComments("scheduler.spawn-offset-radius", List.of(
                 "Max distance from the target player that attacks can spawn."));
-        defaults.set("scheduler.max-events-per-player", 3);
+        defaults.set("scheduler.max-events-per-player", 5);
         defaults.setComments("scheduler.max-events-per-player", List.of(
                 "Maximum simultaneous active attacks per player."));
         defaults.set("scheduler.type-weight-block-display", 1.0);
@@ -681,12 +692,12 @@ public class FluffyConfig {
         defaults.set("mob-ai.detection-range", 14.0);
         defaults.setComments("mob-ai.detection-range", List.of(
                 "Range (blocks) at which a managed mob acquires a player target."));
-        defaults.set("mob-ai.attack-range", 2.5);
+        defaults.set("mob-ai.attack-range", 3.0);
         defaults.setComments("mob-ai.attack-range", List.of(
                 "Range (blocks) at which a managed mob enters its ATTACK state."));
-        defaults.set("mob-ai.attack-cooldown-ticks", 40);
+        defaults.set("mob-ai.attack-cooldown-ticks", 25);
         defaults.setComments("mob-ai.attack-cooldown-ticks", List.of(
-                "Ticks between consecutive attack swings. 40 = 2 seconds."));
+                "Ticks between consecutive attack swings. 25 = 1.25 seconds."));
         defaults.set("mob-ai.flee-hp-percent", 25);
         defaults.setComments("mob-ai.flee-hp-percent", List.of(
                 "HP percentage threshold at which a managed mob enters FLEE state.",
@@ -721,7 +732,7 @@ public class FluffyConfig {
                 "Bird-type mobs bob up/down by this amount per AI tick."));
 
         // ── Per-type attack roster (config-version 2) ───────────────────
-        defaults.set("mob-ai.special-roll-on-attack", 0.35);
+        defaults.set("mob-ai.special-roll-on-attack", 0.55);
         defaults.setComments("mob-ai.special-roll-on-attack", List.of(
                 "",
                 "=== PER-TYPE SPECIAL ATTACKS ===",
@@ -734,11 +745,12 @@ public class FluffyConfig {
         defaults.set("mob-ai.bunny.tackle-damage-multiplier", 1.5);
         defaults.set("mob-ai.bunny.tackle-leap-y", 0.5);
         defaults.set("mob-ai.bunny.tackle-leap-forward", 0.6);
-        defaults.set("mob-ai.bunny.tackle-cooldown-ticks", 200);
+        defaults.set("mob-ai.bunny.tackle-cooldown-ticks", 100);
         defaults.set("mob-ai.bunny.multiply-chance", 0.4);
         defaults.set("mob-ai.bunny.multiply-hp-percent", 60);
         defaults.set("mob-ai.bunny.multiply-spawn-count", 1);
-        defaults.set("mob-ai.bunny.multiply-cooldown-ticks", 600);
+        defaults.set("mob-ai.bunny.multiply-cooldown-ticks", 300);
+        // (cooldowns halved — see difficulty-multiplier comment block)
         defaults.set("mob-ai.bunny.multiply-child-hp-multiplier", 0.5);
         defaults.setComments("mob-ai.bunny.tackle-damage-multiplier", List.of(
                 "Bunny specials: 'tackle' (leap with bonus damage on landing) and",
@@ -774,11 +786,11 @@ public class FluffyConfig {
         defaults.set("mob-ai.bear.paw-cone-radius", 2.5);
         defaults.set("mob-ai.bear.paw-cone-angle-degrees", 120);
         defaults.set("mob-ai.bear.paw-damage-multiplier", 1.5);
-        defaults.set("mob-ai.bear.paw-cooldown-ticks", 160);
+        defaults.set("mob-ai.bear.paw-cooldown-ticks", 80);
         defaults.set("mob-ai.bear.slam-radius", 3.0);
         defaults.set("mob-ai.bear.slam-knockup-y", 0.7);
         defaults.set("mob-ai.bear.slam-damage-multiplier", 1.2);
-        defaults.set("mob-ai.bear.slam-cooldown-ticks", 200);
+        defaults.set("mob-ai.bear.slam-cooldown-ticks", 100);
         defaults.setComments("mob-ai.bear.paw-cone-radius", List.of(
                 "Bear specials: 'paw_swipe' (frontal cone after windup) and",
                 "'slam' (radial AoE with knockup at melee range).",
@@ -811,7 +823,7 @@ public class FluffyConfig {
         defaults.set("mob-ai.fox.pounce-distance", 4.0);
         defaults.set("mob-ai.fox.pounce-damage-multiplier", 1.4);
         defaults.set("mob-ai.fox.pounce-y-velocity", 0.5);
-        defaults.set("mob-ai.fox.pounce-cooldown-ticks", 160);
+        defaults.set("mob-ai.fox.pounce-cooldown-ticks", 80);
         defaults.setComments("mob-ai.fox.pounce-distance", List.of(
                 "Fox special: 'pounce' — a forward lunge toward the target",
                 "that deals damage on landing.",
@@ -830,7 +842,7 @@ public class FluffyConfig {
 
         // dog specials
         defaults.set("mob-ai.dog.pack-lunge-speed-multiplier", 1.6);
-        defaults.set("mob-ai.dog.pack-lunge-cooldown-ticks", 240);
+        defaults.set("mob-ai.dog.pack-lunge-cooldown-ticks", 120);
         defaults.setComments("mob-ai.dog.pack-lunge-speed-multiplier", List.of(
                 "Dog special: 'pack_lunge' — alerts every other dog within",
                 "pack-alert-range to converge on the same target.",
@@ -845,11 +857,11 @@ public class FluffyConfig {
         defaults.set("mob-ai.bird.dive-y-rise", 3.0);
         defaults.set("mob-ai.bird.dive-y-drop-velocity", -1.4);
         defaults.set("mob-ai.bird.dive-damage-multiplier", 1.4);
-        defaults.set("mob-ai.bird.dive-cooldown-ticks", 180);
+        defaults.set("mob-ai.bird.dive-cooldown-ticks", 90);
         defaults.set("mob-ai.bird.buffet-range", 2.0);
         defaults.set("mob-ai.bird.buffet-knockback-strength", 0.9);
         defaults.set("mob-ai.bird.buffet-damage-multiplier", 0.5);
-        defaults.set("mob-ai.bird.buffet-cooldown-ticks", 80);
+        defaults.set("mob-ai.bird.buffet-cooldown-ticks", 40);
         defaults.setComments("mob-ai.bird.dive-y-rise", List.of(
                 "Bird specials: 'dive' (rise then plummet for AoE damage on impact)",
                 "and 'wing_buffet' (close-range push with light damage).",
@@ -890,7 +902,7 @@ public class FluffyConfig {
         defaults.set("mob-ai.fluffy_cat.triple-swipe-chance", 0.25);
         defaults.set("mob-ai.fluffy_cat.triple-swipe-interval-ticks", 10);
         defaults.set("mob-ai.fluffy_cat.triple-swipe-damage-multiplier", 0.8);
-        defaults.set("mob-ai.fluffy_cat.special-cooldown-ticks", 200);
+        defaults.set("mob-ai.fluffy_cat.special-cooldown-ticks", 100);
         defaults.setComments("mob-ai.fluffy_cat.wiggle-pounce-chance", List.of(
                 "fluffy_cat specials: 'wiggle_pounce' (sit -> wiggling -> prepare ->",
                 "pounce theatre, big damage on land) and 'triple_swipe' (3 quick hits).",
@@ -933,12 +945,12 @@ public class FluffyConfig {
         defaults.set("mob-ai.fluffy_squirrel.jump-pounce-distance", 3.0);
         defaults.set("mob-ai.fluffy_squirrel.jump-pounce-y-velocity", 0.45);
         defaults.set("mob-ai.fluffy_squirrel.jump-pounce-damage-multiplier", 1.3);
-        defaults.set("mob-ai.fluffy_squirrel.jump-pounce-cooldown-ticks", 100);
+        defaults.set("mob-ai.fluffy_squirrel.jump-pounce-cooldown-ticks", 50);
         defaults.set("mob-ai.fluffy_squirrel.dart-hp-percent", 50);
         defaults.set("mob-ai.fluffy_squirrel.dart-hop-count", 3);
         defaults.set("mob-ai.fluffy_squirrel.dart-hop-distance", 2.0);
         defaults.set("mob-ai.fluffy_squirrel.dart-hop-interval-ticks", 6);
-        defaults.set("mob-ai.fluffy_squirrel.dart-cooldown-ticks", 240);
+        defaults.set("mob-ai.fluffy_squirrel.dart-cooldown-ticks", 120);
         defaults.setComments("mob-ai.fluffy_squirrel.jump-pounce-distance", List.of(
                 "fluffy_squirrel specials: 'jump_pounce' (small forward leap with",
                 "damage on landing) and 'dart' (HP-gated frantic teleport-hops",
@@ -996,10 +1008,10 @@ public class FluffyConfig {
                 "Continuous rain of fluffy mobs falling from the sky onto the arena.",
                 "Each falling mob is invulnerable + AI-disabled while in flight,",
                 "then enables on landing. Adds a constant aerial-pressure feel."));
-        defaults.set("rain-from-sky.spawns-per-window", 3);
-        defaults.set("rain-from-sky.window-seconds", 8);
+        defaults.set("rain-from-sky.spawns-per-window", 6);
+        defaults.set("rain-from-sky.window-seconds", 6);
         defaults.setComments("rain-from-sky.spawns-per-window", List.of(
-                "Mobs dropped per window-seconds window. 3 per 8s = ~1 every 2.6s."));
+                "Mobs dropped per window-seconds window. 6 per 6s = ~1 per second."));
         defaults.set("rain-from-sky.drop-height", 20);
         defaults.setComments("rain-from-sky.drop-height", List.of(
                 "Blocks above the highest block where each mob spawns."));
@@ -1012,7 +1024,7 @@ public class FluffyConfig {
         defaults.set("rain-from-sky.scatter-radius", 12.0);
         defaults.setComments("rain-from-sky.scatter-radius", List.of(
                 "How far from the chosen target XZ each drop is scattered."));
-        defaults.set("rain-from-sky.max-falling-mobs", 20);
+        defaults.set("rain-from-sky.max-falling-mobs", 35);
         defaults.setComments("rain-from-sky.max-falling-mobs", List.of(
                 "Hard cap on simultaneous in-flight (falling) mobs.",
                 "When the cap is hit, drops are skipped until some land."));

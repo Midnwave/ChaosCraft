@@ -10,6 +10,9 @@
 # so FluffyMobAI's spawn listener picks them up and runs the
 # fluffy_cat state machine (stalk -> wiggle -> pounce, triple-swipe).
 # Animations: idle, walk, sit_loop, wiggling, prepare_attack, attack.
+#
+# Model attachment uses skill-based `model{mid=X}` (matching the
+# canonical Nocsy/Nog pack approach) instead of `Modules.ModelEngine`.
 # ============================================================
 
 Fluffy_NocsyCat-Munchkin:
@@ -23,9 +26,9 @@ Fluffy_NocsyCat-Munchkin:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: nocsy_cat1
+  Skills:
+  - model{mid=nocsy_cat1;n=false} @self ~onSpawn
+  - model{mid=nocsy_cat1;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.32
     PreventOtherDrops: true
@@ -51,9 +54,9 @@ Fluffy_NocsyCat-Bombay:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: nocsy_cat2
+  Skills:
+  - model{mid=nocsy_cat2;n=false} @self ~onSpawn
+  - model{mid=nocsy_cat2;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.34
     PreventOtherDrops: true
@@ -79,9 +82,9 @@ Fluffy_NocsyCat-Siamese:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: nocsy_cat3
+  Skills:
+  - model{mid=nocsy_cat3;n=false} @self ~onSpawn
+  - model{mid=nocsy_cat3;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.34
     PreventOtherDrops: true
@@ -107,9 +110,9 @@ Fluffy_NocsyCat-ScottishFold:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: nocsy_cat4
+  Skills:
+  - model{mid=nocsy_cat4;n=false} @self ~onSpawn
+  - model{mid=nocsy_cat4;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.30
     PreventOtherDrops: true
@@ -135,9 +138,9 @@ Fluffy_NocsyCat-MaineCoon:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: nocsy_cat5
+  Skills:
+  - model{mid=nocsy_cat5;n=false} @self ~onSpawn
+  - model{mid=nocsy_cat5;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.28
     PreventOtherDrops: true
@@ -163,9 +166,9 @@ Fluffy_NocsyCat-European:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: nocsy_cat6
+  Skills:
+  - model{mid=nocsy_cat6;n=false} @self ~onSpawn
+  - model{mid=nocsy_cat6;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.32
     PreventOtherDrops: true
@@ -191,9 +194,9 @@ Fluffy_NocsyCat-Fallen:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: nocsy_cat_fallen
+  Skills:
+  - model{mid=nocsy_cat_fallen;n=false} @self ~onSpawn
+  - model{mid=nocsy_cat_fallen;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.30
     PreventOtherDrops: true

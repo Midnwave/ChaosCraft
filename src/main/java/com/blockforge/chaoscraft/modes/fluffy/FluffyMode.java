@@ -74,7 +74,34 @@ public class FluffyMode extends AbstractMode {
         FluffyEnvironmental5.registerAll(plugin, attackRegistry);
         FluffyModelEngine.registerAll(plugin, attackRegistry);
         attackRegistry.reloadConfigs();
+        applyDifficultyToAttacks();
         plugin.getLogger().info("[Fluffy] Registered " + attackRegistry.size() + " attacks, configs loaded.");
+    }
+
+    /**
+     * Multiplies every registered Fluffy attack's damage by the global
+     * difficulty-multiplier from FluffyConfig (default 15.0). Applied AFTER
+     * attackRegistry.reloadConfigs() so user-supplied per-attack damage
+     * values are still scaled. Fails open (multiplier = 1.0) on any error.
+     */
+    private void applyDifficultyToAttacks() {
+        double diffMult;
+        try {
+            diffMult = fluffyConfig.getDifficultyMultiplier();
+        } catch (Throwable t) {
+            diffMult = 1.0;
+        }
+        if (diffMult == 1.0) return;
+        int scaled = 0;
+        for (var atk : attackRegistry.getAll()) {
+            try {
+                var cfg = atk.getConfig();
+                cfg.setDamage(cfg.getDamage() * diffMult);
+                scaled++;
+            } catch (Throwable ignored) {}
+        }
+        plugin.getLogger().info("[Fluffy] Applied difficulty x" + diffMult + " to "
+                + scaled + " attacks.");
     }
 
     // ========================
@@ -106,8 +133,9 @@ public class FluffyMode extends AbstractMode {
             arenaCenter = world.getSpawnLocation().clone();
         }
 
-        // Reload attack configs
+        // Reload attack configs and re-apply difficulty multiplier
         attackRegistry.reloadConfigs();
+        applyDifficultyToAttacks();
 
         int attackCount = attackRegistry.size();
         int bd = attackRegistry.getByPhaseAndType(1, AttackType.BLOCK_DISPLAY).size();

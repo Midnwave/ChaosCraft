@@ -272,7 +272,9 @@ public class FluffyMobAI implements Listener {
                 if (entity.getAttribute(Attribute.ATTACK_DAMAGE) != null) {
                     dmg = entity.getAttribute(Attribute.ATTACK_DAMAGE).getValue();
                 }
-                target.damage(Math.max(1.0, dmg), entity);
+                double diffMult = 1.0;
+                try { diffMult = config.getDifficultyMultiplier(); } catch (Throwable ignored) {}
+                target.damage(Math.max(1.0, dmg * diffMult), entity);
             } catch (Throwable ignored) {}
             transition(state, State.COOLDOWN, entity);
         } else {
@@ -733,7 +735,9 @@ public class FluffyMobAI implements Listener {
             double base = 2.0;
             var attr = attacker.getAttribute(Attribute.ATTACK_DAMAGE);
             if (attr != null) base = attr.getValue();
-            target.damage(Math.max(1.0, base * multiplier), attacker);
+            double diffMult = 1.0;
+            try { diffMult = config.getDifficultyMultiplier(); } catch (Throwable ignored) {}
+            target.damage(Math.max(1.0, base * multiplier * diffMult), attacker);
         } catch (Throwable ignored) {}
     }
 

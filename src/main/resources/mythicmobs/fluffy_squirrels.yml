@@ -11,6 +11,9 @@
 # 'fluffy:type:fluffy_squirrel' so FluffyMobAI runs the
 # fluffy_squirrel state machine (jump-pounce + dart specials).
 # Animations: idle, walk, jump, sniff, tail_wiggle, hurt_1/2/3, death.
+#
+# Model attachment uses skill-based `model{mid=X}` (matching the
+# canonical Nocsy/Nog pack approach) instead of `Modules.ModelEngine`.
 # ============================================================
 
 Fluffy_NogSquirrel-Brown:
@@ -24,9 +27,9 @@ Fluffy_NogSquirrel-Brown:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: nm_squirrel_brown
+  Skills:
+  - model{mid=nm_squirrel_brown;n=false} @self ~onSpawn
+  - model{mid=nm_squirrel_brown;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.36
     PreventOtherDrops: true
@@ -52,9 +55,9 @@ Fluffy_NogSquirrel-Gray:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: nm_squirrel_gray
+  Skills:
+  - model{mid=nm_squirrel_gray;n=false} @self ~onSpawn
+  - model{mid=nm_squirrel_gray;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.36
     PreventOtherDrops: true
@@ -80,9 +83,9 @@ Fluffy_NogSquirrel-Red:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: nm_squirrel_red
+  Skills:
+  - model{mid=nm_squirrel_red;n=false} @self ~onSpawn
+  - model{mid=nm_squirrel_red;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.38
     PreventOtherDrops: true

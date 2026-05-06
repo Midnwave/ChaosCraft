@@ -23,9 +23,9 @@ DogAiredaleTerrierDark:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: airedale_terrier_dark
+  Skills:
+  - model{mid=airedale_terrier_dark;n=false} @self ~onSpawn
+  - model{mid=airedale_terrier_dark;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.3
     PreventOtherDrops: true
@@ -52,9 +52,9 @@ DogAiredaleTerrierLight:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: airedale_terrier_light
+  Skills:
+  - model{mid=airedale_terrier_light;n=false} @self ~onSpawn
+  - model{mid=airedale_terrier_light;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.3
     PreventOtherDrops: true
@@ -81,9 +81,9 @@ DogAiredaleTerrierMedium:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: airedale_terrier_medium
+  Skills:
+  - model{mid=airedale_terrier_medium;n=false} @self ~onSpawn
+  - model{mid=airedale_terrier_medium;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.3
     PreventOtherDrops: true
@@ -110,9 +110,9 @@ DogAlaskanMalamuteBlack:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: alaskan_malamute_black
+  Skills:
+  - model{mid=alaskan_malamute_black;n=false} @self ~onSpawn
+  - model{mid=alaskan_malamute_black;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.26
     PreventOtherDrops: true
@@ -139,9 +139,9 @@ DogAlaskanMalamuteGray:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: alaskan_malamute_gray
+  Skills:
+  - model{mid=alaskan_malamute_gray;n=false} @self ~onSpawn
+  - model{mid=alaskan_malamute_gray;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.26
     PreventOtherDrops: true
@@ -168,9 +168,9 @@ DogAlaskanMalamuteRed:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: alaskan_malamute_red
+  Skills:
+  - model{mid=alaskan_malamute_red;n=false} @self ~onSpawn
+  - model{mid=alaskan_malamute_red;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.26
     PreventOtherDrops: true
@@ -197,9 +197,9 @@ DogAlaskanMalamuteSable:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: alaskan_malamute_sable
+  Skills:
+  - model{mid=alaskan_malamute_sable;n=false} @self ~onSpawn
+  - model{mid=alaskan_malamute_sable;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.26
     PreventOtherDrops: true
@@ -226,9 +226,9 @@ DogAlaskanMalamuteSeal:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: alaskan_malamute_seal
+  Skills:
+  - model{mid=alaskan_malamute_seal;n=false} @self ~onSpawn
+  - model{mid=alaskan_malamute_seal;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.26
     PreventOtherDrops: true
@@ -255,9 +255,9 @@ DogAlaskanMalamuteSilver:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: alaskan_malamute_silver
+  Skills:
+  - model{mid=alaskan_malamute_silver;n=false} @self ~onSpawn
+  - model{mid=alaskan_malamute_silver;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.26
     PreventOtherDrops: true
@@ -284,9 +284,9 @@ DogAmericanFoxhoundDark:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: american_foxhound_dark
+  Skills:
+  - model{mid=american_foxhound_dark;n=false} @self ~onSpawn
+  - model{mid=american_foxhound_dark;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.3
     PreventOtherDrops: true
@@ -313,9 +313,9 @@ DogAmericanFoxhoundLight:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: american_foxhound_light
+  Skills:
+  - model{mid=american_foxhound_light;n=false} @self ~onSpawn
+  - model{mid=american_foxhound_light;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.3
     PreventOtherDrops: true
@@ -342,9 +342,9 @@ DogAmericanFoxhoundMedium:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: american_foxhound_medium
+  Skills:
+  - model{mid=american_foxhound_medium;n=false} @self ~onSpawn
+  - model{mid=american_foxhound_medium;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.3
     PreventOtherDrops: true
@@ -371,9 +371,9 @@ DogAustralianShepherdBlack:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: australian_shepherd_black
+  Skills:
+  - model{mid=australian_shepherd_black;n=false} @self ~onSpawn
+  - model{mid=australian_shepherd_black;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.3
     PreventOtherDrops: true
@@ -400,9 +400,9 @@ DogAustralianShepherdRed:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: australian_shepherd_red
+  Skills:
+  - model{mid=australian_shepherd_red;n=false} @self ~onSpawn
+  - model{mid=australian_shepherd_red;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.3
     PreventOtherDrops: true
@@ -429,9 +429,9 @@ DogBasenjiBlack:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: basenji_black
+  Skills:
+  - model{mid=basenji_black;n=false} @self ~onSpawn
+  - model{mid=basenji_black;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.32
     PreventOtherDrops: true
@@ -458,9 +458,9 @@ DogBasenjiRed:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: basenji_red
+  Skills:
+  - model{mid=basenji_red;n=false} @self ~onSpawn
+  - model{mid=basenji_red;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.32
     PreventOtherDrops: true
@@ -487,9 +487,9 @@ DogBasenjiTricolor:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: basenji_tricolor
+  Skills:
+  - model{mid=basenji_tricolor;n=false} @self ~onSpawn
+  - model{mid=basenji_tricolor;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.32
     PreventOtherDrops: true
@@ -516,9 +516,9 @@ DogBeagleBlackTan:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: beagle_black_tan
+  Skills:
+  - model{mid=beagle_black_tan;n=false} @self ~onSpawn
+  - model{mid=beagle_black_tan;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.32
     PreventOtherDrops: true
@@ -545,9 +545,9 @@ DogBeagleDarkEars:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: beagle_dark_ears
+  Skills:
+  - model{mid=beagle_dark_ears;n=false} @self ~onSpawn
+  - model{mid=beagle_dark_ears;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.32
     PreventOtherDrops: true
@@ -574,9 +574,9 @@ DogBeagleTan:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: beagle_tan
+  Skills:
+  - model{mid=beagle_tan;n=false} @self ~onSpawn
+  - model{mid=beagle_tan;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.32
     PreventOtherDrops: true
@@ -603,9 +603,9 @@ DogBerneseMountainDogRust:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: bernese_mountain_dog_rust
+  Skills:
+  - model{mid=bernese_mountain_dog_rust;n=false} @self ~onSpawn
+  - model{mid=bernese_mountain_dog_rust;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.26
     PreventOtherDrops: true
@@ -632,9 +632,9 @@ DogBerneseMountainDogTan:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: bernese_mountain_dog_tan
+  Skills:
+  - model{mid=bernese_mountain_dog_tan;n=false} @self ~onSpawn
+  - model{mid=bernese_mountain_dog_tan;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.26
     PreventOtherDrops: true
@@ -661,9 +661,9 @@ DogBloodhoundBlackTan:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: bloodhound_black_tan
+  Skills:
+  - model{mid=bloodhound_black_tan;n=false} @self ~onSpawn
+  - model{mid=bloodhound_black_tan;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.3
     PreventOtherDrops: true
@@ -690,9 +690,9 @@ DogBloodhoundLiverTan:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: bloodhound_liver_tan
+  Skills:
+  - model{mid=bloodhound_liver_tan;n=false} @self ~onSpawn
+  - model{mid=bloodhound_liver_tan;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.3
     PreventOtherDrops: true
@@ -719,9 +719,9 @@ DogBloodhoundRed:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: bloodhound_red
+  Skills:
+  - model{mid=bloodhound_red;n=false} @self ~onSpawn
+  - model{mid=bloodhound_red;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.3
     PreventOtherDrops: true
@@ -748,9 +748,9 @@ DogBorderCollieBlack:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: border_collie_black
+  Skills:
+  - model{mid=border_collie_black;n=false} @self ~onSpawn
+  - model{mid=border_collie_black;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.3
     PreventOtherDrops: true
@@ -777,9 +777,9 @@ DogBorderCollieLilac:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: border_collie_lilac
+  Skills:
+  - model{mid=border_collie_lilac;n=false} @self ~onSpawn
+  - model{mid=border_collie_lilac;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.3
     PreventOtherDrops: true
@@ -806,9 +806,9 @@ DogBorderCollieRed:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: border_collie_red
+  Skills:
+  - model{mid=border_collie_red;n=false} @self ~onSpawn
+  - model{mid=border_collie_red;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.3
     PreventOtherDrops: true
@@ -835,9 +835,9 @@ DogBostonTerrierBlack:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: boston_terrier_black
+  Skills:
+  - model{mid=boston_terrier_black;n=false} @self ~onSpawn
+  - model{mid=boston_terrier_black;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.32
     PreventOtherDrops: true
@@ -864,9 +864,9 @@ DogBostonTerrierSeal:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: boston_terrier_seal
+  Skills:
+  - model{mid=boston_terrier_seal;n=false} @self ~onSpawn
+  - model{mid=boston_terrier_seal;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.32
     PreventOtherDrops: true
@@ -893,9 +893,9 @@ DogBoxerBlack:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: boxer_black
+  Skills:
+  - model{mid=boxer_black;n=false} @self ~onSpawn
+  - model{mid=boxer_black;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.3
     PreventOtherDrops: true
@@ -922,9 +922,9 @@ DogBoxerDark:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: boxer_dark
+  Skills:
+  - model{mid=boxer_dark;n=false} @self ~onSpawn
+  - model{mid=boxer_dark;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.3
     PreventOtherDrops: true
@@ -951,9 +951,9 @@ DogBoxerLight:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: boxer_light
+  Skills:
+  - model{mid=boxer_light;n=false} @self ~onSpawn
+  - model{mid=boxer_light;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.3
     PreventOtherDrops: true
@@ -980,9 +980,9 @@ DogBoxerMedium:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: boxer_medium
+  Skills:
+  - model{mid=boxer_medium;n=false} @self ~onSpawn
+  - model{mid=boxer_medium;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.3
     PreventOtherDrops: true
@@ -1009,9 +1009,9 @@ DogBullTerrierBlack:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: bull_terrier_black
+  Skills:
+  - model{mid=bull_terrier_black;n=false} @self ~onSpawn
+  - model{mid=bull_terrier_black;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.32
     PreventOtherDrops: true
@@ -1038,9 +1038,9 @@ DogBullTerrierRed:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: bull_terrier_red
+  Skills:
+  - model{mid=bull_terrier_red;n=false} @self ~onSpawn
+  - model{mid=bull_terrier_red;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.32
     PreventOtherDrops: true
@@ -1067,9 +1067,9 @@ DogBulldogFawn:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: bulldog_fawn
+  Skills:
+  - model{mid=bulldog_fawn;n=false} @self ~onSpawn
+  - model{mid=bulldog_fawn;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.3
     PreventOtherDrops: true
@@ -1096,9 +1096,9 @@ DogBulldogRed:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: bulldog_red
+  Skills:
+  - model{mid=bulldog_red;n=false} @self ~onSpawn
+  - model{mid=bulldog_red;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.3
     PreventOtherDrops: true
@@ -1125,9 +1125,9 @@ DogCardiganCorgiBlack:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: cardigan_corgi_black
+  Skills:
+  - model{mid=cardigan_corgi_black;n=false} @self ~onSpawn
+  - model{mid=cardigan_corgi_black;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.3
     PreventOtherDrops: true
@@ -1154,9 +1154,9 @@ DogCardiganCorgiBlueMerle:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: cardigan_corgi_blue_merle
+  Skills:
+  - model{mid=cardigan_corgi_blue_merle;n=false} @self ~onSpawn
+  - model{mid=cardigan_corgi_blue_merle;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.3
     PreventOtherDrops: true
@@ -1183,9 +1183,9 @@ DogCardiganCorgiRed:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: cardigan_corgi_red
+  Skills:
+  - model{mid=cardigan_corgi_red;n=false} @self ~onSpawn
+  - model{mid=cardigan_corgi_red;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.3
     PreventOtherDrops: true
@@ -1212,9 +1212,9 @@ DogCardiganCorgiSable:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: cardigan_corgi_sable
+  Skills:
+  - model{mid=cardigan_corgi_sable;n=false} @self ~onSpawn
+  - model{mid=cardigan_corgi_sable;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.3
     PreventOtherDrops: true
@@ -1241,9 +1241,9 @@ DogCkCharlesSpanielBlackTan:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: ck_charles_spaniel_black_tan
+  Skills:
+  - model{mid=ck_charles_spaniel_black_tan;n=false} @self ~onSpawn
+  - model{mid=ck_charles_spaniel_black_tan;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.32
     PreventOtherDrops: true
@@ -1270,9 +1270,9 @@ DogCkCharlesSpanielBlenheim:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: ck_charles_spaniel_blenheim
+  Skills:
+  - model{mid=ck_charles_spaniel_blenheim;n=false} @self ~onSpawn
+  - model{mid=ck_charles_spaniel_blenheim;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.32
     PreventOtherDrops: true
@@ -1299,9 +1299,9 @@ DogCkCharlesSpanielRuby:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: ck_charles_spaniel_ruby
+  Skills:
+  - model{mid=ck_charles_spaniel_ruby;n=false} @self ~onSpawn
+  - model{mid=ck_charles_spaniel_ruby;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.32
     PreventOtherDrops: true
@@ -1328,9 +1328,9 @@ DogCkCharlesSpanielTricolor:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: ck_charles_spaniel_tricolor
+  Skills:
+  - model{mid=ck_charles_spaniel_tricolor;n=false} @self ~onSpawn
+  - model{mid=ck_charles_spaniel_tricolor;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.32
     PreventOtherDrops: true
@@ -1357,9 +1357,9 @@ DogCockerSpanielBlack:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: cocker_spaniel_black
+  Skills:
+  - model{mid=cocker_spaniel_black;n=false} @self ~onSpawn
+  - model{mid=cocker_spaniel_black;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.32
     PreventOtherDrops: true
@@ -1386,9 +1386,9 @@ DogCockerSpanielBrown:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: cocker_spaniel_brown
+  Skills:
+  - model{mid=cocker_spaniel_brown;n=false} @self ~onSpawn
+  - model{mid=cocker_spaniel_brown;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.32
     PreventOtherDrops: true
@@ -1415,9 +1415,9 @@ DogCockerSpanielBuff:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: cocker_spaniel_buff
+  Skills:
+  - model{mid=cocker_spaniel_buff;n=false} @self ~onSpawn
+  - model{mid=cocker_spaniel_buff;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.32
     PreventOtherDrops: true
@@ -1444,9 +1444,9 @@ DogCockerSpanielRed:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: cocker_spaniel_red
+  Skills:
+  - model{mid=cocker_spaniel_red;n=false} @self ~onSpawn
+  - model{mid=cocker_spaniel_red;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.32
     PreventOtherDrops: true
@@ -1473,9 +1473,9 @@ DogCockerSpanielSilver:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: cocker_spaniel_silver
+  Skills:
+  - model{mid=cocker_spaniel_silver;n=false} @self ~onSpawn
+  - model{mid=cocker_spaniel_silver;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.32
     PreventOtherDrops: true
@@ -1502,9 +1502,9 @@ DogCollieBlackTan:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: collie_black_tan
+  Skills:
+  - model{mid=collie_black_tan;n=false} @self ~onSpawn
+  - model{mid=collie_black_tan;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.3
     PreventOtherDrops: true
@@ -1531,9 +1531,9 @@ DogCollieSable:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: collie_sable
+  Skills:
+  - model{mid=collie_sable;n=false} @self ~onSpawn
+  - model{mid=collie_sable;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.3
     PreventOtherDrops: true
@@ -1560,9 +1560,9 @@ DogDachshundBlackCream:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: dachshund_black_cream
+  Skills:
+  - model{mid=dachshund_black_cream;n=false} @self ~onSpawn
+  - model{mid=dachshund_black_cream;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.32
     PreventOtherDrops: true
@@ -1589,9 +1589,9 @@ DogDachshundBlackTan:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: dachshund_black_tan
+  Skills:
+  - model{mid=dachshund_black_tan;n=false} @self ~onSpawn
+  - model{mid=dachshund_black_tan;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.32
     PreventOtherDrops: true
@@ -1618,9 +1618,9 @@ DogDachshundChocolateCream:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: dachshund_chocolate_cream
+  Skills:
+  - model{mid=dachshund_chocolate_cream;n=false} @self ~onSpawn
+  - model{mid=dachshund_chocolate_cream;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.32
     PreventOtherDrops: true
@@ -1647,9 +1647,9 @@ DogDachshundChocolateTan:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: dachshund_chocolate_tan
+  Skills:
+  - model{mid=dachshund_chocolate_tan;n=false} @self ~onSpawn
+  - model{mid=dachshund_chocolate_tan;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.32
     PreventOtherDrops: true
@@ -1676,9 +1676,9 @@ DogDachshundFawnCream:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: dachshund_fawn_cream
+  Skills:
+  - model{mid=dachshund_fawn_cream;n=false} @self ~onSpawn
+  - model{mid=dachshund_fawn_cream;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.32
     PreventOtherDrops: true
@@ -1705,9 +1705,9 @@ DogDachshundFawnTan:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: dachshund_fawn_tan
+  Skills:
+  - model{mid=dachshund_fawn_tan;n=false} @self ~onSpawn
+  - model{mid=dachshund_fawn_tan;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.32
     PreventOtherDrops: true
@@ -1734,9 +1734,9 @@ DogDalmatianBlack1:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: dalmatian_black1
+  Skills:
+  - model{mid=dalmatian_black1;n=false} @self ~onSpawn
+  - model{mid=dalmatian_black1;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.3
     PreventOtherDrops: true
@@ -1763,9 +1763,9 @@ DogDalmatianBlack2:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: dalmatian_black2
+  Skills:
+  - model{mid=dalmatian_black2;n=false} @self ~onSpawn
+  - model{mid=dalmatian_black2;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.3
     PreventOtherDrops: true
@@ -1792,9 +1792,9 @@ DogDalmatianBlack3:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: dalmatian_black3
+  Skills:
+  - model{mid=dalmatian_black3;n=false} @self ~onSpawn
+  - model{mid=dalmatian_black3;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.3
     PreventOtherDrops: true
@@ -1821,9 +1821,9 @@ DogDalmatianBlack4:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: dalmatian_black4
+  Skills:
+  - model{mid=dalmatian_black4;n=false} @self ~onSpawn
+  - model{mid=dalmatian_black4;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.3
     PreventOtherDrops: true
@@ -1850,9 +1850,9 @@ DogDalmatianBrown1:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: dalmatian_brown1
+  Skills:
+  - model{mid=dalmatian_brown1;n=false} @self ~onSpawn
+  - model{mid=dalmatian_brown1;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.3
     PreventOtherDrops: true
@@ -1879,9 +1879,9 @@ DogDalmatianBrown2:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: dalmatian_brown2
+  Skills:
+  - model{mid=dalmatian_brown2;n=false} @self ~onSpawn
+  - model{mid=dalmatian_brown2;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.3
     PreventOtherDrops: true
@@ -1908,9 +1908,9 @@ DogDalmatianBrown3:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: dalmatian_brown3
+  Skills:
+  - model{mid=dalmatian_brown3;n=false} @self ~onSpawn
+  - model{mid=dalmatian_brown3;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.3
     PreventOtherDrops: true
@@ -1937,9 +1937,9 @@ DogDalmatianBrown4:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: dalmatian_brown4
+  Skills:
+  - model{mid=dalmatian_brown4;n=false} @self ~onSpawn
+  - model{mid=dalmatian_brown4;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.3
     PreventOtherDrops: true
@@ -1966,9 +1966,9 @@ DogDalmatianWhite:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: dalmatian_white
+  Skills:
+  - model{mid=dalmatian_white;n=false} @self ~onSpawn
+  - model{mid=dalmatian_white;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.3
     PreventOtherDrops: true
@@ -1995,9 +1995,9 @@ DogDobermanBlack:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: doberman_black
+  Skills:
+  - model{mid=doberman_black;n=false} @self ~onSpawn
+  - model{mid=doberman_black;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.3
     PreventOtherDrops: true
@@ -2024,9 +2024,9 @@ DogDobermanBlue:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: doberman_blue
+  Skills:
+  - model{mid=doberman_blue;n=false} @self ~onSpawn
+  - model{mid=doberman_blue;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.3
     PreventOtherDrops: true
@@ -2053,9 +2053,9 @@ DogDobermanFawn:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: doberman_fawn
+  Skills:
+  - model{mid=doberman_fawn;n=false} @self ~onSpawn
+  - model{mid=doberman_fawn;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.3
     PreventOtherDrops: true
@@ -2082,9 +2082,9 @@ DogDobermanRed:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: doberman_red
+  Skills:
+  - model{mid=doberman_red;n=false} @self ~onSpawn
+  - model{mid=doberman_red;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.3
     PreventOtherDrops: true
@@ -2111,9 +2111,9 @@ DogGermanShepherdBlack:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: german_shepherd_black
+  Skills:
+  - model{mid=german_shepherd_black;n=false} @self ~onSpawn
+  - model{mid=german_shepherd_black;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.3
     PreventOtherDrops: true
@@ -2140,9 +2140,9 @@ DogGermanShepherdBrownPoints:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: german_shepherd_brown_points
+  Skills:
+  - model{mid=german_shepherd_brown_points;n=false} @self ~onSpawn
+  - model{mid=german_shepherd_brown_points;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.3
     PreventOtherDrops: true
@@ -2169,9 +2169,9 @@ DogGermanShepherdStandard:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: german_shepherd_standard
+  Skills:
+  - model{mid=german_shepherd_standard;n=false} @self ~onSpawn
+  - model{mid=german_shepherd_standard;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.3
     PreventOtherDrops: true
@@ -2198,9 +2198,9 @@ DogGermanShepherdWhite:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: german_shepherd_white
+  Skills:
+  - model{mid=german_shepherd_white;n=false} @self ~onSpawn
+  - model{mid=german_shepherd_white;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.3
     PreventOtherDrops: true
@@ -2227,9 +2227,9 @@ DogGermanSpitzBlack:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: german_spitz_black
+  Skills:
+  - model{mid=german_spitz_black;n=false} @self ~onSpawn
+  - model{mid=german_spitz_black;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.3
     PreventOtherDrops: true
@@ -2256,9 +2256,9 @@ DogGermanSpitzBrown:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: german_spitz_brown
+  Skills:
+  - model{mid=german_spitz_brown;n=false} @self ~onSpawn
+  - model{mid=german_spitz_brown;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.3
     PreventOtherDrops: true
@@ -2285,9 +2285,9 @@ DogGermanSpitzRed:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: german_spitz_red
+  Skills:
+  - model{mid=german_spitz_red;n=false} @self ~onSpawn
+  - model{mid=german_spitz_red;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.3
     PreventOtherDrops: true
@@ -2314,9 +2314,9 @@ DogGermanSpitzWhite:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: german_spitz_white
+  Skills:
+  - model{mid=german_spitz_white;n=false} @self ~onSpawn
+  - model{mid=german_spitz_white;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.3
     PreventOtherDrops: true
@@ -2343,9 +2343,9 @@ DogGoldenRetrieverDark:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: golden_retriever_dark
+  Skills:
+  - model{mid=golden_retriever_dark;n=false} @self ~onSpawn
+  - model{mid=golden_retriever_dark;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.3
     PreventOtherDrops: true
@@ -2372,9 +2372,9 @@ DogGoldenRetrieverLight:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: golden_retriever_light
+  Skills:
+  - model{mid=golden_retriever_light;n=false} @self ~onSpawn
+  - model{mid=golden_retriever_light;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.3
     PreventOtherDrops: true
@@ -2401,9 +2401,9 @@ DogGoldenRetrieverMedium:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: golden_retriever_medium
+  Skills:
+  - model{mid=golden_retriever_medium;n=false} @self ~onSpawn
+  - model{mid=golden_retriever_medium;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.3
     PreventOtherDrops: true
@@ -2430,9 +2430,9 @@ DogGreatDaneBlack:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: great_dane_black
+  Skills:
+  - model{mid=great_dane_black;n=false} @self ~onSpawn
+  - model{mid=great_dane_black;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.26
     PreventOtherDrops: true
@@ -2459,9 +2459,9 @@ DogGreatDaneBlue:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: great_dane_blue
+  Skills:
+  - model{mid=great_dane_blue;n=false} @self ~onSpawn
+  - model{mid=great_dane_blue;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.26
     PreventOtherDrops: true
@@ -2488,9 +2488,9 @@ DogGreatDaneFawn:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: great_dane_fawn
+  Skills:
+  - model{mid=great_dane_fawn;n=false} @self ~onSpawn
+  - model{mid=great_dane_fawn;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.26
     PreventOtherDrops: true
@@ -2517,9 +2517,9 @@ DogGreyhoundBlack:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: greyhound_black
+  Skills:
+  - model{mid=greyhound_black;n=false} @self ~onSpawn
+  - model{mid=greyhound_black;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.3
     PreventOtherDrops: true
@@ -2546,9 +2546,9 @@ DogGreyhoundBlue:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: greyhound_blue
+  Skills:
+  - model{mid=greyhound_blue;n=false} @self ~onSpawn
+  - model{mid=greyhound_blue;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.3
     PreventOtherDrops: true
@@ -2575,9 +2575,9 @@ DogGreyhoundRed:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: greyhound_red
+  Skills:
+  - model{mid=greyhound_red;n=false} @self ~onSpawn
+  - model{mid=greyhound_red;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.3
     PreventOtherDrops: true
@@ -2604,9 +2604,9 @@ DogGreyhoundWhite:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: greyhound_white
+  Skills:
+  - model{mid=greyhound_white;n=false} @self ~onSpawn
+  - model{mid=greyhound_white;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.3
     PreventOtherDrops: true
@@ -2633,9 +2633,9 @@ DogHuskyBlack:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: husky_black
+  Skills:
+  - model{mid=husky_black;n=false} @self ~onSpawn
+  - model{mid=husky_black;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.3
     PreventOtherDrops: true
@@ -2662,9 +2662,9 @@ DogHuskyGray:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: husky_gray
+  Skills:
+  - model{mid=husky_gray;n=false} @self ~onSpawn
+  - model{mid=husky_gray;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.3
     PreventOtherDrops: true
@@ -2691,9 +2691,9 @@ DogHuskyRed:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: husky_red
+  Skills:
+  - model{mid=husky_red;n=false} @self ~onSpawn
+  - model{mid=husky_red;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.3
     PreventOtherDrops: true
@@ -2720,9 +2720,9 @@ DogHuskySable:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: husky_sable
+  Skills:
+  - model{mid=husky_sable;n=false} @self ~onSpawn
+  - model{mid=husky_sable;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.3
     PreventOtherDrops: true
@@ -2749,9 +2749,9 @@ DogHuskyWhite:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: husky_white
+  Skills:
+  - model{mid=husky_white;n=false} @self ~onSpawn
+  - model{mid=husky_white;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.3
     PreventOtherDrops: true
@@ -2778,9 +2778,9 @@ DogIrishSetterDark:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: irish_setter_dark
+  Skills:
+  - model{mid=irish_setter_dark;n=false} @self ~onSpawn
+  - model{mid=irish_setter_dark;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.3
     PreventOtherDrops: true
@@ -2807,9 +2807,9 @@ DogIrishSetterLight:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: irish_setter_light
+  Skills:
+  - model{mid=irish_setter_light;n=false} @self ~onSpawn
+  - model{mid=irish_setter_light;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.3
     PreventOtherDrops: true
@@ -2836,9 +2836,9 @@ DogIrishSetterMedium:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: irish_setter_medium
+  Skills:
+  - model{mid=irish_setter_medium;n=false} @self ~onSpawn
+  - model{mid=irish_setter_medium;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.3
     PreventOtherDrops: true
@@ -2865,9 +2865,9 @@ DogItalianGreyhoundBlack:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: italian_greyhound_black
+  Skills:
+  - model{mid=italian_greyhound_black;n=false} @self ~onSpawn
+  - model{mid=italian_greyhound_black;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.32
     PreventOtherDrops: true
@@ -2894,9 +2894,9 @@ DogItalianGreyhoundBlue:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: italian_greyhound_blue
+  Skills:
+  - model{mid=italian_greyhound_blue;n=false} @self ~onSpawn
+  - model{mid=italian_greyhound_blue;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.32
     PreventOtherDrops: true
@@ -2923,9 +2923,9 @@ DogItalianGreyhoundFawn:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: italian_greyhound_fawn
+  Skills:
+  - model{mid=italian_greyhound_fawn;n=false} @self ~onSpawn
+  - model{mid=italian_greyhound_fawn;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.32
     PreventOtherDrops: true
@@ -2952,9 +2952,9 @@ DogLabRetrieverBlack:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: lab_retriever_black
+  Skills:
+  - model{mid=lab_retriever_black;n=false} @self ~onSpawn
+  - model{mid=lab_retriever_black;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.3
     PreventOtherDrops: true
@@ -2981,9 +2981,9 @@ DogLabRetrieverChocolate:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: lab_retriever_chocolate
+  Skills:
+  - model{mid=lab_retriever_chocolate;n=false} @self ~onSpawn
+  - model{mid=lab_retriever_chocolate;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.3
     PreventOtherDrops: true
@@ -3010,9 +3010,9 @@ DogLabRetrieverYellow:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: lab_retriever_yellow
+  Skills:
+  - model{mid=lab_retriever_yellow;n=false} @self ~onSpawn
+  - model{mid=lab_retriever_yellow;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.3
     PreventOtherDrops: true
@@ -3039,9 +3039,9 @@ DogMastiffApricot:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: mastiff_apricot
+  Skills:
+  - model{mid=mastiff_apricot;n=false} @self ~onSpawn
+  - model{mid=mastiff_apricot;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.26
     PreventOtherDrops: true
@@ -3068,9 +3068,9 @@ DogMastiffFawn:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: mastiff_fawn
+  Skills:
+  - model{mid=mastiff_fawn;n=false} @self ~onSpawn
+  - model{mid=mastiff_fawn;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.26
     PreventOtherDrops: true
@@ -3097,9 +3097,9 @@ DogMiniPinscherBlackTan:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: mini_pinscher_black_tan
+  Skills:
+  - model{mid=mini_pinscher_black_tan;n=false} @self ~onSpawn
+  - model{mid=mini_pinscher_black_tan;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.32
     PreventOtherDrops: true
@@ -3126,9 +3126,9 @@ DogMiniPinscherChocolateTan:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: mini_pinscher_chocolate_tan
+  Skills:
+  - model{mid=mini_pinscher_chocolate_tan;n=false} @self ~onSpawn
+  - model{mid=mini_pinscher_chocolate_tan;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.32
     PreventOtherDrops: true
@@ -3155,9 +3155,9 @@ DogMiniPinscherRed:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: mini_pinscher_red
+  Skills:
+  - model{mid=mini_pinscher_red;n=false} @self ~onSpawn
+  - model{mid=mini_pinscher_red;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.32
     PreventOtherDrops: true
@@ -3184,9 +3184,9 @@ DogMudiBlack:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: mudi_black
+  Skills:
+  - model{mid=mudi_black;n=false} @self ~onSpawn
+  - model{mid=mudi_black;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.3
     PreventOtherDrops: true
@@ -3213,9 +3213,9 @@ DogMudiBrown:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: mudi_brown
+  Skills:
+  - model{mid=mudi_brown;n=false} @self ~onSpawn
+  - model{mid=mudi_brown;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.3
     PreventOtherDrops: true
@@ -3242,9 +3242,9 @@ DogMudiWhite:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: mudi_white
+  Skills:
+  - model{mid=mudi_white;n=false} @self ~onSpawn
+  - model{mid=mudi_white;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.3
     PreventOtherDrops: true
@@ -3271,9 +3271,9 @@ DogNorwegianElkhoundDark:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: norwegian_elkhound_dark
+  Skills:
+  - model{mid=norwegian_elkhound_dark;n=false} @self ~onSpawn
+  - model{mid=norwegian_elkhound_dark;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.3
     PreventOtherDrops: true
@@ -3300,9 +3300,9 @@ DogNorwegianElkhoundLight:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: norwegian_elkhound_light
+  Skills:
+  - model{mid=norwegian_elkhound_light;n=false} @self ~onSpawn
+  - model{mid=norwegian_elkhound_light;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.3
     PreventOtherDrops: true
@@ -3329,9 +3329,9 @@ DogNorwegianElkhoundMedium:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: norwegian_elkhound_medium
+  Skills:
+  - model{mid=norwegian_elkhound_medium;n=false} @self ~onSpawn
+  - model{mid=norwegian_elkhound_medium;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.3
     PreventOtherDrops: true
@@ -3358,9 +3358,9 @@ DogPembrokeCorgiBlackTan:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: pembroke_corgi_black_tan
+  Skills:
+  - model{mid=pembroke_corgi_black_tan;n=false} @self ~onSpawn
+  - model{mid=pembroke_corgi_black_tan;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.3
     PreventOtherDrops: true
@@ -3387,9 +3387,9 @@ DogPembrokeCorgiFawn:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: pembroke_corgi_fawn
+  Skills:
+  - model{mid=pembroke_corgi_fawn;n=false} @self ~onSpawn
+  - model{mid=pembroke_corgi_fawn;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.3
     PreventOtherDrops: true
@@ -3416,9 +3416,9 @@ DogPembrokeCorgiRed:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: pembroke_corgi_red
+  Skills:
+  - model{mid=pembroke_corgi_red;n=false} @self ~onSpawn
+  - model{mid=pembroke_corgi_red;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.3
     PreventOtherDrops: true
@@ -3445,9 +3445,9 @@ DogPembrokeCorgiSable:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: pembroke_corgi_sable
+  Skills:
+  - model{mid=pembroke_corgi_sable;n=false} @self ~onSpawn
+  - model{mid=pembroke_corgi_sable;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.3
     PreventOtherDrops: true
@@ -3474,9 +3474,9 @@ DogPitBullBlack:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: pit_bull_black
+  Skills:
+  - model{mid=pit_bull_black;n=false} @self ~onSpawn
+  - model{mid=pit_bull_black;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.3
     PreventOtherDrops: true
@@ -3503,9 +3503,9 @@ DogPitBullBlue:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: pit_bull_blue
+  Skills:
+  - model{mid=pit_bull_blue;n=false} @self ~onSpawn
+  - model{mid=pit_bull_blue;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.3
     PreventOtherDrops: true
@@ -3532,9 +3532,9 @@ DogPitBullBrown:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: pit_bull_brown
+  Skills:
+  - model{mid=pit_bull_brown;n=false} @self ~onSpawn
+  - model{mid=pit_bull_brown;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.3
     PreventOtherDrops: true
@@ -3561,9 +3561,9 @@ DogPitBullWhite:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: pit_bull_white
+  Skills:
+  - model{mid=pit_bull_white;n=false} @self ~onSpawn
+  - model{mid=pit_bull_white;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.3
     PreventOtherDrops: true
@@ -3590,9 +3590,9 @@ DogPoodleBlack:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: poodle_black
+  Skills:
+  - model{mid=poodle_black;n=false} @self ~onSpawn
+  - model{mid=poodle_black;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.3
     PreventOtherDrops: true
@@ -3619,9 +3619,9 @@ DogPoodleBrown:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: poodle_brown
+  Skills:
+  - model{mid=poodle_brown;n=false} @self ~onSpawn
+  - model{mid=poodle_brown;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.3
     PreventOtherDrops: true
@@ -3648,9 +3648,9 @@ DogPoodleCream:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: poodle_cream
+  Skills:
+  - model{mid=poodle_cream;n=false} @self ~onSpawn
+  - model{mid=poodle_cream;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.3
     PreventOtherDrops: true
@@ -3677,9 +3677,9 @@ DogPoodleSilver:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: poodle_silver
+  Skills:
+  - model{mid=poodle_silver;n=false} @self ~onSpawn
+  - model{mid=poodle_silver;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.3
     PreventOtherDrops: true
@@ -3706,9 +3706,9 @@ DogPoodleWhite:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: poodle_white
+  Skills:
+  - model{mid=poodle_white;n=false} @self ~onSpawn
+  - model{mid=poodle_white;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.3
     PreventOtherDrops: true
@@ -3735,9 +3735,9 @@ DogPugBlack:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: pug_black
+  Skills:
+  - model{mid=pug_black;n=false} @self ~onSpawn
+  - model{mid=pug_black;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.32
     PreventOtherDrops: true
@@ -3764,9 +3764,9 @@ DogPugFawn:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: pug_fawn
+  Skills:
+  - model{mid=pug_fawn;n=false} @self ~onSpawn
+  - model{mid=pug_fawn;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.32
     PreventOtherDrops: true
@@ -3793,9 +3793,9 @@ DogRedboneCoonhoundBrown:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: redbone_coonhound_brown
+  Skills:
+  - model{mid=redbone_coonhound_brown;n=false} @self ~onSpawn
+  - model{mid=redbone_coonhound_brown;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.3
     PreventOtherDrops: true
@@ -3822,9 +3822,9 @@ DogRedboneCoonhoundDarkRed:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: redbone_coonhound_dark_red
+  Skills:
+  - model{mid=redbone_coonhound_dark_red;n=false} @self ~onSpawn
+  - model{mid=redbone_coonhound_dark_red;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.3
     PreventOtherDrops: true
@@ -3851,9 +3851,9 @@ DogRedboneCoonhoundRed:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: redbone_coonhound_red
+  Skills:
+  - model{mid=redbone_coonhound_red;n=false} @self ~onSpawn
+  - model{mid=redbone_coonhound_red;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.3
     PreventOtherDrops: true
@@ -3880,9 +3880,9 @@ DogRottweilerMahogany:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: rottweiler_mahogany
+  Skills:
+  - model{mid=rottweiler_mahogany;n=false} @self ~onSpawn
+  - model{mid=rottweiler_mahogany;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.3
     PreventOtherDrops: true
@@ -3909,9 +3909,9 @@ DogRottweilerRust:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: rottweiler_rust
+  Skills:
+  - model{mid=rottweiler_rust;n=false} @self ~onSpawn
+  - model{mid=rottweiler_rust;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.3
     PreventOtherDrops: true
@@ -3938,9 +3938,9 @@ DogRottweilerTan:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: rottweiler_tan
+  Skills:
+  - model{mid=rottweiler_tan;n=false} @self ~onSpawn
+  - model{mid=rottweiler_tan;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.3
     PreventOtherDrops: true
@@ -3967,9 +3967,9 @@ DogRussellTerrierBlack:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: russell_terrier_black
+  Skills:
+  - model{mid=russell_terrier_black;n=false} @self ~onSpawn
+  - model{mid=russell_terrier_black;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.32
     PreventOtherDrops: true
@@ -3996,9 +3996,9 @@ DogRussellTerrierBrown:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: russell_terrier_brown
+  Skills:
+  - model{mid=russell_terrier_brown;n=false} @self ~onSpawn
+  - model{mid=russell_terrier_brown;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.32
     PreventOtherDrops: true
@@ -4025,9 +4025,9 @@ DogRussellTerrierCream:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: russell_terrier_cream
+  Skills:
+  - model{mid=russell_terrier_cream;n=false} @self ~onSpawn
+  - model{mid=russell_terrier_cream;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.32
     PreventOtherDrops: true
@@ -4054,9 +4054,9 @@ DogRussellTerrierTan:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: russell_terrier_tan
+  Skills:
+  - model{mid=russell_terrier_tan;n=false} @self ~onSpawn
+  - model{mid=russell_terrier_tan;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.32
     PreventOtherDrops: true
@@ -4083,9 +4083,9 @@ DogRussellTerrierTriBrown:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: russell_terrier_tri_brown
+  Skills:
+  - model{mid=russell_terrier_tri_brown;n=false} @self ~onSpawn
+  - model{mid=russell_terrier_tri_brown;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.32
     PreventOtherDrops: true
@@ -4112,9 +4112,9 @@ DogRussellTerrierTriTan:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: russell_terrier_tri_tan
+  Skills:
+  - model{mid=russell_terrier_tri_tan;n=false} @self ~onSpawn
+  - model{mid=russell_terrier_tri_tan;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.32
     PreventOtherDrops: true
@@ -4141,9 +4141,9 @@ DogSaintBernardBrown:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: saint_bernard_brown
+  Skills:
+  - model{mid=saint_bernard_brown;n=false} @self ~onSpawn
+  - model{mid=saint_bernard_brown;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.26
     PreventOtherDrops: true
@@ -4170,9 +4170,9 @@ DogSaintBernardMahogany:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: saint_bernard_mahogany
+  Skills:
+  - model{mid=saint_bernard_mahogany;n=false} @self ~onSpawn
+  - model{mid=saint_bernard_mahogany;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.26
     PreventOtherDrops: true
@@ -4199,9 +4199,9 @@ DogSaintBernardOrange:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: saint_bernard_orange
+  Skills:
+  - model{mid=saint_bernard_orange;n=false} @self ~onSpawn
+  - model{mid=saint_bernard_orange;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.26
     PreventOtherDrops: true
@@ -4228,9 +4228,9 @@ DogSaintBernardRed:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: saint_bernard_red
+  Skills:
+  - model{mid=saint_bernard_red;n=false} @self ~onSpawn
+  - model{mid=saint_bernard_red;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.26
     PreventOtherDrops: true
@@ -4257,9 +4257,9 @@ DogSaintBernardYellowBrown:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: saint_bernard_yellow_brown
+  Skills:
+  - model{mid=saint_bernard_yellow_brown;n=false} @self ~onSpawn
+  - model{mid=saint_bernard_yellow_brown;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.26
     PreventOtherDrops: true
@@ -4286,9 +4286,9 @@ DogSchnauzerBlack:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: schnauzer_black
+  Skills:
+  - model{mid=schnauzer_black;n=false} @self ~onSpawn
+  - model{mid=schnauzer_black;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.3
     PreventOtherDrops: true
@@ -4315,9 +4315,9 @@ DogSchnauzerPepperSalt:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: schnauzer_pepper_salt
+  Skills:
+  - model{mid=schnauzer_pepper_salt;n=false} @self ~onSpawn
+  - model{mid=schnauzer_pepper_salt;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.3
     PreventOtherDrops: true
@@ -4344,9 +4344,9 @@ DogScottishTerrierBlack:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: scottish_terrier_black
+  Skills:
+  - model{mid=scottish_terrier_black;n=false} @self ~onSpawn
+  - model{mid=scottish_terrier_black;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.32
     PreventOtherDrops: true
@@ -4373,9 +4373,9 @@ DogScottishTerrierWheaten:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: scottish_terrier_wheaten
+  Skills:
+  - model{mid=scottish_terrier_wheaten;n=false} @self ~onSpawn
+  - model{mid=scottish_terrier_wheaten;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.32
     PreventOtherDrops: true
@@ -4402,9 +4402,9 @@ DogShetlandSheepdogBlack:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: shetland_sheepdog_black
+  Skills:
+  - model{mid=shetland_sheepdog_black;n=false} @self ~onSpawn
+  - model{mid=shetland_sheepdog_black;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.3
     PreventOtherDrops: true
@@ -4431,9 +4431,9 @@ DogShetlandSheepdogBlackTan:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: shetland_sheepdog_black_tan
+  Skills:
+  - model{mid=shetland_sheepdog_black_tan;n=false} @self ~onSpawn
+  - model{mid=shetland_sheepdog_black_tan;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.3
     PreventOtherDrops: true
@@ -4460,9 +4460,9 @@ DogShetlandSheepdogSable:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: shetland_sheepdog_sable
+  Skills:
+  - model{mid=shetland_sheepdog_sable;n=false} @self ~onSpawn
+  - model{mid=shetland_sheepdog_sable;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.3
     PreventOtherDrops: true
@@ -4489,9 +4489,9 @@ DogShibaInuBlackTan:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: shiba_inu_black_tan
+  Skills:
+  - model{mid=shiba_inu_black_tan;n=false} @self ~onSpawn
+  - model{mid=shiba_inu_black_tan;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.32
     PreventOtherDrops: true
@@ -4518,9 +4518,9 @@ DogShibaInuCream:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: shiba_inu_cream
+  Skills:
+  - model{mid=shiba_inu_cream;n=false} @self ~onSpawn
+  - model{mid=shiba_inu_cream;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.32
     PreventOtherDrops: true
@@ -4547,9 +4547,9 @@ DogShibaInuDarkCream:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: shiba_inu_dark_cream
+  Skills:
+  - model{mid=shiba_inu_dark_cream;n=false} @self ~onSpawn
+  - model{mid=shiba_inu_dark_cream;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.32
     PreventOtherDrops: true
@@ -4576,9 +4576,9 @@ DogShibaInuRed:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: shiba_inu_red
+  Skills:
+  - model{mid=shiba_inu_red;n=false} @self ~onSpawn
+  - model{mid=shiba_inu_red;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.32
     PreventOtherDrops: true
@@ -4605,9 +4605,9 @@ DogTreeWalkHoundBlack:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: tree_walk_hound_black
+  Skills:
+  - model{mid=tree_walk_hound_black;n=false} @self ~onSpawn
+  - model{mid=tree_walk_hound_black;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.3
     PreventOtherDrops: true
@@ -4634,9 +4634,9 @@ DogTreeWalkHoundTricolor:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: tree_walk_hound_tricolor
+  Skills:
+  - model{mid=tree_walk_hound_tricolor;n=false} @self ~onSpawn
+  - model{mid=tree_walk_hound_tricolor;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.3
     PreventOtherDrops: true
@@ -4663,9 +4663,9 @@ DogWhippetBlack:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: whippet_black
+  Skills:
+  - model{mid=whippet_black;n=false} @self ~onSpawn
+  - model{mid=whippet_black;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.32
     PreventOtherDrops: true
@@ -4692,9 +4692,9 @@ DogWhippetBlue:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: whippet_blue
+  Skills:
+  - model{mid=whippet_blue;n=false} @self ~onSpawn
+  - model{mid=whippet_blue;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.32
     PreventOtherDrops: true
@@ -4721,9 +4721,9 @@ DogWhippetRed:
   - 0 float
   AITargetSelectors:
   - clear
-  Modules:
-    ModelEngine:
-      ModelID: whippet_red
+  Skills:
+  - model{mid=whippet_red;n=false} @self ~onSpawn
+  - model{mid=whippet_red;n=false} @self ~onLoad
   Options:
     MovementSpeed: 0.32
     PreventOtherDrops: true
