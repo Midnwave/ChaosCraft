@@ -104,6 +104,24 @@ public final class FluffyEnvironmental3 {
                 apexes.add(h);
                 spawnedEntities.add(h.entity());
             }
+
+            // 7 GLOW_BERRIES rainbow accents at mid-height + 7 AMETHYST_SHARD prisms at the top
+            for (int i = 0; i < 7; i++) {
+                double a = arcAngle[i] + Math.PI / 7;
+                Location p = center.clone().add(Math.cos(a) * arcRadius[i] * 0.6, 5.0, Math.sin(a) * arcRadius[i] * 0.6);
+                int[] col = RAINBOW[i];
+                ItemDisplayHandle h = displayBuilder.spawnItem(p, new ItemStack(Material.GLOW_BERRIES));
+                h.scale(0.5f, 0.5f, 0.5f).glow(col[0], col[1], col[2]).interpolation(40, 0);
+                spawnedEntities.add(h.entity());
+            }
+            for (int i = 0; i < 7; i++) {
+                double a = Math.PI * 2 * i / 7;
+                Location p = center.clone().add(Math.cos(a) * 2, 11.0, Math.sin(a) * 2);
+                int[] col = RAINBOW[i];
+                ItemDisplayHandle h = displayBuilder.spawnItem(p, new ItemStack(Material.AMETHYST_SHARD));
+                h.scale(0.55f, 0.8f, 0.55f).glow(col[0], col[1], col[2]).interpolation(40, 0);
+                spawnedEntities.add(h.entity());
+            }
         }
 
         @Override protected void onTick(int tick) {
@@ -221,6 +239,35 @@ public final class FluffyEnvironmental3 {
             rightEye = displayBuilder.spawnItem(center.clone().add(1.0, 6.0, 0), new ItemStack(Material.ENDER_PEARL));
             rightEye.scale(0.6f, 0.6f, 0.6f).glow(40, 220, 40).interpolation(10, 0);
             spawnedEntities.add(rightEye.entity());
+
+            // Cat shape: 4 STRING whiskers + 6 RABBIT_HIDE fur tufts + 4 BONE fangs + 2 NETHER_WART nose
+            for (int side = -1; side <= 1; side += 2) {
+                for (int j = 0; j < 2; j++) {
+                    Location p = center.clone().add(side * (1.5 + j * 0.5), 5.5 - j * 0.4, 0);
+                    ItemDisplayHandle h = displayBuilder.spawnItem(p, new ItemStack(Material.STRING));
+                    h.scale(0.6f, 0.1f, 0.1f).glow(240, 240, 240).interpolation(40, 0);
+                    spawnedEntities.add(h.entity());
+                }
+            }
+            for (int i = 0; i < 6; i++) {
+                double a = Math.PI * 2 * i / 6;
+                Location p = center.clone().add(Math.cos(a) * 2, 6.5 + Math.sin(a) * 0.5, Math.sin(a) * 2);
+                ItemDisplayHandle h = displayBuilder.spawnItem(p, new ItemStack(Material.RABBIT_HIDE));
+                h.scale(0.5f, 0.5f, 0.5f).glow(180, 220, 180).interpolation(40, 0);
+                spawnedEntities.add(h.entity());
+            }
+            for (int i = 0; i < 4; i++) {
+                Location p = center.clone().add(-0.4 + i * 0.25, 5.0, 0);
+                ItemDisplayHandle h = displayBuilder.spawnItem(p, new ItemStack(Material.BONE));
+                h.scale(0.3f, 0.3f, 0.3f).glow(255, 255, 255).interpolation(40, 0);
+                spawnedEntities.add(h.entity());
+            }
+            for (int i = 0; i < 2; i++) {
+                Location p = center.clone().add(-0.2 + i * 0.4, 5.5, 0);
+                ItemDisplayHandle h = displayBuilder.spawnItem(p, new ItemStack(Material.NETHER_WART));
+                h.scale(0.35f, 0.35f, 0.35f).glow(255, 100, 130).interpolation(40, 0);
+                spawnedEntities.add(h.entity());
+            }
         }
 
         @Override protected void onTick(int tick) {
@@ -328,6 +375,22 @@ public final class FluffyEnvironmental3 {
                 meteors.add(h);
                 spawnedEntities.add(h.entity());
             }
+
+            // Plush comet trails: 8 WHITE_WOOL + 6 STRING + 4 RABBIT_HIDE high above
+            Material[] trail = {Material.WHITE_WOOL, Material.WHITE_WOOL, Material.WHITE_WOOL, Material.WHITE_WOOL,
+                    Material.WHITE_WOOL, Material.WHITE_WOOL, Material.WHITE_WOOL, Material.WHITE_WOOL,
+                    Material.STRING, Material.STRING, Material.STRING, Material.STRING, Material.STRING, Material.STRING,
+                    Material.RABBIT_HIDE, Material.RABBIT_HIDE, Material.RABBIT_HIDE, Material.RABBIT_HIDE};
+            for (int i = 0; i < trail.length; i++) {
+                double a = Math.random() * Math.PI * 2;
+                double rr = Math.random() * 7;
+                double yy = 18 + Math.random() * 8;
+                Location p = center.clone().add(Math.cos(a) * rr, yy, Math.sin(a) * rr);
+                int[] col = RAINBOW[i % RAINBOW.length];
+                ItemDisplayHandle h = displayBuilder.spawnItem(p, new ItemStack(trail[i]));
+                h.scale(0.5f, 0.5f, 0.5f).glow(col[0], col[1], col[2]).interpolation(60, 0);
+                spawnedEntities.add(h.entity());
+            }
         }
 
         @Override protected void onTick(int tick) {
@@ -411,6 +474,33 @@ public final class FluffyEnvironmental3 {
                 ItemDisplayHandle h = displayBuilder.spawnItem(pawLoc, new ItemStack(Material.PINK_WOOL));
                 h.scale(1.2f, 0.15f, 1.2f).glow(255, 150, 200).interpolation(6, i * 4);
                 paws.add(h);
+                spawnedEntities.add(h.entity());
+
+                // 4 toe-bean PINK_CONCRETE per pawprint
+                double[][] toes = {{-0.55, 0.85}, {0.55, 0.85}, {-0.85, 0.25}, {0.85, 0.25}};
+                for (double[] off : toes) {
+                    Location toeLoc = pawLoc.clone().add(off[0], 0, off[1]);
+                    ItemDisplayHandle toe = displayBuilder.spawnItem(toeLoc, new ItemStack(Material.PINK_CONCRETE));
+                    toe.scale(0.35f, 0.1f, 0.4f).glow(255, 130, 180).interpolation(6, i * 4);
+                    spawnedEntities.add(toe.entity());
+                }
+            }
+
+            // Cat clutter: 6 STRING + 4 RABBIT_FOOT scattered along the trail
+            for (int i = 0; i < 6; i++) {
+                double a = targetAngle + (Math.random() - 0.5) * 0.6;
+                double r = 1 + i * 1.2;
+                Location p = center.clone().add(Math.cos(a) * r, 0.3, Math.sin(a) * r);
+                ItemDisplayHandle h = displayBuilder.spawnItem(p, new ItemStack(Material.STRING));
+                h.scale(0.45f, 0.45f, 0.45f).glow(255, 220, 230).interpolation(40, 0);
+                spawnedEntities.add(h.entity());
+            }
+            for (int i = 0; i < 4; i++) {
+                double a = targetAngle + Math.PI / 2 + i * 0.4;
+                double r = 2 + i * 1.5;
+                Location p = center.clone().add(Math.cos(a) * r, 0.4, Math.sin(a) * r);
+                ItemDisplayHandle h = displayBuilder.spawnItem(p, new ItemStack(Material.RABBIT_FOOT));
+                h.scale(0.5f, 0.5f, 0.5f).glow(220, 200, 180).interpolation(40, 0);
                 spawnedEntities.add(h.entity());
             }
         }
@@ -502,6 +592,47 @@ public final class FluffyEnvironmental3 {
                 trail.add(h);
                 spawnedEntities.add(h.entity());
             }
+
+            // Side decoration along the scent trail: 9 PINK_PETALS + 6 SPORE_BLOSSOM + 4 AZALEA_LEAVES offset perpendicular
+            double dx = (targetEnd.getX() - center.getX());
+            double dz = (targetEnd.getZ() - center.getZ());
+            double mag = Math.sqrt(dx * dx + dz * dz);
+            if (mag > 0.01) {
+                double perpX = -dz / mag;
+                double perpZ = dx / mag;
+                for (int i = 0; i < 9; i++) {
+                    double t = i / 8.0;
+                    double off = (i % 2 == 0 ? 0.6 : -0.6);
+                    Location p = new Location(center.getWorld(),
+                            center.getX() + dx * t + perpX * off,
+                            center.getY() + 0.7,
+                            center.getZ() + dz * t + perpZ * off);
+                    ItemDisplayHandle h = displayBuilder.spawnItem(p, new ItemStack(Material.PINK_PETALS));
+                    h.scale(0.45f, 0.45f, 0.45f).glow(255, 180, 220).interpolation(40, 0);
+                    spawnedEntities.add(h.entity());
+                }
+                for (int i = 0; i < 6; i++) {
+                    double t = (i + 0.5) / 6.0;
+                    double off = (i % 2 == 0 ? 1.2 : -1.2);
+                    Location p = new Location(center.getWorld(),
+                            center.getX() + dx * t + perpX * off,
+                            center.getY() + 1.5,
+                            center.getZ() + dz * t + perpZ * off);
+                    ItemDisplayHandle h = displayBuilder.spawnItem(p, new ItemStack(Material.SPORE_BLOSSOM));
+                    h.scale(0.55f, 0.55f, 0.55f).glow(220, 130, 200).interpolation(40, 0);
+                    spawnedEntities.add(h.entity());
+                }
+                for (int i = 0; i < 4; i++) {
+                    double t = (i + 1) / 5.0;
+                    Location p = new Location(center.getWorld(),
+                            center.getX() + dx * t,
+                            center.getY() + 2.5,
+                            center.getZ() + dz * t);
+                    ItemDisplayHandle h = displayBuilder.spawnItem(p, new ItemStack(Material.AZALEA_LEAVES));
+                    h.scale(0.5f, 0.5f, 0.5f).glow(255, 200, 230).interpolation(40, 0);
+                    spawnedEntities.add(h.entity());
+                }
+            }
         }
 
         @Override protected void onTick(int tick) {
@@ -587,6 +718,36 @@ public final class FluffyEnvironmental3 {
             ItemDisplayHandle nose = displayBuilder.spawnItem(facePos.clone().add(0, -0.1, 0), new ItemStack(Material.NETHER_WART));
             nose.scale(0.3f, 0.3f, 0.3f).glow(255, 100, 130).interpolation(20, 0);
             features.add(nose); spawnedEntities.add(nose.entity());
+
+            // Build the rest of the cat face with items: 6 STRING whiskers + 4 BONE fangs + 4 RABBIT_HIDE ears + 2 PINK_CONCRETE inner ears
+            for (int side = -1; side <= 1; side += 2) {
+                for (int j = 0; j < 3; j++) {
+                    Location p = facePos.clone().add(side * (0.6 + j * 0.4), -0.1 + (j - 1) * 0.15, 0);
+                    ItemDisplayHandle h = displayBuilder.spawnItem(p, new ItemStack(Material.STRING));
+                    h.scale(0.4f, 0.06f, 0.06f).glow(240, 240, 240).interpolation(40, 0);
+                    spawnedEntities.add(h.entity());
+                }
+            }
+            for (int i = 0; i < 4; i++) {
+                Location p = facePos.clone().add(-0.4 + i * 0.25, -0.4, 0);
+                ItemDisplayHandle h = displayBuilder.spawnItem(p, new ItemStack(Material.BONE));
+                h.scale(0.18f, 0.4f, 0.18f).glow(255, 255, 255).interpolation(40, 0);
+                spawnedEntities.add(h.entity());
+            }
+            for (int side = -1; side <= 1; side += 2) {
+                for (int j = 0; j < 2; j++) {
+                    Location p = facePos.clone().add(side * (1.0 + j * 0.3), 1.4 + j * 0.3, 0);
+                    ItemDisplayHandle h = displayBuilder.spawnItem(p, new ItemStack(Material.RABBIT_HIDE));
+                    h.scale(0.5f, 0.5f, 0.5f).glow(220, 200, 180).interpolation(40, 0);
+                    spawnedEntities.add(h.entity());
+                }
+            }
+            for (int side = -1; side <= 1; side += 2) {
+                Location p = facePos.clone().add(side * 1.1, 1.5, 0);
+                ItemDisplayHandle h = displayBuilder.spawnItem(p, new ItemStack(Material.PINK_CONCRETE));
+                h.scale(0.3f, 0.3f, 0.3f).glow(255, 130, 180).interpolation(40, 0);
+                spawnedEntities.add(h.entity());
+            }
         }
 
         @Override protected void onTick(int tick) {
@@ -703,6 +864,36 @@ public final class FluffyEnvironmental3 {
                 roses.add(h);
                 spawnedEntities.add(h.entity());
             }
+
+            // Comfy cuddle props: 8 PINK_PETALS + 6 STRING + 4 RABBIT_HIDE + 4 PINK_WOOL
+            for (int i = 0; i < 8; i++) {
+                double a = Math.PI * 2 * i / 8;
+                Location p = center.clone().add(Math.cos(a) * 2.0, 0.3, Math.sin(a) * 2.0);
+                ItemDisplayHandle h = displayBuilder.spawnItem(p, new ItemStack(Material.PINK_PETALS));
+                h.scale(0.5f, 0.5f, 0.5f).glow(255, 180, 220).interpolation(40, 0);
+                spawnedEntities.add(h.entity());
+            }
+            for (int i = 0; i < 6; i++) {
+                double a = Math.PI * 2 * i / 6 + Math.PI / 6;
+                Location p = center.clone().add(Math.cos(a) * 1.0, 0.4, Math.sin(a) * 1.0);
+                ItemDisplayHandle h = displayBuilder.spawnItem(p, new ItemStack(Material.STRING));
+                h.scale(0.4f, 0.4f, 0.4f).glow(255, 220, 230).interpolation(40, 0);
+                spawnedEntities.add(h.entity());
+            }
+            for (int i = 0; i < 4; i++) {
+                double a = Math.PI * 2 * i / 4 + Math.PI / 4;
+                Location p = center.clone().add(Math.cos(a) * 2.5, 0.4, Math.sin(a) * 2.5);
+                ItemDisplayHandle h = displayBuilder.spawnItem(p, new ItemStack(Material.RABBIT_HIDE));
+                h.scale(0.55f, 0.55f, 0.55f).glow(230, 200, 210).interpolation(40, 0);
+                spawnedEntities.add(h.entity());
+            }
+            for (int i = 0; i < 4; i++) {
+                double a = Math.PI * 2 * i / 4;
+                Location p = center.clone().add(Math.cos(a) * 1.5, 0.6, Math.sin(a) * 1.5);
+                ItemDisplayHandle h = displayBuilder.spawnItem(p, new ItemStack(Material.PINK_WOOL));
+                h.scale(0.55f, 0.55f, 0.55f).glow(255, 180, 220).interpolation(40, 0);
+                spawnedEntities.add(h.entity());
+            }
         }
 
         @Override protected void onTick(int tick) {
@@ -798,6 +989,36 @@ public final class FluffyEnvironmental3 {
             knife = displayBuilder.spawnItem(startPos, new ItemStack(Material.IRON_SWORD));
             knife.scale(1.4f, 1.4f, 1.4f).glow(220, 220, 255).interpolation(2, 0);
             spawnedEntities.add(knife.entity());
+
+            // Toy box on the ground around the player: 6 STRING + 4 BONE + 4 RABBIT_FOOT + 4 STICK
+            for (int i = 0; i < 6; i++) {
+                double a = Math.PI * 2 * i / 6;
+                Location p = endPos.clone().add(Math.cos(a) * 3.5, 0.3, Math.sin(a) * 3.5);
+                ItemDisplayHandle h = displayBuilder.spawnItem(p, new ItemStack(Material.STRING));
+                h.scale(0.5f, 0.5f, 0.5f).glow(255, 220, 230).interpolation(40, 0);
+                spawnedEntities.add(h.entity());
+            }
+            for (int i = 0; i < 4; i++) {
+                double a = Math.PI * 2 * i / 4;
+                Location p = endPos.clone().add(Math.cos(a) * 2.5, 0.4, Math.sin(a) * 2.5);
+                ItemDisplayHandle h = displayBuilder.spawnItem(p, new ItemStack(Material.BONE));
+                h.scale(0.6f, 0.6f, 0.6f).glow(240, 230, 220).interpolation(40, 0);
+                spawnedEntities.add(h.entity());
+            }
+            for (int i = 0; i < 4; i++) {
+                double a = Math.PI * 2 * i / 4 + Math.PI / 4;
+                Location p = endPos.clone().add(Math.cos(a) * 4.5, 0.4, Math.sin(a) * 4.5);
+                ItemDisplayHandle h = displayBuilder.spawnItem(p, new ItemStack(Material.RABBIT_FOOT));
+                h.scale(0.55f, 0.55f, 0.55f).glow(220, 200, 180).interpolation(40, 0);
+                spawnedEntities.add(h.entity());
+            }
+            for (int i = 0; i < 4; i++) {
+                double a = Math.PI * 2 * i / 4 + Math.PI / 8;
+                Location p = endPos.clone().add(Math.cos(a) * 5.5, 0.4, Math.sin(a) * 5.5);
+                ItemDisplayHandle h = displayBuilder.spawnItem(p, new ItemStack(Material.STICK));
+                h.scale(0.5f, 0.5f, 0.5f).glow(180, 140, 100).interpolation(40, 0);
+                spawnedEntities.add(h.entity());
+            }
         }
 
         @Override protected void onTick(int tick) {
@@ -879,6 +1100,28 @@ public final class FluffyEnvironmental3 {
                 int[] col = RAINBOW[i % RAINBOW.length];
                 h.scale(0.8f, 0.8f, 0.8f).glow(col[0], col[1], col[2]).interpolation(2, 0);
                 stars.add(h);
+                spawnedEntities.add(h.entity());
+            }
+
+            // 6 GUNPOWDER + 6 PAPER firework launch tubes + 4 GLOW_BERRIES sparks on the ground
+            for (int i = 0; i < 6; i++) {
+                Location p = center.clone().add(Math.cos(sAng[i]) * sR[i], 0.3, Math.sin(sAng[i]) * sR[i]);
+                ItemDisplayHandle h = displayBuilder.spawnItem(p, new ItemStack(Material.GUNPOWDER));
+                h.scale(0.45f, 0.45f, 0.45f).glow(150, 150, 160).interpolation(40, 0);
+                spawnedEntities.add(h.entity());
+            }
+            for (int i = 0; i < 6; i++) {
+                Location p = center.clone().add(Math.cos(sAng[i]) * sR[i], 0.6, Math.sin(sAng[i]) * sR[i]);
+                ItemDisplayHandle h = displayBuilder.spawnItem(p, new ItemStack(Material.PAPER));
+                h.scale(0.4f, 0.6f, 0.4f).glow(255, 240, 200).interpolation(40, 0);
+                spawnedEntities.add(h.entity());
+            }
+            for (int i = 0; i < 4; i++) {
+                double a = Math.PI * 2 * i / 4;
+                Location p = center.clone().add(Math.cos(a) * 5, 0.3, Math.sin(a) * 5);
+                ItemDisplayHandle h = displayBuilder.spawnItem(p, new ItemStack(Material.GLOW_BERRIES));
+                int[] col = RAINBOW[i % RAINBOW.length];
+                h.scale(0.5f, 0.5f, 0.5f).glow(col[0], col[1], col[2]).interpolation(40, 0);
                 spawnedEntities.add(h.entity());
             }
         }
