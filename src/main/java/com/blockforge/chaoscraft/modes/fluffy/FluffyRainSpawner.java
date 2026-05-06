@@ -151,6 +151,10 @@ public class FluffyRainSpawner {
             le.setInvulnerable(true);
             le.setAI(false);
             le.setSilent(true);
+            // Paper bug: setAI(false) on Mob entities (Wolf/MM-spawned dogs+cats+squirrels)
+            // disables gravity along with pathfinding, so they freeze in mid-air. Force
+            // gravity back on so they actually fall.
+            le.setGravity(true);
             le.addScoreboardTag("fluffy:managed");
             le.addScoreboardTag("fluffy:falling");
 
@@ -242,7 +246,16 @@ public class FluffyRainSpawner {
             if (le.isOnGround() || le.getLocation().getY() < groundY + 1.5) {
                 onLanded(le);
                 iter.remove();
+                continue;
             }
+            // Active fall enforcement — reinforce downward velocity each poll
+            // cycle so MM mobs can't hover even if gravity flickers off.
+            try {
+                Vector v = le.getVelocity();
+                if (v.getY() > -0.5) {
+                    le.setVelocity(new Vector(v.getX(), -0.8, v.getZ()));
+                }
+            } catch (Throwable ignored) {}
         }
     }
 
