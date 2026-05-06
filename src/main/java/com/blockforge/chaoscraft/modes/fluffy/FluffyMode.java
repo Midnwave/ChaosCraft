@@ -80,79 +80,24 @@ public class FluffyMode extends AbstractMode {
     }
 
     /**
-     * Multiplies every registered Fluffy attack's damage by the global
-     * difficulty-multiplier from FluffyConfig (default 15.0). Applied AFTER
-     * attackRegistry.reloadConfigs() so user-supplied per-attack damage
-     * values are still scaled. Fails open (multiplier = 1.0) on any error.
+     * Per-attack YAML files in modes/fluffy/attacks/*.yml are the
+     * authoritative source for damage / radius / tick-interval / scale /
+     * duration. Edit them directly to tune.
      *
-     * Also extends each attack's lifecycle:
-     *  - durationTicks doubled (2x baseline) so attacks last longer in-game
-     *  - if the attack does constant tick damage (ticksBetweenDamage > 0
-     *    and not damage-on-impact-only), we floor durationTicks at
-     *    ticksBetweenDamage * 10 so each constant-damage attack delivers at
-     *    least 10 damage events over its lifecycle.
+     * The ONLY runtime adjustment this method still performs is ME attack
+     * pacification: every ModelEngine attack except butterfly_swarm_flutter
+     * is forced to {@code tracksPlayer=false} and {@code damage=0} so it
+     * acts as a stationary cosmetic setpiece. User feedback was that
+     * nonstop chasing ME damage felt unfair — this is the explicit
+     * exception, kept in code so the YAML still reads naturally.
+     *
+     * Damage / radius / tick / scale silent runtime multipliers were
+     * removed in config-version 5 — what you write in the per-attack YAML
+     * is what you get.
      */
     private void applyDifficultyToAttacks() {
-        double diffMult;
-        try {
-            diffMult = fluffyConfig.getDifficultyMultiplier();
-        } catch (Throwable t) {
-            diffMult = 1.0;
-        }
-        int scaledDamage = 0;
-        int extendedDuration = 0;
-        int flooredByTickFloor = 0;
-        int impactOnlySkipped = 0;
-        int meScaleSet = 0;
+        int pacified = 0;
         for (var atk : attackRegistry.getAll()) {
-            try {
-                var cfg = atk.getConfig();
-                if (diffMult != 1.0) {
-                    cfg.setDamage(cfg.getDamage() * diffMult);
-                    cfg.setImpactDamage(cfg.getImpactDamage() * diffMult);
-                    scaledDamage++;
-                }
-            } catch (Throwable ignored) {}
-
-            try {
-                var cfg = atk.getConfig();
-                int currentDuration = cfg.getDurationTicks();
-                int tickInterval = cfg.getTicksBetweenDamage();
-                boolean impactOnly = cfg.isDamageOnImpactOnly();
-
-                // Keep base duration (no 2x extension) but still enforce the
-                // 10-damage-event floor for constant-damage attacks so they hit
-                // multiple times before despawning.
-                int newDuration = currentDuration;
-                if (!impactOnly && tickInterval > 0) {
-                    int floor = tickInterval * 10;
-                    if (newDuration < floor) {
-                        newDuration = floor;
-                        flooredByTickFloor++;
-                    }
-                } else if (impactOnly) {
-                    impactOnlySkipped++;
-                }
-                if (newDuration != currentDuration) {
-                    cfg.setDurationTicks(newDuration);
-                    extendedDuration++;
-                }
-            } catch (Throwable ignored) {}
-
-            // Force ModelEngine scale = damage radius for ME attacks (auto-scale
-            // mode is broken on this server's ME version, so we bake the numeric
-            // value in directly so model size matches the area-of-effect).
-            try {
-                var cfg = atk.getConfig();
-                if (cfg.getType() == AttackType.MODEL_ENGINE) {
-                    double radius = cfg.getDamageRadius();
-                    if (radius > 0) {
-                        cfg.setModelengineScale(String.valueOf(radius));
-                        meScaleSet++;
-                    }
-                }
-            } catch (Throwable ignored) {}
-
             // ME attack pacification — only butterfly_swarm_flutter (the "bee")
             // stays as a damaging chase attack. All other ME attacks become
             // stationary cosmetic setpieces (no tracking, no damage). User
@@ -164,33 +109,14 @@ public class FluffyMode extends AbstractMode {
                     cfg.setTracksPlayer(false);
                     cfg.setDamage(0.0);
                     cfg.setImpactDamage(0.0);
-                }
-            } catch (Throwable ignored) {}
-
-            // BD + ENV attack difficulty — make stationary attacks harder to
-            // dodge (bigger AoE) while keeping them strictly stationary.
-            //   Damage radius × 1.6 — wider lethal zones
-            //   Tick interval halved (min 4) — damage hits more often per
-            //     second when player is inside
-            // ME attacks excluded — they're either visual setpieces or the
-            // butterfly chase, both already balanced above.
-            try {
-                var cfg = atk.getConfig();
-                if (cfg.getType() == AttackType.BLOCK_DISPLAY
-                        || cfg.getType() == AttackType.ENVIRONMENTAL) {
-                    double oldR = cfg.getDamageRadius();
-                    if (oldR > 0) cfg.setDamageRadius(oldR * 1.6);
-                    int oldTick = cfg.getTicksBetweenDamage();
-                    if (oldTick > 0) cfg.setTicksBetweenDamage(Math.max(4, oldTick / 2));
+                    pacified++;
                 }
             } catch (Throwable ignored) {}
         }
-        plugin.getLogger().info("[Fluffy] Applied difficulty x" + diffMult
-                + " to " + scaledDamage + " attacks; extended duration on "
-                + extendedDuration + " attacks (" + flooredByTickFloor
-                + " bumped to 10-tick-damage floor, " + impactOnlySkipped
-                + " impact-only attacks not floored); ME scale forced = radius on "
-                + meScaleSet + " ModelEngine attacks.");
+        plugin.getLogger().info("[Fluffy] Per-attack YAML values are the source of truth"
+                + " for damage / radius / tick / scale / duration. Pacified " + pacified
+                + " ME attacks (stationary, non-damaging cosmetic setpieces;"
+                + " butterfly_swarm_flutter excluded).");
     }
 
     // ========================

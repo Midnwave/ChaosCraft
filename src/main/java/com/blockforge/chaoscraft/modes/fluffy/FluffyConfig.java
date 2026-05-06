@@ -26,7 +26,7 @@ import java.util.Map;
  */
 public class FluffyConfig {
 
-    private static final int CURRENT_CONFIG_VERSION = 4;
+    private static final int CURRENT_CONFIG_VERSION = 5;
 
     private final ChaosCraftPlugin plugin;
     private final File configFile;
@@ -114,6 +114,7 @@ public class FluffyConfig {
         if (!config.contains("mob-ai.flee-hp-percent")) { config.set("mob-ai.flee-hp-percent", 25); needsSave = true; }
         if (!config.contains("mob-ai.approach-speed-multiplier")) { config.set("mob-ai.approach-speed-multiplier", 1.5); needsSave = true; }
         if (!config.contains("mob-ai.animation-speed")) { config.set("mob-ai.animation-speed", 2.0); needsSave = true; }
+        if (!config.contains("mob-ai.bite-damage-floor")) { config.set("mob-ai.bite-damage-floor", 100.0); needsSave = true; }
         if (!config.contains("mob-ai.bunny.hop-y-offset")) { config.set("mob-ai.bunny.hop-y-offset", 0.35); needsSave = true; }
         if (!config.contains("mob-ai.bunny.hop-interval-ticks")) { config.set("mob-ai.bunny.hop-interval-ticks", 10); needsSave = true; }
         if (!config.contains("mob-ai.bear.speed-multiplier")) { config.set("mob-ai.bear.speed-multiplier", 0.7); needsSave = true; }
@@ -508,6 +509,7 @@ public class FluffyConfig {
     public int getMobAiFleeHpPercent() { return config.getInt("mob-ai.flee-hp-percent", 25); }
     public double getMobAiApproachSpeedMult() { return config.getDouble("mob-ai.approach-speed-multiplier", 1.1); }
     public double getMobAiAnimationSpeed() { return config.getDouble("mob-ai.animation-speed", 2.0); }
+    public double getMobAiBiteFloor() { return config.getDouble("mob-ai.bite-damage-floor", 100.0); }
     public double getBunnyHopY() { return config.getDouble("mob-ai.bunny.hop-y-offset", 0.35); }
     public int getBunnyHopInterval() { return config.getInt("mob-ai.bunny.hop-interval-ticks", 10); }
     public double getBearSpeedMult() { return config.getDouble("mob-ai.bear.speed-multiplier", 0.7); }
@@ -695,11 +697,16 @@ public class FluffyConfig {
 
         defaults.set("difficulty-multiplier", 15.0);
         defaults.setComments("difficulty-multiplier", List.of(
-                "Global damage and aggression multiplier applied to:",
-                "  - all attack damage (BlockDisplay/Environmental/ModelEngine attacks)",
-                "  - mob AI bite damage",
-                "  - rain mob HP and damage scaling",
-                "Default 15.0 means everything hits ~15x harder than baseline.",
+                "Global aggression multiplier. As of config-version 5, this NO",
+                "LONGER scales per-attack damage or radius — those values come",
+                "directly from the per-attack YAML files in modes/fluffy/attacks/",
+                "and edits there are applied verbatim.",
+                "",
+                "This multiplier still scales:",
+                "  - mob AI bite damage (FluffyMobAI.damageWithMultiplier)",
+                "  - rain mob HP and damage attributes on landing",
+                "    (FluffyRainSpawner.attemptDrop)",
+                "Default 15.0 means rain mob HP / bite damage hits ~15x baseline.",
                 "Set to 1.0 for vanilla baseline."));
 
         defaults.set("arena-radius", 50);
@@ -791,6 +798,12 @@ public class FluffyConfig {
                 "ModelEngine animation playback speed multiplier for managed mobs.",
                 "1.0 = original speed, 2.0 = double speed (matches the modogs",
                 "Geckolib animations being slow at native rate)."));
+        defaults.set("mob-ai.bite-damage-floor", 100.0);
+        defaults.setComments("mob-ai.bite-damage-floor", List.of(
+                "Minimum damage in HP a mob AI bite deals, regardless of base",
+                "ATTACK_DAMAGE attribute. Floors degenerate / zeroed-out attribute",
+                "values so every bite is noticeable. Set to 0.0 to disable the",
+                "floor and use raw attribute x difficulty-multiplier only."));
         defaults.set("mob-ai.bunny.hop-y-offset", 0.35);
         defaults.set("mob-ai.bunny.hop-interval-ticks", 10);
         defaults.setComments("mob-ai.bunny.hop-y-offset", List.of(

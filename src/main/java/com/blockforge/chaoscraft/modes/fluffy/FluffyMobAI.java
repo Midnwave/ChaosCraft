@@ -735,10 +735,13 @@ public class FluffyMobAI implements Listener {
             if (attr != null && attr.getValue() > 0.0) base = attr.getValue();
             double diffMult = 1.0;
             try { diffMult = config.getDifficultyMultiplier(); } catch (Throwable ignored) {}
-            // Floor of 100.0 hp per bite so every Fluffy mob hit is significant
-            // and the player can clearly tell they were attacked, even with
-            // armor / protection enchants soaking ~50% of it.
-            double finalDamage = Math.max(100.0, base * multiplier * diffMult);
+            // Floor of bite-damage-floor hp per bite so every Fluffy mob hit is
+            // significant and the player can clearly tell they were attacked,
+            // even with armor / protection enchants soaking ~50% of it. Set
+            // mob-ai.bite-damage-floor to 0.0 in config to disable the floor.
+            double floor = 0.0;
+            try { floor = config.getMobAiBiteFloor(); } catch (Throwable ignored) {}
+            double finalDamage = Math.max(floor, base * multiplier * diffMult);
             target.damage(finalDamage, attacker);
             plugin.debug("[FluffyAI] " + attacker.getType() + " bit "
                     + target.getName() + " for " + finalDamage + " hp");
