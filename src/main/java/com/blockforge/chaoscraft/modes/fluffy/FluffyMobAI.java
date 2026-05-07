@@ -124,6 +124,16 @@ public class FluffyMobAI implements Listener {
         FluffyMobState state = new FluffyMobState();
         state.typeKey = resolveTypeKey(entity);
         states.put(entity.getUniqueId(), state);
+
+        // Force-silence Fluffy mobs that aren't dogs. Dogs (resolved as "dog"
+        // typekey) keep wolf bark/growl sounds since dog noises ARE wolf
+        // noises in vanilla. Cats and squirrels hosted on a WOLF entity must
+        // be silenced or they bark — MM's Silent: true sometimes leaks through.
+        try {
+            if (!"dog".equals(state.typeKey)) {
+                entity.setSilent(true);
+            }
+        } catch (Throwable ignored) {}
     }
 
     // ========================
