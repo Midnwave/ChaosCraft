@@ -266,13 +266,11 @@ public class FluffyMobAI implements Listener {
             }
         }
 
-        // Bear windup — wait windup-ticks before swinging
-        int windup = "bear".equals(state.typeKey) ? config.getBearWindupTicks() : 8;
+        // Bear windup — only bears wait. All other types bite immediately on
+        // contact (magma-cube tempo per user feedback). Windup of 0 means the
+        // mob bites the same tick it enters ATTACK state.
+        int windup = "bear".equals(state.typeKey) ? config.getBearWindupTicks() : 0;
         if (state.stateTicks >= windup) {
-            // Apply damage via shared helper so the difficulty multiplier
-            // (default 15x) is correctly applied. Previously this used the
-            // raw ATTACK_DAMAGE attribute value resulting in ~2hp bites that
-            // felt like the mob wasn't attacking at all.
             damageWithMultiplier(entity, target, 1.0);
             transition(state, State.COOLDOWN, entity);
         } else {
