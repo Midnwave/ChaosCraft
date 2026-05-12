@@ -1,24 +1,31 @@
 package com.blockforge.chaoscraft.modes.freezingice;
 
 import com.blockforge.chaoscraft.ChaosCraftPlugin;
+import com.blockforge.chaoscraft.services.mobspawn.MobSpawnConfig;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-
-import com.blockforge.chaoscraft.services.mobspawn.MobSpawnConfig;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
- * Freezing Ice Mode configuration loader.
- * Reads from plugins/ChaosCraft/modes/freezingice/freezingice.yml
+ * FreezingIce Mode configuration loader.
  *
- * Freezing Ice is a survival timer mode with aggressive living-ice attacks,
- * a temperature tracker, and powder snow freeze mechanics.
+ * Reads from plugins/ChaosCraft/modes/freezingice/freezingice.yml.
+ * Fresh-start Phase 1 config — no world-effects / herd-pulse / rain-from-sky
+ * / mob-ai sections (those don't exist for FreezingIce yet).
+ *
+ * Keeps: config-version, duration-seconds, arena-radius, enforce-boundary,
+ * exempt-players, on-start / on-end commands, world, scheduler section,
+ * mob-spawning section, ambient-sounds, music, rewards.
  */
 public class FreezingIceConfig {
+
+    private static final int CURRENT_CONFIG_VERSION = 1;
 
     private final ChaosCraftPlugin plugin;
     private final File configFile;
@@ -40,76 +47,65 @@ public class FreezingIceConfig {
 
         boolean needsSave = false;
 
-        // ── Base mode keys ──────────────────────────────────────────────
-        if (!config.contains("config-version")) { config.set("config-version", 2); needsSave = true; }
-        // Auto-upgrade from version 1 → 2 (adds mob-spawning section)
-        if (config.getInt("config-version") < 2) { config.set("config-version", 2); needsSave = true; }
-        if (!config.contains("timer.default-seconds")) { config.set("timer.default-seconds", 600); needsSave = true; }
-        if (!config.contains("timer.max-seconds")) { config.set("timer.max-seconds", 1800); needsSave = true; }
-        if (!config.contains("music.sound-id")) { config.set("music.sound-id", ""); needsSave = true; }
-        if (!config.contains("music.loop")) { config.set("music.loop", true); needsSave = true; }
-        if (!config.contains("music.duration-ticks")) { config.set("music.duration-ticks", 6000); needsSave = true; }
+        // ── Top-level ───────────────────────────────────────────────────
+        if (!config.contains("config-version")) { config.set("config-version", CURRENT_CONFIG_VERSION); needsSave = true; }
+        if (config.getInt("config-version") < CURRENT_CONFIG_VERSION) { config.set("config-version", CURRENT_CONFIG_VERSION); needsSave = true; }
+        if (!config.contains("duration-seconds")) { config.set("duration-seconds", 180); needsSave = true; }
+        if (!config.contains("arena-radius")) { config.set("arena-radius", 50); needsSave = true; }
+        if (!config.contains("enforce-boundary")) { config.set("enforce-boundary", true); needsSave = true; }
+        if (!config.contains("exempt-players")) { config.set("exempt-players", new ArrayList<>()); needsSave = true; }
         if (!config.contains("on-start-commands")) { config.set("on-start-commands", new ArrayList<>()); needsSave = true; }
         if (!config.contains("on-end-commands")) { config.set("on-end-commands", new ArrayList<>()); needsSave = true; }
-        if (!config.contains("on-player-ready-commands")) { config.set("on-player-ready-commands", new ArrayList<>()); needsSave = true; }
-        if (!config.contains("on-reset-commands")) { config.set("on-reset-commands", new ArrayList<>()); needsSave = true; }
-        if (!config.contains("exempt-players")) { config.set("exempt-players", new ArrayList<>()); needsSave = true; }
-        if (!config.contains("max-events-per-player")) { config.set("max-events-per-player", 5); needsSave = true; }
-        if (!config.contains("rewards.commands")) { config.set("rewards.commands", new ArrayList<>()); needsSave = true; }
-        if (!config.contains("rewards.survived.money")) { config.set("rewards.survived.money", 0); needsSave = true; }
-        if (!config.contains("rewards.survived.items")) { config.set("rewards.survived.items", new ArrayList<>()); needsSave = true; }
-        if (!config.contains("rewards.survived.badges")) { config.set("rewards.survived.badges", new ArrayList<>()); needsSave = true; }
-        if (!config.contains("rewards.survived.commands")) { config.set("rewards.survived.commands", new ArrayList<>()); needsSave = true; }
-        if (!config.contains("rewards.died.money")) { config.set("rewards.died.money", 0); needsSave = true; }
-        if (!config.contains("rewards.died.items")) { config.set("rewards.died.items", new ArrayList<>()); needsSave = true; }
-        if (!config.contains("rewards.died.badges")) { config.set("rewards.died.badges", new ArrayList<>()); needsSave = true; }
-        if (!config.contains("rewards.died.commands")) { config.set("rewards.died.commands", new ArrayList<>()); needsSave = true; }
-        if (!config.contains("restrictions.allow-world-change")) { config.set("restrictions.allow-world-change", false); needsSave = true; }
-        if (!config.contains("restrictions.water-to-glass")) { config.set("restrictions.water-to-glass", false); needsSave = true; }
-        if (!config.contains("restrictions.allow-respawn")) { config.set("restrictions.allow-respawn", true); needsSave = true; }
-        if (!config.contains("restrictions.allow-elytra")) { config.set("restrictions.allow-elytra", false); needsSave = true; }
-        if (!config.contains("restrictions.blocked-commands")) { config.set("restrictions.blocked-commands", new ArrayList<>()); needsSave = true; }
-
-        // ── Freezing Ice specific keys ──────────────────────────────────
         if (!config.contains("world")) { config.set("world", ""); needsSave = true; }
-        if (!config.contains("spawn.base-interval-ticks")) { config.set("spawn.base-interval-ticks", 50); needsSave = true; }
-        if (!config.contains("spawn.max-events-per-player")) { config.set("spawn.max-events-per-player", 5); needsSave = true; }
-        if (!config.contains("spawn.offset-radius")) { config.set("spawn.offset-radius", 10.0); needsSave = true; }
 
-        // ── Freeze system ──────────────────────────────────────────────
-        if (!config.contains("freeze.enabled")) { config.set("freeze.enabled", true); needsSave = true; }
-        if (!config.contains("freeze.base-freeze-rate")) { config.set("freeze.base-freeze-rate", 1); needsSave = true; }
-        if (!config.contains("freeze.attack-freeze-bonus")) { config.set("freeze.attack-freeze-bonus", 20); needsSave = true; }
-        if (!config.contains("freeze.max-freeze-ticks")) { config.set("freeze.max-freeze-ticks", 300); needsSave = true; }
-        if (!config.contains("freeze.thaw-near-heat")) { config.set("freeze.thaw-near-heat", true); needsSave = true; }
-        if (!config.contains("freeze.thaw-rate")) { config.set("freeze.thaw-rate", 5); needsSave = true; }
-        if (!config.contains("freeze.leather-boots-protect")) { config.set("freeze.leather-boots-protect", false); needsSave = true; }
+        // ── Scheduler ───────────────────────────────────────────────────
+        if (!config.contains("scheduler.base-spawn-interval-ticks")) { config.set("scheduler.base-spawn-interval-ticks", 25); needsSave = true; }
+        if (!config.contains("scheduler.spawn-offset-radius")) { config.set("scheduler.spawn-offset-radius", 8.0); needsSave = true; }
+        if (!config.contains("scheduler.max-events-per-player")) { config.set("scheduler.max-events-per-player", 5); needsSave = true; }
+        if (!config.contains("scheduler.type-weight-block-display")) { config.set("scheduler.type-weight-block-display", 1.0); needsSave = true; }
+        if (!config.contains("scheduler.type-weight-environmental")) { config.set("scheduler.type-weight-environmental", 1.0); needsSave = true; }
+        if (!config.contains("scheduler.type-weight-model-engine")) { config.set("scheduler.type-weight-model-engine", 0.0); needsSave = true; }
 
-        // ── Temperature system ─────────────────────────────────────────
-        if (!config.contains("temperature.enabled")) { config.set("temperature.enabled", true); needsSave = true; }
-        if (!config.contains("temperature.start-value")) { config.set("temperature.start-value", 100); needsSave = true; }
-        if (!config.contains("temperature.decay-rate")) { config.set("temperature.decay-rate", 1); needsSave = true; }
-        if (!config.contains("temperature.decay-interval-ticks")) { config.set("temperature.decay-interval-ticks", 100); needsSave = true; }
-        if (!config.contains("temperature.speed-threshold-75")) { config.set("temperature.speed-threshold-75", -0.03); needsSave = true; }
-        if (!config.contains("temperature.speed-threshold-50")) { config.set("temperature.speed-threshold-50", -0.06); needsSave = true; }
-        if (!config.contains("temperature.speed-threshold-25")) { config.set("temperature.speed-threshold-25", -0.10); needsSave = true; }
-        if (!config.contains("temperature.freeze-overlay-threshold")) { config.set("temperature.freeze-overlay-threshold", 50); needsSave = true; }
-        if (!config.contains("temperature.heat-source-restore")) { config.set("temperature.heat-source-restore", 5); needsSave = true; }
-        if (!config.contains("temperature.heat-source-radius")) { config.set("temperature.heat-source-radius", 3.0); needsSave = true; }
-
-        // ── Timer HUD ──────────────────────────────────────────────────
-        if (!config.contains("timer-hud.display-name")) { config.set("timer-hud.display-name", "FREEZING ICE"); needsSave = true; }
-        if (!config.contains("timer-hud.color")) { config.set("timer-hud.color", "aqua"); needsSave = true; }
-        if (!config.contains("timer-hud.flash-color")) { config.set("timer-hud.flash-color", "blue"); needsSave = true; }
-        if (!config.contains("timer-hud.flash-threshold-seconds")) { config.set("timer-hud.flash-threshold-seconds", 60); needsSave = true; }
-
-        // ── Universal mob spawning ───────────────────────────────────
+        // ── Mob spawning (shared section) ───────────────────────────────
         if (MobSpawnConfig.ensureKeys(config)) needsSave = true;
+
+        // ── Ambient sounds ──────────────────────────────────────────────
+        if (!config.contains("ambient-sounds.enabled")) { config.set("ambient-sounds.enabled", true); needsSave = true; }
+        if (!config.contains("ambient-sounds.min-interval-ticks")) { config.set("ambient-sounds.min-interval-ticks", 80); needsSave = true; }
+        if (!config.contains("ambient-sounds.max-interval-ticks")) { config.set("ambient-sounds.max-interval-ticks", 200); needsSave = true; }
+        if (!config.contains("ambient-sounds.volume")) { config.set("ambient-sounds.volume", 0.4); needsSave = true; }
+        if (!config.contains("ambient-sounds.sounds")) {
+            config.set("ambient-sounds.sounds", buildDefaultAmbientSounds());
+            needsSave = true;
+        }
+
+        // ── Music ───────────────────────────────────────────────────────
+        if (!config.contains("music.track")) { config.set("music.track", "freezingice_main"); needsSave = true; }
+        if (!config.contains("music.volume")) { config.set("music.volume", 0.6); needsSave = true; }
+
+        // ── Rewards ─────────────────────────────────────────────────────
+        if (!config.contains("rewards.survival-commands")) { config.set("rewards.survival-commands", new ArrayList<>()); needsSave = true; }
 
         if (needsSave) {
             save();
             config = YamlConfiguration.loadConfiguration(configFile);
         }
+    }
+
+    /** Cold-themed ambient sounds — glass chime, ice break, frost step, etc. */
+    private List<String> buildDefaultAmbientSounds() {
+        return Arrays.asList(
+                "ENTITY_GLOW_SQUID_AMBIENT",
+                "BLOCK_AMETHYST_BLOCK_CHIME",
+                "ITEM_ARMOR_EQUIP_ICE",
+                "BLOCK_GLASS_BREAK",
+                "BLOCK_POWDER_SNOW_BREAK",
+                "BLOCK_NOTE_BLOCK_CHIME");
+    }
+
+    /** Empty mob pool by default — FreezingIce ground spawner is opt-in. */
+    private List<MobSpawnConfig.MobSpawnDefaultEntry> buildDefaultMobSpawnEntries() {
+        return Collections.emptyList();
     }
 
     /** Returns a MobSpawnConfig backed by this mode's YAML. */
@@ -128,69 +124,50 @@ public class FreezingIceConfig {
     public FileConfiguration get() { return config; }
 
     // ========================
-    // World
+    // Top-level
     // ========================
 
+    public int getDurationSeconds() { return config.getInt("duration-seconds", 180); }
+    public int getArenaRadius() { return config.getInt("arena-radius", 50); }
+    public boolean isEnforceBoundary() { return config.getBoolean("enforce-boundary", true); }
+    public List<String> getExemptPlayers() { return config.getStringList("exempt-players"); }
+    public List<String> getOnStartCommands() { return config.getStringList("on-start-commands"); }
+    public List<String> getOnEndCommands() { return config.getStringList("on-end-commands"); }
     public String getWorldName() { return config.getString("world", ""); }
 
     // ========================
-    // Timer
+    // Scheduler
     // ========================
 
-    public long getDefaultTimerSeconds() { return config.getLong("timer.default-seconds", 600); }
-    public long getMaxTimerSeconds() { return config.getLong("timer.max-seconds", 1800); }
+    public int getBaseSpawnInterval() { return config.getInt("scheduler.base-spawn-interval-ticks", 25); }
+    public double getSpawnOffsetRadius() { return config.getDouble("scheduler.spawn-offset-radius", 8.0); }
+    public int getMaxEventsPerPlayer() { return config.getInt("scheduler.max-events-per-player", 5); }
+    public double getTypeWeightBlockDisplay() { return config.getDouble("scheduler.type-weight-block-display", 1.0); }
+    public double getTypeWeightEnvironmental() { return config.getDouble("scheduler.type-weight-environmental", 1.0); }
+    public double getTypeWeightModelEngine() { return config.getDouble("scheduler.type-weight-model-engine", 0.0); }
 
     // ========================
-    // Spawning
+    // Ambient sounds
     // ========================
 
-    public int getBaseSpawnInterval() { return config.getInt("spawn.base-interval-ticks", 50); }
-    public int getMaxEventsPerPlayer() { return config.getInt("spawn.max-events-per-player", 5); }
-    public double getSpawnOffsetRadius() { return config.getDouble("spawn.offset-radius", 10.0); }
+    public boolean isAmbientSoundsEnabled() { return config.getBoolean("ambient-sounds.enabled", true); }
+    public int getAmbientSoundMinInterval() { return config.getInt("ambient-sounds.min-interval-ticks", 80); }
+    public int getAmbientSoundMaxInterval() { return config.getInt("ambient-sounds.max-interval-ticks", 200); }
+    public double getAmbientSoundVolume() { return config.getDouble("ambient-sounds.volume", 0.4); }
+    public List<String> getAmbientSounds() { return config.getStringList("ambient-sounds.sounds"); }
 
     // ========================
     // Music
     // ========================
 
-    public String getMusicSoundId() { return config.getString("music.sound-id", ""); }
-    public boolean isMusicLooped() { return config.getBoolean("music.loop", true); }
-    public long getMusicDurationTicks() { return config.getLong("music.duration-ticks", 6000); }
+    public String getMusicTrack() { return config.getString("music.track", "freezingice_main"); }
+    public double getMusicVolume() { return config.getDouble("music.volume", 0.6); }
 
     // ========================
-    // Lifecycle
+    // Rewards
     // ========================
 
-    public List<String> getOnStartCommands() { return config.getStringList("on-start-commands"); }
-    public List<String> getOnEndCommands() { return config.getStringList("on-end-commands"); }
-    public List<String> getExemptPlayers() { return config.getStringList("exempt-players"); }
-    public List<String> getRewardCommands() { return config.getStringList("rewards.commands"); }
-
-    // ========================
-    // Freeze System
-    // ========================
-
-    public boolean isFreezeEnabled() { return config.getBoolean("freeze.enabled", true); }
-    public int getBaseFreezeRate() { return config.getInt("freeze.base-freeze-rate", 1); }
-    public int getAttackFreezeBonus() { return config.getInt("freeze.attack-freeze-bonus", 20); }
-    public int getMaxFreezeTicks() { return config.getInt("freeze.max-freeze-ticks", 300); }
-    public boolean isThawNearHeat() { return config.getBoolean("freeze.thaw-near-heat", true); }
-    public int getThawRate() { return config.getInt("freeze.thaw-rate", 5); }
-    public boolean isLeatherBootsProtect() { return config.getBoolean("freeze.leather-boots-protect", false); }
-
-    // ========================
-    // Temperature System
-    // ========================
-
-    public boolean isTemperatureEnabled() { return config.getBoolean("temperature.enabled", true); }
-    public int getTemperatureStartValue() { return config.getInt("temperature.start-value", 100); }
-    public int getTemperatureDecayRate() { return config.getInt("temperature.decay-rate", 1); }
-    public int getTemperatureDecayInterval() { return config.getInt("temperature.decay-interval-ticks", 100); }
-    public double getSpeedThreshold75() { return config.getDouble("temperature.speed-threshold-75", -0.03); }
-    public double getSpeedThreshold50() { return config.getDouble("temperature.speed-threshold-50", -0.06); }
-    public double getSpeedThreshold25() { return config.getDouble("temperature.speed-threshold-25", -0.10); }
-    public int getFreezeOverlayThreshold() { return config.getInt("temperature.freeze-overlay-threshold", 50); }
-    public int getHeatSourceRestore() { return config.getInt("temperature.heat-source-restore", 5); }
-    public double getHeatSourceRadius() { return config.getDouble("temperature.heat-source-radius", 3.0); }
+    public List<String> getSurvivalCommands() { return config.getStringList("rewards.survival-commands"); }
 
     // ========================
     // Default config creation
@@ -199,163 +176,97 @@ public class FreezingIceConfig {
     private void createDefaults() {
         FileConfiguration defaults = new YamlConfiguration();
 
-        // ── World ────────────────────────────────────────────────────────
-        defaults.set("world", "");
-        defaults.setComments("world", List.of(
-                "World name where Freezing Ice Mode runs.",
-                "Leave empty (\"\") to use the first loaded world (Overworld)."));
+        defaults.set("config-version", CURRENT_CONFIG_VERSION);
+        defaults.setComments("config-version", List.of(
+                "FreezingIce Mode configuration. Do not edit config-version manually.",
+                "The plugin auto-upgrades this file when new config keys are added."));
 
-        // ── Timer ────────────────────────────────────────────────────────
-        defaults.set("timer.default-seconds", 600);
-        defaults.setComments("timer.default-seconds", List.of(
-                "Default duration in seconds when started without a time argument.",
-                "600 = 10 min | 900 = 15 min | 1200 = 20 min."));
-        defaults.set("timer.max-seconds", 1800);
-        defaults.setComments("timer.max-seconds", List.of(
-                "Maximum timer value (seconds) allowed via command."));
+        defaults.set("duration-seconds", 180);
+        defaults.setComments("duration-seconds", List.of(
+                "Total mode duration in seconds. Default: 180 (3 minutes).",
+                "Players who survive past this time receive survival-commands rewards."));
 
-        // ── Spawning ─────────────────────────────────────────────────────
-        defaults.set("spawn.base-interval-ticks", 50);
-        defaults.setComments("spawn.base-interval-ticks", List.of(
-                "Ticks between attack spawn attempts. 20 ticks = 1 second.",
-                "50 = attempt every 2.5 seconds."));
-        defaults.set("spawn.max-events-per-player", 5);
-        defaults.setComments("spawn.max-events-per-player", List.of(
-                "Maximum simultaneous active attacks per player. Recommended: 3–8."));
-        defaults.set("spawn.offset-radius", 10.0);
-        defaults.setComments("spawn.offset-radius", List.of(
-                "Max distance from player that attacks can spawn."));
+        defaults.set("arena-radius", 50);
+        defaults.setComments("arena-radius", List.of(
+                "Radius (in blocks) of the arena area used for spawn picking and",
+                "boundary enforcement. Centered on the first online player at start."));
 
-        // ── Timer HUD ────────────────────────────────────────────────────
-        defaults.set("timer-hud.display-name", "FREEZING ICE");
-        defaults.setComments("timer-hud.display-name", List.of(
-                "Mode name displayed on the BetterHud timer bar."));
-        defaults.set("timer-hud.color", "aqua");
-        defaults.setComments("timer-hud.color", List.of(
-                "Color of the mode name text (normal state)."));
-        defaults.set("timer-hud.flash-color", "blue");
-        defaults.setComments("timer-hud.flash-color", List.of(
-                "Color of the timer text when flashing (low time warning)."));
-        defaults.set("timer-hud.flash-threshold-seconds", 60);
-        defaults.setComments("timer-hud.flash-threshold-seconds", List.of(
-                "Seconds remaining at which the timer starts flashing."));
+        defaults.set("enforce-boundary", true);
+        defaults.setComments("enforce-boundary", List.of(
+                "Whether to enforce arena boundaries by pushing players back inward.",
+                "Set to false to let players roam freely."));
 
-        // ── Music ────────────────────────────────────────────────────────
-        defaults.set("music.sound-id", "");
-        defaults.setComments("music.sound-id", List.of(
-                "Namespaced sound ID for background music. Leave empty to disable."));
-        defaults.set("music.loop", true);
-        defaults.setComments("music.loop", List.of("Whether the music loops continuously."));
-        defaults.set("music.duration-ticks", 6000);
-        defaults.setComments("music.duration-ticks", List.of(
-                "Duration of one music loop in ticks. 6000 = 5 minutes."));
-
-        // ── Lifecycle Commands ───────────────────────────────────────────
-        defaults.set("on-start-commands", new ArrayList<>());
-        defaults.setComments("on-start-commands", List.of(
-                "Console commands run when Freezing Ice starts. Use %player% for the starting player."));
-        defaults.set("on-end-commands", new ArrayList<>());
-        defaults.setComments("on-end-commands", List.of("Console commands run when the mode ends."));
-        defaults.set("on-player-ready-commands", new ArrayList<>());
-        defaults.setComments("on-player-ready-commands", List.of(
-                "Commands run for each player when they exit title screen or change world during this mode.",
-                "Supports wait <ticks>, done, and PlaceholderAPI. Use %player% for the player's name."));
-        defaults.set("on-reset-commands", new ArrayList<>());
-        defaults.setComments("on-reset-commands", List.of(
-                "Per-mode reset commands. Available for manual use or future expansion."));
         defaults.set("exempt-players", new ArrayList<>());
         defaults.setComments("exempt-players", List.of(
-                "Player names that receive ZERO damage from all ice attacks."));
-        defaults.set("rewards.commands", new ArrayList<>());
-        defaults.setComments("rewards.commands", List.of(
-                "Commands run for each surviving player. Use %player%."));
+                "Player names that receive ZERO damage from all FreezingIce attacks.",
+                "Add admins / spectators here while testing."));
 
-        // ── Freeze System ────────────────────────────────────────────────
-        defaults.set("freeze.enabled", true);
-        defaults.setComments("freeze.enabled", List.of(
-                "Enable the powder snow freeze overlay system.",
-                "Uses Player.setFreezeTicks() to simulate walking in powder snow."));
-        defaults.set("freeze.base-freeze-rate", 1);
-        defaults.setComments("freeze.base-freeze-rate", List.of(
-                "Freeze ticks added per second passively during the mode.",
-                "Higher = players freeze faster just by existing in the mode."));
-        defaults.set("freeze.attack-freeze-bonus", 20);
-        defaults.setComments("freeze.attack-freeze-bonus", List.of(
-                "Extra freeze ticks applied when hit by an ice attack.",
-                "Stacks with base rate. 20 = noticeable frost burst on each hit."));
-        defaults.set("freeze.max-freeze-ticks", 300);
-        defaults.setComments("freeze.max-freeze-ticks", List.of(
-                "Maximum freeze ticks cap. 300 = full powder snow freezing effect.",
-                "At 140+ ticks: vanilla freeze damage starts (1 heart per 40 ticks)."));
-        defaults.set("freeze.thaw-near-heat", true);
-        defaults.setComments("freeze.thaw-near-heat", List.of(
-                "Whether standing near heat sources (torches, campfires, lava) reduces freeze ticks."));
-        defaults.set("freeze.thaw-rate", 5);
-        defaults.setComments("freeze.thaw-rate", List.of(
-                "Freeze ticks removed per second when near a heat source."));
-        defaults.set("freeze.leather-boots-protect", false);
-        defaults.setComments("freeze.leather-boots-protect", List.of(
-                "Whether leather boots reduce the freeze rate (vanilla powder snow mechanic).",
-                "Set to false to prevent players from trivially countering the mode."));
+        defaults.set("on-start-commands", new ArrayList<>());
+        defaults.setComments("on-start-commands", List.of(
+                "Console commands run when FreezingIce Mode starts.",
+                "Use %player% to substitute online player names if needed."));
 
-        // ── Temperature System ───────────────────────────────────────────
-        defaults.set("temperature.enabled", true);
-        defaults.setComments("temperature.enabled", List.of(
-                "Enable the temperature tracker. Players start warm and get colder over time.",
-                "Temperature affects movement speed, freeze overlay, and damage taken."));
-        defaults.set("temperature.start-value", 100);
-        defaults.setComments("temperature.start-value", List.of(
-                "Starting temperature for each player. 100 = fully warm."));
-        defaults.set("temperature.decay-rate", 1);
-        defaults.setComments("temperature.decay-rate", List.of(
-                "Temperature points lost per decay tick. Higher = faster cooling."));
-        defaults.set("temperature.decay-interval-ticks", 100);
-        defaults.setComments("temperature.decay-interval-ticks", List.of(
-                "Ticks between temperature decay ticks. 100 = every 5 seconds."));
-        defaults.set("temperature.speed-threshold-75", -0.03);
-        defaults.setComments("temperature.speed-threshold-75", List.of(
-                "Movement speed modifier (attribute) when temperature drops below 75.",
-                "Negative values slow the player. -0.03 = slight slowdown."));
-        defaults.set("temperature.speed-threshold-50", -0.06);
-        defaults.setComments("temperature.speed-threshold-50", List.of(
-                "Movement speed modifier when temperature drops below 50."));
-        defaults.set("temperature.speed-threshold-25", -0.10);
-        defaults.setComments("temperature.speed-threshold-25", List.of(
-                "Movement speed modifier when temperature drops below 25. -0.10 = very slow."));
-        defaults.set("temperature.freeze-overlay-threshold", 50);
-        defaults.setComments("temperature.freeze-overlay-threshold", List.of(
-                "Temperature at which the freeze overlay (powder snow visual) begins.",
-                "Below this, setFreezeTicks() is called periodically to maintain the frost screen effect."));
-        defaults.set("temperature.heat-source-restore", 5);
-        defaults.setComments("temperature.heat-source-restore", List.of(
-                "Temperature points restored per second when near a heat source."));
-        defaults.set("temperature.heat-source-radius", 3.0);
-        defaults.setComments("temperature.heat-source-radius", List.of(
-                "Block radius to search for heat sources (torches, campfires, lava, fire)."));
+        defaults.set("on-end-commands", new ArrayList<>());
+        defaults.setComments("on-end-commands", List.of(
+                "Console commands run when FreezingIce Mode ends."));
 
-        // ── Player Restrictions ──────────────────────────────────────────────────
-        defaults.set("restrictions.allow-world-change", false);
-        defaults.setComments("restrictions.allow-world-change", List.of(
-            "Whether players can change worlds during this mode. Default: false."));
-        defaults.set("restrictions.water-to-glass", false);
-        defaults.setComments("restrictions.water-to-glass", List.of(
-            "Replace water with light blue glass to prevent AI abuse. Default: false."));
-        defaults.set("restrictions.allow-respawn", true);
-        defaults.setComments("restrictions.allow-respawn", List.of(
-            "If false, dead players enter spectator mode until the mode ends. Default: true."));
-        defaults.set("restrictions.allow-elytra", false);
-        defaults.setComments("restrictions.allow-elytra", List.of(
-            "Whether players can use elytra during this mode. Default: false."));
-        defaults.set("restrictions.blocked-commands", new ArrayList<>());
-        defaults.setComments("restrictions.blocked-commands", List.of(
-            "Commands blocked during this mode. Example: home, tpa, spawn, warp"));
+        defaults.set("world", "");
+        defaults.setComments("world", List.of(
+                "World name where FreezingIce Mode runs. Leave empty for the first loaded world."));
 
-        // ── Universal Mob Spawning ──────────────────────────────────────
-        MobSpawnConfig.writeDefaults(defaults, List.of(
-                new MobSpawnConfig.MobSpawnDefaultEntry("STRAY", "vanilla", 10, 1, 3, 1.5, 1.0),
-                new MobSpawnConfig.MobSpawnDefaultEntry("SKELETON", "vanilla", 6, 1, 2, 1.2, 1.0),
-                new MobSpawnConfig.MobSpawnDefaultEntry("POLAR_BEAR", "vanilla", 4, 1, 1, 2.0, 1.5)
-        ));
+        // Scheduler
+        defaults.set("scheduler.base-spawn-interval-ticks", 25);
+        defaults.setComments("scheduler.base-spawn-interval-ticks", List.of(
+                "",
+                "=== ATTACK SCHEDULER ===",
+                "Ticks between attack spawn attempts. 20 ticks = 1 second.",
+                "25 = attempt every 1.25 seconds."));
+        defaults.set("scheduler.spawn-offset-radius", 8.0);
+        defaults.setComments("scheduler.spawn-offset-radius", List.of(
+                "Max distance from the target player that non-tracking attacks can spawn."));
+        defaults.set("scheduler.max-events-per-player", 5);
+        defaults.setComments("scheduler.max-events-per-player", List.of(
+                "Maximum simultaneous active attacks per player."));
+        defaults.set("scheduler.type-weight-block-display", 1.0);
+        defaults.setComments("scheduler.type-weight-block-display", List.of(
+                "Spawn weight for block-display attacks. Higher = more likely.",
+                "All weights are relative — they do not need to sum to 1.0."));
+        defaults.set("scheduler.type-weight-environmental", 1.0);
+        defaults.setComments("scheduler.type-weight-environmental", List.of(
+                "Spawn weight for environmental attacks."));
+        defaults.set("scheduler.type-weight-model-engine", 0.0);
+        defaults.setComments("scheduler.type-weight-model-engine", List.of(
+                "Spawn weight for ModelEngine VFX attacks.",
+                "Defaults to 0.0 — no ME attacks are registered for FreezingIce yet."));
+
+        // Mob spawning section
+        MobSpawnConfig.writeDefaults(defaults, buildDefaultMobSpawnEntries());
+
+        // Ambient sounds
+        defaults.set("ambient-sounds.enabled", true);
+        defaults.set("ambient-sounds.min-interval-ticks", 80);
+        defaults.set("ambient-sounds.max-interval-ticks", 200);
+        defaults.set("ambient-sounds.volume", 0.4);
+        defaults.set("ambient-sounds.sounds", buildDefaultAmbientSounds());
+        defaults.setComments("ambient-sounds.enabled", List.of(
+                "",
+                "=== AMBIENT SOUNDS ===",
+                "Random cold-themed sounds played at a random player at a random interval.",
+                "Sounds are Bukkit Sound enum names (e.g. BLOCK_POWDER_SNOW_BREAK)."));
+
+        // Music
+        defaults.set("music.track", "freezingice_main");
+        defaults.set("music.volume", 0.6);
+        defaults.setComments("music.track", List.of(
+                "Music track id (registered via the resource pack / MusicManager).",
+                "Default 'freezingice_main' is a placeholder — provide a real track id later.",
+                "volume is a multiplier applied at playback (0.0–1.0)."));
+
+        // Rewards
+        defaults.set("rewards.survival-commands", new ArrayList<>());
+        defaults.setComments("rewards.survival-commands", List.of(
+                "Console commands run for each player who survives the mode.",
+                "Use %player% for the player's name."));
 
         try {
             defaults.save(configFile);

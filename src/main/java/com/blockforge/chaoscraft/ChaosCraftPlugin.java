@@ -579,7 +579,7 @@ public class ChaosCraftPlugin extends JavaPlugin {
         }
         getLogger().info("[Reload] BlueMoon in " + (System.currentTimeMillis() - t) + "ms");
 
-        // Reload Freezing Ice
+        // Reload FreezingIce
         t = System.currentTimeMillis();
         var fi = modeManager.getMode("freezingice");
         if (fi instanceof com.blockforge.chaoscraft.modes.freezingice.FreezingIceMode fiMode) {

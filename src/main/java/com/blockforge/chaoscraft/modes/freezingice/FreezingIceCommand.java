@@ -12,12 +12,24 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * Freezing Ice mode admin commands.
- * Mirrors chain/corruption/DD/bluemoon command structure.
+ * FreezingIce mode admin commands. Dispatched via {@code /cc modes freezingice <sub>}.
+ *
+ * Subcommands:
+ *  - status                  — runtime info
+ *  - debug                   — toggle plugin-wide debug
+ *  - test [id]               — list attack ids OR force-spawn one on yourself
+ *  - list                    — list every attack with damage/radius/duration
+ *  - clearattacks            — remove all currently active attacks
+ *  - spawninterval <ticks>   — change attack spawn interval at runtime
+ *  - toggleexempt [player]   — toggle attack exemption for a player
+ *  - reload                  — reload freezingice config + attack configs
  */
 public class FreezingIceCommand implements CommandExecutor, TabCompleter {
 
@@ -44,10 +56,10 @@ public class FreezingIceCommand implements CommandExecutor, TabCompleter {
             case "status" -> handleStatus(sender);
             case "debug" -> handleDebug(sender);
             case "test" -> handleTest(sender, args);
+            case "list" -> handleList(sender);
             case "clearattacks" -> handleClearAttacks(sender);
             case "spawninterval" -> handleSpawnInterval(sender, args);
             case "toggleexempt" -> handleToggleExempt(sender, args);
-            case "list" -> handleList(sender);
             case "reload" -> handleReload(sender);
             default -> { sendHelp(sender); yield true; }
         };
@@ -56,35 +68,39 @@ public class FreezingIceCommand implements CommandExecutor, TabCompleter {
     private boolean handleStatus(CommandSender sender) {
         FreezingIceMode mode = getMode();
         if (mode == null) {
-            sender.sendMessage(Component.text("Freezing Ice mode not registered.", NamedTextColor.RED));
+            sender.sendMessage(Component.text("FreezingIce mode not registered.", NamedTextColor.RED));
             return true;
         }
-
         var modeManager = plugin.getModeManager();
-        boolean active = modeManager.isAnyModeActive()
-                && modeManager.getActiveMode() instanceof FreezingIceMode;
+        boolean active = modeManager.isAnyModeActive() && modeManager.getActiveMode() instanceof FreezingIceMode;
 
-        sender.sendMessage(Component.text("=== Freezing Ice Status ===", NamedTextColor.AQUA));
-        sender.sendMessage(Component.text("Active: " + (active ? "YES" : "NO"), active ? NamedTextColor.GREEN : NamedTextColor.GRAY));
-        sender.sendMessage(Component.text("Registered attacks: " + mode.getAttackRegistry().size(), NamedTextColor.WHITE));
+        sender.sendMessage(Component.text("=== FreezingIce Status ===", NamedTextColor.AQUA));
+        sender.sendMessage(Component.text("Active: " + (active ? "YES" : "NO"),
+                active ? NamedTextColor.GREEN : NamedTextColor.GRAY));
+        sender.sendMessage(Component.text("Registered attacks: " + mode.getAttackRegistry().size(),
+                NamedTextColor.AQUA));
 
         if (active) {
             var scheduler = mode.getAttackScheduler();
-            sender.sendMessage(Component.text("Active attacks: " + scheduler.getActiveAttackCount(), NamedTextColor.YELLOW));
+            sender.sendMessage(Component.text("Active attacks: " + scheduler.getActiveAttackCount(),
+                    NamedTextColor.YELLOW));
             sender.sendMessage(Component.text("Tick counter: " + mode.getTickCounter(), NamedTextColor.GRAY));
-
             var world = mode.getIceWorld();
             if (world != null) {
                 sender.sendMessage(Component.text("World: " + world.getName()
-                        + " (" + world.getPlayers().size() + " players)", NamedTextColor.WHITE));
+                        + " (" + world.getPlayers().size() + " players)", NamedTextColor.AQUA));
             }
         }
 
         int bdCount = mode.getAttackRegistry().getByPhaseAndType(1, AttackType.BLOCK_DISPLAY).size();
         int envCount = mode.getAttackRegistry().getByPhaseAndType(1, AttackType.ENVIRONMENTAL).size();
         int meCount = mode.getAttackRegistry().getByPhaseAndType(1, AttackType.MODEL_ENGINE).size();
-        sender.sendMessage(Component.text("Block Display: " + bdCount + " | Environmental: " + envCount + " | Model Engine: " + meCount, NamedTextColor.WHITE));
+        sender.sendMessage(Component.text("Block Display: " + bdCount + " | Environmental: " + envCount
+                + " | ModelEngine: " + meCount, NamedTextColor.AQUA));
 
+        FreezingIceConfig cfg = mode.getIceConfig();
+        sender.sendMessage(Component.text("Duration: " + cfg.getDurationSeconds() + "s | Spawn interval: "
+                + cfg.getBaseSpawnInterval() + " ticks", NamedTextColor.GRAY));
         return true;
     }
 
@@ -102,10 +118,9 @@ public class FreezingIceCommand implements CommandExecutor, TabCompleter {
             sender.sendMessage(Component.text("Must be a player.", NamedTextColor.RED));
             return true;
         }
-
         FreezingIceMode mode = getMode();
         if (mode == null) {
-            sender.sendMessage(Component.text("Freezing Ice mode not registered.", NamedTextColor.RED));
+            sender.sendMessage(Component.text("FreezingIce mode not registered.", NamedTextColor.RED));
             return true;
         }
 
@@ -113,7 +128,8 @@ public class FreezingIceCommand implements CommandExecutor, TabCompleter {
             for (AttackType type : List.of(AttackType.BLOCK_DISPLAY, AttackType.ENVIRONMENTAL, AttackType.MODEL_ENGINE)) {
                 List<String> ids = mode.getAttackRegistry().getIds(1, type);
                 if (!ids.isEmpty()) {
-                    sender.sendMessage(Component.text(type.name() + " (" + ids.size() + "):", NamedTextColor.AQUA));
+                    sender.sendMessage(Component.text(type.name() + " (" + ids.size() + "):",
+                            NamedTextColor.AQUA));
                     sendIdList(sender, ids);
                 }
             }
@@ -126,23 +142,24 @@ public class FreezingIceCommand implements CommandExecutor, TabCompleter {
             attack = mode.getAttackRegistry().get(1, type, id);
             if (attack != null) break;
         }
-
         if (attack == null) {
             sender.sendMessage(Component.text("Unknown attack: " + id, NamedTextColor.RED));
             return true;
         }
-
         mode.getAttackScheduler().forceSpawn(attack, player);
         sender.sendMessage(Component.text("Spawned: " + id, NamedTextColor.GREEN));
         sender.sendMessage(Component.text("  Damage: " + attack.getConfig().getDamage()
-                + " HP, Radius: " + attack.getConfig().getDamageRadius()
-                + ", Duration: " + attack.getConfig().getDurationTicks() + " ticks", NamedTextColor.GRAY));
+                + " | Radius: " + attack.getConfig().getDamageRadius()
+                + " | Duration: " + attack.getConfig().getDurationTicks() + "t", NamedTextColor.GRAY));
         return true;
     }
 
     private boolean handleClearAttacks(CommandSender sender) {
         FreezingIceMode mode = getMode();
-        if (mode == null) { sender.sendMessage(Component.text("Not registered.", NamedTextColor.RED)); return true; }
+        if (mode == null) {
+            sender.sendMessage(Component.text("Not registered.", NamedTextColor.RED));
+            return true;
+        }
         int count = mode.getAttackScheduler().getActiveAttackCount();
         mode.getAttackScheduler().clearActiveAttacks();
         sender.sendMessage(Component.text("Cleared " + count + " active attacks.", NamedTextColor.GREEN));
@@ -151,12 +168,18 @@ public class FreezingIceCommand implements CommandExecutor, TabCompleter {
 
     private boolean handleSpawnInterval(CommandSender sender, String[] args) {
         FreezingIceMode mode = getMode();
-        if (mode == null) { sender.sendMessage(Component.text("Not registered.", NamedTextColor.RED)); return true; }
-        if (args.length < 2) { sender.sendMessage(Component.text("Usage: spawninterval <ticks>", NamedTextColor.YELLOW)); return true; }
+        if (mode == null) {
+            sender.sendMessage(Component.text("Not registered.", NamedTextColor.RED));
+            return true;
+        }
+        if (args.length < 2) {
+            sender.sendMessage(Component.text("Usage: spawninterval <ticks>", NamedTextColor.YELLOW));
+            return true;
+        }
         try {
             int ticks = Math.max(1, Integer.parseInt(args[1]));
             mode.getAttackScheduler().setBaseSpawnInterval(ticks);
-            sender.sendMessage(Component.text("Spawn interval set to " + ticks + " ticks.", NamedTextColor.GREEN));
+            sender.sendMessage(Component.text("Spawn interval: " + ticks + " ticks.", NamedTextColor.GREEN));
         } catch (NumberFormatException e) {
             sender.sendMessage(Component.text("Invalid number: " + args[1], NamedTextColor.RED));
         }
@@ -165,11 +188,17 @@ public class FreezingIceCommand implements CommandExecutor, TabCompleter {
 
     private boolean handleToggleExempt(CommandSender sender, String[] args) {
         FreezingIceMode mode = getMode();
-        if (mode == null) { sender.sendMessage(Component.text("Not registered.", NamedTextColor.RED)); return true; }
+        if (mode == null) {
+            sender.sendMessage(Component.text("Not registered.", NamedTextColor.RED));
+            return true;
+        }
         Player target;
         if (args.length >= 2) {
             target = Bukkit.getPlayerExact(args[1]);
-            if (target == null) { sender.sendMessage(Component.text("Player not found.", NamedTextColor.RED)); return true; }
+            if (target == null) {
+                sender.sendMessage(Component.text("Player not found.", NamedTextColor.RED));
+                return true;
+            }
         } else if (sender instanceof Player p) {
             target = p;
         } else {
@@ -188,13 +217,16 @@ public class FreezingIceCommand implements CommandExecutor, TabCompleter {
 
     private boolean handleList(CommandSender sender) {
         FreezingIceMode mode = getMode();
-        if (mode == null) { sender.sendMessage(Component.text("Not registered.", NamedTextColor.RED)); return true; }
-
-        sender.sendMessage(Component.text("=== Freezing Ice Attacks ===", NamedTextColor.AQUA));
+        if (mode == null) {
+            sender.sendMessage(Component.text("Not registered.", NamedTextColor.RED));
+            return true;
+        }
+        sender.sendMessage(Component.text("=== FreezingIce Attacks ===", NamedTextColor.AQUA));
         for (AttackType type : List.of(AttackType.BLOCK_DISPLAY, AttackType.ENVIRONMENTAL, AttackType.MODEL_ENGINE)) {
             List<String> ids = mode.getAttackRegistry().getIds(1, type);
             if (ids.isEmpty()) continue;
-            sender.sendMessage(Component.text("--- " + type.name() + " (" + ids.size() + ") ---", NamedTextColor.WHITE));
+            sender.sendMessage(Component.text("--- " + type.name() + " (" + ids.size() + ") ---",
+                    NamedTextColor.AQUA));
             for (int i = 0; i < ids.size(); i++) {
                 String id = ids.get(i);
                 AbstractAttack atk = mode.getAttackRegistry().get(1, type, id);
@@ -211,10 +243,13 @@ public class FreezingIceCommand implements CommandExecutor, TabCompleter {
 
     private boolean handleReload(CommandSender sender) {
         FreezingIceMode mode = getMode();
-        if (mode == null) { sender.sendMessage(Component.text("Not registered.", NamedTextColor.RED)); return true; }
+        if (mode == null) {
+            sender.sendMessage(Component.text("Not registered.", NamedTextColor.RED));
+            return true;
+        }
         mode.getIceConfig().load();
         mode.getAttackRegistry().reloadConfigs();
-        sender.sendMessage(Component.text("Freezing Ice configs reloaded.", NamedTextColor.GREEN));
+        sender.sendMessage(Component.text("FreezingIce configs reloaded.", NamedTextColor.GREEN));
         return true;
     }
 
@@ -227,16 +262,13 @@ public class FreezingIceCommand implements CommandExecutor, TabCompleter {
         if (!sender.hasPermission("chaoscraft.freezingice.admin") && !sender.hasPermission("chaoscraft.admin")) {
             return Collections.emptyList();
         }
-
         if (args.length == 1) {
-            return filterStartsWith(args[0], "status", "debug", "test", "clearattacks",
-                    "spawninterval", "toggleexempt", "list", "reload");
+            return filterStartsWith(args[0], "status", "debug", "test", "list", "clearattacks",
+                    "spawninterval", "toggleexempt", "reload");
         }
-
         if (args.length == 2) {
             String sub = args[0].toLowerCase();
             FreezingIceMode mode = getMode();
-
             if ("test".equals(sub) && mode != null) {
                 List<String> ids = new ArrayList<>();
                 ids.addAll(mode.getAttackRegistry().getIds(1, AttackType.BLOCK_DISPLAY));
@@ -247,26 +279,30 @@ public class FreezingIceCommand implements CommandExecutor, TabCompleter {
             if ("toggleexempt".equals(sub)) return null;
             if ("spawninterval".equals(sub)) return List.of("20", "40", "60", "100");
         }
-
         return Collections.emptyList();
     }
 
+    // ========================
     // Helpers
+    // ========================
+
     private FreezingIceMode getMode() {
         var mode = plugin.getModeManager().getMode("freezingice");
-        return mode instanceof FreezingIceMode fi ? fi : null;
+        return mode instanceof FreezingIceMode fm ? fm : null;
     }
 
     private void sendHelp(CommandSender sender) {
-        sender.sendMessage(Component.text("=== Freezing Ice Commands ===", NamedTextColor.AQUA));
-        sender.sendMessage(Component.text("status — Mode status", NamedTextColor.WHITE));
-        sender.sendMessage(Component.text("debug — Toggle debug mode", NamedTextColor.WHITE));
-        sender.sendMessage(Component.text("test <id> — Spawn attack on yourself", NamedTextColor.WHITE));
-        sender.sendMessage(Component.text("list — List all attack IDs", NamedTextColor.WHITE));
-        sender.sendMessage(Component.text("clearattacks — Clear active attacks", NamedTextColor.WHITE));
-        sender.sendMessage(Component.text("spawninterval <ticks> — Set spawn interval", NamedTextColor.WHITE));
-        sender.sendMessage(Component.text("toggleexempt [player] — Toggle exempt", NamedTextColor.WHITE));
-        sender.sendMessage(Component.text("reload — Reload configs", NamedTextColor.WHITE));
+        sender.sendMessage(Component.text("=== FreezingIce Commands ===", NamedTextColor.AQUA));
+        sender.sendMessage(Component.text("status — Mode status", NamedTextColor.AQUA));
+        sender.sendMessage(Component.text("debug — Toggle debug mode", NamedTextColor.AQUA));
+        sender.sendMessage(Component.text("test [id] — List attacks or spawn one on yourself",
+                NamedTextColor.AQUA));
+        sender.sendMessage(Component.text("list — List all attack IDs with stats", NamedTextColor.AQUA));
+        sender.sendMessage(Component.text("clearattacks — Clear active attacks", NamedTextColor.AQUA));
+        sender.sendMessage(Component.text("spawninterval <ticks> — Set spawn interval",
+                NamedTextColor.AQUA));
+        sender.sendMessage(Component.text("toggleexempt [player] — Toggle exempt", NamedTextColor.AQUA));
+        sender.sendMessage(Component.text("reload — Reload configs", NamedTextColor.AQUA));
     }
 
     private void sendIdList(CommandSender sender, List<String> ids) {

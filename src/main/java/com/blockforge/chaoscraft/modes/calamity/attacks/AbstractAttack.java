@@ -370,4 +370,69 @@ public abstract class AbstractAttack {
     protected void setCenter(Location center) {
         this.center = center;
     }
+
+    // ========================
+    // Follow-AI helper (opt-in per attack via config)
+    // ========================
+
+    /**
+     * Drift the attack center slowly toward the nearest non-exempt player.
+     * Opt-in per attack via {@code config.followAiEnabled}. Distinct from
+     * {@code tracksPlayer} which snap-teleports the center to the target
+     * each tick — this one nudges at a sub-walk pace so the attack feels
+     * scary but stays dodgeable.
+     *
+     * Subclasses must call this explicitly from their {@code onTick(int)}
+     * method to opt in (typically every tick or every few ticks).
+     *
+     * Also teleports any spawned Display entities by the same delta so
+     * the visuals follow the moving center.
+     */
+    protected void tickFollowAI() {
+        if (!config.isFollowAiEnabled()) return;
+        if (center == null || center.getWorld() == null) return;
+
+        // Find nearest non-exempt player within 60 blocks (horizontal+vertical).
+        Player nearest = null;
+        double bestDistSq = 60.0 * 60.0;
+        for (Player p : center.getWorld().getPlayers()) {
+            if (isExempt(p)) continue;
+            double dx = p.getLocation().getX() - center.getX();
+            double dy = p.getLocation().getY() - center.getY();
+            double dz = p.getLocation().getZ() - center.getZ();
+            double dsq = dx * dx + dy * dy + dz * dz;
+            if (dsq < bestDistSq) {
+                bestDistSq = dsq;
+                nearest = p;
+            }
+        }
+        if (nearest == null) return;
+
+        // Direction vector (XZ only, ignore Y so attack doesn't fly up/down).
+        Location target = nearest.getLocation();
+        double dx = target.getX() - center.getX();
+        double dz = target.getZ() - center.getZ();
+        double distSq = dx * dx + dz * dz;
+
+        // Already close enough — don't jitter.
+        if (distSq < 1.0) return;
+
+        double dist = Math.sqrt(distSq);
+        double speed = config.getFollowAiWalkSpeed();
+        double moveX = (dx / dist) * speed;
+        double moveZ = (dz / dist) * speed;
+
+        // Update center.
+        Location newCenter = center.clone().add(moveX, 0, moveZ);
+        setCenter(newCenter);
+
+        // Teleport every spawned Display by the same delta so visuals follow.
+        for (Entity e : spawnedEntities) {
+            if (!(e instanceof Display)) continue;
+            if (e == null || !e.isValid()) continue;
+            try {
+                e.teleport(e.getLocation().add(moveX, 0, moveZ));
+            } catch (Throwable ignored) {}
+        }
+    }
 }

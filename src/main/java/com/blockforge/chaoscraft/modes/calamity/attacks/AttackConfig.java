@@ -25,7 +25,7 @@ public class AttackConfig {
      * On load, if the file version is lower, the file is re-saved with new keys
      * while preserving user-edited values.
      */
-    public static final int CURRENT_CONFIG_VERSION = 3;
+    public static final int CURRENT_CONFIG_VERSION = 4;
 
     private final String attackId;
     private final AttackType type;
@@ -52,6 +52,11 @@ public class AttackConfig {
 
     // ModelEngine scale: "auto" = scale proportional to damage radius, or a fixed number
     private String modelengineScale = "auto";
+
+    // Follow-AI: drift the attack center slowly toward the nearest player.
+    // Distinct from tracksPlayer (which snap-teleports). Opt-in per attack.
+    private boolean followAiEnabled = false;
+    private double followAiWalkSpeed = 0.06;
 
     public AttackConfig(String attackId, AttackType type, int phase) {
         this(attackId, type, phase, "modes/calamity/attacks");
@@ -82,6 +87,8 @@ public class AttackConfig {
         impactDamage = section.getDouble("impact-damage", impactDamage);
         impactRadius = section.getDouble("impact-radius", impactRadius);
         modelengineScale = section.getString("modelengine-scale", modelengineScale);
+        followAiEnabled = section.getBoolean("follow-ai-enabled", followAiEnabled);
+        followAiWalkSpeed = section.getDouble("follow-ai-walk-speed", followAiWalkSpeed);
     }
 
     /**
@@ -101,6 +108,8 @@ public class AttackConfig {
         section.set("impact-damage", impactDamage);
         section.set("impact-radius", impactRadius);
         section.set("modelengine-scale", modelengineScale);
+        section.set("follow-ai-enabled", followAiEnabled);
+        section.set("follow-ai-walk-speed", followAiWalkSpeed);
     }
 
     /**
@@ -248,6 +257,13 @@ public class AttackConfig {
                 "Scale of the ModelEngine model for this attack. Only applies to MODEL_ENGINE type attacks.",
                 "Set to a number (e.g. 1.5) for a fixed scale, or \"auto\" to scale proportionally",
                 "to the damage-radius (radius / 5.0, minimum 0.5). Default: 1.0"));
+        config.setComments(p + "follow-ai-enabled", List.of(
+                "If true, this attack drifts slowly toward the nearest player at follow-ai-walk-speed.",
+                "NOT the same as tracks-player (which snap-teleports). Use for chase mechanics that",
+                "should feel scary but dodgeable."));
+        config.setComments(p + "follow-ai-walk-speed", List.of(
+                "Blocks per tick the attack drifts toward the nearest player when follow-ai-enabled.",
+                "Player walk speed is ~0.21, so values 0.05-0.15 are typical sub-walk speeds."));
     }
 
     private String getTypePath() {
@@ -278,6 +294,8 @@ public class AttackConfig {
         this.impactDamage = other.impactDamage;
         this.impactRadius = other.impactRadius;
         this.modelengineScale = other.modelengineScale;
+        this.followAiEnabled = other.followAiEnabled;
+        this.followAiWalkSpeed = other.followAiWalkSpeed;
     }
 
     // ---- Getters/Setters ----
@@ -335,4 +353,9 @@ public class AttackConfig {
     public String getModelengineScale() { return modelengineScale; }
     public void setModelengineScale(String s) { this.modelengineScale = s; }
     public void setImpactRadius(double radius) { this.impactRadius = radius; }
+
+    public boolean isFollowAiEnabled() { return followAiEnabled; }
+    public void setFollowAiEnabled(boolean v) { followAiEnabled = v; }
+    public double getFollowAiWalkSpeed() { return followAiWalkSpeed; }
+    public void setFollowAiWalkSpeed(double v) { followAiWalkSpeed = v; }
 }

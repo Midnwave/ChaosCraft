@@ -1,17 +1,27 @@
 package com.blockforge.chaoscraft.modes.freezingice;
 
 import com.blockforge.chaoscraft.ChaosCraftPlugin;
-import com.blockforge.chaoscraft.modes.calamity.attacks.*;
+import com.blockforge.chaoscraft.modes.calamity.attacks.AbstractAttack;
+import com.blockforge.chaoscraft.modes.calamity.attacks.AttackRegistry;
+import com.blockforge.chaoscraft.modes.calamity.attacks.AttackType;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
+import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * Attack scheduler for Freezing Ice Mode.
- * Handles automatic attack spawning and lifecycle for all ice attacks.
+ * Attack scheduler for FreezingIce Mode.
+ * Mirrors FluffyScheduler — weighted random selection across BD / ENV / ME
+ * attack types — no phase / escalation logic (FreezingIce is flat-difficulty).
  */
 public class FreezingIceScheduler {
 
@@ -101,7 +111,18 @@ public class FreezingIceScheduler {
 
         if (isExempt(target)) return;
 
-        AbstractAttack attack = registry.selectRandom(1, AttackType.BLOCK_DISPLAY);
+        // Weighted random attack type selection
+        AttackType selectedType = selectWeightedType();
+        AbstractAttack attack = registry.selectRandom(1, selectedType);
+
+        // Fallback: if selected type has no attacks, try the others
+        if (attack == null) {
+            for (AttackType fallback : AttackType.values()) {
+                if (fallback == AttackType.BOSS) continue;
+                attack = registry.selectRandom(1, fallback);
+                if (attack != null) break;
+            }
+        }
         if (attack == null) return;
         if (attackCooldowns.containsKey(attack.getId())) return;
 
@@ -122,8 +143,22 @@ public class FreezingIceScheduler {
 
         attackCooldowns.put(attack.getId(), attack.getConfig().getCooldownTicks());
 
-        plugin.debug("[FreezingIceScheduler] Spawned " + attack.getId() + " near " + target.getName()
-                + " (active: " + activeAttacks.size() + ")");
+        plugin.debug("[FreezingIceScheduler] Spawned " + attack.getId() + " (" + attack.getType()
+                + ") near " + target.getName() + " (active: " + activeAttacks.size() + ")");
+    }
+
+    private AttackType selectWeightedType() {
+        double bdWeight = config.getTypeWeightBlockDisplay();
+        double envWeight = config.getTypeWeightEnvironmental();
+        double meWeight = config.getTypeWeightModelEngine();
+        double total = bdWeight + envWeight + meWeight;
+
+        if (total <= 0) return AttackType.BLOCK_DISPLAY;
+
+        double roll = Math.random() * total;
+        if (roll < bdWeight) return AttackType.BLOCK_DISPLAY;
+        if (roll < bdWeight + envWeight) return AttackType.ENVIRONMENTAL;
+        return AttackType.MODEL_ENGINE;
     }
 
     // ========================
@@ -178,10 +213,6 @@ public class FreezingIceScheduler {
         playerEventCounts.clear();
     }
 
-    // ========================
-    // Player tracking
-    // ========================
-
     private void incrementPlayerCount(Player player) {
         playerEventCounts.merge(player.getUniqueId(), 1, Integer::sum);
     }
@@ -190,14 +221,6 @@ public class FreezingIceScheduler {
         if (player == null) return;
         playerEventCounts.computeIfPresent(player.getUniqueId(), (k, v) -> v > 1 ? v - 1 : null);
     }
-
-    public int getPlayerEventCount(Player player) {
-        return playerEventCounts.getOrDefault(player.getUniqueId(), 0);
-    }
-
-    // ========================
-    // Helpers
-    // ========================
 
     private boolean isExempt(Player player) {
         var modeManager = plugin.getModeManager();

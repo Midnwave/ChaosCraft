@@ -5,68 +5,67 @@ import com.blockforge.chaoscraft.api.mode.AbstractMode;
 import com.blockforge.chaoscraft.modes.calamity.attacks.AttackRegistry;
 import com.blockforge.chaoscraft.modes.calamity.attacks.AttackType;
 import com.blockforge.chaoscraft.modes.freezingice.attacks.*;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.Sound;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 
+import java.util.List;
+import java.util.Random;
+
 /**
- * Freezing Ice Mode — An ancient frozen entity beneath the world is waking up.
- * The cold is ALIVE, aggressive, and predatory.
+ * FreezingIce Mode — Cold horror survival mode.
  *
- * Features:
- * - 208 unique ice-themed attacks (104 block display + 104 environmental)
- * - Temperature tracker (players get colder over time, affecting speed/damage)
- * - Powder snow freeze mechanic (setFreezeTicks for visual frost overlay)
- * - Heat source interaction (torches, campfires restore warmth)
- * - Living ice creatures, glacial structures, frost weapons, avalanches
+ * No boss, no escalation — pure random weighted attack survival.
+ * Currently a fresh-foundation Phase 1 build. Phase 2 will populate the
+ * eight BlockDisplay attack files (75 attacks total) and the five
+ * Environmental files (50 attacks total). ModelEngine attacks pending.
+ *
+ * Mirrors FluffyMode structurally but strips out the fluffy-specific
+ * subsystems (world effects, rain-from-sky, custom mob AI) — those are
+ * not part of the FreezingIce vision yet.
  */
 public class FreezingIceMode extends AbstractMode {
 
     private final FreezingIceConfig iceConfig;
     private final AttackRegistry attackRegistry;
     private final FreezingIceScheduler attackScheduler;
-    private final TemperatureTracker temperatureTracker;
-    private long tickCounter = 0;
+
+    private int tickCounter = 0;
+    private int ambientSoundNextTick = 0;
+    private final Random random = new Random();
+
+    private int endTaskId = -1;
+    private Location arenaCenter;
 
     public FreezingIceMode(ChaosCraftPlugin plugin) {
         super(plugin, "freezingice");
         this.iceConfig = new FreezingIceConfig(plugin);
         this.attackRegistry = new AttackRegistry(plugin);
         this.attackScheduler = new FreezingIceScheduler(plugin, attackRegistry, iceConfig);
-        this.temperatureTracker = new TemperatureTracker(plugin, iceConfig);
+
         registerAllAttacks();
     }
 
-    // ========================
-    // Attack Registration
-    // ========================
-
     private void registerAllAttacks() {
-        // Block Display attacks (104)
-        LivingIce.registerAll(plugin, attackRegistry);
-        GlacialStructures.registerAll(plugin, attackRegistry);
-        FrostWeaponry.registerAll(plugin, attackRegistry);
-        AvalancheSlides.registerAll(plugin, attackRegistry);
-        CrystallineTraps.registerAll(plugin, attackRegistry);
-        BlizzardProjectiles.registerAll(plugin, attackRegistry);
-        PermafrostEruptions.registerAll(plugin, attackRegistry);
-        FrozenArchitecture.registerAll(plugin, attackRegistry);
-
-        // Environmental attacks (104)
-        TemperatureDrop.registerAll(plugin, attackRegistry);
-        BlizzardWeather.registerAll(plugin, attackRegistry);
-        FrostCreepEffects.registerAll(plugin, attackRegistry);
-        IceQuakes.registerAll(plugin, attackRegistry);
-        FrozenMobEffects.registerAll(plugin, attackRegistry);
-        WhiteoutEvents.registerAll(plugin, attackRegistry);
-        HypothermiaPulse.registerAll(plugin, attackRegistry);
-        ThawAndRefreeze.registerAll(plugin, attackRegistry);
-
-        // ModelEngine VFX attacks (25)
-        IceModelEngine.registerAll(plugin, attackRegistry);
-
-        // Generate/load per-attack YAML config files
+        FreezingIceBlockDisplay.registerAll(plugin, attackRegistry);
+        FreezingIceBlockDisplay2.registerAll(plugin, attackRegistry);
+        FreezingIceBlockDisplay3.registerAll(plugin, attackRegistry);
+        FreezingIceBlockDisplay4.registerAll(plugin, attackRegistry);
+        FreezingIceBlockDisplay5.registerAll(plugin, attackRegistry);
+        FreezingIceBlockDisplay6.registerAll(plugin, attackRegistry);
+        FreezingIceBlockDisplay7.registerAll(plugin, attackRegistry);
+        FreezingIceBlockDisplay8.registerAll(plugin, attackRegistry);
+        FreezingIceEnvironmental.registerAll(plugin, attackRegistry);
+        FreezingIceEnvironmental2.registerAll(plugin, attackRegistry);
+        FreezingIceEnvironmental3.registerAll(plugin, attackRegistry);
+        FreezingIceEnvironmental4.registerAll(plugin, attackRegistry);
+        FreezingIceEnvironmental5.registerAll(plugin, attackRegistry);
+        FreezingIceModelEngine.registerAll(plugin, attackRegistry);
         attackRegistry.reloadConfigs();
-        plugin.getLogger().info("[FreezingIce] Registered " + attackRegistry.size() + " attacks, configs loaded.");
+        plugin.getLogger().info("[FreezingIce] Registered " + attackRegistry.size()
+                + " attacks, configs loaded.");
     }
 
     // ========================
@@ -80,29 +79,41 @@ public class FreezingIceMode extends AbstractMode {
 
         World world = getIceWorld();
         if (world == null) {
-            plugin.getLogger().severe("[FreezingIce] Cannot start — configured world not found!");
+            plugin.getLogger().severe("[FreezingIce] Cannot start — no world found!");
             return;
         }
-
-        int playerCount = world.getPlayers().size();
         plugin.getLogger().info("[FreezingIce] Running in world: " + world.getName()
-                + " (" + playerCount + " players)");
+                + " (" + world.getPlayers().size() + " players)");
 
         for (Player player : world.getPlayers()) {
             trackPlayer(player);
         }
-
         loadExemptPlayers();
 
-        // Reload configs
+        // Determine arena center — first online player, or world spawn
+        if (!world.getPlayers().isEmpty()) {
+            arenaCenter = world.getPlayers().get(0).getLocation().clone();
+        } else {
+            arenaCenter = world.getSpawnLocation().clone();
+        }
+
+        // Reload attack configs
         attackRegistry.reloadConfigs();
 
         int attackCount = attackRegistry.size();
         int bd = attackRegistry.getByPhaseAndType(1, AttackType.BLOCK_DISPLAY).size();
-        plugin.getLogger().info("[FreezingIce] " + bd + " BLOCK_DISPLAY attacks registered. " + attackCount + " total.");
+        int env = attackRegistry.getByPhaseAndType(1, AttackType.ENVIRONMENTAL).size();
+        int me = attackRegistry.getByPhaseAndType(1, AttackType.MODEL_ENGINE).size();
+        plugin.getLogger().info("[FreezingIce] " + bd + " BLOCK_DISPLAY, " + env + " ENVIRONMENTAL, "
+                + me + " MODEL_ENGINE attacks registered (" + attackCount + " total).");
 
-        // Start schedulers
+        // Start subsystems
         attackScheduler.start();
+
+        // On-start commands
+        for (String cmd : iceConfig.getOnStartCommands()) {
+            plugin.getServer().dispatchCommand(plugin.getServer().getConsoleSender(), cmd);
+        }
 
         // Universal mob spawning
         if (plugin.getMobSpawnService() != null) {
@@ -110,8 +121,17 @@ public class FreezingIceMode extends AbstractMode {
                     iceConfig.getMobSpawnConfig(), world);
         }
 
-        plugin.getLogger().info("[FreezingIce] Mode fully started. "
-                + "(" + attackCount + " attacks)");
+        // Schedule mode-end after duration
+        long duration = (long) iceConfig.getDurationSeconds() * 20L;
+        endTaskId = Bukkit.getScheduler().runTaskLater(plugin, () -> {
+            plugin.getModeManager().endActiveMode();
+        }, duration).getTaskId();
+
+        // Initialize ambient sound timer
+        ambientSoundNextTick = nextAmbientTick();
+
+        plugin.getLogger().info("[FreezingIce] Mode fully started. Duration: "
+                + iceConfig.getDurationSeconds() + "s, arena radius: " + iceConfig.getArenaRadius());
     }
 
     @Override
@@ -119,10 +139,10 @@ public class FreezingIceMode extends AbstractMode {
         tickCounter++;
         attackScheduler.tick();
 
-        // Temperature tracking for all players in the world
-        World world = getIceWorld();
-        if (world != null) {
-            temperatureTracker.tick(world.getPlayers());
+        // Ambient sounds
+        if (iceConfig.isAmbientSoundsEnabled() && tickCounter >= ambientSoundNextTick) {
+            playRandomAmbient();
+            ambientSoundNextTick = tickCounter + nextAmbientInterval();
         }
 
         // Universal mob spawning
@@ -138,10 +158,14 @@ public class FreezingIceMode extends AbstractMode {
         attackScheduler.stop();
         plugin.getMusicManager().stopAll();
 
-        // Reset temperature and freeze effects for all players
-        World world = getIceWorld();
-        if (world != null) {
-            temperatureTracker.resetAll(world.getPlayers());
+        if (endTaskId != -1) {
+            try { Bukkit.getScheduler().cancelTask(endTaskId); } catch (Throwable ignored) {}
+            endTaskId = -1;
+        }
+
+        // On-end commands
+        for (String cmd : iceConfig.getOnEndCommands()) {
+            plugin.getServer().dispatchCommand(plugin.getServer().getConsoleSender(), cmd);
         }
 
         // Universal mob spawning cleanup
@@ -162,31 +186,64 @@ public class FreezingIceMode extends AbstractMode {
     @Override
     public void onPlayerDeath(Player player) {
         markDeath(player);
-        temperatureTracker.resetPlayer(player.getUniqueId());
-        plugin.debug("[FreezingIce] " + player.getName() + " died.");
     }
 
     @Override
     public void onPlayerChangeDimension(Player player) {
-        // Music replayed via MusicManager listener
+        // No dimension-change handling for FreezingIce.
     }
 
     // ========================
-    // Freezing Ice API
+    // Helpers
+    // ========================
+
+    private int nextAmbientTick() {
+        return tickCounter + nextAmbientInterval();
+    }
+
+    private int nextAmbientInterval() {
+        int min = Math.max(1, iceConfig.getAmbientSoundMinInterval());
+        int max = Math.max(min + 1, iceConfig.getAmbientSoundMaxInterval());
+        return min + random.nextInt(max - min);
+    }
+
+    private void playRandomAmbient() {
+        World world = getIceWorld();
+        if (world == null) return;
+        List<Player> players = world.getPlayers();
+        if (players.isEmpty()) return;
+        List<String> sounds = iceConfig.getAmbientSounds();
+        if (sounds == null || sounds.isEmpty()) return;
+        Player p = players.get(random.nextInt(players.size()));
+        String pick = sounds.get(random.nextInt(sounds.size()));
+        try {
+            Sound sound = Sound.valueOf(pick);
+            p.playSound(p.getLocation(), sound, (float) iceConfig.getAmbientSoundVolume(),
+                    0.8f + random.nextFloat() * 0.6f);
+        } catch (IllegalArgumentException e) {
+            // Try as namespaced custom sound key
+            try {
+                p.playSound(p.getLocation(), pick.toLowerCase(),
+                        (float) iceConfig.getAmbientSoundVolume(), 1.0f);
+            } catch (Throwable ignored) {}
+        }
+    }
+
+    public World getIceWorld() {
+        String configWorld = iceConfig.getWorldName();
+        if (configWorld != null && !configWorld.isEmpty()) {
+            World w = Bukkit.getWorld(configWorld);
+            if (w != null) return w;
+        }
+        return Bukkit.getWorlds().isEmpty() ? null : Bukkit.getWorlds().get(0);
+    }
+
+    // ========================
+    // Accessors
     // ========================
 
     public FreezingIceConfig getIceConfig() { return iceConfig; }
     public AttackRegistry getAttackRegistry() { return attackRegistry; }
     public FreezingIceScheduler getAttackScheduler() { return attackScheduler; }
-    public TemperatureTracker getTemperatureTracker() { return temperatureTracker; }
-    public long getTickCounter() { return tickCounter; }
-
-    public World getIceWorld() {
-        String worldName = iceConfig.getWorldName();
-        if (worldName != null && !worldName.isEmpty()) {
-            return plugin.getServer().getWorld(worldName);
-        }
-        var worlds = plugin.getServer().getWorlds();
-        return worlds.isEmpty() ? null : worlds.get(0);
-    }
+    public int getTickCounter() { return tickCounter; }
 }
