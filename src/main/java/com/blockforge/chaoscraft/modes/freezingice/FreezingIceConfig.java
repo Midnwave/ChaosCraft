@@ -25,7 +25,7 @@ import java.util.List;
  */
 public class FreezingIceConfig {
 
-    private static final int CURRENT_CONFIG_VERSION = 1;
+    private static final int CURRENT_CONFIG_VERSION = 2;
 
     private final ChaosCraftPlugin plugin;
     private final File configFile;
@@ -78,6 +78,22 @@ public class FreezingIceConfig {
             config.set("ambient-sounds.sounds", buildDefaultAmbientSounds());
             needsSave = true;
         }
+
+        // ── Gimmick: Frostbite + Bonfire Network ────────────────────────
+        if (!config.contains("gimmick.enabled")) { config.set("gimmick.enabled", true); needsSave = true; }
+        if (!config.contains("gimmick.frostbite.cold-start-ticks-per-percent")) { config.set("gimmick.frostbite.cold-start-ticks-per-percent", 60); needsSave = true; }
+        if (!config.contains("gimmick.frostbite.cold-end-ticks-per-percent")) { config.set("gimmick.frostbite.cold-end-ticks-per-percent", 15); needsSave = true; }
+        if (!config.contains("gimmick.frostbite.warmth-recovery-ticks-per-percent")) { config.set("gimmick.frostbite.warmth-recovery-ticks-per-percent", 8); needsSave = true; }
+        if (!config.contains("gimmick.frostbite.damage-at-100")) { config.set("gimmick.frostbite.damage-at-100", 6.0); needsSave = true; }
+        if (!config.contains("gimmick.frostbite.damage-interval-ticks")) { config.set("gimmick.frostbite.damage-interval-ticks", 20); needsSave = true; }
+        if (!config.contains("gimmick.frostbite.damage-ignores-armor")) { config.set("gimmick.frostbite.damage-ignores-armor", true); needsSave = true; }
+        if (!config.contains("gimmick.bonfire.min-active")) { config.set("gimmick.bonfire.min-active", 3); needsSave = true; }
+        if (!config.contains("gimmick.bonfire.max-active")) { config.set("gimmick.bonfire.max-active", 5); needsSave = true; }
+        if (!config.contains("gimmick.bonfire.lifetime-ticks")) { config.set("gimmick.bonfire.lifetime-ticks", 600); needsSave = true; }
+        if (!config.contains("gimmick.bonfire.heat-radius")) { config.set("gimmick.bonfire.heat-radius", 5.0); needsSave = true; }
+        if (!config.contains("gimmick.bonfire.respawn-min-delay-ticks")) { config.set("gimmick.bonfire.respawn-min-delay-ticks", 80); needsSave = true; }
+        if (!config.contains("gimmick.bonfire.particle-density")) { config.set("gimmick.bonfire.particle-density", 1.0); needsSave = true; }
+        if (!config.contains("gimmick.bonfire.beam-height")) { config.set("gimmick.bonfire.beam-height", 30); needsSave = true; }
 
         // ── Music ───────────────────────────────────────────────────────
         if (!config.contains("music.track")) { config.set("music.track", "freezingice_main"); needsSave = true; }
@@ -155,6 +171,25 @@ public class FreezingIceConfig {
     public int getAmbientSoundMaxInterval() { return config.getInt("ambient-sounds.max-interval-ticks", 200); }
     public double getAmbientSoundVolume() { return config.getDouble("ambient-sounds.volume", 0.4); }
     public List<String> getAmbientSounds() { return config.getStringList("ambient-sounds.sounds"); }
+
+    // ========================
+    // Gimmick: Frostbite + Bonfire Network
+    // ========================
+
+    public boolean isGimmickEnabled() { return config.getBoolean("gimmick.enabled", true); }
+    public int getFrostbiteColdStartTicksPerPercent() { return config.getInt("gimmick.frostbite.cold-start-ticks-per-percent", 60); }
+    public int getFrostbiteColdEndTicksPerPercent() { return config.getInt("gimmick.frostbite.cold-end-ticks-per-percent", 15); }
+    public int getWarmthRecoveryTicksPerPercent() { return config.getInt("gimmick.frostbite.warmth-recovery-ticks-per-percent", 8); }
+    public double getFrostbiteDamageAt100() { return config.getDouble("gimmick.frostbite.damage-at-100", 6.0); }
+    public int getFrostbiteDamageIntervalTicks() { return config.getInt("gimmick.frostbite.damage-interval-ticks", 20); }
+    public boolean isFrostbiteDamageIgnoresArmor() { return config.getBoolean("gimmick.frostbite.damage-ignores-armor", true); }
+    public int getBonfireMinCount() { return config.getInt("gimmick.bonfire.min-active", 3); }
+    public int getBonfireMaxCount() { return config.getInt("gimmick.bonfire.max-active", 5); }
+    public int getBonfireLifetimeTicks() { return config.getInt("gimmick.bonfire.lifetime-ticks", 600); }
+    public double getBonfireHeatRadius() { return config.getDouble("gimmick.bonfire.heat-radius", 5.0); }
+    public int getBonfireRespawnMinDelayTicks() { return config.getInt("gimmick.bonfire.respawn-min-delay-ticks", 80); }
+    public double getBonfireParticleDensity() { return config.getDouble("gimmick.bonfire.particle-density", 1.0); }
+    public int getBonfireBeamHeight() { return config.getInt("gimmick.bonfire.beam-height", 30); }
 
     // ========================
     // Music
@@ -253,6 +288,79 @@ public class FreezingIceConfig {
                 "=== AMBIENT SOUNDS ===",
                 "Random cold-themed sounds played at a random player at a random interval.",
                 "Sounds are Bukkit Sound enum names (e.g. BLOCK_POWDER_SNOW_BREAK)."));
+
+        // Gimmick: Frostbite + Bonfire Network
+        defaults.set("gimmick.enabled", true);
+        defaults.setComments("gimmick.enabled", List.of(
+                "",
+                "=== FROSTBITE + BONFIRE NETWORK GIMMICK ===",
+                "Master toggle for the FreezingIce flagship mechanic. When true, every",
+                "player in the FreezingIce world has a 0-100% frostbite meter that climbs",
+                "while away from warmth and falls when near a bonfire OR on fire. At 100%,",
+                "freeze-typed damage starts ticking. Visual feedback is the vanilla",
+                "powder-snow freeze overlay — no titles or bossbars are shown.",
+                "Bonfires spawn around the arena and expire after a lifetime, so players",
+                "have to hunt them down. Attacks still spawn in bonfire areas — bonfires",
+                "only protect against frostbite, not against attacks."));
+
+        defaults.set("gimmick.frostbite.cold-start-ticks-per-percent", 60);
+        defaults.setComments("gimmick.frostbite.cold-start-ticks-per-percent", List.of(
+                "Ticks required to gain one frostbite % when the meter is near 0.",
+                "20 ticks = 1 second. 60 = a slow climb at the start (5 seconds per % at 0%)."));
+        defaults.set("gimmick.frostbite.cold-end-ticks-per-percent", 15);
+        defaults.setComments("gimmick.frostbite.cold-end-ticks-per-percent", List.of(
+                "Ticks required to gain one frostbite % when the meter is near 100.",
+                "The rate linearly accelerates from cold-start-ticks toward this value as",
+                "the meter climbs. 15 = a fast climb at the end (~0.75s per %)."));
+        defaults.set("gimmick.frostbite.warmth-recovery-ticks-per-percent", 8);
+        defaults.setComments("gimmick.frostbite.warmth-recovery-ticks-per-percent", List.of(
+                "Constant ticks per % decrease while warm (in bonfire heat radius or on fire).",
+                "8 = ~0.4s per % — gives players a clear incentive to seek warmth."));
+        defaults.set("gimmick.frostbite.damage-at-100", 6.0);
+        defaults.setComments("gimmick.frostbite.damage-at-100", List.of(
+                "Damage dealt each interval once frostbite reaches 100%.",
+                "Uses FREEZE damage type on Paper 1.20.5+ (correct sound + death message).",
+                "6.0 = 3 hearts per hit; tune relative to player gear."));
+        defaults.set("gimmick.frostbite.damage-interval-ticks", 20);
+        defaults.setComments("gimmick.frostbite.damage-interval-ticks", List.of(
+                "Ticks between freeze damage hits while the meter is at 100%.",
+                "20 = once per second."));
+        defaults.set("gimmick.frostbite.damage-ignores-armor", true);
+        defaults.setComments("gimmick.frostbite.damage-ignores-armor", List.of(
+                "If true, frostbite damage bypasses armor and enchantments by adjusting",
+                "health directly after firing a tiny damage event (for sound + tagging).",
+                "If false, damage is applied normally and may be reduced by armor."));
+
+        defaults.set("gimmick.bonfire.min-active", 3);
+        defaults.setComments("gimmick.bonfire.min-active", List.of(
+                "Minimum number of bonfires always active in the arena.",
+                "The system auto-spawns new ones as old ones expire."));
+        defaults.set("gimmick.bonfire.max-active", 5);
+        defaults.setComments("gimmick.bonfire.max-active", List.of(
+                "Hard cap on simultaneous bonfires (admin /spawnbonfire can hit this).",
+                "Auto-spawner never exceeds min-active on its own."));
+        defaults.set("gimmick.bonfire.lifetime-ticks", 600);
+        defaults.setComments("gimmick.bonfire.lifetime-ticks", List.of(
+                "How long each bonfire lives before despawning. 20 ticks = 1 second.",
+                "600 = 30 seconds. After this, the bonfire fades out and a new one",
+                "spawns elsewhere — preventing players from camping a single safe spot."));
+        defaults.set("gimmick.bonfire.heat-radius", 5.0);
+        defaults.setComments("gimmick.bonfire.heat-radius", List.of(
+                "Blocks. Players within this distance of a bonfire are 'warm'",
+                "and their frostbite drops. Visualized in-world by an orange dust ring."));
+        defaults.set("gimmick.bonfire.respawn-min-delay-ticks", 80);
+        defaults.setComments("gimmick.bonfire.respawn-min-delay-ticks", List.of(
+                "Minimum ticks between auto-spawn attempts after one succeeds.",
+                "Prevents the system from flooding new bonfires the moment one expires."));
+        defaults.set("gimmick.bonfire.particle-density", 1.0);
+        defaults.setComments("gimmick.bonfire.particle-density", List.of(
+                "Multiplier on per-bonfire particle counts (FLAME / SOUL_FIRE_FLAME / CRIT).",
+                "1.0 = default; 0.5 = lower-end-PC friendly; 2.0 = extra spectacle."));
+        defaults.set("gimmick.bonfire.beam-height", 30);
+        defaults.setComments("gimmick.bonfire.beam-height", List.of(
+                "Vertical height (blocks) of the END_ROD particle beam that marks each",
+                "bonfire's location from across the arena. 30 = visible from far away.",
+                "0 = no beam."));
 
         // Music
         defaults.set("music.track", "freezingice_main");

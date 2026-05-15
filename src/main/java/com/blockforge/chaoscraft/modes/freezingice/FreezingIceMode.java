@@ -39,6 +39,11 @@ public class FreezingIceMode extends AbstractMode {
     private int endTaskId = -1;
     private Location arenaCenter;
 
+    // Gimmick subsystems
+    private FrostbiteTracker frostbiteTracker;
+    private BonfireNetwork bonfireNetwork;
+    private FreezingIcePlaceholders placeholders;
+
     public FreezingIceMode(ChaosCraftPlugin plugin) {
         super(plugin, "freezingice");
         this.iceConfig = new FreezingIceConfig(plugin);
@@ -110,6 +115,26 @@ public class FreezingIceMode extends AbstractMode {
         // Start subsystems
         attackScheduler.start();
 
+        // ── Gimmick: Frostbite + Bonfire Network ───────────────────────
+        if (iceConfig.isGimmickEnabled()) {
+            bonfireNetwork = new BonfireNetwork(plugin, this, iceConfig);
+            bonfireNetwork.start();
+            frostbiteTracker = new FrostbiteTracker(plugin, iceConfig, bonfireNetwork);
+            frostbiteTracker.start();
+
+            if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
+                try {
+                    placeholders = new FreezingIcePlaceholders(plugin);
+                    placeholders.register();
+                    plugin.getLogger().info("[FreezingIce] Registered PlaceholderAPI expansion: chaoscraft_freezingice");
+                } catch (Throwable t) {
+                    plugin.getLogger().warning("[FreezingIce] Failed to register PAPI expansion: " + t.getMessage());
+                }
+            } else {
+                plugin.getLogger().info("[FreezingIce] PlaceholderAPI not installed — skipping expansion registration.");
+            }
+        }
+
         // On-start commands
         for (String cmd : iceConfig.getOnStartCommands()) {
             plugin.getServer().dispatchCommand(plugin.getServer().getConsoleSender(), cmd);
@@ -157,6 +182,20 @@ public class FreezingIceMode extends AbstractMode {
 
         attackScheduler.stop();
         plugin.getMusicManager().stopAll();
+
+        // Stop gimmick subsystems
+        if (frostbiteTracker != null) {
+            try { frostbiteTracker.stop(); } catch (Throwable ignored) {}
+            frostbiteTracker = null;
+        }
+        if (bonfireNetwork != null) {
+            try { bonfireNetwork.stop(); } catch (Throwable ignored) {}
+            bonfireNetwork = null;
+        }
+        if (placeholders != null) {
+            try { placeholders.unregister(); } catch (Throwable ignored) {}
+            placeholders = null;
+        }
 
         if (endTaskId != -1) {
             try { Bukkit.getScheduler().cancelTask(endTaskId); } catch (Throwable ignored) {}
@@ -246,4 +285,7 @@ public class FreezingIceMode extends AbstractMode {
     public AttackRegistry getAttackRegistry() { return attackRegistry; }
     public FreezingIceScheduler getAttackScheduler() { return attackScheduler; }
     public int getTickCounter() { return tickCounter; }
+    public Location getArenaCenter() { return arenaCenter; }
+    public FrostbiteTracker getFrostbiteTracker() { return frostbiteTracker; }
+    public BonfireNetwork getBonfireNetwork() { return bonfireNetwork; }
 }

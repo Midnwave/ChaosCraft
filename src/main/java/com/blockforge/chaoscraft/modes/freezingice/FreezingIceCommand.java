@@ -61,8 +61,107 @@ public class FreezingIceCommand implements CommandExecutor, TabCompleter {
             case "spawninterval" -> handleSpawnInterval(sender, args);
             case "toggleexempt" -> handleToggleExempt(sender, args);
             case "reload" -> handleReload(sender);
+            case "spawnbonfire" -> handleSpawnBonfire(sender);
+            case "frostbitestatus" -> handleFrostbiteStatus(sender, args);
+            case "setfrostbite" -> handleSetFrostbite(sender, args);
             default -> { sendHelp(sender); yield true; }
         };
+    }
+
+    private boolean handleSpawnBonfire(CommandSender sender) {
+        FreezingIceMode mode = getMode();
+        if (mode == null) {
+            sender.sendMessage(Component.text("FreezingIce mode not registered.", NamedTextColor.RED));
+            return true;
+        }
+        if (!isModeActive()) {
+            sender.sendMessage(Component.text("FreezingIce mode is not active.", NamedTextColor.RED));
+            return true;
+        }
+        if (mode.getBonfireNetwork() == null) {
+            sender.sendMessage(Component.text("Bonfire network unavailable (gimmick disabled?).", NamedTextColor.RED));
+            return true;
+        }
+        var b = mode.getBonfireNetwork().spawnBonfireRandom();
+        if (b == null) {
+            sender.sendMessage(Component.text("Could not spawn bonfire (no arena center?).", NamedTextColor.YELLOW));
+        } else {
+            sender.sendMessage(Component.text("Spawned bonfire at "
+                    + b.center.getBlockX() + "," + b.center.getBlockY() + "," + b.center.getBlockZ(),
+                    NamedTextColor.GREEN));
+        }
+        return true;
+    }
+
+    private boolean handleFrostbiteStatus(CommandSender sender, String[] args) {
+        FreezingIceMode mode = getMode();
+        if (mode == null) {
+            sender.sendMessage(Component.text("FreezingIce mode not registered.", NamedTextColor.RED));
+            return true;
+        }
+        if (mode.getFrostbiteTracker() == null) {
+            sender.sendMessage(Component.text("FrostbiteTracker unavailable (mode inactive or gimmick disabled).",
+                    NamedTextColor.RED));
+            return true;
+        }
+        Player target;
+        if (args.length >= 2) {
+            target = Bukkit.getPlayerExact(args[1]);
+            if (target == null) {
+                sender.sendMessage(Component.text("Player not found: " + args[1], NamedTextColor.RED));
+                return true;
+            }
+        } else if (sender instanceof Player p) {
+            target = p;
+        } else {
+            sender.sendMessage(Component.text("Usage: frostbitestatus <player>", NamedTextColor.YELLOW));
+            return true;
+        }
+        int pct = mode.getFrostbiteTracker().getFrostbite(target);
+        NamedTextColor color = pct >= 80 ? NamedTextColor.RED
+                : pct >= 50 ? NamedTextColor.GOLD
+                : pct >= 25 ? NamedTextColor.YELLOW : NamedTextColor.AQUA;
+        sender.sendMessage(Component.text(target.getName() + " frostbite: " + pct + "%", color));
+        return true;
+    }
+
+    private boolean handleSetFrostbite(CommandSender sender, String[] args) {
+        FreezingIceMode mode = getMode();
+        if (mode == null) {
+            sender.sendMessage(Component.text("FreezingIce mode not registered.", NamedTextColor.RED));
+            return true;
+        }
+        if (mode.getFrostbiteTracker() == null) {
+            sender.sendMessage(Component.text("FrostbiteTracker unavailable (mode inactive or gimmick disabled).",
+                    NamedTextColor.RED));
+            return true;
+        }
+        if (args.length < 3) {
+            sender.sendMessage(Component.text("Usage: setfrostbite <player> <0-100>", NamedTextColor.YELLOW));
+            return true;
+        }
+        Player target = Bukkit.getPlayerExact(args[1]);
+        if (target == null) {
+            sender.sendMessage(Component.text("Player not found: " + args[1], NamedTextColor.RED));
+            return true;
+        }
+        int pct;
+        try {
+            pct = Integer.parseInt(args[2]);
+        } catch (NumberFormatException e) {
+            sender.sendMessage(Component.text("Invalid number: " + args[2], NamedTextColor.RED));
+            return true;
+        }
+        pct = Math.max(0, Math.min(100, pct));
+        mode.getFrostbiteTracker().setFrostbite(target, pct);
+        sender.sendMessage(Component.text("Set " + target.getName() + " frostbite to " + pct + "%.",
+                NamedTextColor.GREEN));
+        return true;
+    }
+
+    private boolean isModeActive() {
+        var modeManager = plugin.getModeManager();
+        return modeManager.isAnyModeActive() && modeManager.getActiveMode() instanceof FreezingIceMode;
     }
 
     private boolean handleStatus(CommandSender sender) {
@@ -264,7 +363,8 @@ public class FreezingIceCommand implements CommandExecutor, TabCompleter {
         }
         if (args.length == 1) {
             return filterStartsWith(args[0], "status", "debug", "test", "list", "clearattacks",
-                    "spawninterval", "toggleexempt", "reload");
+                    "spawninterval", "toggleexempt", "reload",
+                    "spawnbonfire", "frostbitestatus", "setfrostbite");
         }
         if (args.length == 2) {
             String sub = args[0].toLowerCase();
@@ -277,7 +377,13 @@ public class FreezingIceCommand implements CommandExecutor, TabCompleter {
                 return filterStartsWith(args[1], ids);
             }
             if ("toggleexempt".equals(sub)) return null;
+            if ("frostbitestatus".equals(sub)) return null;
+            if ("setfrostbite".equals(sub)) return null;
             if ("spawninterval".equals(sub)) return List.of("20", "40", "60", "100");
+        }
+        if (args.length == 3) {
+            String sub = args[0].toLowerCase();
+            if ("setfrostbite".equals(sub)) return List.of("0", "25", "50", "75", "100");
         }
         return Collections.emptyList();
     }
@@ -303,6 +409,12 @@ public class FreezingIceCommand implements CommandExecutor, TabCompleter {
                 NamedTextColor.AQUA));
         sender.sendMessage(Component.text("toggleexempt [player] — Toggle exempt", NamedTextColor.AQUA));
         sender.sendMessage(Component.text("reload — Reload configs", NamedTextColor.AQUA));
+        sender.sendMessage(Component.text("spawnbonfire — Spawn a bonfire at a random arena point",
+                NamedTextColor.AQUA));
+        sender.sendMessage(Component.text("frostbitestatus [player] — Show frostbite %",
+                NamedTextColor.AQUA));
+        sender.sendMessage(Component.text("setfrostbite <player> <0-100> — Set frostbite %",
+                NamedTextColor.AQUA));
     }
 
     private void sendIdList(CommandSender sender, List<String> ids) {
