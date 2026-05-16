@@ -336,6 +336,12 @@ public class ChaosCraftPlugin extends JavaPlugin {
 
     @Override
     public void onDisable() {
+        // Safety: force-revert FreezingIce block-friction override in case
+        // the server is stopping mid-mode. Idempotent if not applied.
+        try {
+            com.blockforge.chaoscraft.modes.freezingice.FreezingIceFrictionOverride.revert(this);
+        } catch (Throwable ignored) {}
+
         // End active mode if running
         if (modeManager != null && modeManager.isAnyModeActive()) {
             modeManager.endActiveMode();

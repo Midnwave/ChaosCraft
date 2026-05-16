@@ -133,6 +133,17 @@ public class FreezingIceMode extends AbstractMode {
             } else {
                 plugin.getLogger().info("[FreezingIce] PlaceholderAPI not installed — skipping expansion registration.");
             }
+
+            // ── Gimmick: Global Ice Physics (block-friction override) ─
+            if (iceConfig.isIcePhysicsEnabled()) {
+                try {
+                    FreezingIceFrictionOverride.apply(plugin,
+                            (float) iceConfig.getIcePhysicsFriction(),
+                            iceConfig.getIcePhysicsExemptBlocks());
+                } catch (Throwable t) {
+                    plugin.getLogger().warning("[FreezingIce] Ice-physics override failed: " + t.getMessage());
+                }
+            }
         }
 
         // On-start commands
@@ -179,6 +190,10 @@ public class FreezingIceMode extends AbstractMode {
     @Override
     public void onEnd() {
         plugin.getLogger().info("[FreezingIce] Mode ending — cleaning up...");
+
+        // Revert global friction override first — must happen even if other
+        // subsystems are missing / null, so blocks never leak modifications.
+        try { FreezingIceFrictionOverride.revert(plugin); } catch (Throwable ignored) {}
 
         attackScheduler.stop();
         plugin.getMusicManager().stopAll();

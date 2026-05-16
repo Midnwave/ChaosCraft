@@ -5,12 +5,17 @@ import com.blockforge.chaoscraft.services.mobspawn.MobSpawnConfig;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
+import org.bukkit.Material;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.EnumSet;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * FreezingIce Mode configuration loader.
@@ -25,7 +30,12 @@ import java.util.List;
  */
 public class FreezingIceConfig {
 
-    private static final int CURRENT_CONFIG_VERSION = 2;
+    private static final int CURRENT_CONFIG_VERSION = 3;
+
+    /** Default exempt-blocks list — see {@link #buildDefaultIcePhysicsExempt()}. */
+    private static final List<String> DEFAULT_ICE_PHYSICS_EXEMPT = Arrays.asList(
+            "LAVA", "WATER", "COBWEB", "SLIME_BLOCK", "SCAFFOLDING",
+            "LADDER", "VINE", "HONEY_BLOCK", "POWDER_SNOW");
 
     private final ChaosCraftPlugin plugin;
     private final File configFile;
@@ -95,6 +105,14 @@ public class FreezingIceConfig {
         if (!config.contains("gimmick.bonfire.particle-density")) { config.set("gimmick.bonfire.particle-density", 1.0); needsSave = true; }
         if (!config.contains("gimmick.bonfire.beam-height")) { config.set("gimmick.bonfire.beam-height", 30); needsSave = true; }
 
+        // ── Gimmick: Global Ice Physics ─────────────────────────────────
+        if (!config.contains("gimmick.ice-physics.enabled")) { config.set("gimmick.ice-physics.enabled", true); needsSave = true; }
+        if (!config.contains("gimmick.ice-physics.friction")) { config.set("gimmick.ice-physics.friction", 0.93); needsSave = true; }
+        if (!config.contains("gimmick.ice-physics.exempt-blocks")) {
+            config.set("gimmick.ice-physics.exempt-blocks", buildDefaultIcePhysicsExempt());
+            needsSave = true;
+        }
+
         // ── Music ───────────────────────────────────────────────────────
         if (!config.contains("music.track")) { config.set("music.track", "freezingice_main"); needsSave = true; }
         if (!config.contains("music.volume")) { config.set("music.volume", 0.6); needsSave = true; }
@@ -122,6 +140,16 @@ public class FreezingIceConfig {
     /** Empty mob pool by default — FreezingIce ground spawner is opt-in. */
     private List<MobSpawnConfig.MobSpawnDefaultEntry> buildDefaultMobSpawnEntries() {
         return Collections.emptyList();
+    }
+
+    /**
+     * Default exempt-blocks list for the global ice-physics override.
+     * These blocks have movement mechanics (climbing, sinking, sticking,
+     * bouncing, fluid drag) that would break or feel wrong if their
+     * friction were globally overridden.
+     */
+    private List<String> buildDefaultIcePhysicsExempt() {
+        return new ArrayList<>(DEFAULT_ICE_PHYSICS_EXEMPT);
     }
 
     /** Returns a MobSpawnConfig backed by this mode's YAML. */
@@ -190,6 +218,40 @@ public class FreezingIceConfig {
     public int getBonfireRespawnMinDelayTicks() { return config.getInt("gimmick.bonfire.respawn-min-delay-ticks", 80); }
     public double getBonfireParticleDensity() { return config.getDouble("gimmick.bonfire.particle-density", 1.0); }
     public int getBonfireBeamHeight() { return config.getInt("gimmick.bonfire.beam-height", 30); }
+
+    // ── Global ice physics ────────────────────────────────────────
+    public boolean isIcePhysicsEnabled() { return config.getBoolean("gimmick.ice-physics.enabled", true); }
+    public double getIcePhysicsFriction() {
+        double f = config.getDouble("gimmick.ice-physics.friction", 0.93);
+        // Clamp to safe range — anything outside this is dangerous / nonsensical
+        if (f < 0.6) f = 0.6;
+        if (f > 0.999) f = 0.999;
+        return f;
+    }
+    /**
+     * Parse the exempt-blocks string list into a Set<Material>. Unknown names
+     * are skipped with a warning. Returns an empty set if the list is absent.
+     */
+    public Set<Material> getIcePhysicsExemptBlocks() {
+        List<String> raw = config.getStringList("gimmick.ice-physics.exempt-blocks");
+        if (raw == null || raw.isEmpty()) {
+            raw = DEFAULT_ICE_PHYSICS_EXEMPT;
+        }
+        Set<Material> out = EnumSet.noneOf(Material.class);
+        Set<String> warned = new LinkedHashSet<>();
+        for (String name : raw) {
+            if (name == null || name.isBlank()) continue;
+            try {
+                Material m = Material.valueOf(name.trim().toUpperCase());
+                out.add(m);
+            } catch (IllegalArgumentException ex) {
+                if (warned.add(name)) {
+                    plugin.getLogger().warning("[FreezingIce] Unknown ice-physics exempt-blocks entry: " + name);
+                }
+            }
+        }
+        return out;
+    }
 
     // ========================
     // Music
@@ -361,6 +423,29 @@ public class FreezingIceConfig {
                 "Vertical height (blocks) of the END_ROD particle beam that marks each",
                 "bonfire's location from across the arena. 30 = visible from far away.",
                 "0 = no beam."));
+
+        // Gimmick: Global Ice Physics (slippery world)
+        defaults.set("gimmick.ice-physics.enabled", true);
+        defaults.setComments("gimmick.ice-physics.enabled", List.of(
+                "",
+                "=== GLOBAL ICE PHYSICS ===",
+                "When true, every non-exempt block in the registry has its friction",
+                "field temporarily overridden while FreezingIce mode is active. Originals",
+                "are captured on apply and restored exactly on mode end / plugin disable.",
+                "Requires gimmick.enabled = true above."));
+        defaults.set("gimmick.ice-physics.friction", 0.93);
+        defaults.setComments("gimmick.ice-physics.friction", List.of(
+                "Friction value applied to every block. Each tick a player keeps this",
+                "fraction of horizontal velocity.",
+                "Vanilla default = 0.6 (stop in <1s). Vanilla ice = 0.98 (skating rink).",
+                "Recommended range 0.85-0.97. Going above 0.98 makes movement nearly",
+                "uncontrollable. Clamped at runtime to [0.6, 0.999]."));
+        defaults.set("gimmick.ice-physics.exempt-blocks", buildDefaultIcePhysicsExempt());
+        defaults.setComments("gimmick.ice-physics.exempt-blocks", List.of(
+                "Materials excluded from the global friction override. These blocks",
+                "rely on non-friction movement mechanics (climbing, sticking, bouncing,",
+                "fluid drag, sinking) that would break if overridden.",
+                "Use Bukkit Material enum names. Unknown entries are skipped with a warning."));
 
         // Music
         defaults.set("music.track", "freezingice_main");
