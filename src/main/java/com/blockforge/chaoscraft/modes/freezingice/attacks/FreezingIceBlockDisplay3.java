@@ -123,12 +123,12 @@ public final class FreezingIceBlockDisplay3 {
 
         public IceCathedral(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("ice_cathedral", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
-            config.setDamage(11.0);
-            config.setDamageRadius(10.0);
-            config.setTicksBetweenDamage(12);
-            config.setDamageDelayTicks(35);
+            config.setDamage(132.0);
+            config.setDamageRadius(15.0);
+            config.setTicksBetweenDamage(4);
+            config.setDamageDelayTicks(2);
             config.setDurationTicks(290);
-            config.setCooldownTicks(140);
+            config.setCooldownTicks(60);
         }
 
         private BlockDisplayHandle place(Location loc, Material mat, float sx, float sy, float sz, int r, int g, int b, int interp) {
@@ -313,12 +313,12 @@ public final class FreezingIceBlockDisplay3 {
 
         public GlassLabyrinth(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("glass_labyrinth", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
-            config.setDamage(12.0);
-            config.setDamageRadius(9.0);
-            config.setTicksBetweenDamage(10);
-            config.setDamageDelayTicks(30);
+            config.setDamage(144.0);
+            config.setDamageRadius(13.5);
+            config.setTicksBetweenDamage(4);
+            config.setDamageDelayTicks(2);
             config.setDurationTicks(255);
-            config.setCooldownTicks(140);
+            config.setCooldownTicks(60);
         }
 
         private BlockDisplayHandle place(Location loc, Material mat, float sx, float sy, float sz, int r, int g, int b) {
@@ -432,12 +432,12 @@ public final class FreezingIceBlockDisplay3 {
 
         public FrozenLighthouse(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("frozen_lighthouse", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
-            config.setDamage(10.0);
-            config.setDamageRadius(11.0);
-            config.setTicksBetweenDamage(10);
-            config.setDamageDelayTicks(35);
+            config.setDamage(120.0);
+            config.setDamageRadius(16.5);
+            config.setTicksBetweenDamage(4);
+            config.setDamageDelayTicks(2);
             config.setDurationTicks(320);
-            config.setCooldownTicks(150);
+            config.setCooldownTicks(60);
         }
 
         private BlockDisplayHandle place(Location loc, Material mat, float sx, float sy, float sz, int r, int g, int b, int interp) {
@@ -588,12 +588,12 @@ public final class FreezingIceBlockDisplay3 {
 
         public IcePalaceTower(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("ice_palace_tower", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
-            config.setDamage(12.0);
-            config.setDamageRadius(10.0);
-            config.setTicksBetweenDamage(12);
-            config.setDamageDelayTicks(35);
+            config.setDamage(144.0);
+            config.setDamageRadius(15.0);
+            config.setTicksBetweenDamage(4);
+            config.setDamageDelayTicks(2);
             config.setDurationTicks(300);
-            config.setCooldownTicks(150);
+            config.setCooldownTicks(60);
         }
 
         private BlockDisplayHandle place(Location loc, Material mat, float sx, float sy, float sz, int r, int g, int b, int interp) {
@@ -737,11 +737,11 @@ public final class FreezingIceBlockDisplay3 {
         public GlacierBridgeArch(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("glacier_bridge_arch", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
             config.setDamageOnImpactOnly(true);
-            config.setImpactDamage(220.0);
-            config.setImpactRadius(11.0);
+            config.setImpactDamage(2640.0);
+            config.setImpactRadius(16.5);
             config.setDamage(0.0);
             config.setDurationTicks(180);
-            config.setCooldownTicks(140);
+            config.setCooldownTicks(60);
         }
 
         private BlockDisplayHandle place(Location loc, Material mat, float sx, float sy, float sz, int r, int g, int b, int interp) {
@@ -871,12 +871,12 @@ public final class FreezingIceBlockDisplay3 {
 
         public FrostGazebo(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("frost_gazebo", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
-            config.setDamage(11.0);
-            config.setDamageRadius(8.0);
-            config.setTicksBetweenDamage(12);
-            config.setDamageDelayTicks(30);
+            config.setDamage(132.0);
+            config.setDamageRadius(12.0);
+            config.setTicksBetweenDamage(4);
+            config.setDamageDelayTicks(2);
             config.setDurationTicks(290);
-            config.setCooldownTicks(140);
+            config.setCooldownTicks(60);
         }
 
         private BlockDisplayHandle place(Location loc, Material mat, float sx, float sy, float sz, int r, int g, int b, int interp) {
@@ -1021,12 +1021,12 @@ public final class FreezingIceBlockDisplay3 {
 
         public CrystalCathedralWindow(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("crystal_cathedral_window", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
-            config.setDamage(10.0);
-            config.setDamageRadius(7.0);
-            config.setTicksBetweenDamage(14);
-            config.setDamageDelayTicks(30);
+            config.setDamage(120.0);
+            config.setDamageRadius(10.5);
+            config.setTicksBetweenDamage(4);
+            config.setDamageDelayTicks(2);
             config.setDurationTicks(290);
-            config.setCooldownTicks(140);
+            config.setCooldownTicks(60);
         }
 
         private BlockDisplayHandle place(Location loc, Material mat, float sx, float sy, float sz, int r, int g, int b, int interp) {
@@ -1175,12 +1175,12 @@ public final class FreezingIceBlockDisplay3 {
 
         public IceMonastery(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("ice_monastery", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
-            config.setDamage(10.0);
-            config.setDamageRadius(9.0);
-            config.setTicksBetweenDamage(12);
-            config.setDamageDelayTicks(30);
+            config.setDamage(120.0);
+            config.setDamageRadius(13.5);
+            config.setTicksBetweenDamage(4);
+            config.setDamageDelayTicks(2);
             config.setDurationTicks(270);
-            config.setCooldownTicks(140);
+            config.setCooldownTicks(60);
         }
 
         private BlockDisplayHandle place(Location loc, Material mat, float sx, float sy, float sz, int r, int g, int b, int interp) {
@@ -1339,12 +1339,12 @@ public final class FreezingIceBlockDisplay3 {
 
         public FrozenColosseum(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("frozen_colosseum", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
-            config.setDamage(10.0);
-            config.setDamageRadius(11.0);
-            config.setTicksBetweenDamage(14);
-            config.setDamageDelayTicks(35);
+            config.setDamage(120.0);
+            config.setDamageRadius(16.5);
+            config.setTicksBetweenDamage(4);
+            config.setDamageDelayTicks(2);
             config.setDurationTicks(310);
-            config.setCooldownTicks(150);
+            config.setCooldownTicks(60);
         }
 
         private BlockDisplayHandle place(Location loc, Material mat, float sx, float sy, float sz, int r, int g, int b, int interp) {
@@ -1527,12 +1527,12 @@ public final class FreezingIceBlockDisplay3 {
 
         public CrystallineObservatory(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("crystalline_observatory", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
-            config.setDamage(9.0);
-            config.setDamageRadius(8.0);
-            config.setTicksBetweenDamage(14);
-            config.setDamageDelayTicks(30);
+            config.setDamage(108.0);
+            config.setDamageRadius(12.0);
+            config.setTicksBetweenDamage(4);
+            config.setDamageDelayTicks(2);
             config.setDurationTicks(290);
-            config.setCooldownTicks(140);
+            config.setCooldownTicks(60);
         }
 
         private BlockDisplayHandle place(Location loc, Material mat, float sx, float sy, float sz, int r, int g, int b, int interp) {

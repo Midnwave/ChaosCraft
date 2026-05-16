@@ -120,10 +120,10 @@ public final class FreezingIceModelEngine {
     public static class GlacialFloorShatter extends ModelEngineAttack {
         public GlacialFloorShatter(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("glacial_floor_shatter", AttackType.MODEL_ENGINE, 1, MODE_PATH));
-            config.setDamage(0.0); config.setDamageRadius(0);
+            config.setDamage(0.0); config.setDamageRadius(0.0);
             config.setDamageOnImpactOnly(true);
-            config.setImpactDamage(550.0); config.setImpactRadius(11.0);
-            config.setDurationTicks(140); config.setCooldownTicks(220);
+            config.setImpactDamage(6600.0); config.setImpactRadius(16.5);
+            config.setDurationTicks(140); config.setCooldownTicks(60);
         }
         @Override protected String getModelId() { return "glacial_floor_shatter"; }
         @Override protected double getModelScale() { return 2.5; }
@@ -151,10 +151,10 @@ public final class FreezingIceModelEngine {
     public static class AbsoluteZeroSpikeForest extends ModelEngineAttack {
         public AbsoluteZeroSpikeForest(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("absolute_zero_spike_forest", AttackType.MODEL_ENGINE, 1, MODE_PATH));
-            config.setDamage(0.0); config.setDamageRadius(0);
+            config.setDamage(0.0); config.setDamageRadius(0.0);
             config.setDamageOnImpactOnly(true);
-            config.setImpactDamage(480.0); config.setImpactRadius(10.0);
-            config.setDurationTicks(130); config.setCooldownTicks(210);
+            config.setImpactDamage(5760.0); config.setImpactRadius(15.0);
+            config.setDurationTicks(130); config.setCooldownTicks(60);
         }
         @Override protected String getModelId() { return "absolute_zero_spike_forest"; }
         @Override protected double getModelScale() { return 2.2; }
@@ -186,10 +186,10 @@ public final class FreezingIceModelEngine {
     public static class GlacierFistEruption extends ModelEngineAttack {
         public GlacierFistEruption(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("glacier_fist_eruption", AttackType.MODEL_ENGINE, 1, MODE_PATH));
-            config.setDamage(0.0); config.setDamageRadius(0);
+            config.setDamage(0.0); config.setDamageRadius(0.0);
             config.setDamageOnImpactOnly(true);
-            config.setImpactDamage(600.0); config.setImpactRadius(12.0);
-            config.setDurationTicks(160); config.setCooldownTicks(240);
+            config.setImpactDamage(7200.0); config.setImpactRadius(18.0);
+            config.setDurationTicks(160); config.setCooldownTicks(60);
         }
         @Override protected String getModelId() { return "glacier_fist_eruption"; }
         @Override protected double getModelScale() { return 2.5; }
@@ -222,10 +222,10 @@ public final class FreezingIceModelEngine {
     public static class TundraCrackArray extends ModelEngineAttack {
         public TundraCrackArray(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("tundra_crack_array", AttackType.MODEL_ENGINE, 1, MODE_PATH));
-            config.setDamage(0.0); config.setDamageRadius(0);
+            config.setDamage(0.0); config.setDamageRadius(0.0);
             config.setDamageOnImpactOnly(true);
-            config.setImpactDamage(420.0); config.setImpactRadius(13.0);
-            config.setDurationTicks(140); config.setCooldownTicks(220);
+            config.setImpactDamage(5040.0); config.setImpactRadius(18.0);
+            config.setDurationTicks(140); config.setCooldownTicks(60);
         }
         @Override protected String getModelId() { return "tundra_crack_array"; }
         @Override protected double getModelScale() { return 2.0; }
@@ -257,10 +257,10 @@ public final class FreezingIceModelEngine {
     public static class CryoPillarCross extends ModelEngineAttack {
         public CryoPillarCross(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("cryo_pillar_cross", AttackType.MODEL_ENGINE, 1, MODE_PATH));
-            config.setDamage(0.0); config.setDamageRadius(0);
+            config.setDamage(0.0); config.setDamageRadius(0.0);
             config.setDamageOnImpactOnly(true);
-            config.setImpactDamage(500.0); config.setImpactRadius(10.0);
-            config.setDurationTicks(150); config.setCooldownTicks(220);
+            config.setImpactDamage(6000.0); config.setImpactRadius(15.0);
+            config.setDurationTicks(150); config.setCooldownTicks(60);
         }
         @Override protected String getModelId() { return "cryo_pillar_cross"; }
         @Override protected double getModelScale() { return 2.3; }
@@ -296,10 +296,10 @@ public final class FreezingIceModelEngine {
     public static class BlizzardNova extends ModelEngineAttack {
         public BlizzardNova(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("blizzard_nova", AttackType.MODEL_ENGINE, 1, MODE_PATH));
-            config.setDamage(230.0); config.setDamageRadius(12.0);
-            config.setModelengineScale("12.0");
-            config.setTicksBetweenDamage(10); config.setDamageDelayTicks(6);
-            config.setDurationTicks(100); config.setCooldownTicks(200);
+            config.setDamage(2760.0); config.setDamageRadius(18.0);
+            config.setModelengineScale("18.0");
+            config.setTicksBetweenDamage(4); config.setDamageDelayTicks(0);
+            config.setDurationTicks(100); config.setCooldownTicks(60);
         }
         @Override protected String getModelId() { return "blizzard_nova"; }
         @Override protected double getModelScale() { return 2.5; }
@@ -329,10 +329,10 @@ public final class FreezingIceModelEngine {
     public static class FrozenTimeRing extends ModelEngineAttack {
         public FrozenTimeRing(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("frozen_time_ring", AttackType.MODEL_ENGINE, 1, MODE_PATH));
-            config.setDamage(200.0); config.setDamageRadius(11.0);
-            config.setModelengineScale("11.0");
-            config.setTicksBetweenDamage(12); config.setDamageDelayTicks(10);
-            config.setDurationTicks(140); config.setCooldownTicks(220);
+            config.setDamage(2400.0); config.setDamageRadius(16.5);
+            config.setModelengineScale("16.5");
+            config.setTicksBetweenDamage(4); config.setDamageDelayTicks(0);
+            config.setDurationTicks(140); config.setCooldownTicks(60);
         }
         @Override protected String getModelId() { return "frozen_time_ring"; }
         @Override protected double getModelScale() { return 2.4; }
@@ -366,10 +366,10 @@ public final class FreezingIceModelEngine {
     public static class CrystallineAuroraBurst extends ModelEngineAttack {
         public CrystallineAuroraBurst(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("crystalline_aurora_burst", AttackType.MODEL_ENGINE, 1, MODE_PATH));
-            config.setDamage(240.0); config.setDamageRadius(12.0);
-            config.setModelengineScale("12.0");
-            config.setTicksBetweenDamage(10); config.setDamageDelayTicks(8);
-            config.setDurationTicks(120); config.setCooldownTicks(210);
+            config.setDamage(2880.0); config.setDamageRadius(18.0);
+            config.setModelengineScale("18.0");
+            config.setTicksBetweenDamage(4); config.setDamageDelayTicks(0);
+            config.setDurationTicks(120); config.setCooldownTicks(60);
         }
         @Override protected String getModelId() { return "crystalline_aurora_burst"; }
         @Override protected double getModelScale() { return 2.2; }
@@ -399,10 +399,10 @@ public final class FreezingIceModelEngine {
     public static class CryoPressureCollapse extends ModelEngineAttack {
         public CryoPressureCollapse(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("cryo_pressure_collapse", AttackType.MODEL_ENGINE, 1, MODE_PATH));
-            config.setDamage(0.0); config.setDamageRadius(0);
+            config.setDamage(0.0); config.setDamageRadius(0.0);
             config.setDamageOnImpactOnly(true);
-            config.setImpactDamage(580.0); config.setImpactRadius(13.0);
-            config.setDurationTicks(130); config.setCooldownTicks(240);
+            config.setImpactDamage(6960.0); config.setImpactRadius(18.0);
+            config.setDurationTicks(130); config.setCooldownTicks(60);
         }
         @Override protected String getModelId() { return "cryo_pressure_collapse"; }
         @Override protected double getModelScale() { return 2.0; }
@@ -442,10 +442,10 @@ public final class FreezingIceModelEngine {
     public static class IceAgeTerminus extends ModelEngineAttack {
         public IceAgeTerminus(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("ice_age_terminus", AttackType.MODEL_ENGINE, 1, MODE_PATH));
-            config.setDamage(260.0); config.setDamageRadius(14.0);
-            config.setModelengineScale("14.0");
-            config.setTicksBetweenDamage(12); config.setDamageDelayTicks(8);
-            config.setDurationTicks(160); config.setCooldownTicks(260);
+            config.setDamage(3120.0); config.setDamageRadius(18.0);
+            config.setModelengineScale("18.0");
+            config.setTicksBetweenDamage(4); config.setDamageDelayTicks(0);
+            config.setDurationTicks(160); config.setCooldownTicks(60);
         }
         @Override protected String getModelId() { return "ice_age_terminus"; }
         @Override protected double getModelScale() { return 2.6; }
@@ -476,10 +476,10 @@ public final class FreezingIceModelEngine {
     public static class CryoLance extends ModelEngineAttack {
         public CryoLance(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("cryo_lance", AttackType.MODEL_ENGINE, 1, MODE_PATH));
-            config.setDamage(0.0); config.setDamageRadius(0);
+            config.setDamage(0.0); config.setDamageRadius(0.0);
             config.setDamageOnImpactOnly(true);
-            config.setImpactDamage(460.0); config.setImpactRadius(8.0);
-            config.setDurationTicks(100); config.setCooldownTicks(180);
+            config.setImpactDamage(5520.0); config.setImpactRadius(12.0);
+            config.setDurationTicks(100); config.setCooldownTicks(60);
         }
         @Override protected String getModelId() { return "cryo_lance"; }
         @Override protected double getModelScale() { return 2.0; }
@@ -511,10 +511,10 @@ public final class FreezingIceModelEngine {
     public static class AvalancheShot extends ModelEngineAttack {
         public AvalancheShot(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("avalanche_shot", AttackType.MODEL_ENGINE, 1, MODE_PATH));
-            config.setDamage(0.0); config.setDamageRadius(0);
+            config.setDamage(0.0); config.setDamageRadius(0.0);
             config.setDamageOnImpactOnly(true);
-            config.setImpactDamage(520.0); config.setImpactRadius(11.0);
-            config.setDurationTicks(120); config.setCooldownTicks(200);
+            config.setImpactDamage(6240.0); config.setImpactRadius(16.5);
+            config.setDurationTicks(120); config.setCooldownTicks(60);
         }
         @Override protected String getModelId() { return "avalanche_shot"; }
         @Override protected double getModelScale() { return 2.2; }
@@ -547,10 +547,10 @@ public final class FreezingIceModelEngine {
     public static class FrozenCometMe extends ModelEngineAttack {
         public FrozenCometMe(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("frozen_comet_me", AttackType.MODEL_ENGINE, 1, MODE_PATH));
-            config.setDamage(0.0); config.setDamageRadius(0);
+            config.setDamage(0.0); config.setDamageRadius(0.0);
             config.setDamageOnImpactOnly(true);
-            config.setImpactDamage(600.0); config.setImpactRadius(12.0);
-            config.setDurationTicks(130); config.setCooldownTicks(240);
+            config.setImpactDamage(7200.0); config.setImpactRadius(18.0);
+            config.setDurationTicks(130); config.setCooldownTicks(60);
         }
         @Override protected String getModelId() { return "frozen_comet_me"; }
         @Override protected double getModelScale() { return 2.4; }
@@ -583,10 +583,10 @@ public final class FreezingIceModelEngine {
     public static class FrostBreathBeam extends ModelEngineAttack {
         public FrostBreathBeam(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("frost_breath_beam", AttackType.MODEL_ENGINE, 1, MODE_PATH));
-            config.setDamage(0.0); config.setDamageRadius(0);
+            config.setDamage(0.0); config.setDamageRadius(0.0);
             config.setDamageOnImpactOnly(true);
-            config.setImpactDamage(420.0); config.setImpactRadius(10.0);
-            config.setDurationTicks(100); config.setCooldownTicks(190);
+            config.setImpactDamage(5040.0); config.setImpactRadius(15.0);
+            config.setDurationTicks(100); config.setCooldownTicks(60);
         }
         @Override protected String getModelId() { return "frost_breath_beam"; }
         @Override protected double getModelScale() { return 2.0; }
@@ -619,10 +619,10 @@ public final class FreezingIceModelEngine {
     public static class IcicleVolleyMe extends ModelEngineAttack {
         public IcicleVolleyMe(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("icicle_volley_me", AttackType.MODEL_ENGINE, 1, MODE_PATH));
-            config.setDamage(0.0); config.setDamageRadius(0);
+            config.setDamage(0.0); config.setDamageRadius(0.0);
             config.setDamageOnImpactOnly(true);
-            config.setImpactDamage(380.0); config.setImpactRadius(9.0);
-            config.setDurationTicks(110); config.setCooldownTicks(180);
+            config.setImpactDamage(4560.0); config.setImpactRadius(13.5);
+            config.setDurationTicks(110); config.setCooldownTicks(60);
         }
         @Override protected String getModelId() { return "icicle_volley_me"; }
         @Override protected double getModelScale() { return 2.0; }
@@ -654,10 +654,10 @@ public final class FreezingIceModelEngine {
     public static class FrozenSentinelArray extends ModelEngineAttack {
         public FrozenSentinelArray(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("frozen_sentinel_array", AttackType.MODEL_ENGINE, 1, MODE_PATH));
-            config.setDamage(220.0); config.setDamageRadius(11.0);
-            config.setModelengineScale("11.0");
-            config.setTicksBetweenDamage(10); config.setDamageDelayTicks(12);
-            config.setDurationTicks(160); config.setCooldownTicks(230);
+            config.setDamage(2640.0); config.setDamageRadius(16.5);
+            config.setModelengineScale("16.5");
+            config.setTicksBetweenDamage(4); config.setDamageDelayTicks(1);
+            config.setDurationTicks(160); config.setCooldownTicks(60);
         }
         @Override protected String getModelId() { return "frozen_sentinel_array"; }
         @Override protected double getModelScale() { return 2.3; }
@@ -689,10 +689,10 @@ public final class FreezingIceModelEngine {
     public static class PermafrostThrone extends ModelEngineAttack {
         public PermafrostThrone(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("permafrost_throne", AttackType.MODEL_ENGINE, 1, MODE_PATH));
-            config.setDamage(250.0); config.setDamageRadius(12.0);
-            config.setModelengineScale("12.0");
-            config.setTicksBetweenDamage(10); config.setDamageDelayTicks(14);
-            config.setDurationTicks(180); config.setCooldownTicks(250);
+            config.setDamage(3000.0); config.setDamageRadius(18.0);
+            config.setModelengineScale("18.0");
+            config.setTicksBetweenDamage(4); config.setDamageDelayTicks(1);
+            config.setDurationTicks(180); config.setCooldownTicks(60);
         }
         @Override protected String getModelId() { return "permafrost_throne"; }
         @Override protected double getModelScale() { return 2.5; }
@@ -722,10 +722,10 @@ public final class FreezingIceModelEngine {
     public static class CryoSatelliteRing extends ModelEngineAttack {
         public CryoSatelliteRing(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("cryo_satellite_ring", AttackType.MODEL_ENGINE, 1, MODE_PATH));
-            config.setDamage(210.0); config.setDamageRadius(11.0);
-            config.setModelengineScale("11.0");
-            config.setTicksBetweenDamage(10); config.setDamageDelayTicks(12);
-            config.setDurationTicks(160); config.setCooldownTicks(230);
+            config.setDamage(2520.0); config.setDamageRadius(16.5);
+            config.setModelengineScale("16.5");
+            config.setTicksBetweenDamage(4); config.setDamageDelayTicks(1);
+            config.setDurationTicks(160); config.setCooldownTicks(60);
         }
         @Override protected String getModelId() { return "cryo_satellite_ring"; }
         @Override protected double getModelScale() { return 2.2; }
@@ -759,10 +759,10 @@ public final class FreezingIceModelEngine {
     public static class IceWyrmOrbital extends ModelEngineAttack {
         public IceWyrmOrbital(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("ice_wyrm_orbital", AttackType.MODEL_ENGINE, 1, MODE_PATH));
-            config.setDamage(240.0); config.setDamageRadius(13.0);
-            config.setModelengineScale("13.0");
-            config.setTicksBetweenDamage(10); config.setDamageDelayTicks(10);
-            config.setDurationTicks(150); config.setCooldownTicks(230);
+            config.setDamage(2880.0); config.setDamageRadius(18.0);
+            config.setModelengineScale("18.0");
+            config.setTicksBetweenDamage(4); config.setDamageDelayTicks(0);
+            config.setDurationTicks(150); config.setCooldownTicks(60);
         }
         @Override protected String getModelId() { return "ice_wyrm_orbital"; }
         @Override protected double getModelScale() { return 2.4; }
@@ -794,10 +794,10 @@ public final class FreezingIceModelEngine {
     public static class FrozenClockMe extends ModelEngineAttack {
         public FrozenClockMe(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("frozen_clock_me", AttackType.MODEL_ENGINE, 1, MODE_PATH));
-            config.setDamage(200.0); config.setDamageRadius(11.0);
-            config.setModelengineScale("11.0");
-            config.setTicksBetweenDamage(12); config.setDamageDelayTicks(14);
-            config.setDurationTicks(200); config.setCooldownTicks(280);
+            config.setDamage(2400.0); config.setDamageRadius(16.5);
+            config.setModelengineScale("16.5");
+            config.setTicksBetweenDamage(4); config.setDamageDelayTicks(1);
+            config.setDurationTicks(200); config.setCooldownTicks(60);
         }
         @Override protected String getModelId() { return "frozen_clock_me"; }
         @Override protected double getModelScale() { return 2.2; }
@@ -831,10 +831,10 @@ public final class FreezingIceModelEngine {
     public static class AvalancheOrrery extends ModelEngineAttack {
         public AvalancheOrrery(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("avalanche_orrery", AttackType.MODEL_ENGINE, 1, MODE_PATH));
-            config.setDamage(230.0); config.setDamageRadius(12.0);
-            config.setModelengineScale("12.0");
-            config.setTicksBetweenDamage(10); config.setDamageDelayTicks(14);
-            config.setDurationTicks(180); config.setCooldownTicks(260);
+            config.setDamage(2760.0); config.setDamageRadius(18.0);
+            config.setModelengineScale("18.0");
+            config.setTicksBetweenDamage(4); config.setDamageDelayTicks(1);
+            config.setDurationTicks(180); config.setCooldownTicks(60);
         }
         @Override protected String getModelId() { return "avalanche_orrery"; }
         @Override protected double getModelScale() { return 2.4; }
@@ -872,10 +872,10 @@ public final class FreezingIceModelEngine {
     public static class FrozenMirrorArray extends ModelEngineAttack {
         public FrozenMirrorArray(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("frozen_mirror_array", AttackType.MODEL_ENGINE, 1, MODE_PATH));
-            config.setDamage(0.0); config.setDamageRadius(0);
+            config.setDamage(0.0); config.setDamageRadius(0.0);
             config.setDamageOnImpactOnly(true);
-            config.setImpactDamage(480.0); config.setImpactRadius(11.0);
-            config.setDurationTicks(140); config.setCooldownTicks(240);
+            config.setImpactDamage(5760.0); config.setImpactRadius(16.5);
+            config.setDurationTicks(140); config.setCooldownTicks(60);
         }
         @Override protected String getModelId() { return "frozen_mirror_array"; }
         @Override protected double getModelScale() { return 2.0; }
@@ -910,10 +910,10 @@ public final class FreezingIceModelEngine {
     public static class SnowstormVortex extends ModelEngineAttack {
         public SnowstormVortex(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("snowstorm_vortex", AttackType.MODEL_ENGINE, 1, MODE_PATH));
-            config.setDamage(260.0); config.setDamageRadius(13.0);
-            config.setModelengineScale("13.0");
-            config.setTicksBetweenDamage(10); config.setDamageDelayTicks(10);
-            config.setDurationTicks(160); config.setCooldownTicks(250);
+            config.setDamage(3120.0); config.setDamageRadius(18.0);
+            config.setModelengineScale("18.0");
+            config.setTicksBetweenDamage(4); config.setDamageDelayTicks(0);
+            config.setDurationTicks(160); config.setCooldownTicks(60);
         }
         @Override protected String getModelId() { return "snowstorm_vortex"; }
         @Override protected double getModelScale() { return 2.5; }
@@ -952,10 +952,10 @@ public final class FreezingIceModelEngine {
     public static class HypothermiaHalo extends ModelEngineAttack {
         public HypothermiaHalo(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("hypothermia_halo", AttackType.MODEL_ENGINE, 1, MODE_PATH));
-            config.setDamage(220.0); config.setDamageRadius(12.0);
-            config.setModelengineScale("12.0");
-            config.setTicksBetweenDamage(12); config.setDamageDelayTicks(12);
-            config.setDurationTicks(170); config.setCooldownTicks(240);
+            config.setDamage(2640.0); config.setDamageRadius(18.0);
+            config.setModelengineScale("18.0");
+            config.setTicksBetweenDamage(4); config.setDamageDelayTicks(1);
+            config.setDurationTicks(170); config.setCooldownTicks(60);
         }
         @Override protected String getModelId() { return "hypothermia_halo"; }
         @Override protected double getModelScale() { return 2.3; }
@@ -990,10 +990,10 @@ public final class FreezingIceModelEngine {
     public static class GlacialMemory extends ModelEngineAttack {
         public GlacialMemory(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("glacial_memory", AttackType.MODEL_ENGINE, 1, MODE_PATH));
-            config.setDamage(240.0); config.setDamageRadius(14.0);
-            config.setModelengineScale("14.0");
-            config.setTicksBetweenDamage(12); config.setDamageDelayTicks(14);
-            config.setDurationTicks(180); config.setCooldownTicks(260);
+            config.setDamage(2880.0); config.setDamageRadius(18.0);
+            config.setModelengineScale("18.0");
+            config.setTicksBetweenDamage(4); config.setDamageDelayTicks(1);
+            config.setDurationTicks(180); config.setCooldownTicks(60);
         }
         @Override protected String getModelId() { return "glacial_memory"; }
         @Override protected double getModelScale() { return 2.6; }

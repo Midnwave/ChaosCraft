@@ -49,12 +49,12 @@ public final class FreezingIceEnvironmental3 {
 
         public IceRuneCircle(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("ice_rune_circle", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
-            config.setDamage(3500.0);
-            config.setDamageRadius(6.5);
-            config.setTicksBetweenDamage(15);
-            config.setDamageDelayTicks(40);
+            config.setDamage(42000.0);
+            config.setDamageRadius(9.75);
+            config.setTicksBetweenDamage(4);
+            config.setDamageDelayTicks(3);
             config.setDurationTicks(360);
-            config.setCooldownTicks(180);
+            config.setCooldownTicks(60);
         }
 
         @Override protected void onSpawn(Location c) {
@@ -182,14 +182,14 @@ public final class FreezingIceEnvironmental3 {
 
         public SnowDriftMound(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("snow_drift_mound", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
-            config.setDamage(4800.0);
-            config.setDamageRadius(9.0);
-            config.setTicksBetweenDamage(15);
+            config.setDamage(57600.0);
+            config.setDamageRadius(13.5);
+            config.setTicksBetweenDamage(4);
             config.setDurationTicks(200);
-            config.setCooldownTicks(180);
+            config.setCooldownTicks(60);
             config.setDamageOnImpactOnly(true);
-            config.setImpactDamage(4800.0);
-            config.setImpactRadius(9.0);
+            config.setImpactDamage(57600.0);
+            config.setImpactRadius(13.5);
         }
 
         @Override protected void onSpawn(Location c) {
@@ -352,12 +352,12 @@ public final class FreezingIceEnvironmental3 {
 
         public CrystallineLattice(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("crystalline_lattice", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
-            config.setDamage(3200.0);
-            config.setDamageRadius(9.0);
-            config.setTicksBetweenDamage(20);
-            config.setDamageDelayTicks(20);
+            config.setDamage(38400.0);
+            config.setDamageRadius(13.5);
+            config.setTicksBetweenDamage(4);
+            config.setDamageDelayTicks(1);
             config.setDurationTicks(400);
-            config.setCooldownTicks(180);
+            config.setCooldownTicks(60);
         }
 
         @Override protected void onSpawn(Location c) {
@@ -469,12 +469,12 @@ public final class FreezingIceEnvironmental3 {
 
         public FrozenFootprintTrail(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("frozen_footprint_trail", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
-            config.setDamage(2400.0);
-            config.setDamageRadius(8.0);
-            config.setTicksBetweenDamage(12);
-            config.setDamageDelayTicks(8);
+            config.setDamage(28800.0);
+            config.setDamageRadius(12.0);
+            config.setTicksBetweenDamage(4);
+            config.setDamageDelayTicks(0);
             config.setDurationTicks(360);
-            config.setCooldownTicks(170);
+            config.setCooldownTicks(60);
         }
 
         @Override protected void onSpawn(Location c) {
@@ -590,14 +590,14 @@ public final class FreezingIceEnvironmental3 {
 
         public ShatteredMirrorFloor(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("shattered_mirror_floor", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
-            config.setDamage(5200.0);
-            config.setDamageRadius(8.0);
-            config.setTicksBetweenDamage(15);
+            config.setDamage(62400.0);
+            config.setDamageRadius(12.0);
+            config.setTicksBetweenDamage(4);
             config.setDurationTicks(220);
-            config.setCooldownTicks(190);
+            config.setCooldownTicks(60);
             config.setDamageOnImpactOnly(true);
-            config.setImpactDamage(5200.0);
-            config.setImpactRadius(8.0);
+            config.setImpactDamage(62400.0);
+            config.setImpactRadius(12.0);
         }
 
         @Override protected void onSpawn(Location c) {
@@ -714,12 +714,12 @@ public final class FreezingIceEnvironmental3 {
 
         public PermafrostBloom(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("permafrost_bloom", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
-            config.setDamage(2800.0);
-            config.setDamageRadius(7.0);
-            config.setTicksBetweenDamage(15);
-            config.setDamageDelayTicks(20);
+            config.setDamage(33600.0);
+            config.setDamageRadius(10.5);
+            config.setTicksBetweenDamage(4);
+            config.setDamageDelayTicks(1);
             config.setDurationTicks(360);
-            config.setCooldownTicks(170);
+            config.setCooldownTicks(60);
         }
 
         @Override protected void onSpawn(Location c) {
@@ -845,12 +845,12 @@ public final class FreezingIceEnvironmental3 {
 
         public AuroraRibbons(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("aurora_ribbons", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
-            config.setDamage(2400.0);
-            config.setDamageRadius(10.0);
-            config.setTicksBetweenDamage(14);
-            config.setDamageDelayTicks(10);
+            config.setDamage(28800.0);
+            config.setDamageRadius(15.0);
+            config.setTicksBetweenDamage(4);
+            config.setDamageDelayTicks(0);
             config.setDurationTicks(400);
-            config.setCooldownTicks(180);
+            config.setCooldownTicks(60);
         }
 
         @Override protected void onSpawn(Location c) {
@@ -966,14 +966,14 @@ public final class FreezingIceEnvironmental3 {
 
         public IceMeteorShower(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("ice_meteor_shower", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
-            config.setDamage(4500.0);
-            config.setDamageRadius(6.0);
-            config.setTicksBetweenDamage(15);
+            config.setDamage(54000.0);
+            config.setDamageRadius(9.0);
+            config.setTicksBetweenDamage(4);
             config.setDurationTicks(300);
-            config.setCooldownTicks(180);
+            config.setCooldownTicks(60);
             config.setDamageOnImpactOnly(true);
-            config.setImpactDamage(4500.0);
-            config.setImpactRadius(4.0);
+            config.setImpactDamage(54000.0);
+            config.setImpactRadius(6.0);
         }
 
         @Override protected void onSpawn(Location c) {
@@ -1070,12 +1070,12 @@ public final class FreezingIceEnvironmental3 {
 
         public FrozenStorm(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("frozen_storm", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
-            config.setDamage(2200.0);
-            config.setDamageRadius(12.0);
-            config.setTicksBetweenDamage(10);
-            config.setDamageDelayTicks(15);
+            config.setDamage(26400.0);
+            config.setDamageRadius(18.0);
+            config.setTicksBetweenDamage(4);
+            config.setDamageDelayTicks(1);
             config.setDurationTicks(400);
-            config.setCooldownTicks(200);
+            config.setCooldownTicks(60);
         }
 
         @Override protected void onSpawn(Location c) {
@@ -1220,14 +1220,14 @@ public final class FreezingIceEnvironmental3 {
 
         public SkyShatteringPrism(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("sky_shattering_prism", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
-            config.setDamage(3000.0);
-            config.setDamageRadius(6.0);
-            config.setTicksBetweenDamage(15);
+            config.setDamage(36000.0);
+            config.setDamageRadius(9.0);
+            config.setTicksBetweenDamage(4);
             config.setDurationTicks(280);
-            config.setCooldownTicks(180);
+            config.setCooldownTicks(60);
             config.setDamageOnImpactOnly(true);
-            config.setImpactDamage(3000.0);
-            config.setImpactRadius(2.5);
+            config.setImpactDamage(36000.0);
+            config.setImpactRadius(3.75);
         }
 
         @Override protected void onSpawn(Location c) {

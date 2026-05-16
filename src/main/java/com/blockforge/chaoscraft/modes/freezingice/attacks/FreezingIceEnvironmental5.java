@@ -51,12 +51,12 @@ public final class FreezingIceEnvironmental5 {
 
         public EchoingFrostBell(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("echoing_frost_bell", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
-            config.setDamage(4000.0);
-            config.setDamageRadius(10.0);
-            config.setTicksBetweenDamage(30);
-            config.setDamageDelayTicks(10);
+            config.setDamage(48000.0);
+            config.setDamageRadius(15.0);
+            config.setTicksBetweenDamage(4);
+            config.setDamageDelayTicks(0);
             config.setDurationTicks(400);
-            config.setCooldownTicks(200);
+            config.setCooldownTicks(60);
         }
 
         @Override protected void onSpawn(Location c) {
@@ -153,12 +153,12 @@ public final class FreezingIceEnvironmental5 {
 
         public DriftingFrostSpecter(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("drifting_frost_specter", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
-            config.setDamage(3600.0);
-            config.setDamageRadius(4.5);
-            config.setTicksBetweenDamage(12);
-            config.setDamageDelayTicks(8);
+            config.setDamage(43200.0);
+            config.setDamageRadius(6.75);
+            config.setTicksBetweenDamage(4);
+            config.setDamageDelayTicks(0);
             config.setDurationTicks(360);
-            config.setCooldownTicks(190);
+            config.setCooldownTicks(60);
             // FOLLOW-AI: drift toward player at sub-walk pace.
             config.setFollowAiEnabled(true);
             config.setFollowAiWalkSpeed(0.09);
@@ -272,12 +272,12 @@ public final class FreezingIceEnvironmental5 {
 
         public HuntingColdZone(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("hunting_cold_zone", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
-            config.setDamage(3200.0);
-            config.setDamageRadius(6.0);
-            config.setTicksBetweenDamage(10);
-            config.setDamageDelayTicks(10);
+            config.setDamage(38400.0);
+            config.setDamageRadius(9.0);
+            config.setTicksBetweenDamage(4);
+            config.setDamageDelayTicks(0);
             config.setDurationTicks(420);
-            config.setCooldownTicks(200);
+            config.setCooldownTicks(60);
             // FOLLOW-AI: zone hunts the player.
             config.setFollowAiEnabled(true);
             config.setFollowAiWalkSpeed(0.08);
@@ -383,12 +383,12 @@ public final class FreezingIceEnvironmental5 {
 
         public ProwlingBlizzardOrb(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("prowling_blizzard_orb", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
-            config.setDamage(3400.0);
-            config.setDamageRadius(5.0);
-            config.setTicksBetweenDamage(11);
-            config.setDamageDelayTicks(8);
+            config.setDamage(40800.0);
+            config.setDamageRadius(7.5);
+            config.setTicksBetweenDamage(4);
+            config.setDamageDelayTicks(0);
             config.setDurationTicks(360);
-            config.setCooldownTicks(180);
+            config.setCooldownTicks(60);
         }
 
         @Override protected void onSpawn(Location c) {
@@ -524,12 +524,12 @@ public final class FreezingIceEnvironmental5 {
 
         public RoamingHoarfrostBeast(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("roaming_hoarfrost_beast", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
-            config.setDamage(3800.0);
-            config.setDamageRadius(5.5);
-            config.setTicksBetweenDamage(10);
-            config.setDamageDelayTicks(8);
+            config.setDamage(45600.0);
+            config.setDamageRadius(8.25);
+            config.setTicksBetweenDamage(4);
+            config.setDamageDelayTicks(0);
             config.setDurationTicks(380);
-            config.setCooldownTicks(190);
+            config.setCooldownTicks(60);
             // FOLLOW-AI: quadruped predator stalks player.
             config.setFollowAiEnabled(true);
             config.setFollowAiWalkSpeed(0.11);
@@ -652,12 +652,12 @@ public final class FreezingIceEnvironmental5 {
 
         public ShiveringChainpetals(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("shivering_chainpetals", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
-            config.setDamage(2600.0);
-            config.setDamageRadius(8.0);
-            config.setTicksBetweenDamage(14);
-            config.setDamageDelayTicks(8);
+            config.setDamage(31200.0);
+            config.setDamageRadius(12.0);
+            config.setTicksBetweenDamage(4);
+            config.setDamageDelayTicks(0);
             config.setDurationTicks(340);
-            config.setCooldownTicks(180);
+            config.setCooldownTicks(60);
         }
 
         @Override protected void onSpawn(Location c) {
@@ -773,12 +773,12 @@ public final class FreezingIceEnvironmental5 {
 
         public FrostfireOrbital(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("frostfire_orbital", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
-            config.setDamage(3200.0);
-            config.setDamageRadius(7.5);
-            config.setTicksBetweenDamage(11);
-            config.setDamageDelayTicks(8);
+            config.setDamage(38400.0);
+            config.setDamageRadius(11.25);
+            config.setTicksBetweenDamage(4);
+            config.setDamageDelayTicks(0);
             config.setDurationTicks(360);
-            config.setCooldownTicks(180);
+            config.setCooldownTicks(60);
         }
 
         @Override protected void onSpawn(Location c) {
@@ -875,14 +875,14 @@ public final class FreezingIceEnvironmental5 {
 
         public CryostasisDome(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("cryostasis_dome", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
-            config.setDamage(2800.0);
-            config.setDamageRadius(8.0);
-            config.setTicksBetweenDamage(14);
-            config.setDamageDelayTicks(15);
+            config.setDamage(33600.0);
+            config.setDamageRadius(12.0);
+            config.setTicksBetweenDamage(4);
+            config.setDamageDelayTicks(1);
             config.setDurationTicks(320);
-            config.setCooldownTicks(220);
-            config.setImpactDamage(5000.0);
-            config.setImpactRadius(8.0);
+            config.setCooldownTicks(60);
+            config.setImpactDamage(60000.0);
+            config.setImpactRadius(12.0);
         }
 
         @Override protected void onSpawn(Location c) {
@@ -1025,12 +1025,12 @@ public final class FreezingIceEnvironmental5 {
 
         public SubzeroVortex(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("subzero_vortex", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
-            config.setDamage(3000.0);
-            config.setDamageRadius(7.0);
-            config.setTicksBetweenDamage(10);
-            config.setDamageDelayTicks(8);
+            config.setDamage(36000.0);
+            config.setDamageRadius(10.5);
+            config.setTicksBetweenDamage(4);
+            config.setDamageDelayTicks(0);
             config.setDurationTicks(380);
-            config.setCooldownTicks(190);
+            config.setCooldownTicks(60);
         }
 
         @Override protected void onSpawn(Location c) {
@@ -1137,14 +1137,14 @@ public final class FreezingIceEnvironmental5 {
 
         public AbsoluteZeroPoint(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("absolute_zero_point", AttackType.ENVIRONMENTAL, 1, MODE_PATH));
-            config.setDamage(1800.0);
-            config.setDamageRadius(8.0);
-            config.setTicksBetweenDamage(12);
-            config.setDamageDelayTicks(10);
+            config.setDamage(21600.0);
+            config.setDamageRadius(12.0);
+            config.setTicksBetweenDamage(4);
+            config.setDamageDelayTicks(0);
             config.setDurationTicks(280);
-            config.setCooldownTicks(260);
-            config.setImpactDamage(6000.0);
-            config.setImpactRadius(12.0);
+            config.setCooldownTicks(60);
+            config.setImpactDamage(72000.0);
+            config.setImpactRadius(18.0);
         }
 
         @Override protected void onSpawn(Location c) {

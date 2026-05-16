@@ -96,12 +96,12 @@ public final class FreezingIceBlockDisplay8 {
 
         public EverwinterWorldTree(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("everwinter_world_tree", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
-            config.setDamage(120.0);
-            config.setDamageRadius(11.0);
-            config.setTicksBetweenDamage(12);
-            config.setDamageDelayTicks(35);
+            config.setDamage(1440.0);
+            config.setDamageRadius(16.5);
+            config.setTicksBetweenDamage(4);
+            config.setDamageDelayTicks(2);
             config.setDurationTicks(310);
-            config.setCooldownTicks(160);
+            config.setCooldownTicks(60);
         }
 
         @Override
@@ -431,12 +431,12 @@ public final class FreezingIceBlockDisplay8 {
 
         public ColdHeartedSun(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("cold_hearted_sun", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
-            config.setDamage(110.0);
-            config.setDamageRadius(10.0);
-            config.setTicksBetweenDamage(12);
-            config.setDamageDelayTicks(30);
+            config.setDamage(1320.0);
+            config.setDamageRadius(15.0);
+            config.setTicksBetweenDamage(4);
+            config.setDamageDelayTicks(2);
             config.setDurationTicks(290);
-            config.setCooldownTicks(160);
+            config.setCooldownTicks(60);
         }
 
         @Override
@@ -775,11 +775,11 @@ public final class FreezingIceBlockDisplay8 {
         public FrozenLeviathanBreach(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("frozen_leviathan_breach", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
             config.setDamageOnImpactOnly(true);
-            config.setImpactDamage(180.0);
-            config.setImpactRadius(9.0);
+            config.setImpactDamage(2160.0);
+            config.setImpactRadius(13.5);
             config.setDamage(0.0);
             config.setDurationTicks(170);
-            config.setCooldownTicks(160);
+            config.setCooldownTicks(60);
         }
 
         @Override
@@ -1118,12 +1118,12 @@ public final class FreezingIceBlockDisplay8 {
 
         public AbsoluteZeroChamber(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("absolute_zero_chamber", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
-            config.setDamage(140.0);
-            config.setDamageRadius(5.5);
-            config.setTicksBetweenDamage(10);
-            config.setDamageDelayTicks(25);
+            config.setDamage(1680.0);
+            config.setDamageRadius(8.25);
+            config.setTicksBetweenDamage(4);
+            config.setDamageDelayTicks(2);
             config.setDurationTicks(280);
-            config.setCooldownTicks(160);
+            config.setCooldownTicks(60);
         }
 
         @Override
@@ -1475,12 +1475,12 @@ public final class FreezingIceBlockDisplay8 {
 
         public EnderGlacierVoidPortal(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("ender_glacier_void_portal", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
-            config.setDamage(140.0);
-            config.setDamageRadius(11.5);
-            config.setTicksBetweenDamage(10);
-            config.setDamageDelayTicks(30);
+            config.setDamage(1680.0);
+            config.setDamageRadius(17.25);
+            config.setTicksBetweenDamage(4);
+            config.setDamageDelayTicks(2);
             config.setDurationTicks(330);
-            config.setCooldownTicks(180);
+            config.setCooldownTicks(60);
         }
 
         @Override

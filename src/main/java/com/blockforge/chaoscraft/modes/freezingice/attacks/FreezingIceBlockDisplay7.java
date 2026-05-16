@@ -154,12 +154,12 @@ public final class FreezingIceBlockDisplay7 {
 
         public MirroredPlayerEcho(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("mirrored_player_echo", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
-            config.setDamage(110.0);
-            config.setDamageRadius(8.0);
-            config.setTicksBetweenDamage(12);
+            config.setDamage(1320.0);
+            config.setDamageRadius(12.0);
+            config.setTicksBetweenDamage(4);
             config.setDurationTicks(200);
-            config.setCooldownTicks(160);
-            config.setDamageDelayTicks(25);
+            config.setCooldownTicks(60);
+            config.setDamageDelayTicks(2);
             config.setFollowAiEnabled(true);
             config.setFollowAiWalkSpeed(0.11);
         }
@@ -365,12 +365,12 @@ public final class FreezingIceBlockDisplay7 {
 
         public TimeFrozenObjects(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("time_frozen_objects", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
-            config.setDamage(130.0);
-            config.setDamageRadius(9.0);
-            config.setTicksBetweenDamage(12);
+            config.setDamage(1560.0);
+            config.setDamageRadius(13.5);
+            config.setTicksBetweenDamage(4);
             config.setDurationTicks(240);
-            config.setCooldownTicks(180);
-            config.setDamageDelayTicks(25);
+            config.setCooldownTicks(60);
+            config.setDamageDelayTicks(2);
         }
 
         @Override
@@ -542,12 +542,12 @@ public final class FreezingIceBlockDisplay7 {
 
         public FrozenGhostEcho(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("frozen_ghost_echo", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
-            config.setDamage(110.0);
-            config.setDamageRadius(7.5);
-            config.setTicksBetweenDamage(12);
+            config.setDamage(1320.0);
+            config.setDamageRadius(11.25);
+            config.setTicksBetweenDamage(4);
             config.setDurationTicks(220);
-            config.setCooldownTicks(170);
-            config.setDamageDelayTicks(25);
+            config.setCooldownTicks(60);
+            config.setDamageDelayTicks(2);
             config.setFollowAiEnabled(true);
             config.setFollowAiWalkSpeed(0.09);
         }
@@ -746,12 +746,12 @@ public final class FreezingIceBlockDisplay7 {
 
         public IceMirageMountain(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("ice_mirage_mountain", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
-            config.setDamage(100.0);
-            config.setDamageRadius(11.0);
-            config.setTicksBetweenDamage(14);
+            config.setDamage(1200.0);
+            config.setDamageRadius(16.5);
+            config.setTicksBetweenDamage(4);
             config.setDurationTicks(220);
-            config.setCooldownTicks(180);
-            config.setDamageDelayTicks(30);
+            config.setCooldownTicks(60);
+            config.setDamageDelayTicks(2);
         }
 
         @Override
@@ -938,12 +938,12 @@ public final class FreezingIceBlockDisplay7 {
 
         public SlitheringIceForm(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("slithering_ice_form", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
-            config.setDamage(120.0);
-            config.setDamageRadius(7.0);
-            config.setTicksBetweenDamage(10);
+            config.setDamage(1440.0);
+            config.setDamageRadius(10.5);
+            config.setTicksBetweenDamage(4);
             config.setDurationTicks(220);
-            config.setCooldownTicks(180);
-            config.setDamageDelayTicks(20);
+            config.setCooldownTicks(60);
+            config.setDamageDelayTicks(1);
             config.setFollowAiEnabled(true);
             config.setFollowAiWalkSpeed(0.08);
         }
@@ -1093,12 +1093,12 @@ public final class FreezingIceBlockDisplay7 {
 
         public DriftingFrostSpirit(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("drifting_frost_spirit", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
-            config.setDamage(120.0);
-            config.setDamageRadius(8.0);
-            config.setTicksBetweenDamage(10);
+            config.setDamage(1440.0);
+            config.setDamageRadius(12.0);
+            config.setTicksBetweenDamage(4);
             config.setDurationTicks(240);
-            config.setCooldownTicks(180);
-            config.setDamageDelayTicks(25);
+            config.setCooldownTicks(60);
+            config.setDamageDelayTicks(2);
             config.setFollowAiEnabled(true);
             config.setFollowAiWalkSpeed(0.11);
         }
@@ -1262,12 +1262,12 @@ public final class FreezingIceBlockDisplay7 {
 
         public ClimbingIceVine(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("climbing_ice_vine", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
-            config.setDamage(110.0);
-            config.setDamageRadius(6.5);
-            config.setTicksBetweenDamage(10);
+            config.setDamage(1320.0);
+            config.setDamageRadius(9.75);
+            config.setTicksBetweenDamage(4);
             config.setDurationTicks(240);
-            config.setCooldownTicks(180);
-            config.setDamageDelayTicks(25);
+            config.setCooldownTicks(60);
+            config.setDamageDelayTicks(2);
             config.setFollowAiEnabled(true);
             config.setFollowAiWalkSpeed(0.10);
         }
@@ -1428,12 +1428,12 @@ public final class FreezingIceBlockDisplay7 {
 
         public RollingIceBoulder(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("rolling_ice_boulder", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
-            config.setDamage(140.0);
-            config.setDamageRadius(6.5);
-            config.setTicksBetweenDamage(8);
+            config.setDamage(1680.0);
+            config.setDamageRadius(9.75);
+            config.setTicksBetweenDamage(4);
             config.setDurationTicks(240);
-            config.setCooldownTicks(180);
-            config.setDamageDelayTicks(18);
+            config.setCooldownTicks(60);
+            config.setDamageDelayTicks(1);
             config.setFollowAiEnabled(true);
             config.setFollowAiWalkSpeed(0.15);
         }
@@ -1589,12 +1589,12 @@ public final class FreezingIceBlockDisplay7 {
 
         public StalkingFrostShadow(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("stalking_frost_shadow", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
-            config.setDamage(120.0);
-            config.setDamageRadius(6.0);
-            config.setTicksBetweenDamage(10);
+            config.setDamage(1440.0);
+            config.setDamageRadius(9.0);
+            config.setTicksBetweenDamage(4);
             config.setDurationTicks(220);
-            config.setCooldownTicks(180);
-            config.setDamageDelayTicks(25);
+            config.setCooldownTicks(60);
+            config.setDamageDelayTicks(2);
             config.setFollowAiEnabled(true);
             config.setFollowAiWalkSpeed(0.09);
         }
@@ -1767,12 +1767,12 @@ public final class FreezingIceBlockDisplay7 {
 
         public PursuingIceWolves(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("pursuing_ice_wolves", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
-            config.setDamage(110.0);
-            config.setDamageRadius(8.5);
-            config.setTicksBetweenDamage(10);
+            config.setDamage(1320.0);
+            config.setDamageRadius(12.75);
+            config.setTicksBetweenDamage(4);
             config.setDurationTicks(220);
-            config.setCooldownTicks(180);
-            config.setDamageDelayTicks(25);
+            config.setCooldownTicks(60);
+            config.setDamageDelayTicks(2);
             config.setFollowAiEnabled(true);
             config.setFollowAiWalkSpeed(0.07);
         }

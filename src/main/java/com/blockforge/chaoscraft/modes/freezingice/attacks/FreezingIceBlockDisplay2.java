@@ -105,14 +105,14 @@ public final class FreezingIceBlockDisplay2 {
         public IceBallistaVolley(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("ice_ballista_volley", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
             config.setDamageOnImpactOnly(true);
-            config.setImpactDamage(240.0);
-            config.setImpactRadius(7.0);
-            config.setDamage(60.0);
-            config.setDamageRadius(5.0);
-            config.setTicksBetweenDamage(16);
-            config.setDamageDelayTicks(35);
+            config.setImpactDamage(2880.0);
+            config.setImpactRadius(10.5);
+            config.setDamage(720.0);
+            config.setDamageRadius(7.5);
+            config.setTicksBetweenDamage(4);
+            config.setDamageDelayTicks(2);
             config.setDurationTicks(220);
-            config.setCooldownTicks(140);
+            config.setCooldownTicks(60);
             config.setEnabled(true);
         }
 
@@ -331,14 +331,14 @@ public final class FreezingIceBlockDisplay2 {
         public GlacierCannonBarrage(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("glacier_cannon_barrage", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
             config.setDamageOnImpactOnly(true);
-            config.setImpactDamage(280.0);
-            config.setImpactRadius(10.0);
+            config.setImpactDamage(3360.0);
+            config.setImpactRadius(15.0);
             config.setDamage(0.0);
-            config.setDamageRadius(6.0);
-            config.setTicksBetweenDamage(20);
+            config.setDamageRadius(9.0);
+            config.setTicksBetweenDamage(4);
             config.setDamageDelayTicks(0);
             config.setDurationTicks(180);
-            config.setCooldownTicks(150);
+            config.setCooldownTicks(60);
             config.setEnabled(true);
         }
 
@@ -538,14 +538,14 @@ public final class FreezingIceBlockDisplay2 {
         public FrostHalberd(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("frost_halberd", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
             config.setDamageOnImpactOnly(true);
-            config.setImpactDamage(200.0);
-            config.setImpactRadius(8.0);
-            config.setDamage(70.0);
-            config.setDamageRadius(7.5);
-            config.setTicksBetweenDamage(8);
-            config.setDamageDelayTicks(30);
+            config.setImpactDamage(2400.0);
+            config.setImpactRadius(12.0);
+            config.setDamage(840.0);
+            config.setDamageRadius(11.25);
+            config.setTicksBetweenDamage(4);
+            config.setDamageDelayTicks(2);
             config.setDurationTicks(220);
-            config.setCooldownTicks(140);
+            config.setCooldownTicks(60);
             config.setEnabled(true);
         }
 
@@ -729,14 +729,14 @@ public final class FreezingIceBlockDisplay2 {
         public CryoCatapult(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("cryo_catapult", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
             config.setDamageOnImpactOnly(true);
-            config.setImpactDamage(110.0);
-            config.setImpactRadius(6.0);
+            config.setImpactDamage(1320.0);
+            config.setImpactRadius(9.0);
             config.setDamage(0.0);
-            config.setDamageRadius(6.0);
-            config.setTicksBetweenDamage(20);
+            config.setDamageRadius(9.0);
+            config.setTicksBetweenDamage(4);
             config.setDamageDelayTicks(0);
             config.setDurationTicks(200);
-            config.setCooldownTicks(150);
+            config.setCooldownTicks(60);
             config.setEnabled(true);
         }
 
@@ -873,12 +873,12 @@ public final class FreezingIceBlockDisplay2 {
 
         public FrozenChakramWheel(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("frozen_chakram_wheel", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
-            config.setDamage(110.0);
-            config.setDamageRadius(7.0);
-            config.setTicksBetweenDamage(6);
-            config.setDamageDelayTicks(12);
+            config.setDamage(1320.0);
+            config.setDamageRadius(10.5);
+            config.setTicksBetweenDamage(4);
+            config.setDamageDelayTicks(1);
             config.setDurationTicks(220);
-            config.setCooldownTicks(140);
+            config.setCooldownTicks(60);
             config.setEnabled(true);
         }
 
@@ -1072,14 +1072,14 @@ public final class FreezingIceBlockDisplay2 {
         public IceMaceDescend(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("ice_mace_descend", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
             config.setDamageOnImpactOnly(true);
-            config.setImpactDamage(300.0);
-            config.setImpactRadius(12.0);
+            config.setImpactDamage(3600.0);
+            config.setImpactRadius(18.0);
             config.setDamage(0.0);
-            config.setDamageRadius(6.0);
-            config.setTicksBetweenDamage(20);
+            config.setDamageRadius(9.0);
+            config.setTicksBetweenDamage(4);
             config.setDamageDelayTicks(0);
             config.setDurationTicks(120);
-            config.setCooldownTicks(150);
+            config.setCooldownTicks(60);
             config.setEnabled(true);
         }
 
@@ -1249,14 +1249,14 @@ public final class FreezingIceBlockDisplay2 {
         public FrostScytheReap(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("frost_scythe_reap", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
             config.setDamageOnImpactOnly(true);
-            config.setImpactDamage(140.0);
-            config.setImpactRadius(7.5);
+            config.setImpactDamage(1680.0);
+            config.setImpactRadius(11.25);
             config.setDamage(0.0);
-            config.setDamageRadius(6.0);
-            config.setTicksBetweenDamage(20);
+            config.setDamageRadius(9.0);
+            config.setTicksBetweenDamage(4);
             config.setDamageDelayTicks(0);
             config.setDurationTicks(180);
-            config.setCooldownTicks(140);
+            config.setCooldownTicks(60);
             config.setEnabled(true);
         }
 
@@ -1425,14 +1425,14 @@ public final class FreezingIceBlockDisplay2 {
         public HailstormCrossbow(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("hailstorm_crossbow", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
             config.setDamageOnImpactOnly(true);
-            config.setImpactDamage(260.0);
-            config.setImpactRadius(7.0);
+            config.setImpactDamage(3120.0);
+            config.setImpactRadius(10.5);
             config.setDamage(0.0);
-            config.setDamageRadius(6.0);
-            config.setTicksBetweenDamage(20);
+            config.setDamageRadius(9.0);
+            config.setTicksBetweenDamage(4);
             config.setDamageDelayTicks(0);
             config.setDurationTicks(200);
-            config.setCooldownTicks(140);
+            config.setCooldownTicks(60);
             config.setEnabled(true);
         }
 
@@ -1640,14 +1640,14 @@ public final class FreezingIceBlockDisplay2 {
         public CryoLanceCharge(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("cryo_lance_charge", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
             config.setDamageOnImpactOnly(true);
-            config.setImpactDamage(180.0);
-            config.setImpactRadius(7.0);
-            config.setDamage(80.0);
-            config.setDamageRadius(6.5);
-            config.setTicksBetweenDamage(10);
-            config.setDamageDelayTicks(25);
+            config.setImpactDamage(2160.0);
+            config.setImpactRadius(10.5);
+            config.setDamage(960.0);
+            config.setDamageRadius(9.75);
+            config.setTicksBetweenDamage(4);
+            config.setDamageDelayTicks(2);
             config.setDurationTicks(160);
-            config.setCooldownTicks(140);
+            config.setCooldownTicks(60);
             config.setEnabled(true);
         }
 
@@ -1829,12 +1829,12 @@ public final class FreezingIceBlockDisplay2 {
 
         public FrozenFlailSwing(ChaosCraftPlugin plugin) {
             super(plugin, new AttackConfig("frozen_flail_swing", AttackType.BLOCK_DISPLAY, 1, MODE_PATH));
-            config.setDamage(100.0);
-            config.setDamageRadius(8.0);
-            config.setTicksBetweenDamage(8);
-            config.setDamageDelayTicks(18);
+            config.setDamage(1200.0);
+            config.setDamageRadius(12.0);
+            config.setTicksBetweenDamage(4);
+            config.setDamageDelayTicks(1);
             config.setDurationTicks(220);
-            config.setCooldownTicks(140);
+            config.setCooldownTicks(60);
             config.setEnabled(true);
         }
 
