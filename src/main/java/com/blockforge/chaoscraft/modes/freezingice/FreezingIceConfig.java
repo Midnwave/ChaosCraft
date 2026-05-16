@@ -341,15 +341,29 @@ public class FreezingIceConfig {
 
         // Ambient sounds
         defaults.set("ambient-sounds.enabled", true);
-        defaults.set("ambient-sounds.min-interval-ticks", 80);
-        defaults.set("ambient-sounds.max-interval-ticks", 200);
-        defaults.set("ambient-sounds.volume", 0.4);
-        defaults.set("ambient-sounds.sounds", buildDefaultAmbientSounds());
         defaults.setComments("ambient-sounds.enabled", List.of(
                 "",
                 "=== AMBIENT SOUNDS ===",
                 "Random cold-themed sounds played at a random player at a random interval.",
                 "Sounds are Bukkit Sound enum names (e.g. BLOCK_POWDER_SNOW_BREAK)."));
+        defaults.set("ambient-sounds.min-interval-ticks", 80);
+        defaults.setComments("ambient-sounds.min-interval-ticks", List.of(
+                "Minimum ticks between ambient sound plays. 20 ticks = 1 second.",
+                "80 = at least 4 seconds between sounds. Each play targets a random player."));
+        defaults.set("ambient-sounds.max-interval-ticks", 200);
+        defaults.setComments("ambient-sounds.max-interval-ticks", List.of(
+                "Maximum ticks between ambient sound plays. 20 ticks = 1 second.",
+                "200 = at most 10 seconds between sounds. The scheduler picks a random",
+                "delay in [min, max] after each play."));
+        defaults.set("ambient-sounds.volume", 0.4);
+        defaults.setComments("ambient-sounds.volume", List.of(
+                "Volume multiplier (0.0-1.0). Subtle by design — these are background",
+                "atmosphere, not full-volume effects. 0.4 = 40% volume."));
+        defaults.set("ambient-sounds.sounds", buildDefaultAmbientSounds());
+        defaults.setComments("ambient-sounds.sounds", List.of(
+                "Bukkit Sound enum names. Must be valid constants on the running server",
+                "version — unknown names are skipped at runtime. Defaults are cold / glass",
+                "themed (powder snow, amethyst chime, glass break, ice armor)."));
 
         // Gimmick: Frostbite + Bonfire Network
         defaults.set("gimmick.enabled", true);
@@ -449,11 +463,14 @@ public class FreezingIceConfig {
 
         // Music
         defaults.set("music.track", "freezingice_main");
-        defaults.set("music.volume", 0.6);
         defaults.setComments("music.track", List.of(
                 "Music track id (registered via the resource pack / MusicManager).",
                 "Default 'freezingice_main' is a placeholder — provide a real track id later.",
                 "volume is a multiplier applied at playback (0.0–1.0)."));
+        defaults.set("music.volume", 0.6);
+        defaults.setComments("music.volume", List.of(
+                "Playback volume multiplier (0.0-1.0). 0.6 = 60% volume.",
+                "Applied on top of each client's music slider."));
 
         // Rewards
         defaults.set("rewards.survival-commands", new ArrayList<>());
