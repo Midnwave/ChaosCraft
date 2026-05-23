@@ -452,10 +452,45 @@ public class ChainConfig {
         //     doesn't itself know about.
         MobSpawnConfig.writeDefaults(defaults, buildDefaultMobSpawnEntries());
         defaults.set("mob-spawning.enabled", true);
+        defaults.setComments("mob-spawning.enabled", List.of(
+                "",
+                "=== MOB SPAWNING ===",
+                "Universal mob spawning system. Chain mode defaults to ENABLED — the",
+                "mob pool below is the source of mobs that fire chain attacks at players.",
+                "Set to false to run Chain mode without any mob spawns (attacks-only)."));
+
         defaults.set("mob-spawning.spawn-interval-ticks", 200);
+        defaults.setComments("mob-spawning.spawn-interval-ticks", List.of(
+                "Ticks between mob spawn attempts. 20 ticks = 1 second.",
+                "200 = every 10 seconds. Chain mode runs hotter than the shared default",
+                "(400) because the chain gimmick needs mobs nearby to function."));
+
         defaults.set("mob-spawning.max-total-mobs", 12);
+        defaults.setComments("mob-spawning.max-total-mobs", List.of(
+                "Maximum total mobs alive at once for Chain mode across the server.",
+                "Tuned at 12 to keep budget PCs alive — chain visuals add their own",
+                "BlockDisplay overhead on top of the mob count."));
+
         defaults.set("mob-spawning.max-mobs-per-player", 4);
+        defaults.setComments("mob-spawning.max-mobs-per-player", List.of(
+                "Maximum mobs within 30 blocks of any single player.",
+                "4 chain mobs per player is already plenty — every one of them can fire",
+                "a leashing chain, so more = unfair chain-stun stacks."));
+
         defaults.set("mob-spawning.mobs", buildDefaultChainMobs());
+        defaults.setComments("mob-spawning.mobs", List.of(
+                "Chain mode mob pool. Each entry has the standard mob-spawning fields",
+                "(id, type, weight, min-count, max-count, health-multiplier,",
+                "damage-multiplier) PLUS a chain-attack override block:",
+                "  chain-attack:",
+                "    enabled              — per-mob chain toggle",
+                "    reach-radius         — overrides gimmick.chain-attack.default-reach-radius",
+                "    effect               — overrides gimmick.chain-attack.default-effect",
+                "    damage               — overrides gimmick.chain-attack.default-damage",
+                "    effect-duration-ticks— overrides gimmick.chain-attack.default-effect-duration-ticks",
+                "Default pool: 9 chain-themed mobs across 3 sub-vibes",
+                "(industrial / cursed / spectral). Each has a distinct effect so",
+                "encounters feel varied rather than 'all PULL all the time'."));
 
         // Ambient sounds
         defaults.set("ambient-sounds.enabled", true);
