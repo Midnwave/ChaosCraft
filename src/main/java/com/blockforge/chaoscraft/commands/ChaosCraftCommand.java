@@ -125,6 +125,7 @@ public class ChaosCraftCommand implements CommandExecutor, TabCompleter {
     private final com.blockforge.chaoscraft.modes.devilsdream.DevilsDreamCommand devilsDreamHandler;
     private final com.blockforge.chaoscraft.modes.bluemoon.BlueMoonCommand blueMoonHandler;
     private final com.blockforge.chaoscraft.modes.freezingice.FreezingIceCommand freezingIceHandler;
+    private final com.blockforge.chaoscraft.modes.chain.ChainCommand chainHandler;
     private final com.blockforge.chaoscraft.modes.doom.DoomCommand doomHandler;
     private final com.blockforge.chaoscraft.modes.seer.SeerCommand seerHandler;
     private final com.blockforge.chaoscraft.modes.tutorial.TutorialCommand tutorialHandler;
@@ -148,6 +149,7 @@ public class ChaosCraftCommand implements CommandExecutor, TabCompleter {
         this.devilsDreamHandler = new com.blockforge.chaoscraft.modes.devilsdream.DevilsDreamCommand(plugin);
         this.blueMoonHandler = new com.blockforge.chaoscraft.modes.bluemoon.BlueMoonCommand(plugin);
         this.freezingIceHandler = new com.blockforge.chaoscraft.modes.freezingice.FreezingIceCommand(plugin);
+        this.chainHandler = new com.blockforge.chaoscraft.modes.chain.ChainCommand(plugin);
         this.doomHandler = new com.blockforge.chaoscraft.modes.doom.DoomCommand(plugin);
         this.seerHandler = new com.blockforge.chaoscraft.modes.seer.SeerCommand(plugin);
         this.tutorialHandler = new com.blockforge.chaoscraft.modes.tutorial.TutorialCommand(plugin);
@@ -418,6 +420,13 @@ public class ChaosCraftCommand implements CommandExecutor, TabCompleter {
                     yield true;
                 }
                 yield freezingIceHandler.onCommand(sender, command, label, modeArgs);
+            }
+            case "chain" -> {
+                if (!sender.hasPermission("chaoscraft.chain.admin") && !sender.hasPermission("chaoscraft.admin")) {
+                    sender.sendMessage(Component.text("No permission.", NamedTextColor.RED));
+                    yield true;
+                }
+                yield chainHandler.onCommand(sender, command, label, modeArgs);
             }
             case "doom" -> {
                 if (!sender.hasPermission("chaoscraft.doom.admin") && !sender.hasPermission("chaoscraft.admin")) {
@@ -1189,6 +1198,12 @@ public class ChaosCraftCommand implements CommandExecutor, TabCompleter {
                                 "spawninterval", "toggleexempt", "list", "reload"));
                     }
                 }
+                case "chain" -> {
+                    if (sender.hasPermission("chaoscraft.chain.admin") || sender.hasPermission("chaoscraft.admin")) {
+                        actions.addAll(List.of("status", "debug", "test", "clearattacks",
+                                "spawninterval", "toggleexempt", "list", "reload"));
+                    }
+                }
                 case "doom" -> {
                     if (sender.hasPermission("chaoscraft.doom.admin") || sender.hasPermission("chaoscraft.admin")) {
                         actions.addAll(List.of("status", "debug", "test", "clearattacks",
@@ -1244,6 +1259,11 @@ public class ChaosCraftCommand implements CommandExecutor, TabCompleter {
             case "freezingice" -> {
                 if (!sender.hasPermission("chaoscraft.freezingice.admin") && !sender.hasPermission("chaoscraft.admin")) yield List.of();
                 List<String> result = freezingIceHandler.onTabComplete(sender, null, "", modeArgs);
+                yield result != null ? result : List.of();
+            }
+            case "chain" -> {
+                if (!sender.hasPermission("chaoscraft.chain.admin") && !sender.hasPermission("chaoscraft.admin")) yield List.of();
+                List<String> result = chainHandler.onTabComplete(sender, null, "", modeArgs);
                 yield result != null ? result : List.of();
             }
             case "doom" -> {

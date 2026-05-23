@@ -7,6 +7,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -57,6 +58,12 @@ public class AttackConfig {
     // Distinct from tracksPlayer (which snap-teleports). Opt-in per attack.
     private boolean followAiEnabled = false;
     private double followAiWalkSpeed = 0.06;
+
+    // Skill-based dodge style label, e.g. "Pendulum sweep" / "Drop-from-sky" /
+    // "Parry window". Purely informational — written into each per-attack YAML
+    // file's top-level header comment block so designers / config editors can
+    // see at a glance what the intended dodge interaction is.
+    private String designType = "";
 
     public AttackConfig(String attackId, AttackType type, int phase) {
         this(attackId, type, phase, "modes/calamity/attacks");
@@ -152,6 +159,7 @@ public class AttackConfig {
             ConfigurationSection updated = config.createSection(attackId);
             saveTo(updated);
             applyAttackComments(config, attackId);
+            applyFileHeader(config);
             try {
                 config.save(file);
             } catch (IOException e) {
@@ -181,11 +189,42 @@ public class AttackConfig {
         ConfigurationSection section = config.createSection(attackId);
         saveTo(section);
         applyAttackComments(config, attackId);
+        applyFileHeader(config);
 
         try {
             config.save(file);
         } catch (IOException e) {
             plugin.getLogger().severe("Failed to save attack config: " + attackId);
+        }
+    }
+
+    /**
+     * Apply a top-of-file YAML header that identifies the most-recently-saved
+     * attack and its design type. Uses {@link org.bukkit.configuration.file.YamlConfigurationOptions#setHeader(List)}
+     * on Paper 1.18+; if that method is unavailable on the running server,
+     * falls back to {@link YamlConfiguration#setComments(String, List)} on the
+     * top-level {@code config-version} key with the same content.
+     *
+     * Since multiple attacks share one file, this header may get overwritten
+     * each time a sibling attack saves itself. That's fine — the authoritative
+     * per-attack identification comment block lives on each attack's section
+     * (see {@link #applyAttackComments(YamlConfiguration, String)}).
+     */
+    private void applyFileHeader(YamlConfiguration config) {
+        List<String> header = new ArrayList<>();
+        header.add("============================================================");
+        header.add("Attack: " + attackId);
+        if (designType != null && !designType.isEmpty()) {
+            header.add("Design Type: " + designType);
+        }
+        header.add("============================================================");
+        try {
+            config.options().setHeader(header);
+        } catch (Throwable noSetHeader) {
+            // Older API — fall back to first-key comments
+            try {
+                config.setComments("config-version", header);
+            } catch (Throwable ignored) {}
         }
     }
 
@@ -207,14 +246,22 @@ public class AttackConfig {
     /**
      * Sets descriptive block comments on every key in this attack's config section.
      * Called whenever the section is written so comments are always present in the file.
+     *
+     * When this attack has a non-empty design type, that label is included in the
+     * section header block so config editors can see the skill-based dodge style
+     * (e.g. "Pendulum sweep" / "Drop-from-sky" / "Parry window") at a glance.
      */
     void applyAttackComments(YamlConfiguration config, String id) {
         String p = id + ".";
-        config.setComments(id, List.of(
-                "─────────────────────────────────────────────────────────",
-                "Attack: " + id,
-                "Type: " + type.name() + "  |  Phase: " + phase,
-                "─────────────────────────────────────────────────────────"));
+        List<String> header = new ArrayList<>();
+        header.add("============================================================");
+        header.add("Attack: " + id);
+        if (designType != null && !designType.isEmpty()) {
+            header.add("Design Type: " + designType);
+        }
+        header.add("Type: " + type.name() + "  |  Phase: " + phase);
+        header.add("============================================================");
+        config.setComments(id, header);
         config.setComments(p + "damage", List.of(
                 "Base damage dealt to players within the damage radius each damage tick.",
                 "Measured in half-hearts (2.0 = 1 full heart). 20.0 = 10 hearts (instant kill on default HP)."));
@@ -358,4 +405,7 @@ public class AttackConfig {
     public void setFollowAiEnabled(boolean v) { followAiEnabled = v; }
     public double getFollowAiWalkSpeed() { return followAiWalkSpeed; }
     public void setFollowAiWalkSpeed(double v) { followAiWalkSpeed = v; }
+
+    public String getDesignType() { return designType; }
+    public void setDesignType(String type) { this.designType = type == null ? "" : type; }
 }

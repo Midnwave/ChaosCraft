@@ -6,6 +6,7 @@ import com.blockforge.chaoscraft.api.timer.ModeTimer;
 import com.blockforge.chaoscraft.commands.*;
 import com.blockforge.chaoscraft.integration.PlaceholderExpansion;
 import com.blockforge.chaoscraft.modes.calamity.CalamityMode;
+import com.blockforge.chaoscraft.modes.chain.ChainMode;
 import com.blockforge.chaoscraft.modes.corruption.CorruptionMode;
 import com.blockforge.chaoscraft.modes.devilsdream.DevilsDreamMode;
 import com.blockforge.chaoscraft.api.points.ModePointsListener;
@@ -116,6 +117,9 @@ public class ChaosCraftPlugin extends JavaPlugin {
         com.blockforge.chaoscraft.modes.freezingice.FreezingIceMode freezingIceMode =
                 new com.blockforge.chaoscraft.modes.freezingice.FreezingIceMode(this);
         modeManager.registerMode(freezingIceMode);
+
+        ChainMode chainMode = new ChainMode(this);
+        modeManager.registerMode(chainMode);
 
         com.blockforge.chaoscraft.modes.doom.DoomMode doomMode =
                 new com.blockforge.chaoscraft.modes.doom.DoomMode(this);
@@ -573,6 +577,15 @@ public class ChaosCraftPlugin extends JavaPlugin {
             fiMode.getAttackRegistry().reloadConfigs();
         }
         getLogger().info("[Reload] FreezingIce in " + (System.currentTimeMillis() - t) + "ms");
+
+        // Reload Chain
+        t = System.currentTimeMillis();
+        var chain = modeManager.getMode("chain");
+        if (chain instanceof ChainMode chainMode) {
+            chainMode.getChainConfig().load();
+            chainMode.getAttackRegistry().reloadConfigs();
+        }
+        getLogger().info("[Reload] Chain in " + (System.currentTimeMillis() - t) + "ms");
 
         // Reload Doom
         t = System.currentTimeMillis();
