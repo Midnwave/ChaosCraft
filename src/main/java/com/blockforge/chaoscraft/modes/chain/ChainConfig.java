@@ -9,8 +9,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Chain Mode configuration loader.
@@ -25,7 +26,7 @@ import java.util.List;
  */
 public class ChainConfig {
 
-    private static final int CURRENT_CONFIG_VERSION = 2;
+    private static final int CURRENT_CONFIG_VERSION = 3;
 
     private final ChaosCraftPlugin plugin;
     private final File configFile;
@@ -151,9 +152,83 @@ public class ChainConfig {
                 "BLOCK_IRON_DOOR_CLOSE");
     }
 
-    /** Empty mob pool by default — chain ground spawner is opt-in. */
+    /**
+     * Default mob pool — 9 chain-themed MythicMobs spread across 3 sub-vibes
+     * (industrial / cursed / spectral). Each entry's chain-attack override
+     * (effect, reach, damage, duration) is written separately by
+     * {@link #buildDefaultChainMobs()} once the base mob list has been laid
+     * down. This split exists because MobSpawnConfig.MobSpawnDefaultEntry
+     * only writes the canonical mob-spawning fields.
+     */
     private List<MobSpawnConfig.MobSpawnDefaultEntry> buildDefaultMobSpawnEntries() {
-        return Collections.emptyList();
+        List<MobSpawnConfig.MobSpawnDefaultEntry> list = new ArrayList<>();
+        // Industrial
+        list.add(new MobSpawnConfig.MobSpawnDefaultEntry("ChainBrute",          "mythicmobs", 10, 1, 1, 1.0, 1.0));
+        list.add(new MobSpawnConfig.MobSpawnDefaultEntry("IronInquisitor",      "mythicmobs",  8, 1, 1, 1.0, 1.0));
+        list.add(new MobSpawnConfig.MobSpawnDefaultEntry("AnchorSentinel",      "mythicmobs",  5, 1, 1, 1.0, 1.0));
+        // Cursed
+        list.add(new MobSpawnConfig.MobSpawnDefaultEntry("BoundWarden",         "mythicmobs",  8, 1, 1, 1.0, 1.0));
+        list.add(new MobSpawnConfig.MobSpawnDefaultEntry("ShackleWraith",       "mythicmobs",  8, 1, 1, 1.0, 1.0));
+        list.add(new MobSpawnConfig.MobSpawnDefaultEntry("CursedExecutioner",   "mythicmobs",  6, 1, 1, 1.0, 1.0));
+        // Spectral
+        list.add(new MobSpawnConfig.MobSpawnDefaultEntry("SpectralConvict",     "mythicmobs",  9, 1, 1, 1.0, 1.0));
+        list.add(new MobSpawnConfig.MobSpawnDefaultEntry("GhostSentenceBearer", "mythicmobs",  8, 1, 1, 1.0, 1.0));
+        list.add(new MobSpawnConfig.MobSpawnDefaultEntry("IronMaidenPhantom",   "mythicmobs",  6, 1, 1, 1.0, 1.0));
+        return list;
+    }
+
+    /**
+     * Full chain-mode mob pool with per-mob chain-attack overrides.
+     * Used by {@link #createDefaults()} to write a richer mob-spawning.mobs
+     * list than the base MobSpawnConfig writer supports (which only knows
+     * the canonical fields, not chain-attack overrides).
+     */
+    private List<Map<String, Object>> buildDefaultChainMobs() {
+        List<Map<String, Object>> mobs = new ArrayList<>();
+        // Industrial
+        mobs.add(chainMob("ChainBrute",          10, 1.0, 1.0, "PULL",        12.0, 120.0, 30));
+        mobs.add(chainMob("IronInquisitor",       8, 1.0, 1.0, "SLAM",        11.0, 160.0, 28));
+        mobs.add(chainMob("AnchorSentinel",       5, 1.0, 1.0, "SWING",       14.0, 130.0, 40));
+        // Cursed
+        mobs.add(chainMob("BoundWarden",          8, 1.0, 1.0, "LAUNCH",      12.0, 140.0, 24));
+        mobs.add(chainMob("ShackleWraith",        8, 1.0, 1.0, "ANCHOR",      11.0, 100.0, 35));
+        mobs.add(chainMob("CursedExecutioner",    6, 1.0, 1.0, "DAMAGE_ONLY", 10.0, 220.0, 18));
+        // Spectral
+        mobs.add(chainMob("SpectralConvict",      9, 1.0, 1.0, "SWING",       12.0, 110.0, 32));
+        mobs.add(chainMob("GhostSentenceBearer",  8, 1.0, 1.0, "PULL",        13.0, 130.0, 28));
+        mobs.add(chainMob("IronMaidenPhantom",    6, 1.0, 1.0, "SLAM",        11.0, 170.0, 26));
+        return mobs;
+    }
+
+    /**
+     * Build a single mob-spawning.mobs[] entry with a chain-attack override.
+     * @param id              MythicMobs internal ID
+     * @param weight          spawn weight (higher = more frequent)
+     * @param hpMult          health multiplier vs. base
+     * @param dmgMult         damage multiplier vs. base
+     * @param effect          chain effect (PULL/SWING/SLAM/LAUNCH/ANCHOR/DAMAGE_ONLY)
+     * @param reach           chain reach radius in blocks
+     * @param damage          chain attach damage
+     * @param durationTicks   effect phase duration in ticks
+     */
+    private Map<String, Object> chainMob(String id, int weight, double hpMult, double dmgMult,
+                                         String effect, double reach, double damage, int durationTicks) {
+        Map<String, Object> m = new LinkedHashMap<>();
+        m.put("id", id);
+        m.put("type", "mythicmobs");
+        m.put("weight", weight);
+        m.put("min-count", 1);
+        m.put("max-count", 1);
+        m.put("health-multiplier", hpMult);
+        m.put("damage-multiplier", dmgMult);
+        Map<String, Object> chain = new LinkedHashMap<>();
+        chain.put("enabled", true);
+        chain.put("reach-radius", reach);
+        chain.put("effect", effect);
+        chain.put("damage", damage);
+        chain.put("effect-duration-ticks", durationTicks);
+        m.put("chain-attack", chain);
+        return m;
     }
 
     /** Returns a MobSpawnConfig backed by this mode's YAML. */
@@ -370,8 +445,17 @@ public class ChainConfig {
                 "Spawn weight for ModelEngine VFX attacks.",
                 "Defaults to 0.0 — no ME attacks are registered for Chain mode yet."));
 
-        // Mob spawning section
+        // Mob spawning section — write the canonical block first, then
+        // (a) flip enabled to true and tune chain-mode-appropriate caps,
+        // (b) overwrite the .mobs list with our full pool including the
+        //     per-mob chain-attack overrides MobSpawnConfig.writeDefaults
+        //     doesn't itself know about.
         MobSpawnConfig.writeDefaults(defaults, buildDefaultMobSpawnEntries());
+        defaults.set("mob-spawning.enabled", true);
+        defaults.set("mob-spawning.spawn-interval-ticks", 200);
+        defaults.set("mob-spawning.max-total-mobs", 12);
+        defaults.set("mob-spawning.max-mobs-per-player", 4);
+        defaults.set("mob-spawning.mobs", buildDefaultChainMobs());
 
         // Ambient sounds
         defaults.set("ambient-sounds.enabled", true);

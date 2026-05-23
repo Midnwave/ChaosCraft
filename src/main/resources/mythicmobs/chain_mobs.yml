@@ -1,0 +1,448 @@
+# ============================================================
+# Chain Mode - Custom Mob Definitions
+# ============================================================
+# 9 custom MythicMobs across 3 sub-vibes (industrial/cursed/spectral)
+# All tagged `chain:wielder` so ChainAttackSystem fires their chain
+# attack ability. Per-mob chain effect (PULL/SWING/SLAM/LAUNCH/ANCHOR/
+# DAMAGE_ONLY) is set in chain.yml's mob-spawning pool, not here.
+# ============================================================
+
+# ============================================================
+# INDUSTRIAL SUB-VIBE (iron/rust)
+# ============================================================
+# Heavy iron tanks and brutes. Spawn FX: large_smoke + iron block
+# dust. Sounds: chain place, anvil clang, iron golem grunts, grindstone.
+# ============================================================
+
+ChainBrute:
+  Type: WOLF
+  Display: '&8&lChain Brute'
+  Health: 80
+  Damage: 16
+  Faction: chain
+  AIGoalSelectors:
+  - clear
+  - 0 float
+  - 1 meleeattack
+  - 2 lookatplayers
+  - 3 randomstroll
+  AITargetSelectors:
+  - clear
+  - 0 players
+  Skills:
+  - sound{s=block.chain.place;v=1.0;p=0.6} @self ~onSpawn
+  - sound{s=block.anvil.land;v=0.8;p=0.7} @self ~onSpawn
+  - effect:particles{particle=large_smoke;amount=20;hS=0.5;vS=0.3;speed=0.05} @self ~onSpawn
+  - effect:particles{particle=block_crack;material=IRON_BLOCK;amount=15;hS=0.6;vS=0.4;speed=0.0} @self ~onSpawn
+  - sound{s=entity.iron_golem.attack;v=0.9;p=0.7} @self ~onAttack
+  - sound{s=entity.iron_golem.hurt;v=0.8;p=0.8} @self ~onDamaged
+  - sound{s=block.grindstone.use;v=0.6;p=0.5} @self ~onTimer:140
+  - effect:particles{particle=large_smoke;amount=4;hS=0.3;vS=0.2;speed=0.02} @self ~onTimer:80
+  - sound{s=entity.iron_golem.death;v=1.0;p=0.7} @self ~onDeath
+  Options:
+    MovementSpeed: 0.22
+    Silent: true
+    Despawn: true
+    PreventOtherDrops: true
+    PreventSunburn: true
+    NoAI: false
+    Collidable: true
+    Persistent: false
+    KnockbackResistance: 0.8
+    FollowRange: 28
+  Tags:
+  - chaoscraft_chain
+  - chain_brute
+  - chain:wielder
+  - chain:vibe:industrial
+  Drops:
+  - IRON_INGOT 0-2
+
+IronInquisitor:
+  Type: VINDICATOR
+  Display: '&7&lIron Inquisitor'
+  Health: 60
+  Damage: 22
+  Faction: chain
+  AIGoalSelectors:
+  - clear
+  - 0 float
+  - 1 meleeattack
+  - 2 lookatplayers
+  - 3 randomstroll
+  AITargetSelectors:
+  - clear
+  - 0 players
+  Skills:
+  - sound{s=block.chain.place;v=1.0;p=0.9} @self ~onSpawn
+  - sound{s=block.anvil.land;v=0.7;p=1.0} @self ~onSpawn
+  - effect:particles{particle=large_smoke;amount=18;hS=0.5;vS=0.4;speed=0.05} @self ~onSpawn
+  - effect:particles{particle=block_crack;material=IRON_BLOCK;amount=12;hS=0.5;vS=0.4;speed=0.0} @self ~onSpawn
+  - sound{s=entity.iron_golem.attack;v=0.9;p=1.1} @self ~onAttack
+  - sound{s=block.grindstone.use;v=0.6;p=0.8} @self ~onTimer:120
+  - effect:particles{particle=crit;amount=5;hS=0.3;vS=0.3;speed=0.05} @self ~onTimer:80
+  - sound{s=entity.iron_golem.hurt;v=0.8;p=1.0} @self ~onDamaged
+  - sound{s=entity.iron_golem.death;v=1.0;p=0.9} @self ~onDeath
+  Options:
+    MovementSpeed: 0.30
+    Silent: true
+    Despawn: true
+    PreventOtherDrops: true
+    PreventSunburn: true
+    NoAI: false
+    Collidable: true
+    Persistent: false
+    KnockbackResistance: 0.5
+    FollowRange: 32
+  Tags:
+  - chaoscraft_chain
+  - iron_inquisitor
+  - chain:wielder
+  - chain:vibe:industrial
+  Drops:
+  - IRON_INGOT 1-3
+
+AnchorSentinel:
+  Type: IRON_GOLEM
+  Display: '&8&lAnchor Sentinel'
+  Health: 140
+  Damage: 18
+  Faction: chain
+  AIGoalSelectors:
+  - clear
+  - 0 float
+  - 1 meleeattack
+  - 2 lookatplayers
+  - 3 randomstroll
+  AITargetSelectors:
+  - clear
+  - 0 players
+  Skills:
+  - sound{s=block.chain.place;v=1.2;p=0.4} @self ~onSpawn
+  - sound{s=block.anvil.land;v=1.0;p=0.5} @self ~onSpawn
+  - effect:particles{particle=large_smoke;amount=30;hS=0.8;vS=0.5;speed=0.06} @self ~onSpawn
+  - effect:particles{particle=block_crack;material=IRON_BLOCK;amount=25;hS=0.8;vS=0.6;speed=0.0} @self ~onSpawn
+  - sound{s=entity.iron_golem.attack;v=1.0;p=0.5} @self ~onAttack
+  - sound{s=entity.iron_golem.hurt;v=0.9;p=0.6} @self ~onDamaged
+  - sound{s=block.grindstone.use;v=0.8;p=0.4} @self ~onTimer:160
+  - effect:particles{particle=large_smoke;amount=6;hS=0.4;vS=0.3;speed=0.02} @self ~onTimer:60
+  - sound{s=entity.iron_golem.death;v=1.2;p=0.5} @self ~onDeath
+  Options:
+    MovementSpeed: 0.20
+    Silent: true
+    Despawn: true
+    PreventOtherDrops: true
+    PreventSunburn: true
+    NoAI: false
+    Collidable: true
+    Persistent: false
+    KnockbackResistance: 1.0
+    FollowRange: 32
+  Tags:
+  - chaoscraft_chain
+  - anchor_sentinel
+  - chain:wielder
+  - chain:vibe:industrial
+  Drops:
+  - IRON_INGOT 2-4
+  - IRON_BLOCK 0-1
+
+# ============================================================
+# CURSED SUB-VIBE (teal/purple soul flame)
+# ============================================================
+# Skeletal/undead variants channeling cursed teal flame. Spawn FX:
+# soul_fire_flame + cursed teal dust. Sounds: soul sand, wither
+# ambient, beacon deactivate, soul escape.
+# ============================================================
+
+BoundWarden:
+  Type: WITHER_SKELETON
+  Display: '&3&lBound Warden'
+  Health: 65
+  Damage: 24
+  Faction: chain
+  AIGoalSelectors:
+  - clear
+  - 0 float
+  - 1 meleeattack
+  - 2 lookatplayers
+  - 3 randomstroll
+  AITargetSelectors:
+  - clear
+  - 0 players
+  Skills:
+  - sound{s=block.soul_sand.place;v=1.0;p=0.7} @self ~onSpawn
+  - sound{s=entity.wither.ambient;v=0.6;p=1.2} @self ~onSpawn
+  - effect:particles{particle=soul_fire_flame;amount=24;hS=0.6;vS=0.5;speed=0.04} @self ~onSpawn
+  - effect:particles{particle=dust;color=#30D8B0;size=1.2;amount=18;hS=0.5;vS=0.5;speed=0.02} @self ~onSpawn
+  - sound{s=block.beacon.deactivate;v=0.7;p=1.3} @self ~onAttack
+  - effect:particles{particle=soul_fire_flame;amount=6;hS=0.3;vS=0.3;speed=0.02} @self ~onTimer:60
+  - effect:particles{particle=dust;color=#30D8B0;size=1.0;amount=4;hS=0.3;vS=0.3;speed=0.01} @self ~onTimer:60
+  - sound{s=entity.wither_skeleton.hurt;v=0.9;p=0.9} @self ~onDamaged
+  - sound{s=entity.wither_skeleton.death;v=1.0;p=0.9} @self ~onDeath
+  Options:
+    MovementSpeed: 0.28
+    Silent: true
+    Despawn: true
+    PreventOtherDrops: true
+    PreventSunburn: true
+    NoAI: false
+    Collidable: true
+    Persistent: false
+    KnockbackResistance: 0.4
+    FollowRange: 32
+  Tags:
+  - chaoscraft_chain
+  - bound_warden
+  - chain:wielder
+  - chain:vibe:cursed
+  Drops:
+  - BONE 1-2
+  - SOUL_SAND 0-1
+
+ShackleWraith:
+  Type: STRAY
+  Display: '&b&lShackle Wraith'
+  Health: 50
+  Damage: 20
+  Faction: chain
+  AIGoalSelectors:
+  - clear
+  - 0 float
+  - 1 meleeattack
+  - 2 lookatplayers
+  - 3 randomstroll
+  AITargetSelectors:
+  - clear
+  - 0 players
+  Skills:
+  - sound{s=block.soul_sand.place;v=1.0;p=0.9} @self ~onSpawn
+  - sound{s=block.beacon.deactivate;v=0.6;p=1.2} @self ~onSpawn
+  - effect:particles{particle=soul_fire_flame;amount=20;hS=0.5;vS=0.5;speed=0.04} @self ~onSpawn
+  - effect:particles{particle=dust;color=#30D8B0;size=1.2;amount=20;hS=0.6;vS=0.5;speed=0.02} @self ~onSpawn
+  - sound{s=entity.wither.ambient;v=0.5;p=1.5} @self ~onEnterCombat
+  - effect:particles{particle=soul;amount=12;hS=0.4;vS=0.6;speed=0.05} @self ~onEnterCombat
+  - effect:particles{particle=dust;color=#30D8B0;size=1.1;amount=10;hS=0.5;vS=0.4;speed=0.02} @self ~onEnterCombat
+  - effect:particles{particle=soul_fire_flame;amount=4;hS=0.3;vS=0.3;speed=0.02} @self ~onTimer:80
+  - sound{s=entity.stray.hurt;v=0.9;p=0.9} @self ~onDamaged
+  - sound{s=entity.stray.death;v=1.0;p=0.9} @self ~onDeath
+  Options:
+    MovementSpeed: 0.30
+    Silent: true
+    Despawn: true
+    PreventOtherDrops: true
+    PreventSunburn: true
+    NoAI: false
+    Collidable: true
+    Persistent: false
+    KnockbackResistance: 0.3
+    FollowRange: 30
+  Tags:
+  - chaoscraft_chain
+  - shackle_wraith
+  - chain:wielder
+  - chain:vibe:cursed
+  Drops:
+  - BONE 1-2
+
+CursedExecutioner:
+  Type: ZOMBIE
+  Display: '&5&lCursed Executioner'
+  Health: 70
+  Damage: 28
+  Faction: chain
+  AIGoalSelectors:
+  - clear
+  - 0 float
+  - 1 meleeattack
+  - 2 lookatplayers
+  - 3 randomstroll
+  AITargetSelectors:
+  - clear
+  - 0 players
+  Skills:
+  - sound{s=block.soul_sand.place;v=1.0;p=0.6} @self ~onSpawn
+  - sound{s=entity.wither.ambient;v=0.7;p=0.9} @self ~onSpawn
+  - effect:particles{particle=soul_fire_flame;amount=26;hS=0.6;vS=0.5;speed=0.04} @self ~onSpawn
+  - effect:particles{particle=dust;color=#30D8B0;size=1.3;amount=22;hS=0.6;vS=0.5;speed=0.02} @self ~onSpawn
+  - sound{s=block.beacon.deactivate;v=0.8;p=0.7} @self ~onAttack
+  - effect:particles{particle=soul;amount=10;hS=0.4;vS=0.5;speed=0.05} @self ~onAttack
+  - skill{s=ExecutionerShriek} @self ~onDamaged ?<health.percent{p=25}
+  - effect:particles{particle=soul_fire_flame;amount=5;hS=0.3;vS=0.3;speed=0.02} @self ~onTimer:60
+  - sound{s=entity.zombie.hurt;v=0.9;p=0.6} @self ~onDamaged
+  - sound{s=entity.zombie.death;v=1.0;p=0.6} @self ~onDeath
+  Options:
+    MovementSpeed: 0.26
+    Silent: true
+    Despawn: true
+    PreventOtherDrops: true
+    PreventSunburn: true
+    NoAI: false
+    Collidable: true
+    Persistent: false
+    KnockbackResistance: 0.5
+    FollowRange: 30
+  Tags:
+  - chaoscraft_chain
+  - cursed_executioner
+  - chain:wielder
+  - chain:vibe:cursed
+  Drops:
+  - ROTTEN_FLESH 1-3
+  - SOUL_SAND 0-1
+
+# ============================================================
+# SPECTRAL SUB-VIBE (pale blue ghost wisps)
+# ============================================================
+# Ghost variants with pale-blue wisps. Spawn FX: end_rod + pale-blue
+# dust. Sounds: phantom ambient, allay ambient, amethyst chime,
+# soul escape.
+# ============================================================
+
+SpectralConvict:
+  Type: STRAY
+  Display: '&f&lSpectral Convict'
+  Health: 45
+  Damage: 18
+  Faction: chain
+  AIGoalSelectors:
+  - clear
+  - 0 float
+  - 1 meleeattack
+  - 2 lookatplayers
+  - 3 randomstroll
+  AITargetSelectors:
+  - clear
+  - 0 players
+  Skills:
+  - sound{s=entity.phantom.ambient;v=0.7;p=1.4} @self ~onSpawn
+  - sound{s=block.amethyst_block.chime;v=0.8;p=1.5} @self ~onSpawn
+  - effect:particles{particle=end_rod;amount=22;hS=0.5;vS=0.6;speed=0.03} @self ~onSpawn
+  - effect:particles{particle=dust;color=#A0C0E0;size=1.2;amount=20;hS=0.5;vS=0.5;speed=0.02} @self ~onSpawn
+  - sound{s=entity.allay.ambient_with_item;v=0.6;p=1.3} @self ~onTimer:160
+  - effect:particles{particle=end_rod;amount=4;hS=0.4;vS=0.4;speed=0.02} @self ~onTimer:40
+  - effect:particles{particle=dust;color=#A0C0E0;size=1.1;amount=4;hS=0.4;vS=0.4;speed=0.01} @self ~onTimer:40
+  - sound{s=entity.stray.hurt;v=0.8;p=1.3} @self ~onDamaged
+  - sound{s=entity.stray.death;v=0.9;p=1.2} @self ~onDeath
+  Options:
+    MovementSpeed: 0.32
+    Silent: true
+    Despawn: true
+    PreventOtherDrops: true
+    PreventSunburn: true
+    NoAI: false
+    Collidable: true
+    Persistent: false
+    KnockbackResistance: 0.2
+    FollowRange: 30
+  Tags:
+  - chaoscraft_chain
+  - spectral_convict
+  - chain:wielder
+  - chain:vibe:spectral
+  Drops:
+  - BONE 0-1
+  - AMETHYST_SHARD 0-1
+
+GhostSentenceBearer:
+  Type: DROWNED
+  Display: '&b&lGhost Sentence Bearer'
+  Health: 55
+  Damage: 22
+  Faction: chain
+  AIGoalSelectors:
+  - clear
+  - 0 float
+  - 1 meleeattack
+  - 2 lookatplayers
+  - 3 randomstroll
+  AITargetSelectors:
+  - clear
+  - 0 players
+  Skills:
+  - sound{s=entity.phantom.ambient;v=0.7;p=1.0} @self ~onSpawn
+  - sound{s=block.amethyst_block.chime;v=0.7;p=1.2} @self ~onSpawn
+  - effect:particles{particle=end_rod;amount=24;hS=0.6;vS=0.5;speed=0.03} @self ~onSpawn
+  - effect:particles{particle=dust;color=#A0C0E0;size=1.2;amount=22;hS=0.6;vS=0.5;speed=0.02} @self ~onSpawn
+  - sound{s=entity.allay.ambient_with_item;v=0.6;p=1.0} @self ~onTimer:200
+  - effect:particles{particle=end_rod;amount=5;hS=0.4;vS=0.5;speed=0.02} @self ~onTimer:80
+  - effect:particles{particle=dust;color=#A0C0E0;size=1.1;amount=5;hS=0.4;vS=0.5;speed=0.02} @self ~onTimer:80
+  - sound{s=entity.drowned.ambient;v=0.6;p=1.2} @self ~onTimer:240
+  - sound{s=entity.drowned.hurt;v=0.9;p=1.1} @self ~onDamaged
+  - sound{s=entity.drowned.death;v=1.0;p=1.0} @self ~onDeath
+  Options:
+    MovementSpeed: 0.28
+    Silent: true
+    Despawn: true
+    PreventOtherDrops: true
+    PreventSunburn: true
+    NoAI: false
+    Collidable: true
+    Persistent: false
+    KnockbackResistance: 0.3
+    FollowRange: 32
+  Tags:
+  - chaoscraft_chain
+  - ghost_sentence_bearer
+  - chain:wielder
+  - chain:vibe:spectral
+  Drops:
+  - ROTTEN_FLESH 1-2
+  - AMETHYST_SHARD 0-1
+
+IronMaidenPhantom:
+  Type: PHANTOM
+  Display: '&b&lIron Maiden Phantom'
+  Health: 60
+  Damage: 25
+  Faction: chain
+  AIGoalSelectors:
+  - clear
+  - 0 float
+  - 1 meleeattack
+  - 2 lookatplayers
+  AITargetSelectors:
+  - clear
+  - 0 players
+  Skills:
+  - sound{s=entity.phantom.ambient;v=1.0;p=0.7} @self ~onSpawn
+  - sound{s=block.amethyst_block.chime;v=0.8;p=0.9} @self ~onSpawn
+  - sound{s=block.chain.place;v=0.8;p=1.0} @self ~onSpawn
+  - effect:particles{particle=end_rod;amount=28;hS=0.7;vS=0.8;speed=0.04} @self ~onSpawn
+  - effect:particles{particle=dust;color=#A0C0E0;size=1.3;amount=24;hS=0.7;vS=0.6;speed=0.02} @self ~onSpawn
+  - sound{s=entity.phantom.swoop;v=1.0;p=0.8} @self ~onAttack
+  - sound{s=entity.phantom.bite;v=0.9;p=0.9} @self ~onAttack
+  - effect:particles{particle=end_rod;amount=6;hS=0.5;vS=0.5;speed=0.02} @self ~onTimer:50
+  - effect:particles{particle=dust;color=#A0C0E0;size=1.1;amount=6;hS=0.5;vS=0.5;speed=0.02} @self ~onTimer:50
+  - sound{s=entity.phantom.swoop;v=1.1;p=0.6} @self ~onTimer:160
+  - sound{s=entity.phantom.hurt;v=0.9;p=0.9} @self ~onDamaged
+  - sound{s=entity.phantom.death;v=1.0;p=0.8} @self ~onDeath
+  Options:
+    MovementSpeed: 0.36
+    Silent: true
+    Despawn: true
+    PreventOtherDrops: true
+    PreventSunburn: true
+    NoAI: false
+    Collidable: true
+    Persistent: false
+    KnockbackResistance: 0.2
+    FollowRange: 36
+  Tags:
+  - chaoscraft_chain
+  - iron_maiden_phantom
+  - chain:wielder
+  - chain:vibe:spectral
+  Drops:
+  - PHANTOM_MEMBRANE 0-2
+
+# ============================================================
+# META SKILLS (referenced by mobs above)
+# ============================================================
+
+ExecutionerShriek:
+  Skills:
+  - sound{s=entity.wither.spawn;v=0.8;p=1.5} @self
+  - sound{s=block.beacon.deactivate;v=1.0;p=0.5} @self
+  - effect:particles{particle=soul_fire_flame;amount=40;hS=0.8;vS=0.8;speed=0.1} @self
+  - effect:particles{particle=dust;color=#30D8B0;size=1.6;amount=30;hS=0.8;vS=0.8;speed=0.05} @self
