@@ -121,7 +121,6 @@ public class ChaosCraftCommand implements CommandExecutor, TabCompleter {
 
     // Mode-specific command handlers (used for /cc modes <mode> delegation)
     private final CalamityCommand calamityHandler;
-    private final ChainCommand chainHandler;
     private final com.blockforge.chaoscraft.modes.corruption.CorruptionCommand corruptionHandler;
     private final com.blockforge.chaoscraft.modes.devilsdream.DevilsDreamCommand devilsDreamHandler;
     private final com.blockforge.chaoscraft.modes.bluemoon.BlueMoonCommand blueMoonHandler;
@@ -145,7 +144,6 @@ public class ChaosCraftCommand implements CommandExecutor, TabCompleter {
         this.userAgreementCmd = new UserAgreementCommand(plugin);
         this.playCmd = new PlayCommand(plugin);
         this.calamityHandler = new CalamityCommand(plugin);
-        this.chainHandler = new ChainCommand(plugin);
         this.corruptionHandler = new com.blockforge.chaoscraft.modes.corruption.CorruptionCommand(plugin);
         this.devilsDreamHandler = new com.blockforge.chaoscraft.modes.devilsdream.DevilsDreamCommand(plugin);
         this.blueMoonHandler = new com.blockforge.chaoscraft.modes.bluemoon.BlueMoonCommand(plugin);
@@ -290,7 +288,6 @@ public class ChaosCraftCommand implements CommandExecutor, TabCompleter {
         // Legacy shortcuts
         helpSection(sender, "Shortcuts", NamedTextColor.DARK_GRAY);
         helpLine(sender, "/calamity <cmd>", "chaoscraft.calamity.admin", "Shortcut for /cc modes calamity <cmd>");
-        helpLine(sender, "/chain <cmd>", "chaoscraft.chain.admin", "Shortcut for /cc modes chain <cmd>");
         helpLine(sender, "/triggermode <mode>", "chaoscraft.mode.trigger", "Legacy mode start command");
         helpLine(sender, "/endmode", "chaoscraft.mode.end", "Legacy mode stop command");
 
@@ -393,13 +390,6 @@ public class ChaosCraftCommand implements CommandExecutor, TabCompleter {
                     yield true;
                 }
                 yield calamityHandler.onCommand(sender, command, label, modeArgs);
-            }
-            case "chain" -> {
-                if (!sender.hasPermission("chaoscraft.chain.admin")) {
-                    sender.sendMessage(Component.text("No permission.", NamedTextColor.RED));
-                    yield true;
-                }
-                yield chainHandler.onCommand(sender, command, label, modeArgs);
             }
             case "corruption" -> {
                 if (!sender.hasPermission("chaoscraft.corruption.admin") && !sender.hasPermission("chaoscraft.admin")) {
@@ -1175,12 +1165,6 @@ public class ChaosCraftCommand implements CommandExecutor, TabCompleter {
                                 "status", "debug", "clearattacks", "spawninterval", "toggleexempt"));
                     }
                 }
-                case "chain" -> {
-                    if (sender.hasPermission("chaoscraft.chain.admin")) {
-                        actions.addAll(List.of("status", "debug", "test", "clearattacks",
-                                "spawninterval", "toggleexempt", "list", "reload"));
-                    }
-                }
                 case "corruption" -> {
                     if (sender.hasPermission("chaoscraft.corruption.admin") || sender.hasPermission("chaoscraft.admin")) {
                         actions.addAll(List.of("status", "debug", "test", "clearattacks",
@@ -1240,11 +1224,6 @@ public class ChaosCraftCommand implements CommandExecutor, TabCompleter {
             case "calamity" -> {
                 if (!sender.hasPermission("chaoscraft.calamity.admin")) yield List.of();
                 List<String> result = calamityHandler.onTabComplete(sender, null, "", modeArgs);
-                yield result != null ? result : List.of();
-            }
-            case "chain" -> {
-                if (!sender.hasPermission("chaoscraft.chain.admin")) yield List.of();
-                List<String> result = chainHandler.onTabComplete(sender, null, "", modeArgs);
                 yield result != null ? result : List.of();
             }
             case "corruption" -> {

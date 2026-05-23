@@ -6,7 +6,6 @@ import com.blockforge.chaoscraft.api.timer.ModeTimer;
 import com.blockforge.chaoscraft.commands.*;
 import com.blockforge.chaoscraft.integration.PlaceholderExpansion;
 import com.blockforge.chaoscraft.modes.calamity.CalamityMode;
-import com.blockforge.chaoscraft.modes.chain.ChainMode;
 import com.blockforge.chaoscraft.modes.corruption.CorruptionMode;
 import com.blockforge.chaoscraft.modes.devilsdream.DevilsDreamMode;
 import com.blockforge.chaoscraft.api.points.ModePointsListener;
@@ -103,9 +102,6 @@ public class ChaosCraftPlugin extends JavaPlugin {
         // Register modes
         CalamityMode calamityMode = new CalamityMode(this);
         modeManager.registerMode(calamityMode);
-
-        ChainMode chainMode = new ChainMode(this);
-        modeManager.registerMode(chainMode);
 
         CorruptionMode corruptionMode = new CorruptionMode(this);
         modeManager.registerMode(corruptionMode);
@@ -430,13 +426,6 @@ public class ChaosCraftPlugin extends JavaPlugin {
             calamityCmd.setTabCompleter(handler);
         }
 
-        var chainCmd = getCommand("chain");
-        if (chainCmd != null) {
-            var handler = new ChainCommand(this);
-            chainCmd.setExecutor(handler);
-            chainCmd.setTabCompleter(handler);
-        }
-
         // Celestial Ivory
         var ivoryCmd = getCommand("ivory");
         if (ivoryCmd != null && ivoryService != null) {
@@ -557,15 +546,6 @@ public class ChaosCraftPlugin extends JavaPlugin {
             corruptionMode.getAttackRegistry().reloadConfigs();
         }
         getLogger().info("[Reload] Corruption in " + (System.currentTimeMillis() - t) + "ms");
-
-        // Reload Chain-specific config + attack configs
-        t = System.currentTimeMillis();
-        var chain = modeManager.getMode("chain");
-        if (chain instanceof ChainMode chainMode) {
-            chainMode.getChainConfig().load();
-            chainMode.getAttackRegistry().reloadConfigs();
-        }
-        getLogger().info("[Reload] Chain in " + (System.currentTimeMillis() - t) + "ms");
 
         // Reload Devil's Dream
         t = System.currentTimeMillis();
