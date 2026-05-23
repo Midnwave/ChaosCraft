@@ -6,7 +6,9 @@ import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Reads and writes the "mob-spawning" section from any mode's YAML config.
@@ -90,9 +92,45 @@ public class MobSpawnConfig {
                 int maxCount = toInt(map.get("max-count") != null ? map.get("max-count") : 1);
                 double healthMult = toDouble(map.get("health-multiplier") != null ? map.get("health-multiplier") : 1.0);
                 double damageMult = toDouble(map.get("damage-multiplier") != null ? map.get("damage-multiplier") : 1.0);
-                mobs.add(new MobSpawnEntry(id, type, weight, minCount, maxCount, healthMult, damageMult));
+
+                // Optional chain-attack per-mob override block (Chain mode gimmick).
+                // YAML structure:
+                //   chain-attack:
+                //     enabled: true
+                //     reach-radius: 14.0
+                //     effect: SLAM
+                //     damage: 180.0
+                //     effect-duration-ticks: 25
+                // Unknown keys are ignored. Empty/missing -> empty map (use defaults).
+                Map<String, Object> chainAttack = parseSubMap(map.get("chain-attack"));
+
+                mobs.add(new MobSpawnEntry(id, type, weight, minCount, maxCount, healthMult, damageMult,
+                        chainAttack));
             }
         }
+    }
+
+    /**
+     * Convert a YAML sub-block (typically returned as a Map) into a Map&lt;String, Object&gt;.
+     * Returns an empty map if the input is null or not a Map. SnakeYAML/Bukkit may
+     * give us either a LinkedHashMap or a MemorySection depending on how the
+     * parent list was constructed — we accept both.
+     */
+    private static Map<String, Object> parseSubMap(Object raw) {
+        if (raw == null) return Collections.emptyMap();
+        if (raw instanceof Map<?, ?> rawMap) {
+            Map<String, Object> result = new LinkedHashMap<>();
+            for (Map.Entry<?, ?> e : rawMap.entrySet()) {
+                if (e.getKey() != null) result.put(String.valueOf(e.getKey()), e.getValue());
+            }
+            return result;
+        }
+        if (raw instanceof ConfigurationSection cs) {
+            Map<String, Object> result = new LinkedHashMap<>();
+            for (String k : cs.getKeys(false)) result.put(k, cs.get(k));
+            return result;
+        }
+        return Collections.emptyMap();
     }
 
     // ========================

@@ -2,6 +2,9 @@ package com.blockforge.chaoscraft.services.mobspawn;
 
 import org.bukkit.entity.EntityType;
 
+import java.util.Collections;
+import java.util.Map;
+
 /**
  * Represents a single mob type that can be spawned during a mode.
  * Supports both MythicMobs (by string ID) and vanilla mobs (by EntityType).
@@ -35,6 +38,22 @@ public class MobSpawnEntry {
     private final double damageMultiplier;
 
     /**
+     * Optional per-mob override map for the Chain mode chain-attack gimmick.
+     * Parsed from YAML's {@code chain-attack:} sub-block on the entry. Keys
+     * recognised by ChainAttackSystem:
+     * <ul>
+     *   <li>{@code enabled} — boolean, override system-wide on/off</li>
+     *   <li>{@code reach-radius} — double, override chain reach in blocks</li>
+     *   <li>{@code effect} — String, one of PULL / SWING / SLAM / LAUNCH / ANCHOR / DAMAGE_ONLY</li>
+     *   <li>{@code damage} — double, override default damage</li>
+     *   <li>{@code effect-duration-ticks} — int, override effect duration</li>
+     * </ul>
+     * Unknown keys are ignored; missing keys fall back to the system defaults.
+     * Empty map (never null) when no override block is supplied.
+     */
+    private final Map<String, Object> chainAttack;
+
+    /**
      * Whether this entry references a MythicMobs mob or a vanilla Minecraft mob.
      */
     public enum MobType {
@@ -46,6 +65,13 @@ public class MobSpawnEntry {
 
     public MobSpawnEntry(String id, MobType type, int weight, int minCount, int maxCount,
                          double healthMultiplier, double damageMultiplier) {
+        this(id, type, weight, minCount, maxCount, healthMultiplier, damageMultiplier,
+                Collections.emptyMap());
+    }
+
+    public MobSpawnEntry(String id, MobType type, int weight, int minCount, int maxCount,
+                         double healthMultiplier, double damageMultiplier,
+                         Map<String, Object> chainAttack) {
         this.id = id;
         this.type = type;
         this.weight = Math.max(1, weight);
@@ -53,6 +79,9 @@ public class MobSpawnEntry {
         this.maxCount = Math.max(this.minCount, maxCount);
         this.healthMultiplier = Math.max(0.1, healthMultiplier);
         this.damageMultiplier = Math.max(0.1, damageMultiplier);
+        this.chainAttack = chainAttack != null
+                ? Collections.unmodifiableMap(chainAttack)
+                : Collections.emptyMap();
     }
 
     /**
@@ -90,6 +119,13 @@ public class MobSpawnEntry {
      * For MythicMobs this modifies the entity's attack damage attribute after spawn.
      */
     public double getDamageMultiplier() { return damageMultiplier; }
+
+    /**
+     * Optional per-mob override map for mode-specific gimmicks (currently the
+     * Chain mode chain-attack system). Returns an empty map if no override
+     * block was set in the YAML. Returned map is unmodifiable.
+     */
+    public Map<String, Object> getChainAttack() { return chainAttack; }
 
     /**
      * Resolve the vanilla EntityType from the id string.

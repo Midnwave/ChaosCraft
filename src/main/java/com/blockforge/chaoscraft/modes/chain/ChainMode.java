@@ -57,7 +57,8 @@ public class ChainMode extends AbstractMode {
     private Location arenaCenter;
 
     // Gimmick subsystems
-    // (none yet — chain-specific gimmick subsystems will be added in a later phase)
+    private ChainAttackSystem chainAttackSystem;
+    private ChainPlaceholders placeholders;
 
     public ChainMode(ChaosCraftPlugin plugin) {
         super(plugin, "chain");
@@ -130,6 +131,24 @@ public class ChainMode extends AbstractMode {
         // Start subsystems
         attackScheduler.start();
 
+        // ── Gimmick: Chain Attack (mobs leash players) ─────────────────
+        if (chainConfig.isGimmickEnabled() && chainConfig.isChainAttackEnabled()) {
+            chainAttackSystem = new ChainAttackSystem(plugin, chainConfig);
+            chainAttackSystem.start();
+
+            if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
+                try {
+                    placeholders = new ChainPlaceholders(plugin);
+                    placeholders.register();
+                    plugin.getLogger().info("[Chain] Registered PlaceholderAPI expansion: chaoscraft_chain");
+                } catch (Throwable t) {
+                    plugin.getLogger().warning("[Chain] Failed to register PAPI expansion: " + t.getMessage());
+                }
+            } else {
+                plugin.getLogger().info("[Chain] PlaceholderAPI not installed — skipping expansion registration.");
+            }
+        }
+
         // On-start commands
         for (String cmd : chainConfig.getOnStartCommands()) {
             plugin.getServer().dispatchCommand(plugin.getServer().getConsoleSender(), cmd);
@@ -177,6 +196,16 @@ public class ChainMode extends AbstractMode {
 
         attackScheduler.stop();
         plugin.getMusicManager().stopAll();
+
+        // Stop gimmick subsystems
+        if (chainAttackSystem != null) {
+            try { chainAttackSystem.stop(); } catch (Throwable ignored) {}
+            chainAttackSystem = null;
+        }
+        if (placeholders != null) {
+            try { placeholders.unregister(); } catch (Throwable ignored) {}
+            placeholders = null;
+        }
 
         if (endTaskId != -1) {
             try { Bukkit.getScheduler().cancelTask(endTaskId); } catch (Throwable ignored) {}
@@ -267,4 +296,5 @@ public class ChainMode extends AbstractMode {
     public ChainScheduler getAttackScheduler() { return attackScheduler; }
     public int getTickCounter() { return tickCounter; }
     public Location getArenaCenter() { return arenaCenter; }
+    public ChainAttackSystem getChainAttackSystem() { return chainAttackSystem; }
 }

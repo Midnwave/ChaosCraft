@@ -43,6 +43,13 @@ public class MobSpawnService implements Listener {
     /** All entity UUIDs spawned by this service, mapped to their session's mode name. */
     private final Map<UUID, String> entityToSession = new ConcurrentHashMap<>();
 
+    /**
+     * All entity UUIDs spawned by this service, mapped to the {@link MobSpawnEntry}
+     * that produced them. Used by mode-specific gimmicks (e.g. ChainAttackSystem)
+     * to resolve per-mob overrides like reach radius / chain effect from the YAML.
+     */
+    private final Map<UUID, MobSpawnEntry> entityToEntry = new ConcurrentHashMap<>();
+
     private boolean mythicMobsAvailable = false;
 
     public MobSpawnService(ChaosCraftPlugin plugin) {
@@ -99,12 +106,14 @@ public class MobSpawnService implements Listener {
                     removed++;
                 }
                 entityToSession.remove(uuid);
+                entityToEntry.remove(uuid);
             }
             plugin.debug("[MobSpawn] Session '" + modeName + "' destroyed, removed " + removed + " mobs.");
         } else {
             // Just untrack, don't remove entities
             for (UUID uuid : session.activeMobs) {
                 entityToSession.remove(uuid);
+                entityToEntry.remove(uuid);
             }
             plugin.debug("[MobSpawn] Session '" + modeName + "' destroyed (mobs left alive).");
         }
@@ -147,6 +156,7 @@ public class MobSpawnService implements Listener {
             Entity entity = Bukkit.getEntity(uuid);
             if (entity == null || entity.isDead() || !entity.isValid()) {
                 entityToSession.remove(uuid);
+                entityToEntry.remove(uuid);
                 return true;
             }
             return false;
@@ -200,6 +210,7 @@ public class MobSpawnService implements Listener {
             if (spawned != null) {
                 session.activeMobs.add(spawned.getUniqueId());
                 entityToSession.put(spawned.getUniqueId(), modeName);
+                entityToEntry.put(spawned.getUniqueId(), entry);
                 applyMultipliers(spawned, entry);
 
                 plugin.debug("[MobSpawn] " + modeName + ": Spawned " + entry.getId()
@@ -216,6 +227,7 @@ public class MobSpawnService implements Listener {
     public void onEntityDeath(EntityDeathEvent event) {
         UUID uuid = event.getEntity().getUniqueId();
         String modeName = entityToSession.remove(uuid);
+        entityToEntry.remove(uuid);
         if (modeName != null) {
             MobSpawnSession session = sessions.get(modeName);
             if (session != null) {
@@ -441,6 +453,30 @@ public class MobSpawnService implements Listener {
     public int getActiveMobCount(String modeName) {
         MobSpawnSession session = sessions.get(modeName);
         return session != null ? session.activeMobs.size() : 0;
+    }
+
+    /**
+     * Get a snapshot view of the active mob UUIDs for a mode session.
+     * Returns an empty set if no session exists.
+     *
+     * <p>Used by gimmick subsystems (e.g. ChainAttackSystem) to iterate the
+     * mobs the universal spawner has placed for a given mode and apply
+     * mode-specific behavior to them.
+     */
+    public Set<UUID> getActiveMobs(String modeName) {
+        MobSpawnSession session = sessions.get(modeName);
+        if (session == null) return Collections.emptySet();
+        return new HashSet<>(session.activeMobs);
+    }
+
+    /**
+     * Look up the {@link MobSpawnEntry} (config row) used to spawn a tracked
+     * entity. Returns null if the entity wasn't spawned by this service, or
+     * if the entry that produced it can no longer be resolved (e.g. mob list
+     * was reloaded mid-session).
+     */
+    public MobSpawnEntry getEntryFor(UUID entityId) {
+        return entityToEntry.get(entityId);
     }
 
     // ========================

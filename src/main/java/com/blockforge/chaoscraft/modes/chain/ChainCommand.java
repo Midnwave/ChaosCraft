@@ -11,6 +11,8 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Display;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -19,6 +21,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 
@@ -197,8 +200,145 @@ public class ChainCommand implements CommandExecutor, TabCompleter {
             case "damagepreview", "preview" -> handleDamagePreview(sender, args);
             case "designtype" -> handleDesignType(sender, args);
             case "spawncat" -> handleSpawnCat(sender, args);
+            case "chainattack" -> handleChainAttack(sender, args);
             default -> { sendHelp(sender); yield true; }
         };
+    }
+
+    // ========================
+    // New: Chain Attack gimmick admin
+    // ========================
+    private boolean handleChainAttack(CommandSender sender, String[] args) {
+        ChainMode mode = getMode();
+        if (mode == null) {
+            sender.sendMessage(Component.text("Not registered.", NamedTextColor.RED));
+            return true;
+        }
+        if (args.length < 2) {
+            sendChainAttackHelp(sender);
+            return true;
+        }
+        String sub = args[1].toLowerCase();
+        return switch (sub) {
+            case "stats" -> handleChainAttackStats(sender, mode);
+            case "reset" -> handleChainAttackReset(sender, args, mode);
+            case "force" -> handleChainAttackForce(sender, args, mode);
+            default -> { sendChainAttackHelp(sender); yield true; }
+        };
+    }
+
+    private void sendChainAttackHelp(CommandSender sender) {
+        sender.sendMessage(Component.text("=== Chain Attack Commands ===", NamedTextColor.AQUA));
+        sender.sendMessage(Component.text("chainattack stats — Show system stats", NamedTextColor.AQUA));
+        sender.sendMessage(Component.text("chainattack reset [player] — Clear cooldowns", NamedTextColor.AQUA));
+        sender.sendMessage(Component.text("chainattack force <mob-uuid-prefix> <player> — Force-fire chain",
+                NamedTextColor.AQUA));
+    }
+
+    private boolean handleChainAttackStats(CommandSender sender, ChainMode mode) {
+        ChainAttackSystem cas = mode.getChainAttackSystem();
+        if (cas == null) {
+            sender.sendMessage(Component.text("Chain Attack system not active (mode not started or gimmick disabled).",
+                    NamedTextColor.YELLOW));
+            return true;
+        }
+        sender.sendMessage(Component.text("=== Chain Attack Stats ===", NamedTextColor.AQUA));
+        sender.sendMessage(Component.text("Total chains fired this session: " + cas.getTotalFired(),
+                NamedTextColor.AQUA));
+        sender.sendMessage(Component.text("Active chains: " + cas.getActiveChainCount(),
+                NamedTextColor.AQUA));
+
+        Map<UUID, Long> pcd = cas.getPlayerGlobalCooldowns();
+        sender.sendMessage(Component.text("Per-player cooldowns (" + pcd.size() + " active):",
+                NamedTextColor.AQUA));
+        for (Map.Entry<UUID, Long> e : pcd.entrySet()) {
+            Player p = Bukkit.getPlayer(e.getKey());
+            String name = p != null ? p.getName() : e.getKey().toString().substring(0, 8);
+            int secs = p != null ? cas.getGlobalCooldownRemaining(p) : 0;
+            sender.sendMessage(Component.text("  " + name + " — " + secs + "s remaining",
+                    NamedTextColor.GRAY));
+        }
+
+        Map<UUID, Long> mcd = cas.getPerMobCooldowns();
+        sender.sendMessage(Component.text("Per-mob cooldowns (" + mcd.size() + " active):",
+                NamedTextColor.AQUA));
+        for (UUID id : mcd.keySet()) {
+            Entity ent = Bukkit.getEntity(id);
+            String label = ent != null ? ent.getType().name() : "<gone>";
+            sender.sendMessage(Component.text("  " + id.toString().substring(0, 8) + " (" + label + ")",
+                    NamedTextColor.GRAY));
+        }
+        return true;
+    }
+
+    private boolean handleChainAttackReset(CommandSender sender, String[] args, ChainMode mode) {
+        ChainAttackSystem cas = mode.getChainAttackSystem();
+        if (cas == null) {
+            sender.sendMessage(Component.text("Chain Attack system not active.", NamedTextColor.YELLOW));
+            return true;
+        }
+        Player target;
+        if (args.length >= 3) {
+            target = Bukkit.getPlayerExact(args[2]);
+            if (target == null) {
+                sender.sendMessage(Component.text("Player not found: " + args[2], NamedTextColor.RED));
+                return true;
+            }
+        } else if (sender instanceof Player p) {
+            target = p;
+        } else {
+            sender.sendMessage(Component.text("Usage: chainattack reset <player>", NamedTextColor.YELLOW));
+            return true;
+        }
+        cas.resetCooldowns(target);
+        sender.sendMessage(Component.text("Cleared chain cooldowns for " + target.getName() + ".",
+                NamedTextColor.GREEN));
+        return true;
+    }
+
+    private boolean handleChainAttackForce(CommandSender sender, String[] args, ChainMode mode) {
+        ChainAttackSystem cas = mode.getChainAttackSystem();
+        if (cas == null) {
+            sender.sendMessage(Component.text("Chain Attack system not active.", NamedTextColor.YELLOW));
+            return true;
+        }
+        if (args.length < 4) {
+            sender.sendMessage(Component.text("Usage: chainattack force <mob-uuid-prefix> <player>",
+                    NamedTextColor.YELLOW));
+            return true;
+        }
+        String prefix = args[2].toLowerCase();
+        Player target = Bukkit.getPlayerExact(args[3]);
+        if (target == null) {
+            sender.sendMessage(Component.text("Player not found: " + args[3], NamedTextColor.RED));
+            return true;
+        }
+        if (plugin.getMobSpawnService() == null) {
+            sender.sendMessage(Component.text("MobSpawnService unavailable.", NamedTextColor.RED));
+            return true;
+        }
+        // Look up among chain-mode-tracked mobs.
+        LivingEntity mob = null;
+        for (UUID id : plugin.getMobSpawnService().getActiveMobs("chain")) {
+            if (id.toString().toLowerCase().startsWith(prefix)) {
+                Entity e = Bukkit.getEntity(id);
+                if (e instanceof LivingEntity le) { mob = le; break; }
+            }
+        }
+        if (mob == null) {
+            sender.sendMessage(Component.text("No chain-mode mob matches prefix '" + prefix + "'.",
+                    NamedTextColor.RED));
+            return true;
+        }
+        boolean fired = cas.forceFireChain(mob, target);
+        if (fired) {
+            sender.sendMessage(Component.text("Forced chain: " + mob.getType().name()
+                    + " -> " + target.getName(), NamedTextColor.GREEN));
+        } else {
+            sender.sendMessage(Component.text("forceFireChain returned false (world mismatch?).",
+                    NamedTextColor.RED));
+        }
+        return true;
     }
 
     private boolean handleStatus(CommandSender sender) {
@@ -698,7 +838,8 @@ public class ChainCommand implements CommandExecutor, TabCompleter {
                     "status", "debug", "test", "list", "clearattacks",
                     "spawninterval", "toggleexempt", "reload",
                     "me", "category", "cat", "stats",
-                    "damagepreview", "preview", "designtype", "spawncat");
+                    "damagepreview", "preview", "designtype", "spawncat",
+                    "chainattack");
         }
         if (args.length == 2) {
             String sub = args[0].toLowerCase();
@@ -726,6 +867,34 @@ public class ChainCommand implements CommandExecutor, TabCompleter {
             }
             if ("toggleexempt".equals(sub)) return null;
             if ("spawninterval".equals(sub)) return List.of("20", "40", "60", "100");
+            if ("chainattack".equals(sub)) {
+                return filterStartsWith(args[1], "stats", "reset", "force");
+            }
+        }
+        if (args.length == 3) {
+            String sub = args[0].toLowerCase();
+            String sub2 = args[1].toLowerCase();
+            if ("chainattack".equals(sub)) {
+                if ("reset".equals(sub2)) return null; // online player names
+                if ("force".equals(sub2)) {
+                    // Suggest 8-char UUID prefixes of chain-mode mobs.
+                    if (plugin.getMobSpawnService() != null) {
+                        List<String> prefixes = new ArrayList<>();
+                        for (UUID id : plugin.getMobSpawnService().getActiveMobs("chain")) {
+                            prefixes.add(id.toString().substring(0, 8));
+                        }
+                        return filterStartsWith(args[2], prefixes);
+                    }
+                    return Collections.emptyList();
+                }
+            }
+        }
+        if (args.length == 4) {
+            String sub = args[0].toLowerCase();
+            String sub2 = args[1].toLowerCase();
+            if ("chainattack".equals(sub) && "force".equals(sub2)) {
+                return null; // online player names
+            }
         }
         return Collections.emptyList();
     }
@@ -762,6 +931,8 @@ public class ChainCommand implements CommandExecutor, TabCompleter {
         sender.sendMessage(Component.text("designtype <id> — Show skill-based dodge label",
                 NamedTextColor.AQUA));
         sender.sendMessage(Component.text("spawncat <category> — Spawn random attack from category",
+                NamedTextColor.AQUA));
+        sender.sendMessage(Component.text("chainattack <stats|reset|force> — Chain Attack gimmick admin",
                 NamedTextColor.AQUA));
     }
 
