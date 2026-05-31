@@ -14,6 +14,7 @@ import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.util.Transformation;
 import org.bukkit.util.Vector;
 import org.joml.AxisAngle4f;
+import org.joml.Quaternionf;
 import org.joml.Vector3f;
 
 import java.util.*;
@@ -60,6 +61,19 @@ public class ChainAttackSystem {
     private static final int LEASH_ATTACH_TICKS = 8;
     /** Ticks the retract phase lasts before despawning. */
     private static final int RETRACT_TICKS = 8;
+
+    /** Minimum visible cross-section for a chain link (thickness floor). */
+    private static final float MIN_LINK_THICKNESS = 0.35f;
+    /** Slight per-link long-axis overlap so segments tile with no gaps. */
+    private static final double LINK_OVERLAP = 1.08;
+    /** Local +Y unit axis — a CHAIN block's bar runs along this by default. */
+    private static final Vector LOCAL_UP = new Vector(0, 1, 0);
+    /** Glow color for chain links (rust-orange). */
+    private static final Color CHAIN_GLOW = Color.fromRGB(200, 110, 40);
+    /** Glow color for the hook cap (brighter rust). */
+    private static final Color HOOK_GLOW = Color.fromRGB(220, 140, 55);
+    /** Smooth follow interpolation per retarget (ticks). */
+    private static final int FOLLOW_INTERP = 2;
 
     private final ChaosCraftPlugin plugin;
     private final ChainConfig config;
@@ -330,101 +344,151 @@ public class ChainAttackSystem {
     }
 
     /**
-     * Spawn the line of CHAIN BlockDisplays and the IRON_BARS hook cap.
-     * Links are spawned all at once but each is interpolation-scaled in over
-     * LEASH_ATTACH_TICKS so the leash appears to extend out of the mob.
+     * Spawn the line of CHAIN BlockDisplays and the IRON_BARS hook cap, then lay
+     * them out along the mob→player vector. Link count scales with distance so
+     * long chains aren't stretched and short chains aren't overcrowded. Each
+     * link spawns tiny and is interpolation-grown into place by {@link #layoutChain}
+     * so the leash appears to extend out of the mob over LEASH_ATTACH_TICKS.
      */
     private void spawnChainDisplays(ActiveChain ac, LivingEntity mob, Player target) {
         World world = mob.getWorld();
         double spacing = Math.max(0.25, config.getChainLinkSpacing());
-        double scale = Math.max(0.05, config.getChainLinkScale());
 
-        Vector delta = ac.endPos.clone().subtract(ac.startPos).toVector();
-        double distance = delta.length();
-        int links = Math.max(2, (int) Math.floor(distance / spacing));
+        double distance = ac.endPos.clone().subtract(ac.startPos).toVector().length();
+        // One link per `spacing` blocks of distance; clamp so geometry stays sane.
+        int links = Math.max(4, (int) Math.round(distance / spacing));
         ac.linkCount = links;
 
-        float yawRad = (float) Math.atan2(-delta.getX(), delta.getZ());
-        float pitchRad = (float) Math.atan2(delta.getY(), Math.hypot(delta.getX(), delta.getZ()));
-
+        // Spawn each link tiny (so the grow-in interpolation reads as "extending").
         for (int i = 0; i < links; i++) {
-            double t = (double) i / (double) Math.max(1, links - 1);
-            Location loc = ac.startPos.clone().add(delta.clone().multiply(t));
-            loc.setYaw(0); loc.setPitch(0);
-
-            BlockDisplay bd = world.spawn(loc, BlockDisplay.class, d -> {
+            BlockDisplay bd = world.spawn(ac.startPos.clone(), BlockDisplay.class, d -> {
                 d.setBlock(Material.CHAIN.createBlockData());
-                d.setBrightness(new Display.Brightness(15, 15));
-                d.addScoreboardTag("chaoscraft_display");
-                d.addScoreboardTag(CHAIN_DISPLAY_TAG);
-                d.addScoreboardTag("cc:chain");
+                tagDisplay(d);
                 d.setGlowing(true);
-                d.setGlowColorOverride(Color.fromRGB(190, 100, 40)); // orange-rust
-                d.setInterpolationDuration(LEASH_ATTACH_TICKS);
-                d.setInterpolationDelay(0);
+                d.setGlowColorOverride(CHAIN_GLOW);
                 d.setTransformation(new Transformation(
-                        new Vector3f(-0.5f, -0.5f, -0.5f),
-                        rotationFor(yawRad, pitchRad),
-                        new Vector3f(0.05f, 0.05f, 0.05f), // start small, grows in
+                        new Vector3f(0, 0, 0),
+                        new AxisAngle4f(0, 0, 1, 0),
+                        new Vector3f(0.02f, 0.02f, 0.02f), // start tiny, grows in
                         new AxisAngle4f(0, 0, 1, 0)));
             });
-            // Apply target transformation (full scale) after spawn to drive interp.
-            applyLinkTransform(bd, yawRad, pitchRad, (float) scale, (float) spacing);
             ac.chainLinks.add(bd);
         }
 
-        // Hook cap (IRON_BARS) at player end
-        Location capLoc = ac.endPos.clone();
-        capLoc.setYaw(0); capLoc.setPitch(0);
-        BlockDisplay cap = world.spawn(capLoc, BlockDisplay.class, d -> {
+        // Hook cap (IRON_BARS) at the player end.
+        BlockDisplay cap = world.spawn(ac.endPos.clone(), BlockDisplay.class, d -> {
             d.setBlock(Material.IRON_BARS.createBlockData());
-            d.setBrightness(new Display.Brightness(15, 15));
-            d.addScoreboardTag("chaoscraft_display");
-            d.addScoreboardTag(CHAIN_DISPLAY_TAG);
-            d.addScoreboardTag("cc:chain");
+            tagDisplay(d);
             d.setGlowing(true);
-            d.setGlowColorOverride(Color.fromRGB(220, 130, 50));
-            d.setInterpolationDuration(LEASH_ATTACH_TICKS);
-            d.setInterpolationDelay(0);
+            d.setGlowColorOverride(HOOK_GLOW);
             d.setTransformation(new Transformation(
-                    new Vector3f(-0.5f, -0.5f, -0.5f),
+                    new Vector3f(0, 0, 0),
                     new AxisAngle4f(0, 0, 1, 0),
-                    new Vector3f(0.05f, 0.05f, 0.05f),
+                    new Vector3f(0.02f, 0.02f, 0.02f),
                     new AxisAngle4f(0, 0, 1, 0)));
         });
-        applyCapTransform(cap, (float) (scale * 1.4f));
         ac.hookCap = cap;
+
+        // First layout: grow the whole chain in over the attach window.
+        layoutChain(ac, ac.startPos, ac.endPos, LEASH_ATTACH_TICKS);
     }
 
-    private static AxisAngle4f rotationFor(float yawRad, float pitchRad) {
-        // We rotate around Y (yaw) then X (pitch); approximate with a single
-        // axis-angle by combining vectors. Good enough for a chain visual.
-        // Use yaw as primary axis; chain is symmetric, so pitch comes via
-        // translation-driven follow on each subsequent retarget.
-        return new AxisAngle4f(yawRad, 0, 1, 0);
+    /** Apply the shared scoreboard tags + max brightness to a chain display. */
+    private static void tagDisplay(BlockDisplay d) {
+        d.setBrightness(new Display.Brightness(15, 15));
+        d.addScoreboardTag("chaoscraft_display");
+        d.addScoreboardTag(CHAIN_DISPLAY_TAG);
+        d.addScoreboardTag("cc:chain");
     }
 
-    private static void applyLinkTransform(BlockDisplay d, float yawRad, float pitchRad,
-                                           float xz, float yLen) {
+    /**
+     * Recalculate the chain geometry so it reads as one clean, thick, properly
+     * oriented line from {@code start} to {@code end}.
+     *
+     * <p>Each CHAIN link's bar runs along its local +Y axis, so we build a
+     * rotation that maps local +Y onto the start→end direction (axis = up×dir,
+     * angle = acos(up·dir)) and apply it as the display's left-rotation. Links
+     * are evenly spaced and centered on their own segment; the long-axis scale
+     * equals the segment length (×{@link #LINK_OVERLAP}) so segments tile
+     * end-to-end with no gaps, while the cross-section is held at a visible
+     * thickness. The hook cap is parked at the end and oriented along the chain.
+     *
+     * @param interp interpolation duration (ticks) for the move/scale this call.
+     */
+    private void layoutChain(ActiveChain ac, Location start, Location end, int interp) {
+        if (ac.chainLinks.isEmpty()) return;
+
+        Vector delta = end.toVector().subtract(start.toVector());
+        double dist = delta.length();
+        if (dist < 0.01) return;
+        Vector dir = delta.clone().multiply(1.0 / dist);
+
+        int linkCount = ac.chainLinks.size();
+        double segLen = dist / linkCount;                 // exact spacing so links tile
+
+        // Rotation mapping local +Y onto dir.
+        Quaternionf rot = rotationFromUpTo(dir);
+        float thickness = Math.max(MIN_LINK_THICKNESS, (float) config.getChainLinkScale());
+        float longAxis = (float) (segLen * LINK_OVERLAP);
+
+        for (int i = 0; i < linkCount; i++) {
+            BlockDisplay link = ac.chainLinks.get(i);
+            if (link == null || !link.isValid()) continue;
+            double t = (i + 0.5) / linkCount;             // center of each segment
+            Location linkPos = start.clone().add(dir.clone().multiply(dist * t));
+            applyOrientedTransform(link, linkPos, rot,
+                    new Vector3f(thickness, longAxis, thickness), interp);
+        }
+
+        // Hook cap: at the end point, oriented along the chain, a touch larger.
+        if (ac.hookCap != null && ac.hookCap.isValid()) {
+            float capSize = Math.max(0.5f, thickness * 1.6f);
+            applyOrientedTransform(ac.hookCap, end.clone(), rot,
+                    new Vector3f(capSize, capSize, capSize), interp);
+        }
+    }
+
+    /**
+     * Quaternion that rotates the local +Y axis onto {@code dir}.
+     * Handles the near-parallel / near-antiparallel degenerate cases.
+     */
+    private static Quaternionf rotationFromUpTo(Vector dir) {
+        Vector axis = LOCAL_UP.clone().crossProduct(dir);
+        double axisLen = axis.length();
+        double dot = Math.max(-1.0, Math.min(1.0, LOCAL_UP.dot(dir)));
+        float angle = (float) Math.acos(dot);
+        if (axisLen < 1e-4) {
+            // dir is (anti)parallel to up: no tilt needed, or flip 180° about X.
+            if (dot >= 0) return new Quaternionf(); // already aligned (+Y)
+            return new Quaternionf(new AxisAngle4f((float) Math.PI, 1f, 0f, 0f));
+        }
+        axis.multiply(1.0 / axisLen);
+        return new Quaternionf(new AxisAngle4f(
+                angle, (float) axis.getX(), (float) axis.getY(), (float) axis.getZ()));
+    }
+
+    /**
+     * Teleport a display to {@code pos} and set a transformation that rotates the
+     * (recentered) block by {@code rot} and scales it by {@code scale}, with
+     * smooth interpolation. The block model is recentered on the entity origin
+     * first (so it pivots about its own center), then rotated, so the centering
+     * offset is itself rotated by {@code rot} and fed in as the translation.
+     */
+    private static void applyOrientedTransform(BlockDisplay d, Location pos,
+                                               Quaternionf rot, Vector3f scale, int interp) {
+        d.teleport(pos);
+        // Recenter: block model spans [0,1]^3, so its center sits at (+0.5) from
+        // the origin. Shift by -0.5*scale, rotated by `rot`, so the *rotated*
+        // center lands exactly on the entity location.
+        Vector3f center = new Vector3f(-0.5f * scale.x, -0.5f * scale.y, -0.5f * scale.z);
+        rot.transform(center);
         d.setInterpolationDelay(0);
-        d.setInterpolationDuration(LEASH_ATTACH_TICKS);
-        Transformation t = d.getTransformation();
+        d.setInterpolationDuration(interp);
         d.setTransformation(new Transformation(
-                t.getTranslation(),
-                new AxisAngle4f(yawRad, 0, 1, 0),
-                new Vector3f(xz, xz, yLen),
-                new AxisAngle4f(pitchRad, 1, 0, 0)));
-    }
-
-    private static void applyCapTransform(BlockDisplay d, float scale) {
-        d.setInterpolationDelay(0);
-        d.setInterpolationDuration(LEASH_ATTACH_TICKS);
-        Transformation t = d.getTransformation();
-        d.setTransformation(new Transformation(
-                t.getTranslation(),
-                t.getLeftRotation(),
-                new Vector3f(scale, scale, scale),
-                t.getRightRotation()));
+                center,
+                new AxisAngle4f().set(rot),
+                scale,
+                new AxisAngle4f(0, 0, 1, 0)));
     }
 
     private void despawnChainDisplays(ActiveChain ac) {
@@ -455,14 +519,19 @@ public class ChainAttackSystem {
         LivingEntity mob = (mobE instanceof LivingEntity le) ? le : null;
         if (mob == null) return false;
 
-        // Always re-target the visual to match current positions.
+        // Re-target the visual to match current positions — but only while the
+        // chain is still "live". Once retraction starts we stop re-laying it so
+        // the shrink-to-nothing interpolation isn't fought/re-inflated each tick.
         ac.startPos = mob.getLocation().clone().add(0, mob.getHeight() * 0.8, 0);
         ac.endPos = player.getLocation().clone().add(0, 1.0, 0);
-        updateChainVisual(ac);
 
         // Phase determination
         int leashEnd = LEASH_ATTACH_TICKS;
         int retractStart = ac.duration - RETRACT_TICKS;
+
+        if (ac.age < retractStart) {
+            updateChainVisual(ac);
+        }
 
         if (ac.age <= leashEnd) {
             // Leash-attach phase — visual is interpolating in, no effect yet.
@@ -491,36 +560,9 @@ public class ChainAttackSystem {
     }
 
     private void updateChainVisual(ActiveChain ac) {
-        if (ac.chainLinks.isEmpty()) return;
-        Vector delta = ac.endPos.clone().subtract(ac.startPos).toVector();
-        float yawRad = (float) Math.atan2(-delta.getX(), delta.getZ());
-        float pitchRad = (float) Math.atan2(delta.getY(), Math.hypot(delta.getX(), delta.getZ()));
-        double spacing = Math.max(0.25, config.getChainLinkSpacing());
-
-        int n = ac.chainLinks.size();
-        for (int i = 0; i < n; i++) {
-            BlockDisplay bd = ac.chainLinks.get(i);
-            if (bd == null || !bd.isValid()) continue;
-            double t = (double) i / (double) Math.max(1, n - 1);
-            Location loc = ac.startPos.clone().add(delta.clone().multiply(t));
-            loc.setYaw(0); loc.setPitch(0);
-            bd.setInterpolationDelay(0);
-            bd.setInterpolationDuration(2);
-            bd.teleport(loc);
-            Transformation tr = bd.getTransformation();
-            bd.setTransformation(new Transformation(
-                    tr.getTranslation(),
-                    new AxisAngle4f(yawRad, 0, 1, 0),
-                    new Vector3f(tr.getScale().x, tr.getScale().y, (float) spacing),
-                    new AxisAngle4f(pitchRad, 1, 0, 0)));
-        }
-        if (ac.hookCap != null && ac.hookCap.isValid()) {
-            Location capLoc = ac.endPos.clone();
-            capLoc.setYaw(0); capLoc.setPitch(0);
-            ac.hookCap.setInterpolationDelay(0);
-            ac.hookCap.setInterpolationDuration(2);
-            ac.hookCap.teleport(capLoc);
-        }
+        // Re-lay the whole chain along the current mob→player vector with a short
+        // interpolation so links glide as both ends move (no stutter).
+        layoutChain(ac, ac.startPos, ac.endPos, FOLLOW_INTERP);
     }
 
     private void shrinkAll(ActiveChain ac) {
