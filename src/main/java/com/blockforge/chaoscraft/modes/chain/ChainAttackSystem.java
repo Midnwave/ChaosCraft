@@ -151,12 +151,26 @@ public class ChainAttackSystem {
      * is invalid or the world doesn't match.
      */
     public boolean forceFireChain(LivingEntity mob, Player target) {
+        return forceFireChainWithEffect(mob, target, null);
+    }
+
+    /**
+     * Admin hook — fire a chain from {@code mob} at {@code target} bypassing
+     * every cooldown check and the proximity roll, optionally overriding the
+     * resolved chain effect.
+     *
+     * @param effectOverride one of PULL / SWING / SLAM / LAUNCH / ANCHOR /
+     *                       DAMAGE_ONLY (case-insensitive). When null or blank,
+     *                       the mob's configured/default effect is used.
+     * @return false if the mob is invalid or the world doesn't match.
+     */
+    public boolean forceFireChainWithEffect(LivingEntity mob, Player target, String effectOverride) {
         if (mob == null || target == null || !mob.isValid() || target.isDead()) return false;
         if (!mob.getWorld().equals(target.getWorld())) return false;
         MobSpawnEntry entry = plugin.getMobSpawnService() != null
                 ? plugin.getMobSpawnService().getEntryFor(mob.getUniqueId())
                 : null;
-        fireChain(mob, target, entry);
+        fireChain(mob, target, entry, effectOverride);
         return true;
     }
 
@@ -263,6 +277,15 @@ public class ChainAttackSystem {
     // ====================================================================
 
     private void fireChain(LivingEntity mob, Player target, MobSpawnEntry entry) {
+        fireChain(mob, target, entry, null);
+    }
+
+    /**
+     * @param effectOverride when non-null/non-blank, forces the chain effect to
+     *                       this value, ignoring the per-mob and config default
+     *                       effect. Damage and duration still resolve normally.
+     */
+    private void fireChain(LivingEntity mob, Player target, MobSpawnEntry entry, String effectOverride) {
         // Resolve effective parameters (per-mob override > config default).
         String effectName = config.getChainAttackDefaultEffect();
         double damage = config.getChainAttackDefaultDamage();
@@ -273,6 +296,10 @@ public class ChainAttackSystem {
             if (eff != null) effectName = String.valueOf(eff).toUpperCase(Locale.ROOT);
             damage = toDouble(ov.get("damage"), damage);
             duration = (int) toDouble(ov.get("effect-duration-ticks"), duration);
+        }
+        // Manual effect override (admin testspawn) trumps everything.
+        if (effectOverride != null && !effectOverride.isBlank()) {
+            effectName = effectOverride.toUpperCase(Locale.ROOT);
         }
         ChainEffect effect = ChainEffect.fromString(effectName);
 

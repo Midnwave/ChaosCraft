@@ -249,6 +249,35 @@ public class MobSpawnService implements Listener {
         return spawnMob(entry, location);
     }
 
+    /**
+     * Spawn a mob from an entry AND register it into a mode session so it is
+     * tracked exactly like a naturally-spawned mob: counted against caps,
+     * scanned by mode gimmicks (via {@link #getActiveMobs(String)}), resolvable
+     * via {@link #getEntryFor(UUID)}, and cleaned up on session end.
+     *
+     * <p>Used by admin/test commands (e.g. {@code chainattack testspawn}) that
+     * need to inject a single fully-tracked mob on demand without waiting for
+     * the spawn pool to roll. Multipliers are applied just like the tick path.
+     *
+     * @param modeName the session to register into (e.g. "chain"); if no session
+     *                 exists the mob is still spawned but left untracked
+     * @param entry    the mob entry to spawn
+     * @param location where to spawn
+     * @return the spawned Bukkit entity, or null on spawn failure
+     */
+    public Entity spawnAndRegister(String modeName, MobSpawnEntry entry, Location location) {
+        Entity spawned = spawnMob(entry, location);
+        if (spawned == null) return null;
+        applyMultipliers(spawned, entry);
+        entityToSession.put(spawned.getUniqueId(), modeName);
+        entityToEntry.put(spawned.getUniqueId(), entry);
+        MobSpawnSession session = sessions.get(modeName);
+        if (session != null) {
+            session.activeMobs.add(spawned.getUniqueId());
+        }
+        return spawned;
+    }
+
     private Entity spawnMob(MobSpawnEntry entry, Location location) {
         switch (entry.getType()) {
             case MYTHICMOBS -> {

@@ -3,6 +3,7 @@ package com.blockforge.chaoscraft.modes.chain;
 import com.blockforge.chaoscraft.ChaosCraftPlugin;
 import com.blockforge.chaoscraft.modes.calamity.attacks.AbstractAttack;
 import com.blockforge.chaoscraft.modes.calamity.attacks.AttackType;
+import com.blockforge.chaoscraft.services.mobspawn.MobSpawnEntry;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
@@ -223,6 +224,7 @@ public class ChainCommand implements CommandExecutor, TabCompleter {
             case "stats" -> handleChainAttackStats(sender, mode);
             case "reset" -> handleChainAttackReset(sender, args, mode);
             case "force" -> handleChainAttackForce(sender, args, mode);
+            case "testspawn" -> handleChainAttackTestSpawn(sender, args, mode);
             default -> { sendChainAttackHelp(sender); yield true; }
         };
     }
@@ -232,6 +234,8 @@ public class ChainCommand implements CommandExecutor, TabCompleter {
         sender.sendMessage(Component.text("chainattack stats — Show system stats", NamedTextColor.AQUA));
         sender.sendMessage(Component.text("chainattack reset [player] — Clear cooldowns", NamedTextColor.AQUA));
         sender.sendMessage(Component.text("chainattack force <mob-uuid-prefix> <player> — Force-fire chain",
+                NamedTextColor.AQUA));
+        sender.sendMessage(Component.text("chainattack testspawn [effect] — Spawn a chain mob on you and fire it",
                 NamedTextColor.AQUA));
     }
 
@@ -338,6 +342,80 @@ public class ChainCommand implements CommandExecutor, TabCompleter {
             sender.sendMessage(Component.text("forceFireChain returned false (world mismatch?).",
                     NamedTextColor.RED));
         }
+        return true;
+    }
+
+    /** Valid chain-attack effect names (matches {@code ChainAttackSystem.ChainEffect}). */
+    private static final List<String> CHAIN_EFFECTS =
+            List.of("PULL", "SWING", "SLAM", "LAUNCH", "ANCHOR", "DAMAGE_ONLY");
+
+    /**
+     * One-command gimmick test: spawn the first mob from the chain pool at the
+     * sender's location (fully tracked like a normal chain mob) and immediately
+     * fire its chain attack back at the sender. Optional [effect] arg overrides
+     * the spawned mob's configured effect for this fire only.
+     */
+    private boolean handleChainAttackTestSpawn(CommandSender sender, String[] args, ChainMode mode) {
+        if (!(sender instanceof Player player)) {
+            sender.sendMessage(Component.text("Must be a player.", NamedTextColor.RED));
+            return true;
+        }
+        ChainAttackSystem cas = mode.getChainAttackSystem();
+        if (cas == null) {
+            sender.sendMessage(Component.text(
+                    "Chain Attack system not active. Run /cc modes chain start first.",
+                    NamedTextColor.YELLOW));
+            return true;
+        }
+
+        // Optional effect override.
+        String effectOverride = null;
+        if (args.length >= 3) {
+            effectOverride = args[2].toUpperCase();
+            if (!CHAIN_EFFECTS.contains(effectOverride)) {
+                sender.sendMessage(Component.text("Invalid effect: " + args[2], NamedTextColor.RED));
+                sender.sendMessage(Component.text("Valid effects: " + String.join(", ", CHAIN_EFFECTS),
+                        NamedTextColor.YELLOW));
+                return true;
+            }
+        }
+
+        if (plugin.getMobSpawnService() == null) {
+            sender.sendMessage(Component.text("MobSpawnService unavailable.", NamedTextColor.RED));
+            return true;
+        }
+
+        // Pick the first mob from the chain mode's spawn pool.
+        List<MobSpawnEntry> pool = mode.getChainConfig().getMobSpawnConfig().getMobs();
+        if (pool.isEmpty()) {
+            sender.sendMessage(Component.text(
+                    "Chain mob pool is empty — add mobs to mob-spawning.mobs in chain.yml first.",
+                    NamedTextColor.RED));
+            return true;
+        }
+        MobSpawnEntry entry = pool.get(0);
+
+        // Spawn + register so the test mob is tracked exactly like a normal
+        // chain mob (counted, scanned, cleaned up on mode end).
+        Entity spawned = plugin.getMobSpawnService()
+                .spawnAndRegister("chain", entry, player.getLocation());
+        if (!(spawned instanceof LivingEntity mob)) {
+            sender.sendMessage(Component.text("Failed to spawn test mob '" + entry.getId()
+                    + "' (type=" + entry.getType().name().toLowerCase()
+                    + "). Check the id exists.", NamedTextColor.RED));
+            return true;
+        }
+
+        boolean fired = cas.forceFireChainWithEffect(mob, player, effectOverride);
+        if (!fired) {
+            sender.sendMessage(Component.text("Spawned " + entry.getId()
+                    + " but forceFireChain returned false (world mismatch?).", NamedTextColor.RED));
+            return true;
+        }
+        String effectLabel = effectOverride != null ? effectOverride : "default";
+        sender.sendMessage(Component.text("Test chain spawned: " + entry.getId()
+                + " -> " + player.getName() + " (effect: " + effectLabel + ")",
+                NamedTextColor.GREEN));
         return true;
     }
 
@@ -868,7 +946,7 @@ public class ChainCommand implements CommandExecutor, TabCompleter {
             if ("toggleexempt".equals(sub)) return null;
             if ("spawninterval".equals(sub)) return List.of("20", "40", "60", "100");
             if ("chainattack".equals(sub)) {
-                return filterStartsWith(args[1], "stats", "reset", "force");
+                return filterStartsWith(args[1], "stats", "reset", "force", "testspawn");
             }
         }
         if (args.length == 3) {
@@ -876,6 +954,9 @@ public class ChainCommand implements CommandExecutor, TabCompleter {
             String sub2 = args[1].toLowerCase();
             if ("chainattack".equals(sub)) {
                 if ("reset".equals(sub2)) return null; // online player names
+                if ("testspawn".equals(sub2)) {
+                    return filterStartsWith(args[2], CHAIN_EFFECTS);
+                }
                 if ("force".equals(sub2)) {
                     // Suggest 8-char UUID prefixes of chain-mode mobs.
                     if (plugin.getMobSpawnService() != null) {
@@ -932,7 +1013,8 @@ public class ChainCommand implements CommandExecutor, TabCompleter {
                 NamedTextColor.AQUA));
         sender.sendMessage(Component.text("spawncat <category> — Spawn random attack from category",
                 NamedTextColor.AQUA));
-        sender.sendMessage(Component.text("chainattack <stats|reset|force> — Chain Attack gimmick admin",
+        sender.sendMessage(Component.text(
+                "chainattack <stats|reset|force|testspawn> — Chain Attack gimmick admin",
                 NamedTextColor.AQUA));
     }
 
